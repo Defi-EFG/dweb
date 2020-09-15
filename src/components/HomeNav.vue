@@ -1,15 +1,15 @@
 <template>
   <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link> |
-    <router-link to="/markets">market</router-link> |
-    <router-link to="/docs">Docs</router-link> |
-    <router-link to="/defi">App</router-link>
+    <router-link :to="{ name: 'home' }">{{ $t('views.titles.home') }}</router-link> |
+    <router-link :to="{ name: 'home-about' }">{{ $t('views.titles.about') }}</router-link> |
+    <router-link :to="{ name: 'home-markets' }">{{ $t('views.titles.markets') }}</router-link> |
+    <router-link :to="{ name: 'home-docs' }">{{ $t('views.titles.docs') }}</router-link> |
+    <router-link :to="{ name: 'defi' }">App</router-link>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class HomeNav extends Vue {}

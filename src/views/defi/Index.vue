@@ -6,8 +6,8 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
-import DappNav from "@/components/DefiNav.vue";
+import { Component, Vue } from 'vue-property-decorator'
+import DappNav from '@/components/DefiNav.vue'
 
 @Component({
   components: {

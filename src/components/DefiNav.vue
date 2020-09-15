@@ -1,13 +1,13 @@
 <template>
   <div id="nav">
-    <router-link to="/defi/wallet">Wallet</router-link> |
-    <router-link to="/defi/staking">Staking</router-link> |
-    <router-link to="/defi/lending">Lending</router-link>
+    <router-link :to="{ name: 'defi-wallet' }">{{ $t('views.titles.wallet') }}</router-link> |
+    <router-link :to="{ name: 'defi-staking' }">{{ $t('views.titles.staking') }}</router-link> |
+    <router-link :to="{ name: 'defi-lending' }">{{ $t('views.titles.lending') }}</router-link>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue } from 'vue-property-decorator'
 
 @Component
 export default class DappNav extends Vue {}
@@ -22,7 +22,7 @@ export default class DappNav extends Vue {}
     color: #2c3e50;
 
     &.router-link-exact-active {
-      color: #42b983;
+      color: #b942a9;
     }
   }
 }

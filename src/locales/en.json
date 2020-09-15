@@ -1,5 +1,15 @@
 {
   "views": {
+    "titles": {
+      "home": "Home",
+      "main": "Main",
+      "markets": "Markets",
+      "docs": "Docs",
+      "about": "About",
+      "wallet": "Wallet",
+      "staking": "Staking",
+      "lending": "Lending"
+    }
   },
   "components": {
   },
