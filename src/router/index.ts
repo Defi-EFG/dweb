@@ -6,7 +6,6 @@ import homeRoutes from "./home";
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
-  // prettier-ignore
   ...homeRoutes,
   ...defiRoutes
 ];
