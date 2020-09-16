@@ -1,17 +1,17 @@
 <template>
   <div class="defi">
-    <DappNav />
+    <DefiNav />
     <router-view />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import DappNav from '@/components/DefiNav.vue'
+import DefiNav from '@/components/DefiNav.vue'
 
 @Component({
   components: {
-    DappNav
+    DefiNav
   }
 })
 export default class Home extends Vue {}

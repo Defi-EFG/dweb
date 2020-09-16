@@ -10,7 +10,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class DappNav extends Vue {}
+export default class DefiNav extends Vue {}
 </script>
 
 <style lang="scss">
