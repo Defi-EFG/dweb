@@ -143,7 +143,7 @@
   }
   .sec_1{
     background: transparent linear-gradient(180deg, #2C1635 0%, #070C1A 100%) 0% 0% no-repeat padding-box;
-    padding-top: 100px;
+    padding-top: 150px;
     z-index: 200;
   }
   .sec_2{

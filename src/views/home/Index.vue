@@ -8,7 +8,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import HomeNav from '@/components/HomeNav.vue'
-import HeaderNav from '@/components/HeaderNav.vue'
+import HeaderNav from '@/components/HeaderNavH.vue'
 
 @Component({
   components: {

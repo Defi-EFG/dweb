@@ -133,7 +133,7 @@
     opacity: 1;
     padding: 20px 40px;
     color: #ffffff;
-    margin: 0 auto;
+    margin-left: 120px;
     max-width: 400px;
   }
   .M_detail .M_detail_text{
