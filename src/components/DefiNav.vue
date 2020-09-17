@@ -24,7 +24,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class DappNav extends Vue {
+export default class DefiNav extends Vue {
   item = 0
   items = [
     { text: 'Wallet', icon: 'mdi-folder' },

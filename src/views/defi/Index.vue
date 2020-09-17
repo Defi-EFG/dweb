@@ -2,25 +2,27 @@
   <div class="layout">
     <v-container>
       <div class="address-bar">
-        <v-chip class="ma-2">Default</v-chip>
-      </div>
-      <div class="content">
-        <DappNav />
-        <transition name="page" mode="out-in">
-          <router-view></router-view>
-        </transition>
+        <HeaderNav />
       </div>
     </v-container>
+    <div class="content">
+      <DefiNav />
+      <transition name="page" mode="out-in">
+        <router-view></router-view>
+      </transition>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import DappNav from '@/components/DefiNav.vue'
+import DefiNav from '@/components/DefiNav.vue'
+import HeaderNav from '@/components/HeaderNav.vue'
 
 @Component({
   components: {
-    DappNav
+    DefiNav,
+    HeaderNav
   }
 })
 export default class Home extends Vue {}
