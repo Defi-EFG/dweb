@@ -256,13 +256,13 @@
   .img_footer {
     width: 250px;
     height: 250px;
-   
+   border-radius: 50%;
+   overflow:hidden;
   }
   .img_footer img {
     width: 100%;
-    border-radius: 50%;
-    width: 250px;
-    height: 250px;
+  height: 100%;
+  object-fit: cover;
   }
   .text_head_footer{
     text-align: left;
