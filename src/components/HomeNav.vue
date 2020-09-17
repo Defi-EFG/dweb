@@ -15,7 +15,7 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class HomeNav extends Vue {}
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 #nav {
   padding: 20px;
   margin: 0 auto;
