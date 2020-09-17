@@ -52,40 +52,9 @@
           <v-container>
             <v-row>
               <v-col cols="12">
-                    <div class="card">
-    <div class="card-body">
-      <h2 class="card-title">Line</h2>
-
-      <div class="btn-group btn-group-toggle">
-        <label
-          v-for="(item, index) in btn"
-          :key="index"
-          :class="{ active: item.value == radio }"
-          class="btn btn-success"
-        >
-          <input
-            v-model="radio"
-            :name="dataLabel"
-            :value="item.value"
-            type="radio"
-          />
-          {{ item.label }}
-        </label>
-      </div>
-    </div>
-
-    <div class="card-img-bottom">
-      <chartjs-line
-        :backgroundcolor="bgColor"
-        :beginzero="beginZero"
-        :bind="true"
-        :bordercolor="borderColor"
-        :data="data[radio]"
-        :datalabel="dataLabel"
-        :labels="labels[radio]"
-      />
-    </div>
-  </div>
+                  <div class="chart_view">
+                   
+                  </div>
               </v-col>
             </v-row>
           </v-container>
@@ -93,46 +62,25 @@
   </div>
 </template>
 
-<script>
-export default {
-  data() {
-    return {
-      bgColor: "#81894e",
-      beginZero: true,
-      borderColor: "#81894e",
-      btn: [
-        { label: "Today", value: "day" },
-        { label: "This Week", value: "week" }
-      ],
-      data: {
-        day: [1, 3, 5, 3, 1],
-        week: [12, 14, 16, 18, 11, 13, 15]
-      },
-      dataLabel: "Foo",
-      labels: {
-        day: [8, 10, 12, 14, 16],
-        week: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"]
-      },
-      radio: "day"
-    };
-  }
-};
-</script>
+s
 
 <style scoped>
   .container{
     max-width :1200px;
     margin:  0 auto;
-    padding: 150px 0;
+    
   }
   .sec_m1{
-    background-color: #474747;
+   background: transparent linear-gradient(180deg, #2C1635 0%, #070C1A 100%) 0% 0% no-repeat padding-box;
+   padding: 150px 0 50px 0;
   }
   .sec_m2{
-    background: #616161 0% 0% no-repeat padding-box;
+    background: #17181C 0% 0% no-repeat padding-box;
     height: 500px;
+    padding: 50px 0 0 0 ;
   }
   .h_detail {
+    padding: 30px 10px;
     max-width: 500px;
     margin: 0 auto;
   }
@@ -181,10 +129,10 @@ export default {
     margin-top: 10px;;
   }
   .M_detail {
-    background: #303030 0% 0% no-repeat padding-box;
+    background: #17181C 0% 0% no-repeat padding-box;
     border-radius: 5px;
     opacity: 1;
-    padding: 20px;
+    padding: 20px 40px;
     color: #ffffff;
     margin: 0 auto;
     max-width: 400px;
@@ -204,5 +152,10 @@ export default {
     letter-spacing: 0px;
     color: #FFFFFF;
     opacity: 1;
+  }
+  .chart_view{
+    background-color: #000000;
+    height: 300px;
+    color: #ffffff;
   }
 </style>
