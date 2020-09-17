@@ -36,7 +36,7 @@ export default class Home extends Vue {}
     padding-box;
 }
 .content {
-  min-height: 95vh;
+  padding: 0 45px 30px 45px;
   display: flex;
   position: relative;
   flex: 1;

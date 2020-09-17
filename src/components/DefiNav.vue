@@ -4,7 +4,11 @@
       <v-navigation-drawer class="defi-drawer" dark floating permanent>
         <v-list nav dense>
           <v-list-item-group v-model="item" color="primary">
-            <v-list-item v-for="(item, i) in items" :key="i">
+            <v-list-item
+              v-for="(item, i) in items"
+              :key="i"
+              @click="$router.push(`/defi/${item.text}`)"
+            >
               <v-list-item-icon>
                 <v-icon v-text="item.icon"></v-icon>
               </v-list-item-icon>
@@ -27,9 +31,9 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class DefiNav extends Vue {
   item = 0
   items = [
-    { text: 'Wallet', icon: 'mdi-folder' },
-    { text: 'Lending', icon: 'mdi-account-multiple' },
-    { text: 'Staking', icon: 'mdi-star' }
+    { text: 'wallet', icon: 'mdi-folder' },
+    { text: 'lending', icon: 'mdi-account-multiple' },
+    { text: 'staking', icon: 'mdi-star' }
   ]
 }
 </script>
@@ -37,7 +41,7 @@ export default class DefiNav extends Vue {
 <style lang="scss" scoped>
 #nav {
   display: flex;
-  padding: 30px;
+  margin-right: 1rem;
 
   a {
     font-weight: bold;
@@ -54,6 +58,7 @@ export default class DefiNav extends Vue {
 }
 
 .defi-drawer {
+  text-transform: capitalize;
   padding-top: 1.5rem;
   background: transparent linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
     padding-box;
