@@ -4,3 +4,4 @@ declare module '*.vue' {
 }
 
 declare module 'ecoweb3'
+declare module 'ethjs-abi'

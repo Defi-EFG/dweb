@@ -74,3 +74,15 @@ export interface ReceiptLog {
   data: string
   topics: string[]
 }
+
+export interface Utxo {
+  address: string
+  txid: string
+  vout: number
+  scriptPubKey: string
+  amount: number
+  satoshis: number
+  isStake: boolean
+  height: number
+  confirmations: number
+}

@@ -1,12 +1,23 @@
 import bip39 from 'bip39'
-import bip32 from 'bip32'
+import * as bip32 from 'bip32'
 import { Ecocjs } from 'ecoweb3'
 
 import { Wallet } from '@/types/wallet'
 import { KeyStore } from '@/types/keystore'
-import { Transaction } from '@/types/transaction'
+import { Transaction, Utxo } from '@/types/transaction'
+import { ECOC_MAINNET, ECOC_TESTNET } from './constants'
 import ecocw3 from './ecocw3'
 
+const isEcocAddress = (address: string, networkStr: string) => {
+  try {
+    const network = Ecocjs.getNetwork(networkStr)
+    Ecocjs.address.toOutputScript(address, network)
+  } catch (error) {
+    return false
+  }
+
+  return true
+}
 
 export default class EcocWallet implements Wallet {
   keypair: any
@@ -15,16 +26,20 @@ export default class EcocWallet implements Wallet {
   address: string
   transactions: Transaction[]
 
-  constructor(keypair:any, networkStr='Mainnet') {
+  constructor(keypair: any, networkStr = ECOC_MAINNET) {
     this.keypair = keypair
     this.keystore = {} as KeyStore
-    this.address = ""
-    this.transactions = [] as Transaction []
+    this.address = ''
+    this.transactions = [] as Transaction[]
     this.network = Ecocjs.getNetwork(networkStr)
   }
 
   validateMnemonic(mnemonic: string, password: string) {
     const tempWallet = EcocWallet.restoreFromMnemonic(mnemonic, password)
+    if (!tempWallet) {
+      return false
+    }
+
     return this.keypair.toWIF() === tempWallet.keypair.toWIF()
   }
 
@@ -36,7 +51,7 @@ export default class EcocWallet implements Wallet {
     return address
   }
 
-  getHasPrivKey() {
+  hasPrivKey() {
     return !!this.keypair.privateKey
   }
 
@@ -64,7 +79,7 @@ export default class EcocWallet implements Wallet {
     return await ecocw3.api.getTxList(this.address)
   }
 
-  async generateCreateContractTx(code:string, gasLimit:string, gasPrice:string, fee:string) {
+  async generateCreateContractTx(code: string, gasLimit: number, gasPrice: number, fee: number) {
     return EcocWallet.generateCreateContractTx(
       this,
       code,
@@ -75,7 +90,13 @@ export default class EcocWallet implements Wallet {
     )
   }
 
-  async generateSendToContractTx(contractAddress, encodedData, gasLimit, gasPrice, fee) {
+  async generateSendToContractTx(
+    contractAddress: string,
+    encodedData: string,
+    gasLimit: number,
+    gasPrice: number,
+    fee: number
+  ) {
     return await EcocWallet.generateSendToContractTx(
       this,
       contractAddress,
@@ -87,7 +108,7 @@ export default class EcocWallet implements Wallet {
     )
   }
 
-  async generateTx(to, amount, fee) {
+  async generateTx(to: string, amount: number, fee: number) {
     return await EcocWallet.generateTx(
       this,
       to,
@@ -97,7 +118,7 @@ export default class EcocWallet implements Wallet {
     )
   }
 
-  async sendRawTx(tx:string) {
+  async sendRawTx(tx: string) {
     const res = await EcocWallet.sendRawTx(tx)
     setTimeout(() => {
       //
@@ -106,13 +127,20 @@ export default class EcocWallet implements Wallet {
     return res
   }
 
-  async callContract(address, encodedData) {
+  async callContract(address: string, encodedData: string) {
     return await EcocWallet.callContract(address, encodedData)
   }
 
-  static generateCreateContractTx(EcocWallet, code, gasLimit, gasPrice, fee, utxoList) {
+  static generateCreateContractTx(
+    keypair: any,
+    code: string,
+    gasLimit: number,
+    gasPrice: number,
+    fee: number,
+    utxoList: Utxo[]
+  ) {
     return Ecocjs.utils.buildCreateContractTransaction(
-      EcocWallet.keyPair,
+      keypair,
       code,
       gasLimit,
       gasPrice,
@@ -122,19 +150,20 @@ export default class EcocWallet implements Wallet {
   }
 
   static async generateSendToContractTx(
-    EcocWallet,
-    contractAddress,
-    encodedData,
-    gasLimit,
-    gasPrice,
-    fee,
-    utxoList
+    keypair: any,
+    contractAddress: string,
+    encodedData: string,
+    gasLimit: number,
+    gasPrice: number,
+    fee: number,
+    utxoList: Utxo[]
   ) {
-    if (!EcocWallet.getHasPrivKey()) {
+    if (!keypair.privateKey) {
       return false
     }
+
     return Ecocjs.utils.buildSendToContractTransaction(
-      EcocWallet.keyPair,
+      keypair,
       contractAddress,
       encodedData,
       gasLimit,
@@ -144,67 +173,81 @@ export default class EcocWallet implements Wallet {
     )
   }
 
-  static async generateTx(EcocWallet, to, amount, fee, utxoList) {
-    if (!EcocWallet.getHasPrivKey()) {
+  static async generateTx(keypair: any, to: string, amount: number, fee: number, utxoList: Utxo[]) {
+    if (!keypair.privateKey) {
       return false
     }
-    return Ecocjs.utils.buildPubKeyHashTransaction(EcocWallet.keyPair, to, amount, fee, utxoList)
+    return Ecocjs.utils.buildPubKeyHashTransaction(keypair, to, amount, fee, utxoList)
   }
 
-  static async sendRawTx(tx) {
+  static async sendRawTx(tx: string) {
     return await ecocw3.api.sendRawTx(tx)
   }
 
-  static async callContract(address, encodedData) {
+  static async callContract(address: string, encodedData: string) {
     return await ecocw3.api.callContract(address, encodedData)
   }
 
-  static validateBip39Mnemonic(mnemonic) {
+  static validateBip39Mnemonic(mnemonic: string) {
     return bip39.validateMnemonic(mnemonic)
   }
 
-  static restoreFromMnemonic(mnemonic, password) {
-    //if (bip39.validateMnemonic(mnemonic) == false) return false
-    const seedHex = bip39.mnemonicToSeed(mnemonic, password)
-    const hdNode = bip32.fromSeed(seedHex, network)
-    const account = hdNode
-      .deriveHardened(88)
-      .deriveHardened(0)
-      .deriveHardened(0)
-    const keyPair = account
-    return new EcocWallet(keyPair)
-  }
-
-  static restoreFromMobile(mnemonic) {
-    const seedHex = bip39.mnemonicToSeed(mnemonic, password)
-    const hdNode = bip32.fromSeed(seedHex, network)
-    const account = hdNode.deriveHardened(88).deriveHardened(0)
-    const walletList = []
-    for (let i = 0; i < 10; i++) {
-      const wallet = new EcocWallet(account.deriveHardened(i))
-      walletList[i] = {
-        wallet,
-        path: i
-      }
-    }
-    return walletList
-  }
-
-  static restoreFromWif(wif) {
-    return new EcocWallet(ecocjs.ECPair.fromWIF(wif, network))
-  }
-
-  static generateMnemonic() {
-    return bip39.generateMnemonic(128, randomBytes)
-  }
-
-  static isEcocAddress(address) {
-    try {
-      Ecocjs.address.toOutputScript(address, network)
-    } catch (error) {
+  static restoreFromMnemonic(mnemonic: string, password: string) {
+    if (bip39.validateMnemonic(mnemonic) == false) {
       return false
     }
 
-    return true
+    const seedHex = bip39.mnemonicToSeedSync(mnemonic, password)
+    let hdNode
+    let network = Ecocjs.getNetwork(ECOC_MAINNET)
+
+    try {
+      hdNode = bip32.fromSeed(seedHex, network)
+      const account = hdNode
+        .deriveHardened(88)
+        .deriveHardened(0)
+        .deriveHardened(0)
+      const keyPair = account
+
+      return new EcocWallet(keyPair)
+    } catch (error) {
+      network = Ecocjs.getNetwork(ECOC_TESTNET)
+      hdNode = bip32.fromSeed(seedHex, network)
+      const account = hdNode
+        .deriveHardened(88)
+        .deriveHardened(0)
+        .deriveHardened(0)
+      const keyPair = account
+
+      return new EcocWallet(keyPair, ECOC_TESTNET)
+    }
+  }
+
+  static restoreFromWif(wif: string) {
+    let network = Ecocjs.getNetwork(ECOC_MAINNET)
+    try {
+      const keypair = Ecocjs.ECPair.fromWIF(wif, network)
+      return new EcocWallet(keypair)
+    } catch (error) {
+      network = Ecocjs.getNetwork(ECOC_TESTNET)
+    }
+
+    return new EcocWallet(Ecocjs.ECPair.fromWIF(wif, network), ECOC_TESTNET)
+  }
+
+  static generateMnemonic() {
+    return bip39.generateMnemonic()
+  }
+
+  static isEcocAddress(address: string) {
+    if (isEcocAddress(address, ECOC_MAINNET)) {
+      return true
+    }
+
+    if (isEcocAddress(address, ECOC_TESTNET)) {
+      return true
+    }
+
+    return false
   }
 }
