@@ -5,8 +5,7 @@
     <v-spacer></v-spacer>
 
     <template v-if="!loggedIn">
-      <router-link :to="{ name: 'home' }">{{ $t('views.titles.home') }}</router-link>
-       <router-link :to="{ name: 'home-markets' }">{{ $t('views.titles.markets') }}</router-link>
+      <v-btn text small>Documents</v-btn>
       <v-btn text small>White Paper</v-btn>
       <v-btn outlined small>Dashboard</v-btn>
     </template>
@@ -42,36 +41,8 @@ export default class HeaderNav extends Vue {
 </script>
 
 <style lang="scss" scoped>
-
 .efg-header {
   background-color: transparent !important;
-  position: absolute;
-  max-width :1088px;
-  margin:  0 auto;
-  a {
-    font-weight: bold;
-    color: #ffffff;
-    padding: 0 10px;
-    text-decoration: unset;
-
-    &.router-link-exact-active{
-      color: #42b983;
-      border-bottom: 1px solid #42b983;
-      transition: 0.3s;
-      span{
-        color:#42b983;
-        transition: 0.3s;
-      }
-    }
-  }
-  span:hover {
-    color: #42b983;
-    transition: 0.3s;
-  }
-  a:hover {
-    color: #42b983;
-    transition: 0.3s;
-  }
 }
 
 .efg-logo {
@@ -91,10 +62,6 @@ export default class HeaderNav extends Vue {
     background-color: #c074f9;
     border-radius: 50%;
     margin-right: 6px;
-  }
-  .theme--dark.v-btn:hover {
-    color: #42b983;
-    transition: 0.3s;
   }
 }
 </style>
