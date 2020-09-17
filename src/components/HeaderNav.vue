@@ -41,8 +41,12 @@ export default class HeaderNav extends Vue {
 </script>
 
 <style lang="scss" scoped>
+
 .efg-header {
   background-color: transparent !important;
+  position: absolute;
+  max-width :1088px;
+  margin:  0 auto;
 }
 
 .efg-logo {

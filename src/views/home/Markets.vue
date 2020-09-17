@@ -62,11 +62,10 @@
   </div>
 </template>
 
-s
 
 <style scoped>
   .container{
-    max-width :1200px;
+    max-width :1088px;
     margin:  0 auto;
     
   }

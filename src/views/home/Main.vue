@@ -16,7 +16,7 @@
             </div>
           </v-col>
         </v-row>
-        <v-row class="text_table">
+        <v-row class="text_table" style="margin-top:50px;">
           <v-col cols="8" class="text_table_Assets">Supply</v-col>
           <v-col cols="2">Total Deposited</v-col>
           <v-col cols="2">Deposit APY</v-col>
@@ -43,7 +43,7 @@
     </section>
     <section class="sec_3">
       <v-container>
-        <v-row class="text_table">
+        <v-row class="text_table" style="margin-top:0px;">
           <v-col cols="8" class="text_table_Assets">Borrow</v-col>
           <v-col cols="2">Total borrowed</v-col>
           <v-col cols="2">Borrow APY</v-col>
@@ -142,18 +142,18 @@
     margin:  0 auto;
   }
   .sec_1{
-    background:#0b1020;
+    background: transparent linear-gradient(180deg, #2C1635 0%, #070C1A 100%) 0% 0% no-repeat padding-box;
     padding-top: 100px;
     z-index: 200;
   }
   .sec_2{
     background: #202020 0% 0% no-repeat padding-box;
-    padding-top: 200px;
+    padding-top:150px;
    
   }
   .sec_3{
-    background:#0b1020;
-    height:400px;
+    background:#090c1b;
+    height:300px;
     border-bottom-left-radius:50%;
     border-bottom-right-radius: 50%;
   }
@@ -191,7 +191,6 @@
     letter-spacing: 0px;
     color: #ffffff;
     opacity: 1;
-    padding-top: 100px;
   }
   .text_table .text_table_Assets {
     padding-left: 60px;
@@ -251,14 +250,9 @@
     letter-spacing: 0px;
     color: #929292;
     opacity: 1;
-    padding-bottom: 200px;
+
   }
-  .v-window__next{
-      right: 0;
-  }
-  .v-window__prev{
-      left: 0;
-  }
+  
   .img_footer {
     width: 250px;
     height: 250px;
@@ -285,6 +279,6 @@
     color: #707070;
     opacity: 1;
   }
-  
+ 
   
 </style>
