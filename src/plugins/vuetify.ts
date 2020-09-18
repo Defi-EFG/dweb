@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Vuetify from 'vuetify/lib'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
+
 const MY_ICONS = {
   close: 'mdi-close',
   leftarrow: 'mdi-arrow-left',
@@ -25,13 +26,16 @@ export default new Vuetify({
         error: '#FF5252'
       },
       light: {
-        primary: '#1565C0',
+        primary: '#44096B',
         accent: '#CDDC39',
         secondary: '#42A5F5',
         success: '#81C784',
         info: '#81D4FA',
         warning: '#FFB74D',
-        error: '#FF8A65'
+        error: '#FF8A65',
+        lightgray:'#929292',
+        white:'#FFFFFF',
+        transparent:'transparent'
       }
     }
   },
