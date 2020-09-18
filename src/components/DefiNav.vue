@@ -41,8 +41,8 @@ export default class DefiNav extends Vue {
 <style lang="scss" scoped>
 #nav {
   display: flex;
-  margin-right: 1rem;
-
+  min-height: 80vh;
+  padding-top: 12px;
   a {
     font-weight: bold;
     color: #2c3e50;
@@ -65,7 +65,8 @@ export default class DefiNav extends Vue {
   border-radius: 5px !important;
 
   .v-list-item__icon {
-    padding: 0.8rem 0.8rem 0.8rem 2.5rem;
+    padding: 0.8rem 0 0.8rem 2rem;
+    margin-right: 10px !important;
   }
 
   .v-item--active {
