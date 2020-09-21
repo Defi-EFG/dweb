@@ -19,11 +19,11 @@
           </v-toolbar>
 
           <v-row class="pl-2 pr-2">
-            <v-col>
+            <v-col cols="6">
               <receive-token></receive-token>
             </v-col>
-            <v-col>
-              <receive-token></receive-token>
+            <v-col cols="6">
+              <send-token></send-token>
             </v-col>
           </v-row>
         </v-card>
@@ -40,12 +40,14 @@ import { Component, Vue } from 'vue-property-decorator'
 import TokenList from '@/components/TokenList.vue'
 import ContactAddress from '@/components/ContactAddress.vue'
 import ReceiveToken from '@/components/ReceiveToken.vue'
+import SendToken from '@/components/SendToken.vue'
 
 @Component({
   components: {
     TokenList,
     ContactAddress,
-    ReceiveToken
+    ReceiveToken,
+    SendToken
   }
 })
 export default class Wallet extends Vue {}

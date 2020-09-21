@@ -11,7 +11,7 @@
       <div class="address-area">
         <p class="mb-1">ECOC Wallet Address:</p>
         <div class="copyable-addr">
-          <span>{{ mockAddr }}</span>
+          <div class="text-truncate">{{ mockAddr }}</div>
           <v-btn icon small class="copy">
             <v-icon small>mdi-content-copy</v-icon>
           </v-btn>
@@ -46,13 +46,13 @@ export default class ReceiveToken extends Vue {
 }
 
 .qr {
-  margin-top: 2rem;
+  margin-top: 1.2rem;
   border-radius: 10px;
 }
 
 .address-area {
   text-align: left;
-  padding: 12px 1rem 2rem 1rem;
+  padding: 12px 1rem 1rem 1rem;
 
   p {
     color: white;
@@ -63,10 +63,11 @@ export default class ReceiveToken extends Vue {
   padding: 1rem;
   background: #363a4a;
   border-radius: 5px;
+  display: flex;
 }
 
 .copy {
-  float: right;
+  margin-left: 6px;
   align-items: baseline;
 }
 </style>

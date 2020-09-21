@@ -19,7 +19,7 @@
 
         <v-list-item-content>
           <v-list-item-title>{{ contact.name }}</v-list-item-title>
-          <small>{{ contact.address }}</small>
+          <small class="addr-value">{{ contact.address }}</small>
         </v-list-item-content>
 
         <v-list-item-icon>
@@ -84,5 +84,9 @@ export default class ContactAddress extends Vue {
 
 .contact-btn:nth-child(1) {
   margin-right: 10px;
+}
+
+.addr-value {
+  opacity: 0.7;
 }
 </style>
