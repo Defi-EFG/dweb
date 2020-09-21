@@ -4,3 +4,4 @@ declare module '*.vue' {
 }
 
 declare module 'vuetify/lib'
+declare module '@chenfengyuan/vue-qrcode'

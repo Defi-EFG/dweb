@@ -8,6 +8,30 @@
         <contact-address></contact-address>
       </v-col>
     </v-row>
+    <v-row>
+      <v-col cols="8">
+        <v-card dark color="#222738">
+          <v-toolbar class="receive-send-wrapper" dense flat>
+            <v-toolbar-title class="token-symbol">
+              <img src="@/assets/efg_logo.svg" />
+              <span>ECOC</span>
+            </v-toolbar-title>
+          </v-toolbar>
+
+          <v-row class="pl-2 pr-2">
+            <v-col>
+              <receive-token></receive-token>
+            </v-col>
+            <v-col>
+              <receive-token></receive-token>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+      <v-col cols="4">
+        <contact-address></contact-address>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -15,17 +39,32 @@
 import { Component, Vue } from 'vue-property-decorator'
 import TokenList from '@/components/TokenList.vue'
 import ContactAddress from '@/components/ContactAddress.vue'
+import ReceiveToken from '@/components/ReceiveToken.vue'
 
 @Component({
   components: {
     TokenList,
-    ContactAddress
+    ContactAddress,
+    ReceiveToken
   }
 })
 export default class Wallet extends Vue {}
 </script>
 
 <style lang="scss" scoped>
-.wallet-page {
+.receive-send-wrapper {
+  background: transparent linear-gradient(268deg, #6212c9 0%, #9023bf 100%) 0% 0% no-repeat
+    padding-box;
+}
+
+.token-symbol {
+  display: flex;
+  align-items: center;
+  font-size: medium;
+
+  img {
+    width: 24px;
+    margin-right: 0.8rem;
+  }
 }
 </style>

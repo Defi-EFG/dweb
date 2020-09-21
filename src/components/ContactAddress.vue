@@ -1,6 +1,6 @@
 <template>
   <v-card class="mx-auto" dark>
-    <v-toolbar class="contact-address-head" flat>
+    <v-toolbar class="contact-address-head" flat dense>
       <v-toolbar-title>
         <v-icon class="mr-2">mdi-book-variant</v-icon>
         <span>Contact Address</span>
@@ -68,7 +68,7 @@ export default class ContactAddress extends Vue {
 }
 
 .address-list {
-  max-height: 133px;
+  max-height: 149px;
   overflow: auto;
 }
 .address-item {
