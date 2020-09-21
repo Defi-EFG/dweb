@@ -1,21 +1,22 @@
 <template>
-  <v-app-bar class="efg-header" flat dark>
-    <img src="@/assets/efg_logo.svg" class="efg-logo" />
-    <v-toolbar-title>ECOC Finance Governance</v-toolbar-title>
-    <v-spacer></v-spacer>
+  <div class="color_bg">
+    <v-app-bar class="efg-header" flat dark>
+      <img src="@/assets/efg_logo.svg" class="efg-logo" />
+      <router-link to="/" style="color:#ffffff; border-bottom: 0px solid rgb(192, 116, 249);"><v-toolbar-title>ECOC Finance Governance</v-toolbar-title></router-link>
+      <v-spacer></v-spacer>
 
-    <template v-if="!loggedIn">
-      <router-link :to="{ name: 'home' }">{{ $t('views.titles.home') }}</router-link>
-       <router-link :to="{ name: 'home-markets' }">{{ $t('views.titles.markets') }}</router-link>
-      <v-btn text small>White Paper</v-btn>
-      <v-btn outlined small>Dashboard</v-btn>
-    </template>
+      <template v-if="!loggedIn">
+        <router-link :to="{ name: 'home-docs'}" >{{ $t('views.titles.docs') }}</router-link>
+        <router-link :to="{ name: 'home-whitepaper' }">{{ $t('views.titles.whitepaper') }}</router-link>
+        <v-btn outlined small>Dashboard</v-btn>
+      </template>
 
-    <v-chip class="user-status" v-else>
-      <span class="dot-circle"></span>
-      <div class="address">{{ truncateAddress(addr) }}</div>
-    </v-chip>
-  </v-app-bar>
+      <v-chip class="user-status" v-else>
+        <span class="dot-circle"></span>
+        <div class="address">{{ truncateAddress(addr) }}</div>
+      </v-chip>
+    </v-app-bar>  
+  </div>
 </template>
 
 <script lang="ts">
@@ -23,6 +24,7 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component({})
 export default class HeaderNav extends Vue {
+   
   loggedIn = false
 
   get addr() {
@@ -38,16 +40,18 @@ export default class HeaderNav extends Vue {
 
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
   }
+  
 }
 </script>
 
 <style lang="scss" scoped>
-
-.efg-header {
-  background-color: transparent !important;
-  position: absolute;
+  .v-btn.v-size--small {
+    margin-left:10px;
+  }
+  .efg-header {
   max-width :1088px;
   margin:  0 auto;
+  
   a {
     font-weight: bold;
     color: #ffffff;
@@ -55,29 +59,32 @@ export default class HeaderNav extends Vue {
     text-decoration: unset;
 
     &.router-link-exact-active{
-      color: #42b983;
-      border-bottom: 1px solid #42b983;
-      transition: 0.3s;
+      color: rgb(192, 116, 249);
+      border-bottom: 2px solid rgb(192, 116, 249);
       span{
-        color:#42b983;
+        color :rgb(192, 116, 249);
         transition: 0.3s;
       }
     }
   }
   span:hover {
-    color: #42b983;
+    color: rgb(192, 116, 249);
     transition: 0.3s;
   }
   a:hover {
-    color: #42b983;
+    color:rgb(192, 116, 249);
     transition: 0.3s;
   }
 }
 
+.active {
+    color: #c074f9 !important;
+    transition: 0.5s;
+}
 .efg-logo {
   width: 28px;
   height: auto;
-  margin-right: 1rem;
+  margin-right: 0px;
 }
 
 .user-status {
@@ -96,5 +103,15 @@ export default class HeaderNav extends Vue {
     color: #42b983;
     transition: 0.3s;
   }
+}
+.color_bg {
+  background: #2b1534 linear-gradient(180deg, #2C1635 0%, #2b1534 100%) 0% 0% no-repeat padding-box;
+  position: fixed;
+  width: 100%;
+  transition: 0.3s;
+  z-index: 20;
+}
+.theme--dark.v-app-bar.v-toolbar.v-sheet {
+    background-color: #27272700;
 }
 </style>

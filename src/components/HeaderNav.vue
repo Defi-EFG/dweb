@@ -44,7 +44,9 @@ export default class HeaderNav extends Vue {
 .efg-header {
   background-color: transparent !important;
 }
-
+.theme--dark.v-app-bar.v-toolbar.v-sheet {
+    background-color: #27272700;
+}
 .efg-logo {
   width: 28px;
   height: auto;

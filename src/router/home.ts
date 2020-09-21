@@ -4,6 +4,7 @@ import MainPage from '@/views/home/Main.vue'
 import AboutPage from '@/views/home/About.vue'
 import MarketPage from '@/views/home/Markets.vue'
 import DocsPage from '@/views/home/Docs.vue'
+import WhitePaper from '@/views/home/Whitepaper.vue'
 
 const homeRoutes: Array<RouteConfig> = [
   {
@@ -31,6 +32,11 @@ const homeRoutes: Array<RouteConfig> = [
         path: 'docs',
         name: 'home-docs',
         component: DocsPage
+      },
+      {
+        path: 'whitepaper',
+        name: 'home-whitepaper',
+        component: WhitePaper
       }
     ]
   }

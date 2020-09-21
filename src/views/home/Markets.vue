@@ -71,7 +71,7 @@
   }
   .sec_m1{
    background: transparent linear-gradient(180deg, #2C1635 0%, #070C1A 100%) 0% 0% no-repeat padding-box;
-   padding: 150px 0 50px 0;
+   padding: 80px 0 50px 0;
   }
   .sec_m2{
     background: #17181C 0% 0% no-repeat padding-box;
@@ -135,6 +135,7 @@
     color: #ffffff;
     margin-left: 120px;
     max-width: 400px;
+    
   }
   .M_detail .M_detail_text{
     padding: 15px 0;
@@ -143,6 +144,7 @@
     letter-spacing: 0px;
     color: #FFFFFF;
     opacity: 1;
+    font-weight: 400;
   }
   .M_detail .M_detail_text span{
     float: right;
