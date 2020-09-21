@@ -29,7 +29,7 @@
         </v-card>
       </v-col>
       <v-col cols="4">
-        <contact-address></contact-address>
+        <transaction-history></transaction-history>
       </v-col>
     </v-row>
   </div>
@@ -41,13 +41,15 @@ import TokenList from '@/components/TokenList.vue'
 import ContactAddress from '@/components/ContactAddress.vue'
 import ReceiveToken from '@/components/ReceiveToken.vue'
 import SendToken from '@/components/SendToken.vue'
+import TransactionHistory from '@/components/TransactionHistory.vue'
 
 @Component({
   components: {
     TokenList,
     ContactAddress,
     ReceiveToken,
-    SendToken
+    SendToken,
+    TransactionHistory
   }
 })
 export default class Wallet extends Vue {}

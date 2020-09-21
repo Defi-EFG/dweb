@@ -42,6 +42,7 @@ export default class DefiNav extends Vue {
 #nav {
   display: flex;
   min-height: 80vh;
+  height: fit-content;
   padding-top: 12px;
   a {
     font-weight: bold;
