@@ -2,7 +2,7 @@
   <div id="nav">
     <v-card width="219" class="drawer-container">
       <v-navigation-drawer class="defi-drawer" dark floating permanent>
-        <v-list nav dense>
+        <v-list nav>
           <v-list-item-group v-model="item" color="primary">
             <v-list-item
               v-for="(item, i) in items"
@@ -66,7 +66,7 @@ export default class DefiNav extends Vue {
   border-radius: 5px !important;
 
   .v-list-item__icon {
-    padding: 0.8rem 0 0.8rem 2rem;
+    padding: 0.1rem 0 0.1rem 2rem;
     margin-right: 10px !important;
   }
 
