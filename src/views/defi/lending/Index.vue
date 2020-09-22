@@ -3,7 +3,8 @@
     <v-row>
       <v-col cols="8" class="pt-0 pb-0 d-flex">
         <SupplyBalance></SupplyBalance>
-        <SupplyBalance></SupplyBalance>
+        <div class="ml-1 mr-1"></div>
+        <BorrowBalance></BorrowBalance>
       </v-col>
       <v-col cols="4" class="pt-0 pb-0"></v-col>
     </v-row>
@@ -31,10 +32,12 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import SupplyBalance from '@/components/SupplyBalance.vue'
+import BorrowBalance from '@/components/BorrowBalance.vue'
 
 @Component({
   components: {
-    SupplyBalance
+    SupplyBalance,
+    BorrowBalance
   }
 })
 export default class Lending extends Vue {}

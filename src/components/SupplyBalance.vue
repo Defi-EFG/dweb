@@ -24,7 +24,6 @@ export default class SupplyBalance extends Vue {
   padding-right: 0.5rem;
   width: 536px;
   height: auto;
-  margin-right: 0.5rem;
 }
 
 .balance {
