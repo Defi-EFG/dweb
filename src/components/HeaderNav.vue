@@ -19,24 +19,23 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-
+import ModalCreate from '../views/modal/Modal-Create-Account.vue';
 @Component({})
 export default class HeaderNav extends Vue {
-  loggedIn = false
 
+  loggedIn = false   
   get addr() {
     // mockup address
     return '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E'
   }
-
   truncateAddress(addr: string) {
     const separator = '...'
     const charsToShow = 8
     const frontChars = Math.ceil(charsToShow / 2)
     const backChars = Math.floor(charsToShow / 2)
-
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
   }
+
 }
 </script>
 
@@ -44,7 +43,9 @@ export default class HeaderNav extends Vue {
 .efg-header {
   background-color: transparent !important;
 }
-
+.theme--dark.v-app-bar.v-toolbar.v-sheet {
+    background-color: #27272700;
+}
 .efg-logo {
   width: 28px;
   height: auto;

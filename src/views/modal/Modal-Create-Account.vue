@@ -1,13 +1,13 @@
 <template>
   <v-row justify="center">
     <v-btn color="" dark @click.stop="dialog = true">Dashboard </v-btn>
+   
     <v-dialog v-model="dialog" width="450">
       <v-card>
         <v-card-title class="headline modal-header">
           <v-icon></v-icon>
           <v-btn text @click="dialog = false"><v-icon>$close</v-icon></v-btn>
         </v-card-title>
-
         <v-card-content>
           <div class="content-wrapper ">
             <div class="content-logo ">
@@ -67,7 +67,7 @@
   </v-row>
 </template>
 
-<script>
+<script typ>
 export default {
   data() {
     return {

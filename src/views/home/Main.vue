@@ -3,30 +3,32 @@
     <section class="sec_1">
       <v-container>
         <v-row>
-          <v-col cols="6">
+          <v-col cols="6" >
             <div class="total_supply">
-              <div class="head_text">Total Supply</div>
-              <div class="price_text" style="color: #C074F9;">$8,205,610.41</div>
+              <div class="head_text">{{ $t('views.main.text_detail') }}</div>
+              <div class="price_text" style="color: #3FC0DB;">$8,205,610.41</div>
             </div>
           </v-col>
           <v-col cols="6">
             <div class="total_supply">
-              <div class="head_text">Total Borrowed</div>
-              <div class="price_text" style="color: #3FC0DB;">$4,189,402.65</div>
+              <div class="head_text">{{ $t('views.main.text_detail2') }}</div>
+              <div class="price_text" style="color: #C074F9;">$4,189,402.65</div>
             </div>
           </v-col>
         </v-row>
-        <v-row class="text_table">
-          <v-col cols="8" class="text_table_Assets">Supply</v-col>
-          <v-col cols="2">Total Deposited</v-col>
-          <v-col cols="2">Deposit APY</v-col>
+        <v-row class="text_table" style="margin-top:50px;">
+          <v-col cols="8" class="text_table_Assets">{{ $t('views.main.text_detail3') }}</v-col>
+          <v-col cols="2">{{ $t('views.main.text_detail4') }}</v-col>
+          <v-col cols="2">{{ $t('views.main.text_detail5') }}</v-col>
         </v-row>
-        <v-row class="text_table_sub">
-          <v-col cols="1" class="text_table_Assetsimg"><img src="../../assets/bitcoin2.png" alt=""></v-col>
-          <v-col cols="7" class="text_table_Assets"><span>ECOC</span></v-col>
-          <v-col cols="2">$5.3 M</v-col>
-          <v-col cols="2">$2.5 M</v-col>
-        </v-row>
+        <router-link to="/markets">
+          <v-row class="text_table_sub">
+            <v-col cols="1" class="text_table_Assetsimg"><img src="../../assets/bitcoin2.png" alt=""></v-col>
+            <v-col cols="7" class="text_table_Assets"><span>ECOC</span></v-col>
+            <v-col cols="2">$5.3 M</v-col>
+            <v-col cols="2">$2.5 M</v-col>
+          </v-row>
+        </router-link>
         <v-row class="text_table_sub">
           <v-col cols="1" class="text_table_Assetsimg"><img src="../../assets/usd.png" alt=""></v-col>
           <v-col cols="7" class="text_table_Assets"><span>USD</span></v-col>
@@ -43,13 +45,13 @@
     </section>
     <section class="sec_3">
       <v-container>
-        <v-row class="text_table">
-          <v-col cols="8" class="text_table_Assets">Borrow</v-col>
-          <v-col cols="2">Total borrowed</v-col>
-          <v-col cols="2">Borrow APY</v-col>
+        <v-row class="text_table" style="margin-top:0px;">
+          <v-col cols="8" class="text_table_Assets">{{ $t('views.main.text_detail6') }}</v-col>
+          <v-col cols="2">{{ $t('views.main.text_detail7') }}</v-col>
+          <v-col cols="2">{{ $t('views.main.text_detail8') }}</v-col>
         </v-row>
         <v-row class="text_table_sub">
-          <v-col cols="1" class="text_table_Assetsimg"><img src="../../assets/bitcoin2.png" alt=""></v-col>
+          <v-col cols="1" class="text_table_Assetsimg"><img src="../../assets/EFG.svg" alt=""></v-col>
           <v-col cols="7" class="text_table_Assets"><span>EFG</span></v-col>
           <v-col cols="2">$2.9 M</v-col>
           <v-col cols="2">3.5%</v-col>
@@ -142,18 +144,18 @@
     margin:  0 auto;
   }
   .sec_1{
-    background:#0b1020;
-    padding-top: 100px;
+    background: transparent linear-gradient(180deg, #2C1635 0%, #070C1A 100%) 0% 0% no-repeat padding-box;
+    padding-top: 80px;
     z-index: 200;
   }
   .sec_2{
     background: #202020 0% 0% no-repeat padding-box;
-    padding-top: 200px;
+    padding-top:130px;
    
   }
   .sec_3{
-    background:#0b1020;
-    height:400px;
+    background:#090c1b;
+    height:300px;
     border-bottom-left-radius:50%;
     border-bottom-right-radius: 50%;
   }
@@ -191,7 +193,6 @@
     letter-spacing: 0px;
     color: #ffffff;
     opacity: 1;
-    padding-top: 100px;
   }
   .text_table .text_table_Assets {
     padding-left: 60px;
@@ -205,6 +206,10 @@
     margin:10px 0;
     border-radius: 5px;
     background: #242934 0% 0% no-repeat padding-box;
+  }
+  .text_table_sub:hover{
+    background: #414959;
+    transition: 0.4s;
   }
   .text_table_sub .text_table_Assets {
     text-align: left;
@@ -224,15 +229,17 @@
     border-radius: 50px;
     margin-left: 50px;
     margin-right: 20px;
-    margin-top: 5px;
+    margin-top: 9px;
     width: 31px;
     height: 31px;
+    padding: 1px;
   }
   .text_table_sub .text_table_Assets img{
     background-color: #cccccc;
     border-radius: 50px;
     margin-left: 50px;
     margin-right: 20px;
+     padding: 1px;
   }
   .text_table_sub .text_table_Assets span{
     padding-left: 30px;
@@ -251,14 +258,9 @@
     letter-spacing: 0px;
     color: #929292;
     opacity: 1;
-    padding-bottom: 200px;
+
   }
-  .v-window__next{
-      right: 0;
-  }
-  .v-window__prev{
-      left: 0;
-  }
+  
   .img_footer {
     width: 250px;
     height: 250px;
@@ -274,7 +276,7 @@
     text-align: left;
     font: normal normal bold 25px/33px Segoe UI;
     letter-spacing: 0px;
-    color: #707070;
+    color: #ffffff;
     opacity: 1;
     padding-top: 30px;
   }
@@ -285,6 +287,8 @@
     color: #707070;
     opacity: 1;
   }
-  
+  @media only screen and (max-width: 670px) {
+    .total_supply .price_text { font-size: 30px; }
+  }
   
 </style>
