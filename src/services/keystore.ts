@@ -12,7 +12,8 @@ const getKeystore = (data: string | KeyStore) => {
   return data
 }
 
-const createKeystore = (content: string) => {
+const createKeystore = (privatekey: string, password: string) => {
+  const content = encode(privatekey, password)
   const res = {
     version: VERSION,
     content: content,
@@ -24,13 +25,13 @@ const createKeystore = (content: string) => {
   return JSON.stringify(res) as string
 }
 
-const getContent = (keystore: KeyStore) => {
+const getContent = (keystore: KeyStore, password: string) => {
   try {
     if (keystore.version !== VERSION) {
       return null
     }
 
-    return keystore.content
+    return decode(keystore.content, password)
   } catch (e) {
     return null
   }
@@ -46,10 +47,8 @@ const encode = (content: string, password: string) => {
   return AES.encrypt(content, secretKey).toString() as string
 }
 
-export default {
+export {
   getKeystore,
   createKeystore,
   getContent,
-  decode,
-  encode
 }
