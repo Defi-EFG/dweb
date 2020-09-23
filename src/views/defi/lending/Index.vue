@@ -6,7 +6,9 @@
         <div class="ml-1 mr-1"></div>
         <BorrowBalance></BorrowBalance>
       </v-col>
-      <v-col cols="4" class="pt-0 pb-0"></v-col>
+      <v-col cols="4" class="pt-0 pb-0">
+        <LendingActivity></LendingActivity>
+      </v-col>
     </v-row>
     <v-row>
       <v-col cols="8">
@@ -33,11 +35,13 @@
 import { Component, Vue } from 'vue-property-decorator'
 import SupplyBalance from '@/components/SupplyBalance.vue'
 import BorrowBalance from '@/components/BorrowBalance.vue'
+import LendingActivity from '@/components/LendingActivity.vue'
 
 @Component({
   components: {
     SupplyBalance,
-    BorrowBalance
+    BorrowBalance,
+    LendingActivity
   }
 })
 export default class Lending extends Vue {}

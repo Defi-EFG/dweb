@@ -42,7 +42,6 @@ export default class DefiNav extends Vue {
 #nav {
   display: flex;
   min-height: 80vh;
-  height: fit-content;
   padding-top: 12px;
   a {
     font-weight: bold;
@@ -56,6 +55,8 @@ export default class DefiNav extends Vue {
 
 .drawer-container {
   border-radius: 8px !important;
+  background-color: #2f3345 !important;
+  border-color: #303546 !important;
 }
 
 .defi-drawer {

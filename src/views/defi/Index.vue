@@ -7,7 +7,7 @@
     </v-container>
     <div class="content">
       <DefiNav />
-      <div clas="main-container">
+      <div class="main-container">
         <div class="inner-container container">
           <transition name="page" mode="out-in">
             <router-view></router-view>
@@ -52,6 +52,7 @@ export default class Home extends Vue {}
 
 .main-container {
   display: flex;
+  width: -webkit-fill-available;
   .inner-container {
     position: relative;
     height: 100%;
@@ -62,3 +63,4 @@ export default class Home extends Vue {}
   text-align: right;
 }
 </style>
+
