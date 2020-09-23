@@ -1,16 +1,8 @@
-
 <template>
- <div>
-    <v-sheet
-      class="mx-auto"
-      max-width="700"
-    >
+  <div>
+    <v-sheet class="mx-auto" max-width="700">
       <v-slide-group multiple show-arrows>
-        <v-slide-item
-          v-for="n in 32"
-          :key="n"
-          v-slot:default="{ active, toggle }"
-        >
+        <v-slide-item v-for="n in 32" :key="n" v-slot:default="{ active, toggle }">
           <v-btn
             class="mx-12"
             :input-value="active"
@@ -24,12 +16,18 @@
         </v-slide-item>
       </v-slide-group>
     </v-sheet>
- </div>
+  <ModalCreate/>
+  </div>
 </template>
 <script>
-  export default {
-    data: () => ({
-      model: null,
-    }),
-  }
+import ModalCreate from '../modal/Modal-Create-Account';
+export default {
+  data: () => ({
+    model: null,
+  
+  }),
+     components: {
+    ModalCreate,
+  },
+}
 </script>

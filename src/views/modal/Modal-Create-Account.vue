@@ -27,7 +27,6 @@
             </v-btn>
           </div>
         </v-card-content>
-
         <v-card-title class="headline modal-header">
           <v-icon>$leftarrow</v-icon>
           <v-btn text @click="dialog = false"><v-icon>$close</v-icon></v-btn>
