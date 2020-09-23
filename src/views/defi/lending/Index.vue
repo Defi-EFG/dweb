@@ -21,8 +21,12 @@
           </v-toolbar>
 
           <v-row class="pl-2 pr-2">
-            <v-col cols="6"></v-col>
-            <v-col cols="6"></v-col>
+            <v-col cols="6" class="pr-1">
+              <Collateral></Collateral>
+            </v-col>
+            <v-col cols="6" class="pl-1">
+              <Withdraw></Withdraw>
+            </v-col>
           </v-row>
         </v-card>
       </v-col>
@@ -36,12 +40,16 @@ import { Component, Vue } from 'vue-property-decorator'
 import SupplyBalance from '@/components/SupplyBalance.vue'
 import BorrowBalance from '@/components/BorrowBalance.vue'
 import LendingActivity from '@/components/LendingActivity.vue'
+import Collateral from '@/components/CollateralCard.vue'
+import Withdraw from '@/components/WithdrawCard.vue'
 
 @Component({
   components: {
     SupplyBalance,
     BorrowBalance,
-    LendingActivity
+    LendingActivity,
+    Collateral,
+    Withdraw
   }
 })
 export default class Lending extends Vue {}
@@ -49,7 +57,7 @@ export default class Lending extends Vue {}
 
 <style lang="scss" scoped>
 .supply-withdraw-wrapper {
-  background: transparent linear-gradient(268deg, #6212c9 0%, #9023bf 100%) 0% 0% no-repeat
+  background: transparent linear-gradient(270deg, #2e3344 0%, #303748 100%) 0% 0% no-repeat
     padding-box;
 }
 
