@@ -21,7 +21,7 @@
       </v-chip>
     </v-app-bar>
 
-    <v-dialog v-model="dialog" width="400">
+    <v-dialog v-model="dialog" width="394">
       <v-card>
         <template>
           <v-card>
@@ -40,22 +40,24 @@
                 <p class="lightgray--text">Please create or connect your wallet</p>
               </div>
 
-              <div class="action-wrapper more-space pb-13">
+              <div class="action-wrapper more-space ">
                 <v-btn
                   large
-                  class="mb-5"
+                  class="mb-5 border"
                   color="white"
                   @click="dialog = !dialog"
                   @click.stop="createwalletdialog = true"
+                  elevation="1"
+
                 >
                   <div class="d-flex align-center">
                     <div class="img-btn-logo">
                       <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
                     </div>
-                    <h4 class="text-capitalize primary--text">Create new ECOCWallet</h4>
+                    <h4 class="text-capitalize primary--text" >Create new ECOCWallet</h4>
                   </div>
                 </v-btn>
-                <v-btn large color="white" @click.stop="connectwalletdialog = true">
+                <v-btn large color="white" @click.stop="connectwalletdialog = true" elevation="1">
                   <div class="img-btn-logo">
                     <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
                   </div>
@@ -187,6 +189,10 @@ export default class HeaderNav extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.modal-header {
+
+       padding: 9px;
+}
 .modal-header,
 .bg-white {
   background-color: white;
@@ -289,7 +295,7 @@ export default class HeaderNav extends Vue {
 .modal-header {
   display: flex;
   justify-content: space-between;
-  box-shadow: 0px 1px 7px 0px #0000002e;
+     box-shadow: 0px 1px 2px 0px #0000002e;
 }
 .content-wrapper {
   text-align: center;
@@ -300,8 +306,11 @@ export default class HeaderNav extends Vue {
   flex-direction: column;
   text-align: center;
 }
+.action-wrapper .elevation-1{
+      box-shadow: 0px 3px 8px #00000021 !important;
+}
 .more-space {
-  padding: 45px 36px;
+    padding: 38px 36px 77px 36px;
 }
 
 .topspace {
@@ -309,17 +318,18 @@ export default class HeaderNav extends Vue {
 }
 
 .logo {
-  width: 80px;
-  border-radius: 50%;
-  height: 80px;
-  margin: 0 auto;
-  box-shadow: -1px 1px 9px -4px #a5a5a5;
-  margin-top: 52px;
-  margin-bottom: 7px;
+    width: 76px;
+    padding: 14px;
+    border-radius: 50%;
+    height: 76px;
+    margin: 0 auto;
+    box-shadow: -1px 1px 9px -4px #a5a5a5;
+    margin-top: 48px;
+    margin-bottom: 7px;
 }
 .logo img {
-  width: 100%;
-  height: 100%;
+    width: 100%;
+    height: 100%;
   object-fit: cover;
 }
 v-btn {
