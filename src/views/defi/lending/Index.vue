@@ -30,7 +30,14 @@
           </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4"></v-col>
+      <v-col cols="4">
+        <div>
+          <CollateralToken></CollateralToken>
+        </div>
+        <div class="mt-3">
+          <SupplyMarket></SupplyMarket>
+        </div>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -42,6 +49,8 @@ import BorrowBalance from '@/components/BorrowBalance.vue'
 import LendingActivity from '@/components/LendingActivity.vue'
 import Collateral from '@/components/CollateralCard.vue'
 import Withdraw from '@/components/WithdrawCard.vue'
+import CollateralToken from '@/components/CollateralToken.vue'
+import SupplyMarket from '@/components/SupplyMarket.vue'
 
 @Component({
   components: {
@@ -49,7 +58,9 @@ import Withdraw from '@/components/WithdrawCard.vue'
     BorrowBalance,
     LendingActivity,
     Collateral,
-    Withdraw
+    Withdraw,
+    CollateralToken,
+    SupplyMarket
   }
 })
 export default class Lending extends Vue {}
