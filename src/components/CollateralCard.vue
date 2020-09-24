@@ -20,7 +20,7 @@
           value="25"
           rounded
           color="#C074F9"
-          background-color="#FFFFFF"
+          background-color="#E4E4E4"
           class="borrow-bar"
           height="5"
         ></v-progress-linear>

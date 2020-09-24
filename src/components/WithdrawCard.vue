@@ -11,20 +11,24 @@
         class="amount-input"
         label="Withdrawal Amount"
         :suffix="token"
+        v-model="withdrawValue"
         height="43"
         color="#C074F9"
       ></v-text-field>
       <div class="borrow-power">
         <span class="label">Borrow Power</span>
-        <v-slider v-model="val" min="25" max="100" thumb-label="always"></v-slider>
-        <!-- <v-progress-linear
-          value="25"
-          rounded
-          color="#C074F9"
-          background-color="#FFFFFF"
-          class="borrow-bar"
-          height="5"
-        ></v-progress-linear> -->
+        <v-slider
+          class="borrow-slider"
+          v-model="val"
+          min="0"
+          max="100"
+          color="#c074f9"
+          track-color="#E4E4E4"
+          thumb-color="#ffffff"
+          :hide-details="true"
+          @end="limitValue(25)"
+          @click="limitValue(25)"
+        ></v-slider>
       </div>
       <div class="borrow-used">
         <div>Borrow Power Used</div>
@@ -56,6 +60,14 @@ import { Vue, Component } from 'vue-property-decorator'
 export default class Withdraw extends Vue {
   token = 'ECOC'
   val = 25
+  minVal = 25
+  withdrawValue = 0
+
+  limitValue(num: number) {
+    if (this.val < num) {
+      this.val = num
+    }
+  }
 }
 </script>
 
@@ -86,10 +98,6 @@ export default class Withdraw extends Vue {
     font-weight: 700;
     color: white;
   }
-  .borrow-bar {
-    margin-top: 8px;
-    margin-bottom: 12px;
-  }
 }
 
 .borrow-total,
@@ -108,5 +116,30 @@ export default class Withdraw extends Vue {
   font-weight: bold;
   background: transparent linear-gradient(90deg, #3ba7c1 0%, #59289a 100%) 0% 0% no-repeat
     padding-box;
+}
+</style>
+
+<style lang="scss">
+.borrow-power {
+  .v-slider--horizontal {
+    min-height: 25px;
+    margin: 0;
+  }
+
+  .v-slider--horizontal .v-slider__track-container {
+    height: 5px;
+  }
+
+  .v-slider__thumb-container {
+    border: 10px solid #1d212e;
+    border-radius: 50%;
+    top: 9%;
+  }
+
+  .v-slider__thumb {
+    width: 16px;
+    height: 16px;
+    left: -8px;
+  }
 }
 </style>
