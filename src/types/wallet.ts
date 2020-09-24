@@ -1,10 +1,11 @@
 import { KeyStore } from './keystore'
 import { Transaction } from './transaction'
+import { Currency } from './currency'
 
 export interface Wallet {
-  keypair: any
+  address: string
   network: any
   keystore: KeyStore
-  address: string
   transactions: Transaction[]
+  currencies: Currency[]
 }

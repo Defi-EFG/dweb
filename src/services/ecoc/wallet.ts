@@ -2,11 +2,17 @@ import bip39 from 'bip39'
 import * as bip32 from 'bip32'
 import { Ecocjs } from 'ecoweb3'
 
-import { Wallet } from '@/types/wallet'
 import { KeyStore } from '@/types/keystore'
-import { Transaction, Utxo } from '@/types/transaction'
+import { Utxo } from '@/types/transaction'
 import { ECOC_MAINNET, ECOC_TESTNET } from './constants'
-import ecocw3 from './ecocw3'
+import { ecocw3, changeToNetwork } from './ecocw3'
+
+export interface EWallet {
+  keypair: any
+  network: any
+  keystore: KeyStore
+  address: string
+}
 
 const isEcocAddress = (address: string, networkStr: string) => {
   try {
@@ -19,19 +25,20 @@ const isEcocAddress = (address: string, networkStr: string) => {
   return true
 }
 
-export default class EcocWallet implements Wallet {
+export default class EcocWallet implements EWallet {
   keypair: any
   network: any
   keystore: KeyStore
   address: string
-  transactions: Transaction[]
 
   constructor(keypair: any, networkStr = ECOC_MAINNET) {
     this.keypair = keypair
     this.keystore = {} as KeyStore
-    this.address = ''
-    this.transactions = [] as Transaction[]
     this.network = Ecocjs.getNetwork(networkStr)
+    this.address = this.getAddress()
+
+    //change ecocw3 instance network to wallet network
+    changeToNetwork(networkStr)
   }
 
   validateMnemonic(mnemonic: string, password: string) {
@@ -48,7 +55,7 @@ export default class EcocWallet implements Wallet {
       pubkey: this.keypair.publicKey,
       network: this.network
     })
-    return address
+    return address as string
   }
 
   hasPrivKey() {
@@ -68,7 +75,7 @@ export default class EcocWallet implements Wallet {
   }
 
   async getAddressInfo() {
-    return await ecocw3.api.getInfo(this.address)
+    return await ecocw3.api.getAddressInfo(this.address)
   }
 
   async getErc20() {
@@ -79,15 +86,13 @@ export default class EcocWallet implements Wallet {
     return await ecocw3.api.getTxList(this.address)
   }
 
+  async getUtxoList() {
+    return await ecocw3.api.getUtxoList(this.address)
+  }
+
   async generateCreateContractTx(code: string, gasLimit: number, gasPrice: number, fee: number) {
-    return EcocWallet.generateCreateContractTx(
-      this,
-      code,
-      gasLimit,
-      gasPrice,
-      fee,
-      await ecocw3.api.getUtxoList(this.address)
-    )
+    const utxoList = await this.getUtxoList()
+    return await EcocWallet.generateCreateContractTx(this, code, gasLimit, gasPrice, fee, utxoList)
   }
 
   async generateSendToContractTx(
@@ -97,6 +102,7 @@ export default class EcocWallet implements Wallet {
     gasPrice: number,
     fee: number
   ) {
+    const utxoList = await this.getUtxoList()
     return await EcocWallet.generateSendToContractTx(
       this,
       contractAddress,
@@ -104,18 +110,13 @@ export default class EcocWallet implements Wallet {
       gasLimit,
       gasPrice,
       fee,
-      await ecocw3.api.getUtxoList(this.address)
+      utxoList
     )
   }
 
   async generateTx(to: string, amount: number, fee: number) {
-    return await EcocWallet.generateTx(
-      this,
-      to,
-      amount,
-      fee,
-      await ecocw3.api.getUtxoList(this.address)
-    )
+    const utxoList = await this.getUtxoList()
+    return await EcocWallet.generateTx(this, to, amount, fee, utxoList)
   }
 
   async sendRawTx(tx: string) {
@@ -131,7 +132,7 @@ export default class EcocWallet implements Wallet {
     return await EcocWallet.callContract(address, encodedData)
   }
 
-  static generateCreateContractTx(
+  static async generateCreateContractTx(
     keypair: any,
     code: string,
     gasLimit: number,

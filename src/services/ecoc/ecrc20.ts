@@ -2,7 +2,7 @@ import abi from 'ethjs-abi'
 import { Ecocjs } from 'ecoweb3'
 
 import { Ecrc20 } from '@/types/currency'
-import ecocw3 from './ecocw3'
+import { ecocw3 } from './ecocw3'
 
 export const getEcrc20Info = (contractAddress: string) => {
   return ecocw3.api.getTokenInfo(contractAddress)
