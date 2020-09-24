@@ -1,4 +1,4 @@
-import bip39 from 'bip39'
+import * as bip39 from 'bip39'
 import * as bip32 from 'bip32'
 import { Ecocjs } from 'ecoweb3'
 
@@ -30,15 +30,6 @@ export default class EcocWallet implements EWallet {
 
     //change ecocw3 instance network to wallet network
     changeToNetwork(networkStr)
-  }
-
-  validateMnemonic(mnemonic: string, password: string) {
-    const tempWallet = EcocWallet.restoreFromMnemonic(mnemonic, password)
-    if (!tempWallet) {
-      return false
-    }
-
-    return this.keypair.toWIF() === tempWallet.keypair.toWIF()
   }
 
   getAddress() {
@@ -184,35 +175,27 @@ export default class EcocWallet implements EWallet {
     return bip39.validateMnemonic(mnemonic)
   }
 
-  static restoreFromMnemonic(mnemonic: string, password: string) {
+  static createNewWallet(networkStr: string = ECOC_MAINNET) {
+    const mnemonic = EcocWallet.generateMnemonic()
+    const randomStr = Date.now().toString()
+
+    return EcocWallet.restoreFromMnemonic(mnemonic, randomStr, networkStr)
+  }
+
+  static restoreFromMnemonic(mnemonic: string, password: string, networkStr: string) {
     if (bip39.validateMnemonic(mnemonic) == false) {
       return false
     }
-
+    const network = Ecocjs.getNetwork(networkStr)
     const seedHex = bip39.mnemonicToSeedSync(mnemonic, password)
-    let hdNode
-    let network = Ecocjs.getNetwork(ECOC_MAINNET)
+    const hdNode = bip32.fromSeed(seedHex, network)
+    const account = hdNode
+      .deriveHardened(88)
+      .deriveHardened(0)
+      .deriveHardened(0)
+    const keyPair = account
 
-    try {
-      hdNode = bip32.fromSeed(seedHex, network)
-      const account = hdNode
-        .deriveHardened(88)
-        .deriveHardened(0)
-        .deriveHardened(0)
-      const keyPair = account
-
-      return new EcocWallet(keyPair)
-    } catch (error) {
-      network = Ecocjs.getNetwork(ECOC_TESTNET)
-      hdNode = bip32.fromSeed(seedHex, network)
-      const account = hdNode
-        .deriveHardened(88)
-        .deriveHardened(0)
-        .deriveHardened(0)
-      const keyPair = account
-
-      return new EcocWallet(keyPair, ECOC_TESTNET)
-    }
+    return new EcocWallet(keyPair, networkStr)
   }
 
   static restoreFromWif(wif: string) {
