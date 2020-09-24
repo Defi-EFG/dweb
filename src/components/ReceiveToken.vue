@@ -64,6 +64,7 @@ export default class ReceiveToken extends Vue {
   background: #363a4a;
   border-radius: 5px;
   display: flex;
+  justify-content: space-between;
 }
 
 .copy {
