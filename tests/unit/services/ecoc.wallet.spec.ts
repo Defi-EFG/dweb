@@ -34,6 +34,16 @@ describe('Wallet Mainnet Test', () => {
     const utxoList = await wallet.getUtxoList()
     expect(utxoList).to.be.an('array')
   })
+
+  it('can get all token informations', async () => {
+    const tokenInfo = await wallet.getErc20()
+    expect(tokenInfo).to.be.an('array')
+  })
+
+  it('can get transaction list', async () => {
+    const txList = await wallet.getTxList()
+    expect(txList).to.be.an('object')
+  })
 })
 
 describe('Wallet Testnet Test', () => {
@@ -67,5 +77,15 @@ describe('Wallet Testnet Test', () => {
   it('can get Utxo List', async () => {
     const utxoList = await wallet.getUtxoList()
     expect(utxoList).to.be.an('array')
+  })
+
+  it('can get all token informations', async () => {
+    const tokenInfo = await wallet.getErc20()
+    expect(tokenInfo).to.be.an('array')
+  })
+
+  it('can get transaction list', async () => {
+    const txList = await wallet.getTxList()
+    expect(txList).to.be.an('object')
   })
 })

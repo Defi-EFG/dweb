@@ -2,17 +2,10 @@ import bip39 from 'bip39'
 import * as bip32 from 'bip32'
 import { Ecocjs } from 'ecoweb3'
 
-import { KeyStore } from '@/types/keystore'
 import { Utxo } from '@/types/transaction'
+import { EWallet, AddressInfo, TxData, Erc20Info } from './types'
 import { ECOC_MAINNET, ECOC_TESTNET } from './constants'
 import { ecocw3, changeToNetwork } from './ecocw3'
-
-export interface EWallet {
-  keypair: any
-  network: any
-  keystore: KeyStore
-  address: string
-}
 
 const isEcocAddress = (address: string, networkStr: string) => {
   try {
@@ -28,12 +21,10 @@ const isEcocAddress = (address: string, networkStr: string) => {
 export default class EcocWallet implements EWallet {
   keypair: any
   network: any
-  keystore: KeyStore
   address: string
 
   constructor(keypair: any, networkStr = ECOC_MAINNET) {
     this.keypair = keypair
-    this.keystore = {} as KeyStore
     this.network = Ecocjs.getNetwork(networkStr)
     this.address = this.getAddress()
 
@@ -75,19 +66,19 @@ export default class EcocWallet implements EWallet {
   }
 
   async getAddressInfo() {
-    return await ecocw3.api.getAddressInfo(this.address)
-  }
-
-  async getErc20() {
-    return await ecocw3.api.getEcrc20(this.address)
+    return (await ecocw3.api.getAddressInfo(this.address)) as AddressInfo
   }
 
   async getTxList() {
-    return await ecocw3.api.getTxList(this.address)
+    return (await ecocw3.api.getTxList(this.address)) as TxData
+  }
+
+  async getErc20() {
+    return (await ecocw3.api.getEcrc20(this.address)) as Erc20Info[]
   }
 
   async getUtxoList() {
-    return await ecocw3.api.getUtxoList(this.address)
+    return (await ecocw3.api.getUtxoList(this.address)) as Utxo[]
   }
 
   async generateCreateContractTx(code: string, gasLimit: number, gasPrice: number, fee: number) {
