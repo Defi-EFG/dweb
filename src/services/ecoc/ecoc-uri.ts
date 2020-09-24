@@ -1,7 +1,6 @@
 import BigNumber from 'bignumber.js'
-import Wallet from './wallet'
+import Wallet from './ecoc-wallet'
 import { ECOC_MAINNET, ECOC_TESTNET } from './constants'
-import * as _ from 'lodash'
 
 interface URI {
   address: string
@@ -19,7 +18,7 @@ interface QueryParam {
   request?: string
 }
 
-export default class EcocURI implements URI  {
+export default class EcocURI implements URI {
   address: string
   amount?: string
   label?: string
@@ -28,7 +27,7 @@ export default class EcocURI implements URI  {
   network?: string
 
   constructor(data: string | URI) {
-    this.address = ""
+    this.address = ''
 
     if (typeof data === 'string') {
       const params = EcocURI.parse(data)
@@ -41,13 +40,7 @@ export default class EcocURI implements URI  {
   }
 
   _fromObject(obj: URI) {
-    const {
-      address,
-      amount,
-      label,
-      message,
-      request,
-    } = obj
+    const { address, amount, label, message, request } = obj
 
     if (!Wallet.isEcocAddress(address)) throw Error('invalid_ecoc_address')
 
@@ -59,8 +52,7 @@ export default class EcocURI implements URI  {
 
     if (address.startsWith('E')) {
       this.network = ECOC_MAINNET
-    }
-    else {
+    } else {
       this.network = ECOC_TESTNET
     }
   }
@@ -73,7 +65,7 @@ export default class EcocURI implements URI  {
     return res.toString()
   }
 
-  static fromString(str:string) {
+  static fromString(str: string) {
     if (typeof str !== 'string') {
       throw new TypeError('Expected a string')
     }
@@ -106,20 +98,20 @@ export default class EcocURI implements URI  {
       amount: searchParams.get('amount'),
       label: searchParams.get('label'),
       message: searchParams.get('message'),
-      request: searchParams.get('request'),
+      request: searchParams.get('request')
     } as URI
 
     return params
   }
 
   toString() {
-    const protocol = 'ecoc:';
-    const query = [];
+    const protocol = 'ecoc:'
+    const query = []
 
     let result = protocol + this.address
 
     if (this.amount && new BigNumber(this.amount).gt(0)) {
-      query.push(`amount=${this.amount}`);
+      query.push(`amount=${this.amount}`)
     }
 
     if (this.message) {

@@ -1,5 +1,5 @@
-import EcocURI from './ecoc/uri'
-import EcocWallet from './ecoc/wallet'
+import EcocURI from './ecoc/ecoc-uri'
+import EcocWallet from './ecoc/ecoc-wallet'
 
 export function parseEcocURI(data: string) {
   if (EcocWallet.isEcocAddress(data)) {

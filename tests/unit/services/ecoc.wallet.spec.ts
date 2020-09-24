@@ -1,10 +1,10 @@
 import { expect } from 'chai'
 import { Ecocjs } from 'ecoweb3'
 
-import EcocWallet from '@/services/ecoc/wallet'
+import EcocWallet from '@/services/ecoc/ecoc-wallet'
 import { ECOC_MAINNET, ECOC_TESTNET } from '@/services/ecoc/constants'
 
-describe('Wallet Mainnet Test', () => {
+describe('ECOC Wallet Mainnet Test', () => {
   const wif = 'L5PdxazKuinGJCJwyqh65aETM5KChdVZizv2C7vLuiFvCYfm5h65'
   const address = 'EcvG7uBm8c2b8h7RJyAexjRgFyRFeNDMLm'
   let wallet: EcocWallet
@@ -61,7 +61,7 @@ describe('Wallet Mainnet Test', () => {
   })
 })
 
-describe('Wallet Testnet Test', () => {
+describe('ECOC Wallet Testnet Test', () => {
   const testnetWif = 'cRLx9jMUC9f8TgcRb9tKD4PfPyeUPGnJCptPx8LDSNgpDKi56raW'
   const testnetAddress = 'e6asdNftcjTfFTDAVU2Auk6km1vNHzvcwR'
   let wallet: EcocWallet
