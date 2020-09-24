@@ -11,6 +11,7 @@
         <router-link :to="{ name: 'home-whitepaper' }">{{
           $t('views.titles.whitepaper')
         }}</router-link>
+
         <v-btn outlined small @click.stop="dialog = true">Dashboard </v-btn>
       </template>
 
@@ -20,47 +21,63 @@
       </v-chip>
     </v-app-bar>
 
-    <v-dialog v-model="dialog" width="450">
+    <v-dialog v-model="dialog" width="400">
+      <v-card>
+        <template>
+          <v-card>
+            <v-card-title class="headline modal-header">
+              <v-icon></v-icon>
+              <v-btn text @click="dialog = false"><v-icon>$close</v-icon></v-btn>
+            </v-card-title>
+
+            <v-card-content>
+              <div class="content-wrapper ">
+                <div class="content-logo ">
+                  <div class="logo"><img src="@/assets/icon/light-logo-defi.svg" alt="" /></div>
+                </div>
+                <h3 class="primary--text">Welcome to</h3>
+                <h3 class="primary--text">ECOC Finance Governance</h3>
+                <p class="lightgray--text">Please create or connect your wallet</p>
+              </div>
+
+              <div class="action-wrapper more-space pb-13">
+                <v-btn
+                  large
+                  class="mb-5"
+                  color="white"
+                  @click="dialog = !dialog"
+                  @click.stop="createwalletdialog = true"
+                >
+                  <div class="d-flex align-center">
+                    <div class="img-btn-logo">
+                      <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
+                    </div>
+                    <h4 class="text-capitalize primary--text">Create new ECOCWallet</h4>
+                  </div>
+                </v-btn>
+                <v-btn large color="white" @click.stop="connectwalletdialog = true">
+                  <div class="img-btn-logo">
+                    <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
+                  </div>
+                  <h4 class="mr-6 text-capitalize primary--text">Connect ECOCWallet</h4>
+                </v-btn>
+              </div>
+            </v-card-content>
+          </v-card>
+        </template>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="createwalletdialog" width="400">
       <v-card>
         <v-card-title class="headline modal-header">
-          <v-icon></v-icon>
-          <v-btn text @click="dialog = false"><v-icon>$close</v-icon></v-btn>
+          <v-btn text @click="dialog = true" @click.stop="createwalletdialog = false"
+            ><v-icon>$leftarrow</v-icon></v-btn
+          >
+          <v-btn text @click="createwalletdialog = false"><v-icon>$close</v-icon></v-btn>
         </v-card-title>
         <v-card-content>
-          <div class="content-wrapper ">
-            <div class="content-logo ">
-              <div class="logo"><img src="@/assets/icon/light-logo-defi.svg" alt="" /></div>
-            </div>
-            <h3 class="primary--text">Welcome to</h3>
-            <h3 class="primary--text">ECOC Finance Governance</h3>
-            <p class="lightgray--text">Please create or connect your wallet</p>
-          </div>
-
-          <div class="action-wrapper more-space">
-            <v-btn large class="mb-5" color="white">
-              <div class="d-flex align-center">
-                <div class="img-btn-logo">
-                  <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
-                </div>
-                <h4 class=" text-capitalize primary--text ">Create new ECOCWallet</h4>
-              </div>
-            </v-btn>
-            <v-btn large color="white">
-              <div class="img-btn-logo">
-                <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
-              </div>
-              <h4 class="mr-6 text-capitalize primary--text">Connect ECOCWallet</h4>
-            </v-btn>
-          </div>
-        </v-card-content>
-
-        <v-card-title class="headline modal-header">
-          <v-icon>$leftarrow</v-icon>
-          <v-btn text @click="dialog = false"><v-icon>$close</v-icon></v-btn>
-        </v-card-title>
-
-        <v-card-content>
-          <div class="pt-10 more-space">
+          <div class="pt-10 more-space bg-white">
             <div class="mb-10 pb-6">
               <h3 class="primary--text ">Create ECOCWallet</h3>
               <p class="lightgray--text">Please set your password to generate a keystore file</p>
@@ -93,50 +110,65 @@
             ></v-text-field>
 
             <div class="action-wrapper  ">
-              <v-btn large class="mb-5" color="primary">
+              <v-btn
+                large
+                class="mb-5"
+                color="primary"
+                :disabled="loading"
+                :loading="loading"
+                @click="loading = true"
+              >
                 Create
               </v-btn>
               <p class="lightgray--text">Needed password to unlock keystore file.</p>
             </div>
           </div>
         </v-card-content>
-
-        <v-card-content>
-          <div class="generate-keydtore">
-            <v-progress-circular
-              :rotate="360"
-              :size="120"
-              :width="9"
-              color="primary"
-              indeterminate
-            ></v-progress-circular>
-            <p>Generating keystore file...</p>
-          </div>
-        </v-card-content>
-        <v-card-title class="headline modal-header">
-        <v-btn><v-icon>$leftarrow</v-icon></v-btn>
-          <v-btn text @click="dialog = false"><v-icon>$close</v-icon></v-btn>
-        </v-card-title>
-        <v-card-content>
-          <div class="content-wrapper-keystore-file ">
-            <h4>Connect ECOC Wallet</h4>
-            <small>Please input your keystore file and password</small>
-        <template>
-  <v-file-input show-size outlined  counter label="" dense></v-file-input>
-</template>
-          </div>
-        </v-card-content>
       </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="connectwalletdialog" width="400"> </v-dialog>
+
+    <v-dialog v-model="loading" width="400" persistent>
+      <v-card-content>
+        <div class="generate-keydtore bg-white">
+          <v-progress-circular
+            :rotate="360"
+            :size="120"
+            :width="9"
+            color="primary"
+            indeterminate
+          ></v-progress-circular>
+          <p>Generating keystore file...</p>
+        </div>
+      </v-card-content>
     </v-dialog>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 
 @Component({})
 export default class HeaderNav extends Vue {
   loggedIn = false
+  createwalletdialog = false
+  connectwalletdialog = false
+  dialog = false
+  show1 = false
+  show = false
+  loading = false
+  passwor = 'Password'
+  rules = {
+    required: (value: any) => !!value || 'Required.',
+    min: (v: string | any[]) => v.length >= 8 || 'Min 8 characters',
+    emailMatch: () => "The email and password you entered don't match"
+  }
+  @Watch('loading')
+  Onloading(val: boolean) {
+   if (!val) return
+        setTimeout(() => (this.loading = false),3000)
+  }
 
   get addr() {
     // mockup address
@@ -151,27 +183,20 @@ export default class HeaderNav extends Vue {
 
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
   }
-  data() {
-    return {
-      // `hello` will be reactive as it is declared via `data` hook.
-      dialog: false,
-      show1: false,
-      show: false,
-      password: 'Password',
-
-      rules: {
-        required: (value: any) => !!value || 'Required.',
-        min: (v: string | any[]) => v.length >= 8 || 'Min 8 characters',
-        emailMatch: () => "The email and password you entered don't match"
-      }
-    }
-  }
 }
 </script>
 
 <style lang="scss" scoped>
+.modal-header,
+.bg-white {
+  background-color: white;
+}
+.content-wrapper-keystore-file {
+  border: 1px SOLID RED;
+  padding: 28spx;
+}
 .generate-keydtore {
-  height: 450px;
+    height: 506px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
@@ -186,8 +211,10 @@ export default class HeaderNav extends Vue {
 }
 .img-btn-logo {
   width: 40px;
-  padding-bottom: 6px;
-  height: 30px;
+  height: 33px;
+  margin-bottom: 6px;
+  padding-bottom: 3px;
+  margin-right: 9px;
 }
 .img-btn-logo img {
   width: 100%;
@@ -274,20 +301,21 @@ export default class HeaderNav extends Vue {
   text-align: center;
 }
 .more-space {
-  padding: 52px 36px;
+  padding: 45px 36px;
 }
+
 .topspace {
   padding: 30px 0px;
 }
 
 .logo {
-  width: 90px;
+  width: 80px;
   border-radius: 50%;
-  height: 90px;
+  height: 80px;
   margin: 0 auto;
-  box-shadow: 0px 1px 9px -4px black;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  box-shadow: -1px 1px 9px -4px #a5a5a5;
+  margin-top: 52px;
+  margin-bottom: 7px;
 }
 .logo img {
   width: 100%;
