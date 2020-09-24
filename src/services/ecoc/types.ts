@@ -7,18 +7,18 @@ export interface EWallet {
 }
 
 export interface AddressInfo {
-  addrStr: string,
-  balance: number,
-  balanceSat: number,
-  totalReceived: number,
-  totalReceivedSat: number,
-  totalSent: number,
-  totalSentSat: number,
-  unconfirmedBalance: number,
-  unconfirmedBalanceSat: number,
-  unconfirmedTxApperances: number,
-  txApperances: number,
-  transactions: string []
+  addrStr: string
+  balance: number
+  balanceSat: number
+  totalReceived: number
+  totalReceivedSat: number
+  totalSent: number
+  totalSentSat: number
+  unconfirmedBalance: number
+  unconfirmedBalanceSat: number
+  unconfirmedTxApperances: number
+  txApperances: number
+  transactions: string[]
 }
 
 export interface Erc20Info {
@@ -45,5 +45,5 @@ export interface Erc20Info {
 
 export interface TxData {
   pagesTotal: number
-  txs: Transaction []
+  txs: Transaction[]
 }
