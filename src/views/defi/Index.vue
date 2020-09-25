@@ -63,4 +63,3 @@ export default class Home extends Vue {}
   text-align: right;
 }
 </style>
-

@@ -7,7 +7,7 @@
     <v-spacer></v-spacer>
 
     <template v-if="!loggedIn">
-      <v-btn outlined small>Unlock Wallet</v-btn>
+      <v-btn outlined small @click="unlockWallet">Unlock Wallet</v-btn>
     </template>
 
     <v-chip class="user-status" v-else>
@@ -19,13 +19,24 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import ModalCreateAccount from '@/components/modals/ModalCreateAccount.vue'
 
-@Component({})
+@Component({
+  components: {
+    ModalCreateAccount
+  }
+})
 export default class HeaderNav extends Vue {
   loggedIn = false
+  unlockWallet = false
+
   get addr() {
     // mockup address
     return '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E'
+  }
+
+  onUnlockWallet() {
+    //
   }
 
   gotoHome() {
