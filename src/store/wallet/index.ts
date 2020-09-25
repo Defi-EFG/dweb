@@ -15,6 +15,15 @@ export default class WalletModule extends VuexModule implements Wallet {
   currencies = [] as Currency[]
 
   @Mutation
+  clear() {
+    this.address = ''
+    this.network = ''
+    this.keystore = {} as KeyStore
+    this.transactions = [] as Transaction[]
+    this.currencies = [] as Currency[]
+  }
+
+  @Mutation
   updateAddress(address: string) {
     this.address = address
   }
@@ -32,6 +41,12 @@ export default class WalletModule extends VuexModule implements Wallet {
   @Action
   async createNewWallet(password: string) {
     return await generateNewKeystore(password)
+  }
+
+  @Action
+  async logout() {
+    this.context.commit('clear')
+    return true
   }
 
   @MutationAction
