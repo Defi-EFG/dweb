@@ -1,16 +1,21 @@
 <template>
   <div class="wallet-page">
-    <token-list></token-list>
+    <h1>Wallet</h1>
+    {{ walletStore.address }}
+    {{ walletStore.network }}
+
+    <h1>New Wallet</h1>
+    {{ newKeystore }}
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import TokenList from '@/components/TokenList.vue'
-
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
 @Component({
   components: {
-    TokenList
+
   }
 })
 export default class Wallet extends Vue {
