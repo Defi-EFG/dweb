@@ -1,10 +1,10 @@
 <template>
   <div class="docs">
-    <v-container>
+    <v-container style="max-width:1088px;">
       <v-row>
         <v-col cols="4" style="padding:0px;">
           <section class="sec_doc1" name="doc">
-            <div class="siber_me">
+            <div class="sibar_dc">
               <a
                 @click="onClickActive(active == 'Introduction')"
                 :class="active == 'Introduction' ? 'active' : undefined"
@@ -12,7 +12,7 @@
                 >Introduction</a
               >
             </div>
-            <div class="siber_me">
+            <div class="sibar_dc">
               <a
                 @click="onClickActive2"
                 :class="active == 'Guides' ? 'active' : undefined"
@@ -20,7 +20,6 @@
                 >Guides</a
               >
             </div>
-            <div>{{ $store.state.coune }}</div>
           </section>
         </v-col>
         <v-col cols="8" style="padding:0px;">
@@ -181,14 +180,18 @@ export default {
 </script>
 
 <style scoped>
+.docs {
+  background: rgb(228, 228, 228);
+  background: linear-gradient(90deg, rgba(228, 228, 228, 1) 45%, rgba(237, 237, 237, 1) 45%);
+}
 .active {
   color: #c074f9 !important;
   transition: 0.5s;
 }
-.siber_me {
+.sibar_dc {
   margin-bottom: 10px;
 }
-.siber_me a {
+.sibar_dc a {
   color: #000000;
   text-align: left;
   font: normal normal bold 18px/24px Segoe UI;
@@ -196,17 +199,15 @@ export default {
   color: #000000;
   opacity: 1;
 }
-.siber_me a:hover {
+.sibar_dc a:hover {
   color: #c074f9;
   transition: 0.5s;
 }
 .sec_doc1 {
   padding: 150px 50px 100px 50px;
   background: #e4e4e4;
-  text-align: right;
   height: 100%;
   position: fixed;
-  width: 35%;
 }
 .sec_doc1 .list_head {
   font: normal normal bold 18px/24px Segoe UI;
@@ -229,7 +230,7 @@ export default {
 }
 .sec_doc2 {
   background: #ededed;
-  padding: 150px 150px 1200px 150px;
+  padding: 150px 30px 150px 30px;
   height: 100%;
 }
 .sec_doc2 .head_Introduction {
@@ -246,6 +247,7 @@ export default {
   opacity: 1;
   text-indent: 5em;
   margin-bottom: 20px;
+  line-height: 1.5;
 }
 .container {
   max-width: 100%;

@@ -8,17 +8,11 @@
       <v-spacer></v-spacer>
 
       <template v-if="!loggedIn">
-        <router-link
-          :to="{ name: 'home-docs' }"
-          :class="
-            ($store.state.coune = 'doc' ? 'router-link-exact-active router-link-active' : 'nocl')
-          "
-          >{{ $t('views.titles.docs') }}</router-link
-        >
-        <router-link :to="{ name: 'home-whitepaper' }">{{
+        <router-link :to="{ name: 'home-docs' }">{{ $t('views.titles.docs') }}</router-link>
+        <a href="http://www.africau.edu/images/default/sample.pdf" target="_blank">{{
           $t('views.titles.whitepaper')
-        }}</router-link>
-        <v-btn outlined small @click.stop="dialog = true">Dashboard</v-btn>
+        }}</a>
+        <v-btn outlined small>Dashboard</v-btn>
       </template>
 
       <v-chip class="user-status" v-else>
@@ -26,96 +20,6 @@
         <div class="address">{{ truncateAddress(addr) }}</div>
       </v-chip>
     </v-app-bar>
-
-
-    <v-dialog v-model="dialog" width="394">
-      <v-card class="rounded-lg">
-        <template>
-          <v-card>
-            <v-card-title class="headline modal-header">
-              <v-icon></v-icon>
-              <v-btn text @click="dialog = false"><v-icon>$close</v-icon></v-btn>
-            </v-card-title>
-
-            <v-card-content>
-              <div class="content-wrapper ">
-                <div class="content-logo ">
-                  <div class="logo"><img src="@/assets/icon/light-logo-defi.svg" alt="" /></div>
-                </div>
-                <h3 class="primary--text">Welcome to</h3>
-                <h3 class="primary--text">ECOC Wallet Governance</h3>
-                <p class="lightgray--text">Please create or connect your wallet</p>
-              </div>
-
-              <div class="action-wrapper more-space ">
-                <v-btn
-                  large
-                  class="mb-5 border"
-                  color="white"
-                  @click="dialog = !dialog"
-                  @click.stop="createwalletdialog = true"
-                  elevation="1"
-                >
-                  <div class="d-flex align-center">
-                    <div class="img-btn-logo">
-                      <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
-                    </div>
-                    <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
-                  </div>
-                </v-btn>
-                <v-btn large color="white" @click.stop="connectwalletdialog = true" elevation="1">
-                  <div class="img-btn-logo">
-                    <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
-                  </div>
-                  <h4 class="mr-6 text-capitalize primary--text">Connect ECOC Wallet</h4>
-                </v-btn>
-              </div>
-            </v-card-content>
-          </v-card>
-        </template>
-      </v-card>
-    </v-dialog>
-
-    <v-dialog v-model="createwalletdialog" width="394">
-   <v-card class="rounded-lg">
-     <v-card-title class="headline modal-header">
-          <v-btn text @click="dialog = true" @click.stop="createwalletdialog = false"
-            ><v-icon>$leftarrow</v-icon></v-btn
-          >
-          <v-btn text @click="createwalletdialog = false"><v-icon>$close</v-icon></v-btn>
-        </v-card-title>
-
-
-        
-     </v-card> 
-    </v-dialog>
-
-  <v-dialog v-model="connectwalletdialog" width="400"> </v-dialog>
-
-    <v-dialog v-model="keystorefilegenerated" width="400">
-      <v-card>
-        <v-card-title class="headline modal-header">
-          <v-icon></v-icon>
-          <v-btn text @click="keystorefilegenerated = false"><v-icon>$close</v-icon></v-btn>
-        </v-card-title>
-      </v-card>
-    </v-dialog>
-
-        <v-dialog v-model="loading" width="400" persistent>
-      <v-card-content>
-        <div class="generate-keydtore bg-white">
-          <v-progress-circular
-            :rotate="360"
-            :size="120"
-            :width="9"
-            color="primary"
-            indeterminate
-          ></v-progress-circular>
-          <p>Generating keystore file...</p>
-        </div>
-      </v-card-content>
-    </v-dialog>
-
   </div>
 
 
@@ -165,6 +69,13 @@ export default class HeaderNav extends Vue {
 }
 </style>
 <style lang="scss" scoped>
+.v-btn.v-size--small {
+  margin-left: 10px;
+}
+.efg-header {
+  max-width: 1088px;
+  margin: 0 auto;
+
 .v-input__slot:before {
   border-color: none !important;
 }

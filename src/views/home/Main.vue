@@ -11,7 +11,7 @@
         <v-row>
           <v-col class="12">
             <img src="@/assets/efg_logo.svg" class="efg-logo" />
-            <div class="text_header">ECOC Finance Governance</div>
+            <div class="text_header">{{ $t('views.main.name') }}</div>
             <div class="text_header_sub">
               ECOC Financial Governance Token (EFG) has a concept of working similar to a bank, that
               is, accepting deposits and lending. The depositor can have the EFG token to use for
