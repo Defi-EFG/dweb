@@ -2,7 +2,7 @@
   <div class="docs">
     <v-container style="max-width:1088px;">
       <v-row>
-        <v-col cols="4" style="padding:0px;">
+        <v-col lg="3" md="3" cols="12" style="padding:0px;">
           <section class="sec_doc1" name="doc">
             <div class="sibar_dc">
               <a
@@ -22,7 +22,7 @@
             </div>
           </section>
         </v-col>
-        <v-col cols="8" style="padding:0px;">
+        <v-col lg="9" md="9" cols="12" style="padding:0px;">
           <section id="Introduction" class="sec_doc2">
             <div class="head_Introduction">Introduction</div>
             <div class="sun_Introduction">
@@ -230,7 +230,7 @@ export default {
 }
 .sec_doc2 {
   background: #ededed;
-  padding: 150px 30px 150px 30px;
+  padding: 150px 30px 150px 82px;
   height: 100%;
 }
 .sec_doc2 .head_Introduction {
@@ -255,5 +255,24 @@ export default {
 }
 .efg-header {
   background-color: #000000 !important;
+}
+@media only screen and (max-width: 960px) {
+  .sec_doc1 {
+    position: fixed;
+    width: 100%;
+    top: 50px;
+    padding: 20px 50px;
+    height: 70px;
+  }
+  .sibar_dc {
+    display: inline;
+    margin: 0 10px;
+  }
+  .sec_doc2 {
+    padding: 100px 50px;
+  }
+  .container {
+    padding: 12px;
+  }
 }
 </style>

@@ -3,7 +3,7 @@
     <v-app-bar class="efg-header" flat dark>
       <img src="@/assets/efg_logo.svg" class="efg-logo" />
       <a href="/" style="color:#ffffff; border-bottom: 0px solid rgb(192, 116, 249);"
-        ><v-toolbar-title>ECOC Finance Governance</v-toolbar-title></a
+        ><v-toolbar-title>{{ $t('views.main.name') }}</v-toolbar-title></a
       >
       <v-spacer></v-spacer>
 

@@ -12,9 +12,9 @@
             "whitepaper": "White Paper"
         },
         "main": {
-            "name": "ECOC Finance Governance",
-            "text_detail": "Total Supply",
-            "text_detail2": "Total Borrowed",
+            "name": "ECOC Financial Growth",
+            "sub_name_1": "ECOC Financial Governance Token (EFG) has a concept of working similar to a bank, that is, accepting deposits and lending. The depositor can have the EFG token to use for investment the method by deposit ECOC coins for guarantee. Then, to pay the interest the loan compensation to the ECOChain. (Similar to the abbreviation of the bank in Smart Contract), but EFG token pays interest is not stable, according to the cryptocurrency market mechanism.",
+            "sub_name_2": "This mechanism can be read in EFG token Smart Contract, so instead of just holding the ECOC coins if we don’t want to trade it. We can hold the EFG token to use for expanding your investment. Therefore, DeFi is the basic sector to empower EFG token’s reliable and stable currency attributes to providing a firmer credit channel for borrowers.",
             "text_detail3": "Supply",
             "text_detail4": "Total Deposited",
             "text_detail5": "Deposit APY",

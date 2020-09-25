@@ -32,7 +32,7 @@
               <v-row>
                 <v-col cols="6">
                   <div class="chart">
-                    <doughnut-chart></doughnut-chart>
+                    <doughnut-chart class="chart_dg_logo"></doughnut-chart>
                   </div>
                 </v-col>
                 <v-col cols="6">
@@ -167,5 +167,13 @@ export default {
   background-color: #000000;
   color: #ffffff;
   padding: 20px;
+}
+.chart_dg_logo {
+  padding: 0;
+  margin: 0;
+  background-image: url('../../assets/efg_01.svg');
+  background-repeat: no-repeat;
+  background-position: 50% 43%;
+  background-size: 50px;
 }
 </style>

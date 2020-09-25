@@ -1,30 +1,16 @@
 <template>
   <div class="markets">
     <section class="sec_1">
-      <img
-        src="@/assets/efg_logo_test.svg"
-        class=""
-        width="500px"
-        style="position: absolute; right: 200px;"
-      />
+      <img src="@/assets/efg_logo_test.svg" class="img_background" />
       <v-container>
         <v-row>
           <v-col class="12">
             <img src="@/assets/efg_logo.svg" class="efg-logo" />
             <div class="text_header">{{ $t('views.main.name') }}</div>
             <div class="text_header_sub">
-              ECOC Financial Governance Token (EFG) has a concept of working similar to a bank, that
-              is, accepting deposits and lending. The depositor can have the EFG token to use for
-              investment the method by deposit ECOC coins for guarantee. Then, to pay the interest
-              the loan compensation to the ECOChain. (Similar to the abbreviation of the bank in
-              Smart Contract), but EFG token pays interest is not stable, according to the
-              cryptocurrency market mechanism.
+              {{ $t('views.main.sub_name_1') }}
               <br /><br />
-              This mechanism can be read in EFG token Smart Contract, so instead of just holding the
-              ECOC coins if we don’t want to trade it. We can hold the EFG token to use for
-              expanding your investment. Therefore, DeFi is the basic sector to empower EFG token’s
-              reliable and stable currency attributes to providing a firmer credit channel for
-              borrowers.
+              {{ $t('views.main.sub_name_2') }}
             </div>
             <div class="social_icon">
               <img class="img_logo1" src="@/assets/Telegram.svg" style="animation-delay: 1s;" />
@@ -275,6 +261,11 @@ export default {
   width: 100%;
   margin-right: 0;
   text-align: right;
+}
+.img_background {
+  width: 500px;
+  position: absolute; 
+  right: 200px;
 }
 .sec_1 .social_icon img {
   padding: 0 5px;
