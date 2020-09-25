@@ -1,7 +1,6 @@
 import Vue from 'vue'
-import Vuetify from 'vuetify/lib'
+import Vuetify from 'vuetify'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
-
 
 const MY_ICONS = {
   close: 'mdi-close',
@@ -33,9 +32,9 @@ export default new Vuetify({
         info: '#81D4FA',
         warning: '#FFB74D',
         error: '#FF8A65',
-        lightgray:'#929292',
-        white:'#FFFFFF',
-        transparent:'transparent'
+        lightgray: '#929292',
+        white: '#FFFFFF',
+        transparent: 'transparent'
       }
     }
   },

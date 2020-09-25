@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center">
     <v-btn color="" dark @click.stop="dialog = true">Dashboard </v-btn>
-   
+
     <v-dialog v-model="dialog" width="450">
       <v-card>
         <v-card-title class="headline modal-header">
@@ -80,6 +80,7 @@ export default {
   }
 }
 </script>
+
 <style lang="scss">
 .modal-header {
   display: flex;

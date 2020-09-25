@@ -7,7 +7,6 @@ import store from './store'
 import { messages, defaultLocale } from '@/i18n'
 import vuetify from './plugins/vuetify'
 
-
 Vue.config.productionTip = false
 Vue.use(VueI18n)
 
