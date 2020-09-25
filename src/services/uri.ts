@@ -8,6 +8,6 @@ export function parseEcocURI(data: string) {
   return new EcocURI(data)
 }
 
-export function generateEcocURI(address:string, amount: string) {
+export function generateEcocURI(address: string, amount: string) {
   return new EcocURI({ address, amount }).toString()
 }
