@@ -12,6 +12,7 @@
             "whitepaper": "White Paper"
         },
         "main": {
+            "name": "ECOC Finance Governance",
             "text_detail": "Total Supply",
             "text_detail2": "Total Borrowed",
             "text_detail3": "Supply",
