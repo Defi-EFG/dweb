@@ -51,7 +51,7 @@ describe('ECOC Wallet Mainnet Test', () => {
   })
 
   it('can get all token informations', async () => {
-    const tokenInfo = await wallet.getErc20()
+    const tokenInfo = await wallet.getEcrc20()
     expect(tokenInfo).to.be.an('array')
   })
 
@@ -109,7 +109,7 @@ describe('ECOC Wallet Testnet Test', () => {
   })
 
   it('can get all token informations', async () => {
-    const tokenInfo = await wallet.getErc20()
+    const tokenInfo = await wallet.getEcrc20()
     expect(tokenInfo).to.be.an('array')
   })
 

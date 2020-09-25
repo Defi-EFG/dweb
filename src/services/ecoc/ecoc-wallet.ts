@@ -57,19 +57,19 @@ export default class EcocWallet implements EWallet {
   }
 
   async getAddressInfo() {
-    return (await ecocw3.api.getAddressInfo(this.address)) as AddressInfo
+    return await EcocWallet.getAddressInfo(this.address)
   }
 
   async getTxList() {
-    return (await ecocw3.api.getTxList(this.address)) as TxData
+    return await EcocWallet.getTxList(this.address)
   }
 
-  async getErc20() {
-    return (await ecocw3.api.getEcrc20(this.address)) as Erc20Info[]
+  async getEcrc20() {
+    return await EcocWallet.getEcrc20(this.address)
   }
 
   async getUtxoList() {
-    return (await ecocw3.api.getUtxoList(this.address)) as Utxo[]
+    return await EcocWallet.getUtxoList(this.address)
   }
 
   async generateCreateContractTx(code: string, gasLimit: number, gasPrice: number, fee: number) {
@@ -112,6 +112,22 @@ export default class EcocWallet implements EWallet {
 
   async callContract(address: string, encodedData: string) {
     return await EcocWallet.callContract(address, encodedData)
+  }
+
+  static async getAddressInfo(address: string) {
+    return (await ecocw3.api.getAddressInfo(address)) as AddressInfo
+  }
+
+  static async getTxList(address: string) {
+    return (await ecocw3.api.getTxList(address)) as TxData
+  }
+
+  static async getEcrc20(address: string) {
+    return (await ecocw3.api.getEcrc20(address)) as Erc20Info[]
+  }
+
+  static async getUtxoList(address: string) {
+    return (await ecocw3.api.getUtxoList(address)) as Utxo[]
   }
 
   static async generateCreateContractTx(

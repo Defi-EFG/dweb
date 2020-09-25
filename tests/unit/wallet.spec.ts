@@ -1,10 +1,10 @@
 import { expect } from 'chai'
-import { generateNewKeysore } from '@/models/wallet'
+import { generateNewKeystore } from '@/models/wallet'
 
 describe('Wallet test', () => {
   it('can generate new wallet to keysore', () => {
     const password = '123456'
-    const keystore = generateNewKeysore(password)
+    const keystore = generateNewKeystore(password)
 
     expect(keystore)
       .to.be.an('string')

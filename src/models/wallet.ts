@@ -1,9 +1,5 @@
-import { Wallet } from '@/types/wallet'
-import { KeyStore } from '@/types/keystore'
-import { Transaction } from '@/types/transaction'
-
 import EcocWallet from '@/services/ecoc/ecoc-wallet'
-import { createKeystore, getKeystoreContent } from '@/services/keystore'
+import { createKeystore } from '@/services/keystore'
 import { WalletError } from '@/exceptions/wallet'
 
 const walletColor = {
@@ -14,7 +10,7 @@ const walletColor = {
   DELAY: 'SteelBlue'
 }
 
-const generateNewKeysore = (password: string) => {
+const generateNewKeystore = (password: string) => {
   // create new wallet default is mainnet
   const wallet = EcocWallet.createNewWallet()
 
@@ -26,4 +22,4 @@ const generateNewKeysore = (password: string) => {
   return keystore
 }
 
-export { generateNewKeysore, walletColor }
+export { generateNewKeystore, walletColor }
