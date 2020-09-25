@@ -17,9 +17,7 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 
 @Component({
-  components: {
-
-  }
+  components: {}
 })
 export default class Wallet extends Vue {
   walletStore = getModule(WalletModule)
