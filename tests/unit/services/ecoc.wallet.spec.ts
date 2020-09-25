@@ -9,8 +9,8 @@ describe('ECOC Wallet Mainnet Test', () => {
   const address = 'EcvG7uBm8c2b8h7RJyAexjRgFyRFeNDMLm'
   let wallet: EcocWallet
 
-  it('can create new wallet', () => {
-    const newWallet = EcocWallet.createNewWallet(ECOC_MAINNET)
+  it('can create new wallet', async () => {
+    const newWallet = await EcocWallet.createNewWallet(ECOC_MAINNET)
 
     expect(newWallet)
       .to.be.an('object')
@@ -66,8 +66,8 @@ describe('ECOC Wallet Testnet Test', () => {
   const testnetAddress = 'e6asdNftcjTfFTDAVU2Auk6km1vNHzvcwR'
   let wallet: EcocWallet
 
-  it('can create new wallet', () => {
-    const newWallet = EcocWallet.createNewWallet(ECOC_TESTNET)
+  it('can create new wallet', async () => {
+    const newWallet = await EcocWallet.createNewWallet(ECOC_TESTNET)
 
     expect(newWallet)
       .to.be.an('object')
