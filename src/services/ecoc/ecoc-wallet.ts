@@ -21,12 +21,14 @@ const isEcocAddress = (address: string, networkStr: string) => {
 export default class EcocWallet implements EWallet {
   keypair: any
   network: any
+  networkName: string
   address: string
 
   constructor(keypair: any, networkStr = ECOC_MAINNET) {
     this.keypair = keypair
     this.network = Ecocjs.getNetwork(networkStr)
     this.address = this.getAddress()
+    this.networkName = networkStr
 
     //change ecocw3 instance network to wallet network
     changeToNetwork(networkStr)
@@ -191,19 +193,19 @@ export default class EcocWallet implements EWallet {
     return bip39.validateMnemonic(mnemonic)
   }
 
-  static createNewWallet(networkStr: string = ECOC_MAINNET) {
+  static async createNewWallet(networkStr: string = ECOC_MAINNET) {
     const mnemonic = EcocWallet.generateMnemonic()
     const randomStr = Date.now().toString()
 
-    return EcocWallet.restoreFromMnemonic(mnemonic, randomStr, networkStr)
+    return await EcocWallet.restoreFromMnemonic(mnemonic, randomStr, networkStr)
   }
 
-  static restoreFromMnemonic(mnemonic: string, password: string, networkStr: string) {
+  static async restoreFromMnemonic(mnemonic: string, password: string, networkStr: string) {
     if (bip39.validateMnemonic(mnemonic) == false) {
       return false
     }
     const network = Ecocjs.getNetwork(networkStr)
-    const seedHex = bip39.mnemonicToSeedSync(mnemonic, password)
+    const seedHex = await bip39.mnemonicToSeed(mnemonic, password)
     const hdNode = bip32.fromSeed(seedHex, network)
     const account = hdNode
       .deriveHardened(88)

@@ -7,14 +7,14 @@ interface Config {
 
 const mainnetConfig = {
   networkStr: ECOC_MAINNET,
-  apiProvider: "https://explorer.ecoc.io/api",
-  socketURL: "https://explorer.ecoc.io/"
+  apiProvider: 'https://explorer.ecoc.io/api',
+  socketURL: 'https://explorer.ecoc.io/'
 } as Config
 
 const testnetConfig = {
   networkStr: ECOC_TESTNET,
-  apiProvider: "https://testnet.explorer.ecoc.io/api",
-  socketURL: "https://testnet.explorer.ecoc.io/"
+  apiProvider: 'https://testnet.explorer.ecoc.io/api',
+  socketURL: 'https://testnet.explorer.ecoc.io/'
 } as Config
 
 const defaultNetwork = ECOC_TESTNET

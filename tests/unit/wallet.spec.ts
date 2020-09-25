@@ -1,5 +1,5 @@
 import { expect } from 'chai'
-import { generateNewKeystore } from '@/models/wallet'
+import { generateNewKeystore } from '@/services/wallet'
 
 describe('Wallet test', () => {
   it('can generate new wallet to keysore', () => {

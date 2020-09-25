@@ -1,6 +1,5 @@
 import abi from 'ethjs-abi'
 import { Ecocjs } from 'ecoweb3'
-
 import { Ecrc20 } from '@/types/currency'
 import { ecocw3 } from './ecocw3'
 

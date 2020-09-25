@@ -51,4 +51,4 @@ const getKeystoreContent = (keystore: KeyStore | string, password: string) => {
   }
 }
 
-export { createKeystore, getKeystoreContent }
+export { createKeystore, getKeystoreContent, getKeystoreFromString }

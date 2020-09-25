@@ -3,6 +3,7 @@ export interface Currency {
   type: string
   icon: string
   balance: string
+  price: string
   tokenInfo?: Ecrc20
 }
 

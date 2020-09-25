@@ -4,7 +4,7 @@ import { Currency } from './currency'
 
 export interface Wallet {
   address: string
-  network: any
+  network: string
   keystore: KeyStore
   transactions: Transaction[]
   currencies: Currency[]
