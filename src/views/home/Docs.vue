@@ -10,6 +10,7 @@
               <div class="siber_me">
                  <a @click="onClickActive2" :class="active == 'Guides' ? 'active' : undefined" href="#guides">Guides</a>
               </div> 
+              <div>{{$store.state.coune}}</div>
           </section>
         </v-col>
         <v-col cols="8" style="padding:0px;">
@@ -48,14 +49,15 @@
 
     methods: {
       onClickActive () {
-        this.active = 'Introduction',
-         this.name = 'home-docs'
+        this.active = 'Introduction'
+        this.name = 'home-docs'
+        this.$store.dispatch("addAction")
       },
       onClickActive2 () {
-        this.active = 'Guides',
-         this.name = 'home-docs'
+        this.active = 'Guides'
+        this.name = 'home-docs'
        
-      },
+      }, 
     },
   }
 </script>
@@ -64,6 +66,9 @@
   .active {
     color: #c074f9 !important;
     transition: 0.5s;
+  }
+  .siber_me {
+    margin-bottom: 10px;
   }
   .siber_me a {
     color : #000000;
@@ -78,13 +83,12 @@
     transition: 0.5s;
   }
   .sec_doc1 {
-    padding: 100px 50px 100px 50px;
+    padding: 150px 50px 100px 50px;
     background: #e4e4e4;
     text-align: right;
     height: 100%;
     position: fixed;
     width: 35%;
-    top:64px
   }
   .sec_doc1 .list_head{
     font: normal normal bold 18px/24px Segoe UI;
@@ -107,7 +111,7 @@
   }
   .sec_doc2 {
     background: #ededed;
-    padding: 160px 150px 1200px 150px;
+    padding: 150px 150px 1200px 150px;
     height: 100%;
   }
   .sec_doc2 .head_Introduction {

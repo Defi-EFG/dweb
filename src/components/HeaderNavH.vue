@@ -2,11 +2,11 @@
   <div class="color_bg">
     <v-app-bar class="efg-header" flat dark>
       <img src="@/assets/efg_logo.svg" class="efg-logo" />
-      <router-link to="/" style="color:#ffffff; border-bottom: 0px solid rgb(192, 116, 249);"><v-toolbar-title>ECOC Finance Governance</v-toolbar-title></router-link>
+      <a href="/" style="color:#ffffff; border-bottom: 0px solid rgb(192, 116, 249);"><v-toolbar-title>ECOC Finance Governance</v-toolbar-title></a>
       <v-spacer></v-spacer>
 
       <template v-if="!loggedIn">
-        <router-link :to="{ name: 'home-docs'}" >{{ $t('views.titles.docs') }}</router-link>
+        <router-link :to="{ name: 'home-docs'}" :class="$store.state.coune = 'doc' ? 'router-link-exact-active router-link-active' : 'nocl'">{{ $t('views.titles.docs') }}</router-link>
         <router-link :to="{ name: 'home-whitepaper' }">{{ $t('views.titles.whitepaper') }}</router-link>
         <v-btn outlined small>Dashboard</v-btn>
       </template>
@@ -24,7 +24,7 @@ import { Component, Vue } from 'vue-property-decorator'
 
 @Component({})
 export default class HeaderNav extends Vue {
-   
+ 
   loggedIn = false
 
   get addr() {
@@ -40,7 +40,6 @@ export default class HeaderNav extends Vue {
 
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
   }
-  
 }
 </script>
 

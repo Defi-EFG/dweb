@@ -3,9 +3,9 @@
         "titles": {
             "home": "Home",
             "main": "Main",
-            "markets": "Markets",
-            "docs": "Docs",
-            "about": "About",
+            "delay": "Delay",
+            "docs": "Documents",
+            "efg": "Efg",
             "wallet": "Wallet",
             "staking": "Staking",
             "lending": "Lending",
