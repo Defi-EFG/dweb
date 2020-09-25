@@ -1,13 +1,13 @@
 <template>
   <v-app-bar class="efg-header" flat dark>
-    <img src="@/assets/efg_logo.svg" class="efg-logo" />
-    <v-toolbar-title>ECOC Finance Governance</v-toolbar-title>
+    <div class="home" @click="gotoHome">
+      <img src="@/assets/efg_logo.svg" class="efg-logo" />
+      <v-toolbar-title>ECOC Finance Governance</v-toolbar-title>
+    </div>
     <v-spacer></v-spacer>
 
     <template v-if="!loggedIn">
-      <v-btn text small>Documents</v-btn>
-      <v-btn text small>White Paper</v-btn>
-      <v-btn outlined small>Dashboard</v-btn>
+      <v-btn outlined small @click="unlockWallet">Unlock Wallet</v-btn>
     </template>
 
     <v-chip class="user-status" v-else>
@@ -19,14 +19,30 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import ModalCreateAccount from '@/components/modals/ModalCreateAccount.vue'
 
-@Component({})
+@Component({
+  components: {
+    ModalCreateAccount
+  }
+})
 export default class HeaderNav extends Vue {
   loggedIn = false
+  unlockWallet = false
+
   get addr() {
     // mockup address
     return '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E'
   }
+
+  onUnlockWallet() {
+    //
+  }
+
+  gotoHome() {
+    this.$router.push('/')
+  }
+
   truncateAddress(addr: string) {
     const separator = '...'
     const charsToShow = 8
@@ -38,6 +54,11 @@ export default class HeaderNav extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.home {
+  display: flex;
+  cursor: pointer;
+}
+
 .efg-header {
   background-color: transparent !important;
 }

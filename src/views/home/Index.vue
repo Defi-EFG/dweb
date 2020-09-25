@@ -1,6 +1,6 @@
 <template>
   <div class="home">
-    <HeaderNav />
+    <HeaderNavHome />
     <router-view />
     <Footer />
   </div>
@@ -8,14 +8,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import HomeNav from '@/components/HomeNav.vue'
-import HeaderNav from '@/components/HeaderNavH.vue'
+import HeaderNavHome from '@/components/HeaderNavHome.vue'
 import Footer from '@/components/Footer.vue'
 
 @Component({
   components: {
-    HomeNav,
-    HeaderNav,
+    HeaderNavHome,
     Footer
   }
 })

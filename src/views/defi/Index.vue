@@ -7,9 +7,13 @@
     </v-container>
     <div class="content">
       <DefiNav />
-      <transition name="page" mode="out-in">
-        <router-view></router-view>
-      </transition>
+      <div class="main-container">
+        <div class="inner-container container">
+          <transition name="page" mode="out-in">
+            <router-view></router-view>
+          </transition>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -40,8 +44,18 @@ export default class Home extends Vue {}
   display: flex;
   position: relative;
   flex: 1;
+  justify-content: center;
   .row {
     width: 100%;
+  }
+}
+
+.main-container {
+  display: flex;
+  width: -webkit-fill-available;
+  .inner-container {
+    position: relative;
+    height: 100%;
   }
 }
 
