@@ -16,6 +16,7 @@
     "bignumber.js": "^9.0.0",
     "bip32": "^2.0.5",
     "bip39": "^3.0.2",
+    "@chenfengyuan/vue-qrcode": "^1.0.2",
     "chart.js": "^2.9.3",
     "core-js": "^3.6.5",
     "crypto-js": "^4.0.0",

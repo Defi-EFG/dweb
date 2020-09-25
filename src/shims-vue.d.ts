@@ -6,3 +6,4 @@ declare module '*.vue' {
 declare module 'vuetify/lib'
 declare module 'ecoweb3'
 declare module 'ethjs-abi'
+declare module '@chenfengyuan/vue-qrcode'
