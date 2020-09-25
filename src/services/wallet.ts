@@ -41,7 +41,7 @@ const importFromKeystore = (keystore: string, password: string) => {
   const wif = getKeystoreContent(keystore, password)
 
   if (!wif) {
-    throw new WalletError('Invalid keystore')
+    throw new WalletError('Invalid keystore or password')
   }
 
   return importFromWif(wif)

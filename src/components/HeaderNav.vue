@@ -7,7 +7,7 @@
     <v-spacer></v-spacer>
 
     <template v-if="!loggedIn">
-      <v-btn outlined small @click="unlockWallet">Unlock Wallet</v-btn>
+      <v-btn outlined small @click="onUnlockWallet">Unlock Wallet</v-btn>
     </template>
 
     <v-chip class="user-status" v-else>
@@ -20,6 +20,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import ModalCreateAccount from '@/components/modals/ModalCreateAccount.vue'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
 
 @Component({
   components: {
@@ -29,14 +31,19 @@ import ModalCreateAccount from '@/components/modals/ModalCreateAccount.vue'
 export default class HeaderNav extends Vue {
   loggedIn = false
   unlockWallet = false
+  walletStore = getModule(WalletModule)
 
   get addr() {
-    // mockup address
-    return '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E'
+    return this.walletStore.address
   }
 
   onUnlockWallet() {
-    //
+    const keystore =
+      '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
+    const password = '123456'
+
+    this.walletStore.importWallet({ keystore, password })
+    this.loggedIn = true
   }
 
   gotoHome() {
