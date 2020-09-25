@@ -92,7 +92,6 @@ export default class SupplyMarket extends Vue {
     text-align: center;
   }
 
-
   .borrow {
     text-decoration: underline;
     cursor: pointer;

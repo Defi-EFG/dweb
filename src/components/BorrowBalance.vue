@@ -13,9 +13,11 @@
           :rounded="true"
           :value="calculateBorrow(borrowBalance, maxBorrow)"
         ></v-progress-linear>
-        <div
-          class="borrow-cap"
-        >{{ calculateBorrow(borrowBalance, maxBorrow).toFixed(1) }}% ({{ `${borrowBalance.toFixed(2)}/${maxBorrow.toFixed(2)}` }})</div>
+        <div class="borrow-cap">
+          {{ calculateBorrow(borrowBalance, maxBorrow).toFixed(1) }}% ({{
+            `${borrowBalance.toFixed(2)}/${maxBorrow.toFixed(2)}`
+          }})
+        </div>
       </div>
     </v-card-text>
   </v-card>

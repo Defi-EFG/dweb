@@ -9,9 +9,9 @@
 
     <v-list color="#222738" class="tx-list">
       <v-list-item v-for="(tx, index) in items" :key="index" class="tx-item">
-        <v-icon
-          class="mr-3"
-        >{{ tx.type === 'received' ? 'mdi-arrow-down-circle-outline' : 'mdi-arrow-up-circle-outline' }}</v-icon>
+        <v-icon class="mr-3">{{
+          tx.type === 'received' ? 'mdi-arrow-down-circle-outline' : 'mdi-arrow-up-circle-outline'
+        }}</v-icon>
 
         <v-list-item-content>
           <v-list-item-title class="tx-type">
@@ -20,7 +20,10 @@
             {{ tx.value }} {{ tx.token }}
           </v-list-item-title>
           <div class="tx-addr">
-            <small>{{ tx.type === 'received' ? 'From' : 'To' }}: {{ tx.address === defiAddr ? 'Lending (DeFi)' : truncateAddress(tx.address) }}</small>
+            <small
+              >{{ tx.type === 'received' ? 'From' : 'To' }}:
+              {{ tx.address === defiAddr ? 'Lending (DeFi)' : truncateAddress(tx.address) }}</small
+            >
             <v-spacer></v-spacer>
             <small>{{ tx.time }}</small>
           </div>

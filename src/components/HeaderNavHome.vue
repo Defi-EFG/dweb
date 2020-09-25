@@ -1,24 +1,17 @@
 <template>
   <div class="color_bg">
     <v-app-bar class="efg-header" flat dark>
-      <img src="@/assets/efg_logo.svg" class="efg-logo" />
-      <a href="/" style="color:#ffffff; border-bottom: 0px solid rgb(192, 116, 249);"
-        ><v-toolbar-title>ECOC Finance Governance</v-toolbar-title></a
-      >
+      <div class="home" @click="gotoHome">
+        <img src="@/assets/efg_logo.svg" class="efg-logo" />
+        <v-toolbar-title>ECOC Finance Governance</v-toolbar-title>
+      </div>
       <v-spacer></v-spacer>
 
-      <template v-if="!loggedIn">
-        <router-link :to="{ name: 'home-docs' }">{{ $t('views.titles.docs') }}</router-link>
-        <a href="http://www.africau.edu/images/default/sample.pdf" target="_blank">{{
-          $t('views.titles.whitepaper')
-        }}</a>
-        <v-btn outlined small>Dashboard</v-btn>
-      </template>
-
-      <v-chip class="user-status" v-else>
-        <span class="dot-circle"></span>
-        <div class="address">{{ truncateAddress(addr) }}</div>
-      </v-chip>
+      <router-link :to="{ name: 'home-docs' }">{{ $t('views.titles.docs') }}</router-link>
+      <a href="http://www.africau.edu/images/default/sample.pdf" target="_blank">{{
+        $t('views.titles.whitepaper')
+      }}</a>
+      <v-btn outlined small @click="gotoDashboard">Dashboard</v-btn>
     </v-app-bar>
   </div>
 </template>
@@ -27,21 +20,13 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component({})
-export default class HeaderNav extends Vue {
-  loggedIn = false
-
-  get addr() {
-    // mockup address
-    return '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E'
+export default class HeaderNavHome extends Vue {
+  gotoHome() {
+    this.$router.push('/')
   }
 
-  truncateAddress(addr: string) {
-    const separator = '...'
-    const charsToShow = 8
-    const frontChars = Math.ceil(charsToShow / 2)
-    const backChars = Math.floor(charsToShow / 2)
-
-    return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
+  gotoDashboard() {
+    this.$router.push('defi')
   }
 }
 </script>
@@ -50,6 +35,12 @@ export default class HeaderNav extends Vue {
 .v-btn.v-size--small {
   margin-left: 10px;
 }
+
+.home {
+  display: flex;
+  cursor: pointer;
+}
+
 .efg-header {
   max-width: 1088px;
   margin: 0 auto;
@@ -86,7 +77,7 @@ export default class HeaderNav extends Vue {
 .efg-logo {
   width: 28px;
   height: auto;
-  margin-right: 0px;
+  margin-right: 10px;
 }
 
 .user-status {

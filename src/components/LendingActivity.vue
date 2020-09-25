@@ -67,9 +67,9 @@
                 <div class="activity-date">
                   <small>{{ act.time }}</small>
                   <v-spacer></v-spacer>
-                  <small
-                    v-if="act.type != 'activated'"
-                  >≈{{ act.estimated.toFixed(2) }} {{ act.token }}</small>
+                  <small v-if="act.type != 'activated'"
+                    >≈{{ act.estimated.toFixed(2) }} {{ act.token }}</small
+                  >
                 </div>
               </v-list-item-content>
             </v-list-item>
