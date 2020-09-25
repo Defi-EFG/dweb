@@ -8,16 +8,10 @@
       <v-spacer></v-spacer>
 
       <template v-if="!loggedIn">
-        <router-link
-          :to="{ name: 'home-docs' }"
-          :class="
-            ($store.state.coune = 'doc' ? 'router-link-exact-active router-link-active' : 'nocl')
-          "
-          >{{ $t('views.titles.docs') }}</router-link
-        >
-        <router-link :to="{ name: 'home-whitepaper' }">{{
+        <router-link :to="{ name: 'home-docs' }">{{ $t('views.titles.docs') }}</router-link>
+        <a href="http://www.africau.edu/images/default/sample.pdf" target="_blank">{{
           $t('views.titles.whitepaper')
-        }}</router-link>
+        }}</a>
         <v-btn outlined small>Dashboard</v-btn>
       </template>
 
