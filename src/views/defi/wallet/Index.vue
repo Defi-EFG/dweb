@@ -1,5 +1,6 @@
 <template>
   <div class="wallet-page">
+    <token-list></token-list>
     <h1>Wallet</h1>
     {{ walletStore.address }}
     {{ walletStore.network }}
@@ -11,8 +12,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import TokenList from '@/components/TokenList.vue'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
+
 @Component({
   components: {
 

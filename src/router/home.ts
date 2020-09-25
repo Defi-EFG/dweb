@@ -1,8 +1,8 @@
 import { RouteConfig } from 'vue-router'
 import HomeIndex from '@/views/home/Index.vue'
 import MainPage from '@/views/home/Main.vue'
-import AboutPage from '@/views/home/About.vue'
-import MarketPage from '@/views/home/Markets.vue'
+import Delay from '@/views/home/Delay.vue'
+import Efg from '@/views/home/Efg.vue'
 import DocsPage from '@/views/home/Docs.vue'
 import WhitePaper from '@/views/home/Whitepaper.vue'
 
@@ -19,14 +19,14 @@ const homeRoutes: Array<RouteConfig> = [
         component: MainPage
       },
       {
-        path: 'about',
-        name: 'home-about',
-        component: AboutPage
+        path: 'Delay',
+        name: 'home-Delay',
+        component: Delay
       },
       {
-        path: 'markets',
-        name: 'home-markets',
-        component: MarketPage
+        path: 'Efg',
+        name: 'home-Efg',
+        component: Efg
       },
       {
         path: 'docs',

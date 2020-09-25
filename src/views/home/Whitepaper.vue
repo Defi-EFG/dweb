@@ -1,14 +1,11 @@
 <template>
-  <div name="cccc" style="margin-top:200px">
-   
-   </div>
-
-  
+  <div>
+    <div style="margin-top200px">
+      <h1>Purple Haze</h1>
+    </div>
+  </div>
 </template>
 <script>
-  export default {
-  }
+export default {}
 </script>
-<style scoped>
-
-</style>
+<style lang="stylus" scoped></style>
