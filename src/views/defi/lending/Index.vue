@@ -22,20 +22,30 @@
 
           <v-row class="pl-2 pr-2">
             <v-col cols="6" class="pr-1">
-              <Collateral></Collateral>
+              <template v-if="mode === 'collateral'">
+                <Collateral></Collateral>
+              </template>
+              <template v-else>
+                <Borrow></Borrow>
+              </template>
             </v-col>
             <v-col cols="6" class="pl-1">
-              <Withdraw></Withdraw>
+              <template v-if="mode === 'collateral'">
+                <Withdraw></Withdraw>
+              </template>
+              <template v-else>
+                <Repay></Repay>
+              </template>
             </v-col>
           </v-row>
         </v-card>
       </v-col>
       <v-col cols="4">
         <div>
-          <CollateralToken></CollateralToken>
+          <CollateralToken @switchToCollateral="modeSwitch"></CollateralToken>
         </div>
         <div class="mt-3">
-          <SupplyMarket></SupplyMarket>
+          <SupplyMarket @switchToBorrow="modeSwitch"></SupplyMarket>
         </div>
       </v-col>
     </v-row>
@@ -51,6 +61,8 @@ import Collateral from '@/components/CollateralCard.vue'
 import Withdraw from '@/components/WithdrawCard.vue'
 import CollateralToken from '@/components/CollateralToken.vue'
 import SupplyMarket from '@/components/SupplyMarket.vue'
+import Borrow from '@/components/BorrowCard.vue'
+import Repay from '@/components/RepayCard.vue'
 
 @Component({
   components: {
@@ -60,10 +72,19 @@ import SupplyMarket from '@/components/SupplyMarket.vue'
     Collateral,
     Withdraw,
     CollateralToken,
-    SupplyMarket
+    SupplyMarket,
+    Borrow,
+    Repay
   }
 })
-export default class Lending extends Vue {}
+export default class Lending extends Vue {
+  mode = 'collateral'
+
+  modeSwitch(val: string) {
+    console.log('receive emit')
+    this.mode = val
+  }
+}
 </script>
 
 <style lang="scss" scoped>

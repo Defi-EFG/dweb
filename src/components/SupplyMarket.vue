@@ -8,23 +8,28 @@
 
     <v-card-text class="market-content">
       <v-row class="market-label">
-        <v-col class="text-center">Assets</v-col>
-        <v-col cols="2" class="text-center">APY</v-col>
-        <v-col cols="4" class="text-right">Wallet</v-col>
-        <v-col class="text-center">Borrow</v-col>
+        <v-col cols="3" class="text-center">Assets</v-col>
+        <v-col cols="3" class="text-center">APY</v-col>
+        <v-col cols="3" class="text-right">Wallet</v-col>
+        <v-col cols="3" class="text-center">Borrow</v-col>
       </v-row>
-      <v-row class="market-item" v-for="(item, index) in supplyList" :key="index">
-        <v-col class="assets">
+      <v-row
+        class="market-item hvr-sweep-to-right"
+        v-for="(item, index) in supplyList"
+        :key="index"
+        @click="switchBorrow"
+      >
+        <v-col cols="3" class="assets">
           <img src="@/assets/efg_logo.svg" />
           <span>{{ item.token }}</span>
         </v-col>
-        <v-col cols="2" class="apy">
+        <v-col cols="3" class="apy">
           <span>{{ item.apy }}%</span>
         </v-col>
-        <v-col cols="4" class="balance">
+        <v-col cols="3" class="balance">
           <span>{{ item.value.toFixed(2) }} {{ item.token }}</span>
         </v-col>
-        <v-col class="borrow">
+        <v-col cols="3" class="borrow">
           <span>Borrow</span>
         </v-col>
       </v-row>
@@ -49,6 +54,11 @@ export default class SupplyMarket extends Vue {
       value: 1000
     }
   ]
+
+  switchBorrow(event: any) {
+    console.log('send emit')
+    this.$emit('switchToBorrow', 'borrow')
+  }
 }
 </script>
 
@@ -92,7 +102,6 @@ export default class SupplyMarket extends Vue {
     text-align: center;
   }
 
-
   .borrow {
     text-decoration: underline;
     cursor: pointer;
@@ -107,6 +116,8 @@ export default class SupplyMarket extends Vue {
 
 <style lang="scss">
 .market-content {
+  height: 220px;
+  overflow: auto;
   .row {
     margin-left: 0;
     margin-right: 0;
