@@ -2,7 +2,7 @@
   <div class="home">
     <HeaderNav />
     <router-view />
-    <Footer/>
+    <Footer />
   </div>
 </template>
 
