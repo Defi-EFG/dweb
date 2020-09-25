@@ -18,13 +18,31 @@
         single-line
         solo
         hide-details="true"
+        v-model="selectedAddr"
       >
         <template v-slot:append-outer>
-          <div class="address-book">
+          <div class="address-book" @click="displayContact = !displayContact">
             <v-icon>mdi-book-variant</v-icon>
           </div>
         </template>
       </v-text-field>
+      <div class="contact-address" v-if="displayContact" v-click-outside="onClickOutside">
+        <v-list-item-group color="#363a4a" class="address-list">
+          <v-list-item
+            v-for="(contact, index) in addrList"
+            :key="index"
+            class="address-item"
+            @click="selectAddress(contact.address)"
+          >
+            <v-icon class="mr-3">mdi-account-circle</v-icon>
+
+            <v-list-item-content>
+              {{ contact.name }}
+              <small class="addr-value text-truncate">{{ contact.address }}</small>
+            </v-list-item-content>
+          </v-list-item>
+        </v-list-item-group>
+      </div>
       <div class="withdraw-rate">
         <span>Minimum Withdrawal: {{ withdrawRate }} EFG</span>
         <v-spacer></v-spacer>
@@ -40,18 +58,6 @@
         hide-details="true"
       ></v-text-field>
 
-      <div class="withdraw-fee">
-        <span>Withdrawal fee:</span>
-        <v-spacer></v-spacer>
-        <span class="fee-value">0.00 EFG</span>
-      </div>
-
-      <div class="total-withdraw">
-        <span>Total Withdraw:</span>
-        <v-spacer></v-spacer>
-        <span class="fee-value">0.00 EFG</span>
-      </div>
-
       <v-btn depressed block large class="send-btn">Send</v-btn>
     </v-card-text>
   </v-card>
@@ -59,10 +65,55 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import vClickOutside from 'v-click-outside'
 
-@Component({})
+@Component({
+  directives: {
+    clickOutside: vClickOutside.directive
+  }
+})
 export default class SendToken extends Vue {
   withdrawRate = 0.001
+
+  hehe = '1'
+
+  displayContact = false
+
+  selectedAddr = ''
+
+  addrList = [
+    {
+      name: 'MXC',
+      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+    },
+    {
+      name: 'CXM',
+      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+    },
+    {
+      name: 'MCX',
+      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+    },
+    {
+      name: 'XCM',
+      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+    },
+    {
+      name: 'XMC',
+      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+    }
+  ]
+
+  selectAddress(addr: string) {
+    this.selectedAddr = addr
+    this.displayContact = false
+  }
+
+  onClickOutside() {
+    console.log('clicked outside')
+
+    this.displayContact = false
+  }
 }
 </script>
 
@@ -140,11 +191,40 @@ export default class SendToken extends Vue {
 }
 
 .send-btn {
-  margin-bottom: 0.5rem;
-  margin-top: 1rem;
+  margin-bottom: 3rem;
+  margin-top: 4.2rem;
   background-color: #363a4a !important;
   color: #c074f9;
   font-weight: bold;
+}
+
+.contact-address {
+  z-index: 1;
+  position: absolute;
+  background: #363a4a;
+  width: -webkit-fill-available;
+  margin-right: 2rem;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  max-height: 232px;
+  overflow: auto;
+}
+
+.address-list {
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+}
+
+.address-item {
+  text-align: left;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.057);
+
+  .addr-value {
+    opacity: 0.5;
+  }
+}
+.address-item:nth-last-child(1) {
+  border-bottom: 0;
 }
 </style>
 
@@ -166,6 +246,15 @@ export default class SendToken extends Vue {
 
   input {
     text-align: right;
+  }
+}
+</style>
+
+<style lang="scss">
+.address-list {
+  .v-list-item--active {
+    background: #3d4254;
+    color: white;
   }
 }
 </style>

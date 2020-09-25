@@ -7,15 +7,18 @@
       </v-toolbar-title>
     </v-toolbar>
     <v-card-text class="text-center">
-      <VueQrcode class="qr" :value="mockAddr" :options="{ width: 226, height: 226 }"></VueQrcode>
+      <VueQrcode class="qr" :value="mockAddr" :options="{ width: 180, height: 180 }"></VueQrcode>
       <div class="address-area">
         <p class="mb-1">ECOC Wallet Address:</p>
         <div class="copyable-addr">
           <div class="text-truncate">{{ mockAddr }}</div>
-          <v-btn icon small class="copy">
+          <v-btn icon small class="copy" @click="copyAddress">
             <v-icon small>mdi-content-copy</v-icon>
           </v-btn>
         </div>
+      </div>
+      <div class="copy-message">
+        <div class="copied" v-if="showCopy">Copied!</div>
       </div>
     </v-card-text>
   </v-card>
@@ -32,6 +35,14 @@ import VueQrcode from '@chenfengyuan/vue-qrcode'
 })
 export default class ReceiveToken extends Vue {
   mockAddr = '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+  showCopy = false
+  copyAddress() {
+    this.showCopy = true
+
+    setTimeout(() => {
+      this.showCopy = false
+    }, 1000)
+  }
 }
 </script>
 
@@ -70,5 +81,17 @@ export default class ReceiveToken extends Vue {
 .copy {
   margin-left: 6px;
   align-items: baseline;
+}
+
+.copy-message {
+  height: 33px;
+}
+.copied {
+  width: fit-content;
+  margin: auto;
+  background: #363a4a;
+  border-radius: 6px;
+  padding: 6px 2rem;
+  color: #55e52b;
 }
 </style>

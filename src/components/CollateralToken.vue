@@ -12,7 +12,12 @@
         <v-col cols="5" class="text-right">Wallet</v-col>
         <v-col cols="3" class="text-center">Collateral</v-col>
       </v-row>
-      <v-row class="collateral-item" v-for="(item, index) in collateralList" :key="index">
+      <v-row
+        class="collateral-item hvr-sweep-to-right"
+        v-for="(item, index) in collateralList"
+        :key="index"
+        @click="switchToCollateral"
+      >
         <v-col cols="4" class="assets">
           <img src="@/assets/efg_logo.svg" />
           <span>{{ item.token }}</span>
@@ -50,6 +55,10 @@ export default class CollateralToken extends Vue {
       activated: false
     }
   ]
+
+  switchToCollateral(event: any) {
+    this.$emit('switchToCollateral', 'collateral')
+  }
 }
 </script>
 
@@ -70,6 +79,7 @@ export default class CollateralToken extends Vue {
   color: white;
   justify-content: space-between;
   margin-bottom: 0.5rem;
+  cursor: pointer;
 
   .assets {
     display: flex;
@@ -93,6 +103,11 @@ export default class CollateralToken extends Vue {
     text-align: center;
   }
 }
+
+// .collateral-item:hover {
+//   background: #42475c;
+//   transition: 0.3s;
+// }
 
 .supply-item:nth-last-child(1) {
   margin-bottom: 0;
@@ -128,5 +143,50 @@ export default class CollateralToken extends Vue {
         padding-box;
     }
   }
+}
+
+.hvr-sweep-to-right {
+  border-radius: 6px;
+  cursor: pointer;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  position: relative;
+  -webkit-transition-property: color;
+  transition-property: color;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+}
+.hvr-sweep-to-right:before {
+  border-radius: 6px;
+  content: '';
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #454a60;
+  -webkit-transform: scaleX(0);
+  transform: scaleX(0);
+  -webkit-transform-origin: 0 50%;
+  transform-origin: 0 50%;
+  -webkit-transition-property: transform;
+  transition-property: transform;
+  -webkit-transition-duration: 0.3s;
+  transition-duration: 0.3s;
+  -webkit-transition-timing-function: ease-out;
+  transition-timing-function: ease-out;
+}
+.hvr-sweep-to-right:hover,
+.hvr-sweep-to-right:focus,
+.hvr-sweep-to-right:active {
+  color: white;
+}
+.hvr-sweep-to-right:hover:before,
+.hvr-sweep-to-right:focus:before,
+.hvr-sweep-to-right:active:before {
+  -webkit-transform: scaleX(1);
+  transform: scaleX(1);
 }
 </style>
