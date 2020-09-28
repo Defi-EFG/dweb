@@ -7,7 +7,14 @@
       </div>
       <v-spacer></v-spacer>
       <template v-if="!loggedIn">
-        <unlockwalletModal />
+        <v-btn outlined small @click="onOpenModal()">unlock wallet</v-btn>
+    
+        <UnlockWallet
+          ref="unlockwalletModalRef"
+          :visible="unlockWalletOpen"
+          @onClose="onCloseunlockwalletModal = false"
+        />
+
       </template>
       <v-chip class="user-status" v-else>
         <span class="dot-circle"></span>
@@ -19,25 +26,30 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import unlockwalletModal from '@/components/modals/unlock-wallet.vue'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
-
+import UnlockWallet from './modals/unlock-wallet.vue'
 @Component({
   components: {
-    'unlockwalletModal': unlockwalletModal
+    UnlockWallet
   }
 })
 export default class HeaderNav extends Vue {
-  createAccountModal = false
   loggedIn = false
-  unlockWallet = false
+  unlockWalletOpen = false
   walletStore = getModule(WalletModule)
 
   get addr() {
     return this.walletStore.address
   }
+  onOpenModal() {
+    this.unlockWalletOpen = !this.unlockWalletOpen
+  }
+  onCloseunlockwalletModal() {
+    console.log('ffsfdsfdsfdsfd')
 
+    this.unlockWalletOpen = !this.unlockWalletOpen
+  }
   onUnlockWallet() {
     const keystore =
       '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'

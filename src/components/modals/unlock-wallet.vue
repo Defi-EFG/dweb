@@ -1,12 +1,9 @@
-<template >
-  <v-dialog max-width="394">
-    <template v-slot:activator="{ on }"
-      ><v-btn outlined small v-on="on">unlock wallet</v-btn>
-    </template>
+<template name = "unlock">
+  <v-dialog v-model="unlockwallet" max-width="394">
     <v-card>
       <v-card-title class="headline modal-header">
         <v-icon></v-icon>
-        <v-btn text><v-icon>$close</v-icon></v-btn>
+        <v-btn text @click.stop="unlockwallet = false"><v-icon>$close</v-icon></v-btn>
       </v-card-title>
       <div class="content-wrapper ">
         <div class="content-logo ">
@@ -17,14 +14,7 @@
         <p class="lightgray--text">Please create or connect your wallet</p>
       </div>
       <div class="action-wrapper more-space">
-        <v-btn
-          large
-          class="mb-5 border"
-          color="white"
-          @click="dialog = !dialog"
-          @click.stop="createwalletdialog = true"
-          elevation="1"
-        >
+        <v-btn large class="mb-5 border" color="white" elevation="1">
           <div class="d-flex align-center">
             <div class="img-btn-logo">
               <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
@@ -32,7 +22,7 @@
             <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
           </div>
         </v-btn>
-        <v-btn large color="white" @click.stop="connectwalletdialog = true" elevation="1">
+        <v-btn large color="white" @click.stop="connectwalletdialog()" elevation="1">
           <div class="img-btn-logo">
             <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
           </div>
@@ -42,13 +32,24 @@
     </v-card>
   </v-dialog>
 </template>
-<script>
-export default {
-  name: 'unlockwalletModal',
-  props: {
-    dialog: {}
-  },
-  methods: {}
+<script lang="ts">
+import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+@Component({})
+export default class UnlockwalletModal extends Vue {
+  @Prop() visible!: boolean
+  unlockwallet = this.visible
+
+  @Watch('visible')
+  show() {
+    this.unlockwallet = this.visible
+  }
+
+  onClose() {
+    this.$emit('onClose')
+  }
+  onSuccess() {
+    this.$emit('onSuccess')
+  }
 }
 </script>
 <style>
