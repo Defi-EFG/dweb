@@ -39,11 +39,11 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
-import TokenList from '@/components/TokenList.vue'
-import ContactAddress from '@/components/ContactAddress.vue'
-import ReceiveToken from '@/components/ReceiveToken.vue'
-import SendToken from '@/components/SendToken.vue'
-import TransactionHistory from '@/components/TransactionHistory.vue'
+import TokenList from '@/components/DeFi/TokenList.vue'
+import ContactAddress from '@/components/DeFi/ContactAddress.vue'
+import ReceiveToken from '@/components/DeFi/ReceiveToken.vue'
+import SendToken from '@/components/DeFi/SendToken.vue'
+import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
 
 @Component({
   components: {
