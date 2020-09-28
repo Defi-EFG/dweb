@@ -7,12 +7,12 @@
       </div>
       <v-spacer></v-spacer>
       <template v-if="!loggedIn">
-        <v-btn outlined small @click="onOpenModal()">unlock wallet</v-btn>
+        <v-btn outlined small @click="onunlockSuccess()">unlock wallet</v-btn>
         <UnlockWallet
           ref="unlockwalletModalRef"
           :visible="unlockWalletOpen"
           @onClose="onOpenModal"
-          @onSuccess="onJoinSuccess"
+          @onSuccess="onunlockSuccess"
         />
       </template>
       <v-chip class="user-status" v-else>
@@ -44,7 +44,7 @@ export default class HeaderNav extends Vue {
   onOpenModal() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
-  onJoinSuccess() {
+  onunlockSuccess() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
   onUnlockWallet() {

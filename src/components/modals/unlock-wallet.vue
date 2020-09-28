@@ -1,49 +1,67 @@
-<template name = "unlock">
-  <v-dialog v-model="unlockwallet" max-width="394" persistent>
-    <v-card>
-      <v-card-title class="headline modal-header">
-        <v-icon></v-icon>
-        <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
-      </v-card-title>
-      <div class="content-wrapper ">
-        <div class="content-logo ">
-          <div class="logo"><img src="@/assets/icon/light-logo-defi.svg" alt="" /></div>
+<template>
+  <div>
+    <v-dialog v-model="unlockwalletModal" max-width="394" persistent>
+      <v-card>
+        <v-card-title class="headline modal-header">
+          <v-icon></v-icon>
+          <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+        </v-card-title>
+        <div class="content-wrapper ">
+          <div class="content-logo ">
+            <div class="logo"><img src="@/assets/icon/light-logo-defi.svg" alt="" /></div>
+          </div>
+          <h3 class="primary--text">Welcome to</h3>
+          <h3 class="primary--text">ECOC Finance Governance</h3>
+          <p class="lightgray--text">Please create or connect your wallet</p>
         </div>
-        <h3 class="primary--text">Welcome to</h3>
-        <h3 class="primary--text">ECOC Finance Governance</h3>
-        <p class="lightgray--text">Please create or connect your wallet</p>
-      </div>
-      <div class="action-wrapper more-space">
-        <v-btn large class="mb-5 border" color="white" elevation="1">
-          <div class="d-flex align-center">
-            <div class="img-btn-logo">
-              <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
+        <div class="action-wrapper more-space">
+          <v-btn
+            @click.stop="CreateNewWallet()"
+            large
+            class="mb-5 border"
+            color="white"
+            elevation="1"
+          >
+            <div class="d-flex align-center">
+              <div class="img-btn-logo">
+                <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
+              </div>
+              <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
             </div>
-            <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
-          </div>
-        </v-btn>
-        <v-btn large color="white" @click.stop="connectwalletdialog()" elevation="1">
-          <div class="img-btn-logo">
-            <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
-          </div>
-          <h4 class="mr-6 text-capitalize primary--text">Connect ECOC Wallet</h4>
-        </v-btn>
-      </div>
-    </v-card>
-  </v-dialog>
+            <CreateWalletModal :visible="createwalletdialog" @onSuccess="onOpenModal2" />
+          </v-btn>
+
+          <v-btn large color="white" elevation="1">
+            <div class="img-btn-logo">
+              <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
+            </div>
+            <h4 class="mr-6 text-capitalize primary--text">Connect ECOC Wallet</h4>
+          </v-btn>
+        </div>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-@Component({})
+import CreateWalletModal from './create-wallet.vue'
+@Component({
+  components: {
+    CreateWalletModal
+  }
+})
 export default class UnlockwalletModal extends Vue {
+  createwalletdialog = false
   @Prop() visible!: boolean
-  unlockwallet = this.visible
+  unlockwalletModal = this.visible
 
   @Watch('visible')
   show() {
-    this.unlockwallet = this.visible
+    this.unlockwalletModal = this.visible
   }
-
+  onOpenModal2() {
+    this.createwalletdialog = !this.createwalletdialog
+  }
   onClose() {
     this.$emit('onClose')
   }
@@ -54,19 +72,13 @@ export default class UnlockwalletModal extends Vue {
   onCloseX() {
     this.onClose()
   }
+  CreateNewWallet() {
+    console.log(this.createwalletdialog)
+    this.onOpenModal2()
+  }
 }
 </script>
-<style>
-.create-wallet-wraper .v-label {
-  font-size: 0.8em;
-}
-.create-wallet-wraper .v-input__slot:before {
-  border: none !important;
-}
-.v-text-field__details {
-  margin-bottom: 0px !important;
-}
-</style>
+
 <style lang="scss" scoped>
 .content-wrapper {
   text-align: center;
@@ -110,27 +122,13 @@ v-btn {
 .v-application p {
   margin-bottom: 0;
 }
-.theme--light.v-text-field > .v-input__control > .v-input__slot:before {
-  border-color: transparent !important;
-}
-.v-input__slot {
-  margin-bottom: 0 !important;
-}
-.v-text-field > .v-input__control > .v-input__slot:after {
-  transform: scaleX(0) !important;
-}
-</style>
-<style lang="scss" scoped>
 .v-btn.v-size--small {
   margin-left: 10px;
 }
 .v-input__slot:before {
   border-color: none !important;
 }
-.create-wallet-wraper {
-  padding: 41px 30px;
-  padding: 29px 33px 39px 36px;
-}
+
 .modal-header {
   display: flex;
   justify-content: space-between;
@@ -142,20 +140,7 @@ v-btn {
 .bg-white {
   background-color: white;
 }
-.content-wrapper-keystore-file {
-  padding: 28spx;
-}
-.generate-keydtore {
-  height: 506px;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-.generate-keydtore p {
-  margin-top: 15px;
-}
+
 .v-btn.v-size--small {
   margin-left: 10px;
 }
