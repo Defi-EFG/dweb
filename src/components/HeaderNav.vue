@@ -7,7 +7,7 @@
       </div>
       <v-spacer></v-spacer>
       <template v-if="!loggedIn">
-        <create-account v-model="createAccountModal"></create-account>
+        <unlockwalletModal />
       </template>
       <v-chip class="user-status" v-else>
         <span class="dot-circle"></span>
@@ -19,13 +19,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import ModalCreateAccount from '@/components/modals/ModalCreateAccount.vue'
+import unlockwalletModal from '@/components/modals/unlock-wallet.vue'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 
 @Component({
   components: {
-    'create-account': ModalCreateAccount
+    'unlockwalletModal': unlockwalletModal
   }
 })
 export default class HeaderNav extends Vue {

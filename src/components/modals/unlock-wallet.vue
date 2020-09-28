@@ -44,7 +44,7 @@
 </template>
 <script>
 export default {
-  name: 'createAccountModal',
+  name: 'unlockwalletModal',
   props: {
     dialog: {}
   },
