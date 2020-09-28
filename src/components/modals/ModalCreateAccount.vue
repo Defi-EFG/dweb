@@ -1,92 +1,68 @@
-<template>
-  <v-row justify="center">
-    <v-btn color="" dark @click.stop="dialog = true">Dashboard </v-btn>
-
-    <v-dialog v-model="dialog" width="450">
-      <v-card>
-        <v-card-title class="headline modal-header">
-          <v-icon></v-icon>
-          <v-btn text @click="dialog = false"><v-icon>$close</v-icon></v-btn>
-        </v-card-title>
-        <v-card-content>
-          <div class="content-wrapper ">
-            <div class="content-logo ">
-              <div class="logo"><img src="@/assets/icon/light-logo-defi.svg" alt="" /></div>
+<template >
+  <v-dialog max-width="394">
+    <template v-slot:activator="{ on }"
+      ><v-btn outlined small v-on="on">unlock wallet</v-btn>
+    </template>
+    <v-card>
+      <v-card-title class="headline modal-header">
+        <v-icon></v-icon>
+        <v-btn text><v-icon>$close</v-icon></v-btn>
+      </v-card-title>
+      <div class="content-wrapper ">
+        <div class="content-logo ">
+          <div class="logo"><img src="@/assets/icon/light-logo-defi.svg" alt="" /></div>
+        </div>
+        <h3 class="primary--text">Welcome to</h3>
+        <h3 class="primary--text">ECOC Finance Governance</h3>
+        <p class="lightgray--text">Please create or connect your wallet</p>
+      </div>
+      <div class="action-wrapper more-space">
+        <v-btn
+          large
+          class="mb-5 border"
+          color="white"
+          @click="dialog = !dialog"
+          @click.stop="createwalletdialog = true"
+          elevation="1"
+        >
+          <div class="d-flex align-center">
+            <div class="img-btn-logo">
+              <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
             </div>
-
-            <h3 class="primary--text">Welcome to</h3>
-            <h3 class="primary--text">ECOC Finance Governance</h3>
-            <p class="lightgray--text">Please create or connect your wallet</p>
+            <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
           </div>
-          <div class="action-wrapper more-space">
-            <v-btn large class="mb-5" color="white">
-              <p>Create ECOC Wallet</p>
-            </v-btn>
-            <v-btn large color="white">
-              <p>Connect ECOC Wallet</p>
-            </v-btn>
+        </v-btn>
+        <v-btn large color="white" @click.stop="connectwalletdialog = true" elevation="1">
+          <div class="img-btn-logo">
+            <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
           </div>
-        </v-card-content>
-        <v-card-title class="headline modal-header">
-          <v-icon>$leftarrow</v-icon>
-          <v-btn text @click="dialog = false"><v-icon>$close</v-icon></v-btn>
-        </v-card-title>
-        <v-card-content>
-          <div class="pt-10 more-space">
-            <div class="mb-10 pb-6">
-              <h3 class="primary--text ">Create ECOCWallet</h3>
-              <p class="lightgray--text">Please set your password to generate a keystore file</p>
-            </div>
-            <v-text-field
-              label="Set your password"
-              color="primary"
-              filled
-              elevation-0
-              single-line
-              dense
-            ></v-text-field>
-            <v-text-field
-              label="Repeat password"
-              color="primary"
-              filled
-              elevation-0
-              single-line
-              dense
-            ></v-text-field>
-
-            <div class="action-wrapper  ">
-              <v-btn large class="mb-5 " color="primary">
-                Create
-              </v-btn>
-              <small class="lightgray--text">Needed password to unlock keystore file.</small>
-            </div>
-          </div>
-        </v-card-content>
-      </v-card>
-    </v-dialog>
-  </v-row>
+          <h4 class="mr-6 text-capitalize primary--text">Connect ECOC Wallet</h4>
+        </v-btn>
+      </div>
+    </v-card>
+  </v-dialog>
 </template>
-
-<script typ>
+<script>
 export default {
-  data() {
-    return {
-      dialog: false
-    }
+  name: 'createAccountModal',
+  props: {
+    dialog: {}
   },
-  output: {
-    name: 'ModalCreation',
-    exports: 'named'
-  }
+  methods: {}
 }
 </script>
-
-<style lang="scss">
-.modal-header {
-  display: flex;
-  justify-content: space-between;
-  box-shadow: 0px 1px 7px 0px #0000002e;
+<style>
+.create-wallet-wraper .v-label {
+  font-size: 0.8em;
 }
+.create-wallet-wraper .v-input__slot:before {
+  border: none !important;
+}
+.v-text-field__details {
+  margin-bottom: 0px !important;
+}
+</style>
+<style lang="scss" scoped>
 .content-wrapper {
   text-align: center;
 }
@@ -96,21 +72,26 @@ export default {
   flex-direction: column;
   text-align: center;
 }
-.more-space {
-  padding: 30px;
+.action-wrapper .elevation-1 {
+  box-shadow: 0px 3px 8px #00000021 !important;
 }
+.more-space {
+  padding: 38px 36px 77px 36px;
+}
+
 .topspace {
   padding: 30px 0px;
 }
 
 .logo {
-  width: 90px;
+  width: 76px;
+  padding: 14px;
   border-radius: 50%;
-  height: 90px;
+  height: 76px;
   margin: 0 auto;
-  box-shadow: 0px 1px 9px -4px black;
-  margin-top: 40px;
-  margin-bottom: 40px;
+  box-shadow: -1px 1px 9px -4px #a5a5a5;
+  margin-top: 48px;
+  margin-bottom: 7px;
 }
 .logo img {
   width: 100%;
@@ -132,5 +113,125 @@ v-btn {
 }
 .v-text-field > .v-input__control > .v-input__slot:after {
   transform: scaleX(0) !important;
+}
+</style>
+<style lang="scss" scoped>
+.v-btn.v-size--small {
+  margin-left: 10px;
+}
+.v-input__slot:before {
+  border-color: none !important;
+}
+.create-wallet-wraper {
+  padding: 41px 30px;
+  padding: 29px 33px 39px 36px;
+}
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+
+  padding: 9px !important;
+  border-bottom: 1px solid #0000002e;
+}
+
+.bg-white {
+  background-color: white;
+}
+.content-wrapper-keystore-file {
+  padding: 28spx;
+}
+.generate-keydtore {
+  height: 506px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.generate-keydtore p {
+  margin-top: 15px;
+}
+.v-btn.v-size--small {
+  margin-left: 10px;
+}
+.img-btn-logo {
+  width: 40px;
+  height: 33px;
+  margin-bottom: 6px;
+  padding-bottom: 3px;
+  margin-right: 9px;
+}
+.img-btn-logo img {
+  width: 100%;
+  height: 100%;
+}
+.v-btn.v-size--small {
+  margin-left: 10px;
+}
+.efg-header {
+  max-width: 1088px;
+  margin: 0 auto;
+
+  a {
+    font-weight: bold;
+    color: #ffffff;
+    padding: 0 10px;
+    text-decoration: unset;
+
+    &.router-link-exact-active {
+      color: rgb(192, 116, 249);
+      border-bottom: 2px solid rgb(192, 116, 249);
+      span {
+        color: rgb(192, 116, 249);
+        transition: 0.3s;
+      }
+    }
+  }
+  span:hover {
+    color: rgb(192, 116, 249);
+    transition: 0.3s;
+  }
+  a:hover {
+    color: rgb(192, 116, 249);
+    transition: 0.3s;
+  }
+}
+
+.active {
+  color: #c074f9 !important;
+  transition: 0.5s;
+}
+.efg-logo {
+  width: 28px;
+  height: auto;
+  margin-right: 0px;
+}
+
+.user-status {
+  width: auto;
+  height: auto;
+  background-color: #2a3047 !important;
+
+  .dot-circle {
+    height: 12px;
+    width: 12px;
+    background-color: #c074f9;
+    border-radius: 50%;
+    margin-right: 6px;
+  }
+  .theme--dark.v-btn:hover {
+    color: #42b983;
+    transition: 0.3s;
+  }
+}
+.color_bg {
+  background: #2b1534 linear-gradient(180deg, #2c1635 0%, #2b1534 100%) 0% 0% no-repeat padding-box;
+  position: fixed;
+  width: 100%;
+  transition: 0.3s;
+  z-index: 20;
+}
+.theme--dark.v-app-bar.v-toolbar.v-sheet {
+  background-color: #27272700;
 }
 </style>

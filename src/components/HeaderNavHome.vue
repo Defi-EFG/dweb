@@ -12,15 +12,22 @@
         $t('views.titles.whitepaper')
       }}</a>
       <v-btn outlined small @click="gotoDashboard">Dashboard</v-btn>
+
     </v-app-bar>
+  
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 
-@Component({})
+@Component({
+
+
+
+})
 export default class HeaderNavHome extends Vue {
+
   gotoHome() {
     this.$router.push('/')
   }
