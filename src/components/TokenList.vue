@@ -4,7 +4,7 @@
       <v-card class="token-card">
         <v-card-text class="token-text">
           <div class="token-symbol">
-            <img src="@/assets/efg_logo.svg" />
+            <img :src="currency.icon" />
             {{ currency.name }}
           </div>
         </v-card-text>
@@ -36,6 +36,10 @@ export default class TokenList extends Vue {
 
   get currencies() {
     return this.walletStore.currencies
+  }
+
+  getIcon(src: string) {
+    return require(src)
   }
 
   getEstimatedValue(amount: string, price: string | null) {

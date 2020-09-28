@@ -14,12 +14,12 @@ const currencyColor = {
 }
 
 const currencyIcon = {
-  ECOC: '@/assets/icon/currency/ecoc.svg',
-  ETH: '@/assets/icon/currency/eth.svg',
-  USDT: '@/assets/icon/currency/usdt.svg',
-  EFG: '@/assets/icon/currency/efg.svg',
-  DELAY: '@/assets/icon/currency/delay.svg',
-  DEFAULT: '@/assets/icon/currency/ecoc.svg'
+  ECOC: require('@/assets/icon/currency/ecoc.svg'),
+  ETH: require('@/assets/icon/currency/eth.png'),
+  USDT: require('@/assets/icon/currency/usdt.png'),
+  EFG: require('@/assets/icon/currency/efg.svg'),
+  DELAY: require('@/assets/icon/currency/delay.svg'),
+  DEFAULT: require('@/assets/icon/currency/delay.svg')
 }
 
 const generateNewKeystore = async (password: string) => {
@@ -98,7 +98,6 @@ const getEcrc20Balance = async (address: string) => {
 
 const getTxs = async (address: string) => {
   const txs = await EcocWallet.getTxList(address)
-  console.log(txs)
   return txs
 }
 
