@@ -26,7 +26,7 @@ export default class SupplyBalance extends Vue {
 }
 
 .balance {
-  font-size: xx-large;
+  font-size: 38px;
   color: #3fc0db;
   text-align: right;
   padding: 5rem 0 2.5rem 0;
@@ -35,5 +35,13 @@ export default class SupplyBalance extends Vue {
 .balance-label {
   font-size: 16px;
   color: white;
+}
+</style>
+
+<style lang="scss">
+.balance-card {
+  .v-card__text {
+    padding: 2rem !important;
+  }
 }
 </style>

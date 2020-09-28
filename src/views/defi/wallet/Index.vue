@@ -29,7 +29,7 @@
         </v-card>
       </v-col>
       <v-col cols="4">
-        <transaction-history></transaction-history>
+        <transaction-history :page="'wallet'"></transaction-history>
       </v-col>
     </v-row>
   </div>

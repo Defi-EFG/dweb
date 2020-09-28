@@ -68,7 +68,7 @@ export default class ContactAddress extends Vue {
 }
 
 .address-list {
-  max-height: 149px;
+  max-height: 192px;
   overflow: auto;
 }
 .address-item {

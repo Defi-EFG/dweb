@@ -221,7 +221,7 @@ export default class LendingActivity extends Vue {
 <style lang="scss">
 .lending-tabs {
   .v-card__text {
-    height: 154px;
+    height: 192px;
     overflow: auto;
   }
 

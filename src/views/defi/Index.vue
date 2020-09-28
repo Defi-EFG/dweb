@@ -9,7 +9,7 @@
       <DefiNav />
       <div class="main-container">
         <div class="inner-container container">
-          <transition name="page" mode="out-in">
+          <transition name="fade" mode="out-in">
             <router-view></router-view>
           </transition>
         </div>
@@ -61,5 +61,19 @@ export default class Home extends Vue {}
 
 .address-bar {
   text-align: right;
+}
+</style>
+
+<style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.2s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 </style>

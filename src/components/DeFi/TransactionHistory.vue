@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" dark>
+  <v-card class="mx-auto" :class="page" dark>
     <v-toolbar class="tx-history-head" flat dense>
       <v-toolbar-title>
         <v-icon class="mr-2">mdi-clock</v-icon>
@@ -34,10 +34,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component({})
 export default class TransactionHistory extends Vue {
+  @Prop() page!: string
+
   // mock address
   defiAddr = '0x91A31A1C5197DD101e91B0747B02560f41E2f532'
 
@@ -139,5 +141,14 @@ export default class TransactionHistory extends Vue {
   color: white;
   display: flex;
   opacity: 0.6;
+}
+
+.staking {
+  height: 240px;
+  overflow: auto;
+}
+
+.wallet {
+  height: auto;
 }
 </style>

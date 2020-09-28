@@ -63,8 +63,8 @@ export default class TokenList extends Vue {
   color: white;
   border-radius: 6px;
   padding: 8px;
-  overflow-x: auto;
   display: flex;
+  overflow: auto;
 }
 
 .token-card {
@@ -97,9 +97,7 @@ export default class TokenList extends Vue {
   .token-balance {
     color: white;
     padding-left: 2rem;
-    // right: 0;
-    // padding-right: 1rem;
-    // padding-bottom: 1rem;
+    padding-top: 2rem;
 
     .label {
       margin-bottom: 0.7rem;

@@ -2,12 +2,12 @@
   <div class="staking-page">
     <v-row>
       <v-col cols="8" class="pt-0 pb-0 d-flex">
-        <StakingList v-bind:tokenList="tokenList"></StakingList>
+        <StakingList></StakingList>
         <div class="ml-1 mr-1"></div>
         <StakingList></StakingList>
       </v-col>
       <v-col cols="4" class="pt-0 pb-0">
-        <LendingActivity></LendingActivity>
+        <TransactionHistory :page="'staking'"></TransactionHistory>
       </v-col>
     </v-row>
     <v-row>
@@ -59,18 +59,7 @@ import LendingActivity from '@/components/DeFi/LendingActivity.vue'
     LendingActivity
   }
 })
-export default class Staking extends Vue {
-  tokenList = [
-    {
-      token: 'DELAY',
-      value: '5.16349650'
-    },
-    {
-      token: 'ECOC',
-      value: '123.45678901'
-    }
-  ]
-}
+export default class Staking extends Vue {}
 </script>
 
 <style lang="scss" scoped>
