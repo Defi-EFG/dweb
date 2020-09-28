@@ -1,9 +1,9 @@
 <template name = "unlock">
-  <v-dialog v-model="unlockwallet" max-width="394">
+  <v-dialog v-model="unlockwallet" max-width="394" persistent>
     <v-card>
       <v-card-title class="headline modal-header">
         <v-icon></v-icon>
-        <v-btn text @click.stop="unlockwallet = false"><v-icon>$close</v-icon></v-btn>
+        <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
       </v-card-title>
       <div class="content-wrapper ">
         <div class="content-logo ">
@@ -47,8 +47,12 @@ export default class UnlockwalletModal extends Vue {
   onClose() {
     this.$emit('onClose')
   }
+
   onSuccess() {
     this.$emit('onSuccess')
+  }
+  onCloseX() {
+    this.onClose()
   }
 }
 </script>
