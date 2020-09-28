@@ -7,7 +7,7 @@
       </div>
       <v-spacer></v-spacer>
       <template v-if="!loggedIn">
-      <create-account v-model="createAccountModal" ></create-account>
+        <create-account v-model="createAccountModal"></create-account>
       </template>
       <v-chip class="user-status" v-else>
         <span class="dot-circle"></span>
@@ -19,20 +19,32 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import createAccountModal from './modals/ModalCreateAccount.vue'
+import ModalCreateAccount from '@/components/modals/ModalCreateAccount.vue'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
+
 @Component({
   components: {
-    'create-account':createAccountModal,
+    'create-account': ModalCreateAccount
   }
 })
 export default class HeaderNav extends Vue {
   createAccountModal = false
   loggedIn = false
   unlockWallet = false
+  walletStore = getModule(WalletModule)
 
   get addr() {
-    // mockup address
-    return '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E'
+    return this.walletStore.address
+  }
+
+  onUnlockWallet() {
+    const keystore =
+      '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
+    const password = '123456'
+
+    this.walletStore.importWallet({ keystore, password })
+    this.loggedIn = true
   }
 
   gotoHome() {
