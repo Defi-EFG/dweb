@@ -41,7 +41,10 @@ export default class HeaderNav extends Vue {
       '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
     const password = '123456'
 
-    this.walletStore.importWallet({ keystore, password })
+    this.walletStore.importWallet({ keystore, password }).then(() => {
+      this.walletStore.updateBalance()
+      this.walletStore.updateTransactionsHistory()
+    })
   }
 
   onLogout() {

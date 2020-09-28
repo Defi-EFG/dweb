@@ -10,7 +10,7 @@
       <div class="token-balance">
         <span>ECOC Total Balance</span>
         <v-spacer></v-spacer>
-        <span>2,000.00 ECOC</span>
+        <span>{{ ecocBalance }} ECOC</span>
       </div>
       <v-text-field
         label="To Address"
@@ -66,6 +66,8 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
 
 @Component({
   directives: {
@@ -73,8 +75,8 @@ import vClickOutside from 'v-click-outside'
   }
 })
 export default class SendToken extends Vue {
+  walletStore = getModule(WalletModule)
   withdrawRate = 0.001
-
   hehe = '1'
 
   displayContact = false
@@ -103,6 +105,10 @@ export default class SendToken extends Vue {
       address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
     }
   ]
+
+  get ecocBalance() {
+    return this.walletStore.ecoc
+  }
 
   selectAddress(addr: string) {
     this.selectedAddr = addr

@@ -1,18 +1,20 @@
 <template>
   <div class="token-container">
-    <div class="card-grad-border" v-for="(token, index) in mockData" :key="index">
+    <div class="card-grad-border" v-for="(currency, index) in currencies" :key="index">
       <v-card class="token-card">
         <v-card-text class="token-text">
           <div class="token-symbol">
             <img src="@/assets/efg_logo.svg" />
-            {{ token.symbol }}
+            {{ currency.name }}
           </div>
         </v-card-text>
         <v-card-text>
           <div class="token-balance text-right">
             <div class="label">Total Balance</div>
-            <div class="value">{{ token.value.toLocaleString() }} {{ token.symbol }}</div>
-            <div class="estimated">≈ {{ token.estimated.toLocaleString() }} USD</div>
+            <div class="value">{{ currency.balance }} {{ currency.name }}</div>
+            <div class="estimated">
+              ≈ {{ getEstimatedValue(currency.balance, currency.price) }} USD
+            </div>
           </div>
         </v-card-text>
       </v-card>
@@ -22,38 +24,24 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import BigNumber from 'bignumber.js'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
 
 @Component({
   components: {}
 })
 export default class TokenList extends Vue {
-  mockData = [
-    {
-      symbol: 'ECOC',
-      value: 2000,
-      estimated: 4000
-    },
-    {
-      symbol: 'EFG',
-      value: 20000,
-      estimated: 20000
-    },
-    {
-      symbol: 'DELAY',
-      value: 500,
-      estimated: 250
-    },
-    {
-      symbol: 'USDT',
-      value: 1000,
-      estimated: 1000
-    },
-    {
-      symbol: 'DoiCoin',
-      value: 4000,
-      estimated: 8000
-    }
-  ]
+  walletStore = getModule(WalletModule)
+
+  get currencies() {
+    return this.walletStore.currencies
+  }
+
+  getEstimatedValue(amount: string, price: string | null) {
+    if (!price) return 0
+    return new BigNumber(amount).multipliedBy(new BigNumber(price))
+  }
 }
 </script>
 

@@ -7,11 +7,11 @@
       </v-toolbar-title>
     </v-toolbar>
     <v-card-text class="text-center">
-      <VueQrcode class="qr" :value="mockAddr" :options="{ width: 180, height: 180 }"></VueQrcode>
+      <VueQrcode class="qr" :value="address" :options="{ width: 180, height: 180 }"></VueQrcode>
       <div class="address-area">
         <p class="mb-1">ECOC Wallet Address:</p>
         <div class="copyable-addr">
-          <div class="text-truncate">{{ mockAddr }}</div>
+          <div class="text-truncate">{{ address }}</div>
           <v-btn icon small class="copy" @click="copyAddress">
             <v-icon small>mdi-content-copy</v-icon>
           </v-btn>
@@ -27,6 +27,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import VueQrcode from '@chenfengyuan/vue-qrcode'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
 
 @Component({
   components: {
@@ -34,14 +36,19 @@ import VueQrcode from '@chenfengyuan/vue-qrcode'
   }
 })
 export default class ReceiveToken extends Vue {
-  mockAddr = '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+  walletStore = getModule(WalletModule)
   showCopy = false
+
   copyAddress() {
     this.showCopy = true
 
     setTimeout(() => {
       this.showCopy = false
     }, 1000)
+  }
+
+  get address() {
+    return this.walletStore.address || 'loading...'
   }
 }
 </script>
