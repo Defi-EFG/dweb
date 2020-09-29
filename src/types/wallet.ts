@@ -8,6 +8,16 @@ export interface Wallet {
   keystore: KeyStore
   txList: TxList
   currencies: Currency[]
-  selectedCurrency: number
+  selectedCurrencyIndex: number
   lastUpdate: number
+}
+
+export interface SendPayload {
+  currency: Currency
+  password: string
+  to: string
+  amount: number
+  fee: number
+  gasLimit?: number
+  gasPrice?: number
 }

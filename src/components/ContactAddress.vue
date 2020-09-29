@@ -43,15 +43,11 @@ export default class ContactAddress extends Vue {
   contact = [
     {
       name: 'MXC',
-      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
     },
     {
-      name: 'Bittrex',
-      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
-    },
-    {
-      name: 'Boboo',
-      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+      name: 'Bitrex',
+      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
     }
   ]
 }

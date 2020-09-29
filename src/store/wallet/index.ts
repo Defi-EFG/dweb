@@ -1,10 +1,13 @@
 import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '@/store'
-import { Wallet } from '@/types/wallet'
+import { InsufficientBalance } from '@/exceptions/wallet'
+import { Wallet, SendPayload } from '@/types/wallet'
 import { KeyStore } from '@/types/keystore'
 import { Currency } from '@/types/currency'
 import { TxList } from '@/types/transaction'
 import * as Ecoc from '@/services/wallet'
+import * as utils from '@/services/utils'
+import { SendEcrc20Payload, SendEcocPayload } from '@/services/ecoc/types'
 import * as constants from '@/constants'
 
 @Module({ dynamic: true, store, namespaced: true, name: 'walletStore' })
@@ -14,7 +17,7 @@ export default class WalletModule extends VuexModule implements Wallet {
   keystore = {} as KeyStore
   txList = {} as TxList
   currencies = [] as Currency[]
-  selectedCurrency = 0
+  selectedCurrencyIndex = 0
   lastUpdate = 0
 
   get ecoc() {
@@ -24,6 +27,14 @@ export default class WalletModule extends VuexModule implements Wallet {
     return currencyInfo?.balance
   }
 
+  get selectedCurrency() {
+    return this.currencies[this.selectedCurrencyIndex]
+  }
+
+  get numberOfCurrency() {
+    return this.currencies.length
+  }
+
   @Mutation
   clear() {
     this.address = ''
@@ -31,7 +42,7 @@ export default class WalletModule extends VuexModule implements Wallet {
     this.keystore = {} as KeyStore
     this.txList = {} as TxList
     this.currencies = [] as Currency[]
-    this.selectedCurrency = 0
+    this.selectedCurrencyIndex = 0
     this.lastUpdate = 0
   }
 
@@ -117,6 +128,31 @@ export default class WalletModule extends VuexModule implements Wallet {
     return true
   }
 
+  @Action
+  async send(payload: SendPayload) {
+    const currency = payload.currency
+    const password = payload.password
+
+    if (Ecoc.isEcrc20(currency)) {
+      if (utils.toNumber(currency.balance).lt(payload.amount)) {
+        throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
+      }
+
+      return await Ecoc.SendEcrc20Balance(
+        this.keystore,
+        password,
+        currency,
+        payload as SendEcrc20Payload
+      )
+    }
+
+    if (utils.toNumber(currency.balance).lt(payload.amount + payload.fee)) {
+      throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
+    }
+
+    return await Ecoc.SendEcocBalance(this.keystore, password, payload as SendEcocPayload)
+  }
+
   @MutationAction
   async importWallet(payload: { keystore: string; password: string }) {
     const wallet = Ecoc.importFromKeystore(payload.keystore, payload.password)
@@ -125,6 +161,17 @@ export default class WalletModule extends VuexModule implements Wallet {
       address: wallet.address,
       network: wallet.networkName,
       keystore: Ecoc.getKeystore(payload.keystore)
+    }
+  }
+
+  @MutationAction
+  async selectCurrency(currencyIndex: number) {
+    if (this.numberOfCurrency < currencyIndex + 1) {
+      return {}
+    }
+
+    return {
+      selectedCurrencyIndex: currencyIndex
     }
   }
 }

@@ -6,3 +6,7 @@ export const toDecimals = (value: number | string, decimals: number | string) =>
 
   return res.toString()
 }
+
+export const toNumber = (value: string) => {
+  return new BigNumber(value)
+}

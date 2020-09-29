@@ -14,7 +14,7 @@
           <v-toolbar class="receive-send-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
               <img src="@/assets/efg_logo.svg" />
-              <span>ECOC</span>
+              <span>{{ selectedCurrencyName }}</span>
             </v-toolbar-title>
           </v-toolbar>
 
@@ -56,6 +56,18 @@ import TransactionHistory from '@/components/TransactionHistory.vue'
 })
 export default class Wallet extends Vue {
   walletStore = getModule(WalletModule)
+
+  get selectedIndex() {
+    return this.walletStore.selectedCurrencyIndex
+  }
+
+  get selectedCurrencyName() {
+    return this.selectedCurrency?.name || ''
+  }
+
+  get selectedCurrency() {
+    return this.walletStore.selectedCurrency
+  }
 }
 </script>
 

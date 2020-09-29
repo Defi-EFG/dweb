@@ -3,7 +3,7 @@
     <div class="card-grad-border" v-for="(currency, index) in currencies" :key="index">
       <v-card class="token-card">
         <v-card-text class="token-text">
-          <div class="token-symbol">
+          <div class="token-symbol" @click="selectCurency(index)">
             <img :src="currency.icon" />
             {{ currency.name }}
           </div>
@@ -24,8 +24,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import BigNumber from 'bignumber.js'
 import { getModule } from 'vuex-module-decorators'
+import BigNumber from 'bignumber.js'
 import WalletModule from '@/store/wallet'
 
 @Component({
@@ -38,13 +38,15 @@ export default class TokenList extends Vue {
     return this.walletStore.currencies
   }
 
-  getIcon(src: string) {
-    return require(src)
-  }
-
   getEstimatedValue(amount: string, price: string | null) {
     if (!price) return 0
     return new BigNumber(amount).multipliedBy(new BigNumber(price))
+  }
+
+  selectCurency(index: number) {
+    this.walletStore.selectCurrency(index).then(() => {
+      //
+    })
   }
 }
 </script>
@@ -76,6 +78,7 @@ export default class TokenList extends Vue {
   }
 
   .token-symbol {
+    cursor: pointer;
     display: flex;
     align-items: center;
     font-size: medium;
