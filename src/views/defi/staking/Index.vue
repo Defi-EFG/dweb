@@ -4,7 +4,7 @@
       <v-col cols="8" class="pt-0 pb-0 d-flex">
         <StakingList></StakingList>
         <div class="ml-1 mr-1"></div>
-        <StakingList></StakingList>
+        <StakingChart></StakingChart>
       </v-col>
       <v-col cols="4" class="pt-0 pb-0">
         <TransactionHistory :page="'staking'"></TransactionHistory>
@@ -51,12 +51,14 @@ import { Component, Vue } from 'vue-property-decorator'
 import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
 import StakingList from '@/components/DeFi/StakingList.vue'
 import LendingActivity from '@/components/DeFi/LendingActivity.vue'
+import StakingChart from '@/components/DeFi/StakingChart.vue'
 
 @Component({
   components: {
     TransactionHistory,
     StakingList,
-    LendingActivity
+    LendingActivity,
+    StakingChart
   }
 })
 export default class Staking extends Vue {}
