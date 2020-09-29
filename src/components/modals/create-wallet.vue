@@ -19,7 +19,6 @@
           <v-text-field
             :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
             name="input-10-1"
-            :rules="[rules.required, rules.min]"
             :type="show ? 'text' : 'password'"
             @click:append="show = !show"
             label="Set your password"
@@ -33,7 +32,6 @@
         <v-text-field
           :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
           name="input-10-2"
-          :rules="[rules.required, rules.min2]"
           :type="show ? 'text' : 'password'"
           @click:append="show = !show"
           label="Repeat your password"
@@ -45,10 +43,10 @@
         ></v-text-field>
 
         <div class="action-wrapper  ">
-          <v-btn large class="mb-5" color="primary">
-            <h4 class="text-capitalize font-weight-light" @click.stop="Loadinge()">Create</h4>
+          <v-btn large class="mb-5" color="primary" @click="Loading()">
+            <h4 class="text-capitalize font-weight-light">Create</h4>
           </v-btn>
-          <Loading :visible="loading" />
+
           <small class="lightgray--text mt-5 mb-2">Needed password to unlock keystore file.</small>
         </div>
       </div>
@@ -60,39 +58,45 @@
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Loading from './loading-create-accout.vue'
 @Component({
-     components: {
+  components: {
     Loading
   }
 })
 export default class CreateWalletModal extends Vue {
+createwalletdialog = false
   @Prop() password1!: string
   @Prop() password2!: string
   @Prop() visible!: boolean
-  loading = false
   show = false
-  createwalletdialog = this.visible
-   loadingg =! this.visible
+
+
   @Watch('visible')
-  show1() {
+  CreateWalletdialog() {
     this.createwalletdialog = this.visible
   }
-  onClose() {
-    this.$emit('onClose')
-  }
-  onSuccess() {
-    this.$emit('onSuccess')
-  }
-  Loadinge(){
-console.log("loading");
-this.loadingg = !this.loadingg
- 
-  }
-  password = 'Password'
 
+  onCreatewalletModal() {
+
+    this.$emit('onCreatewalletModal')
+  }
+    oncloseCreatewalletModal() {
+    this.$emit('oncloseCreatewalletModal')
+  }
+
+  
+//   onCreatewallet() {
+// this.createwalletdialog =! this.createwalletdialog
+//   }
+  // Loading() {
+  //   console.log('loading')
+  //   // this.loading = !this.loading
+  // }
+
+  password = 'Password'
   rules = {
-    required: (value: any) => !!value || 'Required.',
-    min: (password1: string | any[]) => password1.length >= 8 || 'Min 8 characters',
-    min2: (password2: string | any[]) => password2.length >= 8 || 'Min 8 characters'
+    // required: (value: any) => !!value || 'Required.',
+    // min: (password1: string | any[]) => password1.length >= 8 || 'Min 8 characters',
+    // min2: (password2: string | any[]) => password2.length >= 8 || 'Min 8 characters'
   }
 }
 </script>

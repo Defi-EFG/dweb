@@ -15,27 +15,26 @@
           <p class="lightgray--text">Please create or connect your wallet</p>
         </div>
         <div class="action-wrapper more-space">
-          <v-btn
-            @click.stop="CreateNewWallet()"
-            large
-            class="mb-5 border"
-            color="white"
-            elevation="1"
-          >
+          <v-btn @click="onOpenModal()" large class="mb-5 border" color="white" elevation="1">
             <div class="d-flex align-center">
               <div class="img-btn-logo">
                 <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
               </div>
               <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
             </div>
-            <CreateWalletModal :visible="createwalletdialog" @onSuccess="onOpenModal2" />
+            <CreateWalletModal
+              :visible="createwalletdialog"
+              @onCreatewalletModal="onOpenModal"
+              :oncloseCreatewalletModal="onCloseModalcreate"
+            />
           </v-btn>
 
-          <v-btn large color="white" elevation="1">
+          <v-btn large color="white" elevation="1" @click.stop="ConnectWallet()">
             <div class="img-btn-logo">
               <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
             </div>
             <h4 class="mr-6 text-capitalize primary--text">Connect ECOC Wallet</h4>
+            <ConnectWalletModal />
           </v-btn>
         </div>
       </v-card>
@@ -44,37 +43,60 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+import ConnectWalletModal from './connect-wallet.vue'
 import CreateWalletModal from './create-wallet.vue'
 @Component({
   components: {
-    CreateWalletModal
+    CreateWalletModal,
+    ConnectWalletModal
   }
 })
 export default class UnlockwalletModal extends Vue {
   createwalletdialog = false
+  connectwalletmodal = false
   @Prop() visible!: boolean
   unlockwalletModal = this.visible
-
   @Watch('visible')
   show() {
     this.unlockwalletModal = this.visible
   }
-  onOpenModal2() {
+  onOpenModal() {
     this.createwalletdialog = !this.createwalletdialog
+    console.log('testonOpenModal')
+
+    // this.unlockWalletOpen = !this.unlockWalletOpen
   }
+ 
+  // onOpenCreateWallet() {
+  //   console.log('CreateNewWallet1')
+  //   this.createwalletdialog = !this.createwalletdialog
+  // }
+  // onOpenConnectWallet() {
+  //   console.log('connect')
+  //   this.connectwalletmodal = !this.connectwalletmodal
+  //}
   onClose() {
+    console.log('emitOnclose')
     this.$emit('onClose')
   }
-
+  onCreatewallet() {
+    this.$emit('onCreatewallet')
+  }
   onSuccess() {
     this.$emit('onSuccess')
   }
+
   onCloseX() {
     this.onClose()
   }
-  CreateNewWallet() {
-    console.log(this.createwalletdialog)
-    this.onOpenModal2()
+
+ onCloseModalcreate() {
+    this.createwalletdialog = !this.createwalletdialog
+    console.log('onCloseModalcreate')
+  }
+  ConnectWallet() {
+    // this.onOpenConnectWallet()
+    console.log('connect', this.connectwalletmodal)
   }
 }
 </script>
