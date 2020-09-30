@@ -7,9 +7,9 @@
       </div>
       <v-spacer></v-spacer>
 
-      <template v-if="!addr">
-        <v-btn outlined small @click="onUnlockWallet">Unlock Wallet</v-btn>
-      </template>
+    <template v-if="!addr">
+      <v-btn outlined small @click="onUnlockWallet">Unlock Wallet</v-btn>
+    </template>
 
       <v-chip class="user-status" v-else>
         <span class="dot-circle"></span>
@@ -41,7 +41,7 @@ export default class HeaderNav extends Vue {
   walletStore = getModule(WalletModule)
   unlockWalletOpen = false
   unlockWallet = false
-  // walletStore = getModule(WalletModule)
+  walletStore = getModule(WalletModule)
 
   get addr() {
     return this.walletStore.address
