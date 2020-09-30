@@ -32,7 +32,7 @@
                     <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
                   </div>
                 </v-btn>
-                <v-btn large color="white" elevation="1" @click.native="step = 4">
+                <v-btn large color="white" elevation="1" @click.native="step = 3">
                   <div class="img-btn-logo">
                     <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
                   </div>
@@ -47,17 +47,130 @@
                 <v-btn text @click.native="step = 1"><v-icon>$leftarrow</v-icon></v-btn>
                 <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
-              <CreateWalletModal />
+              <div class="create-wallet-wraper bg-white rounded-lg">
+                <div class="pb-5 mb-7">
+                  <h3 class="primary--text"><b>Create ECOC Wallet</b></h3>
+                  <small class="lightgray--text"
+                    >Please set your password to generate a keystore file</small
+                  >
+                </div>
+                <template>
+                  <v-text-field
+                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                    name="input-10-1"
+                    :type="show ? 'text' : 'password'"
+                    @click:append="show = !show"
+                    label="Set your password"
+                    color="primary"
+                    filled
+                    elevation-0
+                    dense
+                    v-model="password1"
+                  ></v-text-field>
+                </template>
+                <v-text-field
+                  :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                  name="input-10-2"
+                  :type="show ? 'text' : 'password'"
+                  @click:append="show = !show"
+                  label="Repeat your password"
+                  color="primary"
+                  filled
+                  elevation-0
+                  dense
+                  v-model="password2"
+                ></v-text-field>
+                <div class="action-wrapper"  >
+                  <v-btn large class="mb-5" color="primary" @click.native="step = 3">
+                    <h4 class="text-capitalize font-weight-light">Create</h4>
+                  </v-btn>
+                  <small class="lightgray--text mt-5 mb-2"
+                    >Needed password to unlock keystore file.</small
+                  >
+                </div>
+              </div>
             </v-card>
           </v-stepper-content>
-          <v-stepper-content step="4">
-            <v-card>
+          <v-stepper-content step="3">
+            <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
                 <v-btn text @click.native="step = 1"><v-icon>$leftarrow</v-icon></v-btn>
                 <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
-
-              <ConnectWalletModal />
+              <div class="create-wallet-wraper bg-white rounded-lg">
+                <div class="pb-5 mb-7">
+                  <h3 class="primary--text"><b>Connect ECOC Wallet</b></h3>
+                  <small class="lightgray--text">Please input your keystore text or file.</small>
+                </div>
+                <template>
+                  <div class="upload_input">
+                    <v-textarea
+                      outlined
+                      v-model="jsonformat"
+                      filled
+                      label="Your keystore text..."
+                    ></v-textarea>
+                    <v-file-input
+                      accept="application/json"
+                      outlined
+                      prepend-icon="mdi-upload"
+                      truncate-length="auto"
+                      hide-input
+                      @change="onFileChange"
+                    ></v-file-input>
+                    <div class="uploadkeystorefile">
+                      <span class="lightgray--text  mr-2">or</span>
+                      <p>Upload keystore file</p>
+                    </div>
+                    <div class="action-wrapper">
+                      <v-btn
+                        v-if="upload || jsonformat.length > 6"
+                        @click.native="step = 4"
+                        class="mb-5"
+                        color="primary"
+                      >
+                        <h4 class="text-capitalize font-weight-light">Next</h4>
+                      </v-btn>
+                      <v-btn v-else large class="mb-5" color="primary" disabled>
+                        <h4 class="text-capitalize font-weight-light">Next</h4>
+                      </v-btn>
+                    </div>
+                  </div>
+                </template>
+              </div>
+            </v-card>
+          </v-stepper-content>
+          <v-stepper-content step="4">
+            <v-card class="rounded-lg">
+               <v-card-title class="headline modal-header">
+                <v-btn text @click.native="step = 3"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+              </v-card-title>
+              <div class="create-wallet-wraper bg-white rounded-lg">
+                <div class="pb-5 mb-7">
+                  <h3 class="primary--text"><b>Keystore password</b></h3>
+                  <small class="lightgray--text">Please input your keystore password</small>
+                </div>
+                <template>
+                  <v-text-field
+                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                    name="input-10-1"
+                    :type="show ? 'text' : 'password'"
+                    @click:append="show = !show"
+                    label="Set your password"
+                    color="primary"
+                    filled
+                    elevation-0
+                    dense
+                    
+                  ></v-text-field>
+                </template>
+                <div class="action-wrapper">
+                  <v-btn large class="mb-5" color="primary"  @click.stop="onCloseX()">
+                    <h4 class="text-capitalize font-weight-light">Create</h4>
+                  </v-btn>
+                </div>
+              </div>
             </v-card>
           </v-stepper-content>
         </v-stepper-items>
@@ -67,19 +180,19 @@
 </template>
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import ConnectWalletModal from './connect-wallet.vue'
-import CreateWalletModal from './create-wallet.vue'
+
 @Component({
-  components: {
-    CreateWalletModal,
-    ConnectWalletModal
-  }
+  components: {}
 })
 export default class UnlockwalletModal extends Vue {
+  @Prop() password1!: string
+  @Prop() password2!: string
   createwalletdialog = false
+  upload = false
+  jsonformat = ''
   connectwalletmodal = false
-  step = 1
   @Prop() visible!: boolean
+  step = 1
   unlockwalletModal = this.visible
   @Watch('visible')
   show() {
@@ -91,10 +204,15 @@ export default class UnlockwalletModal extends Vue {
 
     // this.unlockWalletOpen = !this.unlockWalletOpen
   }
+  onFileChange() {
+    this.upload = !this.upload
+    console.log(this.jsonformat)
+
+    console.log('change')
+  }
   submit() {
     this.step = 1
   }
-
   // onOpenCreateWallet() {
   //   console.log('CreateNewWallet1')
   //   this.createwalletdialog = !this.createwalletdialog
@@ -113,6 +231,9 @@ export default class UnlockwalletModal extends Vue {
   onSuccess() {
     this.$emit('onSuccess')
   }
+  onClick() {
+    console.log('ssdsdsdsd2')
+  }
 
   onCloseX() {
     this.onClose()
@@ -129,14 +250,77 @@ export default class UnlockwalletModal extends Vue {
 }
 </script>
 
+<style>
+.disable-events {
+  pointer-events: none;
+}
+.create-wallet-wraper .v-label {
+  font-size: 0.8em;
+}
+.create-wallet-wraper .v-input__slot:before {
+  border: none !important;
+}
+.v-text-field__details {
+  margin-bottom: 0px !important;
+}
+.upload_input .v-input__prepend-outer {
+  margin-right: 0px !important;
+  position: absolute;
+  right: 0;
+  bottom: -25px;
+}
+.upload_input .v-file-input .v-file-input__text {
+  word-break: break-all !important;
+  height: 150px !important;
+}
+.upload_input .v-icon.v-icon.v-icon--link::before {
+  color: white;
+}
+
+.upload_input .v-icon.v-icon.v-icon--link {
+  border: 1px solid;
+  border-radius: 50%;
+  background-color: #44096b;
+  color: white;
+  padding: 4px;
+  font-size: revert;
+}
+</style>
 <style lang="scss" scoped>
+.v-btn--fab.v-size--small {
+  height: 30px;
+  width: 30px;
+}
+.create-wallet-wraper {
+  padding: 29px 33px 23px 36px;
+}
 .v-stepper__content {
   padding: 0;
+}
+.v-text-field {
+  margin: 0;
+  padding: 0;
+  flex-direction: column-reverse;
 }
 .content-wrapper {
   text-align: center;
 }
+.uploadkeystorefile {
+  font-size: 0.8em;
+  display: flex;
+  justify-content: flex-end;
+  text-align: end;
+  padding-right: 25px;
+  margin-right: 5px;
+}
 .action-wrapper {
+  margin-top: 15px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+}
+.upl .action-wrapper {
   display: flex;
   justify-content: center;
   flex-direction: column;

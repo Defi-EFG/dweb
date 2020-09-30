@@ -1,7 +1,6 @@
 <template >
-    <div>
-
-        <v-dialog v-model="loading" width="400" persistent>
+  <div>
+    <v-dialog v-model="loading" width="400" persistent>
       <v-card-content>
         <div class="generate-keydtore bg-white">
           <v-progress-circular
@@ -15,18 +14,16 @@
         </div>
       </v-card-content>
     </v-dialog>
-    </div>
+  </div>
 </template>
 <script>
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 @Component({})
-export default class Loading extends Vue { 
-
+export default class Loading extends Vue {
   onLoading() {
     this.$emit('onLoading')
   }
 }
-
 </script>
 <style scoped>
 .generate-keydtore {
@@ -40,6 +37,5 @@ export default class Loading extends Vue {
 .generate-keydtore p {
   margin-top: 15px;
 }
-
 </style>
 
