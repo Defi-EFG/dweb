@@ -32,7 +32,7 @@
         hide-details="true"
       ></v-text-field>
 
-      <v-btn large block class="reward-btn">Withdraw Reward</v-btn>
+      <v-btn large block depressed class="reward-btn">Withdraw Reward</v-btn>
     </v-card-text>
   </v-card>
 </template>
@@ -84,7 +84,9 @@ export default class StakedReward extends Vue {}
   margin-top: 1.3rem;
   margin-bottom: 1rem;
   border-radius: 5px;
-  background: #474d5d;
+  background: #474d5d !important;
+  background-color: #474d5d !important;
+  font-weight: bold !important;
   color: #c074f9;
 }
 
@@ -110,7 +112,7 @@ export default class StakedReward extends Vue {}
 .reward-label {
   padding: 1.5rem 10px 0;
   font-size: larger;
-  color: #C074F9;
+  color: #c074f9;
   font-weight: 700;
 }
 </style>
