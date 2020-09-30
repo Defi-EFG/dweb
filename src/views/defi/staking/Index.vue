@@ -15,21 +15,17 @@
         <v-card dark color="#222738">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
-              <img src="@/assets/efg_logo.svg" />
-              <span>ECOC</span>
+              <img src="@/assets/delay.svg" />
+              <span>DELAY</span>
             </v-toolbar-title>
           </v-toolbar>
 
           <v-row class="pl-2 pr-2">
             <v-col cols="6" class="pr-1">
-              <!-- <Collateral></Collateral> -->
-
-              <!-- <Borrow></Borrow> -->
+              <DepositWithdraw></DepositWithdraw>
             </v-col>
             <v-col cols="6" class="pl-1">
-              <!-- <Withdraw></Withdraw> -->
-
-              <!-- <Repay></Repay> -->
+              <StakedReward></StakedReward>
             </v-col>
           </v-row>
         </v-card>
@@ -52,13 +48,17 @@ import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
 import StakingList from '@/components/DeFi/StakingList.vue'
 import LendingActivity from '@/components/DeFi/LendingActivity.vue'
 import StakingChart from '@/components/DeFi/StakingChart.vue'
+import DepositWithdraw from '@/components/DeFi/DepositWithdraw.vue'
+import StakedReward from '@/components/DeFi/StakedReward.vue'
 
 @Component({
   components: {
     TransactionHistory,
     StakingList,
     LendingActivity,
-    StakingChart
+    StakingChart,
+    DepositWithdraw,
+    StakedReward
   }
 })
 export default class Staking extends Vue {}
