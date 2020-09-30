@@ -1,40 +1,42 @@
 <template>
-  <v-dialog v-model="connectwalletmodal" width="394">
-    <v-card class="rounded-lg">
-      <v-card-title class="headline modal-header">
-        <v-btn text @click="dialog = true" @click.stop="connectwalletmodal = false"
-          ><v-icon>$leftarrow</v-icon></v-btn
-        >
-        <v-btn text @click="connectwalletmodal = false"><v-icon>$close</v-icon></v-btn>
-      </v-card-title>
-      <div class="create-wallet-wraper bg-white rounded-lg">
-        <div class="pb-5 mb-7">
-          <h3 class="primary--text"><b>Connect ECOC Wallet</b></h3>
-          <small class="lightgray--text">Please input your keystore text or file.</small>
-        </div>
-        <template>
-          <div class="upload_input">
-            <v-file-input
-         
-            accept="application/json"
-              outlined
-              prepend-icon="mdi-upload"
-              label="Your keystore text..."
-              truncate-length="auto"
-            ></v-file-input>
-            <div class="uploadkeystorefile">
-              <span class="lightgray--text  mr-2">or</span> <a href="">Upload keystore file </a>
-            </div>
-            <div class="action-wrapper">
-              <v-btn large class="mb-5" color="primary" >
-                <h4 class="text-capitalize font-weight-light">Next</h4>
-              </v-btn>
-            </div>
-          </div>
-        </template>
+  <v-card class="rounded-lg">
+    <div class="create-wallet-wraper bg-white rounded-lg">
+      <div class="pb-5 mb-7">
+        <h3 class="primary--text"><b>Connect ECOC Wallet</b></h3>
+        <small class="lightgray--text">Please input your keystore text or file.</small>
       </div>
-    </v-card>
-  </v-dialog>
+      <template>
+        <div class="upload_input">
+          <v-textarea
+            outlined
+            v-model="jsonformat"
+            filled
+            label="Your keystore text..."
+          ></v-textarea>
+          <v-file-input
+            accept="application/json"
+            outlined
+            prepend-icon="mdi-upload"
+            truncate-length="auto"
+            hide-input
+            @change="onFileChange"
+          ></v-file-input>
+          <div class="uploadkeystorefile">
+            <span class="lightgray--text  mr-2">or</span>
+            <p>Upload keystore file</p>
+          </div>
+          <div class="action-wrapper">
+            <v-btn v-if="upload || jsonformat.length > 6" large class="mb-5" color="primary">
+              <h4 class="text-capitalize font-weight-light">Next</h4>
+            </v-btn>
+            <v-btn v-else large class="mb-5" color="primary" disabled>
+              <h4 class="text-capitalize font-weight-light">Next</h4>
+            </v-btn>
+          </div>
+        </div>
+      </template>
+    </div>
+  </v-card>
 </template> 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
@@ -43,6 +45,8 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
   components: {}
 })
 export default class ConnectWalletModal extends Vue {
+  upload = false
+  jsonformat = ''
   connectwalletmodal = false
   @Prop() visible!: boolean
   @Watch('visible')
@@ -56,11 +60,20 @@ export default class ConnectWalletModal extends Vue {
   onClose() {
     this.$emit('onClose')
   }
+  onFileChange() {
+    this.upload = !this.upload
+    console.log(this.jsonformat)
+
+    console.log('change')
+  }
 }
 </script>
 
 
 <style>
+.disable-events {
+  pointer-events: none;
+}
 .create-wallet-wraper .v-label {
   font-size: 0.8em;
 }
@@ -80,17 +93,17 @@ export default class ConnectWalletModal extends Vue {
   word-break: break-all !important;
   height: 150px !important;
 }
-.upload_input .v-icon.v-icon.v-icon--link::before{
-   color: white;
+.upload_input .v-icon.v-icon.v-icon--link::before {
+  color: white;
 }
 
-.upload_input .v-icon.v-icon.v-icon--link{
+.upload_input .v-icon.v-icon.v-icon--link {
   border: 1px solid;
   border-radius: 50%;
-  background-color: #44096B;
+  background-color: #44096b;
   color: white;
   padding: 4px;
-      font-size: revert;
+  font-size: revert;
 }
 </style>
 
@@ -113,7 +126,7 @@ export default class ConnectWalletModal extends Vue {
   padding-right: 25px;
   margin-right: 5px;
 }
-.uploadkeystorefile a {
+.uploadkeystorefile p {
   text-decoration-line: underline;
 }
 .modal-header {

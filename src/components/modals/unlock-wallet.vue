@@ -1,43 +1,67 @@
 <template>
   <div>
     <v-dialog v-model="unlockwalletModal" max-width="394" persistent>
-      <v-card>
-        <v-card-title class="headline modal-header">
-          <v-icon></v-icon>
-          <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
-        </v-card-title>
-        <div class="content-wrapper ">
-          <div class="content-logo ">
-            <div class="logo"><img src="@/assets/icon/light-logo-defi.svg" alt="" /></div>
-          </div>
-          <h3 class="primary--text">Welcome to</h3>
-          <h3 class="primary--text">ECOC Finance Governance</h3>
-          <p class="lightgray--text">Please create or connect your wallet</p>
-        </div>
-        <div class="action-wrapper more-space">
-          <v-btn @click="onOpenModal()" large class="mb-5 border" color="white" elevation="1">
-            <div class="d-flex align-center">
-              <div class="img-btn-logo">
-                <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
+      <v-stepper v-model="step">
+        <v-stepper-items>
+          <v-stepper-content step="1">
+            <v-card>
+              <v-card-title class="headline modal-header">
+                <v-icon></v-icon>
+                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+              </v-card-title>
+              <div class="content-wrapper ">
+                <div class="content-logo ">
+                  <div class="logo"><img src="@/assets/icon/light-logo-defi.svg" alt="" /></div>
+                </div>
+                <h3 class="primary--text">Welcome to</h3>
+                <h3 class="primary--text">ECOC Finance Governance</h3>
+                <p class="lightgray--text">Please create or connect your wallet</p>
               </div>
-              <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
-            </div>
-            <CreateWalletModal
-              :visible="createwalletdialog"
-              @onCreatewalletModal="onOpenModal"
-              :oncloseCreatewalletModal="onCloseModalcreate"
-            />
-          </v-btn>
+              <div class="action-wrapper more-space">
+                <v-btn
+                  @click.native="step = 2"
+                  large
+                  class="mb-5 border"
+                  color="white"
+                  elevation="1"
+                >
+                  <div class="d-flex align-center">
+                    <div class="img-btn-logo">
+                      <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
+                    </div>
+                    <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
+                  </div>
+                </v-btn>
+                <v-btn large color="white" elevation="1" @click.native="step = 4">
+                  <div class="img-btn-logo">
+                    <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
+                  </div>
+                  <h4 class="mr-6 text-capitalize primary--text">Connect ECOC Wallet</h4>
+                </v-btn>
+              </div>
+            </v-card>
+          </v-stepper-content>
+          <v-stepper-content step="2">
+            <v-card>
+              <v-card-title class="headline modal-header">
+                <v-btn text @click.native="step = 1"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+              </v-card-title>
+              <CreateWalletModal />
+            </v-card>
+          </v-stepper-content>
+          <v-stepper-content step="4">
+            <v-card>
+              <v-card-title class="headline modal-header">
+                <v-btn text @click.native="step = 1"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+              </v-card-title>
 
-          <v-btn large color="white" elevation="1" @click.stop="ConnectWallet()">
-            <div class="img-btn-logo">
-              <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
-            </div>
-            <h4 class="mr-6 text-capitalize primary--text">Connect ECOC Wallet</h4>
-            <ConnectWalletModal />
-          </v-btn>
-        </div>
-      </v-card>
+              <ConnectWalletModal />
+            </v-card>
+          </v-stepper-content>
+        </v-stepper-items>
+      </v-stepper>
     </v-dialog>
   </div>
 </template>
@@ -54,6 +78,7 @@ import CreateWalletModal from './create-wallet.vue'
 export default class UnlockwalletModal extends Vue {
   createwalletdialog = false
   connectwalletmodal = false
+  step = 1
   @Prop() visible!: boolean
   unlockwalletModal = this.visible
   @Watch('visible')
@@ -66,7 +91,10 @@ export default class UnlockwalletModal extends Vue {
 
     // this.unlockWalletOpen = !this.unlockWalletOpen
   }
- 
+  submit() {
+    this.step = 1
+  }
+
   // onOpenCreateWallet() {
   //   console.log('CreateNewWallet1')
   //   this.createwalletdialog = !this.createwalletdialog
@@ -90,7 +118,7 @@ export default class UnlockwalletModal extends Vue {
     this.onClose()
   }
 
- onCloseModalcreate() {
+  onCloseModalcreate() {
     this.createwalletdialog = !this.createwalletdialog
     console.log('onCloseModalcreate')
   }
@@ -102,6 +130,9 @@ export default class UnlockwalletModal extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.v-stepper__content {
+  padding: 0;
+}
 .content-wrapper {
   text-align: center;
 }
