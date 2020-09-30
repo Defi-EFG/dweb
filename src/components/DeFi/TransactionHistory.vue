@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" :class="page" dark>
+  <v-card class="mx-auto tx-history" dark>
     <v-toolbar class="tx-history-head" flat dense>
       <v-toolbar-title>
         <v-icon class="mr-2">mdi-clock</v-icon>
@@ -7,29 +7,33 @@
       </v-toolbar-title>
     </v-toolbar>
 
-    <v-list color="#222738" class="tx-list">
-      <v-list-item v-for="(tx, index) in items" :key="index" class="tx-item">
-        <v-icon class="mr-3">{{
-          tx.type === 'received' ? 'mdi-arrow-down-circle-outline' : 'mdi-arrow-up-circle-outline'
-        }}</v-icon>
+    <v-card-text :class="page">
+      <v-list color="#222738" class="tx-list">
+        <v-list-item v-for="(tx, index) in items" :key="index" class="tx-item">
+          <v-icon class="mr-3">
+            {{
+            tx.type === 'received' ? 'mdi-arrow-down-circle-outline' : 'mdi-arrow-up-circle-outline'
+            }}
+          </v-icon>
 
-        <v-list-item-content>
-          <v-list-item-title class="tx-type">
-            {{ tx.type }} {{ tx.subtype ? `(${tx.subtype})` : '' }}
-            <v-spacer></v-spacer>
-            {{ tx.value }} {{ tx.token }}
-          </v-list-item-title>
-          <div class="tx-addr">
-            <small
-              >{{ tx.type === 'received' ? 'From' : 'To' }}:
-              {{ tx.address === defiAddr ? 'Lending (DeFi)' : truncateAddress(tx.address) }}</small
-            >
-            <v-spacer></v-spacer>
-            <small>{{ tx.time }}</small>
-          </div>
-        </v-list-item-content>
-      </v-list-item>
-    </v-list>
+          <v-list-item-content>
+            <v-list-item-title class="tx-type">
+              {{ tx.type }} {{ tx.subtype ? `(${tx.subtype})` : '' }}
+              <v-spacer></v-spacer>
+              {{ tx.value }} {{ tx.token }}
+            </v-list-item-title>
+            <div class="tx-addr">
+              <small>
+                {{ tx.type === 'received' ? 'From' : 'To' }}:
+                {{ tx.address === defiAddr ? 'Lending (DeFi)' : truncateAddress(tx.address) }}
+              </small>
+              <v-spacer></v-spacer>
+              <small>{{ tx.time }}</small>
+            </div>
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+    </v-card-text>
   </v-card>
 </template>
 
@@ -150,5 +154,13 @@ export default class TransactionHistory extends Vue {
 
 .wallet {
   height: auto;
+}
+</style>
+
+<style lang="scss">
+.tx-history {
+  .v-card__text {
+    padding: 0 !important;
+  }
 }
 </style>

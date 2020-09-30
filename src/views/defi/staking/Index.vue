@@ -31,12 +31,7 @@
         </v-card>
       </v-col>
       <v-col cols="4">
-        <div>
-          <TransactionHistory></TransactionHistory>
-        </div>
-        <div class="mt-3">
-          <!-- <SupplyMarket @switchToBorrow="modeSwitch"></SupplyMarket> -->
-        </div>
+        <RewardHistory></RewardHistory>
       </v-col>
     </v-row>
   </div>
@@ -50,6 +45,7 @@ import LendingActivity from '@/components/DeFi/LendingActivity.vue'
 import StakingChart from '@/components/DeFi/StakingChart.vue'
 import DepositWithdraw from '@/components/DeFi/DepositWithdraw.vue'
 import StakedReward from '@/components/DeFi/StakedReward.vue'
+import RewardHistory from '@/components/DeFi/RewardHistory.vue'
 
 @Component({
   components: {
@@ -58,7 +54,8 @@ import StakedReward from '@/components/DeFi/StakedReward.vue'
     LendingActivity,
     StakingChart,
     DepositWithdraw,
-    StakedReward
+    StakedReward,
+    RewardHistory
   }
 })
 export default class Staking extends Vue {}
