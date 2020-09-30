@@ -9,7 +9,8 @@
             <div class="text_header">{{ $t('views.main.name') }}</div>
             <div class="text_header_sub">
               {{ $t('views.main.sub_name_1') }}
-              <br /><br />
+            </div>
+            <div class="text_header_sub">
               {{ $t('views.main.sub_name_2') }}
             </div>
             <div class="social_icon">
@@ -24,56 +25,53 @@
     </section>
     <section class="sec_3">
       <v-container>
-        <v-row class="text_table" style="margin-top:0px;"> </v-row>
+        <v-row class="text_table"></v-row>
         <v-row class="text_table_sub"> </v-row>
       </v-container>
     </section>
     <section class="sec_2">
       <v-container>
         <v-row>
-          <v-col cols="12" style="color:#cccccc;">
-            Supply
+          <v-col cols="12" class="head_supply">
+            {{ $t('views.main.title_name') }}
           </v-col>
         </v-row>
         <v-row class="row1">
-          <v-col cols="5">
-            <div class="supply" style="border-right:2px solid  rgb(75 69 83);">
+          <v-col lg="5" md="5" cols="12" class="supply3">
+            <div class="supply supply2">
               <v-row>
                 <v-col cols="6">
                   <img src="@/assets/efg_01.svg" />
                   <div class="supply_name">EFG</div>
-                  <div class="supply_text" style="margin-top:10px;">Supply APY (DELAY)</div>
+                  <div class="supply_text">Supply APY (DELAY)</div>
                   <div class="supply_text">Borrow APY</div>
                 </v-col>
                 <v-col cols="6">
-                  <div class="supply_button1">
+                  <div class="supply_button11">
                     <a href="efg">
                       <button>Details</button>
                     </a>
                   </div>
-                  <div class="supply_price" style="margin-top:10px;">20.0%</div>
+                  <div class="supply_price">20.0%</div>
                   <div class="supply_price">3.5%</div>
                 </v-col>
               </v-row>
             </div>
           </v-col>
-          <v-col cols="7">
+          <v-col lg="7" md="7" cols="12">
             <div class="supply">
               <v-row>
-                <v-col cols="6">
-                  <div class="supply_name" style="top:unset; margin-left:0px;">
+                <v-col lg="6" md="6" cols="12">
+                  <div class="supply_name2">
                     EFG - Total Supply
                   </div>
-                  <div class="supply_price_color" style="margin-top:10px; color:#3FC0DB;">
+                  <div class="supply_price_color color_1">
                     $5,305,610.41
                   </div>
                 </v-col>
-                <v-col cols="6">
+                <v-col lg="6" md="6" cols="12">
                   <div class="supply_button1">EFG - Total Borrowed</div>
-                  <div
-                    class="supply_price_color"
-                    style="margin-top:10px; float: right; color:#C074F9;"
-                  >
+                  <div class="supply_price_color color_2">
                     $4,189,402.65
                   </div>
                 </v-col>
@@ -83,13 +81,13 @@
           <img style="position: absolute;" src="@/assets/backg_01.svg" />
         </v-row>
         <v-row class="row1">
-          <v-col cols="5">
-            <div class="supply" style="border-right:2px solid rgb(75 69 83);">
+          <v-col lg="5" md="5" cols="12" class="supply3">
+            <div class="supply supply2">
               <v-row>
                 <v-col cols="6">
                   <img src="@/assets/delay.svg" />
                   <div class="supply_name">DELAY</div>
-                  <div class="supply_text" style="margin-top:10px;">Liquidation</div>
+                  <div class="supply_text">Liquidation</div>
                 </v-col>
                 <v-col cols="6">
                   <div class="supply_button2">
@@ -97,19 +95,19 @@
                       <button>Details</button>
                     </a>
                   </div>
-                  <div class="supply_price" style="margin-top:10px;">20.0%</div>
+                  <div class="supply_price">20.0%</div>
                 </v-col>
               </v-row>
             </div>
           </v-col>
-          <v-col cols="7">
+          <v-col lg="7" md="7" cols="12">
             <div class="supply">
               <v-row>
                 <v-col cols="12">
-                  <div class="supply_name" style="top:unset; margin-left:0px;">
+                  <div class="supply_name2">
                     DELAY - Available (Total: 10,000 DELAY)
                   </div>
-                  <div class="supply_price_color" style="margin-top:10px; color:#3FC0DB;">
+                  <div class="supply_price_color color_1">
                     $5,305,610.41
                   </div>
                 </v-col>
@@ -121,7 +119,7 @@
         <v-row style="border-bottom:2px solid #312D36; margin-top:20px"></v-row>
         <v-row>
           <v-col cols="12" style="color:#cccccc; margin-top:50px">
-            Collateral
+            {{ $t('views.main.collateral') }}
           </v-col>
         </v-row>
         <v-row>
@@ -145,10 +143,10 @@
             <v-carousel hide-delimiters>
               <v-carousel-item v-for="(item, i) in items" :key="i">
                 <v-row class="fill-height" align="center" justify="center">
-                  <v-col cols="4">
+                  <v-col lg="4" md="4" cols="12">
                     <div class="img_footer"><img :src="item.src" alt="" /></div>
                   </v-col>
-                  <v-col cols="8">
+                  <v-col lg="8" md="8" cols="12">
                     <div class="text_head_footer">{{ item.title }}</div>
                     <div class="subtext_head_footer">{{ item.subtitle }}</div>
                   </v-col>
@@ -185,27 +183,6 @@ export default {
           subtitle:
             'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
         }
-      ],
-      data: [
-        {
-          img: require('../../assets/bitcoin2.png'),
-          name: 'ECOC',
-          total: '$5.3 M',
-          apy: '$2.5 M'
-        },
-        {
-          img: require('../../assets/usd.png'),
-          name: 'USD',
-          total: '$5.3 M',
-          apy: '$2.5 M',
-          phat: '/markets?id='
-        },
-        {
-          img: require('../../assets/eth.png'),
-          name: 'ETH',
-          total: '$5.3 M',
-          apy: '$2.5 M'
-        }
       ]
     }
   }
@@ -224,7 +201,6 @@ export default {
   background: transparent linear-gradient(180deg, #2c1635 0%, #070c1a 100%) 0% 0% no-repeat
     padding-box;
   padding-top: 200px;
-  z-index: 200;
 }
 .sec_2 {
   background: #202020 0% 0% no-repeat padding-box;
@@ -244,16 +220,17 @@ export default {
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
-  top: -20px;
+  top: -13px;
   padding-left: 20px;
 }
 .sec_1 .text_header_sub {
   text-align: left;
-  font: normal normal normal 16px/21px Segoe UI;
+  font: normal normal normal 17px/23px Segoe UI;
   letter-spacing: 0px;
   color: #929292;
   opacity: 1;
   padding-top: 20px;
+  text-indent: 5em;
 }
 .sec_1 .social_icon {
   position: relative;
@@ -264,7 +241,7 @@ export default {
 }
 .img_background {
   width: 500px;
-  position: absolute; 
+  position: absolute;
   right: 200px;
 }
 .sec_1 .social_icon img {
@@ -284,13 +261,19 @@ export default {
   right: 0;
   bottom: 0;
 }
+.head_supply {
+  color: #cccccc;
+}
+.sec_2 .row1 .supply2 {
+  border-right: 2px solid rgb(75 69 83);
+}
 .sec_2 .row1 .supply {
   padding: 0px 20px;
   position: relative;
-  z-index: 200;
 }
 .sec_2 .row1 .supply img {
   width: 30px;
+  margin-right: 10px;
 }
 .sec_2 .row1 .supply_name {
   text-align: left;
@@ -301,7 +284,15 @@ export default {
   display: inline;
   position: relative;
   top: -10px;
-  margin-left: 10px;
+}
+.sec_2 .row1 .supply_name2 {
+  text-align: left;
+  font: normal normal normal 16px/21px Segoe UI;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+  display: inline;
+  position: relative;
 }
 .sec_2 .row1 .supply_text {
   text-align: left;
@@ -309,12 +300,17 @@ export default {
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 0.5;
+  margin-top: 10px;
 }
 .sec_2 .row1 .supply_button1 {
   text-align: right;
   color: #ffffff;
 }
-.sec_2 .row1 .supply_button1 button {
+.sec_2 .row1 .supply_button11 {
+  text-align: right;
+  color: #ffffff;
+}
+.sec_2 .row1 .supply_button11 button {
   background: transparent linear-gradient(270deg, #522d6a 0%, #743f96 100%) 0% 0% no-repeat
     padding-box;
   border-radius: 17px;
@@ -323,7 +319,7 @@ export default {
   color: #ffffff;
   transition: 0.5s;
 }
-.sec_2 .row1 .supply_button1 button:hover {
+.sec_2 .row1 .supply_button11 button:hover {
   background: transparent linear-gradient(270deg, #8d48ba 0%, #a38bb3 100%) 0% 0% no-repeat;
   color: #000000;
 }
@@ -351,13 +347,22 @@ export default {
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
+  margin-top: 10px;
 }
 .sec_2 .row1 .supply_price_color {
-  z-index: 200;
   text-align: left;
   font: normal normal 400 30px/40px Segoe UI;
   letter-spacing: 0px;
   opacity: 1;
+  padding-top: 20px;
+}
+.sec_2 .row1 .color_1 {
+  color: rgb(63, 192, 219);
+}
+.sec_2 .row1 .color_2 {
+  color: rgb(192, 116, 249);
+  float: right;
+  color: rgb(192, 116, 249);
 }
 .sec_2 .but_div {
   background: #312d36 0% 0% no-repeat padding-box;
@@ -423,7 +428,7 @@ export default {
   transform-origin: 50% 50%;
   animation-name: icon_div;
   animation-duration: 2s;
-  width: 80px;
+  width: 60px;
 }
 .img_logo1 {
   animation: img_logo1 2s forwards;
@@ -433,6 +438,7 @@ export default {
 .sec_1 .social_icon img:hover {
   transform: scale(1.5);
 }
+
 @keyframes img_logo1 {
   0% {
     opacity: 0;
@@ -478,9 +484,82 @@ export default {
   }
 }
 
+@media only screen and (max-width: 960px) {
+  .sec_2 .row1 .supply2 {
+    border-right: unset;
+  }
+  .sec_2 .row1 .supply2 {
+    border-bottom: 2px solid rgb(75, 69, 83);
+  }
+  .img_footer {
+    margin: 0 auto;
+  }
+  .text_head_footer {
+    text-align: center;
+  }
+  .subtext_head_footer {
+    text-align: center;
+  }
+  .sec_2 .row1 .supply_price_color {
+    padding: 0;
+  }
+  .sec_2 .row1 .color_2 {
+    float: left;
+  }
+  .sec_2 .row1 .supply_button1 {
+    text-align: left;
+  }
+  .sec_2 .row1 .supply_button11 button {
+    padding: 5px 20px;
+  }
+  .sec_2 .row1 .supply_button2 button {
+    padding: 5px 20px;
+  }
+}
+
 @media only screen and (max-width: 670px) {
   .total_supply .price_text {
     font-size: 30px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .sec_1 .text_header {
+    font-size: 25px;
+    top: -10px;
+  }
+  .efg-logo {
+    width: 50px;
+  }
+  .sec_1 {
+    padding-top: 150px;
+  }
+  .sec_3 {
+    height: 150px;
+  }
+  .sec_2 {
+    padding-top: 50px;
+  }
+  .sec_2 .but_div {
+    padding: 21px 20px 2px 10px;
+  }
+  .sec_1 .social_icon {
+    text-align: center;
+    padding: 20px 10px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .sec_2 .row1 .supply_price_color {
+    padding: 0;
+  }
+  .sec_2 .row1 .color_2 {
+    float: left;
+  }
+  .sec_2 .row1 .supply_button1 {
+    text-align: left;
+  }
+  .sec_2 .row1 .supply_name2 {
+    font-size: 14px;
   }
 }
 </style>

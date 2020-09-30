@@ -263,13 +263,14 @@ export default {
     top: 50px;
     padding: 20px 50px;
     height: 70px;
+    background: #ffffff;
   }
   .sibar_dc {
     display: inline;
-    margin: 0 10px;
+    margin-right:10px;
   }
   .sec_doc2 {
-    padding: 100px 50px;
+    padding: 150px 50px;
   }
   .container {
     padding: 12px;
