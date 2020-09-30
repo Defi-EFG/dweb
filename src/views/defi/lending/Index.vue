@@ -54,15 +54,15 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import SupplyBalance from '@/components/SupplyBalance.vue'
-import BorrowBalance from '@/components/BorrowBalance.vue'
-import LendingActivity from '@/components/LendingActivity.vue'
-import Collateral from '@/components/CollateralCard.vue'
-import Withdraw from '@/components/WithdrawCard.vue'
-import CollateralToken from '@/components/CollateralToken.vue'
-import SupplyMarket from '@/components/SupplyMarket.vue'
-import Borrow from '@/components/BorrowCard.vue'
-import Repay from '@/components/RepayCard.vue'
+import SupplyBalance from '@/components/DeFi/SupplyBalance.vue'
+import BorrowBalance from '@/components/DeFi/BorrowBalance.vue'
+import LendingActivity from '@/components/DeFi/LendingActivity.vue'
+import Collateral from '@/components/DeFi/CollateralCard.vue'
+import Withdraw from '@/components/DeFi/WithdrawCard.vue'
+import CollateralToken from '@/components/DeFi/CollateralToken.vue'
+import SupplyMarket from '@/components/DeFi/SupplyMarket.vue'
+import Borrow from '@/components/DeFi/BorrowCard.vue'
+import Repay from '@/components/DeFi/RepayCard.vue'
 
 @Component({
   components: {
