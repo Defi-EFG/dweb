@@ -46,7 +46,7 @@
       <div class="withdraw-rate">
         <span>{{ selectedCurrencyName }} Available: {{ selectedCurrencyBalance }}</span>
         <v-spacer></v-spacer>
-        <span class="fb-btn">Full Balance</span>
+        <span class="fb-btn">Withdraw All</span>
       </div>
       <v-text-field
         class="withdraw-amount"
