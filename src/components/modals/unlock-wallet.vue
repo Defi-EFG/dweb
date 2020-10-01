@@ -32,7 +32,7 @@
                     <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
                   </div>
                 </v-btn>
-                <v-btn large color="white" elevation="1" @click.native="step = 3">
+                <v-btn large color="white" elevation="1" @click.native="step = 4">
                   <div class="img-btn-logo">
                     <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
                   </div>
