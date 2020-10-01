@@ -231,6 +231,7 @@ export default class UnlockwalletModal extends Vue {
   createwalletdialog = false
   upload = false
   jsonformat = ''
+  welcomecontent = 'welcomecontent'
   connectwalletmodal = false
   @Prop() visible!: boolean
   step = 'welcomecontent'
