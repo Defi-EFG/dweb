@@ -3,7 +3,9 @@
     <v-dialog v-model="unlockwalletModal" max-width="394" persistent>
       <v-stepper v-model="step">
         <v-stepper-items>
-          <v-stepper-content step="welcomecontent">
+          <!-- Welcome to ECOC Finance Governance -->
+
+          <v-stepper-content step="1">
             <v-card>
               <v-card-title class="headline modal-header">
                 <v-icon></v-icon>
@@ -42,10 +44,12 @@
             </v-card>
           </v-stepper-content>
 
+          <!-- Keystore File Generated! -->
+
           <v-stepper-content step="3">
             <v-card>
               <v-card-title class="headline modal-header">
-                <v-btn text><v-icon></v-icon></v-btn>
+                <v-btn text disabled><v-icon></v-icon></v-btn>
                 <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
@@ -75,12 +79,12 @@
             </v-card>
           </v-stepper-content>
 
+          <!-- Create ECOC Wallet -->
+
           <v-stepper-content step="2">
             <v-card>
               <v-card-title class="headline modal-header">
-                <v-btn text @click.native="step = welcomecontent"
-                  ><v-icon>$leftarrow</v-icon></v-btn
-                >
+                <v-btn text @click.native="step = 1"><v-icon>$leftarrow</v-icon></v-btn>
                 <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
@@ -120,7 +124,7 @@
                   <v-btn large class="mb-5" color="primary" @click.native="step = 3">
                     <h4 class="text-capitalize font-weight-light">Create</h4>
                   </v-btn>
-                  <small class="lightgray--text mt-5 mb-2"
+                  <small class="lightgray--text mt-1 mb-4"
                     >Needed password to unlock keystore file.</small
                   >
                 </div>
@@ -128,12 +132,12 @@
             </v-card>
           </v-stepper-content>
 
+          <!-- Connect ECOC Wallet-->
+
           <v-stepper-content step="4">
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
-                <v-btn text @click.native="step = welcomecontent"
-                  ><v-icon>$leftarrow</v-icon></v-btn
-                >
+                <v-btn text @click.native="step = 1"><v-icon>$leftarrow</v-icon></v-btn>
                 <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
@@ -145,6 +149,7 @@
                   <div class="upload_input">
                     <v-textarea
                       outlined
+                      auto-grow
                       v-model="jsonformat"
                       filled
                       label="Your keystore text..."
@@ -157,12 +162,13 @@
                       hide-input
                       @change="onFileChange"
                     ></v-file-input>
-                    <div class="uploadkeystorefile">
+                    <div class="uploadkeystorefile mb-4">
                       <span class="lightgray--text  mr-2">or</span>
                       <p>Upload keystore file</p>
                     </div>
                     <div class="action-wrapper">
                       <v-btn
+                        large
                         v-if="upload || jsonformat.length > 6"
                         @click.native="step = 5"
                         class="mb-5"
@@ -180,10 +186,12 @@
             </v-card>
           </v-stepper-content>
 
+          <!-- Keystore password -->
+
           <v-stepper-content step="5">
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
-                <v-btn text @click.native="step = 3"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn text @click.native="step = 4"><v-icon>$leftarrow</v-icon></v-btn>
                 <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
@@ -217,6 +225,9 @@
     </v-dialog>
   </div>
 </template>
+
+
+
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Loading from './loading-create-accout.vue'
@@ -231,10 +242,10 @@ export default class UnlockwalletModal extends Vue {
   createwalletdialog = false
   upload = false
   jsonformat = ''
-  welcomecontent = 'welcomecontent'
+
   connectwalletmodal = false
   @Prop() visible!: boolean
-  step = 'welcomecontent'
+  step = 1
   unlockwalletModal = this.visible
   @Watch('visible')
   show() {
@@ -247,7 +258,7 @@ export default class UnlockwalletModal extends Vue {
     this.upload = !this.upload
   }
   submit() {
-    this.step = ''
+    this.step = 1
   }
   onClose() {
     console.log('emitOnclose')
@@ -327,7 +338,7 @@ export default class UnlockwalletModal extends Vue {
   width: 30px;
 }
 .create-wallet-wraper {
-  padding: 29px 33px 23px 36px;
+  padding: 29px 33px 43px 36px;
 }
 .v-stepper__content {
   padding: 0;
@@ -349,7 +360,6 @@ export default class UnlockwalletModal extends Vue {
   margin-right: 5px;
 }
 .action-wrapper {
-  margin-top: 15px;
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -365,7 +375,7 @@ export default class UnlockwalletModal extends Vue {
   box-shadow: 0px 3px 8px #00000021 !important;
 }
 .more-space {
-  padding: 38px 36px 77px 36px;
+  padding: 38px 36px 56px 36px;
 }
 
 .topspace {
