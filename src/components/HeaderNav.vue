@@ -6,7 +6,7 @@
     </div>
     <v-spacer></v-spacer>
 
-    <template v-if="!loggedIn">
+    <template v-if="!addr">
       <v-btn outlined small @click="onUnlockWallet">Unlock Wallet</v-btn>
     </template>
 
@@ -29,9 +29,8 @@ import WalletModule from '@/store/wallet'
   }
 })
 export default class HeaderNav extends Vue {
-  loggedIn = false
-  unlockWallet = false
   walletStore = getModule(WalletModule)
+  unlockWallet = false
 
   get addr() {
     return this.walletStore.address
@@ -42,11 +41,20 @@ export default class HeaderNav extends Vue {
       '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
     const password = '123456'
 
-    this.walletStore.importWallet({ keystore, password })
-    this.loggedIn = true
+    this.walletStore.importWallet({ keystore, password }).then(() => {
+      this.walletStore.updateBalance()
+      this.walletStore.updateTransactionsHistory()
+    })
+  }
+
+  onLogout() {
+    console.log('before clear', this.walletStore.address)
+    this.walletStore.logout()
+    console.log('after clear', this.walletStore.address)
   }
 
   gotoHome() {
+    this.onLogout()
     this.$router.push('/')
   }
 

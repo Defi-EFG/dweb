@@ -1,3 +1,8 @@
+export interface TxList {
+  pagesTotal: number
+  txs: Transaction[]
+}
+
 export interface Transaction {
   txid: string
   version: number
