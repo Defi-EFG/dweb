@@ -39,7 +39,8 @@ export default new Vuetify({
         lightgray: '#929292',
         white: '#FFFFFF',
         transparent: 'transparent'
-      }
+      },
+    
     }
   },
   icons: {

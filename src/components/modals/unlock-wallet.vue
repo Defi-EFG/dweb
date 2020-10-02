@@ -227,7 +227,6 @@
 </template>
 
 
-
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Loading from './loading-create-accout.vue'
@@ -261,7 +260,6 @@ export default class UnlockwalletModal extends Vue {
     this.step = 1
   }
   onClose() {
-    console.log('emitOnclose')
     this.$emit('onClose')
   }
   onCreatewallet() {
@@ -276,7 +274,6 @@ export default class UnlockwalletModal extends Vue {
 
   onCloseModalcreate() {
     this.createwalletdialog = !this.createwalletdialog
-    console.log('onCloseModalcreate')
   }
   ConnectWallet() {
     console.log('connect', this.connectwalletmodal)

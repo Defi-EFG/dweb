@@ -58,25 +58,30 @@
         solo
         hide-details="true"
       ></v-text-field>
-
-      <v-btn depressed block large class="send-btn" @click="onSend">Send</v-btn>
+      <v-btn depressed block large class="send-btn" @click="onunlockSuccess()">Send</v-btn>
+      <TransactionComfirmationModal :visible="sendialog" @onSuccess="sendialog" />
     </v-card-text>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
 import { getModule } from 'vuex-module-decorators'
 import { SendPayload } from '@/types/wallet'
 import WalletModule from '@/store/wallet'
-
+import TransactionComfirmationModal from '@/components/modals/transection-confirmation.vue'
 @Component({
+  components: {
+    TransactionComfirmationModal
+  },
   directives: {
     clickOutside: vClickOutside.directive
   }
 })
 export default class SendToken extends Vue {
+  sendialog = true
+
   walletStore = getModule(WalletModule)
   displayContact = false
 
@@ -123,7 +128,13 @@ export default class SendToken extends Vue {
 
     this.displayContact = false
   }
-
+  onunlockSuccess() {
+    console.log('ggg')
+    this.sendialog = !this.sendialog
+  }
+  onOpenModal() {
+    this.sendialog = !this.sendialog
+  }
   onSend() {
     const payload = {
       currency: this.selectedCurrency,
@@ -289,5 +300,8 @@ export default class SendToken extends Vue {
     background: #3d4254;
     color: white;
   }
+}
+v-dialog {
+  border: 1pc solid red;
 }
 </style>
