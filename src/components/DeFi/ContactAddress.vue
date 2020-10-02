@@ -19,7 +19,7 @@
 
         <v-list-item-content>
           <v-list-item-title>{{ contact.name }}</v-list-item-title>
-          <small class="addr-value">{{ contact.address }}</small>
+          <small class="addr-value text-truncate">{{ contact.address }}</small>
         </v-list-item-content>
 
         <v-list-item-icon>

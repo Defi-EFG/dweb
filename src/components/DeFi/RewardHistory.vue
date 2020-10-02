@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" dark color="#222738">
+  <v-card class="mx-auto history-container" dark color="#222738">
     <v-toolbar class="reward-history-head" flat dense>
       <v-toolbar-title>
         <v-icon class="mr-2">mdi-star</v-icon>
@@ -51,6 +51,10 @@ export default class RewardHistory extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.history-container {
+  width: inherit;
+}
+
 .reward-history-head {
   background: transparent linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
     padding-box;

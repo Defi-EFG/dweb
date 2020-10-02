@@ -14,7 +14,7 @@ interface CurrencyStyle {
 
 export const KNOWN_CURRENCY = {
   ECOC: {
-    icon: require('@/assets/icon/currency/ecoc.png'),
+    icon: require('@/assets/icon/currency/ecoc.svg'),
     mark: require('@/assets/wallet-token/ecoc.svg')
   } as Style,
   EFG: {
@@ -26,11 +26,11 @@ export const KNOWN_CURRENCY = {
     mark: require('@/assets/wallet-token/delay.svg')
   } as Style,
   USDT: {
-    icon: require('@/assets/icon/currency/usdt.png'),
+    icon: require('@/assets/icon/currency/usdt.svg'),
     mark: require('@/assets/wallet-token/usdt.svg')
   } as Style,
   ETH: {
-    icon: require('@/assets/icon/currency/eth.png'),
+    icon: require('@/assets/icon/currency/eth.svg'),
     mark: require('@/assets/wallet-token/ether.svg')
   } as Style,
   // Temporary currency, please remove when project done
