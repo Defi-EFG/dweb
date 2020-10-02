@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" dark>
+  <v-card class="contact-address-container" color="#222738" dark>
     <v-toolbar class="contact-address-head" flat dense>
       <v-toolbar-title>
         <v-icon class="mr-2">mdi-book-variant</v-icon>
@@ -54,6 +54,10 @@ export default class ContactAddress extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.contact-address-container {
+  width: inherit;
+}
+
 .contact-address-head {
   background: transparent linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
     padding-box;
@@ -68,6 +72,7 @@ export default class ContactAddress extends Vue {
   overflow: auto;
 }
 .address-item {
+  text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.105);
 }
 .address-item:nth-last-child(1) {

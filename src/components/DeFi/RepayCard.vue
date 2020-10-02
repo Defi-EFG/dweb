@@ -5,11 +5,15 @@
       <div class="wallet-balance mb-2">
         <span>Wallet Balance:</span>
         <v-spacer></v-spacer>
-        <span class="balance">1000.00 {{ token }}</span>
+        <span
+          class="balance"
+          @click="fillAmount(walletBalance)"
+        >{{ walletBalance.toFixed(2) }} {{ token }}</span>
       </div>
       <v-text-field
         class="amount-input"
         label="Collateral Amount"
+        v-model="collateralAmount"
         :suffix="token"
         height="43"
         color="#C074F9"
@@ -59,11 +63,18 @@ import { Vue, Component } from 'vue-property-decorator'
 @Component({})
 export default class Collateral extends Vue {
   token = 'ECOC'
+  walletBalance = 1000
+  collateralAmount: number | string = ''
+
+  fillAmount(amount: number) {
+    this.collateralAmount = amount
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .wrapper {
+  text-align: left;
   padding: 2rem;
 }
 
@@ -90,6 +101,7 @@ export default class Collateral extends Vue {
 }
 
 .borrow-power {
+  margin-top: 1rem;
   .label {
     font-weight: 700;
     color: white;
@@ -115,7 +127,7 @@ export default class Collateral extends Vue {
 }
 
 .submit-btn {
-  margin-top: 1.65rem;
+  margin-top: 3.6rem;
   border-radius: 7px;
   font-weight: bold;
   background: transparent linear-gradient(90deg, #9c26df 0%, #661b91 100%) 0% 0% no-repeat

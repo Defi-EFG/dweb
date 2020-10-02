@@ -120,6 +120,7 @@ export default class TokenList extends Vue {
   display: flex;
   overflow: auto;
   min-height: 226px;
+  width: inherit;
 
   &::-webkit-scrollbar-track {
     margin: 8px
@@ -244,10 +245,12 @@ export default class TokenList extends Vue {
   &-ECOC {
     position: absolute;
     bottom: 1rem;
+    left: 0;
   }
 
   &-EFG {
     position: absolute;
+    left: 0;
     bottom: 0;
   }
 
