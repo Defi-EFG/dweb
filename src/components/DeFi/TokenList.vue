@@ -2,7 +2,7 @@
   <div class="token-container">
     <div
       :class="`card-grad-border ${currency.name}-bg`"
-      v-for="(currency, index) in exampleCurrency"
+      v-for="(currency, index) in currencies"
       :key="index"
     >
       <v-card

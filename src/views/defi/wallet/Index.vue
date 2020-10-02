@@ -11,9 +11,9 @@
     <v-row>
       <v-col cols="8">
         <v-card dark color="#222738">
-          <v-toolbar class="receive-send-wrapper" dense flat>
+          <v-toolbar :class="`receive-send-wrapper token-${selectedCurrencyName}`" dense flat>
             <v-toolbar-title class="token-symbol">
-              <img src="@/assets/efg_logo.svg" />
+              <img :src="require(`@/assets/icon/vector/${selectedCurrencyName}.svg`)" />
               <span>{{ selectedCurrencyName }}</span>
             </v-toolbar-title>
           </v-toolbar>
@@ -62,7 +62,8 @@ export default class Wallet extends Vue {
   }
 
   get selectedCurrencyName() {
-    return this.selectedCurrency?.name || ''
+    return 'ETH'
+    // return this.selectedCurrency?.name || ''
   }
 
   get selectedCurrency() {
@@ -85,6 +86,28 @@ export default class Wallet extends Vue {
   img {
     width: 24px;
     margin-right: 0.8rem;
+  }
+}
+
+.token- {
+  &ECOC {
+    background: linear-gradient(268deg, #5b1eaa 0%, #754097 100%) !important;
+  }
+
+  &EFG {
+    background: linear-gradient(268deg, #9400dc 0%, #743f96 100%) !important;
+  }
+
+  &DELAY {
+    background: linear-gradient(268deg, #8a40d7 0%, #6800fe 100%) !important;
+  }
+
+  &USDT {
+    background: linear-gradient(268deg, #53ae94 0%, #00bf66 100%) !important;
+  }
+
+  &ETH {
+    background: linear-gradient(268deg, #bebebe 0%, #5a5a5a 100%) !important;
   }
 }
 </style>
