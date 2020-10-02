@@ -14,10 +14,31 @@
               {{ $t('views.main.sub_name_2') }}
             </div>
             <div class="social_icon">
-              <img class="img_logo1" src="@/assets/Telegram.svg" style="animation-delay: 1s;" />
-              <img class="img_logo1" src="@/assets/github.svg" style="animation-delay: 1.5s;" />
-              <img class="img_logo1" src="@/assets/facebook.svg" style="animation-delay: 2s;" />
-              <img class="img_logo1" src="@/assets/twitter.svg" style="animation-delay: 2.5s;" />
+              <a href="https://t.me/EFGtoken" target="_blank">
+                <img
+                  title="Telegram"
+                  class="img_logo1"
+                  src="@/assets/Subtraction.svg"
+                  style="animation-delay: 1s;"
+              /></a>
+              <img
+                title="Github"
+                class="img_logo1"
+                src="@/assets/github.svg"
+                style="animation-delay: 1.5s;"
+              />
+              <img
+                title="Medium"
+                class="img_logo1"
+                src="@/assets/medium.svg"
+                style="animation-delay: 2s;"
+              />
+              <img
+                title="Twitter"
+                class="img_logo1"
+                src="@/assets/twitter.svg"
+                style="animation-delay: 2.5s;"
+              />
             </div>
           </v-col>
         </v-row>
@@ -33,7 +54,7 @@
       <v-container>
         <v-row>
           <v-col cols="12" class="head_supply">
-            {{ $t('views.main.title_name') }}
+            {{ $t('views.main.supply') }}
           </v-col>
         </v-row>
         <v-row class="row1">
@@ -43,13 +64,13 @@
                 <v-col cols="6">
                   <img src="@/assets/efg_01.svg" />
                   <div class="supply_name">EFG</div>
-                  <div class="supply_text">Supply APY (DELAY)</div>
-                  <div class="supply_text">Borrow APY</div>
+                  <div class="supply_text">{{ $t('views.main.supply_apy') }}</div>
+                  <div class="supply_text">{{ $t('views.main.borrow_apy') }}</div>
                 </v-col>
                 <v-col cols="6">
                   <div class="supply_button11">
                     <a href="efg">
-                      <button>Details</button>
+                      <button>{{ $t('views.main.detail') }}</button>
                     </a>
                   </div>
                   <div class="supply_price">20.0%</div>
@@ -62,15 +83,13 @@
             <div class="supply">
               <v-row>
                 <v-col lg="6" md="6" cols="12">
-                  <div class="supply_name2">
-                    EFG - Total Supply
-                  </div>
+                  <div class="supply_name2">EFG - {{ $t('views.main.total_supply') }}</div>
                   <div class="supply_price_color color_1">
                     $5,305,610.41
                   </div>
                 </v-col>
                 <v-col lg="6" md="6" cols="12">
-                  <div class="supply_button1">EFG - Total Borrowed</div>
+                  <div class="supply_button1">EFG - {{ $t('views.main.total_borrowed') }}</div>
                   <div class="supply_price_color color_2">
                     $4,189,402.65
                   </div>
@@ -87,12 +106,12 @@
                 <v-col cols="6">
                   <img src="@/assets/delay.svg" />
                   <div class="supply_name">DELAY</div>
-                  <div class="supply_text">Liquidation</div>
+                  <div class="supply_text">{{ $t('views.main.liquidation') }}</div>
                 </v-col>
                 <v-col cols="6">
                   <div class="supply_button2">
                     <a href="delay">
-                      <button>Details</button>
+                      <button>{{ $t('views.main.detail') }}</button>
                     </a>
                   </div>
                   <div class="supply_price">20.0%</div>
@@ -104,9 +123,7 @@
             <div class="supply">
               <v-row>
                 <v-col cols="12">
-                  <div class="supply_name2">
-                    DELAY - Available (Total: 10,000 DELAY)
-                  </div>
+                  <div class="supply_name2">DELAY - {{ $t('views.main.available') }}</div>
                   <div class="supply_price_color color_1">
                     $5,305,610.41
                   </div>
@@ -143,10 +160,10 @@
             <v-carousel hide-delimiters>
               <v-carousel-item v-for="(item, i) in items" :key="i">
                 <v-row class="fill-height" align="center" justify="center">
-                  <v-col lg="4" md="4" cols="12">
+                  <v-col lg="3" md="3" cols="12">
                     <div class="img_footer"><img :src="item.src" alt="" /></div>
                   </v-col>
-                  <v-col lg="8" md="8" cols="12">
+                  <v-col lg="9" md="9" cols="12">
                     <div class="text_head_footer">{{ item.title }}</div>
                     <div class="subtext_head_footer">{{ item.subtitle }}</div>
                   </v-col>
@@ -166,10 +183,10 @@ export default {
     return {
       items: [
         {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-          title: 'Lorem ipsum dolor sit amet 1',
+          src: require('@/assets/silderimg_01.svg'),
+          title: 'ECOC Financial Growth',
           subtitle:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
+            'ECOC Financial Growth (EFG) is an interesting lending opportunity on decentralize blockchain, that let developers create new financial applications that are global, safe, and open for ECOC coins user. ECOChain developers keep developing the core blockchain infrastructure, as well as the tools to empower the new financial system.'
         },
         {
           src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
@@ -248,6 +265,7 @@ export default {
   padding: 0 5px;
   margin-right: 0;
   transition: transform 0.3s;
+  cursor: pointer;
 }
 .sec_2 .row1 {
   background: #312d36;
@@ -389,8 +407,8 @@ export default {
   margin-left: 10px;
 }
 .img_footer {
-  width: 250px;
-  height: 250px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   overflow: hidden;
 }

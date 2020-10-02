@@ -52,7 +52,7 @@
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
-              <line-chart></line-chart>
+              <line-chart ></line-chart>
             </div>
           </v-col>
         </v-row>

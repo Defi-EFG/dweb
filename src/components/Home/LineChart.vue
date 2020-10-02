@@ -13,7 +13,9 @@ export default {
             data: [1.6, 3, 2, 2.3, 2.1, 2],
             borderColor: '#ffffff',
             backgroundColor: '#a346ff3b',
-            borderWidth: 2
+            borderWidth: 2,
+            pointBorderColor: '#ffffff00',
+            pointHoverBackgroundColor: '#ffffff00'
           }
         ]
       },

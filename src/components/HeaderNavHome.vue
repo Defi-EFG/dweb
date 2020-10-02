@@ -140,7 +140,7 @@ ul {
 .desktop_menu {
   width: 100%;
   text-align: right;
-  margin-right: 50px;
+  margin-right: 20px;
 }
 .lg_div {
   top: 50px !important;

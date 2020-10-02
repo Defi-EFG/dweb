@@ -15,8 +15,18 @@
             "name": "ECOC Financial Growth",
             "sub_name_1": "ECOC Financial Growth (EFG) token is a Dapp logic based on decentralization finance (DeFi) created by smart contracts. These tokens comply with ECRC-20 standard, which shares the same Interface of ERC-20 (Ethereum) standard. The mechanism to function ECOC Financial Growth (EFG) token can offer a firmer credit channel for borrowers.",
             "sub_name_2": "Investors don’t need to sell their coins to get liquidity, they just deposit them as collateral and they can buy them back when they want. That way EFG token comes with new alternatives for investment, according to the basic mechanism of the cryptocurrency market and interest compensation depends on the borrowing period.",
-            "title_name": "Supply",
+            "supply": "Supply",
+            "detail": "Details",
+            "supply_apy": "Supply APY (DELAY)",
+            "borrow_apy": "Borrow APY",
+            "total_supply": "Total Supply",
+            "total_borrowed": "Total Borrowed",
+            "liquidation": "Liquidation",
+            "available": "Available (Total: 10,000 DELAY)",
             "collateral": "Collateral"
+        },
+        "mainslider": {
+            "": ""
         }
     },
     "components": {
