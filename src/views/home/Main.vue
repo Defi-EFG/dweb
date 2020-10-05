@@ -173,6 +173,14 @@
         </v-row>
       </v-container>
     </section>
+    <div class="send-transaction">
+      <v-dialog v-model="dialog" max-width="500">
+        <v-card>
+        <v-card-text>
+          <img class="img" src="@/assets/underconstruction.svg" alt="" />
+    </v-card-text>    </v-card>
+      </v-dialog>
+    </div>
   </div>
 </template>
 
@@ -180,6 +188,7 @@
 export default {
   data() {
     return {
+      dialog: true,
       items: [
         {
           src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
@@ -491,5 +500,8 @@ export default {
   .total_supply .price_text {
     font-size: 30px;
   }
+}
+.v-card__text{
+      text-align: center;
 }
 </style>
