@@ -79,6 +79,7 @@ export default class StakingChart extends Vue {
   width: inherit;
   background: #222738;
   display: flex;
+  text-align: left;
 }
 
 .chart-wrapper {

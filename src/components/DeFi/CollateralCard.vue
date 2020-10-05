@@ -45,7 +45,7 @@
         </div>
       </div>
       <v-divider />
-      <v-btn large block depressed class="submit-btn">Collateral</v-btn>
+      <v-btn large block depressed class="submit-btn">Deposit</v-btn>
     </v-card-text>
   </v-card>
 </template>

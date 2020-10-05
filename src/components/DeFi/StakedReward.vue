@@ -9,7 +9,7 @@
       <div class="d-amount">
         <span>Deposited amount</span>
         <v-spacer></v-spacer>
-        <span>500.00 EFG</span>
+        <span>{{ depositedAmount.toFixed(2) }} EFG</span>
       </div>
 
       <v-divider></v-divider>
@@ -17,9 +17,9 @@
       <p class="reward-label">Reward Withdrawal</p>
 
       <div class="minimum-w">
-        <span class="value">Minimum Deposit: 1.00 EFG</span>
+        <span class="value">Minimum Withdrawal: 1.00 EFG</span>
         <v-spacer></v-spacer>
-        <span class="all">Withdraw All</span>
+        <span class="all" @click="fillAmount(depositedAmount)">Withdraw All</span>
       </div>
 
       <v-text-field
@@ -27,6 +27,7 @@
         placeholder="0"
         prefix="Amount"
         suffix="DELAY"
+        v-model="rewardAmount"
         single-line
         solo
         hide-details="true"
@@ -41,13 +42,21 @@
 import { Vue, Component } from 'vue-property-decorator'
 
 @Component({})
-export default class StakedReward extends Vue {}
+export default class StakedReward extends Vue {
+  rewardAmount: string | number = ''
+  depositedAmount = 500
+
+  fillAmount(amount: number) {
+    this.rewardAmount = amount
+  }
+}
 </script>
 
 <style lang="scss" scoped>
 .wrapper {
   padding: 1.2rem;
   padding-top: 3.11rem;
+  text-align: left;
 }
 
 .d-amount {

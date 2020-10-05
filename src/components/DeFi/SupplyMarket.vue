@@ -122,5 +122,20 @@ export default class SupplyMarket extends Vue {
     margin-left: 0;
     margin-right: 0;
   }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff41;
+    border-radius: 6px;
+  }
 }
 </style>

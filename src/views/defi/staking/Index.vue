@@ -21,10 +21,10 @@
           </v-toolbar>
 
           <v-row>
-            <v-col cols="6">
+            <v-col cols="6" class="pr-1">
               <DepositWithdraw></DepositWithdraw>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="6" class="pl-1">
               <StakedReward></StakedReward>
             </v-col>
           </v-row>

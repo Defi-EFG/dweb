@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto tx-history" dark>
+  <v-card class="mx-auto tx-history" dark color="#222738">
     <v-toolbar class="tx-history-head" flat dense>
       <v-toolbar-title>
         <v-icon class="mr-2">mdi-clock</v-icon>
@@ -12,7 +12,9 @@
         <v-list-item v-for="(tx, index) in items" :key="index" class="tx-item">
           <v-icon class="mr-3">
             {{
-            tx.type === 'received' ? 'mdi-arrow-down-circle-outline' : 'mdi-arrow-up-circle-outline'
+              tx.type === 'received'
+                ? 'mdi-arrow-down-circle-outline'
+                : 'mdi-arrow-up-circle-outline'
             }}
           </v-icon>
 
@@ -103,6 +105,38 @@ export default class TransactionHistory extends Vue {
       value: 100,
       token: 'ECOC',
       time: '25 Aug'
+    },
+    {
+      type: 'received',
+      subtype: '',
+      address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
+      value: 100,
+      token: 'ECOC',
+      time: '25 Aug'
+    },
+    {
+      type: 'sent',
+      subtype: 'borrow',
+      address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
+      value: 100,
+      token: 'ECOC',
+      time: '25 Aug'
+    },
+    {
+      type: 'received',
+      subtype: '',
+      address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
+      value: 100,
+      token: 'ECOC',
+      time: '25 Aug'
+    },
+    {
+      type: 'sent',
+      subtype: 'borrow',
+      address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
+      value: 100,
+      token: 'ECOC',
+      time: '25 Aug'
     }
   ]
 
@@ -154,10 +188,41 @@ export default class TransactionHistory extends Vue {
 .staking {
   height: 240px;
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff41;
+    border-radius: 6px;
+  }
 }
 
 .wallet {
-  height: auto;
+  max-height: 471px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff41;
+    border-radius: 6px;
+  }
 }
 </style>
 
