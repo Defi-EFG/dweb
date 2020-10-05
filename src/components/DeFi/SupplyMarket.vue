@@ -14,7 +14,7 @@
         <v-col cols="3" class="text-center">Borrow</v-col>
       </v-row>
       <v-row
-        class="market-item hvr-sweep-to-right"
+        class="market-item"
         v-for="(item, index) in supplyList"
         :key="index"
         @click="switchBorrow"
@@ -79,6 +79,7 @@ export default class SupplyMarket extends Vue {
   color: white;
   justify-content: space-between;
   margin-bottom: 0.5rem;
+  cursor: pointer;
 
   .assets {
     display: flex;
@@ -107,6 +108,11 @@ export default class SupplyMarket extends Vue {
     cursor: pointer;
     text-align: center;
   }
+}
+
+.market-item:hover {
+  background: #42475c;
+  transition: 0.3s;
 }
 
 .supply-item:nth-last-child(1) {
