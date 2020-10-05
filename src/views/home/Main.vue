@@ -21,24 +21,30 @@
                   src="@/assets/Subtraction.svg"
                   style="animation-delay: 1s;"
               /></a>
+
               <img
                 title="Github"
                 class="img_logo1"
                 src="@/assets/github.svg"
                 style="animation-delay: 1.5s;"
               />
-              <img
-                title="Medium"
-                class="img_logo1"
-                src="@/assets/medium.svg"
-                style="animation-delay: 2s;"
-              />
-              <img
-                title="Twitter"
-                class="img_logo1"
-                src="@/assets/twitter.svg"
-                style="animation-delay: 2.5s;"
-              />
+
+              <a href="https://medium.com/@ecoc.efg" target="_blank">
+                <img
+                  title="Medium"
+                  class="img_logo1"
+                  src="@/assets/medium.svg"
+                  style="animation-delay: 2s;"
+                />
+              </a>
+              <a href="https://twitter.com/EcocEfg" target="_blank">
+                <img
+                  title="Twitter"
+                  class="img_logo1"
+                  src="@/assets/twitter.svg"
+                  style="animation-delay: 2.5s;"
+                />
+              </a>
             </div>
           </v-col>
         </v-row>
@@ -85,13 +91,13 @@
                 <v-col lg="6" md="6" cols="12">
                   <div class="supply_name2">EFG - {{ $t('views.main.total_supply') }}</div>
                   <div class="supply_price_color color_1">
-                    $5,305,610.41
+                    $0
                   </div>
                 </v-col>
                 <v-col lg="6" md="6" cols="12">
                   <div class="supply_button1">EFG - {{ $t('views.main.total_borrowed') }}</div>
                   <div class="supply_price_color color_2">
-                    $4,189,402.65
+                    $0
                   </div>
                 </v-col>
               </v-row>
@@ -125,7 +131,7 @@
                 <v-col cols="12">
                   <div class="supply_name2">DELAY - {{ $t('views.main.available') }}</div>
                   <div class="supply_price_color color_1">
-                    $5,305,610.41
+                    10,000 DELAY
                   </div>
                 </v-col>
               </v-row>
@@ -189,16 +195,16 @@ export default {
             'ECOC Financial Growth (EFG) is an interesting lending opportunity on decentralize blockchain, that let developers create new financial applications that are global, safe, and open for ECOC coins user. ECOChain developers keep developing the core blockchain infrastructure, as well as the tools to empower the new financial system.'
         },
         {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-          title: 'Lorem ipsum dolor sit amet 2',
+          src: require('@/assets/silderimg_01.svg'),
+          title: 'The security of the ECOC Financial Growth (EFG)',
           subtitle:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
+            'The security of the ECOC Financial Growth (EFG) token is our highest priority; our development team, alongside, has invested considerable effort to create an EFG token that we believe is safe and dependable. Besides balances are publicly verifiable.'
         },
         {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-          title: 'Lorem ipsum dolor sit amet 3',
+          src: require('@/assets/silderimg_01.svg'),
+          title: 'The security of the ECOC Financial Growth (EFG)',
           subtitle:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
+            "We believe that size, visibility, and time are the true test for the security of smart contracts and make the determination of security and suitability for users. ECOC Financial Growth (EFG) Token's developers never stop to develop the best financial channel."
         }
       ]
     }
@@ -244,7 +250,7 @@ export default {
   text-align: left;
   font: normal normal normal 17px/23px Segoe UI;
   letter-spacing: 0px;
-  color: #929292;
+  color: #c7bebe;
   opacity: 1;
   padding-top: 20px;
   text-indent: 5em;
@@ -430,6 +436,8 @@ export default {
   letter-spacing: 0px;
   color: #707070;
   opacity: 1;
+  text-indent: 3em;
+  margin-top: 5px;
 }
 
 .text_header {

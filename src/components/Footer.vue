@@ -1,9 +1,15 @@
 <template>
   <div id="footer">
-    <span>Medium</span>
-    <span>Twitter</span>
+    <a href="https://t.me/EFGtoken" target="_blank" rel="noopener noreferrer"
+      ><span>Telegram</span></a
+    >
     <span>Github</span>
-    <span>Youtube</span>
+    <a href="https://medium.com/@ecoc.efg" target="_blank" rel="noopener noreferrer"
+      ><span>Medium</span></a
+    >
+    <a href="https://twitter.com/EcocEfg" target="_blank" rel="noopener noreferrer">
+      <span>Twitter</span></a
+    >
   </div>
 </template>
 <script>
@@ -23,5 +29,9 @@ export default {}
   text-align: center;
   padding: 20px;
   color: #ffffff;
+  transition: 0.3s;
+}
+#footer span:hover {
+  color: #693987;
 }
 </style>

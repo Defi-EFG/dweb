@@ -12,144 +12,32 @@
                 >Introduction</a
               >
             </div>
-            <div class="sibar_dc">
-              <a
-                @click="onClickActive2"
-                :class="active == 'Guides' ? 'active' : undefined"
-                href="#guides"
-                >Guides</a
-              >
-            </div>
           </section>
         </v-col>
         <v-col lg="9" md="9" cols="12" style="padding:0px;">
           <section id="Introduction" class="sec_doc2">
-            <div class="head_Introduction">Introduction</div>
+            <div class="head_Introduction">What is DeFi?</div>
             <div class="sun_Introduction">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-              euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim
-              veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea
-              commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit
-              esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
-              accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue
-              duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer
-              adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-              aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-              ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel
-              eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-              dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
-              blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+              Decentralized Finance or DeFi refers to financial services using smart contracts,
+              which are automated enforceable agreements. It doesn’t need intermediaries like bank
+              or lawyer as it uses blockchain instead. EFG!
             </div>
+            <div class="head_Introduction">What is ECOC Financial Growth (EFG)</div>
             <div class="sun_Introduction">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-              euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim
-              veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea
-              commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit
-              esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
-              accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue
-              duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer
-              adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-              aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-              ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel
-              eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-              dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
-              blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+              ECOC Financial Growth (EFG) is a decentralized currency, building on ECRC-20 and
+              sharing the same interface of ERC-20 (Ethereum) standard. EFG is created form ECOChain
+              developers and trying to expand and strengthen the ecosystem, providing the desired
+              missing attributes for users, reality, and stable prices. EFG aims to simplify DeFi
+              for the general users and help boost their profits at the same time, even for those
+              unfamiliar with the world of digital assets.
             </div>
 
+            <div class="head_Introduction">Why EGF?</div>
             <div class="sun_Introduction">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-              euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim
-              veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea
-              commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit
-              esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
-              accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue
-              duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer
-              adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-              aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-              ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel
-              eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-              dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
-              blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-            </div>
-
-            <div class="sun_Introduction">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-              euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim
-              veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea
-              commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit
-              esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
-              accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue
-              duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer
-              adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-              aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-              ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel
-              eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-              dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
-              blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-            </div>
-
-            <div class="sun_Introduction">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-              euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim
-              veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea
-              commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit
-              esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
-              accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue
-              duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer
-              adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-              aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-              ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel
-              eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-              dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
-              blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-            </div>
-
-            <div class="sun_Introduction">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-              euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim
-              veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea
-              commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit
-              esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
-              accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue
-              duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer
-              adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-              aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-              ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel
-              eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-              dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
-              blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-            </div>
-
-            <div id="guides" class="sun_Introduction">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-              euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim
-              veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea
-              commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit
-              esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
-              accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue
-              duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer
-              adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-              aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-              ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel
-              eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-              dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
-              blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
-            </div>
-            <div class="head_Introduction">Guides</div>
-            <div class="sun_Introduction">
-              Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh
-              euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim
-              veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea
-              commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit
-              esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et
-              accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue
-              duis dolore te feugait nulla facilisi. Lorem ipsum dolor sit amet, consectetuer
-              adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna
-              aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation
-              ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel
-              eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-              dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui
-              blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.
+              EFG brings an opportunity for increasing the investment value for users. Our goal is
+              to make DeFi simple and accessible for everyone, even for the digital asset novices.
+              As well as, gather a wide user base and create high utility services. Get ready to
+              join a brand-new monetary,
             </div>
           </section>
         </v-col>
@@ -230,23 +118,22 @@ export default {
 }
 .sec_doc2 {
   background: #ededed;
-  padding: 150px 30px 150px 82px;
+  padding: 150px 30px 400px 82px;
   height: 100%;
 }
 .sec_doc2 .head_Introduction {
-  font: normal normal bold 25px/33px Segoe UI;
+  font: normal normal bold 16px/21px Segoe UI;
   letter-spacing: 0px;
   color: #000000;
   opacity: 1;
-  margin-bottom: 20px;
+  margin-bottom: 5px;
 }
 .sec_doc2 .sun_Introduction {
   font: normal normal normal 16px/21px Segoe UI;
   letter-spacing: 0px;
   color: #929292;
   opacity: 1;
-  text-indent: 5em;
-  margin-bottom: 20px;
+  margin-bottom: 80px;
   line-height: 1.5;
 }
 .container {
@@ -267,7 +154,7 @@ export default {
   }
   .sibar_dc {
     display: inline;
-    margin-right:10px;
+    margin-right: 10px;
   }
   .sec_doc2 {
     padding: 150px 50px;

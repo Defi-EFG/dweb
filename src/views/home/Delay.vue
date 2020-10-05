@@ -29,19 +29,7 @@
           </v-col>
           <v-col lg="8" md="8" cols="12">
             <div class="M_detail">
-              <v-row>
-                <v-col lg="6" md="6" cols="12">
-                  <div class="chart">
-                    <doughnut-chart class="chart_dg_logo"></doughnut-chart>
-                  </div>
-                </v-col>
-                <v-col lg="6" md="6" cols="12">
-                  <div class="div_price">
-                    <div class="text_price_head">DELAY - Available (Total: 10,000)</div>
-                    <div class="text_price">8,405.01486564 DELAY</div>
-                  </div>
-                </v-col>
-              </v-row>
+              <doughnut-chart class="chart_dg_logo"></doughnut-chart>
             </div>
           </v-col>
         </v-row>
@@ -52,7 +40,7 @@
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
-              <line-chart ></line-chart>
+              <line-chart></line-chart>
             </div>
           </v-col>
         </v-row>
@@ -75,7 +63,7 @@ export default {
 
 <style scoped>
 .container {
-  max-width: 1300px;
+  max-width: 1088px;
   margin: 0 auto;
 }
 .sec_m1 {
@@ -175,14 +163,7 @@ export default {
   color: #ffffff;
   padding: 20px;
 }
-.chart_dg_logo {
-  padding: 0;
-  margin: 0;
-  background-image: url('../../assets/efg_01.svg');
-  background-repeat: no-repeat;
-  background-position: 50% 43%;
-  background-size: 50px;
-}
+
 @media only screen and (max-width: 960px) {
   .h_detail {
     max-width: 95%;
