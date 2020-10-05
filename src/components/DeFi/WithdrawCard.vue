@@ -54,11 +54,12 @@
   </v-card>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component({})
 export default class Withdraw extends Vue {
-  token = 'ECOC'
+  @Prop() token!: string
+  
   val = 25
   minVal = 25
   withdrawValue = 0
@@ -118,7 +119,7 @@ export default class Withdraw extends Vue {
 }
 
 .submit-btn {
-  margin-top: 4.5rem;
+  margin-top: 4.3rem;
   margin-bottom: 1.2rem;
   border-radius: 7px;
   font-weight: bold;

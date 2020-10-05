@@ -58,11 +58,12 @@
   </v-card>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component({})
-export default class Collateral extends Vue {
-  token = 'ECOC'
+export default class RepayCard extends Vue {
+  @Prop() token!: string
+
   walletBalance = 1000
   collateralAmount: number | string = ''
 

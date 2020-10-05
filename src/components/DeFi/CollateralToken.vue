@@ -16,7 +16,7 @@
         class="collateral-item"
         v-for="(item, index) in collateralList"
         :key="index"
-        @click="switchToCollateral"
+        @click="switchToCollateral(item.token)"
       >
         <v-col cols="4" class="assets">
           <img :src="require(`@/assets/icon/currency/${item.token.toLowerCase()}.svg`)" />
@@ -56,8 +56,8 @@ export default class CollateralToken extends Vue {
     }
   ]
 
-  switchToCollateral(event: any) {
-    this.$emit('switchToCollateral', 'collateral')
+  switchToCollateral(token: string) {
+    this.$emit('switchToCollateral', token)
   }
 }
 </script>
