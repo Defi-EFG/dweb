@@ -118,6 +118,10 @@ export default class TransactionHistory extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.tx-history {
+  width: inherit;
+}
+
 .tx-history-head {
   background: transparent linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
     padding-box;

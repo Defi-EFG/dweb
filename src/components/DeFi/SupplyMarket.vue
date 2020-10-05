@@ -20,7 +20,7 @@
         @click="switchBorrow"
       >
         <v-col cols="3" class="assets">
-          <img src="@/assets/efg_logo.svg" />
+          <img :src="require(`@/assets/icon/currency/${item.token.toLowerCase()}.svg`)" />
           <span>{{ item.token }}</span>
         </v-col>
         <v-col cols="3" class="apy">

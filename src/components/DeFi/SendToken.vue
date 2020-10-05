@@ -46,7 +46,7 @@
       <div class="withdraw-rate">
         <span>{{ selectedCurrencyName }} Available: {{ selectedCurrencyBalance }}</span>
         <v-spacer></v-spacer>
-        <span class="fb-btn">Full Balance</span>
+        <span class="fb-btn" @click="withdrawAll(selectedCurrencyBalance)">Withdraw All</span>
       </div>
       <v-text-field
         class="withdraw-amount"
@@ -157,6 +157,10 @@ export default class SendToken extends Vue {
         this.walletStore.updateBalance()
       })
       .catch(console.log)
+  }
+
+  withdrawAll(amount: number) {
+    this.amount = amount
   }
 }
 </script>

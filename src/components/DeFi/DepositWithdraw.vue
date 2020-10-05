@@ -1,5 +1,5 @@
 <template>
-  <v-card dark>
+  <v-card dark class="tab-container">
     <v-tabs grow background-color="#191c26" class="dw-tabs" :hide-slider="true" show-arrows>
       <v-tab>Deposit</v-tab>
       <v-tab>Withdraw</v-tab>
@@ -90,6 +90,11 @@ export default class DepositWithdraw extends Vue {}
 </script>
 
 <style lang="scss" scoped>
+.tab-container {
+  width: inherit;
+  text-align: left;
+}
+
 .withdraw,
 .deposit {
   border-top-right-radius: 0;

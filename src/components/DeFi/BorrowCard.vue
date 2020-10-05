@@ -78,6 +78,7 @@ export default class BorrowCard extends Vue {
 
 <style lang="scss" scoped>
 .wrapper {
+  text-align: left;
   padding: 2rem;
 }
 
@@ -103,6 +104,7 @@ export default class BorrowCard extends Vue {
 }
 
 .borrow-power {
+  margin-top: 1rem;
   .label {
     font-weight: 700;
     color: white;
@@ -120,7 +122,7 @@ export default class BorrowCard extends Vue {
 }
 
 .submit-btn {
-  margin-top: 1.65rem;
+  margin-top: 3.6rem;
   border-radius: 7px;
   font-weight: bold;
   background: transparent linear-gradient(90deg, #9c26df 0%, #661b91 100%) 0% 0% no-repeat

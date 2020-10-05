@@ -76,7 +76,7 @@ export default class StakingChart extends Vue {
 
 <style lang="scss" scoped>
 .chart-card {
-  width: -webkit-fill-available;
+  width: inherit;
   background: #222738;
   display: flex;
 }
