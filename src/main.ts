@@ -16,6 +16,11 @@ const i18n = new VueI18n({
   fallbackLocale: defaultLocale
 })
 
+router.beforeEach((to, from, next) => {
+  document.title = to.meta.title
+  next()
+})
+
 new Vue({
   i18n,
   router,

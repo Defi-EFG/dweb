@@ -17,27 +17,42 @@ const homeRoutes: Array<RouteConfig> = [
       {
         path: '',
         name: 'home-main',
-        component: MainPage
+        component: MainPage,
+        meta: {
+          title: 'Home - EFG'
+        }
       },
       {
         path: 'Delay',
         name: 'home-Delay',
-        component: Delay
+        component: Delay,
+        meta: {
+          title: 'Delay Details - EFG'
+        }
       },
       {
         path: 'Efg',
         name: 'home-Efg',
-        component: Efg
+        component: Efg,
+        meta: {
+          title: 'EFG Details - EFG'
+        }
       },
       {
         path: 'docs',
         name: 'home-docs',
-        component: DocsPage
+        component: DocsPage,
+        meta: {
+          title: 'Documents - EFG'
+        }
       },
       {
         path: 'whitepaper',
         name: 'home-whitepaper',
-        component: WhitePaper
+        component: WhitePaper,
+        meta: {
+          title: 'Whitepaper - EFG'
+        }
       }
     ]
   }
