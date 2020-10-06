@@ -6,17 +6,34 @@
         <v-toolbar-title>ECOC Finance Governance</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
-
       <template v-if="!addr">
         <v-btn outlined small @click="onUnlockWallet">Unlock Wallet</v-btn>
       </template>
-
-      <v-chip class="user-status" v-else>
-        <span class="dot-circle"></span>
-        <div class="address">{{ truncateAddress(addr) }}</div>
-      </v-chip>
+      <v-menu v-model="menu" v-else offset-y left>
+        <template v-slot:activator="{ on }">
+          <v-chip class="user-status" pill v-on="on">
+            <span class="dot-circle"></span>
+            <div class="address">{{ truncateAddress(addr) }}</div>
+          </v-chip>
+        </template>
+        <v-card rounded-lg width="389" class="v-card-wrapper">
+          <v-card-title class="cardheadertitle"
+            ><h6>ECOC Wallet</h6>
+            <v-btn text color="primary" class="mb-2"
+              ><span class="text-btn">Disconnect</span></v-btn
+            ></v-card-title
+          >
+          <v-card-text>
+            <v-alert rounded-lg dense color="#ebebeb" class="primary-address">
+              <span>{{ addr }}</span>
+            </v-alert>
+            <v-btn text color="#7900B5" class="mt-1">
+              <span class="text-btn">Private Key</span>
+            </v-btn></v-card-text
+          >
+        </v-card>
+      </v-menu>
     </v-app-bar>
-
     <v-btn outlined small @click="onunlockSuccess()">unlock wallet</v-btn>
     <UnlockWallet
       :visible="unlockWalletOpen"
@@ -41,8 +58,7 @@ export default class HeaderNav extends Vue {
   walletStore = getModule(WalletModule)
   unlockWalletOpen = false
   unlockWallet = false
-  // walletStore = getModule(WalletModule)
-
+  menu = false
   get addr() {
     return this.walletStore.address
   }
@@ -64,9 +80,7 @@ export default class HeaderNav extends Vue {
   }
 
   onLogout() {
-    console.log('before clear', this.walletStore.address)
     this.walletStore.logout()
-    console.log('after clear', this.walletStore.address)
   }
 
   gotoHome() {
@@ -85,11 +99,43 @@ export default class HeaderNav extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.v-btn:not(.v-btn--round).v-size--default {
+  height: auto;
+  min-width: 0px;
+  padding: 0px;
+}
+.primary-address {
+  font-size: 0.9em;
+  padding: 14px 10px;
+}
 .home {
   display: flex;
   cursor: pointer;
 }
+.v-card__title {
+  padding: 15px 20px 0px;
+}
+.v-card-wrapper {
+  background-color: white !important;
+  padding: 8px 6px;
+  border-radius: 8px;
+  margin-top: 10px;
+}
+.text-btn {
+  text-decoration: underline;
+  text-transform: capitalize;
+  letter-spacing: 0px;
+}
+.cardheadertitle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 
+.cardheadertitle p,
+.v-alert {
+  margin: 0;
+}
 .efg-header {
   background-color: transparent !important;
 }
@@ -105,7 +151,9 @@ export default class HeaderNav extends Vue {
 .user-status {
   width: auto;
   height: auto;
+  padding: 7px 10px;
   background-color: #2a3047 !important;
+  margin-bottom: 10px;
 
   .dot-circle {
     height: 12px;

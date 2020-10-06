@@ -26,7 +26,9 @@ export default new Vuetify({
         warning: '#FB8C00',
         error: '#FF5252',
         white:'#FFFFFF',
-        lightgray:'#D3D3D3'
+        lightgray:'#D3D3D3',
+      
+  
       },
       light: {
         primary: '#44096B',
