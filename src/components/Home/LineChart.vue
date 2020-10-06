@@ -5,8 +5,9 @@ export default {
   extends: Line,
   data() {
     return {
+      title: ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct'],
       chartData: {
-        labels: ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct'],
+        labels: [this.title],
         datasets: [
           {
             label: 'Line Chart',
