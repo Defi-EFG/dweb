@@ -9,7 +9,7 @@
                 <v-col cols="12" style="padding:0px">
                   <div class="logo_ecoc">
                     <img class="logo_ecoc_m" width="40" src="@/assets/delay_02.svg" alt="" />
-                    <div class="logo_ecoc_m_text">DELAY <span>- Market Details</span></div>
+                    <div class="logo_ecoc_m_text">GPT <span>- Market Details</span></div>
                   </div>
                 </v-col>
                 <v-col cols="9" style="padding:0px; border-top:1px solid #ffffff; ">
@@ -37,8 +37,8 @@
                 </v-col>
                 <v-col cols="6">
                   <div class="div_price">
-                    <div class="text_price_head">DELAY - Available (Total: 10,000)</div>
-                    <div class="text_price">8,405.01486564 DELAY</div>
+                    <div class="text_price_head">GPT - Available (Total: 10,000)</div>
+                    <div class="text_price">8,405.01486564 GPT</div>
                   </div>
                 </v-col>
               </v-row>

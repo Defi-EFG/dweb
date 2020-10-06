@@ -3,13 +3,13 @@
     <v-card-text class="wrapper">
       <div class="total-reward">
         <p class="label">Total Staked Reward</p>
-        <p class="value">5.15349650 DELAY</p>
+        <p class="value">5.15349650 GPT</p>
       </div>
 
       <div class="d-amount">
         <span>Deposited amount</span>
         <v-spacer></v-spacer>
-        <span>{{ depositedAmount.toFixed(2) }} EFG</span>
+        <span>{{ depositedAmount.toFixed(2) }} GPT</span>
       </div>
 
       <v-divider></v-divider>
@@ -17,7 +17,7 @@
       <p class="reward-label">Reward Withdrawal</p>
 
       <div class="minimum-w">
-        <span class="value">Minimum Withdrawal: 1.00 EFG</span>
+        <span class="value">Minimum Withdrawal: 1.00 GPT</span>
         <v-spacer></v-spacer>
         <span class="all" @click="fillAmount(depositedAmount)">Withdraw All</span>
       </div>
@@ -26,7 +26,7 @@
         class="staked-amount"
         placeholder="0"
         prefix="Amount"
-        suffix="DELAY"
+        suffix="GPT"
         v-model="rewardAmount"
         single-line
         solo

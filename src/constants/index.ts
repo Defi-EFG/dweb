@@ -21,9 +21,9 @@ export const KNOWN_CURRENCY = {
     icon: require('@/assets/icon/currency/efg.svg'),
     mark: require('@/assets/wallet-token/efg.svg')
   } as Style,
-  DELAY: {
-    icon: require('@/assets/icon/currency/delay.svg'),
-    mark: require('@/assets/wallet-token/delay.svg')
+  GPT: {
+    icon: require('@/assets/icon/currency/gpt.svg'),
+    mark: require('@/assets/wallet-token/gpt.svg')
   } as Style,
   USDT: {
     icon: require('@/assets/icon/currency/usdt.svg'),
@@ -35,7 +35,7 @@ export const KNOWN_CURRENCY = {
   } as Style,
   // Temporary currency, please remove when project done
   BCST: {
-    icon: require('@/assets/icon/currency/delay.svg'),
-    mark: require('@/assets/wallet-token/delay.svg')
+    icon: require('@/assets/icon/currency/gpt.svg'),
+    mark: require('@/assets/wallet-token/gpt.svg')
   } as Style,
 } as CurrencyStyle

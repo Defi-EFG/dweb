@@ -13,7 +13,7 @@ const currencyColor = {
   ETH: 'SteelBlue',
   USDT: 'SteelBlue',
   EFG: 'SteelBlue',
-  DELAY: 'SteelBlue',
+  GPT: 'SteelBlue',
   DEFAULT: 'SteelBlue'
 }
 
@@ -22,8 +22,8 @@ const currencyIcon = {
   ETH: require('@/assets/icon/currency/eth.png'),
   USDT: require('@/assets/icon/currency/usdt.png'),
   EFG: require('@/assets/icon/currency/efg.svg'),
-  DELAY: require('@/assets/icon/currency/delay.svg'),
-  DEFAULT: require('@/assets/icon/currency/delay.svg')
+  GPT: require('@/assets/icon/currency/gpt.svg'),
+  DEFAULT: require('@/assets/icon/currency/gpt.svg')
 }
 
 const isEcrc20 = (currency: Currency) => {

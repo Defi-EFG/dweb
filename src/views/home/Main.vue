@@ -56,7 +56,7 @@
                 <v-col cols="6">
                   <img src="@/assets/efg_01.svg" />
                   <div class="supply_name">EFG</div>
-                  <div class="supply_text" style="margin-top:10px;">Supply APY (DELAY)</div>
+                  <div class="supply_text" style="margin-top:10px;">Supply APY (GPT)</div>
                   <div class="supply_text">Borrow APY</div>
                 </v-col>
                 <v-col cols="6">
@@ -101,8 +101,8 @@
             <div class="supply" style="border-right:2px solid rgb(75 69 83);">
               <v-row>
                 <v-col cols="6">
-                  <img src="@/assets/delay.svg" />
-                  <div class="supply_name">DELAY</div>
+                  <img src="@/assets/gpt.svg" />
+                  <div class="supply_name">GPT</div>
                   <div class="supply_text" style="margin-top:10px;">Liquidation</div>
                 </v-col>
                 <v-col cols="6">
@@ -121,7 +121,7 @@
               <v-row>
                 <v-col cols="12">
                   <div class="supply_name" style="top:unset; margin-left:0px;">
-                    DELAY - Available (Total: 10,000 DELAY)
+                    GPT - Available (Total: 10,000 GPT)
                   </div>
                   <div class="supply_price_color" style="margin-top:10px; color:#3FC0DB;">
                     $5,305,610.41

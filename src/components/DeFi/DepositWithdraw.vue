@@ -8,10 +8,10 @@
         <v-card dark color="#2e3344" class="deposit">
           <v-card-text class="wrapper">
             <div class="label pl-3">
-              <img src="@/assets/delay.svg" />
-              <span>DELAY - Flexible Staking</span>
+              <img src="@/assets/gpt.svg" />
+              <span>GPT - Flexible Staking</span>
             </div>
-            <small class="pl-3">Deposit EFG, Earn Delay</small>
+            <small class="pl-3">Deposit EFG, Earn GPT</small>
 
             <div class="total-balance">
               <span>TOTAL BALANCE</span>

@@ -12,7 +12,7 @@
         <v-row>
           <v-col>
             <div class="token">
-              <img src="@/assets/delay.svg" />
+              <img src="@/assets/gpt.svg" />
               <span>{{ item.token }}</span>
             </div>
           </v-col>
@@ -35,22 +35,22 @@ import { Vue, Component } from 'vue-property-decorator'
 export default class RewardHistory extends Vue {
   rewardHistory = [
     {
-      token: 'DELAY',
+      token: 'GPT',
       timestamp: '2020-09-17 02:56:41',
       value: 0.56
     },
     {
-      token: 'DELAY',
+      token: 'GPT',
       timestamp: '2020-09-17 02:56:41',
       value: 0.56
     },
     {
-      token: 'DELAY',
+      token: 'GPT',
       timestamp: '2020-09-17 02:56:41',
       value: 0.56
     },
     {
-      token: 'DELAY',
+      token: 'GPT',
       timestamp: '2020-09-17 02:56:41',
       value: 0.56
     }
