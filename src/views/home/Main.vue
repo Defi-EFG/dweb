@@ -183,9 +183,10 @@
     <div class="send-transaction">
       <v-dialog v-model="dialog" max-width="500">
         <v-card>
-        <v-card-text>
-          <img class="img" src="@/assets/underconstruction.svg" alt="" />
-    </v-card-text>    </v-card>
+          <v-card-text>
+            <img class="img" src="@/assets/underconstruction.svg" alt="" />
+          </v-card-text>
+        </v-card>
       </v-dialog>
     </div>
   </div>
@@ -557,49 +558,7 @@ export default {
     font-size: 30px;
   }
 }
-<<<<<<< HEAD
-@media only screen and (max-width: 600px) {
-  .sec_1 .text_header {
-    font-size: 25px;
-    top: -10px;
-  }
-  .efg-logo {
-    width: 50px;
-  }
-  .sec_1 {
-    padding-top: 150px;
-  }
-  .sec_3 {
-    height: 150px;
-  }
-  .sec_2 {
-    padding-top: 50px;
-  }
-  .sec_2 .but_div {
-    padding: 21px 20px 2px 10px;
-  }
-  .sec_1 .social_icon {
-    text-align: center;
-    padding: 20px 10px;
-  }
-}
-
-@media only screen and (max-width: 500px) {
-  .sec_2 .row1 .supply_price_color {
-    padding: 0;
-  }
-  .sec_2 .row1 .color_2 {
-    float: left;
-  }
-  .sec_2 .row1 .supply_button1 {
-    text-align: left;
-  }
-  .sec_2 .row1 .supply_name2 {
-    font-size: 14px;
-  }
-=======
-.v-card__text{
-      text-align: center;
->>>>>>> 542804cb628b8b7f9f63d86776c1af47424bc9d7
+.v-card__text {
+  text-align: center;
 }
 </style>
