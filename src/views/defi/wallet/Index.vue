@@ -1,24 +1,27 @@
 <template>
   <div class="wallet-page">
-    <v-row>
-      <v-col cols="8" class="pt-0 pb-0">
+    <v-row class="content-wrapper">
+      <v-col cols="8" class="content">
         <token-list></token-list>
       </v-col>
-      <v-col cols="4" class="pt-0 pb-0">
+      <v-col cols="4" class="content">
         <contact-address></contact-address>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="8">
-        <v-card dark color="#222738">
-          <v-toolbar class="receive-send-wrapper" dense flat>
+    <v-row class="content-wrapper">
+      <v-col cols="8" class="content">
+        <v-card dark class="tx-container">
+          <v-toolbar :class="`receive-send-wrapper token-${selectedCurrencyName}`" dense flat>
             <v-toolbar-title class="token-symbol">
-              <img src="@/assets/efg_logo.svg" />
+              <img
+                v-if="selectedCurrencyName"
+                :src="require(`@/assets/icon/vector/${selectedCurrencyName}.svg`)"
+              />
               <span>{{ selectedCurrencyName }}</span>
             </v-toolbar-title>
           </v-toolbar>
 
-          <v-row class="pl-2 pr-2">
+          <v-row>
             <v-col cols="6">
               <receive-token></receive-token>
             </v-col>
@@ -28,7 +31,7 @@
           </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="4" class="content">
         <transaction-history :page="'wallet'"></transaction-history>
       </v-col>
     </v-row>
@@ -85,6 +88,48 @@ export default class Wallet extends Vue {
   img {
     width: 24px;
     margin-right: 0.8rem;
+  }
+}
+
+.token- {
+  &ECOC {
+    background: linear-gradient(268deg, #5b1eaa 0%, #754097 100%) !important;
+  }
+
+  &EFG {
+    background: linear-gradient(268deg, #9400dc 0%, #743f96 100%) !important;
+  }
+
+  &DELAY {
+    background: linear-gradient(268deg, #8a40d7 0%, #6800fe 100%) !important;
+  }
+
+  &USDT {
+    background: linear-gradient(268deg, #53ae94 0%, #00bf66 100%) !important;
+  }
+
+  &ETH {
+    background: linear-gradient(268deg, #bebebe 0%, #5a5a5a 100%) !important;
+  }
+}
+</style>
+
+<style lang="scss">
+.content-wrapper {
+  .content {
+    padding-top: 0;
+    padding-left: 0;
+    display: flex;
+  }
+}
+
+.tx-container {
+  width: inherit;
+  background: #222738 !important;
+
+  .row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
   }
 }
 </style>

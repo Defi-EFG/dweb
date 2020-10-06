@@ -1,18 +1,18 @@
 <template>
   <div class="lending-page">
-    <v-row>
-      <v-col cols="8" class="pt-0 pb-0 d-flex">
+    <v-row class="content-wrapper">
+      <v-col cols="8" class="content">
         <SupplyBalance></SupplyBalance>
         <div class="ml-1 mr-1"></div>
         <BorrowBalance></BorrowBalance>
       </v-col>
-      <v-col cols="4" class="pt-0 pb-0">
+      <v-col cols="4" class="content">
         <LendingActivity></LendingActivity>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="8">
-        <v-card dark color="#222738">
+    <v-row class="content-wrapper">
+      <v-col cols="8" class="content">
+        <v-card dark class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
               <img src="@/assets/efg_logo.svg" />
@@ -20,33 +20,37 @@
             </v-toolbar-title>
           </v-toolbar>
 
-          <v-row class="pl-2 pr-2">
-            <v-col cols="6" class="pr-1">
-              <template v-if="mode === 'collateral'">
-                <Collateral></Collateral>
-              </template>
-              <template v-else>
-                <Borrow></Borrow>
-              </template>
-            </v-col>
-            <v-col cols="6" class="pl-1">
-              <template v-if="mode === 'collateral'">
-                <Withdraw></Withdraw>
-              </template>
-              <template v-else>
-                <Repay></Repay>
-              </template>
-            </v-col>
-          </v-row>
+          <v-card-text>
+            <v-row>
+              <v-col cols="6" class="inner-content-left">
+                <template v-if="mode === 'collateral'">
+                  <Collateral></Collateral>
+                </template>
+                <template v-else>
+                  <Borrow></Borrow>
+                </template>
+              </v-col>
+              <v-col cols="6" class="inner-content-right">
+                <template v-if="mode === 'collateral'">
+                  <Withdraw></Withdraw>
+                </template>
+                <template v-else>
+                  <Repay></Repay>
+                </template>
+              </v-col>
+            </v-row>
+          </v-card-text>
         </v-card>
       </v-col>
-      <v-col cols="4">
-        <div>
-          <CollateralToken @switchToCollateral="modeSwitch"></CollateralToken>
-        </div>
-        <div class="mt-3">
-          <SupplyMarket @switchToBorrow="modeSwitch"></SupplyMarket>
-        </div>
+      <v-col cols="4" class="content">
+        <v-row>
+          <v-col cols="12" class="pt-0 pb-0">
+            <CollateralToken @switchToCollateral="modeSwitch"></CollateralToken>
+          </v-col>
+          <v-col cols="12" class="pb-0">
+            <SupplyMarket @switchToBorrow="modeSwitch"></SupplyMarket>
+          </v-col>
+        </v-row>
       </v-col>
     </v-row>
   </div>
@@ -101,6 +105,16 @@ export default class Lending extends Vue {
   img {
     width: 24px;
     margin-right: 0.8rem;
+  }
+}
+
+.inner-content {
+  &-left {
+    padding: 0 4px 0 0;
+  }
+
+  &-right {
+    padding: 0 0 0 4px;
   }
 }
 </style>

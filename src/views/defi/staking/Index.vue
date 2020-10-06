@@ -1,18 +1,18 @@
 <template>
   <div class="staking-page">
-    <v-row>
-      <v-col cols="8" class="pt-0 pb-0 d-flex">
+    <v-row class="content-wrapper">
+      <v-col cols="8" class="content">
         <StakingList></StakingList>
         <div class="ml-1 mr-1"></div>
         <StakingChart></StakingChart>
       </v-col>
-      <v-col cols="4" class="pt-0 pb-0">
+      <v-col cols="4" class="content">
         <TransactionHistory :page="'staking'"></TransactionHistory>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="8">
-        <v-card dark color="#222738">
+    <v-row class="content-wrapper">
+      <v-col cols="8" class="content">
+        <v-card dark color="#222738" class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
               <img src="@/assets/delay.svg" />
@@ -20,17 +20,17 @@
             </v-toolbar-title>
           </v-toolbar>
 
-          <v-row class="pl-2 pr-2">
-            <v-col cols="6" class="pr-1">
+          <v-row>
+            <v-col cols="6">
               <DepositWithdraw></DepositWithdraw>
             </v-col>
-            <v-col cols="6" class="pl-1">
+            <v-col cols="6">
               <StakedReward></StakedReward>
             </v-col>
           </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4">
+      <v-col cols="4" class="content">
         <RewardHistory></RewardHistory>
       </v-col>
     </v-row>

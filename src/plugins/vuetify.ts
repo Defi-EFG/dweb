@@ -5,7 +5,9 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 const MY_ICONS = {
   close: 'mdi-close',
   leftarrow: 'mdi-arrow-left',
-  rightarrow: 'mdi-arrow-right'
+  rightarrow: 'mdi-arrow-right',
+  upload:'mdi-upload',
+
 }
 
 Vue.use(Vuetify)
@@ -22,7 +24,9 @@ export default new Vuetify({
         success: '#4CAF50',
         info: '#2196F3',
         warning: '#FB8C00',
-        error: '#FF5252'
+        error: '#FF5252',
+        white:'#FFFFFF',
+        lightgray:'#D3D3D3'
       },
       light: {
         primary: '#44096B',
@@ -35,7 +39,8 @@ export default new Vuetify({
         lightgray: '#929292',
         white: '#FFFFFF',
         transparent: 'transparent'
-      }
+      },
+    
     }
   },
   icons: {

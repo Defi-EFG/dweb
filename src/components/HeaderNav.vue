@@ -1,41 +1,59 @@
 <template>
-  <v-app-bar class="efg-header" flat dark>
-    <div class="home" @click="gotoHome">
-      <img src="@/assets/efg_logo.svg" class="efg-logo" />
-      <v-toolbar-title>ECOC Finance Governance</v-toolbar-title>
-    </div>
-    <v-spacer></v-spacer>
+  <div>
+    <v-app-bar class="efg-header" flat dark>
+      <div class="home" @click="gotoHome">
+        <img src="@/assets/efg_logo.svg" class="efg-logo" />
+        <v-toolbar-title>ECOC Finance Governance</v-toolbar-title>
+      </div>
+      <v-spacer></v-spacer>
 
-    <template v-if="!addr">
-      <v-btn outlined small @click="onUnlockWallet">Unlock Wallet</v-btn>
-    </template>
+      <template v-if="!addr">
+        <v-btn outlined small @click="onUnlockWallet">Unlock Wallet</v-btn>
+      </template>
 
-    <v-chip class="user-status" v-else>
-      <span class="dot-circle"></span>
-      <div class="address">{{ truncateAddress(addr) }}</div>
-    </v-chip>
-  </v-app-bar>
+      <v-chip class="user-status" v-else>
+        <span class="dot-circle"></span>
+        <div class="address">{{ truncateAddress(addr) }}</div>
+      </v-chip>
+    </v-app-bar>
+
+    <v-btn outlined small @click="onunlockSuccess()">unlock wallet</v-btn>
+    <UnlockWallet
+      :visible="unlockWalletOpen"
+      ref="unlockwalletModalRef"
+      @onClose="onOpenModal"
+      @onSuccess="onunlockSuccess"
+    />
+  </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import ModalCreateAccount from '@/components/modals/ModalCreateAccount.vue'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
-
+import UnlockWallet from './modals/unlock-wallet.vue'
 @Component({
   components: {
-    ModalCreateAccount
+    UnlockWallet
   }
 })
 export default class HeaderNav extends Vue {
   walletStore = getModule(WalletModule)
+  unlockWalletOpen = false
   unlockWallet = false
+  // walletStore = getModule(WalletModule)
 
   get addr() {
     return this.walletStore.address
   }
+  onOpenModal() {
+    this.unlockWalletOpen = !this.unlockWalletOpen
+  }
+  onCloseunlockwalletModal() {
+    console.log('ffsfdsfdsfdsfd')
 
+    this.unlockWalletOpen = !this.unlockWalletOpen
+  }
   onUnlockWallet() {
     const keystore =
       '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
