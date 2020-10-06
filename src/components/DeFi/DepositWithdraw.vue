@@ -8,27 +8,28 @@
         <v-card dark color="#2e3344" class="deposit">
           <v-card-text class="wrapper">
             <div class="label pl-3">
-              <img src="@/assets/delay.svg" />
-              <span>DELAY - Flexible Staking</span>
+              <img src="@/assets/gpt.svg" />
+              <span>GPT - Flexible Staking</span>
             </div>
-            <small class="pl-3">Deposit EFG, Earn Delay</small>
+            <small class="pl-3">Deposit EFG, Earn GPT</small>
 
             <div class="total-balance">
               <span>TOTAL BALANCE</span>
               <v-spacer></v-spacer>
-              <span>1000.00 EFG</span>
+              <span>{{ totalBalance.toFixed(2) }} EFG</span>
             </div>
 
             <div class="minimum-d">
               <span class="value">Minimum Deposit: 1.00 EFG</span>
               <v-spacer></v-spacer>
-              <span class="all">Deposit All</span>
+              <span class="all" @click="fillAmountDeposit(totalBalance)">Deposit All</span>
             </div>
 
             <v-text-field
               class="deposit-amount"
               placeholder="0"
               prefix="Deposit Amount"
+              v-model="depositAmount"
               suffix="EFG"
               single-line
               solo
@@ -55,19 +56,20 @@
             <div class="d-amount">
               <span>Deposited amount</span>
               <v-spacer></v-spacer>
-              <span>500.00 EFG</span>
+              <span>{{ depositedAmount.toFixed(2) }} EFG</span>
             </div>
 
             <div class="minimum-w">
               <span class="value">Minimum Deposit: 1.00 EFG</span>
               <v-spacer></v-spacer>
-              <span class="all">Withdraw All</span>
+              <span class="all" @click="fillAmountWithdraw(depositedAmount)">Withdraw All</span>
             </div>
 
             <v-text-field
               class="withdrawal-amount"
               placeholder="0"
               prefix="Withdrawal Amount"
+              v-model="withdrawAmount"
               suffix="EFG"
               single-line
               solo
@@ -86,7 +88,20 @@
 import { Vue, Component } from 'vue-property-decorator'
 
 @Component({})
-export default class DepositWithdraw extends Vue {}
+export default class DepositWithdraw extends Vue {
+  totalBalance = 1000
+  depositedAmount = 500
+  depositAmount: string | number = ''
+  withdrawAmount: string | number = ''
+
+  fillAmountDeposit(amount: number) {
+    this.depositAmount = amount
+  }
+
+  fillAmountWithdraw(amount: number) {
+    this.withdrawAmount = amount
+  }
+}
 </script>
 
 <style lang="scss" scoped>

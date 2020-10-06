@@ -15,16 +15,16 @@
         <v-card dark color="#222738" class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
-              <img src="@/assets/delay.svg" />
-              <span>DELAY</span>
+              <img src="@/assets/gpt.svg" />
+              <span>GPT</span>
             </v-toolbar-title>
           </v-toolbar>
 
           <v-row>
-            <v-col cols="6">
+            <v-col cols="6" class="pr-1">
               <DepositWithdraw></DepositWithdraw>
             </v-col>
-            <v-col cols="6">
+            <v-col cols="6" class="pl-1">
               <StakedReward></StakedReward>
             </v-col>
           </v-row>

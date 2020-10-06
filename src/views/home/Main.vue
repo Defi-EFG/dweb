@@ -110,7 +110,7 @@
             <div class="supply supply2">
               <v-row>
                 <v-col cols="6">
-                  <img src="@/assets/delay.svg" />
+                  <img src="@/assets/gpt.svg" />
                   <div class="supply_name">DELAY</div>
                   <div class="supply_text">{{ $t('views.main.liquidation') }}</div>
                 </v-col>

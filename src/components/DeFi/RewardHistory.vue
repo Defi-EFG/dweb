@@ -9,12 +9,20 @@
 
     <v-card-text class="wrapper">
       <div class="history-items" v-for="(item, index) in rewardHistory" :key="index">
-        <div class="token">
-          <img src="@/assets/delay.svg" />
-          <span>{{ item.token}}</span>
-        </div>
-        <div class="time">{{ item.timestamp }}</div>
-        <div class="value">{{ item.value }} {{ item.token }}</div>
+        <v-row>
+          <v-col>
+            <div class="token">
+              <img src="@/assets/gpt.svg" />
+              <span>{{ item.token }}</span>
+            </div>
+          </v-col>
+          <v-col class="ma-auto">
+            <div class="time">{{ item.timestamp }}</div>
+          </v-col>
+          <v-col class="ma-auto">
+            <div class="value">{{ item.value }} {{ item.token }}</div>
+          </v-col>
+        </v-row>
       </div>
     </v-card-text>
   </v-card>
@@ -27,22 +35,22 @@ import { Vue, Component } from 'vue-property-decorator'
 export default class RewardHistory extends Vue {
   rewardHistory = [
     {
-      token: 'DELAY',
+      token: 'GPT',
       timestamp: '2020-09-17 02:56:41',
       value: 0.56
     },
     {
-      token: 'DELAY',
+      token: 'GPT',
       timestamp: '2020-09-17 02:56:41',
       value: 0.56
     },
     {
-      token: 'DELAY',
+      token: 'GPT',
       timestamp: '2020-09-17 02:56:41',
       value: 0.56
     },
     {
-      token: 'DELAY',
+      token: 'GPT',
       timestamp: '2020-09-17 02:56:41',
       value: 0.56
     }
@@ -67,17 +75,37 @@ export default class RewardHistory extends Vue {
 .wrapper {
   height: 482px;
   overflow: auto;
+
+    &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff41;
+    border-radius: 6px;
+  }
 }
 
 .history-items {
-  display: flex;
-  padding: 1rem;
+  // display: flex;
+  padding: 3px;
   background: #363a4a7e;
   border-radius: 5px;
-  justify-content: space-between;
+  // justify-content: space-between;
   align-items: center;
   color: white;
   margin-bottom: 0.5rem;
+
+  .row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
 
   .token {
     display: flex;
