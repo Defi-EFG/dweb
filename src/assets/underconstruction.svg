@@ -1,0 +1,60 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="365" height="213" viewBox="0 0 365 213">
+  <defs>
+    <filter id="Rectangle_1890" x="32" y="30" width="297" height="171" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur"/>
+      <feFlood flood-opacity="0.161"/>
+      <feComposite operator="in" in2="blur"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <filter id="Path_16322" x="257" y="0" width="107" height="107" filterUnits="userSpaceOnUse">
+      <feOffset dy="3" input="SourceAlpha"/>
+      <feGaussianBlur stdDeviation="3" result="blur-2"/>
+      <feFlood flood-opacity="0.2"/>
+      <feComposite operator="in" in2="blur-2"/>
+      <feComposite in="SourceGraphic"/>
+    </filter>
+    <linearGradient id="linear-gradient" x1="0.5" x2="0.5" y2="1" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#754097"/>
+      <stop offset="1" stop-color="#3b204c"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.935" y1="0.557" x2="0.183" y2="0.5" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#9767b7"/>
+      <stop offset="1" stop-color="#4c345c"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-3" x1="0.2" y1="0.5" x2="0.953" y2="0.5" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-4" x1="0.979" y1="0.584" x2="-0.012" y2="0.5" xlink:href="#linear-gradient"/>
+  </defs>
+  <g id="Group_2888" data-name="Group 2888" transform="translate(7470 1979)">
+    <ellipse id="Ellipse_167" data-name="Ellipse 167" cx="182.5" cy="24.5" rx="182.5" ry="24.5" transform="translate(-7470 -1815)" fill="#040404" opacity="0.2"/>
+    <g transform="matrix(1, 0, 0, 1, -7470, -1979)" filter="url(#Rectangle_1890)">
+      <rect id="Rectangle_1890-2" data-name="Rectangle 1890" width="279" height="153" rx="10" transform="translate(41 36)" fill="#fff"/>
+    </g>
+    <g id="Path_16535" data-name="Path 16535" transform="translate(-7421.333 -1934)" fill="#fff">
+      <path d="M 252.1655426025391 134.3333892822266 L 10.16798114776611 134.3333892822266 C 5.388448238372803 134.3333892822266 1.500014662742615 130.5257873535156 1.500014662742615 125.8456192016602 L 1.500014662742615 9.987753868103027 C 1.500014662742615 5.307587146759033 5.388448238372803 1.499987006187439 10.16798114776611 1.499987006187439 L 252.1655426025391 1.499987006187439 C 256.945068359375 1.499987006187439 260.8335266113281 5.307587146759033 260.8335266113281 9.987753868103027 L 260.8335266113281 125.8456192016602 C 260.8335266113281 130.5257873535156 256.945068359375 134.3333892822266 252.1655426025391 134.3333892822266 Z" stroke="none"/>
+      <path d="M 10.16796875 3.000015258789063 C 6.215545654296875 3.000015258789063 3 6.134689331054688 3 9.987754821777344 L 3 125.8456115722656 C 3 129.6986846923828 6.215545654296875 132.8333587646484 10.16796875 132.8333587646484 L 252.16552734375 132.8333587646484 C 256.1179504394531 132.8333587646484 259.33349609375 129.6986846923828 259.33349609375 125.8456115722656 L 259.33349609375 9.987754821777344 C 259.33349609375 6.134689331054688 256.1179504394531 3.000015258789063 252.16552734375 3.000015258789063 L 10.16796875 3.000015258789063 M 10.16796875 1.52587890625e-05 L 252.16552734375 1.52587890625e-05 C 257.7811279296875 1.52587890625e-05 262.33349609375 4.471649169921875 262.33349609375 9.987754821777344 L 262.33349609375 125.8456115722656 C 262.33349609375 131.3617248535156 257.7811279296875 135.8333587646484 252.16552734375 135.8333587646484 L 10.16796875 135.8333587646484 C 4.5523681640625 135.8333587646484 0 131.3617248535156 0 125.8456115722656 L 0 9.987754821777344 C 0 4.471649169921875 4.5523681640625 1.52587890625e-05 10.16796875 1.52587890625e-05 Z" stroke="none" fill="#754097"/>
+    </g>
+    <g id="Group_2887" data-name="Group 2887" transform="translate(-7367.136 -1937.383)">
+      <text id="UNDER" transform="translate(78 69.088)" fill="#191919" font-size="48" font-family="SegoeUI, Segoe UI"><tspan x="-77.766" y="0">UNDER</tspan></text>
+      <text id="CONSTRUCTION" transform="translate(75.362 89.007)" fill="#191919" font-size="18" font-family="SegoeUI, Segoe UI"><tspan x="-66.111" y="0">CONSTRUCTION</tspan></text>
+      <text id="Something_amazing_is_coming..." data-name="Something amazing is coming..." transform="translate(78.559 109.793)" font-size="9" font-family="SegoeUI, Segoe UI"><tspan x="-62.892" y="0">Something amazing is coming...</tspan></text>
+    </g>
+    <path id="Subtraction_47" data-name="Subtraction 47" d="M361.522,232.826H208.374l55.118-153h98.03a10.011,10.011,0,0,1,10,10v133A10.012,10.012,0,0,1,361.522,232.826Z" transform="translate(-7521.521 -2022.825)" fill="#241a1a" opacity="0.05"/>
+    <g id="Group_2886" data-name="Group 2886" transform="translate(-21113 -9581)">
+      <g id="Group_2294" data-name="Group 2294" transform="translate(13909 7608)">
+        <g id="Group_2241" data-name="Group 2241">
+          <g transform="matrix(1, 0, 0, 1, -266, -6)" filter="url(#Path_16322)">
+            <path id="Path_16322-2" data-name="Path 16322" d="M44.5,0A44.5,44.5,0,1,1,0,44.5,44.5,44.5,0,0,1,44.5,0Z" transform="translate(266 6)" fill="#fff"/>
+          </g>
+        </g>
+        <g id="Group_2242" data-name="Group 2242" transform="translate(16.616 16.718)">
+          <rect id="Rectangle_1457" data-name="Rectangle 1457" width="3.249" height="7.147" transform="translate(43.647 16.08) rotate(45)" fill="url(#linear-gradient)"/>
+          <path id="Rectangle_1453" data-name="Rectangle 1453" d="M0,0H32.487a0,0,0,0,1,0,0V0A7.147,7.147,0,0,1,25.34,7.147H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(27.107 45.484) rotate(-45)" fill="url(#linear-gradient-2)"/>
+          <path id="Rectangle_1454" data-name="Rectangle 1454" d="M0,0H18.842a7.147,7.147,0,0,1,7.147,7.147v0a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(20.215 29.404) rotate(-45)" fill="#754097"/>
+          <path id="Rectangle_1455" data-name="Rectangle 1455" d="M7,0H31.984a7,7,0,0,1,7,7v.147a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V7A7,7,0,0,1,7,0Z" transform="translate(0 27.566) rotate(-45)" fill="url(#linear-gradient-3)"/>
+          <path id="Rectangle_1456" data-name="Rectangle 1456" d="M0,0H38.984a0,0,0,0,1,0,0V.147a7,7,0,0,1-7,7H7a7,7,0,0,1-7-7V0A0,0,0,0,1,0,0Z" transform="translate(5.054 22.512) rotate(45)" fill="url(#linear-gradient-4)"/>
+        </g>
+      </g>
+    </g>
+  </g>
+</svg>
