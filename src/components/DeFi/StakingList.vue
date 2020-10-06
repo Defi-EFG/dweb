@@ -51,7 +51,7 @@ export default class StakingList extends Vue {
 }
 
 .sl-card {
-  width: -webkit-fill-available;
+  width: inherit;
   background: #222738;
 }
 

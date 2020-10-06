@@ -180,6 +180,14 @@
         </v-row>
       </v-container>
     </section>
+    <div class="send-transaction">
+      <v-dialog v-model="dialog" max-width="500">
+        <v-card>
+        <v-card-text>
+          <img class="img" src="@/assets/underconstruction.svg" alt="" />
+    </v-card-text>    </v-card>
+      </v-dialog>
+    </div>
   </div>
 </template>
 
@@ -187,6 +195,7 @@
 export default {
   data() {
     return {
+      dialog: true,
       items: [
         {
           src: require('@/assets/silderimg_01.svg'),
@@ -548,6 +557,7 @@ export default {
     font-size: 30px;
   }
 }
+<<<<<<< HEAD
 @media only screen and (max-width: 600px) {
   .sec_1 .text_header {
     font-size: 25px;
@@ -587,5 +597,9 @@ export default {
   .sec_2 .row1 .supply_name2 {
     font-size: 14px;
   }
+=======
+.v-card__text{
+      text-align: center;
+>>>>>>> 542804cb628b8b7f9f63d86776c1af47424bc9d7
 }
 </style>

@@ -19,14 +19,14 @@
         @click="switchToCollateral"
       >
         <v-col cols="4" class="assets">
-          <img src="@/assets/efg_logo.svg" />
+          <img :src="require(`@/assets/icon/currency/${item.token.toLowerCase()}.svg`)" />
           <span>{{ item.token }}</span>
         </v-col>
         <v-col cols="5" class="balance">
           <span>{{ item.value.toFixed(2) }} {{ item.token }}</span>
         </v-col>
         <v-col cols="3" class="activate">
-          <v-switch :hide-details="true" inset v-model="item.activated"></v-switch>
+          <v-switch color="#060606" :hide-details="true" inset v-model="item.activated"></v-switch>
         </v-col>
       </v-row>
     </v-card-text>
@@ -138,6 +138,7 @@ export default class CollateralToken extends Vue {
   }
 
   .v-input--is-label-active {
+    color: #060606 !important;
     .v-input--switch__thumb {
       background: transparent linear-gradient(180deg, #c074f9 0%, #734597 100%) 0% 0% no-repeat
         padding-box;

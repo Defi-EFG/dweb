@@ -74,7 +74,7 @@ const getEcocBalance = async (address: string) => {
   const currency = {
     name: constants.ECOC,
     type: constants.TYPE_ECOC,
-    icon: currencyIcon.ECOC,
+    style: constants.KNOWN_CURRENCY.ECOC,
     balance: balance.toString()
   } as Currency
 
@@ -89,7 +89,7 @@ const getEcrc20Balance = async (address: string) => {
     currencies.push({
       name: token.contract.symbol,
       type: constants.TYPE_ECRC20,
-      icon: currencyIcon.DEFAULT,
+      style: constants.KNOWN_CURRENCY[token.contract.symbol],
       balance: utils.toDecimals(token.amount, token.contract.decimals),
       tokenInfo: {
         name: token.contract.name,
