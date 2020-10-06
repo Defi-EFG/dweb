@@ -7,7 +7,7 @@
       </div>
       <v-spacer></v-spacer>
       <template v-if="!addr">
-        <v-btn outlined small @click="onUnlockWallet">Unlock Wallet</v-btn>
+        <v-btn outlined small @click="openUnlockWallet">Unlock Wallet</v-btn>
       </template>
       <v-menu v-model="menu" v-else offset-y left>
         <template v-slot:activator="{ on }">
@@ -19,7 +19,7 @@
         <v-card rounded-lg width="389" class="v-card-wrapper">
           <v-card-title class="cardheadertitle"
             ><h6>ECOC Wallet</h6>
-            <v-btn text color="primary" class="mb-2" @click="onLogout()"
+            <v-btn text color="primary" class="mb-2" @click="logout()"
               ><span class="text-btn">Disconnect</span></v-btn
             ></v-card-title
           >
@@ -34,18 +34,16 @@
         </v-card>
       </v-menu>
     </v-app-bar>
-    <v-btn outlined small @click="onunlockSuccess()">unlock wallet</v-btn>
     <UnlockWallet
       :visible="unlockWalletOpen"
       ref="unlockwalletModalRef"
-      @onClose="onOpenModal"
-      @onSuccess="onunlockSuccess"
+      @onClose="closeUnlockWallet"
     />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
+import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import UnlockWallet from './modals/unlock-wallet.vue'
@@ -57,36 +55,27 @@ import UnlockWallet from './modals/unlock-wallet.vue'
 export default class HeaderNav extends Vue {
   walletStore = getModule(WalletModule)
   unlockWalletOpen = false
-  unlockWallet = false
+
   menu = false
+
   get addr() {
     return this.walletStore.address
   }
-  onOpenModal() {
+
+  closeUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
-  onCloseunlockwalletModal() {
-    console.log('ffsfdsfdsfdsfd')
 
+  openUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
-  onUnlockWallet() {
-    const keystore =
-      '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
-    const password = '123456'
 
-    this.walletStore.importWallet({ keystore, password }).then(() => {
-      this.walletStore.updateBalance()
-      this.walletStore.updateTransactionsHistory()
-    })
-  }
-
-  onLogout() {
+  logout() {
     this.walletStore.logout()
   }
 
   gotoHome() {
-    this.onLogout()
+    this.logout()
     this.$router.push('/')
   }
 
