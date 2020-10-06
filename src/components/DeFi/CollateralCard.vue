@@ -199,5 +199,12 @@ export default class Collateral extends Vue {
   .v-messages {
     padding-top: 8px;
   }
+
+  input:-internal-autofill-selected {
+    appearance: menulist-button;
+    background-color: transparent !important;
+    background-image: none !important;
+    color: #c074f9 !important;
+  }
 }
 </style>
