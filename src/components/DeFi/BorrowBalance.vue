@@ -44,10 +44,11 @@ export default class BorrowBalance extends Vue {
   padding-top: 0.5rem;
   padding-right: 0.5rem;
   width: -webkit-fill-available;
+  text-align: left;
 }
 
 .borrow {
-  font-size: xx-large;
+  font-size: 38px;
   color: #c074f9;
   text-align: right;
   padding: 2rem 0 1.2rem 0;
@@ -70,5 +71,13 @@ export default class BorrowBalance extends Vue {
   margin-top: 4px;
   margin-bottom: 1px;
   box-shadow: 0px 3px 6px #00000029;
+}
+</style>
+
+<style lang="scss">
+.borrow-card {
+  .v-card__text {
+    padding: 2rem !important;
+  }
 }
 </style>

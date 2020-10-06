@@ -8,9 +8,9 @@
     </v-toolbar>
     <v-card-text class="text-center send-area">
       <div class="token-balance">
-        <span>ECOC Total Balance</span>
+        <span>ECOC Balance</span>
         <v-spacer></v-spacer>
-        <span>2,000.00 ECOC</span>
+        <span>{{ ecocBalance }} ECOC</span>
       </div>
       <v-text-field
         label="To Address"
@@ -18,7 +18,7 @@
         single-line
         solo
         hide-details="true"
-        v-model="selectedAddr"
+        v-model="toAddr"
       >
         <template v-slot:append-outer>
           <div class="address-book" @click="displayContact = !displayContact">
@@ -44,68 +44,82 @@
         </v-list-item-group>
       </div>
       <div class="withdraw-rate">
-        <span>Minimum Withdrawal: {{ withdrawRate }} EFG</span>
+        <span>{{ selectedCurrencyName }} Available: {{ selectedCurrencyBalance }}</span>
         <v-spacer></v-spacer>
-        <span class="fb-btn">Full Balance</span>
+        <span class="fb-btn" @click="withdrawAll(selectedCurrencyBalance)">Withdraw All</span>
       </div>
       <v-text-field
         class="withdraw-amount"
         placeholder="0"
         prefix="Amount"
-        suffix="EFG"
+        v-model="amount"
+        :suffix="selectedCurrencyName"
         single-line
         solo
         hide-details="true"
       ></v-text-field>
-
-      <v-btn depressed block large class="send-btn">Send</v-btn>
+      <v-btn depressed block large class="send-btn" @click="onunlockSuccess()">Send</v-btn>
+      <TransactionComfirmationModal :visible="sendialog" @onSuccess="sendialog" />
     </v-card-text>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
-
+import { getModule } from 'vuex-module-decorators'
+import { SendPayload } from '@/types/wallet'
+import WalletModule from '@/store/wallet'
+import TransactionComfirmationModal from '@/components/modals/transection-confirmation.vue'
 @Component({
+  components: {
+    TransactionComfirmationModal
+  },
   directives: {
     clickOutside: vClickOutside.directive
   }
 })
 export default class SendToken extends Vue {
-  withdrawRate = 0.001
+  sendialog = true
 
-  hehe = '1'
-
+  walletStore = getModule(WalletModule)
   displayContact = false
 
-  selectedAddr = ''
+  toAddr = ''
+  amount = 0
+  fee = 0.01
+  gasPrice = 40
+  gasLimit = 150000
 
   addrList = [
     {
       name: 'MXC',
-      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
     },
     {
-      name: 'CXM',
-      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
-    },
-    {
-      name: 'MCX',
-      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
-    },
-    {
-      name: 'XCM',
-      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
-    },
-    {
-      name: 'XMC',
-      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+      name: 'Bitrex',
+      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
     }
   ]
 
+  get ecocBalance() {
+    return this.walletStore.ecoc
+  }
+
+  get selectedCurrencyName() {
+    return this.selectedCurrency?.name || ''
+  }
+
+  get selectedCurrencyBalance() {
+    return this.selectedCurrency?.balance || ''
+  }
+
+  get selectedCurrency() {
+    return this.walletStore.selectedCurrency
+  }
+
   selectAddress(addr: string) {
-    this.selectedAddr = addr
+    this.toAddr = addr
     this.displayContact = false
   }
 
@@ -113,6 +127,40 @@ export default class SendToken extends Vue {
     console.log('clicked outside')
 
     this.displayContact = false
+  }
+  onunlockSuccess() {
+    console.log('ggg')
+    this.sendialog = !this.sendialog
+  }
+  onOpenModal() {
+    this.sendialog = !this.sendialog
+  }
+  onSend() {
+    const payload = {
+      currency: this.selectedCurrency,
+      password: '123456',
+      to: this.toAddr,
+      amount: this.amount,
+      fee: this.fee,
+      gasLimit: this.gasLimit,
+      gasPrice: this.gasPrice
+    } as SendPayload
+
+    this.currencySend(payload)
+  }
+
+  currencySend(payload: SendPayload) {
+    this.walletStore
+      .send(payload)
+      .then(txid => {
+        console.log(txid)
+        this.walletStore.updateBalance()
+      })
+      .catch(console.log)
+  }
+
+  withdrawAll(amount: number) {
+    this.amount = amount
   }
 }
 </script>
@@ -256,5 +304,8 @@ export default class SendToken extends Vue {
     background: #3d4254;
     color: white;
   }
+}
+v-dialog {
+  border: 1pc solid red;
 }
 </style>

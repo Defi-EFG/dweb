@@ -1,29 +1,34 @@
 <template>
   <v-card dark color="#1D212E">
     <v-card-text class="wrapper">
-      <p class="action-label">Collateral</p>
+      <p class="action-label">Borrow</p>
       <div class="wallet-balance mb-2">
         <span>Wallet Balance:</span>
         <v-spacer></v-spacer>
-        <span class="balance">1000.00 {{ token }}</span>
+        <span class="balance">500.00 {{ token }}</span>
       </div>
       <v-text-field
         class="amount-input"
-        label="Collateral Amount"
+        label="Borrow Amount"
         :suffix="token"
+        v-model="borrowValue"
         height="43"
         color="#C074F9"
       ></v-text-field>
       <div class="borrow-power">
         <span class="label">Borrow Power</span>
-        <v-progress-linear
-          value="25"
-          rounded
-          color="#C074F9"
-          background-color="#E4E4E4"
-          class="borrow-bar"
-          height="5"
-        ></v-progress-linear>
+        <v-slider
+          class="borrow-slider"
+          v-model="val"
+          min="0"
+          max="100"
+          color="#c074f9"
+          track-color="#E4E4E4"
+          thumb-color="#ffffff"
+          :hide-details="true"
+          @end="limitValue(25)"
+          @click="limitValue(25)"
+        ></v-slider>
       </div>
       <div class="borrow-used">
         <div>Borrow Power Used</div>
@@ -44,7 +49,12 @@
         </div>
       </div>
       <v-divider />
-      <v-btn large block depressed class="submit-btn">Collateral</v-btn>
+      <div class="borrow-apy">
+        <span class="label">Borrow APY</span>
+        <v-spacer></v-spacer>
+        <span>2.90 %</span>
+      </div>
+      <v-btn large block depressed class="submit-btn">Borrow</v-btn>
     </v-card-text>
   </v-card>
 </template>
@@ -52,13 +62,23 @@
 import { Vue, Component } from 'vue-property-decorator'
 
 @Component({})
-export default class Collateral extends Vue {
+export default class BorrowCard extends Vue {
   token = 'ECOC'
+  val = 25
+  minVal = 25
+  borrowValue = 0
+
+  limitValue(num: number) {
+    if (this.val < num) {
+      this.val = num
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .wrapper {
+  text-align: left;
   padding: 2rem;
 }
 
@@ -69,24 +89,25 @@ export default class Collateral extends Vue {
   margin-bottom: 2rem;
 }
 
+.borrow-apy,
 .wallet-balance {
   display: flex;
   color: white;
 
-  .balance {
-    text-decoration: underline;
-    cursor: pointer;
+  .label {
+    font-weight: 700;
   }
 }
 
+.borrow-apy {
+  margin-top: 0.5rem;
+}
+
 .borrow-power {
+  margin-top: 1rem;
   .label {
     font-weight: 700;
     color: white;
-  }
-  .borrow-bar {
-    margin-top: 8px;
-    margin-bottom: 12px;
   }
 }
 
@@ -101,39 +122,10 @@ export default class Collateral extends Vue {
 }
 
 .submit-btn {
-  margin-top: 3.5rem;
+  margin-top: 3.6rem;
   border-radius: 7px;
   font-weight: bold;
-  background: transparent linear-gradient(90deg, #3ba7c1 0%, #59289a 100%) 0% 0% no-repeat
+  background: transparent linear-gradient(90deg, #9c26df 0%, #661b91 100%) 0% 0% no-repeat
     padding-box;
-}
-</style>
-
-<style lang="scss">
-.amount-input {
-  .v-label {
-    color: white !important;
-    font-weight: 700;
-    margin-top: 8px;
-  }
-
-  .v-label--active {
-    margin-top: 0;
-  }
-
-  input {
-    text-align: right;
-    font-size: 28px;
-    color: #c074f9 !important;
-    margin: 8px 0;
-    font-weight: 300;
-  }
-
-  .v-text-field__suffix {
-    opacity: 0.6;
-    color: white !important;
-    font-size: smaller;
-    margin-left: 8px;
-  }
 }
 </style>

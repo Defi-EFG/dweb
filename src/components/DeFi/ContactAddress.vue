@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto" dark>
+  <v-card class="contact-address-container" color="#222738" dark>
     <v-toolbar class="contact-address-head" flat dense>
       <v-toolbar-title>
         <v-icon class="mr-2">mdi-book-variant</v-icon>
@@ -19,7 +19,7 @@
 
         <v-list-item-content>
           <v-list-item-title>{{ contact.name }}</v-list-item-title>
-          <small class="addr-value">{{ contact.address }}</small>
+          <small class="addr-value text-truncate">{{ contact.address }}</small>
         </v-list-item-content>
 
         <v-list-item-icon>
@@ -43,21 +43,21 @@ export default class ContactAddress extends Vue {
   contact = [
     {
       name: 'MXC',
-      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
     },
     {
-      name: 'Bittrex',
-      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
-    },
-    {
-      name: 'Boboo',
-      address: '0x76D684b9D7C925A56B6481DF3e0bDA18B235F065'
+      name: 'Bitrex',
+      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
     }
   ]
 }
 </script>
 
 <style lang="scss" scoped>
+.contact-address-container {
+  width: inherit;
+}
+
 .contact-address-head {
   background: transparent linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
     padding-box;
@@ -68,10 +68,11 @@ export default class ContactAddress extends Vue {
 }
 
 .address-list {
-  max-height: 149px;
+  max-height: 192px;
   overflow: auto;
 }
 .address-item {
+  text-align: left;
   border-bottom: 1px solid rgba(255, 255, 255, 0.105);
 }
 .address-item:nth-last-child(1) {

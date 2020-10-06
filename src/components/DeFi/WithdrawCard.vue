@@ -1,17 +1,17 @@
 <template>
   <v-card dark color="#1D212E">
     <v-card-text class="wrapper">
-      <p class="action-label">Borrow</p>
+      <p class="action-label">Withdraw</p>
       <div class="wallet-balance mb-2">
-        <span>Wallet Balance:</span>
+        <span>Max Withdrawable:</span>
         <v-spacer></v-spacer>
-        <span class="balance">500.00 {{ token }}</span>
+        <span class="balance" @click="fillAmount(maxWithdraw)">{{ maxWithdraw.toFixed(2) }} {{ token }}</span>
       </div>
       <v-text-field
         class="amount-input"
-        label="Borrow Amount"
+        label="Withdrawal Amount"
         :suffix="token"
-        v-model="borrowValue"
+        v-model="withdrawValue"
         height="43"
         color="#C074F9"
       ></v-text-field>
@@ -49,12 +49,7 @@
         </div>
       </div>
       <v-divider />
-      <div class="borrow-apy">
-        <span class="label">Borrow APY</span>
-        <v-spacer></v-spacer>
-        <span>2.90 %</span>
-      </div>
-      <v-btn large block depressed class="submit-btn">Borrow</v-btn>
+      <v-btn large block depressed class="submit-btn">Withdraw</v-btn>
     </v-card-text>
   </v-card>
 </template>
@@ -62,16 +57,21 @@
 import { Vue, Component } from 'vue-property-decorator'
 
 @Component({})
-export default class BorrowCard extends Vue {
+export default class Withdraw extends Vue {
   token = 'ECOC'
   val = 25
   minVal = 25
-  borrowValue = 0
+  withdrawValue = 0
+  maxWithdraw = 500
 
   limitValue(num: number) {
     if (this.val < num) {
       this.val = num
     }
+  }
+
+  fillAmount(amount: number) {
+    this.withdrawValue = amount
   }
 }
 </script>
@@ -79,6 +79,7 @@ export default class BorrowCard extends Vue {
 <style lang="scss" scoped>
 .wrapper {
   padding: 2rem;
+  text-align: left;
 }
 
 .action-label {
@@ -88,21 +89,18 @@ export default class BorrowCard extends Vue {
   margin-bottom: 2rem;
 }
 
-.borrow-apy,
 .wallet-balance {
   display: flex;
   color: white;
 
-  .label {
-    font-weight: 700;
+  .balance {
+    text-decoration: underline;
+    cursor: pointer;
   }
 }
 
-.borrow-apy {
-  margin-top: 0.5rem;
-}
-
 .borrow-power {
+  margin-top: 1rem;
   .label {
     font-weight: 700;
     color: white;
@@ -120,10 +118,36 @@ export default class BorrowCard extends Vue {
 }
 
 .submit-btn {
-  margin-top: 1.65rem;
+  margin-top: 4.5rem;
+  margin-bottom: 1.2rem;
   border-radius: 7px;
   font-weight: bold;
-  background: transparent linear-gradient(90deg, #9c26df 0%, #661b91 100%) 0% 0% no-repeat
+  background: transparent linear-gradient(90deg, #3ba7c1 0%, #59289a 100%) 0% 0% no-repeat
     padding-box;
+}
+</style>
+
+<style lang="scss">
+.borrow-power {
+  .v-slider--horizontal {
+    min-height: 25px;
+    margin: 0;
+  }
+
+  .v-slider--horizontal .v-slider__track-container {
+    height: 5px;
+  }
+
+  .v-slider__thumb-container {
+    border: 10px solid #1d212e;
+    border-radius: 50%;
+    top: 9%;
+  }
+
+  .v-slider__thumb {
+    width: 16px;
+    height: 16px;
+    left: -8px;
+  }
 }
 </style>

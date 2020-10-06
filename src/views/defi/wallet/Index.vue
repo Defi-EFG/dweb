@@ -1,24 +1,27 @@
 <template>
   <div class="wallet-page">
-    <v-row>
-      <v-col cols="8" class="pt-0 pb-0">
+    <v-row class="content-wrapper">
+      <v-col cols="8" class="content">
         <token-list></token-list>
       </v-col>
-      <v-col cols="4" class="pt-0 pb-0">
+      <v-col cols="4" class="content">
         <contact-address></contact-address>
       </v-col>
     </v-row>
-    <v-row>
-      <v-col cols="8">
-        <v-card dark color="#222738">
-          <v-toolbar class="receive-send-wrapper" dense flat>
+    <v-row class="content-wrapper">
+      <v-col cols="8" class="content">
+        <v-card dark class="tx-container">
+          <v-toolbar :class="`receive-send-wrapper token-${selectedCurrencyName}`" dense flat>
             <v-toolbar-title class="token-symbol">
-              <img src="@/assets/efg_logo.svg" />
-              <span>ECOC</span>
+              <img
+                v-if="selectedCurrencyName"
+                :src="require(`@/assets/icon/vector/${selectedCurrencyName}.svg`)"
+              />
+              <span>{{ selectedCurrencyName }}</span>
             </v-toolbar-title>
           </v-toolbar>
 
-          <v-row class="pl-2 pr-2">
+          <v-row>
             <v-col cols="6">
               <receive-token></receive-token>
             </v-col>
@@ -28,8 +31,8 @@
           </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4">
-        <transaction-history></transaction-history>
+      <v-col cols="4" class="content">
+        <transaction-history :page="'wallet'"></transaction-history>
       </v-col>
     </v-row>
   </div>
@@ -39,11 +42,11 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
-import TokenList from '@/components/TokenList.vue'
-import ContactAddress from '@/components/ContactAddress.vue'
-import ReceiveToken from '@/components/ReceiveToken.vue'
-import SendToken from '@/components/SendToken.vue'
-import TransactionHistory from '@/components/TransactionHistory.vue'
+import TokenList from '@/components/DeFi/TokenList.vue'
+import ContactAddress from '@/components/DeFi/ContactAddress.vue'
+import ReceiveToken from '@/components/DeFi/ReceiveToken.vue'
+import SendToken from '@/components/DeFi/SendToken.vue'
+import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
 
 @Component({
   components: {
@@ -56,24 +59,17 @@ import TransactionHistory from '@/components/TransactionHistory.vue'
 })
 export default class Wallet extends Vue {
   walletStore = getModule(WalletModule)
-  newKeystore = ''
 
-  createNewWallet(password: string) {
-    this.walletStore.createNewWallet(password).then(newKeystore => {
-      this.newKeystore = newKeystore
-    })
+  get selectedIndex() {
+    return this.walletStore.selectedCurrencyIndex
   }
 
-  importKeystore(keystore: string, password: string) {
-    this.walletStore.importWallet({ keystore, password })
+  get selectedCurrencyName() {
+    return this.selectedCurrency?.name || ''
   }
 
-  mounted() {
-    const keystore =
-      '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
-    const password = '123456'
-
-    this.importKeystore(keystore, password)
+  get selectedCurrency() {
+    return this.walletStore.selectedCurrency
   }
 }
 </script>
@@ -92,6 +88,48 @@ export default class Wallet extends Vue {
   img {
     width: 24px;
     margin-right: 0.8rem;
+  }
+}
+
+.token- {
+  &ECOC {
+    background: linear-gradient(268deg, #5b1eaa 0%, #754097 100%) !important;
+  }
+
+  &EFG {
+    background: linear-gradient(268deg, #9400dc 0%, #743f96 100%) !important;
+  }
+
+  &DELAY {
+    background: linear-gradient(268deg, #8a40d7 0%, #6800fe 100%) !important;
+  }
+
+  &USDT {
+    background: linear-gradient(268deg, #53ae94 0%, #00bf66 100%) !important;
+  }
+
+  &ETH {
+    background: linear-gradient(268deg, #bebebe 0%, #5a5a5a 100%) !important;
+  }
+}
+</style>
+
+<style lang="scss">
+.content-wrapper {
+  .content {
+    padding-top: 0;
+    padding-left: 0;
+    display: flex;
+  }
+}
+
+.tx-container {
+  width: inherit;
+  background: #222738 !important;
+
+  .row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
   }
 }
 </style>

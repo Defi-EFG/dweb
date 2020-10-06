@@ -6,25 +6,29 @@
         <v-toolbar-title>ECOC Finance Governance</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
-      <template v-if="!loggedIn">
-        <v-btn outlined small @click="onunlockSuccess()">unlock wallet</v-btn>
-        <UnlockWallet
-          ref="unlockwalletModalRef"
-          :visible="unlockWalletOpen"
-          @onClose="onOpenModal"
-          @onSuccess="onunlockSuccess"
-        />
+
+      <template v-if="!addr">
+        <v-btn outlined small @click="onUnlockWallet">Unlock Wallet</v-btn>
       </template>
+
       <v-chip class="user-status" v-else>
         <span class="dot-circle"></span>
         <div class="address">{{ truncateAddress(addr) }}</div>
       </v-chip>
     </v-app-bar>
+
+    <v-btn outlined small @click="onunlockSuccess()">unlock wallet</v-btn>
+    <UnlockWallet
+      :visible="unlockWalletOpen"
+      ref="unlockwalletModalRef"
+      @onClose="onOpenModal"
+      @onSuccess="onunlockSuccess"
+    />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import UnlockWallet from './modals/unlock-wallet.vue'
@@ -34,9 +38,10 @@ import UnlockWallet from './modals/unlock-wallet.vue'
   }
 })
 export default class HeaderNav extends Vue {
-  loggedIn = false
-  unlockWalletOpen = false
   walletStore = getModule(WalletModule)
+  unlockWalletOpen = false
+  unlockWallet = false
+  // walletStore = getModule(WalletModule)
 
   get addr() {
     return this.walletStore.address
@@ -53,11 +58,21 @@ export default class HeaderNav extends Vue {
     const keystore =
       '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
     const password = '123456'
-    this.walletStore.importWallet({ keystore, password })
-    this.loggedIn = true
+
+    this.walletStore.importWallet({ keystore, password }).then(() => {
+      this.walletStore.updateBalance()
+      this.walletStore.updateTransactionsHistory()
+    })
+  }
+
+  onLogout() {
+    console.log('before clear', this.walletStore.address)
+    this.walletStore.logout()
+    console.log('after clear', this.walletStore.address)
   }
 
   gotoHome() {
+    this.onLogout()
     this.$router.push('/')
   }
 

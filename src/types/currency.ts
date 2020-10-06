@@ -1,9 +1,9 @@
 export interface Currency {
   name: string
   type: string
-  icon: string
   balance: string
-  price: string
+  style?: Style
+  price?: string
   tokenInfo?: Ecrc20
 }
 
@@ -14,3 +14,9 @@ export interface Ecrc20 {
   decimals: string
   totalSupply: string
 }
+
+export interface Style {
+  icon: string
+  mark: string
+}
+

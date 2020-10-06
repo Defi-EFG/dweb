@@ -14,7 +14,7 @@
             </div>
             <div class="supply-item" v-for="(item, index) in myCollateral" :key="index">
               <div class="assets">
-                <img src="@/assets/efg_logo.svg" />
+                <img :src="require(`@/assets/icon/currency/${item.token.toLowerCase()}.svg`)" />
                 <span>{{ item.token }}</span>
               </div>
               <div class="balance">
@@ -36,7 +36,7 @@
             </div>
             <div class="borrow-item" v-for="(item, index) in myBorrowing" :key="index">
               <div class="assets">
-                <img src="@/assets/efg_logo.svg" />
+                <img :src="require(`@/assets/icon/currency/${item.token.toLowerCase()}.svg`)" />
                 <span>{{ item.token }}</span>
               </div>
               <div class="apy">
@@ -67,9 +67,9 @@
                 <div class="activity-date">
                   <small>{{ act.time }}</small>
                   <v-spacer></v-spacer>
-                  <small v-if="act.type != 'activated'"
-                    >≈{{ act.estimated.toFixed(2) }} {{ act.token }}</small
-                  >
+                  <small
+                    v-if="act.type != 'activated'"
+                  >≈{{ act.estimated.toFixed(2) }} {{ act.token }}</small>
                 </div>
               </v-list-item-content>
             </v-list-item>
@@ -140,6 +140,7 @@ export default class LendingActivity extends Vue {
 <style lang="scss" scoped>
 .lending-card {
   background: #252b3d;
+  width: inherit;
 }
 
 .borrow-header,
@@ -164,7 +165,7 @@ export default class LendingActivity extends Vue {
     place-items: center;
 
     img {
-      width: 23px;
+      width: 28px;
       margin-left: 0.5rem;
       margin-right: 1rem;
     }
@@ -189,8 +190,23 @@ export default class LendingActivity extends Vue {
 
 .activity-list {
   background: #2e3344 !important;
-  height: 154px;
+  height: 192px;
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff41;
+    border-radius: 6px;
+  }
 
   .activity-item {
     border-bottom: 1px solid rgba(255, 255, 255, 0.105);
@@ -221,8 +237,23 @@ export default class LendingActivity extends Vue {
 <style lang="scss">
 .lending-tabs {
   .v-card__text {
-    height: 154px;
+    height: 192px;
     overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 6px;
+      border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+      border-radius: 6px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #ffffff41;
+      border-radius: 6px;
+    }
   }
 
   .v-tabs-items {
