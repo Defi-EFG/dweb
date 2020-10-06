@@ -88,7 +88,7 @@ export default class EcocWallet implements EWallet {
   ) {
     const utxoList = await this.getUtxoList()
     return await EcocWallet.generateSendToContractTx(
-      this,
+      this.keypair,
       contractAddress,
       encodedData,
       gasLimit,
@@ -98,9 +98,15 @@ export default class EcocWallet implements EWallet {
     )
   }
 
-  async generateTx(to: string, amount: number, fee: number) {
+  async generateTx(payload: { to: string; amount: number; fee: number }) {
     const utxoList = await this.getUtxoList()
-    return await EcocWallet.generateTx(this, to, amount, fee, utxoList)
+    return await EcocWallet.generateTx(
+      this.keypair,
+      payload.to,
+      payload.amount,
+      payload.fee,
+      utxoList
+    )
   }
 
   async sendRawTx(tx: string) {
@@ -181,8 +187,9 @@ export default class EcocWallet implements EWallet {
     return Ecocjs.utils.buildPubKeyHashTransaction(keypair, to, amount, fee, utxoList)
   }
 
-  static async sendRawTx(tx: string) {
-    return await ecocw3.api.sendRawTx(tx)
+  static async sendRawTx(tx: string): Promise<string> {
+    const response = await ecocw3.api.sendRawTx(tx)
+    return response.txid
   }
 
   static async callContract(address: string, encodedData: string) {

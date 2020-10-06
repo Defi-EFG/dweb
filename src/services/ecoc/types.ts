@@ -47,3 +47,17 @@ export interface TxData {
   pagesTotal: number
   txs: Transaction[]
 }
+
+export interface SendEcocPayload {
+  to: string
+  amount: number
+  fee: number
+}
+
+export interface SendEcrc20Payload {
+  to: string
+  amount: number
+  fee: number
+  gasPrice: number
+  gasLimit: number
+}

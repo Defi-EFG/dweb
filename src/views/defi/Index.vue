@@ -7,16 +7,20 @@
     </v-container>
     <div class="content">
       <DefiNav />
-      <transition name="page" mode="out-in">
-        <router-view></router-view>
-      </transition>
+      <div class="main-container">
+        <div class="inner-container container">
+          <transition name="fade" mode="out-in">
+            <router-view></router-view>
+          </transition>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import DefiNav from '@/components/DefiNav.vue'
+import DefiNav from '@/components/DeFi/DefiNav.vue'
 import HeaderNav from '@/components/HeaderNav.vue'
 
 @Component({
@@ -40,12 +44,36 @@ export default class Home extends Vue {}
   display: flex;
   position: relative;
   flex: 1;
+  justify-content: center;
   .row {
     width: 100%;
   }
 }
 
+.main-container {
+  display: flex;
+  width: -webkit-fill-available;
+  .inner-container {
+    position: relative;
+    height: 100%;
+  }
+}
+
 .address-bar {
   text-align: right;
+}
+</style>
+
+<style lang="scss">
+.fade-enter-active,
+.fade-leave-active {
+  transition-duration: 0.2s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.fade-enter,
+.fade-leave-active {
+  opacity: 0;
 }
 </style>
