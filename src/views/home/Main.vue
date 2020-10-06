@@ -21,13 +21,13 @@
                   src="@/assets/Subtraction.svg"
                   style="animation-delay: 1s;"
               /></a>
-
-              <img
-                title="Github"
-                class="img_logo1"
-                src="@/assets/github.svg"
-                style="animation-delay: 1.5s;"
-              />
+              <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer">
+                <img
+                  title="Github"
+                  class="img_logo1"
+                  src="@/assets/github.svg"
+                  style="animation-delay: 1.5s;"
+              /></a>
 
               <a href="https://medium.com/@ecoc.efg" target="_blank">
                 <img
@@ -111,7 +111,7 @@
               <v-row>
                 <v-col cols="6">
                   <img src="@/assets/delay.svg" />
-                  <div class="supply_name">DELAY</div>
+                  <div class="supply_name">GPT</div>
                   <div class="supply_text">{{ $t('views.main.liquidation') }}</div>
                 </v-col>
                 <v-col cols="6">
@@ -129,9 +129,9 @@
             <div class="supply">
               <v-row>
                 <v-col cols="12">
-                  <div class="supply_name2">DELAY - {{ $t('views.main.available') }}</div>
+                  <div class="supply_name2">GPT - {{ $t('views.main.available') }}</div>
                   <div class="supply_price_color color_1">
-                    10,000 DELAY
+                    10,000 GPT
                   </div>
                 </v-col>
               </v-row>
@@ -389,6 +389,8 @@ export default {
   letter-spacing: 0px;
   opacity: 1;
   padding-top: 20px;
+  position: relative;
+  z-index: 10;
 }
 .sec_2 .row1 .color_1 {
   color: rgb(63, 192, 219);

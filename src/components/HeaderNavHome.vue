@@ -8,7 +8,7 @@
       <v-spacer></v-spacer>
       <div class="desktop_menu">
         <router-link :to="{ name: 'home-docs' }">{{ $t('views.titles.docs') }}</router-link>
-        <a href="http://www.africau.edu/images/default/sample.pdf" target="_blank">{{
+        <a href="https://efg.finance/media/efg-whitepaper.pdf" target="_blank">{{
           $t('views.titles.whitepaper')
         }}</a>
         <v-btn outlined small @click="gotoDashboard">Dashboard</v-btn>
@@ -31,7 +31,7 @@
                       }}</router-link>
                     </li>
                     <li>
-                      <a href="http://www.africau.edu/images/default/sample.pdf" target="_blank">{{
+                      <a href="https://efg.finance/media/efg-whitepaper.pdf" target="_blank">{{
                         $t('views.titles.whitepaper')
                       }}</a>
                     </li>

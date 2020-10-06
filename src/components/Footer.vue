@@ -3,7 +3,9 @@
     <a href="https://t.me/EFGtoken" target="_blank" rel="noopener noreferrer"
       ><span>Telegram</span></a
     >
-    <span>Github</span>
+    <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer"
+      ><span>Github</span></a
+    >
     <a href="https://medium.com/@ecoc.efg" target="_blank" rel="noopener noreferrer"
       ><span>Medium</span></a
     >
