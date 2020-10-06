@@ -191,7 +191,7 @@ export default {
   .logo_ecoc .logo_ecoc_m_text {
     font-size: 30px;
   }
-  .logo_ecoc .logo_ecoc_m_text span{
+  .logo_ecoc .logo_ecoc_m_text span {
     font-size: 20px;
   }
 }
