@@ -3,18 +3,22 @@ import { Line } from 'vue-chartjs'
 
 export default {
   extends: Line,
+  titleName: [
+    { x: 'Jan', net: 100, cogs: 50, gm: 50 },
+    { x: 'Feb', net: 120, cogs: 55, gm: 50 }
+  ],
   data() {
     return {
-      title: ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct'],
       chartData: {
-        labels: [this.title],
+        labels: ['Jan', 'Feb'],
         datasets: [
           {
             label: 'Line Chart',
-            data: [1.6, 3, 2, 2.3, 2.1, 2],
+            data: [this.titleData],
             borderColor: '#ffffff',
             backgroundColor: '#a346ff3b',
-            borderWidth: 2
+            borderWidth: 2,
+            pointBorderColor: '#ffffff00'
           }
         ]
       },

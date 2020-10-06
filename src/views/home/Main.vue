@@ -1,36 +1,50 @@
 <template>
   <div class="markets">
     <section class="sec_1">
-      <img
-        src="@/assets/efg_logo_test.svg"
-        class=""
-        width="500px"
-        style="position: absolute; right: 200px;"
-      />
+      <img src="@/assets/efg_logo_test.svg" class="img_background" />
       <v-container>
         <v-row>
           <v-col class="12">
             <img src="@/assets/efg_logo.svg" class="efg-logo" />
             <div class="text_header">{{ $t('views.main.name') }}</div>
             <div class="text_header_sub">
-              ECOC Financial Governance Token (EFG) has a concept of working similar to a bank, that
-              is, accepting deposits and lending. The depositor can have the EFG token to use for
-              investment the method by deposit ECOC coins for guarantee. Then, to pay the interest
-              the loan compensation to the ECOChain. (Similar to the abbreviation of the bank in
-              Smart Contract), but EFG token pays interest is not stable, according to the
-              cryptocurrency market mechanism.
-              <br /><br />
-              This mechanism can be read in EFG token Smart Contract, so instead of just holding the
-              ECOC coins if we don’t want to trade it. We can hold the EFG token to use for
-              expanding your investment. Therefore, DeFi is the basic sector to empower EFG token’s
-              reliable and stable currency attributes to providing a firmer credit channel for
-              borrowers.
+              {{ $t('views.main.sub_name_1') }}
+            </div>
+            <div class="text_header_sub">
+              {{ $t('views.main.sub_name_2') }}
             </div>
             <div class="social_icon">
-              <img class="img_logo1" src="@/assets/Telegram.svg" style="animation-delay: 1s;" />
-              <img class="img_logo1" src="@/assets/github.svg" style="animation-delay: 1.5s;" />
-              <img class="img_logo1" src="@/assets/facebook.svg" style="animation-delay: 2s;" />
-              <img class="img_logo1" src="@/assets/twitter.svg" style="animation-delay: 2.5s;" />
+              <a href="https://t.me/EFGtoken" target="_blank">
+                <img
+                  title="Telegram"
+                  class="img_logo1"
+                  src="@/assets/Subtraction.svg"
+                  style="animation-delay: 1s;"
+              /></a>
+
+              <img
+                title="Github"
+                class="img_logo1"
+                src="@/assets/github.svg"
+                style="animation-delay: 1.5s;"
+              />
+
+              <a href="https://medium.com/@ecoc.efg" target="_blank">
+                <img
+                  title="Medium"
+                  class="img_logo1"
+                  src="@/assets/medium.svg"
+                  style="animation-delay: 2s;"
+                />
+              </a>
+              <a href="https://twitter.com/EcocEfg" target="_blank">
+                <img
+                  title="Twitter"
+                  class="img_logo1"
+                  src="@/assets/twitter.svg"
+                  style="animation-delay: 2.5s;"
+                />
+              </a>
             </div>
           </v-col>
         </v-row>
@@ -38,57 +52,52 @@
     </section>
     <section class="sec_3">
       <v-container>
-        <v-row class="text_table" style="margin-top:0px;"> </v-row>
+        <v-row class="text_table"></v-row>
         <v-row class="text_table_sub"> </v-row>
       </v-container>
     </section>
     <section class="sec_2">
       <v-container>
         <v-row>
-          <v-col cols="12" style="color:#cccccc;">
-            Supply
+          <v-col cols="12" class="head_supply">
+            {{ $t('views.main.supply') }}
           </v-col>
         </v-row>
         <v-row class="row1">
-          <v-col cols="5">
-            <div class="supply" style="border-right:2px solid  rgb(75 69 83);">
+          <v-col lg="5" md="5" cols="12" class="supply3">
+            <div class="supply supply2">
               <v-row>
                 <v-col cols="6">
                   <img src="@/assets/efg_01.svg" />
                   <div class="supply_name">EFG</div>
-                  <div class="supply_text" style="margin-top:10px;">Supply APY (DELAY)</div>
-                  <div class="supply_text">Borrow APY</div>
+                  <div class="supply_text">{{ $t('views.main.supply_apy') }}</div>
+                  <div class="supply_text">{{ $t('views.main.borrow_apy') }}</div>
                 </v-col>
                 <v-col cols="6">
-                  <div class="supply_button1">
+                  <div class="supply_button11">
                     <a href="efg">
-                      <button>Details</button>
+                      <button>{{ $t('views.main.detail') }}</button>
                     </a>
                   </div>
-                  <div class="supply_price" style="margin-top:10px;">20.0%</div>
+                  <div class="supply_price">20.0%</div>
                   <div class="supply_price">3.5%</div>
                 </v-col>
               </v-row>
             </div>
           </v-col>
-          <v-col cols="7">
+          <v-col lg="7" md="7" cols="12">
             <div class="supply">
               <v-row>
-                <v-col cols="6">
-                  <div class="supply_name" style="top:unset; margin-left:0px;">
-                    EFG - Total Supply
-                  </div>
-                  <div class="supply_price_color" style="margin-top:10px; color:#3FC0DB;">
-                    $5,305,610.41
+                <v-col lg="6" md="6" cols="12">
+                  <div class="supply_name2">EFG - {{ $t('views.main.total_supply') }}</div>
+                  <div class="supply_price_color color_1">
+                    $0
                   </div>
                 </v-col>
-                <v-col cols="6">
-                  <div class="supply_button1">EFG - Total Borrowed</div>
-                  <div
-                    class="supply_price_color"
-                    style="margin-top:10px; float: right; color:#C074F9;"
-                  >
-                    $4,189,402.65
+                <v-col lg="6" md="6" cols="12">
+                  <div class="supply_button1">EFG - {{ $t('views.main.total_borrowed') }}</div>
+                  <div class="supply_price_color color_2">
+                    $0
                   </div>
                 </v-col>
               </v-row>
@@ -97,34 +106,32 @@
           <img style="position: absolute;" src="@/assets/backg_01.svg" />
         </v-row>
         <v-row class="row1">
-          <v-col cols="5">
-            <div class="supply" style="border-right:2px solid rgb(75 69 83);">
+          <v-col lg="5" md="5" cols="12" class="supply3">
+            <div class="supply supply2">
               <v-row>
                 <v-col cols="6">
                   <img src="@/assets/delay.svg" />
                   <div class="supply_name">DELAY</div>
-                  <div class="supply_text" style="margin-top:10px;">Liquidation</div>
+                  <div class="supply_text">{{ $t('views.main.liquidation') }}</div>
                 </v-col>
                 <v-col cols="6">
                   <div class="supply_button2">
                     <a href="delay">
-                      <button>Details</button>
+                      <button>{{ $t('views.main.detail') }}</button>
                     </a>
                   </div>
-                  <div class="supply_price" style="margin-top:10px;">20.0%</div>
+                  <div class="supply_price">20.0%</div>
                 </v-col>
               </v-row>
             </div>
           </v-col>
-          <v-col cols="7">
+          <v-col lg="7" md="7" cols="12">
             <div class="supply">
               <v-row>
                 <v-col cols="12">
-                  <div class="supply_name" style="top:unset; margin-left:0px;">
-                    DELAY - Available (Total: 10,000 DELAY)
-                  </div>
-                  <div class="supply_price_color" style="margin-top:10px; color:#3FC0DB;">
-                    $5,305,610.41
+                  <div class="supply_name2">DELAY - {{ $t('views.main.available') }}</div>
+                  <div class="supply_price_color color_1">
+                    10,000 DELAY
                   </div>
                 </v-col>
               </v-row>
@@ -135,7 +142,7 @@
         <v-row style="border-bottom:2px solid #312D36; margin-top:20px"></v-row>
         <v-row>
           <v-col cols="12" style="color:#cccccc; margin-top:50px">
-            Collateral
+            {{ $t('views.main.collateral') }}
           </v-col>
         </v-row>
         <v-row>
@@ -159,10 +166,10 @@
             <v-carousel hide-delimiters>
               <v-carousel-item v-for="(item, i) in items" :key="i">
                 <v-row class="fill-height" align="center" justify="center">
-                  <v-col cols="4">
+                  <v-col lg="3" md="3" cols="12">
                     <div class="img_footer"><img :src="item.src" alt="" /></div>
                   </v-col>
-                  <v-col cols="8">
+                  <v-col lg="9" md="9" cols="12">
                     <div class="text_head_footer">{{ item.title }}</div>
                     <div class="subtext_head_footer">{{ item.subtitle }}</div>
                   </v-col>
@@ -191,43 +198,22 @@ export default {
       dialog: true,
       items: [
         {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/squirrel.jpg',
-          title: 'Lorem ipsum dolor sit amet 1',
+          src: require('@/assets/silderimg_01.svg'),
+          title: 'ECOC Financial Growth',
           subtitle:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
+            'ECOC Financial Growth (EFG) is an interesting lending opportunity on decentralize blockchain, that let developers create new financial applications that are global, safe, and open for ECOC coins user. ECOChain developers keep developing the core blockchain infrastructure, as well as the tools to empower the new financial system.'
         },
         {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/sky.jpg',
-          title: 'Lorem ipsum dolor sit amet 2',
+          src: require('@/assets/silderimg_01.svg'),
+          title: 'The security of the ECOC Financial Growth (EFG)',
           subtitle:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
+            'The security of the ECOC Financial Growth (EFG) token is our highest priority; our development team, alongside, has invested considerable effort to create an EFG token that we believe is safe and dependable. Besides balances are publicly verifiable.'
         },
         {
-          src: 'https://cdn.vuetifyjs.com/images/carousel/bird.jpg',
-          title: 'Lorem ipsum dolor sit amet 3',
+          src: require('@/assets/silderimg_01.svg'),
+          title: 'The security of the ECOC Financial Growth (EFG)',
           subtitle:
-            'Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Ut wisi enim ad minim veniam, quis nostrud exerci tation ullamcorper suscipit lobortis nisl ut aliquip ex ea commodo consequat. Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.'
-        }
-      ],
-      data: [
-        {
-          img: require('../../assets/bitcoin2.png'),
-          name: 'ECOC',
-          total: '$5.3 M',
-          apy: '$2.5 M'
-        },
-        {
-          img: require('../../assets/usd.png'),
-          name: 'USD',
-          total: '$5.3 M',
-          apy: '$2.5 M',
-          phat: '/markets?id='
-        },
-        {
-          img: require('../../assets/eth.png'),
-          name: 'ETH',
-          total: '$5.3 M',
-          apy: '$2.5 M'
+            "We believe that size, visibility, and time are the true test for the security of smart contracts and make the determination of security and suitability for users. ECOC Financial Growth (EFG) Token's developers never stop to develop the best financial channel."
         }
       ]
     }
@@ -247,7 +233,6 @@ export default {
   background: transparent linear-gradient(180deg, #2c1635 0%, #070c1a 100%) 0% 0% no-repeat
     padding-box;
   padding-top: 200px;
-  z-index: 200;
 }
 .sec_2 {
   background: #202020 0% 0% no-repeat padding-box;
@@ -267,16 +252,17 @@ export default {
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
-  top: -20px;
+  top: -13px;
   padding-left: 20px;
 }
 .sec_1 .text_header_sub {
   text-align: left;
-  font: normal normal normal 16px/21px Segoe UI;
+  font: normal normal normal 17px/23px Segoe UI;
   letter-spacing: 0px;
-  color: #929292;
+  color: #c7bebe;
   opacity: 1;
   padding-top: 20px;
+  text-indent: 5em;
 }
 .sec_1 .social_icon {
   position: relative;
@@ -285,10 +271,16 @@ export default {
   margin-right: 0;
   text-align: right;
 }
+.img_background {
+  width: 500px;
+  position: absolute;
+  right: 200px;
+}
 .sec_1 .social_icon img {
   padding: 0 5px;
   margin-right: 0;
   transition: transform 0.3s;
+  cursor: pointer;
 }
 .sec_2 .row1 {
   background: #312d36;
@@ -302,13 +294,19 @@ export default {
   right: 0;
   bottom: 0;
 }
+.head_supply {
+  color: #cccccc;
+}
+.sec_2 .row1 .supply2 {
+  border-right: 2px solid rgb(75 69 83);
+}
 .sec_2 .row1 .supply {
   padding: 0px 20px;
   position: relative;
-  z-index: 200;
 }
 .sec_2 .row1 .supply img {
   width: 30px;
+  margin-right: 10px;
 }
 .sec_2 .row1 .supply_name {
   text-align: left;
@@ -319,7 +317,15 @@ export default {
   display: inline;
   position: relative;
   top: -10px;
-  margin-left: 10px;
+}
+.sec_2 .row1 .supply_name2 {
+  text-align: left;
+  font: normal normal normal 16px/21px Segoe UI;
+  letter-spacing: 0px;
+  color: #ffffff;
+  opacity: 1;
+  display: inline;
+  position: relative;
 }
 .sec_2 .row1 .supply_text {
   text-align: left;
@@ -327,12 +333,17 @@ export default {
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 0.5;
+  margin-top: 10px;
 }
 .sec_2 .row1 .supply_button1 {
   text-align: right;
   color: #ffffff;
 }
-.sec_2 .row1 .supply_button1 button {
+.sec_2 .row1 .supply_button11 {
+  text-align: right;
+  color: #ffffff;
+}
+.sec_2 .row1 .supply_button11 button {
   background: transparent linear-gradient(270deg, #522d6a 0%, #743f96 100%) 0% 0% no-repeat
     padding-box;
   border-radius: 17px;
@@ -341,7 +352,7 @@ export default {
   color: #ffffff;
   transition: 0.5s;
 }
-.sec_2 .row1 .supply_button1 button:hover {
+.sec_2 .row1 .supply_button11 button:hover {
   background: transparent linear-gradient(270deg, #8d48ba 0%, #a38bb3 100%) 0% 0% no-repeat;
   color: #000000;
 }
@@ -369,13 +380,22 @@ export default {
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
+  margin-top: 10px;
 }
 .sec_2 .row1 .supply_price_color {
-  z-index: 200;
   text-align: left;
   font: normal normal 400 30px/40px Segoe UI;
   letter-spacing: 0px;
   opacity: 1;
+  padding-top: 20px;
+}
+.sec_2 .row1 .color_1 {
+  color: rgb(63, 192, 219);
+}
+.sec_2 .row1 .color_2 {
+  color: rgb(192, 116, 249);
+  float: right;
+  color: rgb(192, 116, 249);
 }
 .sec_2 .but_div {
   background: #312d36 0% 0% no-repeat padding-box;
@@ -402,8 +422,8 @@ export default {
   margin-left: 10px;
 }
 .img_footer {
-  width: 250px;
-  height: 250px;
+  width: 220px;
+  height: 220px;
   border-radius: 50%;
   overflow: hidden;
 }
@@ -425,6 +445,8 @@ export default {
   letter-spacing: 0px;
   color: #707070;
   opacity: 1;
+  text-indent: 3em;
+  margin-top: 5px;
 }
 
 .text_header {
@@ -441,7 +463,7 @@ export default {
   transform-origin: 50% 50%;
   animation-name: icon_div;
   animation-duration: 2s;
-  width: 80px;
+  width: 60px;
 }
 .img_logo1 {
   animation: img_logo1 2s forwards;
@@ -451,6 +473,7 @@ export default {
 .sec_1 .social_icon img:hover {
   transform: scale(1.5);
 }
+
 @keyframes img_logo1 {
   0% {
     opacity: 0;
@@ -496,12 +519,82 @@ export default {
   }
 }
 
+@media only screen and (max-width: 960px) {
+  .sec_2 .row1 .supply2 {
+    border-right: unset;
+  }
+  .sec_2 .row1 .supply2 {
+    border-bottom: 2px solid rgb(75, 69, 83);
+  }
+  .img_footer {
+    margin: 0 auto;
+  }
+  .text_head_footer {
+    text-align: center;
+  }
+  .subtext_head_footer {
+    text-align: center;
+  }
+  .sec_2 .row1 .supply_price_color {
+    padding: 0;
+  }
+  .sec_2 .row1 .color_2 {
+    float: left;
+  }
+  .sec_2 .row1 .supply_button1 {
+    text-align: left;
+  }
+  .sec_2 .row1 .supply_button11 button {
+    padding: 5px 20px;
+  }
+  .sec_2 .row1 .supply_button2 button {
+    padding: 5px 20px;
+  }
+}
+
 @media only screen and (max-width: 670px) {
   .total_supply .price_text {
     font-size: 30px;
   }
 }
-.v-card__text{
-      text-align: center;
+@media only screen and (max-width: 600px) {
+  .sec_1 .text_header {
+    font-size: 25px;
+    top: -10px;
+  }
+  .efg-logo {
+    width: 50px;
+  }
+  .sec_1 {
+    padding-top: 150px;
+  }
+  .sec_3 {
+    height: 150px;
+  }
+  .sec_2 {
+    padding-top: 50px;
+  }
+  .sec_2 .but_div {
+    padding: 21px 20px 2px 10px;
+  }
+  .sec_1 .social_icon {
+    text-align: center;
+    padding: 20px 10px;
+  }
+}
+
+@media only screen and (max-width: 500px) {
+  .sec_2 .row1 .supply_price_color {
+    padding: 0;
+  }
+  .sec_2 .row1 .color_2 {
+    float: left;
+  }
+  .sec_2 .row1 .supply_button1 {
+    text-align: left;
+  }
+  .sec_2 .row1 .supply_name2 {
+    font-size: 14px;
+  }
 }
 </style>
