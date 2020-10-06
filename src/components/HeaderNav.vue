@@ -19,7 +19,7 @@
         <v-card rounded-lg width="389" class="v-card-wrapper">
           <v-card-title class="cardheadertitle"
             ><h6>ECOC Wallet</h6>
-            <v-btn text color="primary" class="mb-2"
+            <v-btn text color="primary" class="mb-2" @click="onLogout()"
               ><span class="text-btn">Disconnect</span></v-btn
             ></v-card-title
           >
