@@ -5,7 +5,7 @@ import homeRoutes from './home'
 
 Vue.use(VueRouter)
 
-const routes: Array<RouteConfig> = [...homeRoutes, ...defiRoutes]
+const routes: Array<RouteConfig> = [...homeRoutes]//, ...defiRoutes]
 
 const router = new VueRouter({
   mode: 'history',

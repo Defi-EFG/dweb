@@ -69,7 +69,7 @@ export default class HeaderNavHome extends Vue {
     this.$router.push('/')
   }
   gotoDashboard() {
-    this.$router.push('defi')
+    //this.$router.push('defi')
   }
   data() {
     return {
