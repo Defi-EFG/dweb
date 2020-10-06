@@ -37,5 +37,5 @@ export const KNOWN_CURRENCY = {
   BCST: {
     icon: require('@/assets/icon/currency/delay.svg'),
     mark: require('@/assets/wallet-token/delay.svg')
-  } as Style,
+  } as Style
 } as CurrencyStyle

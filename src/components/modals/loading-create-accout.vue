@@ -38,4 +38,3 @@ export default class Loading extends Vue {
   margin-top: 15px;
 }
 </style>
-

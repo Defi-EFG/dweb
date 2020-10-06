@@ -49,7 +49,9 @@ export default class HeaderNav extends Vue {
   onOpenModal() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
-  onunlockSuccess() {
+  onCloseunlockwalletModal() {
+    console.log('ffsfdsfdsfdsfd')
+
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
   onUnlockWallet() {
