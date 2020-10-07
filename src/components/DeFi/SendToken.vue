@@ -70,7 +70,7 @@ import vClickOutside from 'v-click-outside'
 import { getModule } from 'vuex-module-decorators'
 import { SendPayload } from '@/types/wallet'
 import WalletModule from '@/store/wallet'
-import TransactionComfirmationModal from '@/components/modals/transection-confirmation.vue'
+import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 @Component({
   components: {
     TransactionComfirmationModal
