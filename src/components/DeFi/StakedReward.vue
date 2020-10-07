@@ -14,7 +14,7 @@
 
       <v-divider></v-divider>
 
-      <p class="reward-label pb-0">Reward Withdrawal</p>
+      <p class="reward-label mb-1">Reward Withdrawal</p>
 
       <div class="minimum-w">
         <span class="value">Minimum Withdrawal: 1.00 GPT</span>

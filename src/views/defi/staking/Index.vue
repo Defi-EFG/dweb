@@ -41,7 +41,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
 import StakingList from '@/components/DeFi/StakingList.vue'
-import LendingActivity from '@/components/DeFi/LendingActivity.vue'
 import StakingChart from '@/components/DeFi/StakingChart.vue'
 import DepositWithdraw from '@/components/DeFi/DepositWithdraw.vue'
 import StakedReward from '@/components/DeFi/StakedReward.vue'
@@ -51,7 +50,6 @@ import RewardHistory from '@/components/DeFi/RewardHistory.vue'
   components: {
     TransactionHistory,
     StakingList,
-    LendingActivity,
     StakingChart,
     DepositWithdraw,
     StakedReward,

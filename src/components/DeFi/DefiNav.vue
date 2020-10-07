@@ -10,7 +10,7 @@
               @click="$router.push(`/defi/${item.text}`)"
             >
               <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
+                <img :src="item.icon" />
               </v-list-item-icon>
 
               <v-list-item-content>
@@ -31,9 +31,21 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class DefiNav extends Vue {
   item = 0
   items = [
-    { text: 'wallet', icon: 'mdi-folder' },
-    { text: 'lending', icon: 'mdi-account-multiple' },
-    { text: 'staking', icon: 'mdi-star' }
+    {
+      text: 'wallet',
+      icon: require('@/assets/icon/wallet-w.svg'),
+      iconClicked: require('@/assets/icon/wallet.svg')
+    },
+    {
+      text: 'lending',
+      icon: require('@/assets/icon/lending-w.svg'),
+      iconClicked: require('@/assets/icon/lending.svg')
+    },
+    {
+      text: 'staking',
+      icon: require('@/assets/icon/staking-w.svg'),
+      iconClicked: require('@/assets/icon/staking.svg')
+    }
   ]
 }
 </script>
