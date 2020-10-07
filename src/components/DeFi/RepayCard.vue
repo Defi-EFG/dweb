@@ -5,10 +5,9 @@
       <div class="wallet-balance mb-2">
         <span>Wallet Balance:</span>
         <v-spacer></v-spacer>
-        <span
-          class="balance"
-          @click="fillAmount(walletBalance)"
-        >{{ walletBalance.toFixed(2) }} {{ token }}</span>
+        <span class="balance" @click="fillAmount(walletBalance)"
+          >{{ walletBalance.toFixed(2) }} {{ token }}</span
+        >
       </div>
       <v-text-field
         class="amount-input"
