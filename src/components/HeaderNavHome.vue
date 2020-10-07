@@ -30,9 +30,7 @@
                         }}</router-link>
                       </li>
                       <li>
-                        <a href="https://efg.finance/media/efg-whitepaper.pdf" target="_blank">{{
-                          $t('views.titles.whitepaper')
-                        }}</a>
+                        <a :href="msg" target="_blank">{{ $t('views.titles.whitepaper') }}</a>
                       </li>
                       <li class="li_noberder">
                         <v-btn outlined small @click="gotoDashboard">{{
@@ -57,7 +55,7 @@
       <v-dialog v-model="dialog">
         <v-card>
           <v-card-text>
-            <img class="img" src="@/assets/underconstruction.svg" alt="" />
+            <img class="img" :src="require(`@/assets/${underconstruction}`)" alt="" />
           </v-card-text>
         </v-card>
       </v-dialog>
@@ -87,6 +85,9 @@ export default class HeaderNavHome extends Vue {
   }
   get msg() {
     return this.$t('views.pdf')
+  }
+  get underconstruction() {
+    return this.$t('views.underconstruction')
   }
 }
 </script>
