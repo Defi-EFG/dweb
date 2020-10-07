@@ -20,3 +20,7 @@ export interface Style {
   mark: string
 }
 
+// Temporary interface, remove this after complete integrated with contract
+export interface CurrencyRate {
+  [token: string]: number
+}

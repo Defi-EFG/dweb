@@ -72,7 +72,7 @@ export default class TransactionComfirmationModal extends Vue {
   }
 }
 </script>
-<style >
+<style>
 .headline {
   border-bottom: 1px solid rgba(180, 180, 180, 0.555);
   border-bottom-right-radius: 0px !important;
@@ -210,4 +210,3 @@ export default class TransactionComfirmationModal extends Vue {
   font-size: 10px;
 }
 </style>
-

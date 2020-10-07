@@ -14,10 +14,10 @@
         <v-col cols="3" class="text-center">Borrow</v-col>
       </v-row>
       <v-row
-        class="market-item hvr-sweep-to-right"
+        class="market-item"
         v-for="(item, index) in supplyList"
         :key="index"
-        @click="switchBorrow"
+        @click="switchBorrow(item.token)"
       >
         <v-col cols="3" class="assets">
           <img :src="require(`@/assets/icon/currency/${item.token.toLowerCase()}.svg`)" />
@@ -47,17 +47,11 @@ export default class SupplyMarket extends Vue {
       token: 'EFG',
       apy: 2.9,
       value: 20000
-    },
-    {
-      token: 'ECOC',
-      apy: 3.5,
-      value: 1000
     }
   ]
 
-  switchBorrow(event: any) {
-    console.log('send emit')
-    this.$emit('switchToBorrow', 'borrow')
+  switchBorrow(token: any) {
+    this.$emit('switchToBorrow', token)
   }
 }
 </script>
@@ -79,6 +73,7 @@ export default class SupplyMarket extends Vue {
   color: white;
   justify-content: space-between;
   margin-bottom: 0.5rem;
+  cursor: pointer;
 
   .assets {
     display: flex;
@@ -109,6 +104,11 @@ export default class SupplyMarket extends Vue {
   }
 }
 
+.market-item:hover {
+  background: #42475c;
+  transition: 0.3s;
+}
+
 .supply-item:nth-last-child(1) {
   margin-bottom: 0;
 }
@@ -121,6 +121,21 @@ export default class SupplyMarket extends Vue {
   .row {
     margin-left: 0;
     margin-right: 0;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff41;
+    border-radius: 6px;
   }
 }
 </style>

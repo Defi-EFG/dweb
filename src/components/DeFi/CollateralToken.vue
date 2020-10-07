@@ -13,10 +13,10 @@
         <v-col cols="3" class="text-center">Collateral</v-col>
       </v-row>
       <v-row
-        class="collateral-item hvr-sweep-to-right"
+        class="collateral-item"
         v-for="(item, index) in collateralList"
         :key="index"
-        @click="switchToCollateral"
+        @click="switchToCollateral(item.token)"
       >
         <v-col cols="4" class="assets">
           <img :src="require(`@/assets/icon/currency/${item.token.toLowerCase()}.svg`)" />
@@ -56,8 +56,8 @@ export default class CollateralToken extends Vue {
     }
   ]
 
-  switchToCollateral(event: any) {
-    this.$emit('switchToCollateral', 'collateral')
+  switchToCollateral(token: string) {
+    this.$emit('switchToCollateral', token)
   }
 }
 </script>
@@ -104,10 +104,10 @@ export default class CollateralToken extends Vue {
   }
 }
 
-// .collateral-item:hover {
-//   background: #42475c;
-//   transition: 0.3s;
-// }
+.collateral-item:hover {
+  background: #42475c;
+  transition: 0.3s;
+}
 
 .supply-item:nth-last-child(1) {
   margin-bottom: 0;
@@ -144,50 +144,20 @@ export default class CollateralToken extends Vue {
         padding-box;
     }
   }
-}
 
-.hvr-sweep-to-right {
-  border-radius: 6px;
-  cursor: pointer;
-  vertical-align: middle;
-  -webkit-transform: perspective(1px) translateZ(0);
-  transform: perspective(1px) translateZ(0);
-  position: relative;
-  -webkit-transition-property: color;
-  transition-property: color;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-}
-.hvr-sweep-to-right:before {
-  border-radius: 6px;
-  content: '';
-  position: absolute;
-  z-index: -1;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #454a60;
-  -webkit-transform: scaleX(0);
-  transform: scaleX(0);
-  -webkit-transform-origin: 0 50%;
-  transform-origin: 0 50%;
-  -webkit-transition-property: transform;
-  transition-property: transform;
-  -webkit-transition-duration: 0.3s;
-  transition-duration: 0.3s;
-  -webkit-transition-timing-function: ease-out;
-  transition-timing-function: ease-out;
-}
-.hvr-sweep-to-right:hover,
-.hvr-sweep-to-right:focus,
-.hvr-sweep-to-right:active {
-  color: white;
-}
-.hvr-sweep-to-right:hover:before,
-.hvr-sweep-to-right:focus:before,
-.hvr-sweep-to-right:active:before {
-  -webkit-transform: scaleX(1);
-  transform: scaleX(1);
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff41;
+    border-radius: 6px;
+  }
 }
 </style>

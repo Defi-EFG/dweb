@@ -70,6 +70,21 @@ export default class ContactAddress extends Vue {
 .address-list {
   max-height: 192px;
   overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff41;
+    border-radius: 6px;
+  }
 }
 .address-item {
   text-align: left;

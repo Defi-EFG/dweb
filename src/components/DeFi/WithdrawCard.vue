@@ -5,7 +5,9 @@
       <div class="wallet-balance mb-2">
         <span>Max Withdrawable:</span>
         <v-spacer></v-spacer>
-        <span class="balance" @click="fillAmount(maxWithdraw)">{{ maxWithdraw.toFixed(2) }} {{ token }}</span>
+        <span class="balance" @click="fillAmount(maxWithdraw)"
+          >{{ maxWithdraw.toFixed(2) }} {{ token }}</span
+        >
       </div>
       <v-text-field
         class="amount-input"
@@ -14,21 +16,19 @@
         v-model="withdrawValue"
         height="43"
         color="#C074F9"
+        :hint="tokenConversion"
+        persistent-hint
       ></v-text-field>
       <div class="borrow-power">
         <span class="label">Borrow Power</span>
-        <v-slider
-          class="borrow-slider"
-          v-model="val"
-          min="0"
-          max="100"
-          color="#c074f9"
-          track-color="#E4E4E4"
-          thumb-color="#ffffff"
-          :hide-details="true"
-          @end="limitValue(25)"
-          @click="limitValue(25)"
-        ></v-slider>
+        <v-progress-linear
+          :value="calculateBPUsed(withdrawValue)"
+          rounded
+          color="#C074F9"
+          background-color="#E4E4E4"
+          class="borrow-bar"
+          height="5"
+        ></v-progress-linear>
       </div>
       <div class="borrow-used">
         <div>Borrow Power Used</div>
@@ -36,7 +36,7 @@
         <div>
           <span>25.0%</span>
           &rarr;
-          <span class="after-calculated">22.7%</span>
+          <span class="after-calculated">{{ calculateBPUsed(withdrawValue).toFixed(1) }}%</span>
         </div>
       </div>
       <div class="borrow-total mt-1 mb-3">
@@ -45,24 +45,57 @@
         <div>
           <span>$800.00</span>
           &rarr;
-          <span class="after-calculated">$880.00</span>
+          <span class="after-calculated">${{ calculateTotalBP(withdrawValue).toFixed(2) }}</span>
         </div>
       </div>
       <v-divider />
-      <v-btn large block depressed class="submit-btn">Withdraw</v-btn>
+      <v-btn
+        large
+        block
+        depressed
+        :disabled="withdrawValue > maxWithdraw"
+        :class="withdrawValue > maxWithdraw ? 'submit-btn disabled' : 'submit-btn'"
+      >
+        {{ withdrawValue > maxWithdraw ? 'Insufficient' : 'Withdraw' }}</v-btn
+      >
     </v-card-text>
   </v-card>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import { CurrencyRate } from '@/types/currency'
 
 @Component({})
 export default class Withdraw extends Vue {
-  token = 'ECOC'
+  @Prop() token!: string
+
+  currencyRate: CurrencyRate = {
+    ECOC: 1,
+    USDT: 1,
+    ETH: 10
+  }
+
   val = 25
   minVal = 25
   withdrawValue = 0
   maxWithdraw = 500
+
+  get supplyBalance() {
+    return 1000
+  }
+
+  get borrowBalance() {
+    return 200
+  }
+
+  get borrowPowerPercentage() {
+    return 0.8
+  }
+
+  get tokenConversion() {
+    return `${this.withdrawValue} ${this.token} ≈ $${this.currencyRate[this.token] *
+      Number(this.withdrawValue)}`
+  }
 
   limitValue(num: number) {
     if (this.val < num) {
@@ -72,6 +105,17 @@ export default class Withdraw extends Vue {
 
   fillAmount(amount: number) {
     this.withdrawValue = amount
+  }
+
+  // BP = Borrow Power
+  calculateTotalBP(withdrawAmount: number) {
+    const dollarsAmount = Number(withdrawAmount) * this.currencyRate[this.token]
+    return (this.supplyBalance - dollarsAmount) * this.borrowPowerPercentage
+  }
+
+  calculateBPUsed(withdrawAmount: number) {
+    const dollarsAmount = Number(withdrawAmount) * this.currencyRate[this.token]
+    return (this.borrowBalance / this.calculateTotalBP(withdrawAmount)) * 100
   }
 }
 </script>
@@ -105,6 +149,11 @@ export default class Withdraw extends Vue {
     font-weight: 700;
     color: white;
   }
+
+  .borrow-bar {
+    margin-top: 8px;
+    margin-bottom: 12px;
+  }
 }
 
 .borrow-total,
@@ -118,12 +167,17 @@ export default class Withdraw extends Vue {
 }
 
 .submit-btn {
-  margin-top: 4.5rem;
+  margin-top: 4.3rem;
   margin-bottom: 1.2rem;
   border-radius: 7px;
   font-weight: bold;
   background: transparent linear-gradient(90deg, #3ba7c1 0%, #59289a 100%) 0% 0% no-repeat
     padding-box;
+}
+
+.disabled {
+  background: #8f8f8f !important;
+  cursor: no-drop;
 }
 </style>
 

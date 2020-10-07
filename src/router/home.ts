@@ -5,7 +5,6 @@ import Delay from '@/views/home/Delay.vue'
 import Efg from '@/views/home/Efg.vue'
 import DocsPage from '@/views/home/Docs.vue'
 import WhitePaper from '@/views/home/Whitepaper.vue'
-import Socket from '@/views/home/socket.vue'
 
 const homeRoutes: Array<RouteConfig> = [
   {
@@ -17,27 +16,42 @@ const homeRoutes: Array<RouteConfig> = [
       {
         path: '',
         name: 'home-main',
-        component: MainPage
+        component: MainPage,
+        meta: {
+          title: 'Home - EFG'
+        }
       },
       {
         path: 'Delay',
         name: 'home-Delay',
-        component: Delay
+        component: Delay,
+        meta: {
+          title: 'Delay Details - EFG'
+        }
       },
       {
         path: 'Efg',
         name: 'home-Efg',
-        component: Efg
+        component: Efg,
+        meta: {
+          title: 'EFG Details - EFG'
+        }
       },
       {
         path: 'docs',
         name: 'home-docs',
-        component: DocsPage
+        component: DocsPage,
+        meta: {
+          title: 'Documents - EFG'
+        }
       },
       {
         path: 'whitepaper',
         name: 'home-whitepaper',
-        component: WhitePaper
+        component: WhitePaper,
+        meta: {
+          title: 'Whitepaper - EFG'
+        }
       }
     ]
   }

@@ -117,4 +117,3 @@ export default class GasSetting extends Vue {}
   padding: 15px 3px;
 }
 </style>
-

@@ -33,7 +33,7 @@ export default class StakingList extends Vue {
 
   tokenList = [
     {
-      token: 'DELAY',
+      token: 'GPT',
       value: '5.16349650'
     }
   ]

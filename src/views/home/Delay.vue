@@ -9,7 +9,7 @@
                 <v-col cols="12" style="padding:0px">
                   <div class="logo_ecoc">
                     <img class="logo_ecoc_m" width="40" src="@/assets/delay_02.svg" alt="" />
-                    <div class="logo_ecoc_m_text">DELAY <span>- Market Details</span></div>
+                    <div class="logo_ecoc_m_text">GPT <span>- Market Details</span></div>
                   </div>
                 </v-col>
                 <v-col cols="9" class="chart_detail">

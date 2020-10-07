@@ -111,10 +111,9 @@ export default class DoughnutChart extends Vue {
 .token-logo {
   padding: 0;
   margin: 0;
-  background-image: url('../../assets/delay.svg');
+  background-image: url('../../assets/gpt.svg');
   background-repeat: no-repeat;
   background-position: 50.4% 49.5%;
   background-size: 50px;
 }
-
 </style>
