@@ -5,10 +5,9 @@
       <div class="wallet-balance mb-2">
         <span>Wallet Balance:</span>
         <v-spacer></v-spacer>
-        <span
-          class="balance"
-          @click="fillAmount(walletBalance)"
-        >{{ walletBalance.toFixed(2) }} {{ token }}</span>
+        <span class="balance" @click="fillAmount(walletBalance)"
+          >{{ walletBalance.toFixed(2) }} {{ token }}</span
+        >
       </div>
       <v-text-field
         class="amount-input"
@@ -58,11 +57,12 @@
   </v-card>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component({})
-export default class Collateral extends Vue {
-  token = 'ECOC'
+export default class RepayCard extends Vue {
+  @Prop() token!: string
+
   walletBalance = 1000
   collateralAmount: number | string = ''
 

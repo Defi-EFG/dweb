@@ -14,6 +14,8 @@
         v-model="borrowValue"
         height="43"
         color="#C074F9"
+        :hint="tokenConversion"
+        persistent-hint
       ></v-text-field>
       <div class="borrow-power">
         <span class="label">Borrow Power</span>
@@ -36,16 +38,7 @@
         <div>
           <span>25.0%</span>
           &rarr;
-          <span class="after-calculated">22.7%</span>
-        </div>
-      </div>
-      <div class="borrow-total mt-1 mb-3">
-        <div>Total Borrow Power</div>
-        <v-spacer></v-spacer>
-        <div>
-          <span>$800.00</span>
-          &rarr;
-          <span class="after-calculated">$880.00</span>
+          <span class="after-calculated">{{ calculateBPUsed(borrowValue).toFixed(1) }}%</span>
         </div>
       </div>
       <v-divider />
@@ -59,11 +52,20 @@
   </v-card>
 </template>
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import { CurrencyRate } from '@/types/currency'
 
 @Component({})
 export default class BorrowCard extends Vue {
-  token = 'ECOC'
+  @Prop() token!: string
+
+  currencyRate: CurrencyRate = {
+    ECOC: 1,
+    USDT: 1,
+    EFG: 1,
+    ETH: 10
+  }
+
   val = 25
   minVal = 25
   borrowValue = 0
@@ -72,6 +74,32 @@ export default class BorrowCard extends Vue {
     if (this.val < num) {
       this.val = num
     }
+  }
+
+  get supplyBalance() {
+    return 1000
+  }
+
+  get borrowBalance() {
+    return 200
+  }
+
+  get borrowPowerPercentage() {
+    return 0.8
+  }
+
+  get tokenConversion() {
+    return `${this.borrowValue} ${this.token} ≈ $${this.currencyRate[this.token] *
+      Number(this.borrowValue)}`
+  }
+
+  // BP = Borrow Power
+  calculateBPUsed(borrowAmount: number) {
+    const dollarsAmount = Number(borrowAmount) * this.currencyRate[this.token]
+    return (
+      ((this.borrowBalance + dollarsAmount) / (this.supplyBalance * this.borrowPowerPercentage)) *
+      100
+    )
   }
 }
 </script>
@@ -119,6 +147,11 @@ export default class BorrowCard extends Vue {
   .after-calculated {
     color: #c074f9;
   }
+}
+
+.borrow-used {
+  margin-top: 1rem;
+  margin-bottom: 1.25rem;
 }
 
 .submit-btn {
