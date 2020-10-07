@@ -21,13 +21,13 @@
                   src="@/assets/Subtraction.svg"
                   style="animation-delay: 1s;"
               /></a>
-
-              <img
-                title="Github"
-                class="img_logo1"
-                src="@/assets/github.svg"
-                style="animation-delay: 1.5s;"
-              />
+              <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer">
+                <img
+                  title="Github"
+                  class="img_logo1"
+                  src="@/assets/github.svg"
+                  style="animation-delay: 1.5s;"
+              /></a>
 
               <a href="https://medium.com/@ecoc.efg" target="_blank">
                 <img
@@ -75,9 +75,9 @@
                 </v-col>
                 <v-col cols="6">
                   <div class="supply_button11">
-                    <a href="efg">
-                      <button>{{ $t('views.main.detail') }}</button>
-                    </a>
+                    <!-- <a href="efg"> -->
+                    <button disabled>{{ $t('views.main.detail') }}</button>
+                    <!-- </a> -->
                   </div>
                   <div class="supply_price">20.0%</div>
                   <div class="supply_price">3.5%</div>
@@ -116,9 +116,9 @@
                 </v-col>
                 <v-col cols="6">
                   <div class="supply_button2">
-                    <a href="delay">
-                      <button>{{ $t('views.main.detail') }}</button>
-                    </a>
+                    <!-- <a href="delay"> -->
+                    <button disabled>{{ $t('views.main.detail') }}</button>
+                    <!-- </a> -->
                   </div>
                   <div class="supply_price">20.0%</div>
                 </v-col>
@@ -129,9 +129,9 @@
             <div class="supply">
               <v-row>
                 <v-col cols="12">
-                  <div class="supply_name2">DELAY - {{ $t('views.main.available') }}</div>
+                  <div class="supply_name2">GPT - {{ $t('views.main.available') }}</div>
                   <div class="supply_price_color color_1">
-                    10,000 DELAY
+                    10,000 GPT
                   </div>
                 </v-col>
               </v-row>
@@ -148,14 +148,14 @@
         <v-row>
           <v-col cols="12">
             <span class="but_div"
-              ><img class="img_text_but" src="@/assets/bitcoin2.png" alt="" />
+              ><img class="img_text_but" src="@/assets/icon/currency/ecoc.svg" alt="" />
               <div class="text_but">ECOC</div></span
             >
-            <span class="but_div"
+            <span class="but_div" style="display:none;"
               ><img class="img_text_but" src="@/assets/usd.png" alt="" />
               <div class="text_but">USDT</div></span
             >
-            <span class="but_div"
+            <span class="but_div" style="display:none;"
               ><img class="img_text_but" src="@/assets/eth.png" alt="" />
               <div class="text_but">ETH</div></span
             >
@@ -163,11 +163,13 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <v-carousel hide-delimiters>
-              <v-carousel-item v-for="(item, i) in items" :key="i">
+            <v-carousel hide-delimiters class="efg-slider">
+              <v-carousel-item v-for="(item, i) in msg" :key="i">
                 <v-row class="fill-height" align="center" justify="center">
                   <v-col lg="3" md="3" cols="12">
-                    <div class="img_footer"><img :src="item.src" alt="" /></div>
+                    <div class="img_footer">
+                      <img :src="require(`@/assets/${item.src}`)" alt="" />
+                    </div>
                   </v-col>
                   <v-col lg="9" md="9" cols="12">
                     <div class="text_head_footer">{{ item.title }}</div>
@@ -180,51 +182,34 @@
         </v-row>
       </v-container>
     </section>
-    <div class="send-transaction">
-      <v-dialog v-model="dialog" max-width="500">
-        <v-card>
-          <v-card-text>
-            <img class="img" src="@/assets/underconstruction.svg" alt="" />
-          </v-card-text>
-        </v-card>
-      </v-dialog>
-    </div>
   </div>
 </template>
 
 <script lang="ts">
-export default {
-  data() {
-    return {
-      dialog: true,
-      items: [
-        {
-          src: require('@/assets/silderimg_01.svg'),
-          title: 'ECOC Financial Growth',
-          subtitle:
-            'ECOC Financial Growth (EFG) is an interesting lending opportunity on decentralize blockchain, that let developers create new financial applications that are global, safe, and open for ECOC coins user. ECOChain developers keep developing the core blockchain infrastructure, as well as the tools to empower the new financial system.'
-        },
-        {
-          src: require('@/assets/silderimg_01.svg'),
-          title: 'The security of the ECOC Financial Growth (EFG)',
-          subtitle:
-            'The security of the ECOC Financial Growth (EFG) token is our highest priority; our development team, alongside, has invested considerable effort to create an EFG token that we believe is safe and dependable. Besides balances are publicly verifiable.'
-        },
-        {
-          src: require('@/assets/silderimg_01.svg'),
-          title: 'The security of the ECOC Financial Growth (EFG)',
-          subtitle:
-            "We believe that size, visibility, and time are the true test for the security of smart contracts and make the determination of security and suitability for users. ECOC Financial Growth (EFG) Token's developers never stop to develop the best financial channel."
-        }
-      ]
-    }
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component({})
+export default class Main extends Vue {
+  get msg() {
+    return this.$t('views.mainslider')
   }
 }
 </script>
 
 <style scoped>
+body {
+  background-attachment: fixed;
+}
 .markets {
-  background: #202020 0% 0% no-repeat padding-box;
+  background: #17181c;
+}
+.v-application--is-ltr .v-window__next {
+  right: 50px !important;
+  margin-top: 100px !important;
+}
+.v-window__prev,
+.v-window__next {
+  background: unset !important;
 }
 .container {
   max-width: 1088px;
@@ -233,11 +218,11 @@ export default {
 .sec_1 {
   background: transparent linear-gradient(180deg, #2c1635 0%, #070c1a 100%) 0% 0% no-repeat
     padding-box;
-  padding-top: 200px;
+  padding-top: 180px;
 }
 .sec_2 {
-  background: #202020 0% 0% no-repeat padding-box;
-  padding-top: 130px;
+  background: #17181c;
+  padding-top: 30px;
 }
 .sec_3 {
   background: #090c1b;
@@ -267,7 +252,7 @@ export default {
 }
 .sec_1 .social_icon {
   position: relative;
-  padding: 40px 10px;
+  padding-top: 40px;
   width: 100%;
   margin-right: 0;
   text-align: right;
@@ -284,7 +269,7 @@ export default {
   cursor: pointer;
 }
 .sec_2 .row1 {
-  background: #312d36;
+  background: #26262c;
   border-radius: 5px;
   opacity: 5;
   padding: 5px 10px;
@@ -389,6 +374,8 @@ export default {
   letter-spacing: 0px;
   opacity: 1;
   padding-top: 20px;
+  position: relative;
+  z-index: 10;
 }
 .sec_2 .row1 .color_1 {
   color: rgb(63, 192, 219);
@@ -560,5 +547,30 @@ export default {
 }
 .v-card__text {
   text-align: center;
+}
+</style>
+
+<style lang="scss">
+.efg-slider {
+  .v-window__prev {
+    left: auto !important;
+    right: 90px !important;
+    margin-top: 100px !important;
+  }
+  .v-window__next {
+    margin-top: 100px !important;
+  }
+}
+@media only screen and (max-width: 960px) {
+  .efg-slider {
+    .v-window__prev {
+      left: 0 !important;
+      right: unset !important;
+      margin-top: unset !important;
+    }
+    .v-window__next {
+      margin-top: unset !important;
+    }
+  }
 }
 </style>
