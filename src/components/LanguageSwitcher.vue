@@ -11,7 +11,7 @@
       persistent-hint
       return-object
       single-line
-      @click="selectlangs(key)"
+      @input="selectlangs"
     ></v-select>
   </div>
 </template>
@@ -34,9 +34,9 @@ export default class LanguageSwitcher extends Vue {
   ]
 
   locale = 'en'
-  selectlangs(locale: string) {
-    console.log(this.locale);
-    this.$i18n.locale = this.locale.key
+  selectlangs(value: any) {
+    this.locale = value.key
+    this.$i18n.locale = this.locale
   }
 }
 </script>

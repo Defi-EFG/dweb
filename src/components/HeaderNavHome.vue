@@ -8,10 +8,8 @@
       <v-spacer></v-spacer>
       <div class="desktop_menu">
         <router-link :to="{ name: 'home-docs' }">{{ $t('views.titles.docs') }}</router-link>
-        <a href="https://efg.finance/media/efg-whitepaper.pdf" target="_blank">{{
-          $t('views.titles.whitepaper')
-        }}</a>
-        <v-btn outlined small @click="gotoDashboard">Dashboard</v-btn>
+        <a :href="msg" target="_blank">{{ $t('views.titles.whitepaper') }}</a>
+        <v-btn outlined small @click="gotoDashboard">{{ $t('views.titles.dashboard') }}</v-btn>
       </div>
       <v-row id="menu_s">
         <v-col>
@@ -37,7 +35,9 @@
                         }}</a>
                       </li>
                       <li class="li_noberder">
-                        <v-btn outlined small @click="gotoDashboard">Dashboard</v-btn>
+                        <v-btn outlined small @click="gotoDashboard">{{
+                          $t('views.titles.dashboard')
+                        }}</v-btn>
                       </li>
                       <!-- <li class="li_noberder">
                         <v-btn outlined small @click="gotoDashboard">Dashboard</v-btn>
@@ -52,6 +52,7 @@
       </v-row>
       <language-switcher></language-switcher>
     </v-app-bar>
+
     <div class="send-transaction">
       <v-dialog v-model="dialog">
         <v-card>
@@ -83,6 +84,9 @@ export default class HeaderNavHome extends Vue {
   // }
   gotoDashboard() {
     this.dialog = true
+  }
+  get msg() {
+    return this.$t('views.pdf')
   }
 }
 </script>

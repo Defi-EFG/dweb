@@ -148,14 +148,14 @@
         <v-row>
           <v-col cols="12">
             <span class="but_div"
-              ><img class="img_text_but" src="@/assets/bitcoin2.png" alt="" />
+              ><img class="img_text_but" src="@/assets/icon/currency/ecoc.svg" alt="" />
               <div class="text_but">ECOC</div></span
             >
-            <span class="but_div"
+            <span class="but_div" style="display:none;"
               ><img class="img_text_but" src="@/assets/usd.png" alt="" />
               <div class="text_but">USDT</div></span
             >
-            <span class="but_div"
+            <span class="but_div" style="display:none;"
               ><img class="img_text_but" src="@/assets/eth.png" alt="" />
               <div class="text_but">ETH</div></span
             >
@@ -164,10 +164,12 @@
         <v-row>
           <v-col cols="12">
             <v-carousel hide-delimiters class="efg-slider">
-              <v-carousel-item v-for="(item, i) in items" :key="i">
+              <v-carousel-item v-for="(item, i) in msg" :key="i">
                 <v-row class="fill-height" align="center" justify="center">
                   <v-col lg="3" md="3" cols="12">
-                    <div class="img_footer"><img :src="item.src" alt="" /></div>
+                    <div class="img_footer">
+                      <img :src="require(`@/assets/${item.src}`)" alt="" />
+                    </div>
                   </v-col>
                   <v-col lg="9" md="9" cols="12">
                     <div class="text_head_footer">{{ item.title }}</div>
@@ -184,30 +186,12 @@
 </template>
 
 <script lang="ts">
-export default {
-  data() {
-    return {
-      items: [
-        {
-          src: require('@/assets/sliderimg01.svg'),
-          title: 'ECOC Financial Growth',
-          subtitle:
-            'ECOC Financial Growth (EFG) is an interesting lending opportunity on decentralize blockchain, that let developers create new financial applications that are global, safe, and open for ECOC coins user. ECOChain developers keep developing the core blockchain infrastructure, as well as the tools to empower the new financial system.'
-        },
-        {
-          src: require('@/assets/sliderimg02.svg'),
-          title: 'Safe and dependable',
-          subtitle:
-            'The security of the ECOC Financial Growth (EFG) token is our highest priority; our development team, alongside, has invested considerable effort to create an EFG token that we believe is safe and dependable. Besides balances are publicly verifiable.'
-        },
-        {
-          src: require('@/assets/sliderimg03.svg'),
-          title: 'Security and suitability',
-          subtitle:
-            "We believe that size, visibility, and time are the true test for the security of smart contracts and make the determination of security and suitability for users. ECOC Financial Growth (EFG) Token's developers never stop to develop the best financial channel."
-        }
-      ]
-    }
+import { Component, Vue } from 'vue-property-decorator'
+
+@Component({})
+export default class Main extends Vue {
+  get msg() {
+    return this.$t('views.mainslider')
   }
 }
 </script>
@@ -217,7 +201,7 @@ body {
   background-attachment: fixed;
 }
 .markets {
-  background: #202020 0% 0% no-repeat padding-box;
+  background: #17181c;
 }
 .v-application--is-ltr .v-window__next {
   right: 50px !important;
@@ -237,7 +221,7 @@ body {
   padding-top: 180px;
 }
 .sec_2 {
-  background: #202020 0% 0% no-repeat padding-box;
+  background: #17181c;
   padding-top: 30px;
 }
 .sec_3 {
@@ -285,7 +269,7 @@ body {
   cursor: pointer;
 }
 .sec_2 .row1 {
-  background: #312d36;
+  background: #26262c;
   border-radius: 5px;
   opacity: 5;
   padding: 5px 10px;
