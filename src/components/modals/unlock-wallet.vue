@@ -322,7 +322,6 @@ export default class UnlockwalletModal extends Vue {
     link.href = window.URL.createObjectURL(blob)
     link.download = 'keyStorefile.json'
     link.click()
-    // console.log('downloaded', blob, this.createWalletKeystore)
   }
 }
 </script>
@@ -342,12 +341,6 @@ export default class UnlockwalletModal extends Vue {
 }
 .create-wallet-wraper .v-label {
   font-size: 0.8em;
-}
-.create-wallet-wraper .v-input__slot:before {
-  border: none !important;
-}
-.v-text-field__details {
-  margin-bottom: 0px !important;
 }
 .upload_input .v-input__prepend-outer {
   margin-right: 0px !important;
@@ -402,18 +395,14 @@ export default class UnlockwalletModal extends Vue {
   padding-right: 25px;
   margin-right: 5px;
 }
-.action-wrapper {
-  display: flex;
-  justify-content: center;
-  flex-direction: column;
-  text-align: center;
-}
+.action-wrapper,
 .upl .action-wrapper {
   display: flex;
   justify-content: center;
   flex-direction: column;
   text-align: center;
 }
+
 .action-wrapper .elevation-1 {
   box-shadow: 0px 3px 8px #00000021 !important;
 }
@@ -435,7 +424,8 @@ export default class UnlockwalletModal extends Vue {
   margin-top: 48px;
   margin-bottom: 7px;
 }
-.logo img {
+.logo img,
+.img-btn-logo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -466,9 +456,6 @@ v-btn {
   background-color: white;
 }
 
-.v-btn.v-size--small {
-  margin-left: 10px;
-}
 .img-btn-logo {
   width: 40px;
   height: 33px;
@@ -476,10 +463,7 @@ v-btn {
   padding-bottom: 3px;
   margin-right: 9px;
 }
-.img-btn-logo img {
-  width: 100%;
-  height: 100%;
-}
+
 .v-btn.v-size--small {
   margin-left: 10px;
 }
