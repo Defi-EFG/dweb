@@ -5,7 +5,6 @@ import Delay from '@/views/home/Delay.vue'
 import Efg from '@/views/home/Efg.vue'
 import DocsPage from '@/views/home/Docs.vue'
 import WhitePaper from '@/views/home/Whitepaper.vue'
-import Socket from '@/views/home/socket.vue'
 
 const homeRoutes: Array<RouteConfig> = [
   {
