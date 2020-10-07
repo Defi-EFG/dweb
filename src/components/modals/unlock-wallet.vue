@@ -149,29 +149,19 @@
                 <template>
                   <div class="upload_input">
                     <v-textarea
-                      outlined
-                      auto-grow
-                      v-model="keystore"
                       filled
+                      auto-grow
                       label="Your keystore text..."
-                    ></v-textarea>
-                    <v-file-input
-                      accept="application/json"
                       outlined
-                      prepend-icon="mdi-upload"
-                      truncate-length="auto"
-                      hide-input
-                      @change="onFileChange"
-                    ></v-file-input>
-                    <div class="uploadkeystorefile mb-4">
-                      <span class="lightgray--text  mr-2">or</span>
-                      <p>Upload keystore file</p>
-                    </div>
+                      v-model="keystore"
+                      req
+                    ></v-textarea>
+                    <text-reader @load="keystore = $event"></text-reader>
                     <div class="action-wrapper">
                       <v-btn
                         large
                         v-if="upload || keystore.length > 6"
-                        @click.native="step = 5"
+                        @click="confirmKeystore"
                         class="mb-5"
                         color="primary"
                       >
@@ -235,10 +225,12 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Loading from './loading-create-accout.vue'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
+import TextReader from './text-reader.vue'
 
 @Component({
   components: {
-    Loading
+    Loading,
+    TextReader
   }
 })
 export default class UnlockwalletModal extends Vue {
@@ -247,23 +239,28 @@ export default class UnlockwalletModal extends Vue {
   walletStore = getModule(WalletModule)
   upload = false
 
-  keystore = ''
+  keystore: any = ''
   keystorePassword = ''
-
+  files = true
   createWalletKeystore = ''
   createWalletPassword = ''
   confirmPassword = ''
 
+  show = false
   step = 1
   unlockwalletModal = this.visible
-
-  @Watch('visible')
-  show() {
-    this.unlockwalletModal = this.visible
+  rules = {
+    required: (value: any) => {
+      return !!value || 'Required.'
+    },
+    min: (v: any) => {
+      return v.length >= 8 || 'Min 8 characters'
+    }
   }
 
-  onFileChange() {
-    this.upload = !this.upload
+  @Watch('visible')
+  checkvisible() {
+    this.unlockwalletModal = this.visible
   }
 
   onClose() {
