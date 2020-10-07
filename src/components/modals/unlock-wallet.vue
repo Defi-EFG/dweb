@@ -4,7 +4,6 @@
       <v-stepper v-model="step">
         <v-stepper-items>
           <!-- Welcome to ECOC Finance Governance -->
-
           <v-stepper-content step="1">
             <v-card>
               <v-card-title class="headline modal-header">
@@ -20,13 +19,7 @@
                 <p class="lightgray--text">Please create or connect your wallet</p>
               </div>
               <div class="action-wrapper more-space">
-                <v-btn
-                  @click.native="step = 2"
-                  large
-                  class="mb-5 border"
-                  color="white"
-                  elevation="1"
-                >
+                <v-btn @click="createStep" large class="mb-5 border" color="white" elevation="1">
                   <div class="d-flex align-center">
                     <div class="img-btn-logo">
                       <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
@@ -34,7 +27,7 @@
                     <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
                   </div>
                 </v-btn>
-                <v-btn large color="white" elevation="1" @click.native="step = 4">
+                <v-btn large color="white" elevation="1" @click="connetStep">
                   <div class="img-btn-logo">
                     <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
                   </div>
@@ -67,12 +60,12 @@
                   disabled
                 ></v-textarea>
                 <div class="action-wrapper">
-                  <v-btn large class="mb-5" color="primary" @click.native="step = 3">
+                  <v-btn large class="mb-5" color="primary" @click="downloadkeystore()">
                     <h4 class="text-capitalize font-weight-light">Download Keystore File</h4>
                   </v-btn>
                   <small class="connect">
                     Already saved your keystore file?.
-                    <v-btn text @click.native="step = 4">Connect</v-btn>
+                    <v-btn text @click="connetStep">Connect</v-btn>
                   </small>
                 </div>
               </div>
@@ -84,7 +77,7 @@
           <v-stepper-content step="2">
             <v-card>
               <v-card-title class="headline modal-header">
-                <v-btn text @click.native="step = 1"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn text @click="welcomeStep"><v-icon>$leftarrow</v-icon></v-btn>
                 <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
@@ -137,7 +130,7 @@
           <v-stepper-content step="4">
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
-                <v-btn text @click.native="step = 1"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn text @click="welcomeStep"><v-icon>$leftarrow</v-icon></v-btn>
                 <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
@@ -191,7 +184,7 @@
           <v-stepper-content step="5">
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
-                <v-btn text @click.native="step = 4"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn text @click="connectStep"><v-icon>$leftarrow</v-icon></v-btn>
                 <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
@@ -282,27 +275,44 @@ export default class UnlockwalletModal extends Vue {
 
   onCreateWallet() {
     const password = this.createWalletPassword
-
     this.walletStore.createNewWallet(password).then(keystore => {
       this.createWalletKeystore = keystore
       this.step = 3
     })
   }
 
+  createStep() {
+    this.step = 2
+  }
+  connectStep() {
+    this.step = 4
+  }
+  welcomeStep() {
+    this.step = 1
+  }
+  confirmKeystore() {
+    this.step = 5
+  }
   onUnlockWallet() {
     // const keystore =
     //   '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
     // const password = '123456'
-
     const keystore = this.keystore
     const password = this.keystorePassword
-
     this.walletStore.importWallet({ keystore, password }).then(() => {
       this.walletStore.updateBalance()
       this.walletStore.updateTransactionsHistory()
 
       this.onClose()
     })
+  }
+  downloadkeystore() {
+    const blob = new Blob([this.createWalletKeystore], { type: 'application/json' })
+    const link = document.createElement('a')
+    link.href = window.URL.createObjectURL(blob)
+    link.download = 'keyStorefile.json'
+    link.click()
+    // console.log('downloaded', blob, this.createWalletKeystore)
   }
 }
 </script>
