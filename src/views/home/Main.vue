@@ -75,9 +75,9 @@
                 </v-col>
                 <v-col cols="6">
                   <div class="supply_button11">
-                    <a href="efg">
-                      <button>{{ $t('views.main.detail') }}</button>
-                    </a>
+                    <!-- <a href="efg"> -->
+                      <button disabled>{{ $t('views.main.detail') }}</button>
+                    <!-- </a> -->
                   </div>
                   <div class="supply_price">20.0%</div>
                   <div class="supply_price">3.5%</div>
@@ -116,9 +116,9 @@
                 </v-col>
                 <v-col cols="6">
                   <div class="supply_button2">
-                    <a href="delay">
-                      <button>{{ $t('views.main.detail') }}</button>
-                    </a>
+                    <!-- <a href="delay"> -->
+                      <button disabled>{{ $t('views.main.detail') }}</button>
+                    <!-- </a> -->
                   </div>
                   <div class="supply_price">20.0%</div>
                 </v-col>
