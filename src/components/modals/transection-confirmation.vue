@@ -86,11 +86,11 @@ export default class TransactionComfirmationModal extends Vue {
   border-color: transparent !important;
   background-color: transparent;
 }
-.v-input__slot:before {
+/* .v-input__slot:before {
   border: none !important;
-}
+} */
 </style>
-<style lang="scss" scope>
+<style lang="scss" scoped>
 .v-dialog {
   background-color: transparent;
   position: relative;

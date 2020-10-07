@@ -18,6 +18,7 @@
         color="#C074F9"
         :hint="tokenConversion"
         persistent-hint
+        type="number"
       ></v-text-field>
       <div class="borrow-power">
         <span class="label">Borrow Power</span>
@@ -53,10 +54,10 @@
         large
         block
         depressed
-        :disabled="withdrawValue > maxWithdraw"
-        :class="withdrawValue > maxWithdraw ? 'submit-btn disabled' : 'submit-btn'"
+        :disabled="!isWithdrawable(withdrawValue, 'error')"
+        :class="isWithdrawable(withdrawValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       >
-        {{ withdrawValue > maxWithdraw ? 'Insufficient' : 'Withdraw' }}</v-btn
+        {{ isWithdrawable(withdrawValue, 'btn') ? 'Withdraw' : 'Insufficient' }}</v-btn
       >
     </v-card-text>
   </v-card>
@@ -114,9 +115,20 @@ export default class Withdraw extends Vue {
   }
 
   calculateBPUsed(withdrawAmount: number) {
-    const dollarsAmount = Number(withdrawAmount) * this.currencyRate[this.token]
     return (this.borrowBalance / this.calculateTotalBP(withdrawAmount)) * 100
   }
+
+  isWithdrawable(amount: number, type: string) {
+    const isEnough = amount <= this.maxWithdraw
+    const isValidAmount = amount >= 0
+    const isClickable = amount > 0
+
+    if (type === 'error') {
+      return isEnough && isClickable
+    }
+    return isEnough && isValidAmount
+  }
+
 }
 </script>
 

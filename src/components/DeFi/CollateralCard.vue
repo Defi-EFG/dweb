@@ -16,6 +16,7 @@
         height="43"
         color="#C074F9"
         v-model="collateralAmount"
+        type="number"
         :hint="tokenConversion"
         persistent-hint
       ></v-text-field>
@@ -49,7 +50,14 @@
         </div>
       </div>
       <v-divider />
-      <v-btn large block depressed class="submit-btn">Deposit</v-btn>
+      <v-btn
+        large
+        block
+        depressed
+        :disabled="!isCollateralable(collateralAmount, 'error')"
+        :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+        >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
+      >
     </v-card-text>
   </v-card>
 </template>
@@ -110,6 +118,17 @@ export default class Collateral extends Vue {
       100
     )
   }
+
+  isCollateralable(amount: number, type: string) {
+    const isEnough = amount <= this.balance
+    const isValidAmount = amount >= 0
+    const isClickable = amount > 0
+
+    if (type === 'error') {
+      return isEnough && isClickable
+    }
+    return isEnough && isValidAmount
+  }
 }
 </script>
 
@@ -167,6 +186,11 @@ export default class Collateral extends Vue {
   background: transparent linear-gradient(90deg, #3ba7c1 0%, #59289a 100%) 0% 0% no-repeat
     padding-box;
 }
+
+.disabled {
+  background: #8f8f8f !important;
+  cursor: no-drop;
+}
 </style>
 
 <style lang="scss">
@@ -205,6 +229,16 @@ export default class Collateral extends Vue {
     background-color: transparent !important;
     background-image: none !important;
     color: #c074f9 !important;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield; /* Firefox */
   }
 }
 </style>

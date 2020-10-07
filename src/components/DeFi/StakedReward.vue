@@ -2,7 +2,7 @@
   <v-card dark color="#2e3344">
     <v-card-text class="wrapper">
       <div class="total-reward">
-        <p class="label">Total Staked Reward</p>
+        <p class="label pb-0">Total Staked Reward</p>
         <p class="value">5.15349650 GPT</p>
       </div>
 
@@ -14,7 +14,7 @@
 
       <v-divider></v-divider>
 
-      <p class="reward-label">Reward Withdrawal</p>
+      <p class="reward-label pb-0">Reward Withdrawal</p>
 
       <div class="minimum-w">
         <span class="value">Minimum Withdrawal: 1.00 GPT</span>
