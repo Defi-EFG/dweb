@@ -18,9 +18,11 @@
           <section id="Introduction" class="sec_doc2">
             <div class="head_Introduction">What is DeFi?</div>
             <div class="sun_Introduction">
-              Decentralized Finance or DeFi refers to financial services using smart contracts,
-              which are automated enforceable agreements. It doesn’t need intermediaries like bank
-              or lawyer as it uses blockchain instead. EFG!
+              Decentralized Finance or DeFi refers to the ecosystem comprised of financial
+              applications that are being developed on top of blockchain systems. DeFi aims to
+              recreate the traditional financial system without intermediaries. Many of the
+              traditional actions in the markets such as lending or borrowing can now be done
+              through a decentralized open-source network.
             </div>
             <div class="head_Introduction">What is ECOC Financial Growth (EFG)</div>
             <div class="sun_Introduction">

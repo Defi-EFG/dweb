@@ -163,7 +163,7 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <v-carousel hide-delimiters>
+            <v-carousel hide-delimiters class="efg-slider">
               <v-carousel-item v-for="(item, i) in items" :key="i">
                 <v-row class="fill-height" align="center" justify="center">
                   <v-col lg="3" md="3" cols="12">
@@ -180,15 +180,6 @@
         </v-row>
       </v-container>
     </section>
-    <div class="send-transaction">
-      <v-dialog v-model="dialog" max-width="500">
-        <v-card>
-          <v-card-text>
-            <img class="img" src="@/assets/underconstruction.svg" alt="" />
-          </v-card-text>
-        </v-card>
-      </v-dialog>
-    </div>
   </div>
 </template>
 
@@ -196,23 +187,22 @@
 export default {
   data() {
     return {
-      dialog: true,
       items: [
         {
-          src: require('@/assets/silderimg_01.svg'),
+          src: require('@/assets/sliderimg01.svg'),
           title: 'ECOC Financial Growth',
           subtitle:
             'ECOC Financial Growth (EFG) is an interesting lending opportunity on decentralize blockchain, that let developers create new financial applications that are global, safe, and open for ECOC coins user. ECOChain developers keep developing the core blockchain infrastructure, as well as the tools to empower the new financial system.'
         },
         {
-          src: require('@/assets/silderimg_01.svg'),
-          title: 'The security of the ECOC Financial Growth (EFG)',
+          src: require('@/assets/sliderimg02.svg'),
+          title: 'Safe and dependable',
           subtitle:
             'The security of the ECOC Financial Growth (EFG) token is our highest priority; our development team, alongside, has invested considerable effort to create an EFG token that we believe is safe and dependable. Besides balances are publicly verifiable.'
         },
         {
-          src: require('@/assets/silderimg_01.svg'),
-          title: 'The security of the ECOC Financial Growth (EFG)',
+          src: require('@/assets/sliderimg03.svg'),
+          title: 'Security and suitability',
           subtitle:
             "We believe that size, visibility, and time are the true test for the security of smart contracts and make the determination of security and suitability for users. ECOC Financial Growth (EFG) Token's developers never stop to develop the best financial channel."
         }
@@ -223,8 +213,19 @@ export default {
 </script>
 
 <style scoped>
+body {
+  background-attachment: fixed;
+}
 .markets {
   background: #202020 0% 0% no-repeat padding-box;
+}
+.v-application--is-ltr .v-window__next {
+  right: 50px !important;
+  margin-top: 100px !important;
+}
+.v-window__prev,
+.v-window__next {
+  background: unset !important;
 }
 .container {
   max-width: 1088px;
@@ -233,11 +234,11 @@ export default {
 .sec_1 {
   background: transparent linear-gradient(180deg, #2c1635 0%, #070c1a 100%) 0% 0% no-repeat
     padding-box;
-  padding-top: 200px;
+  padding-top: 180px;
 }
 .sec_2 {
   background: #202020 0% 0% no-repeat padding-box;
-  padding-top: 130px;
+  padding-top: 30px;
 }
 .sec_3 {
   background: #090c1b;
@@ -267,7 +268,7 @@ export default {
 }
 .sec_1 .social_icon {
   position: relative;
-  padding: 40px 10px;
+  padding-top: 40px;
   width: 100%;
   margin-right: 0;
   text-align: right;
@@ -562,5 +563,30 @@ export default {
 }
 .v-card__text {
   text-align: center;
+}
+</style>
+
+<style lang="scss">
+.efg-slider {
+  .v-window__prev {
+    left: auto !important;
+    right: 90px !important;
+    margin-top: 100px !important;
+  }
+  .v-window__next {
+    margin-top: 100px !important;
+  }
+}
+@media only screen and (max-width: 960px) {
+  .efg-slider {
+    .v-window__prev {
+      left: 0 !important;
+      right: unset !important;
+      margin-top: unset !important;
+    }
+    .v-window__next {
+      margin-top: unset !important;
+    }
+  }
 }
 </style>
