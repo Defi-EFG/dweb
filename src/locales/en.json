@@ -9,24 +9,55 @@
             "wallet": "Wallet",
             "staking": "Staking",
             "lending": "Lending",
-            "whitepaper": "White Paper"
+            "whitepaper": "White Paper",
+            "dashboard": "Dashboard"
         },
+        "pdf": "https://efg.finance/media/efg-whitepaper.pdf",
         "main": {
             "name": "ECOC Financial Growth",
-            "sub_name_1": "ECOC Financial Growth (EFG) token is a Dapp logic based on decentralization finance (DeFi) created by smart contracts. These tokens comply with ECRC-20 standard, which shares the same Interface of ERC-20 (Ethereum) standard. The mechanism to function ECOC Financial Growth (EFG) token can offer a firmer credit channel for borrowers.",
-            "sub_name_2": "Investors don’t need to sell their coins to get liquidity, they just deposit them as collateral and they can buy them back when they want. That way EFG token comes with new alternatives for investment, according to the basic mechanism of the cryptocurrency market and interest compensation depends on the borrowing period.",
+            "sub_name_1": "ECOC Financial Growth (EFG) token is a Dapp logic based on decentralization finance (DeFi) created by smart contracts. These tokens comply with ECRC-20 standard, which shares the same Interface of ERC-20 (Ethereum) standard.",
+            "sub_name_2": "The mechanism to function ECOC Financial Growth (EFG) token can offer a firmer credit channel for borrowers. Investors don’t need to sell their coins to get liquidity, they just deposit them as collateral and they can buy them back when they want. That way EFG token comes with new alternatives for investment, according to the basic mechanism of the cryptocurrency market and interest compensation depends on the borrowing period.",
             "supply": "Supply",
             "detail": "Details",
-            "supply_apy": "Supply APY (DELAY)",
+            "supply_apy": "Supply APY (GPT)",
             "borrow_apy": "Borrow APY",
             "total_supply": "Total Supply",
             "total_borrowed": "Total Borrowed",
             "liquidation": "Liquidation",
-            "available": "Available (Total: 10,000 DELAY)",
+            "available": "Available (Total: 10,000 GPT)",
             "collateral": "Collateral"
         },
-        "mainslider": {
-            "": ""
+        "mainslider": [{
+                "src": "sliderimg01.svg",
+                "title": "ECOC Financial Growth",
+                "subtitle": "ECOC Financial Growth (EFG) is an interesting lending opportunity on decentralize blockchain, that let developers create new financial applications that are global, safe, and open for ECOC coins user. ECOChain developers keep developing the core blockchain infrastructure, as well as the tools to empower the new financial system."
+            },
+            {
+                "src": "sliderimg02.svg",
+                "title": "Safe and dependable",
+                "subtitle": "The security of the ECOC Financial Growth (EFG) token is our highest priority; our development team, alongside, has invested considerable effort to create an EFG token that we believe is safe and dependable. Besides balances are publicly verifiable."
+            },
+            {
+                "src": "sliderimg03.svg",
+                "title": "Security and suitability",
+                "subtitle": "We believe that size, visibility, and time are the true test for the security of smart contracts and make the determination of security and suitability for users. ECOC Financial Growth (EFG) Token's developers never stop to develop the best financial channel."
+            }
+        ],
+        "docs": {
+            "Introduction": "Introduction",
+            "detail1": {
+                "head": "What is DeFi?",
+                "head_sub": "Decentralized Finance or DeFi refers to the ecosystem comprised of financial applications that are being developed on top of blockchain systems. DeFi aims to recreate the traditional financial system without intermediaries. Many of the traditional actions in the markets such as lending or borrowing can now be done through a decentralized open-source network."
+            },
+            "detail2": {
+                "head": "What is ECOC Financial Growth (EFG)",
+                "head_sub": "ECOC Financial Growth (EFG) is a decentralized currency, building on ECRC-20 and sharing the same interface of ERC-20 (Ethereum) standard. EFG is created form ECOChain developers and trying to expand and strengthen the ecosystem, providing the desired missing attributes for users, reality, and stable prices. EFG aims to simplify DeFi for the general users and help boost their profits at the same time, even for those unfamiliar with the world of digital assets."
+            },
+            "detail3": {
+                "head": "Why EGF?",
+                "head_sub": "EFG brings an opportunity for increasing the investment value for users. Our goal is to make DeFi simple and accessible for everyone, even for the digital asset novices. As well as, gather a wide user base and create high utility services. Get ready to join a brand-new monetary,v"
+            }
+
         }
     },
     "components": {

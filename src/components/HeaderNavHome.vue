@@ -8,15 +8,13 @@
       <v-spacer></v-spacer>
       <div class="desktop_menu">
         <router-link :to="{ name: 'home-docs' }">{{ $t('views.titles.docs') }}</router-link>
-        <a href="http://www.africau.edu/images/default/sample.pdf" target="_blank">{{
-          $t('views.titles.whitepaper')
-        }}</a>
-        <v-btn outlined small @click="gotoDashboard">Dashboard</v-btn>
+        <a :href="msg" target="_blank">{{ $t('views.titles.whitepaper') }}</a>
+        <v-btn outlined small @click="gotoDashboard">{{ $t('views.titles.dashboard') }}</v-btn>
       </div>
       <v-row id="menu_s">
         <v-col>
           <v-card-title>
-            <v-menu>
+            <v-menu class="bg-bu">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn dark icon v-bind="attrs" v-on="on">
                   <v-app-bar-nav-icon></v-app-bar-nav-icon>
@@ -24,67 +22,106 @@
               </template>
               <v-list color="menu">
                 <v-list-item>
-                  <ul>
-                    <li>
-                      <router-link :to="{ name: 'home-docs' }">{{
-                        $t('views.titles.docs')
-                      }}</router-link>
-                    </li>
-                    <li>
-                      <a href="http://www.africau.edu/images/default/sample.pdf" target="_blank">{{
-                        $t('views.titles.whitepaper')
-                      }}</a>
-                    </li>
-                    <li class="li_noberder">
-                      <v-btn outlined small @click="gotoDashboard">Dashboard</v-btn>
-                    </li>
-                  </ul>
+                  <div class="menu_bu">
+                    <ul>
+                      <li>
+                        <router-link :to="{ name: 'home-docs' }">{{
+                          $t('views.titles.docs')
+                        }}</router-link>
+                      </li>
+                      <li>
+                        <a href="https://efg.finance/media/efg-whitepaper.pdf" target="_blank">{{
+                          $t('views.titles.whitepaper')
+                        }}</a>
+                      </li>
+                      <li class="li_noberder">
+                        <v-btn outlined small @click="gotoDashboard">{{
+                          $t('views.titles.dashboard')
+                        }}</v-btn>
+                      </li>
+                      <!-- <li class="li_noberder">
+                        <v-btn outlined small @click="gotoDashboard">Dashboard</v-btn>
+                      </li> -->
+                    </ul>
+                  </div>
                 </v-list-item>
               </v-list>
             </v-menu>
           </v-card-title>
         </v-col>
       </v-row>
-      <div class="lg_select">
-        <v-select
-          v-model="select"
-          :items="items"
-          item-text="state"
-          item-value="abbr"
-          label="Select"
-          persistent-hint
-          return-object
-          single-line
-        ></v-select>
-      </div>
+      <language-switcher></language-switcher>
     </v-app-bar>
+
+    <div class="send-transaction">
+      <v-dialog v-model="dialog">
+        <v-card>
+          <v-card-text>
+            <img class="img" src="@/assets/underconstruction.svg" alt="" />
+          </v-card-text>
+        </v-card>
+      </v-dialog>
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-@Component({})
+import LanguageSwitcher from './LanguageSwitcher.vue'
+
+@Component({
+  components: {
+    LanguageSwitcher
+  }
+})
 export default class HeaderNavHome extends Vue {
+  dialog = false
   gotoHome() {
     this.$router.push('/')
   }
+  // gotoDashboard() {
+  //   this.$router.push('defi')
+  // }
   gotoDashboard() {
-    this.$router.push('defi')
+    this.dialog = true
   }
-  data() {
-    return {
-      drawer: false,
-      group: null,
-      select: { state: 'EN', abbr: 'EN' },
-      items: [
-        { state: 'EN', abbr: 'EN' },
-        { state: '中文', abbr: '中文' }
-      ]
-    }
+  get msg() {
+    return this.$t('views.pdf')
   }
 }
 </script>
+<style lang="scss">
+.v-dialog {
+  border-radius: 4px;
+  margin: 24px;
+  overflow-y: auto;
+  pointer-events: auto;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 100%;
+  z-index: inherit;
+  box-shadow: unset;
+}
+.v-dialog::before {
+  content: '';
+  max-width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: unset;
+  -webkit-backdrop-filter: unset;
+  backdrop-filter: unset;
+}
+.v-dialog img {
+  width: 30%;
+  min-width: 500px;
+}
+</style>
 <style lang="scss" scoped>
+.v-card__text {
+  text-align: center;
+}
 .v-btn.v-size--small {
   margin-left: 10px;
 }
@@ -94,11 +131,42 @@ export default class HeaderNavHome extends Vue {
 .v-card__title {
   float: right;
 }
+.bg-bu {
+  backdrop-filter: blur(20px);
+}
+.menu_bu {
+  overflow-y: auto;
+  pointer-events: auto;
+  transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  width: 100%;
+  z-index: inherit;
+  box-shadow: 0px 11px 15px -7px rgba(0, 0, 0, 0.2), 0px 24px 38px 3px rgba(0, 0, 0, 0.14),
+    0px 9px 46px 8px rgba(0, 0, 0, 0.12);
+  position: relative;
+  border-radius: 5px;
+}
+.menu_bu::before {
+  content: '';
+  max-width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  box-shadow: inset 0 0 2000px rgba(255, 255, 255, 0.233);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+}
+.v-list-item {
+  margin-top: 0px;
+}
 .lg_select {
   width: 70px;
   margin-top: 15px;
 }
 .v-menu__content {
+  top: 56px !important;
+  backdrop-filter: blur(20px);
   width: 40%;
   max-width: 100% !important;
 }
@@ -129,6 +197,7 @@ li {
 ul {
   list-style-type: none;
   padding: 10px 10px;
+  position: relative;
 }
 .home {
   display: flex;
@@ -180,10 +249,6 @@ ul {
   color: #c074f9 !important;
   transition: 0.5s;
 }
-.v-sheet.v-list {
-  margin-top: 45px !important;
-  border-radius: 5px;
-}
 .efg-logo {
   width: 28px;
   height: auto;
@@ -219,15 +284,13 @@ ul {
 .theme--dark.v-app-bar.v-toolbar.v-sheet {
   background-color: #27272700;
 }
-.v-sheet.v-list {
-  background: #ffffff;
-}
+
 .v-menu__content {
   box-shadow: unset;
 }
 ul {
-  background-color: #464448;
   border-radius: 5px;
+  background-color: transparent;
 }
 @media only screen and (max-width: 760px) {
   .desktop_menu {
