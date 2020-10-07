@@ -76,7 +76,7 @@ export default class RewardHistory extends Vue {
   height: 482px;
   overflow: auto;
 
-    &::-webkit-scrollbar {
+  &::-webkit-scrollbar {
     width: 6px;
     border-radius: 6px;
   }

@@ -120,7 +120,7 @@ export default class TransactionHistory extends Vue {
         .fromNow()} (${moment(timestamp * 1000).format('YYYY-MM-DD HH:mm')})`
     }
   }
-  
+
   displayHistory() {
     console.log('clicked')
   }

@@ -9,35 +9,25 @@
                 @click="onClickActive(active == 'Introduction')"
                 :class="active == 'Introduction' ? 'active' : undefined"
                 href="#Introduction"
-                >Introduction</a
+                >{{ $t('views.docs.Introduction') }}</a
               >
             </div>
           </section>
         </v-col>
         <v-col lg="9" md="9" cols="12" style="padding:0px;">
           <section id="Introduction" class="sec_doc2">
-            <div class="head_Introduction">What is DeFi?</div>
+            <div class="head_Introduction">{{ $t('views.docs.detail1.head') }}</div>
             <div class="sun_Introduction">
-              Decentralized Finance or DeFi refers to financial services using smart contracts,
-              which are automated enforceable agreements. It doesn’t need intermediaries like bank
-              or lawyer as it uses blockchain instead. EFG!
+              {{ $t('views.docs.detail1.head_sub') }}
             </div>
-            <div class="head_Introduction">What is ECOC Financial Growth (EFG)</div>
+            <div class="head_Introduction">{{ $t('views.docs.detail2.head') }}</div>
             <div class="sun_Introduction">
-              ECOC Financial Growth (EFG) is a decentralized currency, building on ECRC-20 and
-              sharing the same interface of ERC-20 (Ethereum) standard. EFG is created form ECOChain
-              developers and trying to expand and strengthen the ecosystem, providing the desired
-              missing attributes for users, reality, and stable prices. EFG aims to simplify DeFi
-              for the general users and help boost their profits at the same time, even for those
-              unfamiliar with the world of digital assets.
+              {{ $t('views.docs.detail2.head_sub') }}
             </div>
 
-            <div class="head_Introduction">Why EGF?</div>
+            <div class="head_Introduction">{{ $t('views.docs.detail3.head') }}</div>
             <div class="sun_Introduction">
-              EFG brings an opportunity for increasing the investment value for users. Our goal is
-              to make DeFi simple and accessible for everyone, even for the digital asset novices.
-              As well as, gather a wide user base and create high utility services. Get ready to
-              join a brand-new monetary,
+              {{ $t('views.docs.detail3.head_sub') }}
             </div>
           </section>
         </v-col>
@@ -131,7 +121,7 @@ export default {
 .sec_doc2 .sun_Introduction {
   font: normal normal normal 16px/21px Segoe UI;
   letter-spacing: 0px;
-  color: #929292;
+  color: #434141;
   opacity: 1;
   margin-bottom: 80px;
   line-height: 1.5;

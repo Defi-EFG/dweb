@@ -1,17 +1,68 @@
 {
     "views": {
         "titles": {
-            "home": "Home-cn",
-            "main": "Main-cn",
-            "markets": "Markets-cn",
-            "docs": "Docs-cn",
-            "about": "About-cn",
-            "wallet": "Wallet-cn",
-            "staking": "Staking-cn",
-            "lending": "Lending-cn",
-            "whitepaper": "White Paper-cn"
+            "home": "Home",
+            "main": "Main",
+            "delay": "Delay",
+            "docs": "文件",
+            "efg": "Efg",
+            "wallet": "Wallet",
+            "staking": "Staking",
+            "lending": "Lending",
+            "whitepaper": "白皮书",
+            "dashboard": "仪表板"
+        },
+        "pdf": "https://efg.finance/media/efg-whitepaperzh.pdf",
+        "underconstruction": "underconstructionzh.svg",
+        "main": {
+            "name": "ECOC Financial Growth",
+            "sub_name_1": "ECOC Financial Growth (EFG) 代币是一种基于智能合约创建的去中心化金融（DeFi）的代币。它符合ECRC-20标准，该标准共享ERC-20（以太坊）标准的相同接口。",
+            "sub_name_2": "ECOC Financial Growth（EFG）代币的运作机制为借款人提供更稳固的信贷渠道。投资者不需要出售他们的币来获得资金流，他们只需将其作为抵押存放，并可以在任何时间回购。因此，EFG代币具有提供新的投资选择。根据加密货币市场的基本机制，利息补偿取决于借款的期限。",
+            "supply": "供应量",
+            "detail": "细节",
+            "supply_apy": "供应年利率 （GPT）",
+            "borrow_apy": "总借贷",
+            "total_supply": "总供应量",
+            "total_borrowed": "总供应量",
+            "liquidation": "Liquidation",
+            "available": "可用（总计：10000 GPT）",
+            "collateral": "抵押品"
+        },
+        "mainslider": [{
+                "src": "sliderimg01.svg",
+                "title": "ECOC Financial Growth",
+                "subtitle": "ECOC Financial Growth（EFG）是一个在去中心化区块链上有趣的借贷功能。它还使开发人员可以为ECOC币用户创建全球、安全和开放的新金融应用程序。ECOChain开发人员继续开发核心区块链基础设施，以及赋予新金融系统权力的工具。"
+            },
+            {
+                "src": "sliderimg02.svg",
+                "title": "Safe and dependable",
+                "subtitle": "ECOC Financial Growth（EFG）代币的安全性是我们的首要任务；我们的开发团队也投入了大量精力来创建我们认为安全可靠的EFG代币。此外，余额是可公开核实的。"
+            },
+            {
+                "src": "sliderimg03.svg",
+                "title": "Security and suitability",
+                "subtitle": "我们相信规模、可视性和时间是对智能合约安全真正的关键考验，它就是用户的安全性和适用性的关键点。ECOC Financial Growth（EFG）Token的开发人员为了建造最佳金融渠道而努力不停的开发。"
+            }
+        ],
+        "docs": {
+            "Introduction": "Introduction",
+            "detail1": {
+                "head": "什么是DeFi？",
+                "head_sub": "去中心化金融（DeFi）是指在区块链系统之上开发的金融应用程序组成的生态系统。DeFi的目标是重建没有中介的传统金融体系。市场上的许多传统行为，如借贷，现在可以通过去中心化的开源系统完成。"
+            },
+            "detail2": {
+                "head": "什么是ECOC Financial Growth（EFG）",
+                "head_sub": "ECOC Financial Growth（EFG）是一种去中心化的数字加密货币，建立在ECRC-20的基础上，共享ERC-20（以太坊）标准的相同接口。EFG是由 ECOChain开发平台创建的。 ECOChain 认为扩展和加强生态系统，为用户、现实和稳定的价格提供所需的缺失属性。同时，EFG 提供用户和不熟悉的用户简单化的 Defi 平台，而提高他们的利润。"
+            },
+            "detail3": {
+                "head": "为什么选择EGF？",
+                "head_sub": "EFG为用户带来了增加投资价值的机会。我们的目标是提供DeFi简单化、易用，即使对于数字资产的新手用户。同时，聚集广泛的用户群和创造高效用的服务。准备加入一个全新的货币，EFG！"
+            }
+
         }
     },
-    "components": {},
+    "components": {
+
+    },
     "dom": {}
 }

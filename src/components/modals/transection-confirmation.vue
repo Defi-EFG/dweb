@@ -13,7 +13,7 @@
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
-           <GasSetting></GasSetting>
+            <GasSetting></GasSetting>
             <h3><strong>Transaction Confirm</strong></h3>
             <small>Please confirm the transaction</small>
             <div class="transaction-confirmation-content-detail">
@@ -51,7 +51,6 @@
               <v-btn outlined large color="primary" class="text-capitalize">Cancel</v-btn>
               <v-btn large depressed color="primary" class="text-capitalize">Confirm</v-btn>
             </div>
-           
           </div>
         </div>
       </v-card>
@@ -62,9 +61,7 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import GasSetting from './gas-setting-modal.vue'
 @Component({
-  components:{
-    
-  }
+  components: {}
 })
 export default class TransactionComfirmationModal extends Vue {
   sendialog = false
@@ -75,7 +72,7 @@ export default class TransactionComfirmationModal extends Vue {
   }
 }
 </script>
-<style >
+<style>
 .headline {
   border-bottom: 1px solid rgba(180, 180, 180, 0.555);
   border-bottom-right-radius: 0px !important;
@@ -213,4 +210,3 @@ export default class TransactionComfirmationModal extends Vue {
   font-size: 10px;
 }
 </style>
-

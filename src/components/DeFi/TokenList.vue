@@ -7,7 +7,7 @@
     >
       <v-card
         class="token-card"
-        :class="{ 'selected': index === activeItem }"
+        :class="{ selected: index === activeItem }"
         @click="selectCurrency(index)"
       >
         <img :class="`token-mark-${currency.name}`" :src="currency.style.mark" />
@@ -23,9 +23,9 @@
               <div class="token-balance text-right">
                 <div class="label">Total Balance</div>
                 <div class="value">{{ currency.balance }} {{ currency.name }}</div>
-                <div
-                  class="estimated"
-                >≈ {{ getEstimatedValue(currency.balance, currency.price) }} USD</div>
+                <div class="estimated">
+                  ≈ {{ getEstimatedValue(currency.balance, currency.price) }} USD
+                </div>
               </div>
             </v-col>
           </v-row>
@@ -123,7 +123,7 @@ export default class TokenList extends Vue {
   width: inherit;
 
   &::-webkit-scrollbar-track {
-    margin: 8px
+    margin: 8px;
   }
 
   &::-webkit-scrollbar {
