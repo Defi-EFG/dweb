@@ -93,11 +93,13 @@
                     name="input-10-1"
                     :type="show ? 'text' : 'password'"
                     @click:append="show = !show"
+                    :rules="[rules.required, rules.min]"
                     label="Set your password"
                     color="primary"
                     filled
                     elevation-0
                     dense
+                    required
                     v-model="createWalletPassword"
                   ></v-text-field>
                 </template>
@@ -106,11 +108,17 @@
                   name="input-10-2"
                   :type="show ? 'text' : 'password'"
                   @click:append="show = !show"
+                  :rules="[
+                    rules.required,
+                    rules.min,
+                    createWalletPassword === confirmPassword || 'Password must match'
+                  ]"
                   label="Repeat your password"
                   color="primary"
                   filled
                   elevation-0
                   dense
+                  required
                   v-model="confirmPassword"
                 ></v-text-field>
                 <div class="action-wrapper">
@@ -202,8 +210,10 @@
                     label="Keystore Password"
                     color="primary"
                     filled
+                    :rules="[rules.required, rules.min]"
                     elevation-0
                     dense
+                    required
                   ></v-text-field>
                 </template>
                 <div class="action-wrapper">
