@@ -107,7 +107,7 @@ export default {
 }
 
 .efg_border1 {
-  padding: 0px; 
+  padding: 0px;
   border-top: 1px solid #ffffff;
 }
 .logo_ecoc .logo_ecoc_m_text span {
@@ -205,7 +205,7 @@ export default {
   .logo_ecoc .logo_ecoc_m_text {
     font-size: 30px;
   }
-  .logo_ecoc .logo_ecoc_m_text span{
+  .logo_ecoc .logo_ecoc_m_text span {
     font-size: 20px;
   }
 }

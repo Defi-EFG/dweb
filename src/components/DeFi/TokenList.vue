@@ -7,7 +7,7 @@
     >
       <v-card
         class="token-card"
-        :class="{ 'selected': index === activeItem }"
+        :class="{ selected: index === activeItem }"
         @click="selectCurrency(index)"
       >
         <img :class="`token-mark-${currency.name}`" :src="currency.style.mark" />
@@ -23,9 +23,9 @@
               <div class="token-balance text-right">
                 <div class="label">Total Balance</div>
                 <div class="value">{{ currency.balance }} {{ currency.name }}</div>
-                <div
-                  class="estimated"
-                >≈ {{ getEstimatedValue(currency.balance, currency.price) }} USD</div>
+                <div class="estimated">
+                  ≈ {{ getEstimatedValue(currency.balance, currency.price) }} USD
+                </div>
               </div>
             </v-col>
           </v-row>
@@ -72,10 +72,10 @@ export default class TokenList extends Vue {
         price: '1'
       },
       {
-        name: 'DELAY',
+        name: 'GPT',
         type: '',
         balance: '1.329478',
-        style: constants.KNOWN_CURRENCY['DELAY'],
+        style: constants.KNOWN_CURRENCY['GPT'],
         price: '1'
       },
       {
@@ -123,7 +123,7 @@ export default class TokenList extends Vue {
   width: inherit;
 
   &::-webkit-scrollbar-track {
-    margin: 8px
+    margin: 8px;
   }
 
   &::-webkit-scrollbar {
@@ -228,7 +228,7 @@ export default class TokenList extends Vue {
     background: linear-gradient(180deg, #9400dc 0%, #743f96 100%) !important;
   }
 
-  &.DELAY-bg {
+  &.GPT-bg {
     background: linear-gradient(3deg, #8a40d7 0%, #6800fe 100%) !important;
   }
 
@@ -255,7 +255,7 @@ export default class TokenList extends Vue {
   }
 
   &-BCST,
-  &-DELAY {
+  &-GPT {
     position: absolute;
     bottom: 1rem;
     left: 1rem;

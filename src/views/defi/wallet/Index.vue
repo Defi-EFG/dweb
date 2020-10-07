@@ -100,7 +100,7 @@ export default class Wallet extends Vue {
     background: linear-gradient(268deg, #9400dc 0%, #743f96 100%) !important;
   }
 
-  &DELAY {
+  &GPT {
     background: linear-gradient(268deg, #8a40d7 0%, #6800fe 100%) !important;
   }
 

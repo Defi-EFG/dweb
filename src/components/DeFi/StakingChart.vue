@@ -19,7 +19,7 @@ import Chart from 'chart.js'
 
 @Component({})
 export default class StakingChart extends Vue {
-  token = 'DELAY'
+  token = 'GPT'
   max = 10000
   currentValue = 8405.01486564
 
@@ -79,6 +79,7 @@ export default class StakingChart extends Vue {
   width: inherit;
   background: #222738;
   display: flex;
+  text-align: left;
 }
 
 .chart-wrapper {
@@ -106,7 +107,7 @@ export default class StakingChart extends Vue {
 .token-logo {
   padding: 0;
   margin: 0;
-  background-image: url('../../assets/delay.svg');
+  background-image: url('../../assets/gpt.svg');
   background-repeat: no-repeat;
   background-position: 50.4% 49.5%;
   background-size: 50px;

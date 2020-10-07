@@ -76,7 +76,7 @@
                 <v-col cols="6">
                   <div class="supply_button11">
                     <!-- <a href="efg"> -->
-                      <button disabled>{{ $t('views.main.detail') }}</button>
+                    <button disabled>{{ $t('views.main.detail') }}</button>
                     <!-- </a> -->
                   </div>
                   <div class="supply_price">20.0%</div>
@@ -110,14 +110,14 @@
             <div class="supply supply2">
               <v-row>
                 <v-col cols="6">
-                  <img src="@/assets/delay.svg" />
-                  <div class="supply_name">GPT</div>
+                  <img src="@/assets/gpt.svg" />
+                  <div class="supply_name">DELAY</div>
                   <div class="supply_text">{{ $t('views.main.liquidation') }}</div>
                 </v-col>
                 <v-col cols="6">
                   <div class="supply_button2">
                     <!-- <a href="delay"> -->
-                      <button disabled>{{ $t('views.main.detail') }}</button>
+                    <button disabled>{{ $t('views.main.detail') }}</button>
                     <!-- </a> -->
                   </div>
                   <div class="supply_price">20.0%</div>

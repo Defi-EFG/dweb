@@ -51,7 +51,7 @@
       <language-switcher></language-switcher>
     </v-app-bar>
 
-    <div class="send-transaction">
+    <div>
       <v-dialog v-model="dialog">
         <v-card>
           <v-card-text>

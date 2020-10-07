@@ -20,7 +20,7 @@
             <div class="sun_Introduction">
               {{ $t('views.docs.detail1.head_sub') }}
             </div>
-            <div class="head_Introduction"> {{ $t('views.docs.detail2.head') }}</div>
+            <div class="head_Introduction">{{ $t('views.docs.detail2.head') }}</div>
             <div class="sun_Introduction">
               {{ $t('views.docs.detail2.head_sub') }}
             </div>

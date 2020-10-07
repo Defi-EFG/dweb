@@ -4,16 +4,16 @@
       <v-card class="blur-card">
         <v-card-title class="headline modal-header">
           <v-icon></v-icon>
-          <v-btn text @click.stop="onCloseX()"><v-icon color="white">$close</v-icon></v-btn>
+          <v-btn text><v-icon color="white">$close</v-icon></v-btn>
         </v-card-title>
         <div class="transaction-confirmation-wrapper ">
           <div class="d-flex ">
-            <div class="transaction-sender"> Ed76D6...F985 </div>
+            <div class="transaction-sender">Ed76D6...F985</div>
             <div class="transaction-receiver">0x76D6...F065</div>
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
-
           <div class="transaction-confirmation-content">
+            <GasSetting></GasSetting>
             <h3><strong>Transaction Confirm</strong></h3>
             <small>Please confirm the transaction</small>
             <div class="transaction-confirmation-content-detail">
@@ -39,7 +39,9 @@
                   <p>2.00</p>
                   <p class="ml-2">ECOC</p>
                 </div>
-                <v-btn small text color="primary">gas setting</v-btn>
+                <v-btn small text color="primary">
+                  <span class="gassetting">gas setting</span>
+                </v-btn>
               </div>
             </div>
             <v-form class="pt-4">
@@ -57,7 +59,10 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-@Component({})
+import GasSetting from './gas-setting-modal.vue'
+@Component({
+  components: {}
+})
 export default class TransactionComfirmationModal extends Vue {
   sendialog = false
   @Prop() visible!: boolean
@@ -67,7 +72,7 @@ export default class TransactionComfirmationModal extends Vue {
   }
 }
 </script>
-<style >
+<style>
 .headline {
   border-bottom: 1px solid rgba(180, 180, 180, 0.555);
   border-bottom-right-radius: 0px !important;
@@ -197,6 +202,11 @@ export default class TransactionComfirmationModal extends Vue {
   font-size: 0.9em;
   text-transform: capitalize;
   text-decoration: underline;
+  height: auto;
+}
+
+.gassetting {
+  letter-spacing: 0px;
+  font-size: 10px;
 }
 </style>
-

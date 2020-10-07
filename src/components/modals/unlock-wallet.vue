@@ -62,7 +62,7 @@
                 <v-textarea
                   name="input-7-1"
                   filled
-                  value="json format"
+                  :value="createWalletKeystore"
                   auto-grow
                   disabled
                 ></v-textarea>
@@ -105,7 +105,7 @@
                     filled
                     elevation-0
                     dense
-                    v-model="password1"
+                    v-model="createWalletPassword"
                   ></v-text-field>
                 </template>
                 <v-text-field
@@ -118,10 +118,10 @@
                   filled
                   elevation-0
                   dense
-                  v-model="password2"
+                  v-model="confirmPassword"
                 ></v-text-field>
                 <div class="action-wrapper">
-                  <v-btn large class="mb-5" color="primary" @click.native="step = 3">
+                  <v-btn large class="mb-5" color="primary" @click="onCreateWallet">
                     <h4 class="text-capitalize font-weight-light">Create</h4>
                   </v-btn>
                   <small class="lightgray--text mt-1 mb-4"
@@ -150,7 +150,7 @@
                     <v-textarea
                       outlined
                       auto-grow
-                      v-model="jsonformat"
+                      v-model="keystore"
                       filled
                       label="Your keystore text..."
                     ></v-textarea>
@@ -169,7 +169,7 @@
                     <div class="action-wrapper">
                       <v-btn
                         large
-                        v-if="upload || jsonformat.length > 6"
+                        v-if="upload || keystore.length > 6"
                         @click.native="step = 5"
                         class="mb-5"
                         color="primary"
@@ -201,11 +201,12 @@
                 </div>
                 <template>
                   <v-text-field
+                    v-model="keystorePassword"
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                     name="input-10-1"
                     :type="show ? 'text' : 'password'"
                     @click:append="show = !show"
-                    label="Set your password"
+                    label="Keystore Password"
                     color="primary"
                     filled
                     elevation-0
@@ -213,7 +214,7 @@
                   ></v-text-field>
                 </template>
                 <div class="action-wrapper">
-                  <v-btn large class="mb-5" color="primary" @click.stop="onCloseX()">
+                  <v-btn large class="mb-5" color="primary" @click="onUnlockWallet()">
                     <h4 class="text-capitalize font-weight-light">Create</h4>
                   </v-btn>
                 </div>
@@ -226,57 +227,82 @@
   </div>
 </template>
 
-
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Loading from './loading-create-accout.vue'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
+
 @Component({
   components: {
     Loading
   }
 })
 export default class UnlockwalletModal extends Vue {
-  @Prop() password1!: string
-  @Prop() password2!: string
-  createwalletdialog = false
-  upload = false
-  jsonformat = ''
-
-  connectwalletmodal = false
   @Prop() visible!: boolean
+
+  walletStore = getModule(WalletModule)
+  upload = false
+
+  keystore = ''
+  keystorePassword = ''
+
+  createWalletKeystore = ''
+  createWalletPassword = ''
+  confirmPassword = ''
+
   step = 1
   unlockwalletModal = this.visible
+
   @Watch('visible')
   show() {
     this.unlockwalletModal = this.visible
   }
-  onOpenModal() {
-    this.createwalletdialog = !this.createwalletdialog
-  }
+
   onFileChange() {
     this.upload = !this.upload
   }
-  submit() {
-    this.step = 1
-  }
+
   onClose() {
+    this.step = 1
     this.$emit('onClose')
   }
+
   onCreatewallet() {
     this.$emit('onCreatewallet')
   }
+
   onSuccess() {
     this.$emit('onSuccess')
   }
+
   onCloseX() {
     this.onClose()
   }
 
-  onCloseModalcreate() {
-    this.createwalletdialog = !this.createwalletdialog
+  onCreateWallet() {
+    const password = this.createWalletPassword
+
+    this.walletStore.createNewWallet(password).then(keystore => {
+      this.createWalletKeystore = keystore
+      this.step = 3
+    })
   }
-  ConnectWallet() {
-    console.log('connect', this.connectwalletmodal)
+
+  onUnlockWallet() {
+    // const keystore =
+    //   '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
+    // const password = '123456'
+
+    const keystore = this.keystore
+    const password = this.keystorePassword
+
+    this.walletStore.importWallet({ keystore, password }).then(() => {
+      this.walletStore.updateBalance()
+      this.walletStore.updateTransactionsHistory()
+
+      this.onClose()
+    })
   }
 }
 </script>
