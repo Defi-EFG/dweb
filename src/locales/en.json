@@ -13,6 +13,7 @@
             "dashboard": "Dashboard"
         },
         "pdf": "https://efg.finance/media/efg-whitepaper.pdf",
+        "underconstruction": "underconstruction.svg",
         "main": {
             "name": "ECOC Financial Growth",
             "sub_name_1": "ECOC Financial Growth (EFG) token is a Dapp logic based on decentralization finance (DeFi) created by smart contracts. These tokens comply with ECRC-20 standard, which shares the same Interface of ERC-20 (Ethereum) standard.",

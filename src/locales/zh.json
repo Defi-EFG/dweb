@@ -13,6 +13,7 @@
             "dashboard": "仪表板"
         },
         "pdf": "https://efg.finance/media/efg-whitepaperzh.pdf",
+        "underconstruction": "underconstructionzh.svg",
         "main": {
             "name": "ECOC Financial Growth",
             "sub_name_1": "ECOC Financial Growth (EFG) 代币是一种基于智能合约创建的去中心化金融（DeFi）的代币。它符合ECRC-20标准，该标准共享ERC-20（以太坊）标准的相同接口。",

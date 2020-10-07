@@ -121,7 +121,7 @@ export default {
 .sec_doc2 .sun_Introduction {
   font: normal normal normal 16px/21px Segoe UI;
   letter-spacing: 0px;
-  color: #929292;
+  color: #434141;
   opacity: 1;
   margin-bottom: 80px;
   line-height: 1.5;
