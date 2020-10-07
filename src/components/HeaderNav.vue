@@ -75,7 +75,6 @@ export default class HeaderNav extends Vue {
   }
 
   gotoHome() {
-    this.logout()
     this.$router.push('/')
   }
 
