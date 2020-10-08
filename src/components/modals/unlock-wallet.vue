@@ -65,7 +65,7 @@
                   </v-btn>
                   <small class="connect">
                     Already saved your keystore file?.
-                    <v-btn text @click="connetStep">Connect</v-btn>
+                    <v-btn text @click="connectStep">Connect</v-btn>
                   </small>
                 </div>
               </div>
