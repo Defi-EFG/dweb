@@ -36,4 +36,10 @@ export default {}
 #footer span:hover {
   color: #693987;
 }
+@media only screen and (max-width: 670px) {
+  #footer span {
+    font-size: 14px;
+    padding: 15px;
+  }
+}
 </style>

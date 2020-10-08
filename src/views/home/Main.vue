@@ -59,54 +59,78 @@
     <section class="sec_2">
       <v-container>
         <v-row>
-          <v-col cols="12" class="head_supply">
-            {{ $t('views.main.supply') }}
-          </v-col>
-        </v-row>
-        <v-row class="row1">
-          <v-col lg="5" md="5" cols="12" class="supply3">
+          <v-col lg="5" md="5" cols="5" class="supply3">
             <div class="supply supply2">
               <v-row>
-                <v-col cols="6">
-                  <img src="@/assets/efg_01.svg" />
-                  <div class="supply_name">EFG</div>
-                  <div class="supply_text">{{ $t('views.main.supply_apy') }}</div>
-                  <div class="supply_text">{{ $t('views.main.borrow_apy') }}</div>
+                <v-col cols="6" class="head_supply head_supply2">
+                  {{ $t('views.main.supply') }}
                 </v-col>
-                <v-col cols="6">
-                  <div class="supply_button11">
-                    <!-- <a href="efg"> -->
-                    <button disabled>{{ $t('views.main.detail') }}</button>
-                    <!-- </a> -->
-                  </div>
-                  <div class="supply_price">20.0%</div>
-                  <div class="supply_price">3.5%</div>
+                <v-col cols="6" class="head_supply">
+                  Pool
                 </v-col>
               </v-row>
             </div>
           </v-col>
-          <v-col lg="7" md="7" cols="12">
+          <v-col lg="7" md="7" cols="7" class="supply3">
             <div class="supply">
               <v-row>
-                <v-col lg="6" md="6" cols="12">
-                  <div class="supply_name2">EFG - {{ $t('views.main.total_supply') }}</div>
-                  <div class="supply_price_color color_1">
-                    $0
-                  </div>
+                <v-col cols="6" class="head_supply head_supply2">
+                  EFG - Total Supply
                 </v-col>
-                <v-col lg="6" md="6" cols="12">
-                  <div class="supply_button1">EFG - {{ $t('views.main.total_borrowed') }}</div>
-                  <div class="supply_price_color color_2">
-                    $0
+                <v-col cols="6" class="head_supply">
+                  EFG - Total Borrowed
+                </v-col>
+              </v-row>
+            </div>
+          </v-col>
+        </v-row>
+        <v-row v-for="(item, i) in items" :key="i" class="row1 roww2">
+          <v-col lg="5" md="5" cols="5" class="supply3">
+            <div class="supply supply2">
+              <v-row>
+                <v-col cols="6" class="margintopimg padding_012">
+                  <img src="@/assets/efg_01.svg" />
+                  <div class="supply_name ">EFG</div>
+                </v-col>
+                <v-col cols="6" class="padding_0123">
+                  <div class=" margintop">
+                    {{ item.Loener }}
                   </div>
                 </v-col>
               </v-row>
             </div>
           </v-col>
-          <img style="position: absolute;" src="@/assets/backg_01.svg" />
+          <v-col lg="7" md="7" cols="7" class="supply3">
+            <div class="supply">
+              <v-row>
+                <v-col lg="6" md="6" cols="6" class="padding_012">
+                  <div class="color_1 color_size">
+                    {{ item.EFGTotalSupply }}
+                  </div>
+                </v-col>
+                <v-col lg="6" md="6" cols="6" class="padding_012">
+                  <div class="color_2 color_size">
+                    {{ item.EFGTotalBorrowed }}
+                  </div>
+                </v-col>
+              </v-row>
+            </div>
+          </v-col>
+          <img class="row1_img" src="@/assets/backg_01.svg" />
         </v-row>
-        <v-row class="row1">
-          <v-col lg="5" md="5" cols="12" class="supply3">
+        <v-row style="border-top:2px solid #312D36; margin-top:20px">
+          <v-col cols="12" class="supply3">
+            <div class="supply supply2">
+              <v-row>
+                <v-col cols="6" class="head_supply3">
+                  Staking
+                </v-col>
+              </v-row>
+            </div>
+          </v-col>
+        </v-row>
+        <v-row class="row1 roww3">
+          <v-col lg="5" md="5" cols="12">
             <div class="supply supply2">
               <v-row>
                 <v-col cols="6">
@@ -137,7 +161,7 @@
               </v-row>
             </div>
           </v-col>
-          <img style="position: absolute;" src="@/assets/backg_02.svg" />
+          <img style="position: absolute; opacity: 0.25;" src="@/assets/backg_02.svg" />
         </v-row>
         <v-row style="border-bottom:2px solid #312D36; margin-top:20px"></v-row>
         <v-row>
@@ -151,13 +175,21 @@
               ><img class="img_text_but" src="@/assets/icon/currency/ecoc.svg" alt="" />
               <div class="text_but">ECOC</div></span
             >
-            <span class="but_div" style="display:none;"
-              ><img class="img_text_but" src="@/assets/usd.png" alt="" />
+            <span class="but_div not_it"
+              ><img class="img_text_but not_it" src="@/assets/usd.png" alt="" />
               <div class="text_but">USDT</div></span
             >
-            <span class="but_div" style="display:none;"
-              ><img class="img_text_but" src="@/assets/eth.png" alt="" />
+            <span class="but_div not_it"
+              ><img class="img_text_but not_it" src="@/assets/eth.png" alt="" />
               <div class="text_but">ETH</div></span
+            >
+            <span class="but_div not_it"
+              ><img class="img_text_but not_it" src="@/assets/tron.svg" alt="" />
+              <div class="text_but">TRON</div></span
+            >
+            <span class="but_div not_it"
+              ><img class="img_text_but not_it" src="@/assets/dot.png" alt="" />
+              <div class="text_but">DOT</div></span
             >
           </v-col>
         </v-row>
@@ -193,6 +225,62 @@ export default class Main extends Vue {
   get msg() {
     return this.$t('views.mainslider')
   }
+  data() {
+    return {
+      items: [
+        {
+          Loener: 'ES1jMgpCN...JWGkkjxbJB',
+          EFGTotalSupply: '$8,123,456.79',
+          EFGTotalBorrowed: '$4,189,402.65'
+        },
+        {
+          Loener: 'ES1jMgpCN...JWGkkjxbJB',
+          EFGTotalSupply: '$8,123,456.79',
+          EFGTotalBorrowed: '$4,189,402.65'
+        },
+        {
+          Loener: 'ES1jMgpCN...JWGkkjxbJB',
+          EFGTotalSupply: '$8,123,456.79',
+          EFGTotalBorrowed: '$4,189,402.65'
+        },
+        {
+          Loener: 'ES1jMgpCN...JWGkkjxbJB',
+          EFGTotalSupply: '$8,123,456.79',
+          EFGTotalBorrowed: '$4,189,402.65'
+        },
+        {
+          Loener: 'ES1jMgpCN...JWGkkjxbJB',
+          EFGTotalSupply: '$8,123,456.79',
+          EFGTotalBorrowed: '$4,189,402.65'
+        },
+        {
+          Loener: 'ES1jMgpCN...JWGkkjxbJB',
+          EFGTotalSupply: '$8,123,456.79',
+          EFGTotalBorrowed: '$4,189,402.65'
+        },
+        {
+          Loener: 'ES1jMgpCN...JWGkkjxbJB',
+          EFGTotalSupply: '$8,123,456.79',
+          EFGTotalBorrowed: '$4,189,402.65'
+        },
+        {
+          Loener: 'ES1jMgpCN...JWGkkjxbJB',
+          EFGTotalSupply: '$8,123,456.79',
+          EFGTotalBorrowed: '$4,189,402.65'
+        },
+        {
+          Loener: 'ES1jMgpCN...JWGkkjxbJB',
+          EFGTotalSupply: '$8,123,456.79',
+          EFGTotalBorrowed: '$4,189,402.65'
+        },
+        {
+          Loener: 'ES1jMgpCN...JWGkkjxbJB',
+          EFGTotalSupply: '$8,123,456.79',
+          EFGTotalBorrowed: '$4,189,402.65'
+        }
+      ]
+    }
+  }
 }
 </script>
 
@@ -215,6 +303,9 @@ body {
   max-width: 1088px;
   margin: 0 auto;
 }
+.not_it {
+  opacity: 0.6;
+}
 .sec_1 {
   background: transparent linear-gradient(180deg, #2c1635 0%, #070c1a 100%) 0% 0% no-repeat
     padding-box;
@@ -234,21 +325,22 @@ body {
   display: inline;
   position: relative;
   text-align: left;
-  font: normal normal normal 41px/55px Nunito Sans;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
   top: -13px;
   padding-left: 20px;
+  font-size: 35px;
 }
 .sec_1 .text_header_sub {
   text-align: left;
-  font: normal normal normal 17px/23px Segoe UI;
   letter-spacing: 0px;
   color: #c7bebe;
   opacity: 1;
   padding-top: 20px;
-  text-indent: 5em;
+  text-indent: 4.5em;
+  font-size: 18px;
+  line-height: 1.3;
 }
 .sec_1 .social_icon {
   position: relative;
@@ -268,17 +360,43 @@ body {
   transition: transform 0.3s;
   cursor: pointer;
 }
-.sec_2 .row1 {
+.sec_2 .roww2 {
   background: #26262c;
+  transition: 0.5s;
+  cursor: pointer;
+}
+.sec_2 .roww2:hover {
+  background: #393943;
+  transform: scale(1.03);
+}
+
+.sec_2 .roww2:hover .row1_img {
+  opacity: 1;
+  transition: 0.5s;
+}
+
+.sec_2 .row1 {
   border-radius: 5px;
   opacity: 5;
   padding: 5px 10px;
-  margin-top: 20px;
+  margin-bottom: 5px;
   position: relative;
+}
+.sec_2 .roww3 {
+  background: #26262c;
 }
 .sec_2 img {
   right: 0;
   bottom: 0;
+  width: 130px;
+}
+.head_supply3 {
+  padding-left: 40px;
+  color: #cccccc;
+  padding-top: 50px;
+}
+.head_supply2 {
+  padding-left: 40px;
 }
 .head_supply {
   color: #cccccc;
@@ -296,7 +414,6 @@ body {
 }
 .sec_2 .row1 .supply_name {
   text-align: left;
-  font: normal normal normal 16px/21px Segoe UI;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
@@ -304,9 +421,24 @@ body {
   position: relative;
   top: -10px;
 }
+.sec_2 .row1 .margintopimg {
+  padding-top: 16px;
+}
+.sec_2 .row1 .margintop {
+  padding-top: 10px;
+  color: #ffffff;
+}
+.sec_2 .row1 .row1_img {
+  position: absolute;
+  width: 60px;
+  opacity: 0.25;
+  transition: 0.5s;
+}
+.sec_2 .supply3 {
+  padding: 0 12px;
+}
 .sec_2 .row1 .supply_name2 {
   text-align: left;
-  font: normal normal normal 16px/21px Segoe UI;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
@@ -315,7 +447,6 @@ body {
 }
 .sec_2 .row1 .supply_text {
   text-align: left;
-  font: normal normal normal 14px/19px Segoe UI;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 0.5;
@@ -362,7 +493,6 @@ body {
 }
 .sec_2 .row1 .supply_price {
   text-align: right;
-  font: normal normal normal 14px/19px Segoe UI;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
@@ -370,19 +500,27 @@ body {
 }
 .sec_2 .row1 .supply_price_color {
   text-align: left;
-  font: normal normal 400 30px/40px Segoe UI;
   letter-spacing: 0px;
   opacity: 1;
   padding-top: 20px;
   position: relative;
   z-index: 10;
+  font-size: 30px;
 }
 .sec_2 .row1 .color_1 {
   color: rgb(63, 192, 219);
 }
+.padding_012 {
+  padding: 14px 12px 10px 12px;
+}
+.padding_0123 {
+  padding: 10px 12px 10px 12px;
+}
+.sec_2 .row1 .color_size {
+  font-size: 25px;
+}
 .sec_2 .row1 .color_2 {
   color: rgb(192, 116, 249);
-  float: right;
   color: rgb(192, 116, 249);
 }
 .sec_2 .but_div {
@@ -403,7 +541,6 @@ body {
 .sec_2 .but_div .text_but {
   display: inline;
   text-align: left;
-  font: normal normal normal 16px/21px Segoe UI;
   letter-spacing: 0px;
   top: -10px;
   position: relative;
@@ -422,19 +559,20 @@ body {
 }
 .text_head_footer {
   text-align: left;
-  font: normal normal bold 25px/33px Segoe UI;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
+  font-size: 25px;
 }
 .subtext_head_footer {
   text-align: left;
-  font: normal normal normal 16px/21px Segoe UI;
   letter-spacing: 0px;
   color: #707070;
   opacity: 1;
   text-indent: 3em;
   margin-top: 5px;
+  line-height: 1.3;
+  font-size: 17px;
 }
 
 .text_header {
@@ -544,9 +682,29 @@ body {
   .total_supply .price_text {
     font-size: 30px;
   }
-}
-.v-card__text {
-  text-align: center;
+  .v-card__text {
+    text-align: center;
+  }
+  .sec_1 {
+    padding-top: 100px;
+  }
+  .sec_1 .text_header {
+    font-size: 25px;
+  }
+  .sec_1 .text_header_sub {
+    font-size: 16px;
+    text-indent: 2em;
+  }
+  .sec_3 {
+    height: 150px;
+  }
+  .text_head_footer {
+    font-size: 23px;
+  }
+  .subtext_head_footer {
+    font-size: 16px;
+    text-indent: 0;
+  }
 }
 </style>
 

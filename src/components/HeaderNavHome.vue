@@ -50,7 +50,6 @@
       </v-row>
       <language-switcher></language-switcher>
     </v-app-bar>
-
     <div>
       <v-dialog v-model="dialog">
         <v-card>
@@ -145,6 +144,7 @@ export default class HeaderNavHome extends Vue {
     0px 9px 46px 8px rgba(0, 0, 0, 0.12);
   position: relative;
   border-radius: 5px;
+  background-color: #2c1635;
 }
 .menu_bu::before {
   content: '';
@@ -276,7 +276,7 @@ ul {
   }
 }
 .color_bg {
-  background: #2b1534 linear-gradient(180deg, #2c1635 0%, #2b1534 100%) 0% 0% no-repeat padding-box;
+  background: #24142f linear-gradient(180deg, #251430 0%, #251430 100%) 0% 0% no-repeat padding-box;
   position: fixed;
   width: 100%;
   transition: 0.3s;
