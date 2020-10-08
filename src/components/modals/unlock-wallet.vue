@@ -27,7 +27,7 @@
                     <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
                   </div>
                 </v-btn>
-                <v-btn large color="white" elevation="1" @click="connetStep">
+                <v-btn large color="white" elevation="1" @click="connectStep">
                   <div class="img-btn-logo">
                     <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
                   </div>
@@ -87,6 +87,7 @@
                     >Please set your password to generate a keystore file</small
                   >
                 </div>
+
                 <template>
                   <v-text-field
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -103,6 +104,7 @@
                     v-model="createWalletPassword"
                   ></v-text-field>
                 </template>
+
                 <v-text-field
                   :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                   name="input-10-2"
