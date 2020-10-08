@@ -51,8 +51,8 @@
       <language-switcher></language-switcher>
     </v-app-bar>
 
-    <div>
-      <v-dialog v-model="dialog">
+    <div class="undercontruction-dialog">
+      <v-dialog v-model="dialog" width="500">
         <v-card>
           <v-card-text>
             <img class="img" :src="require(`@/assets/${underconstruction}`)" alt="" />
@@ -92,7 +92,7 @@ export default class HeaderNavHome extends Vue {
 }
 </script>
 <style lang="scss">
-.v-dialog {
+.undercontruction-dialog .v-dialog {
   border-radius: 4px;
   margin: 24px;
   overflow-y: auto;
@@ -102,7 +102,7 @@ export default class HeaderNavHome extends Vue {
   z-index: inherit;
   box-shadow: unset;
 }
-.v-dialog::before {
+.undercontruction-dialog .v-dialog::before {
   content: '';
   max-width: 100%;
   position: absolute;
@@ -114,9 +114,9 @@ export default class HeaderNavHome extends Vue {
   -webkit-backdrop-filter: unset;
   backdrop-filter: unset;
 }
-.v-dialog img {
+.undercontruction-dialog .v-dialog img {
   width: 30%;
-  min-width: 500px;
+ 
 }
 </style>
 <style lang="scss" scoped>
