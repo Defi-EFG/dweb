@@ -2,7 +2,7 @@
   <v-card class="mx-auto history-container" dark color="#222738">
     <v-toolbar class="reward-history-head" flat dense>
       <v-toolbar-title>
-        <v-icon class="mr-2">mdi-star</v-icon>
+        <v-icon class="head-icon">mdi-star</v-icon>
         <span>Reward History</span>
       </v-toolbar-title>
     </v-toolbar>
@@ -16,10 +16,10 @@
               <span>{{ item.token }}</span>
             </div>
           </v-col>
-          <v-col class="ma-auto">
+          <v-col cols="auto" >
             <div class="time">{{ item.timestamp }}</div>
           </v-col>
-          <v-col class="ma-auto">
+          <v-col >
             <div class="value">{{ item.value }} {{ item.token }}</div>
           </v-col>
         </v-row>
@@ -68,7 +68,12 @@ export default class RewardHistory extends Vue {
     padding-box;
 
   span {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .head-icon {
+    margin-right: 0.5rem;
+    font-size: 20px;
   }
 }
 

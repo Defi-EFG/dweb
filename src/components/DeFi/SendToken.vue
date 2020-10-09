@@ -2,7 +2,7 @@
   <v-card class="mx-auto send-token" dark color="#1D212E">
     <v-toolbar class="send-head" flat dense>
       <v-toolbar-title>
-        <v-icon class="mr-2">mdi-arrow-up-circle-outline</v-icon>
+        <v-icon class="head-icon">mdi-arrow-up-circle-outline</v-icon>
         <span>Send</span>
       </v-toolbar-title>
     </v-toolbar>
@@ -171,7 +171,12 @@ export default class SendToken extends Vue {
     padding-box;
 
   span {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .head-icon {
+    font-size: 20px;
+    margin-right: 0.5rem;
   }
 }
 

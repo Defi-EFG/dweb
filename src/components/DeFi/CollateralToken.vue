@@ -68,7 +68,7 @@ export default class CollateralToken extends Vue {
     padding-box;
 
   span {
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 

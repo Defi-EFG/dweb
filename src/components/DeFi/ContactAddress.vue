@@ -2,7 +2,7 @@
   <v-card class="contact-address-container" color="#222738" dark>
     <v-toolbar class="contact-address-head" flat dense>
       <v-toolbar-title>
-        <v-icon class="mr-2">mdi-book-variant</v-icon>
+        <v-icon class="head-icon">mdi-book-variant</v-icon>
         <span>Contact Address</span>
       </v-toolbar-title>
 
@@ -62,8 +62,13 @@ export default class ContactAddress extends Vue {
   background: transparent linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
     padding-box;
 
+  .head-icon {
+    font-size: 20px;
+    margin-right: 8px;
+  }
+
   span {
-    font-size: 18px;
+    font-size: 16px;
   }
 }
 
