@@ -90,7 +90,7 @@ export default class TransactionComfirmationModal extends Vue {
   border: none !important;
 }
 </style>
-<style lang="scss" scope>
+<style lang="scss" scoped>
 .v-dialog {
   background-color: transparent;
   position: relative;
