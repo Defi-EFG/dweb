@@ -9,6 +9,7 @@ import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import { SendEcrc20Payload, SendEcocPayload } from '@/services/ecoc/types'
 import * as constants from '@/constants'
+import { currencyInit } from './currency'
 
 @Module({ dynamic: true, store, namespaced: true, name: 'walletStore' })
 export default class WalletModule extends VuexModule implements Wallet {
@@ -16,7 +17,7 @@ export default class WalletModule extends VuexModule implements Wallet {
   network = ''
   keystore = {} as KeyStore
   txList = {} as TxList
-  currencies = [] as Currency[]
+  currencies = currencyInit()
   selectedCurrencyIndex = 0
   lastUpdate = 0
 
@@ -41,7 +42,7 @@ export default class WalletModule extends VuexModule implements Wallet {
     this.network = ''
     this.keystore = {} as KeyStore
     this.txList = {} as TxList
-    this.currencies = [] as Currency[]
+    this.currencies = currencyInit()
     this.selectedCurrencyIndex = 0
     this.lastUpdate = 0
   }
