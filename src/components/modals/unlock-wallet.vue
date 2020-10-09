@@ -256,7 +256,7 @@ export default class UnlockwalletModal extends Vue {
       return !!value || 'Required.'
     },
     min: (v: any) => {
-      return v.length >= 8 || 'Min 8 characters'
+      return v.length >= 6 || 'Min 6 characters'
     }
   }
 
@@ -284,10 +284,12 @@ export default class UnlockwalletModal extends Vue {
 
   onCreateWallet() {
     const password = this.createWalletPassword
+
     this.walletStore.createNewWallet(password).then(keystore => {
       this.createWalletKeystore = keystore
       this.step = 3
     })
+    
   }
 
   createStep() {

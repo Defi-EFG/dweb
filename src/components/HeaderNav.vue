@@ -27,13 +27,41 @@
             <v-alert rounded-lg dense color="#ebebeb" class="primary-address">
               <span>{{ addr }}</span>
             </v-alert>
-            <v-btn text color="#7900B5" class="mt-1">
+            <v-btn text color="#7900B5" class="mt-1" @click="checkPrivatekeyDialog = true">
               <span class="text-btn">Private Key</span>
             </v-btn></v-card-text
           >
         </v-card>
       </v-menu>
     </v-app-bar>
+    <v-dialog v-model="checkPrivatekeyDialog" max-width="394">
+      <v-card>
+        <v-card-title class="bg-header"
+          ><div><span>ECOC Wallet</span></div>
+        </v-card-title>
+        <div class="bg-white">
+          <div>
+            <h4>Private Key</h4>
+            <img src="" alt="" />
+          </div>
+          <small>Please input keystore password to access private key</small>
+          <v-text-field
+            v-model="keystorePassword"
+            name="input-10-1"
+            label="Keystore Password"
+            color="primary"
+            filled
+            elevation-0
+            dense
+          >
+          </v-text-field>
+          <div class="action-wrapper">
+            <v-btn large color="primary">Access</v-btn>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
+
     <UnlockWallet
       :visible="unlockWalletOpen"
       ref="unlockwalletModalRef"
@@ -47,6 +75,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import UnlockWallet from './modals/unlock-wallet.vue'
+
 @Component({
   components: {
     UnlockWallet
@@ -55,9 +84,9 @@ import UnlockWallet from './modals/unlock-wallet.vue'
 export default class HeaderNav extends Vue {
   walletStore = getModule(WalletModule)
   unlockWalletOpen = false
-
+  checkPrivatekeyDialog = false
   menu = false
-
+  keystorePassword: any = ''
   get addr() {
     return this.walletStore.address
   }
@@ -73,17 +102,18 @@ export default class HeaderNav extends Vue {
   logout() {
     this.walletStore.logout()
   }
-
   gotoHome() {
     this.$router.push('/')
   }
-
   truncateAddress(addr: string) {
     const separator = '...'
     const charsToShow = 8
     const frontChars = Math.ceil(charsToShow / 2)
     const backChars = Math.floor(charsToShow / 2)
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
+  }
+  PrivateKey() {
+    console.log('privateModal')
   }
 }
 </script>
@@ -152,5 +182,22 @@ export default class HeaderNav extends Vue {
     border-radius: 50%;
     margin-right: 6px;
   }
+}
+
+/*------------------------*/
+.action-wrapper {
+  display: flex;
+ 
+  flex-direction: column;
+  text-align: center;
+}
+.bg-white {
+  background-color: white;
+  margin:  0px 29px;
+  padding: 10px;
+}
+.bg-header{
+background-color: red;
+  margin:  10px 29px 0px;
 }
 </style>
