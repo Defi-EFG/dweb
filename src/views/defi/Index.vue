@@ -5,16 +5,18 @@
         <HeaderNav />
       </div>
     </v-container>
-    <div class="content">
-      <DefiNav />
-      <div class="main-container">
-        <div class="inner-container container">
-          <transition name="fade" mode="out-in">
-            <router-view></router-view>
-          </transition>
+    <v-responsive>
+      <div class="content">
+        <DefiNav />
+        <div class="main-container">
+          <div class="inner-container">
+            <transition name="fade" mode="out-in">
+              <router-view></router-view>
+            </transition>
+          </div>
         </div>
       </div>
-    </div>
+    </v-responsive>
   </div>
 </template>
 
@@ -40,18 +42,18 @@ export default class Home extends Vue {}
     padding-box;
 }
 .content {
-  padding: 0 45px 30px 45px;
+  margin: 0 70px;
   display: flex;
   position: relative;
   flex: 1;
-  justify-content: center;
+  align-self: center;
+  // justify-content: center;
   .row {
     width: 100%;
   }
 }
 
 .main-container {
-  display: flex;
   width: -webkit-fill-available;
   .inner-container {
     position: relative;
