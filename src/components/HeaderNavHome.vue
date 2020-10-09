@@ -80,7 +80,7 @@ export default class HeaderNavHome extends Vue {
   //   this.$router.push('defi')
   // }
   gotoDashboard() {
-    this.dialog = true
+    this.$router.push('defi')
   }
   get msg() {
     return this.$t('views.pdf')

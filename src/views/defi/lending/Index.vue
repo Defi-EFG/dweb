@@ -62,6 +62,9 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
 import SupplyBalance from '@/components/DeFi/SupplyBalance.vue'
 import BorrowBalance from '@/components/DeFi/BorrowBalance.vue'
 import LendingActivity from '@/components/DeFi/LendingActivity.vue'
@@ -86,9 +89,15 @@ import Repay from '@/components/DeFi/RepayCard.vue'
   }
 })
 export default class Lending extends Vue {
+  walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+
   mode = 'collateral'
-  // ECOC for default
   selectedToken = 'ECOC'
+
+  get isLoggedIn(): boolean {
+    return this.walletStore.address != ''
+  }
 
   modeSwitch(val: string) {
     console.log('receive emit')
@@ -104,6 +113,14 @@ export default class Lending extends Vue {
   toSupplyToken(token: string) {
     this.mode = 'borrow'
     this.selectedToken = token
+  }
+
+  mounted() {
+    const currencyName = 'ECOC'
+    this.lendingStore.getRate(currencyName).then(console.log)
+    this.lendingStore.getInterestRate(currencyName).then(console.log)
+    this.lendingStore.getDebt('eJ2MXjCnSSpSvuDE8CdEDjwzSZgWxGfYBP').then(console.log)
+    this.lendingStore.getBorrowPower(currencyName).then(console.log)
   }
 }
 </script>

@@ -15,6 +15,11 @@ export interface Ecrc20 {
   totalSupply: string
 }
 
+export interface CurrencyInfo {
+  name: string
+  style: Style
+}
+
 export interface Style {
   icon: string
   mark: string

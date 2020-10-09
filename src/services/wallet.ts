@@ -8,24 +8,6 @@ import { SendEcocPayload, SendEcrc20Payload } from './ecoc/types'
 import { encodeSendData } from './ecoc/ecrc20'
 import * as utils from './utils'
 
-const currencyColor = {
-  ECOC: 'BlueViolet',
-  ETH: 'SteelBlue',
-  USDT: 'SteelBlue',
-  EFG: 'SteelBlue',
-  GPT: 'SteelBlue',
-  DEFAULT: 'SteelBlue'
-}
-
-const currencyIcon = {
-  ECOC: require('@/assets/icon/currency/ecoc.svg'),
-  ETH: require('@/assets/icon/currency/eth.png'),
-  USDT: require('@/assets/icon/currency/usdt.png'),
-  EFG: require('@/assets/icon/currency/efg.svg'),
-  GPT: require('@/assets/icon/currency/gpt.svg'),
-  DEFAULT: require('@/assets/icon/currency/gpt.svg')
-}
-
 const isEcrc20 = (currency: Currency) => {
   return currency.type === constants.TYPE_ECRC20
 }
@@ -154,6 +136,5 @@ export {
   getEcocBalance,
   getEcrc20Balance,
   getTxs,
-  isEcrc20,
-  currencyColor
+  isEcrc20
 }
