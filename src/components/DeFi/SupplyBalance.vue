@@ -2,17 +2,17 @@
   <v-card dark class="balance-card">
     <v-card-text>
       <span class="balance-label">Supply Balance</span>
-      <div class="balance">${{ currentBalance.toFixed(2) }}</div>
+      <div class="balance">${{ balance.toFixed(2) }}</div>
     </v-card-text>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component({})
 export default class SupplyBalance extends Vue {
-  currentBalance = 1000
+  @Prop({ default: 0 }) readonly balance!: number
 }
 </script>
 

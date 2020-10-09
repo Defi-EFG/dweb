@@ -2,7 +2,7 @@
   <v-card dark class="borrow-card">
     <v-card-text>
       <span class="borrow-label">Borrow Balance</span>
-      <div class="borrow">${{ borrowBalance.toFixed(2) }}</div>
+      <div class="borrow">${{ balance.toFixed(2) }}</div>
       <div class="borrow-power">
         <span class="power-label">Borrow Power</span>
         <v-progress-linear
@@ -11,11 +11,11 @@
           height="7"
           class="borrow-bar"
           :rounded="true"
-          :value="calculateBorrow(borrowBalance, maxBorrow)"
+          :value="calculateBorrow(balance, borrowPower)"
         ></v-progress-linear>
         <div class="borrow-cap">
-          {{ calculateBorrow(borrowBalance, maxBorrow).toFixed(1) }}% ({{
-            `${borrowBalance.toFixed(2)}/${maxBorrow.toFixed(2)}`
+          {{ calculateBorrow(balance, borrowPower).toFixed(1) }}% ({{
+            `${balance.toFixed(2)}/${borrowPower.toFixed(2)}`
           }})
         </div>
       </div>
@@ -24,14 +24,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component({})
 export default class BorrowBalance extends Vue {
-  borrowBalance = 200
-  maxBorrow = 800
+  @Prop({ default: 0 }) readonly balance!: number
+  @Prop({ default: 0 }) readonly borrowPower!: number
 
   calculateBorrow(val: number, max: number) {
+    if (max === 0) return 0
     return (val / max) * 100
   }
 }

@@ -14,12 +14,12 @@
             </div>
             <div class="supply-item" v-for="(item, index) in myCollateral" :key="index">
               <div class="assets">
-                <img :src="require(`@/assets/icon/currency/${item.token.toLowerCase()}.svg`)" />
-                <span>{{ item.token }}</span>
+                <img :src="item.currency.style.icon" />
+                <span>{{ item.currency.name }}</span>
               </div>
               <div class="balance">
-                <div>${{ item.balance.toFixed(2) }}</div>
-                <small>≈{{ item.estimated.toFixed(1) }} {{ item.token }}</small>
+                <div>${{ getEstimatedValue(item.amount, item.price).toFixed(2) }}</div>
+                <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
               </div>
             </div>
           </v-card-text>
@@ -31,20 +31,20 @@
           <v-card-text>
             <div class="borrow-header">
               <div class="mr-3">Assets</div>
-              <div>APY</div>
+              <div>Inrerest Rate</div>
               <div>Balance</div>
             </div>
             <div class="borrow-item" v-for="(item, index) in myBorrowing" :key="index">
               <div class="assets">
-                <img :src="require(`@/assets/icon/currency/${item.token.toLowerCase()}.svg`)" />
-                <span>{{ item.token }}</span>
+                <img :src="item.currency.style.icon" />
+                <span>{{ item.currency.name }}</span>
               </div>
               <div class="apy">
-                <span>{{ item.apy }}%</span>
+                <span>{{ item.interestRate }}%</span>
               </div>
               <div class="balance">
-                <div>${{ item.balance.toFixed(2) }}</div>
-                <small>≈{{ item.estimated.toFixed(1) }} {{ item.token }}</small>
+                <div>${{ getEstimatedValue(item.amount, item.exchangeRate).toFixed(2) }}</div>
+                <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
               </div>
             </div>
           </v-card-text>
@@ -55,21 +55,25 @@
         <v-card dark color="#2e3344">
           <v-list color="#222738" class="activity-list">
             <v-list-item v-for="(act, index) in myActivity" :key="index" class="activity-item">
-              <v-icon class="mr-3">{{ activityIcon[act.type] }}</v-icon>
+              <v-icon class="mr-3">{{ activityIcon[act.activityName] }}</v-icon>
 
               <v-list-item-content>
                 <v-list-item-title class="activity-type">
-                  <span v-if="act.type == 'activated'">{{ act.token }} Collateral Activated</span>
-                  <span v-else>{{ act.type }} ({{ act.token }})</span>
+                  <span v-if="act.activityName == 'activated'"
+                    >{{ act.currencyName }} Collateral Activated</span
+                  >
+                  <span v-else>{{ act.activityName }} ({{ act.currencyName }})</span>
                   <v-spacer></v-spacer>
-                  <span v-if="act.type != 'activated'">${{ act.value.toFixed(2) }}</span>
+                  <span v-if="act.activityName != 'activated'"
+                    >${{ getEstimatedValue(act.amount, act.price).toFixed(2) }}</span
+                  >
                 </v-list-item-title>
                 <div class="activity-date">
-                  <small>{{ act.time }}</small>
+                  <small>{{ getTime(act.timestamp) }}</small>
                   <v-spacer></v-spacer>
-                  <small
-                    v-if="act.type != 'activated'"
-                  >≈{{ act.estimated.toFixed(2) }} {{ act.token }}</small>
+                  <small v-if="act.activityName != 'activated'"
+                    >≈{{ act.amount.toFixed(2) }} {{ act.currencyName }}</small
+                  >
                 </div>
               </v-list-item-content>
             </v-list-item>
@@ -82,58 +86,49 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import BigNumber from 'bignumber.js'
+import moment from 'moment'
+import LendingModule from '@/store/lending'
 
 @Component({})
 export default class LendingActivity extends Vue {
+  lendingStore = getModule(LendingModule)
+
   activityIcon = {
     borrow: 'mdi-transfer-up',
-    supply: 'mdi-transfer-down',
+    deposit: 'mdi-transfer-down',
     activated: 'mdi-circle-slice-8'
   }
 
-  myCollateral = [
-    {
-      token: 'ECOC',
-      balance: 1000,
-      estimated: 500
-    },
-    {
-      token: 'ECOC',
-      balance: 1000,
-      estimated: 500
-    }
-  ]
+  get myCollateral() {
+    return this.lendingStore.myCollateralAssets
+  }
 
-  myBorrowing = [
-    {
-      token: 'EFG',
-      apy: 2.9,
-      balance: 200,
-      estimated: 200
-    }
-  ]
+  get myBorrowing() {
+    return this.lendingStore.myBorrowing
+  }
 
-  myActivity = [
-    {
-      type: 'borrow',
-      token: 'EFG',
-      time: '2020-06-15 03:04:56',
-      value: 200,
-      estimated: 100
-    },
-    {
-      type: 'supply',
-      token: 'ECOC',
-      time: '2020-06-15 02:56:41',
-      value: 1000,
-      estimated: 500
-    },
-    {
-      type: 'activated',
-      token: 'ECOC',
-      time: '2020-06-15 02:56:41'
+  get myActivity() {
+    return this.lendingStore.myActivity
+  }
+
+  getEstimatedValue(amount: number, price: number) {
+    if (!price) return 0
+    return new BigNumber(amount).multipliedBy(new BigNumber(price))
+  }
+
+  getTime(timestamp: number) {
+    if (timestamp) {
+      // const timeMsg = moment(timestamp * 1000)
+      //   .startOf('minute')
+      //   .fromNow()
+
+      return `${moment(timestamp * 1000).format('YYYY-MM-DD HH:mm')}`
     }
-  ]
+
+    return timestamp
+  }
 }
 </script>
 

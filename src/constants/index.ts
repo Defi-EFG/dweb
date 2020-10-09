@@ -15,6 +15,8 @@ interface CurrencyStyle {
   [symbol: string]: Style
 }
 
+export const COLLATERAL_CURRENCIES = [ECOC]
+
 export const KNOWN_CURRENCY = {
   ECOC: {
     icon: require('@/assets/icon/currency/ecoc.svg'),
@@ -40,5 +42,5 @@ export const KNOWN_CURRENCY = {
   BCST: {
     icon: require('@/assets/icon/currency/gpt.svg'),
     mark: require('@/assets/wallet-token/gpt.svg')
-  } as Style,
+  } as Style
 } as CurrencyStyle

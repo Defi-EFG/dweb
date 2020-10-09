@@ -2,9 +2,9 @@
   <div class="lending-page">
     <v-row class="content-wrapper">
       <v-col cols="8" class="content">
-        <SupplyBalance></SupplyBalance>
+        <SupplyBalance :balance="collateralBalance"></SupplyBalance>
         <div class="ml-1 mr-1"></div>
-        <BorrowBalance></BorrowBalance>
+        <BorrowBalance :balance="borrowedBalance" :borrowPower="borrowPower"></BorrowBalance>
       </v-col>
       <v-col cols="4" class="content">
         <LendingActivity></LendingActivity>
@@ -16,7 +16,7 @@
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
               <img src="@/assets/efg_logo.svg" />
-              <span>ECOC</span>
+              <span> {{ selectedToken }}</span>
             </v-toolbar-title>
           </v-toolbar>
 
@@ -94,6 +94,18 @@ export default class Lending extends Vue {
 
   mode = 'collateral'
   selectedToken = 'ECOC'
+
+  get collateralBalance() {
+    return this.lendingStore.collateralBalance
+  }
+
+  get borrowedBalance() {
+    return this.lendingStore.borrowedBalance
+  }
+
+  get borrowPower() {
+    return this.lendingStore.borrowPower
+  }
 
   get isLoggedIn(): boolean {
     return this.walletStore.address != ''
