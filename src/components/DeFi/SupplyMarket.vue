@@ -66,6 +66,10 @@ export default class SupplyMarket extends Vue {
   }
 }
 
+.market-token {
+  height: 100%
+}
+
 .market-item {
   align-items: center;
   background: #323646;
@@ -116,7 +120,7 @@ export default class SupplyMarket extends Vue {
 
 <style lang="scss">
 .market-content {
-  height: 220px;
+  height: 229px;
   overflow: auto;
   .row {
     margin-left: 0;

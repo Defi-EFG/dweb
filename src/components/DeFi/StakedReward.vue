@@ -1,8 +1,8 @@
 <template>
-  <v-card dark color="#2e3344">
+  <v-card dark color="#2e3344" class="staked-reward">
     <v-card-text class="wrapper">
       <div class="total-reward">
-        <p class="label pb-0">Total Staked Reward</p>
+        <p class="label mb-0">Total Staked Reward</p>
         <p class="value">5.15349650 GPT</p>
       </div>
 
@@ -53,6 +53,10 @@ export default class StakedReward extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.staked-reward {
+  width: inherit;
+}
+
 .wrapper {
   padding: 1.2rem;
   padding-top: 3.11rem;
@@ -108,12 +112,12 @@ export default class StakedReward extends Vue {
   }
 
   .value {
-    padding: 1rem 0;
+    padding-top: 1rem;
     background: transparent linear-gradient(90deg, #c074f9 0%, #deb6fe 100%) 0% 0% no-repeat
       padding-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: xx-large;
+    font-size: x-large;
     font-weight: bold;
   }
 }

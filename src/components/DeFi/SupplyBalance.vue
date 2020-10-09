@@ -2,6 +2,10 @@
   <v-card dark class="balance-card">
     <v-card-text>
       <span class="balance-label">Supply Balance</span>
+      <div class="loaner">
+        Loaner: ES1jMgpCNbDcBUdXz1JkJVxJWGkkjxbJB
+        <span class="change-btn">Change</span>
+      </div>
       <div class="balance">${{ currentBalance.toFixed(2) }}</div>
     </v-card-text>
   </v-card>
@@ -30,12 +34,21 @@ export default class SupplyBalance extends Vue {
   font-size: 38px;
   color: #3fc0db;
   text-align: right;
-  padding: 5rem 0 2.5rem 0;
+  padding: 3.8rem 0 2.5rem 0;
 }
 
 .balance-label {
   font-size: 16px;
   color: white;
+}
+
+.loaner {
+  color: #7E7E7E;
+  .change-btn {
+    color: white;
+    text-decoration: underline;
+    cursor: pointer;
+  }
 }
 </style>
 

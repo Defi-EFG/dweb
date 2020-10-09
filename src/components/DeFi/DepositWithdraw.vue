@@ -11,7 +11,7 @@
               <img src="@/assets/gpt.svg" />
               <span>GPT - Flexible Staking</span>
             </div>
-            <small class="pl-3">Deposit EFG, Earn GPT</small>
+            <span class="pl-3">Deposit EFG, Earn GPT</span>
 
             <div class="total-balance">
               <span>TOTAL BALANCE</span>
@@ -171,7 +171,7 @@ export default class DepositWithdraw extends Vue {
 
   .btn-w,
   .btn-d {
-    margin-top: 3rem;
+    margin-top: 2.5rem;
     margin-bottom: 1rem;
     border-radius: 5px;
     background: transparent linear-gradient(90deg, #8b41d6 0%, #6800fe 100%) 0% 0% no-repeat
@@ -179,7 +179,7 @@ export default class DepositWithdraw extends Vue {
   }
 
   .btn-w {
-    margin-top: 5.9rem;
+    margin-top: 5.3rem;
   }
 }
 </style>

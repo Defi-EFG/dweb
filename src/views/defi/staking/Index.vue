@@ -11,7 +11,7 @@
       </v-col>
     </v-row>
     <v-row class="content-wrapper">
-      <v-col cols="8" class="content">
+      <v-col cols="8" class="content pb-0">
         <v-card dark color="#222738" class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
@@ -20,11 +20,11 @@
             </v-toolbar-title>
           </v-toolbar>
 
-          <v-row>
-            <v-col cols="6" class="pr-1">
+          <v-row class="content-wrapper">
+            <v-col cols="6" class="inner-content pr-1">
               <DepositWithdraw></DepositWithdraw>
             </v-col>
-            <v-col cols="6" class="pl-1">
+            <v-col cols="6" class="inner-content pl-1">
               <StakedReward></StakedReward>
             </v-col>
           </v-row>

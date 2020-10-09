@@ -1,5 +1,5 @@
 <template>
-  <v-card class="mx-auto send-token" dark color="#1D212E">
+  <v-card class="send-token" dark color="#1D212E">
     <v-toolbar class="send-head" flat dense>
       <v-toolbar-title>
         <v-icon class="head-icon">mdi-arrow-up-circle-outline</v-icon>
@@ -166,6 +166,10 @@ export default class SendToken extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.send-token {
+  width: 100%;
+}
+
 .send-head {
   background: transparent linear-gradient(270deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
     padding-box;
@@ -245,7 +249,7 @@ export default class SendToken extends Vue {
 
 .send-btn {
   margin-bottom: 3rem;
-  margin-top: 4.2rem;
+  margin-top: 9rem;
   background-color: #363a4a !important;
   color: #c074f9;
   font-weight: bold;

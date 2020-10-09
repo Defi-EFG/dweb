@@ -1,5 +1,5 @@
 <template>
-  <v-card dark color="#1D212E">
+  <v-card dark color="#1D212E" class="withdraw-card">
     <v-card-text class="wrapper">
       <p class="action-label">Withdraw</p>
       <div class="wallet-balance mb-2">
@@ -133,6 +133,10 @@ export default class Withdraw extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.withdraw-card {
+  width: 100%;
+}
+
 .wrapper {
   padding: 2rem;
   text-align: left;

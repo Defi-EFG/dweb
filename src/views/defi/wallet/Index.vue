@@ -9,7 +9,7 @@
       </v-col>
     </v-row>
     <v-row class="content-wrapper">
-      <v-col cols="8" class="content">
+      <v-col cols="8" class="content pb-0">
         <v-card dark class="tx-container">
           <v-toolbar :class="`receive-send-wrapper token-${selectedCurrencyName}`" dense flat>
             <v-toolbar-title class="token-symbol">
@@ -21,17 +21,17 @@
             </v-toolbar-title>
           </v-toolbar>
 
-          <v-row>
-            <v-col cols="6">
+          <v-row class="content-wrapper">
+            <v-col class="inner-content pr-1" cols="6">
               <receive-token></receive-token>
             </v-col>
-            <v-col cols="6">
+            <v-col class="inner-content pl-1" cols="6">
               <send-token></send-token>
             </v-col>
           </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pb-0">
         <transaction-history :page="'wallet'"></transaction-history>
       </v-col>
     </v-row>
@@ -116,9 +116,15 @@ export default class Wallet extends Vue {
 
 <style lang="scss">
 .content-wrapper {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   .content {
     padding-top: 0;
     padding-left: 0;
+    display: flex;
+  }
+
+  .inner-content {
     display: flex;
   }
 }

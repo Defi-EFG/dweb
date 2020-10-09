@@ -68,6 +68,7 @@ export default class DefiNav extends Vue {
   align-items: center;
   img {
     margin-right: 8px;
+    width: 22px;
   }
 }
 

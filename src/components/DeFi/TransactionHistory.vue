@@ -181,7 +181,7 @@ export default class TransactionHistory extends Vue {
 }
 
 .staking {
-  height: 240px;
+  height: 217px;
   overflow: auto;
 
   &::-webkit-scrollbar {
