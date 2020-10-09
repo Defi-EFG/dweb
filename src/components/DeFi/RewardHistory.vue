@@ -8,19 +8,19 @@
     </v-toolbar>
 
     <v-card-text class="wrapper">
-      <div class="history-items" v-for="(item, index) in rewardHistory" :key="index">
+      <div class="history-items" v-for="(item, index) in rewardList" :key="index">
         <v-row>
           <v-col>
             <div class="token">
               <img src="@/assets/gpt.svg" />
-              <span>{{ item.token }}</span>
+              <span>{{ rewardCurrencyName }}</span>
             </div>
           </v-col>
           <v-col class="ma-auto">
-            <div class="time">{{ item.timestamp }}</div>
+            <div class="time">{{ getTime(item.timestamp) }}</div>
           </v-col>
           <v-col class="ma-auto">
-            <div class="value">{{ item.value }} {{ item.token }}</div>
+            <div class="value">{{ item.amount }} {{ rewardCurrencyName }}</div>
           </v-col>
         </v-row>
       </div>
@@ -29,32 +29,26 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import moment from 'moment'
+import { RewardHistory as Rewardlist } from '@/types/staking'
 
 @Component({})
 export default class RewardHistory extends Vue {
-  rewardHistory = [
-    {
-      token: 'GPT',
-      timestamp: '2020-09-17 02:56:41',
-      value: 0.56
-    },
-    {
-      token: 'GPT',
-      timestamp: '2020-09-17 02:56:41',
-      value: 0.56
-    },
-    {
-      token: 'GPT',
-      timestamp: '2020-09-17 02:56:41',
-      value: 0.56
-    },
-    {
-      token: 'GPT',
-      timestamp: '2020-09-17 02:56:41',
-      value: 0.56
+  @Prop({ default: [] }) readonly rewardList!: Rewardlist
+  @Prop({ default: '###' }) readonly rewardCurrencyName!: string
+
+  getTime(timestamp: number) {
+    if (timestamp) {
+      const timeMsg = moment(timestamp * 1000)
+        .startOf('minute')
+        .fromNow()
+
+      return `${timeMsg} (${moment(timestamp * 1000).format('YYYY-MM-DD HH:mm')})`
     }
-  ]
+
+    return timestamp
+  }
 }
 </script>
 

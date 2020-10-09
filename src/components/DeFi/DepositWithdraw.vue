@@ -8,21 +8,22 @@
         <v-card dark color="#2e3344" class="deposit">
           <v-card-text class="wrapper">
             <div class="label pl-3">
-              <img src="@/assets/gpt.svg" />
-              <span>GPT - Flexible Staking</span>
+              <img src="@/assets/efg_logo.svg" />
+              <span>{{ stakingCurrencyName }} - Flexible Staking</span>
             </div>
-            <small class="pl-3">Deposit EFG, Earn GPT</small>
+            <small class="pl-3"
+              >Deposit {{ stakingCurrencyName }} to Earn {{ rewardCurrencyName }}</small
+            >
 
             <div class="total-balance">
-              <span>TOTAL BALANCE</span>
+              <span>Your Balance</span>
               <v-spacer></v-spacer>
-              <span>{{ totalBalance.toFixed(2) }} EFG</span>
+              <span>{{ balance.toFixed(2) }} {{ stakingCurrencyName }}</span>
             </div>
 
             <div class="minimum-d">
-              <span class="value">Minimum Deposit: 1.00 EFG</span>
               <v-spacer></v-spacer>
-              <span class="all" @click="fillAmountDeposit(totalBalance)">Deposit All</span>
+              <span class="all" @click="fillAmountDeposit(balance)">Deposit All</span>
             </div>
 
             <v-text-field
@@ -30,7 +31,7 @@
               placeholder="0"
               prefix="Deposit Amount"
               v-model="depositAmount"
-              suffix="EFG"
+              :suffix="stakingCurrencyName"
               single-line
               solo
               hide-details="true"
@@ -54,15 +55,14 @@
             <span class="pl-3">Please input the amount that you want to withdraw</span>
 
             <div class="d-amount">
-              <span>Deposited amount</span>
+              <span>Your Staking amount</span>
               <v-spacer></v-spacer>
-              <span>{{ depositedAmount.toFixed(2) }} EFG</span>
+              <span>{{ stakingAmount.toFixed(2) }} {{ stakingCurrencyName }}</span>
             </div>
 
             <div class="minimum-w">
-              <span class="value">Minimum Deposit: 1.00 EFG</span>
               <v-spacer></v-spacer>
-              <span class="all" @click="fillAmountWithdraw(depositedAmount)">Withdraw All</span>
+              <span class="all" @click="fillAmountWithdraw(stakingAmount)">Withdraw All</span>
             </div>
 
             <v-text-field
@@ -70,7 +70,7 @@
               placeholder="0"
               prefix="Withdrawal Amount"
               v-model="withdrawAmount"
-              suffix="EFG"
+              :suffix="stakingCurrencyName"
               single-line
               solo
               hide-details="true"
@@ -85,14 +85,25 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import { CurrencyInfo } from '@/types/currency'
 
 @Component({})
 export default class DepositWithdraw extends Vue {
-  totalBalance = 1000
-  depositedAmount = 500
+  @Prop({ default: 0 }) readonly balance!: number
+  @Prop({ default: 0 }) readonly stakingAmount!: number
+  @Prop({ default: {} }) readonly stakingCurrency!: CurrencyInfo
+
   depositAmount: string | number = ''
   withdrawAmount: string | number = ''
+
+  get stakingCurrencyName() {
+    return this.stakingCurrency.name || '###'
+  }
+
+  get rewardCurrencyName() {
+    return 'GPT'
+  }
 
   fillAmountDeposit(amount: number) {
     this.depositAmount = amount

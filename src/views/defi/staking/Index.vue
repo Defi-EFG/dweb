@@ -2,9 +2,13 @@
   <div class="staking-page">
     <v-row class="content-wrapper">
       <v-col cols="8" class="content">
-        <StakingList></StakingList>
+        <StakingList :stakingAmount="staking" :stakingCurrency="stakingCurrency"></StakingList>
         <div class="ml-1 mr-1"></div>
-        <StakingChart></StakingChart>
+        <StakingChart
+          :currencyName="rewardCurrency.name"
+          :total="totalReward"
+          :available="available"
+        ></StakingChart>
       </v-col>
       <v-col cols="4" class="content">
         <TransactionHistory :page="'staking'"></TransactionHistory>
@@ -15,23 +19,33 @@
         <v-card dark color="#222738" class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
-              <img src="@/assets/gpt.svg" />
-              <span>GPT</span>
+              <img :src="stakingCurrency.style.icon" />
+              <span>{{ stakingCurrency.name }}</span>
             </v-toolbar-title>
           </v-toolbar>
 
           <v-row>
             <v-col cols="6" class="pr-1">
-              <DepositWithdraw></DepositWithdraw>
+              <DepositWithdraw
+                :balance="stakingBalance"
+                :stakingAmount="staking"
+                :stakingCurrency="stakingCurrency"
+              ></DepositWithdraw>
             </v-col>
             <v-col cols="6" class="pl-1">
-              <StakedReward></StakedReward>
+              <StakedReward
+                :stakedReward="totalStakedReward"
+                :rewardCurrency="rewardCurrency"
+              ></StakedReward>
             </v-col>
           </v-row>
         </v-card>
       </v-col>
       <v-col cols="4" class="content">
-        <RewardHistory></RewardHistory>
+        <RewardHistory
+          :rewardList="rewardHistory"
+          :rewardCurrencyName="rewardCurrency.name"
+        ></RewardHistory>
       </v-col>
     </v-row>
   </div>
@@ -65,6 +79,38 @@ import RewardHistory from '@/components/DeFi/RewardHistory.vue'
 export default class Staking extends Vue {
   walletStore = getModule(WalletModule)
   stakingStore = getModule(StakingModule)
+
+  get stakingBalance() {
+    return 0
+  }
+
+  get rewardHistory() {
+    return this.stakingStore.rewardHistory
+  }
+
+  get totalReward() {
+    return this.stakingStore.totalReward
+  }
+
+  get available() {
+    return this.stakingStore.available
+  }
+
+  get staking() {
+    return this.stakingStore.staking
+  }
+
+  get totalStakedReward() {
+    return this.stakingStore.totalStakedReward
+  }
+
+  get stakingCurrency() {
+    return this.stakingStore.stakingCurrency
+  }
+
+  get rewardCurrency() {
+    return this.stakingStore.rewardCurrency
+  }
 }
 </script>
 

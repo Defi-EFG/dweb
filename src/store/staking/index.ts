@@ -1,10 +1,4 @@
-import {
-  VuexModule,
-  Module,
-  Mutation,
-  Action,
-  MutationAction,
-} from 'vuex-module-decorators'
+import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '@/store'
 import { InsufficientBalance } from '@/exceptions/wallet'
 import { StakingPlatform } from '@/types/staking'
@@ -31,9 +25,20 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   stakingCurrency = stakingCurrency
   rewardCurrency = rewardCurrency
 
-  totalReward = 0
-  available = 0
-  staking = 0
+  totalReward = 10000
+  available = 10000
+  staking = 100
   timestamp = 0
-  totalStakedReward = 0
+  totalStakedReward = 6.06
+
+  rewardHistory = [
+    {
+      amount: 0.56,
+      timestamp: 1602222563
+    },
+    {
+      amount: 5.5,
+      timestamp: 1602222563
+    }
+  ]
 }
