@@ -2,6 +2,9 @@ import { Style } from '../types/currency'
 
 export const ECOC = 'ECOC'
 export const ETH = 'ETH'
+export const USDT = 'USDT'
+export const EFG = 'EFG'
+export const GPT = 'GPT'
 
 export const TYPE_RECEIVED = 'Received'
 export const TYPE_SENT = 'Sent'

@@ -39,6 +39,10 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
+import StakingModule from '@/store/staking'
+
 import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
 import StakingList from '@/components/DeFi/StakingList.vue'
 import LendingActivity from '@/components/DeFi/LendingActivity.vue'
@@ -58,7 +62,10 @@ import RewardHistory from '@/components/DeFi/RewardHistory.vue'
     RewardHistory
   }
 })
-export default class Staking extends Vue {}
+export default class Staking extends Vue {
+  walletStore = getModule(WalletModule)
+  stakingStore = getModule(StakingModule)
+}
 </script>
 
 <style lang="scss" scoped>

@@ -7,19 +7,38 @@ import {
 } from 'vuex-module-decorators'
 import store from '@/store'
 import { InsufficientBalance } from '@/exceptions/wallet'
-import { LendingPlatform } from '@/types/lending'
-import { Contract } from '@/types/contract'
+import { LendingPlatform, Loan } from '@/types/lending'
+import * as constants from '@/constants'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
-import * as constants from '@/constants'
+
 import { lendingContract } from '@/services/lending'
 import { SmartContract, Params, ExecutionResult } from '@/services/contract'
 
 const lending = new SmartContract(lendingContract.address, lendingContract.abi)
+const loanCurrency = {
+  name: constants.EFG,
+  style: constants.KNOWN_CURRENCY[constants.EFG]
+}
 
 @Module({ dynamic: true, store, namespaced: true, name: 'lendingStore' })
 export default class LendingModule extends VuexModule implements LendingPlatform {
   contract = lendingContract
+  loaner = ''
+  collateralBalance = 0
+  borrowPower = 0
+
+  loan = {
+    currency: loanCurrency,
+    amount: 0,
+    timestamp: 0,
+    interestRate: 0,
+    exchangeRate: 0,
+    interest: 0
+  } as Loan
+
+  myCollateralAsset = []
+  myActivity = []
 
   @Action
   async getRate(currencyName: string) {
@@ -28,7 +47,10 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     } as Params
 
     const result = await lending.call('getEFGRates', params)
-    return result
+
+    const executionResult = result.executionResult as ExecutionResult
+    const data = executionResult.formattedOutput['0'].toNumber()
+    return data
   }
 
   @Action
@@ -38,7 +60,10 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     }
 
     const result = await lending.call('getInterestRate', params)
-    return result
+
+    const executionResult = result.executionResult as ExecutionResult
+    const data = executionResult.formattedOutput['0'].toNumber()
+    return data
   }
 
   @Action

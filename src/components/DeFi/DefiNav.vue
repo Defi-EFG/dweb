@@ -4,11 +4,7 @@
       <v-navigation-drawer class="defi-drawer" dark floating permanent>
         <v-list nav>
           <v-list-item-group v-model="item" color="primary">
-            <v-list-item
-              v-for="(item, i) in items"
-              :key="i"
-              @click="$router.push(`/defi/${item.text}`)"
-            >
+            <v-list-item v-for="(item, i) in items" :key="i" @click="goto(item.text)">
               <v-list-item-icon>
                 <v-icon v-text="item.icon"></v-icon>
               </v-list-item-icon>
@@ -35,6 +31,10 @@ export default class DefiNav extends Vue {
     { text: 'lending', icon: 'mdi-account-multiple' },
     { text: 'staking', icon: 'mdi-star' }
   ]
+
+  goto(page: string) {
+    this.$router.push(`/defi/${page}`).catch(console.log)
+  }
 }
 </script>
 

@@ -95,6 +95,10 @@ export default class Lending extends Vue {
   mode = 'collateral'
   selectedToken = 'ECOC'
 
+  get isLoggedIn(): boolean {
+    return this.walletStore.address != ''
+  }
+
   modeSwitch(val: string) {
     console.log('receive emit')
     this.mode = val
