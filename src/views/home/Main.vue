@@ -66,7 +66,7 @@
                   {{ $t('views.main.supply') }}
                 </v-col>
                 <v-col cols="6" class="head_supply">
-                  Pool
+                  Loaner
                 </v-col>
               </v-row>
             </div>
