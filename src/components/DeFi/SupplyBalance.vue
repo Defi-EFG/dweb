@@ -4,9 +4,14 @@
       <span class="balance-label">Supply Balance</span>
       <div class="loaner">
         Loaner: ES1jMgpCNbDcBUdXz1JkJVxJWGkkjxbJB
-        <span class="change-btn">Change</span>
       </div>
-      <div class="balance">${{ currentBalance.toFixed(2) }}</div>
+      <div class="balance" :class="isLiquidate ? 'liquidate' : ''">
+        ${{ currentBalance.toFixed(2) }}
+      </div>
+      <div class="liquid-countdown" v-show="isLiquidate">
+        <span>Counting down 5 blocks to liquidation...</span>
+        <span class="extend-btn">Extend</span>
+      </div>
     </v-card-text>
   </v-card>
 </template>
@@ -16,6 +21,8 @@ import { Vue, Component } from 'vue-property-decorator'
 
 @Component({})
 export default class SupplyBalance extends Vue {
+  isLiquidate = false
+
   currentBalance = 1000
 }
 </script>
@@ -34,7 +41,8 @@ export default class SupplyBalance extends Vue {
   font-size: 38px;
   color: #3fc0db;
   text-align: right;
-  padding: 3.8rem 0 2.5rem 0;
+  padding-top: 3.8rem;
+  padding-bottom: 1rem;
 }
 
 .balance-label {
@@ -43,12 +51,27 @@ export default class SupplyBalance extends Vue {
 }
 
 .loaner {
-  color: #7E7E7E;
+  color: #7e7e7e;
   .change-btn {
     color: white;
     text-decoration: underline;
     cursor: pointer;
   }
+}
+
+.liquid-countdown {
+  display: flex;
+  justify-content: space-between;
+
+  .extend-btn {
+    cursor: pointer;
+    text-decoration: underline;
+    color: #c074f9;
+  }
+}
+
+.liquidate {
+  color: #FF5656;
 }
 </style>
 

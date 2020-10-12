@@ -4,10 +4,13 @@
       <span class="borrow-label">Borrow Balance</span>
       <div class="borrow">${{ borrowBalance.toFixed(2) }}</div>
       <div class="borrow-power">
-        <span class="power-label">Borrow Power</span>
+        <div class="label">
+          <span class="power-label">Borrow Power</span>
+          <span v-if="isLiquidate" class="liquid-label">Liquidation</span>
+        </div>
         <v-progress-linear
           background-color="#1D212E"
-          color="#C074F9"
+          :color="isLiquidate ? '#FF5656' : '#C074F9'"
           height="7"
           class="borrow-bar"
           :rounded="true"
@@ -30,6 +33,7 @@ import { Vue, Component } from 'vue-property-decorator'
 export default class BorrowBalance extends Vue {
   borrowBalance = 200
   maxBorrow = 800
+  isLiquidate = false
 
   calculateBorrow(val: number, max: number) {
     return (val / max) * 100
@@ -61,6 +65,15 @@ export default class BorrowBalance extends Vue {
 
 .borrow-power {
   color: white;
+
+  .label {
+    display: flex;
+    justify-content: space-between;
+
+    .liquid-label {
+      color: #ff5656;
+    }
+  }
 
   .borrow-cap {
     text-align: right;
