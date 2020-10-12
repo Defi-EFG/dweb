@@ -76,11 +76,9 @@ export default class HeaderNavHome extends Vue {
   gotoHome() {
     this.$router.push('/')
   }
-  // gotoDashboard() {
-  //   this.$router.push('defi')
-  // }
   gotoDashboard() {
-    this.$router.push('defi')
+    // this.$router.push('defi')
+    this.dialog = true
   }
   get msg() {
     return this.$t('views.pdf')
@@ -348,6 +346,11 @@ ul {
   .v-btn--icon.v-size--default .v-icon,
   .v-btn--fab.v-size--default .v-icon {
     font-size: 40px;
+  }
+}
+@media only screen and (max-width: 670px) {
+  .color_bg {
+    padding: 4px 15px;
   }
 }
 </style>

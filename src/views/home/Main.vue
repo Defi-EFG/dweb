@@ -58,62 +58,52 @@
     </section>
     <section class="sec_2">
       <v-container>
-        <v-row>
-          <v-col lg="5" md="5" cols="5" class="supply3">
-            <div class="supply supply2">
-              <v-row>
-                <v-col cols="6" class="head_supply head_supply2">
-                  {{ $t('views.main.supply') }}
-                </v-col>
-                <v-col cols="6" class="head_supply">
-                  Loaner
-                </v-col>
-              </v-row>
+        <v-row class="row1">
+          <v-col lg="2" md="2" cols="2">
+            <div class="supply sub_head_supply">
+              {{ $t('views.main.supply') }}
             </div>
           </v-col>
-          <v-col lg="7" md="7" cols="7" class="supply3">
-            <div class="supply">
-              <v-row>
-                <v-col cols="6" class="head_supply head_supply2">
-                  EFG - Total Supply
-                </v-col>
-                <v-col cols="6" class="head_supply">
-                  EFG - Total Borrowed
-                </v-col>
-              </v-row>
+          <v-col lg="3" md="3" cols="4">
+            <div class="supply sub_head_supply">
+              {{ $t('views.main.loaner') }}
+            </div>
+          </v-col>
+          <v-col lg="3" md="3" cols="3">
+            <div class="supply sub_head_supply">
+              {{ $t('views.main.total_supply') }}
+            </div>
+          </v-col>
+          <v-col lg="3" md="3" cols="3">
+            <div class="supply sub_head_supply">
+              {{ $t('views.main.total_borrowed') }}
             </div>
           </v-col>
         </v-row>
         <v-row v-for="(item, i) in items" :key="i" class="row1 roww2">
-          <v-col lg="5" md="5" cols="5" class="supply3">
-            <div class="supply supply2">
-              <v-row>
-                <v-col cols="6" class="margintopimg padding_012">
-                  <img src="@/assets/efg_01.svg" />
-                  <div class="supply_name ">EFG</div>
-                </v-col>
-                <v-col cols="6" class="padding_0123">
-                  <div class=" margintop">
-                    {{ item.Loener }}
-                  </div>
-                </v-col>
-              </v-row>
+          <v-col lg="2" md="2" cols="2">
+            <div class="margintop">
+              <img src="@/assets/efg_01.svg" />
+              EFG
             </div>
           </v-col>
-          <v-col lg="7" md="7" cols="7" class="supply3">
-            <div class="supply">
-              <v-row>
-                <v-col lg="6" md="6" cols="6" class="padding_012">
-                  <div class="color_1 color_size">
-                    {{ item.EFGTotalSupply }}
-                  </div>
-                </v-col>
-                <v-col lg="6" md="6" cols="6" class="padding_012">
-                  <div class="color_2 color_size">
-                    {{ item.EFGTotalBorrowed }}
-                  </div>
-                </v-col>
-              </v-row>
+          <v-col lg="3" md="3" cols="4">
+            <div class="margintop Loener">
+              {{ item.Loener }}
+            </div>
+          </v-col>
+          <v-col lg="3" md="3" cols="3" class="border_left">
+            <div class="margintop color_1 textafter">
+              <span class="color_size"
+                >${{ item.EFGTotalSupply | numberWithCommas({ decimal: 2 }) }}</span
+              >
+            </div>
+          </v-col>
+          <v-col lg="3" md="3" cols="3">
+            <div class="margintop color_2 textafter">
+              <span class="color_size"
+                >${{ item.EFGTotalBorrowed | numberWithCommas({ decimal: 2 }) }}</span
+              >
             </div>
           </v-col>
           <img class="row1_img" src="@/assets/backg_01.svg" />
@@ -130,38 +120,24 @@
           </v-col>
         </v-row>
         <v-row class="row1 roww3">
-          <v-col lg="5" md="5" cols="12">
-            <div class="supply supply2">
-              <v-row>
-                <v-col cols="6">
-                  <img src="@/assets/gpt.svg" />
-                  <div class="supply_name">GPT</div>
-                  <div class="supply_text">{{ $t('views.main.liquidation') }}</div>
-                </v-col>
-                <v-col cols="6">
-                  <div class="supply_button2">
-                    <!-- <a href="delay"> -->
-                    <button disabled>{{ $t('views.main.detail') }}</button>
-                    <!-- </a> -->
-                  </div>
-                  <div class="supply_price">20.0%</div>
-                </v-col>
-              </v-row>
-            </div>
+          <v-col lg="2" md="2" cols="6" class="Staking_dt">
+            <img src="@/assets/gpt.svg" />
+            <div class="supply_name">GPT</div>
+            <div class="supply_text">{{ $t('views.main.liquidation') }}</div>
           </v-col>
-          <v-col lg="7" md="7" cols="12">
-            <div class="supply">
-              <v-row>
-                <v-col cols="12">
-                  <div class="supply_name2">GPT - {{ $t('views.main.available') }}</div>
-                  <div class="supply_price_color color_1">
-                    10,000 GPT
-                  </div>
-                </v-col>
-              </v-row>
+          <v-col lg="3" md="3" cols="6" class="Staking_dt">
+            <div class="supply_button2">
+              <!-- <a href="delay"> -->
+              <button disabled>{{ $t('views.main.detail') }}</button>
+              <!-- </a> -->
             </div>
+            <div class="supply_price">{{ liquidation }}%</div>
           </v-col>
-          <img style="position: absolute; opacity: 0.25;" src="@/assets/backg_02.svg" />
+          <v-col lg="6" md="6" cols="12" class="border_left1 Staking_dt">
+            <div class="supply_name2">GPT - {{ $t('views.main.available') }}</div>
+            <div class="supply_price_color color_1">{{ GPTprice }} GPT</div>
+          </v-col>
+          <img class="bg_gpt" src="@/assets/backg_02.svg" />
         </v-row>
         <v-row style="border-bottom:2px solid #312D36; margin-top:20px"></v-row>
         <v-row>
@@ -170,7 +146,7 @@
           </v-col>
         </v-row>
         <v-row>
-          <v-col cols="12">
+          <v-col cols="12" class="but_div_inline">
             <span class="but_div"
               ><img class="img_text_but" src="@/assets/icon/currency/ecoc.svg" alt="" />
               <div class="text_but">ECOC</div></span
@@ -219,6 +195,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { numberWithCommas } from '@/plugins/filters'
 
 @Component({})
 export default class Main extends Vue {
@@ -227,56 +204,13 @@ export default class Main extends Vue {
   }
   data() {
     return {
+      liquidation: 20.0,
+      GPTprice: 10000,
       items: [
         {
           Loener: 'ES1jMgpCN...JWGkkjxbJB',
-          EFGTotalSupply: '$8,123,456.79',
-          EFGTotalBorrowed: '$4,189,402.65'
-        },
-        {
-          Loener: 'ES1jMgpCN...JWGkkjxbJB',
-          EFGTotalSupply: '$8,123,456.79',
-          EFGTotalBorrowed: '$4,189,402.65'
-        },
-        {
-          Loener: 'ES1jMgpCN...JWGkkjxbJB',
-          EFGTotalSupply: '$8,123,456.79',
-          EFGTotalBorrowed: '$4,189,402.65'
-        },
-        {
-          Loener: 'ES1jMgpCN...JWGkkjxbJB',
-          EFGTotalSupply: '$8,123,456.79',
-          EFGTotalBorrowed: '$4,189,402.65'
-        },
-        {
-          Loener: 'ES1jMgpCN...JWGkkjxbJB',
-          EFGTotalSupply: '$8,123,456.79',
-          EFGTotalBorrowed: '$4,189,402.65'
-        },
-        {
-          Loener: 'ES1jMgpCN...JWGkkjxbJB',
-          EFGTotalSupply: '$8,123,456.79',
-          EFGTotalBorrowed: '$4,189,402.65'
-        },
-        {
-          Loener: 'ES1jMgpCN...JWGkkjxbJB',
-          EFGTotalSupply: '$8,123,456.79',
-          EFGTotalBorrowed: '$4,189,402.65'
-        },
-        {
-          Loener: 'ES1jMgpCN...JWGkkjxbJB',
-          EFGTotalSupply: '$8,123,456.79',
-          EFGTotalBorrowed: '$4,189,402.65'
-        },
-        {
-          Loener: 'ES1jMgpCN...JWGkkjxbJB',
-          EFGTotalSupply: '$8,123,456.79',
-          EFGTotalBorrowed: '$4,189,402.65'
-        },
-        {
-          Loener: 'ES1jMgpCN...JWGkkjxbJB',
-          EFGTotalSupply: '$8,123,456.79',
-          EFGTotalBorrowed: '$4,189,402.65'
+          EFGTotalSupply: 812356446,
+          EFGTotalBorrowed: 812356446
         }
       ]
     }
@@ -381,14 +315,36 @@ body {
   padding: 5px 10px;
   margin-bottom: 5px;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 .sec_2 .roww3 {
   background: #26262c;
+}
+.sec_2 .roww3 .border_left1 {
+  border-left: 2px solid rgb(49, 45, 54);
+}
+.sec_2 .roww3 .Staking_dt {
+  padding-left: 30px;
+  padding-right: 30px;
+}
+.sec_2 .roww3 .bg_gpt {
+  width: 100px;
+  position: absolute;
+  opacity: 0.258;
+}
+.sec_2 .roww3 img {
+  width: 30px;
+  margin-right: 3px;
 }
 .sec_2 img {
   right: 0;
   bottom: 0;
   width: 130px;
+}
+.sub_head_supply {
+  color: #ffffff;
+  padding-left: 20px;
 }
 .head_supply3 {
   padding-left: 40px;
@@ -423,10 +379,22 @@ body {
 }
 .sec_2 .row1 .margintopimg {
   padding-top: 16px;
+  display: flex;
+  color: #ffffff;
+  align-items: center;
 }
 .sec_2 .row1 .margintop {
-  padding-top: 10px;
   color: #ffffff;
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+}
+.sec_2 .row1 .border_left {
+  border-left: 2px solid rgb(49, 45, 54);
+}
+.sec_2 .row1 .margintop img {
+  width: 30px;
+  margin-right: 2px;
 }
 .sec_2 .row1 .row1_img {
   position: absolute;
@@ -517,24 +485,31 @@ body {
   padding: 10px 12px 10px 12px;
 }
 .sec_2 .row1 .color_size {
-  font-size: 25px;
+  font-size: 18px;
 }
 .sec_2 .row1 .color_2 {
   color: rgb(192, 116, 249);
   color: rgb(192, 116, 249);
 }
+.sec_2 .but_div_inline {
+  display: contents;
+}
 .sec_2 .but_div {
   background: #312d36 0% 0% no-repeat padding-box;
   border-radius: 34px;
-  padding: 22px 30px 2px 10px;
   margin-right: 10px;
   color: #ffffff;
+  display: flex;
   transition: 0.5s;
+  align-items: center;
+  padding: 11px;
+  width: 134px;
+  margin-bottom: 5px;
 }
 
 .sec_2 .but_div .img_text_but {
-  width: 30px;
-  height: 30px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
   background-color: aliceblue;
 }
@@ -542,7 +517,6 @@ body {
   display: inline;
   text-align: left;
   letter-spacing: 0px;
-  top: -10px;
   position: relative;
   margin-left: 10px;
 }
@@ -599,7 +573,6 @@ body {
 .sec_1 .social_icon img:hover {
   transform: scale(1.5);
 }
-
 @keyframes img_logo1 {
   0% {
     opacity: 0;
@@ -676,8 +649,43 @@ body {
   .sec_2 .row1 .supply_button2 button {
     padding: 5px 20px;
   }
+  .sec_2 .roww3 .border_left1 {
+    border-top: 2px solid rgb(49, 45, 54);
+    border-left: 0px solid rgb(49, 45, 54);
+  }
+  .sec_2 .row1 .margintop {
+    padding-left: 0px;
+  }
+  .sub_head_supply {
+    padding-left: 10px;
+  }
+  .sec_2 .roww3 .Staking_dt {
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+  .sec_2 .row1 .supply {
+    padding: 0;
+  }
 }
 
+@media only screen and (max-width: 933px) {
+  .sec_2 .row1 .color_size {
+    width: 35px;
+    overflow: hidden;
+    text-overflow: clip;
+    position: relative;
+    z-index: 1;
+  }
+  .sec_2 .row1 .textafter::after {
+    content: 'M';
+    font-size: 18px;
+  }
+  .Loener {
+    width: 35px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+}
 @media only screen and (max-width: 670px) {
   .total_supply .price_text {
     font-size: 30px;
@@ -686,7 +694,8 @@ body {
     text-align: center;
   }
   .sec_1 {
-    padding-top: 100px;
+    padding-top: unset;
+    padding: 100px 14px 0 14px;
   }
   .sec_1 .text_header {
     font-size: 25px;
@@ -704,6 +713,34 @@ body {
   .subtext_head_footer {
     font-size: 16px;
     text-indent: 0;
+  }
+  .img_background {
+    right: 0;
+  }
+  .sec_2 .row1 .supply {
+    padding: 0;
+  }
+  .sub_head_supply {
+    font-size: 13px;
+    padding-left: 20px;
+  }
+  .sec_2 .row1 {
+    padding: 0 2px;
+  }
+  .sec_2 .roww2:hover .row1_img {
+    opacity: 0.25;
+    transition: 0.5s;
+  }
+  .sec_2 .row1 .margintop img {
+    display: none;
+  }
+  .sec_2 .row1 .row1_img {
+    opacity: 0.1;
+    width: 50px;
+  }
+  .sec_2 .but_div .img_text_but {
+    width: 30px;
+    height: 30px;
   }
 }
 </style>
