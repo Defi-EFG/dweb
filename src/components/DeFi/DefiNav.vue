@@ -20,7 +20,7 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component
 export default class DefiNav extends Vue {
   item = 0
-  activeItem = -1
+  activeItem = 0
   items = [
     {
       page: 'wallet',
@@ -40,8 +40,10 @@ export default class DefiNav extends Vue {
   ]
 
   menuSelect(index: number) {
-    this.activeItem = index
-    this.$router.push(`/defi/${this.items[index].page}`)
+    if (index !== this.activeItem) {
+      this.activeItem = index
+      this.$router.push(`/defi/${this.items[index].page}`)
+    }
   }
 }
 </script>
@@ -50,7 +52,7 @@ export default class DefiNav extends Vue {
 .side-navbar {
   background: transparent linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
     padding-box;
-  
+
   margin-right: 12px;
 
   .inner-nav {

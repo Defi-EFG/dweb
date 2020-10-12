@@ -7,7 +7,13 @@
       </v-toolbar-title>
     </v-toolbar>
     <v-card-text class="text-center">
-      <VueQrcode class="qr" :value="address" :options="{ width: 200, height: 200 }"></VueQrcode>
+      <div v-if="!address" class="empty-div"></div>
+      <VueQrcode
+        v-else
+        class="qr"
+        :value="address"
+        :options="{ width: 200, height: 200 }"
+      ></VueQrcode>
       <div class="address-area">
         <p class="mb-1">ECOC Wallet Address:</p>
         <div class="copyable-addr">
@@ -40,6 +46,7 @@ import WalletModule from '@/store/wallet'
 export default class ReceiveToken extends Vue {
   walletStore = getModule(WalletModule)
   showCopy = false
+  showQr = false
 
   copyAddress() {
     const el = document.createElement('textarea')
@@ -56,7 +63,7 @@ export default class ReceiveToken extends Vue {
   }
 
   get address() {
-    return this.walletStore.address || 'loading...'
+    return this.walletStore.address || ''
   }
 }
 </script>
@@ -117,5 +124,15 @@ export default class ReceiveToken extends Vue {
   border-radius: 6px;
   padding: 6px 2rem;
   color: #55e52b;
+}
+
+.empty-div {
+  width: 200px;
+  height: 200px;
+  margin: 3rem;
+  border-radius: 10px;
+  background: #363a4a;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
