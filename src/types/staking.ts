@@ -12,4 +12,11 @@ export interface StakingPlatform {
   staking: number
   timestamp: number
   totalStakedReward: number
+
+  rewardHistory: RewardHistory[]
+}
+
+export interface RewardHistory {
+  amount: number
+  timestamp: number
 }

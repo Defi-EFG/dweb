@@ -135,14 +135,14 @@
           <v-col lg="3" md="3" cols="3" class="border_left">
             <div class="margintop color_1 textafter">
               <span class="color_size"
-                >${{ item.EFGTotalSupply | numberWithCommas({ decimal: 2 }) }}</span
+                >${{ item.EFGTotalSupply}}</span
               >
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="3">
             <div class="margintop color_2 textafter">
               <span class="color_size"
-                >${{ item.EFGTotalBorrowed | numberWithCommas({ decimal: 2 }) }}</span
+                >${{ item.EFGTotalBorrowed}}</span
               >
             </div>
           </v-col>
@@ -237,7 +237,6 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { numberWithCommas } from '@/plugins/filters'
 
 @Component({})
 export default class Main extends Vue {

@@ -10,9 +10,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 import HeaderNavHome from '@/components/HeaderNavHome.vue'
 import Footer from '@/components/Footer.vue'
-import { initFilters } from '@/plugins/filters'
-
-initFilters()
 
 @Component({
   components: {

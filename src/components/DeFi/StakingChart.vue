@@ -5,8 +5,8 @@
         <canvas id="myChart" class="token-logo"></canvas>
       </div>
       <div class="token-detail">
-        <p class="mb-3">{{ token }} - Available (Total: {{ max }})</p>
-        <div class="value">{{ currentValue }} {{ token }}</div>
+        <p class="mb-3">{{ currencyName }} - Available (Total: {{ total }})</p>
+        <div class="value">{{ available }} {{ currencyName }}</div>
       </div>
     </v-card-text>
   </v-card>
@@ -19,12 +19,12 @@ import Chart from 'chart.js'
 
 @Component({})
 export default class StakingChart extends Vue {
-  token = 'GPT'
-  max = 10000
-  currentValue = 8405.01486564
+  @Prop({ default: '###' }) readonly currencyName!: string
+  @Prop({ default: 10000 }) readonly total!: number
+  @Prop({ default: 0 }) readonly available!: number
 
   mounted() {
-    this.renderChart(this.ctx, this.max, this.currentValue)
+    this.renderChart(this.ctx, this.total, this.available)
   }
 
   get ctx() {

@@ -2,14 +2,14 @@
   <v-card dark color="#2e3344">
     <v-card-text class="wrapper">
       <div class="total-reward">
-        <p class="label">Total Staked Reward</p>
-        <p class="value">5.15349650 GPT</p>
+        <p class="label">Your Staked Reward</p>
+        <p class="value">{{ stakedReward }} {{ currencyName }}</p>
       </div>
 
       <div class="d-amount">
-        <span>Deposited amount</span>
+        <span>Withdraw Available</span>
         <v-spacer></v-spacer>
-        <span>{{ depositedAmount.toFixed(2) }} GPT</span>
+        <span>{{ withdrawAvailable.toFixed(2) }} {{ currencyName }}</span>
       </div>
 
       <v-divider></v-divider>
@@ -17,17 +17,16 @@
       <p class="reward-label">Reward Withdrawal</p>
 
       <div class="minimum-w">
-        <span class="value">Minimum Withdrawal: 1.00 GPT</span>
         <v-spacer></v-spacer>
-        <span class="all" @click="fillAmount(depositedAmount)">Withdraw All</span>
+        <span class="all" @click="fillAmount(withdrawAvailable)">Withdraw All</span>
       </div>
 
       <v-text-field
         class="staked-amount"
         placeholder="0"
         prefix="Amount"
-        suffix="GPT"
-        v-model="rewardAmount"
+        :suffix="currencyName"
+        v-model="withdrawAmount"
         single-line
         solo
         hide-details="true"
@@ -39,15 +38,26 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import { CurrencyInfo } from '@/types/currency'
 
 @Component({})
 export default class StakedReward extends Vue {
-  rewardAmount: string | number = ''
-  depositedAmount = 500
+  @Prop({ default: 0 }) readonly stakedReward!: number
+  @Prop({ default: {} }) readonly rewardCurrency!: CurrencyInfo
+
+  withdrawAmount: string | number = ''
+
+  get currencyName() {
+    return this.rewardCurrency.name
+  }
+
+  get withdrawAvailable() {
+    return this.stakedReward
+  }
 
   fillAmount(amount: number) {
-    this.rewardAmount = amount
+    this.withdrawAmount = amount
   }
 }
 </script>
