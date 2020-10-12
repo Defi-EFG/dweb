@@ -10,7 +10,7 @@
         :class="{ selected: index === activeItem }"
         @click="selectCurrency(index)"
       >
-        <img :class="`token-mark-${currency.name}`" :src="currency.style.mark" />
+        <img :class="`token-mark ${currency.name}`" :src="currency.style.mark" />
         <v-card-text class="token-text">
           <v-row>
             <v-col cols="12">
@@ -48,7 +48,8 @@ import * as constants from '@/constants'
 })
 export default class TokenList extends Vue {
   walletStore = getModule(WalletModule)
-  activeItem = -1
+  // active on first item
+  activeItem = 0
 
   get currencies() {
     console.log(this.walletStore.currencies)
@@ -90,6 +91,13 @@ export default class TokenList extends Vue {
         type: '',
         balance: '23.622',
         style: constants.KNOWN_CURRENCY['ETH'],
+        price: '1'
+      },
+      {
+        name: 'DEFAULT',
+        type: '',
+        balance: '2231.3',
+        style: constants.KNOWN_CURRENCY['DEFAULT'],
         price: '1'
       }
     ]
@@ -212,7 +220,7 @@ export default class TokenList extends Vue {
 
 .card-grad-border {
   height: fit-content;
-  background: transparent linear-gradient(183deg, #6212c9 0%, #9023bf 100%) 0% 0% no-repeat
+  background: transparent linear-gradient(183deg, #646464 0%, #474747 100%) 0% 0% no-repeat
     padding-box;
   padding-left: 10px;
   border-radius: 6px;
@@ -242,32 +250,36 @@ export default class TokenList extends Vue {
 }
 
 .token-mark {
-  &-ECOC {
+  position: absolute;
+  bottom: 0.7rem;
+  left: 1rem;
+
+  &.ECOC {
     position: absolute;
     bottom: 1rem;
     left: 0;
   }
 
-  &-EFG {
+  &.EFG {
     position: absolute;
     left: 0;
     bottom: 0;
   }
 
-  &-BCST,
-  &-GPT {
+  &.BCST,
+  &.GPT {
     position: absolute;
     bottom: 1rem;
     left: 1rem;
   }
 
-  &-USDT {
+  &.USDT {
     position: absolute;
     bottom: 1rem;
     left: 1rem;
   }
 
-  &-ETH {
+  &.ETH {
     position: absolute;
     bottom: 1rem;
     left: 2rem;

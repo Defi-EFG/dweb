@@ -76,7 +76,7 @@ export default class Wallet extends Vue {
 
 <style lang="scss" scoped>
 .receive-send-wrapper {
-  background: transparent linear-gradient(268deg, #6212c9 0%, #9023bf 100%) 0% 0% no-repeat
+  background: transparent linear-gradient(268deg, #646464 0%, #474747 100%) 0% 0% no-repeat
     padding-box;
 }
 

@@ -1,5 +1,5 @@
 <template>
-  <v-card dark color="#1D212E">
+  <v-card dark color="#1D212E" class="borrow-card">
     <v-card-text class="wrapper">
       <p class="action-label">Borrow</p>
       <div class="wallet-balance mb-2">
@@ -155,6 +155,10 @@ export default class BorrowCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.borrow-card {
+  width: inherit;
+}
+
 .wrapper {
   text-align: left;
   padding: 2rem;

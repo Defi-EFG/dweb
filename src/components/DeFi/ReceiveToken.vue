@@ -42,6 +42,12 @@ export default class ReceiveToken extends Vue {
   showCopy = false
 
   copyAddress() {
+    const el = document.createElement('textarea')
+    el.value = this.address
+    document.body.appendChild(el)
+    el.select()
+    document.execCommand('copy')
+    document.body.removeChild(el)
     this.showCopy = true
 
     setTimeout(() => {
@@ -57,7 +63,7 @@ export default class ReceiveToken extends Vue {
 
 <style lang="scss" scoped>
 .receive-token-card {
-  width: 100%
+  width: 100%;
 }
 
 .receive-head {
@@ -112,5 +118,4 @@ export default class ReceiveToken extends Vue {
   padding: 6px 2rem;
   color: #55e52b;
 }
-
 </style>

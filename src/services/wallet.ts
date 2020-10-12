@@ -89,7 +89,8 @@ const getEcrc20Balance = async (address: string) => {
     currencies.push({
       name: token.contract.symbol,
       type: constants.TYPE_ECRC20,
-      style: constants.KNOWN_CURRENCY[token.contract.symbol],
+      style: Object.prototype.hasOwnProperty.call(constants.KNOWN_CURRENCY, token.contract.symbol) ?
+        constants.KNOWN_CURRENCY[token.contract.symbol] : constants.KNOWN_CURRENCY['DEFAULT'],
       balance: utils.toDecimals(token.amount, token.contract.decimals),
       tokenInfo: {
         name: token.contract.name,

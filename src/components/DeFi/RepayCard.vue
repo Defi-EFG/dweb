@@ -1,5 +1,5 @@
 <template>
-  <v-card dark color="#1D212E">
+  <v-card dark color="#1D212E" class="repay-card">
     <v-card-text class="wrapper">
       <p class="action-label">Repay</p>
       <div class="wallet-balance mb-2">
@@ -139,6 +139,10 @@ export default class RepayCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.repay-card {
+  width: inherit;
+}
+
 .wrapper {
   text-align: left;
   padding: 2rem;

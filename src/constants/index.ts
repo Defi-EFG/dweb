@@ -38,4 +38,8 @@ export const KNOWN_CURRENCY = {
     icon: require('@/assets/icon/currency/gpt.svg'),
     mark: require('@/assets/wallet-token/gpt.svg')
   } as Style,
+  DEFAULT: {
+    icon: require('@/assets/icon/currency/default.svg'),
+    mark: require('@/assets/wallet-token/default.svg')
+  } as Style
 } as CurrencyStyle
