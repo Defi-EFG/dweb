@@ -7,11 +7,51 @@
           <v-col class="12">
             <img src="@/assets/efg_logo.svg" class="efg-logo" />
             <div class="text_header">{{ $t('views.main.name') }}</div>
-            <div class="text_header_sub">
-              {{ $t('views.main.sub_name_1') }}
+            <div class="select_detailmain img_logo1">
+              <section class="sec_doc1" name="doc">
+                <div class="sibar_dc">
+                  <a
+                    @click="onClickActive('EFG')"
+                    :class="active == 'EFG' ? 'active' : undefined"
+                    >{{ $t('views.main.sub_name_efg') }}</a
+                  >
+                  <a
+                    @click="onClickActive('GTP')"
+                    :class="active == 'GTP' ? 'active' : undefined"
+                    >{{ $t('views.main.sub_name_gpt') }}</a
+                  >
+                  <a
+                    @click="onClickActive('efgandgpt')"
+                    :class="active == 'efgandgpt' ? 'active' : undefined"
+                    >{{ $t('views.main.sub_name_efgandgpt') }}</a
+                  >
+                  <a
+                    @click="onClickActive('work')"
+                    :class="active == 'work' ? 'active' : undefined"
+                    >{{ $t('views.main.sub_name_work') }}</a
+                  >
+                </div>
+              </section>
             </div>
-            <div class="text_header_sub">
-              {{ $t('views.main.sub_name_2') }}
+            <div class="open" :class="active == 'EFG' ? 'open_active' : undefined">
+              <div class="text_header_sub">
+                {{ $t('views.main.sub_name_1') }}
+              </div>
+            </div>
+            <div class="open" :class="active == 'GTP' ? 'open_active' : undefined">
+              <div class="text_header_sub">
+                {{ $t('views.main.sub_name_2') }}
+              </div>
+            </div>
+            <div class="open" :class="active == 'efgandgpt' ? 'open_active' : undefined">
+              <div class="text_header_sub">
+                {{ $t('views.main.sub_name_3') }}
+              </div>
+            </div>
+            <div class="open" :class="active == 'work' ? 'open_active' : undefined">
+              <div class="text_header_sub">
+                {{ $t('views.main.sub_name_4') }}
+              </div>
             </div>
             <div class="social_icon">
               <a href="https://t.me/EFGtoken" target="_blank">
@@ -123,7 +163,8 @@
           <v-col lg="2" md="2" cols="6" class="Staking_dt">
             <img src="@/assets/gpt.svg" />
             <div class="supply_name">GPT</div>
-            <div class="supply_text">{{ $t('views.main.liquidation') }}</div>
+            <div class="supply_text">{{ $t('views.main.deposit') }}</div>
+            <div class="supply_text">{{ $t('views.main.estimated') }}</div>
           </v-col>
           <v-col lg="3" md="3" cols="6" class="Staking_dt">
             <div class="supply_button2">
@@ -131,6 +172,7 @@
               <button disabled>{{ $t('views.main.detail') }}</button>
               <!-- </a> -->
             </div>
+            <div class="supply_price">EFG</div>
             <div class="supply_price">{{ liquidation }}%</div>
           </v-col>
           <v-col lg="6" md="6" cols="12" class="border_left1 Staking_dt">
@@ -202,23 +244,42 @@ export default class Main extends Vue {
   get msg() {
     return this.$t('views.mainslider')
   }
+  active = 'EFG'
+  name = 'EFG'
   data() {
     return {
       liquidation: 20.0,
       GPTprice: 10000,
       items: [
         {
-          Loener: 'ES1jMgpCN...JWGkkjxbJB',
-          EFGTotalSupply: 812356446,
-          EFGTotalBorrowed: 812356446
+          Loener: '...',
+          EFGTotalSupply: 0,
+          EFGTotalBorrowed: 0
+        },
+        {
+          Loener: '...',
+          EFGTotalSupply: 0,
+          EFGTotalBorrowed: 0
         }
       ]
     }
+  }
+  onClickActive(name: string) {
+    this.active = name
+    this.name = name
   }
 }
 </script>
 
 <style scoped>
+.open {
+  display: none;
+  animation: text_header_sub 2s forwards;
+  height: 230px;
+}
+.open_active {
+  display: block !important;
+}
 body {
   background-attachment: fixed;
 }
@@ -573,6 +634,22 @@ body {
 .sec_1 .social_icon img:hover {
   transform: scale(1.5);
 }
+.select_detailmain {
+  padding: 20px 0;
+}
+.select_detailmain a {
+  color: #c7bebe;
+  padding: 0 12px;
+  transition: 0.3s;
+  font-weight: bold;
+}
+.select_detailmain a:hover {
+  color: #c074f9;
+}
+.select_detailmain a.active {
+  color: #c074f9;
+  border-bottom: 2px solid #c074f9;
+}
 @keyframes img_logo1 {
   0% {
     opacity: 0;
@@ -585,7 +662,7 @@ body {
 }
 @keyframes text_header_sub {
   0% {
-    opacity: 20;
+    opacity: 0.8;
     top: 100px;
   }
   100% {
