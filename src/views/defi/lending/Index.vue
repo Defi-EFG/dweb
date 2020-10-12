@@ -6,7 +6,7 @@
         <div class="ml-1 mr-1"></div>
         <BorrowBalance></BorrowBalance>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pr-0">
         <LendingActivity></LendingActivity>
       </v-col>
     </v-row>
@@ -44,7 +44,7 @@
           </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4" class="content pb-0">
+      <v-col cols="4" class="content pb-0 pr-0">
         <v-row>
           <v-col cols="12" class="pt-0 pb-0">
             <CollateralToken @switchToCollateral="toCollateralToken"></CollateralToken>

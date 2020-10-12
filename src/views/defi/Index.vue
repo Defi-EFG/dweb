@@ -47,7 +47,6 @@ export default class Home extends Vue {}
   position: relative;
   flex: 1;
   align-self: center;
-  // justify-content: center;
   .row {
     width: 100%;
   }
@@ -63,6 +62,12 @@ export default class Home extends Vue {}
 
 .address-bar {
   text-align: right;
+}
+
+@media (max-width: 1440px) {
+  .content {
+    margin: 0 20px;
+  }
 }
 </style>
 

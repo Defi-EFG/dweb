@@ -4,7 +4,7 @@
       <v-col cols="8" class="content">
         <token-list></token-list>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pr-0">
         <contact-address></contact-address>
       </v-col>
     </v-row>
@@ -15,7 +15,10 @@
             <v-toolbar-title class="token-symbol">
               <img
                 v-if="selectedCurrencyName"
-                :src="require(`@/assets/icon/vector/${selectedCurrencyName}.svg`)"
+                :src="
+                  require(`@/assets/icon/vector/${selectedCurrencyName}.svg` ||
+                    `@/assets/icon/vector/default.svg`)
+                "
               />
               <span>{{ selectedCurrencyName }}</span>
             </v-toolbar-title>
@@ -31,7 +34,7 @@
           </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4" class="content pb-0">
+      <v-col cols="4" class="content pb-0 pr-0">
         <transaction-history :page="'wallet'"></transaction-history>
       </v-col>
     </v-row>

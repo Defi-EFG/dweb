@@ -3,7 +3,7 @@
     <v-card-text class="wrapper">
       <p class="action-label">Collateral</p>
       <div class="wallet-balance mb-2">
-        <span>Wallet Balance:</span>
+        <span class="text-left">Wallet Balance:</span>
         <v-spacer></v-spacer>
         <span class="balance" @click="fillAmount(balance)"
           >{{ balance.toFixed(2) }} {{ token }}</span
@@ -32,18 +32,18 @@
         ></v-progress-linear>
       </div>
       <div class="borrow-used">
-        <div>Borrow Power Used</div>
+        <div class="text-left">Borrow Power Used</div>
         <v-spacer></v-spacer>
-        <div>
+        <div class="text-right">
           <span>{{ bpUsed.toFixed(1) }}%</span>
           &rarr;
           <span class="after-calculated">{{ calculateBPUsed(collateralAmount).toFixed(1) }}%</span>
         </div>
       </div>
       <div class="borrow-total mt-1 mb-3">
-        <div>Total Borrow Power</div>
+        <div class="text-left">Total Borrow Power</div>
         <v-spacer></v-spacer>
-        <div>
+        <div class="text-right">
           <span>$800.00</span>
           &rarr;
           <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
@@ -156,6 +156,7 @@ export default class Collateral extends Vue {
   .balance {
     text-decoration: underline;
     cursor: pointer;
+    text-align: right;
   }
 }
 

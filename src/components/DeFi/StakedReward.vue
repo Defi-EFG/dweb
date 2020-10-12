@@ -9,7 +9,7 @@
       <div class="d-amount">
         <span>Deposited amount</span>
         <v-spacer></v-spacer>
-        <span>{{ depositedAmount.toFixed(2) }} GPT</span>
+        <span class="text-right">{{ depositedAmount.toFixed(2) }} GPT</span>
       </div>
 
       <v-divider></v-divider>
@@ -79,6 +79,7 @@ export default class StakedReward extends Vue {
   display: flex;
   padding: 13px 10px;
   .value {
+    text-align: left;
     opacity: 0.7;
   }
 
@@ -86,6 +87,7 @@ export default class StakedReward extends Vue {
     text-decoration: underline;
     cursor: pointer;
     color: white;
+    text-align: right;
   }
 }
 

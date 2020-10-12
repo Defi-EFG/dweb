@@ -16,7 +16,7 @@
             <div class="total-balance">
               <span>TOTAL BALANCE</span>
               <v-spacer></v-spacer>
-              <span>{{ totalBalance.toFixed(2) }} EFG</span>
+              <span class="text-right">{{ totalBalance.toFixed(2) }} EFG</span>
             </div>
 
             <div class="minimum-d">
@@ -149,6 +149,7 @@ export default class DepositWithdraw extends Vue {
     display: flex;
     padding: 13px 10px;
     .value {
+      text-align: left;
       opacity: 0.7;
     }
 
@@ -156,6 +157,7 @@ export default class DepositWithdraw extends Vue {
       text-decoration: underline;
       cursor: pointer;
       color: white;
+      text-align: right;
     }
   }
 

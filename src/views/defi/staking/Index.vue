@@ -6,7 +6,7 @@
         <div class="ml-1 mr-1"></div>
         <StakingChart></StakingChart>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pr-0">
         <TransactionHistory :page="'staking'"></TransactionHistory>
       </v-col>
     </v-row>
@@ -30,7 +30,7 @@
           </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pr-0">
         <RewardHistory></RewardHistory>
       </v-col>
     </v-row>

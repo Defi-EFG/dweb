@@ -32,18 +32,18 @@
         ></v-progress-linear>
       </div>
       <div class="borrow-used">
-        <div>Borrow Power Used</div>
+        <div class="text-left">Borrow Power Used</div>
         <v-spacer></v-spacer>
-        <div>
+        <div class="text-right">
           <span>25.0%</span>
           &rarr;
           <span class="after-calculated">{{ calculateBPUsed(withdrawValue).toFixed(1) }}%</span>
         </div>
       </div>
       <div class="borrow-total mt-1 mb-3">
-        <div>Total Borrow Power</div>
+        <div class="text-left">Total Borrow Power</div>
         <v-spacer></v-spacer>
-        <div>
+        <div class="text-right">
           <span>$800.00</span>
           &rarr;
           <span class="after-calculated">${{ calculateTotalBP(withdrawValue).toFixed(2) }}</span>
@@ -128,7 +128,6 @@ export default class Withdraw extends Vue {
     }
     return isEnough && isValidAmount
   }
-
 }
 </script>
 
@@ -156,6 +155,7 @@ export default class Withdraw extends Vue {
   .balance {
     text-decoration: underline;
     cursor: pointer;
+    text-align: right;
   }
 }
 
