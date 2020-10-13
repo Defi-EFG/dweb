@@ -37,9 +37,6 @@
                           $t('views.titles.dashboard')
                         }}</v-btn>
                       </li>
-                      <!-- <li class="li_noberder">
-                        <v-btn outlined small @click="gotoDashboard">Dashboard</v-btn>
-                      </li> -->
                     </ul>
                   </div>
                 </v-list-item>
@@ -73,8 +70,8 @@ export default class HeaderNavHome extends Vue {
     this.$router.push('/')
   }
   gotoDashboard() {
-    // this.$router.push('defi')
-    this.dialog = true
+    this.$router.push('defi')
+    //this.dialog = true
   }
   get msg() {
     return this.$t('views.pdf')

@@ -1,25 +1,4 @@
 <template>
-<<<<<<< HEAD
-  <div id="nav">
-    <v-card width="219" class="drawer-container">
-      <v-navigation-drawer class="defi-drawer" dark floating permanent>
-        <v-list nav>
-          <v-list-item-group v-model="item" color="primary">
-            <v-list-item v-for="(item, i) in items" :key="i" @click="goto(item.text)">
-              <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-navigation-drawer>
-    </v-card>
-  </div>
-=======
   <v-card dark class="side-navbar">
     <v-card-text class="inner-nav">
       <div v-for="(item, index) in items" :key="index">
@@ -33,7 +12,6 @@
       </div>
     </v-card-text>
   </v-card>
->>>>>>> 137c6d2faaf5a7fa48e5cc7379e8ed2f27d68267
 </template>
 
 <script lang="ts">
@@ -60,15 +38,6 @@ export default class DefiNav extends Vue {
       iconClicked: require('@/assets/icon/staking.svg')
     }
   ]
-<<<<<<< HEAD
-
-  goto(page: string) {
-    this.$router.push(`/defi/${page}`).catch(console.log)
-  }
-}
-</script>
-=======
->>>>>>> 137c6d2faaf5a7fa48e5cc7379e8ed2f27d68267
 
   mounted() {
     const currentMenu = this.getCurrentPageMenu(this.pageParams)

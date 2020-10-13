@@ -213,7 +213,7 @@
               <div class="text_but">ETH</div></span
             >
             <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/TRON .svg" alt="" />
+              ><img class="img_text_but not_it" src="@/assets/TRON.svg" alt="" />
               <div class="text_but">TRON</div></span
             >
             <span class="but_div not_it"
@@ -224,8 +224,8 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <v-carousel class="efg-slider" hide-delimiters>
-              <v-carousel-item v-for="(item, i) in items" :key="i">
+            <v-carousel hide-delimiters class="efg-slider">
+              <v-carousel-item v-for="(item, i) in msg" :key="i">
                 <v-row class="fill-height" align="center" justify="center">
                   <v-col lg="3" md="3" cols="12">
                     <div class="img_footer">
@@ -243,9 +243,6 @@
         </v-row>
       </v-container>
     </section>
-    <v-dialog v-model="dialog" max-width="500">
-      <img class="img" src="@/assets/underconstruction.svg" alt="" />
-    </v-dialog>
   </div>
 </template>
 
@@ -257,30 +254,31 @@ export default class Main extends Vue {
   get msg() {
     return this.$t('views.mainslider')
   }
+
   active = 'EFG'
   name = 'EFG'
-  data() {
-    return {
-      liquidation: 20.0,
-      GPTprice: '10,000',
-      items: [
-        {
-          Loener: '...',
-          EFGTotalSupply: 0,
-          EFGTotalBorrowed: 0
-        },
-        {
-          Loener: '...',
-          EFGTotalSupply: 0,
-          EFGTotalBorrowed: 0
-        }
-      ]
+
+  liquidation = 20.0
+  GPTprice = '10,000'
+
+  items = [
+    {
+      Loener: '...',
+      EFGTotalSupply: 0,
+      EFGTotalBorrowed: 0
+    },
+    {
+      Loener: '...',
+      EFGTotalSupply: 0,
+      EFGTotalBorrowed: 0
     }
-  }
+  ]
+
   onClickActive(name: string) {
     this.active = name
     this.name = name
   }
+
   readmore(name: string) {
     this.active = name
     this.name = name

@@ -2,13 +2,8 @@
   <v-card class="mx-auto sl-card" dark>
     <v-toolbar class="sl-header" flat dense>
       <v-toolbar-title>
-<<<<<<< HEAD
-        <v-icon class="mr-2">mdi-database</v-icon>
-        <span>Staking</span>
-=======
         <v-icon class="head-icon">mdi-database</v-icon>
         <span>Staking List</span>
->>>>>>> 137c6d2faaf5a7fa48e5cc7379e8ed2f27d68267
       </v-toolbar-title>
     </v-toolbar>
 
