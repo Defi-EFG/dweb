@@ -411,7 +411,7 @@ body {
   border-left: 2px solid rgb(49, 45, 54);
 }
 .sec_2 .roww3 .Staking_dt {
-  padding-left: 30px;
+  padding-left: 35px;
   padding-right: 30px;
 }
 .sec_2 .roww3 .bg_gpt {
