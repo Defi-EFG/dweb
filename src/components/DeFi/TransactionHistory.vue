@@ -2,7 +2,7 @@
   <v-card class="mx-auto tx-history" dark color="#222738">
     <v-toolbar class="tx-history-head" flat dense>
       <v-toolbar-title>
-        <v-icon class="mr-2">mdi-clock</v-icon>
+        <v-icon class="head-icon">mdi-clock</v-icon>
         <span>Transaction History</span>
       </v-toolbar-title>
     </v-toolbar>
@@ -146,7 +146,12 @@ export default class TransactionHistory extends Vue {
     padding-box;
 
   span {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .head-icon {
+    font-size: 20px;
+    margin-right: 8px;
   }
 }
 
@@ -176,7 +181,7 @@ export default class TransactionHistory extends Vue {
 }
 
 .staking {
-  height: 240px;
+  height: 217px;
   overflow: auto;
 
   &::-webkit-scrollbar {

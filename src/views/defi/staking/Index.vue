@@ -10,12 +10,12 @@
           :available="available"
         ></StakingChart>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pr-0">
         <TransactionHistory :page="'staking'"></TransactionHistory>
       </v-col>
     </v-row>
     <v-row class="content-wrapper">
-      <v-col cols="8" class="content">
+      <v-col cols="8" class="content pb-0">
         <v-card dark color="#222738" class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
@@ -23,16 +23,15 @@
               <span>{{ stakingCurrency.name }}</span>
             </v-toolbar-title>
           </v-toolbar>
-
-          <v-row>
-            <v-col cols="6" class="pr-1">
+          <v-row class="content-wrapper">
+            <v-col cols="6" class="inner-content pr-1">
               <DepositWithdraw
                 :balance="stakingBalance"
                 :stakingAmount="staking"
                 :stakingCurrency="stakingCurrency"
               ></DepositWithdraw>
             </v-col>
-            <v-col cols="6" class="pl-1">
+            <v-col cols="6" class="inner-content pl-1">
               <StakedReward
                 :stakedReward="totalStakedReward"
                 :rewardCurrency="rewardCurrency"
@@ -41,7 +40,7 @@
           </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pr-0">
         <RewardHistory
           :rewardList="rewardHistory"
           :rewardCurrencyName="rewardCurrency.name"
@@ -59,7 +58,6 @@ import StakingModule from '@/store/staking'
 
 import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
 import StakingList from '@/components/DeFi/StakingList.vue'
-import LendingActivity from '@/components/DeFi/LendingActivity.vue'
 import StakingChart from '@/components/DeFi/StakingChart.vue'
 import DepositWithdraw from '@/components/DeFi/DepositWithdraw.vue'
 import StakedReward from '@/components/DeFi/StakedReward.vue'
@@ -69,7 +67,6 @@ import RewardHistory from '@/components/DeFi/RewardHistory.vue'
   components: {
     TransactionHistory,
     StakingList,
-    LendingActivity,
     StakingChart,
     DepositWithdraw,
     StakedReward,

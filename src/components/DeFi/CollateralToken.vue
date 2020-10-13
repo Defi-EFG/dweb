@@ -25,8 +25,9 @@
         <v-col cols="5" class="balance">
           <span>{{ item.value.toFixed(2) }} {{ item.token }}</span>
         </v-col>
-        <v-col cols="3" class="activate">
-          <v-switch color="#060606" :hide-details="true" inset v-model="item.activated"></v-switch>
+        <v-col cols="3" class="collateral">
+          <div class="collateral-status" :class="item.activated ? 'activated' : ''"></div>
+          <!-- <v-switch color="#060606" :hide-details="true" inset v-model="item.activated"></v-switch> -->
         </v-col>
       </v-row>
     </v-card-text>
@@ -68,8 +69,12 @@ export default class CollateralToken extends Vue {
     padding-box;
 
   span {
-    font-size: 18px;
+    font-size: 16px;
   }
+}
+
+.collateral-token {
+  height: 100%;
 }
 
 .collateral-item {
@@ -99,8 +104,8 @@ export default class CollateralToken extends Vue {
     }
   }
 
-  .activate {
-    text-align: center;
+  .collateral {
+    text-align: -webkit-center;
   }
 }
 
@@ -112,11 +117,23 @@ export default class CollateralToken extends Vue {
 .supply-item:nth-last-child(1) {
   margin-bottom: 0;
 }
+
+.collateral-status {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  border: 6px solid #212637;
+  background-color: #afb1b7;
+}
+
+.activated {
+  background-color: #c074f9 !important;
+}
 </style>
 
 <style lang="scss">
 .collateral-content {
-  height: 220px;
+  height: 230px;
   overflow: auto;
   .row {
     margin-left: 0;

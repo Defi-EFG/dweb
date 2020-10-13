@@ -1,13 +1,19 @@
 <template>
-  <v-card class="mx-auto" dark color="#1D212E">
+  <v-card class="receive-token-card" dark color="#1D212E">
     <v-toolbar class="receive-head" flat dense>
       <v-toolbar-title>
-        <v-icon class="mr-2">mdi-arrow-down-circle-outline</v-icon>
+        <v-icon class="head-icon">mdi-arrow-down-circle-outline</v-icon>
         <span>Receive</span>
       </v-toolbar-title>
     </v-toolbar>
     <v-card-text class="text-center">
-      <VueQrcode class="qr" :value="address" :options="{ width: 180, height: 180 }"></VueQrcode>
+      <div v-if="!address" class="empty-div"></div>
+      <VueQrcode
+        v-else
+        class="qr"
+        :value="address"
+        :options="{ width: 200, height: 200 }"
+      ></VueQrcode>
       <div class="address-area">
         <p class="mb-1">ECOC Wallet Address:</p>
         <div class="copyable-addr">
@@ -17,8 +23,10 @@
           </v-btn>
         </div>
       </div>
-      <div class="copy-message">
-        <div class="copied" v-if="showCopy">Copied!</div>
+      <div class="copy-message ">
+        <transition name="fade" mode="out-in">
+          <div class="copied" v-if="showCopy">Copied!</div>
+        </transition>
       </div>
     </v-card-text>
   </v-card>
@@ -38,8 +46,15 @@ import WalletModule from '@/store/wallet'
 export default class ReceiveToken extends Vue {
   walletStore = getModule(WalletModule)
   showCopy = false
+  showQr = false
 
   copyAddress() {
+    const el = document.createElement('textarea')
+    el.value = this.address
+    document.body.appendChild(el)
+    el.select()
+    document.execCommand('copy')
+    document.body.removeChild(el)
     this.showCopy = true
 
     setTimeout(() => {
@@ -48,23 +63,32 @@ export default class ReceiveToken extends Vue {
   }
 
   get address() {
-    return this.walletStore.address || 'loading...'
+    return this.walletStore.address || ''
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.receive-token-card {
+  width: 100%;
+}
+
 .receive-head {
   background: transparent linear-gradient(270deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
     padding-box;
 
   span {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .head-icon {
+    font-size: 20px;
+    margin-right: 8px;
   }
 }
 
 .qr {
-  margin-top: 1.2rem;
+  margin: 2.78rem;
   border-radius: 10px;
 }
 
@@ -78,7 +102,7 @@ export default class ReceiveToken extends Vue {
 }
 
 .copyable-addr {
-  padding: 1rem;
+  padding: 12px 12px 6px 12px;
   background: #363a4a;
   border-radius: 5px;
   display: flex;
@@ -100,5 +124,15 @@ export default class ReceiveToken extends Vue {
   border-radius: 6px;
   padding: 6px 2rem;
   color: #55e52b;
+}
+
+.empty-div {
+  width: 200px;
+  height: 200px;
+  margin: 3rem;
+  border-radius: 10px;
+  background: #363a4a;
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>

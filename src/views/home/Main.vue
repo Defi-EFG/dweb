@@ -224,8 +224,8 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <v-carousel hide-delimiters class="efg-slider">
-              <v-carousel-item v-for="(item, i) in msg" :key="i">
+            <v-carousel class="efg-slider" hide-delimiters>
+              <v-carousel-item v-for="(item, i) in items" :key="i">
                 <v-row class="fill-height" align="center" justify="center">
                   <v-col lg="3" md="3" cols="12">
                     <div class="img_footer">
@@ -243,6 +243,9 @@
         </v-row>
       </v-container>
     </section>
+    <v-dialog v-model="dialog" max-width="500">
+      <img class="img" src="@/assets/underconstruction.svg" alt="" />
+    </v-dialog>
   </div>
 </template>
 
@@ -851,23 +854,12 @@ body {
 .efg-slider {
   .v-window__prev {
     left: auto !important;
-    right: 90px !important;
-    margin-top: 100px !important;
+    margin-top: 9rem;
+    right: 9rem;
   }
+
   .v-window__next {
-    margin-top: 100px !important;
-  }
-}
-@media only screen and (max-width: 960px) {
-  .efg-slider {
-    .v-window__prev {
-      left: 0 !important;
-      right: unset !important;
-      margin-top: unset !important;
-    }
-    .v-window__next {
-      margin-top: unset !important;
-    }
+    margin-top: 9rem;
   }
 }
 </style>
