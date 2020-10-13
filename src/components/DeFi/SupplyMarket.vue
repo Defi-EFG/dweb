@@ -2,7 +2,7 @@
   <v-card class="mx-auto market-token" color="#222738" dark>
     <v-toolbar class="market-token-head" flat dense>
       <v-toolbar-title>
-        <span>Supply Market</span>
+        <span>Borrow</span>
       </v-toolbar-title>
     </v-toolbar>
 
@@ -15,19 +15,19 @@
       </v-row>
       <v-row
         class="market-item"
-        v-for="(item, index) in supplyList"
+        v-for="(item, index) in borrowList"
         :key="index"
-        @click="switchBorrow(item.token)"
+        @click="switchBorrow(item.currency)"
       >
         <v-col cols="3" class="assets">
-          <img :src="require(`@/assets/icon/currency/${item.token.toLowerCase()}.svg`)" />
-          <span>{{ item.token }}</span>
+          <img :src="item.currency.style.icon" />
+          <span>{{ item.currency.name }}</span>
         </v-col>
         <v-col cols="3" class="apy">
           <span>{{ item.apy }}%</span>
         </v-col>
         <v-col cols="3" class="balance">
-          <span>{{ item.value.toFixed(2) }} {{ item.token }}</span>
+          <span>{{ item.currency.balance }} {{ item.currency.name }}</span>
         </v-col>
         <v-col cols="3" class="borrow">
           <span>Borrow</span>
@@ -38,20 +38,16 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Borrow } from '@/types/lending'
+import { Currency } from '@/types/currency'
 
 @Component({})
 export default class SupplyMarket extends Vue {
-  supplyList = [
-    {
-      token: 'EFG',
-      apy: 2.9,
-      value: 20000
-    }
-  ]
+  @Prop({ default: [] }) readonly borrowList!: Borrow[]
 
-  switchBorrow(token: any) {
-    this.$emit('switchToBorrow', token)
+  switchBorrow(currency: Currency) {
+    this.$emit('switchToBorrow', currency)
   }
 }
 </script>

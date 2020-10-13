@@ -6,14 +6,14 @@
         <span>Wallet Balance:</span>
         <v-spacer></v-spacer>
         <span class="balance" @click="fillAmount(walletBalance)"
-          >{{ walletBalance.toFixed(2) }} {{ token }}</span
+          >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
         >
       </div>
       <v-text-field
         class="amount-input"
         label="Collateral Amount"
         v-model="collateralAmount"
-        :suffix="token"
+        :suffix="currencyName"
         height="43"
         color="#C074F9"
       ></v-text-field>
@@ -58,13 +58,21 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Currency } from '@/types/currency'
 
 @Component({})
 export default class RepayCard extends Vue {
-  @Prop() token!: string
+  @Prop() currency!: Currency
 
-  walletBalance = 1000
   collateralAmount: number | string = ''
+
+  get walletBalance() {
+    return Number(this.currency.balance)
+  }
+
+  get currencyName() {
+    return this.currency.name
+  }
 
   fillAmount(amount: number) {
     this.collateralAmount = amount

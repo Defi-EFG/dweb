@@ -1,285 +1,563 @@
 [
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_oracleAddr",
-				"type": "address"
-			},
-			{
-				"name": "_action",
-				"type": "bool"
-			}
-		],
-		"name": "authOracles",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
+			"constant": false,
+			"inputs": [
+					{
+							"name": "_name",
+							"type": "bytes8"
+					},
+					{
+							"name": "_leader_addr",
+							"type": "address"
+					},
+					{
+							"name": "_EFG_amount",
+							"type": "uint256"
+					}
+			],
+			"name": "addNewPool",
+			"outputs": [
+					{
+							"name": "",
+							"type": "uint256"
+					}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_lock",
-				"type": "uint256"
-			}
-		],
-		"name": "depositECOC",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
+			"constant": true,
+			"inputs": [
+					{
+							"name": "_symbol",
+							"type": "bytes8"
+					},
+					{
+							"name": "_address",
+							"type": "address"
+					}
+			],
+			"name": "getAssetBalance",
+			"outputs": [
+					{
+							"name": "",
+							"type": "uint256"
+					}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_amount",
-				"type": "uint256"
-			}
-		],
-		"name": "lockECOC",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
+			"constant": true,
+			"inputs": [
+					{
+							"name": "_symbol",
+							"type": "bytes8"
+					}
+			],
+			"name": "getEFGRates",
+			"outputs": [
+					{
+							"name": "",
+							"type": "uint256"
+					}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_debtors_addr",
-				"type": "address"
-			}
-		],
-		"name": "marginCall",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
+			"constant": true,
+			"inputs": [
+					{
+							"name": "_address",
+							"type": "address"
+					}
+			],
+			"name": "getEFGBalance",
+			"outputs": [
+					{
+							"name": "",
+							"type": "uint256"
+					}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_amount",
-				"type": "uint256"
-			}
-		],
-		"name": "payback",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
+			"constant": false,
+			"inputs": [
+					{
+							"name": "_symbol",
+							"type": "bytes8"
+					},
+					{
+							"name": "_interestRate",
+							"type": "uint256"
+					}
+			],
+			"name": "setInterestRate",
+			"outputs": [
+					{
+							"name": "",
+							"type": "bool"
+					}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_rate",
-				"type": "uint256"
-			}
-		],
-		"name": "setCollateralRate",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
+			"constant": false,
+			"inputs": [
+					{
+							"name": "_amount",
+							"type": "uint256"
+					}
+			],
+			"name": "repay",
+			"outputs": [
+					{
+							"name": "",
+							"type": "bool"
+					}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_symbol",
-				"type": "string"
-			},
-			{
-				"name": "_rate",
-				"type": "uint256"
-			}
-		],
-		"name": "setEFGRate",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
+			"constant": false,
+			"inputs": [
+					{
+							"name": "_pool_addr",
+							"type": "address"
+					},
+					{
+							"name": "_amount",
+							"type": "uint256"
+					}
+			],
+			"name": "lockECOC",
+			"outputs": [
+					{
+							"name": "",
+							"type": "bool"
+					}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_symbol",
-				"type": "string"
-			},
-			{
-				"name": "_interestRate",
-				"type": "uint256"
-			}
-		],
-		"name": "setInterestRate",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
+			"constant": false,
+			"inputs": [
+					{
+							"name": "_amount",
+							"type": "uint256"
+					}
+			],
+			"name": "withdrawEFG",
+			"outputs": [
+					{
+							"name": "",
+							"type": "bool"
+					}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_amount",
-				"type": "uint256"
-			},
-			{
-				"name": "_beneficiaries_addr",
-				"type": "address"
-			}
-		],
-		"name": "withdrawEcoc",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": true,
-		"stateMutability": "payable",
-		"type": "function"
+			"constant": false,
+			"inputs": [
+					{
+							"name": "_symbol",
+							"type": "bytes8"
+					},
+					{
+							"name": "_rate",
+							"type": "uint256"
+					}
+			],
+			"name": "setCollateralRate",
+			"outputs": [
+					{
+							"name": "",
+							"type": "bool"
+					}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
 	},
 	{
-		"constant": false,
-		"inputs": [
-			{
-				"name": "_amount",
-				"type": "uint256"
-			}
-		],
-		"name": "withdrawEFG",
-		"outputs": [
-			{
-				"name": "",
-				"type": "bool"
-			}
-		],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "function"
+			"constant": false,
+			"inputs": [
+					{
+							"name": "_debtors_addr",
+							"type": "address"
+					}
+			],
+			"name": "marginCall",
+			"outputs": [
+					{
+							"name": "",
+							"type": "bool"
+					}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
 	},
 	{
-		"inputs": [],
-		"payable": false,
-		"stateMutability": "nonpayable",
-		"type": "constructor"
+			"constant": false,
+			"inputs": [
+					{
+							"name": "_symbol",
+							"type": "bytes8"
+					},
+					{
+							"name": "_contract_addr",
+							"type": "address"
+					}
+			],
+			"name": "addNewAsset",
+			"outputs": [
+					{
+							"name": "",
+							"type": "uint256"
+					}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [],
-		"name": "getCollateralRate",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
+			"constant": false,
+			"inputs": [
+					{
+							"name": "_lock",
+							"type": "uint256"
+					},
+					{
+							"name": "_pool_addr",
+							"type": "address"
+					}
+			],
+			"name": "depositECOC",
+			"outputs": [
+					{
+							"name": "",
+							"type": "bool"
+					}
+			],
+			"payable": true,
+			"stateMutability": "payable",
+			"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_debtor",
-				"type": "address"
-			}
-		],
-		"name": "getDebt",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
+			"constant": true,
+			"inputs": [
+					{
+							"name": "_symbol",
+							"type": "bytes8"
+					}
+			],
+			"name": "getCollateralRate",
+			"outputs": [
+					{
+							"name": "",
+							"type": "uint256"
+					}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_symbol",
-				"type": "string"
-			}
-		],
-		"name": "getEFGRates",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
+			"constant": true,
+			"inputs": [
+					{
+							"name": "_debtor",
+							"type": "address"
+					}
+			],
+			"name": "getDebt",
+			"outputs": [
+					{
+							"name": "",
+							"type": "uint256"
+					},
+					{
+							"name": "",
+							"type": "address"
+					}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
 	},
 	{
-		"constant": true,
-		"inputs": [
-			{
-				"name": "_symbol",
-				"type": "string"
-			}
-		],
-		"name": "getInterestRate",
-		"outputs": [
-			{
-				"name": "",
-				"type": "uint256"
-			}
-		],
-		"payable": false,
-		"stateMutability": "view",
-		"type": "function"
+			"constant": false,
+			"inputs": [
+					{
+							"name": "_amount",
+							"type": "uint256"
+					},
+					{
+							"name": "_beneficiaries_addr",
+							"type": "address"
+					}
+			],
+			"name": "withdrawECOC",
+			"outputs": [
+					{
+							"name": "",
+							"type": "bool"
+					}
+			],
+			"payable": true,
+			"stateMutability": "payable",
+			"type": "function"
+	},
+	{
+			"constant": true,
+			"inputs": [],
+			"name": "getAllPools",
+			"outputs": [
+					{
+							"name": "",
+							"type": "address[]"
+					}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+	},
+	{
+			"constant": false,
+			"inputs": [
+					{
+							"name": "_symbol",
+							"type": "bytes8"
+					},
+					{
+							"name": "_rate",
+							"type": "uint256"
+					}
+			],
+			"name": "setEFGRate",
+			"outputs": [
+					{
+							"name": "",
+							"type": "bool"
+					}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+	},
+	{
+			"constant": true,
+			"inputs": [
+					{
+							"name": "_symbol",
+							"type": "bytes8"
+					}
+			],
+			"name": "getInterestRate",
+			"outputs": [
+					{
+							"name": "",
+							"type": "uint256"
+					}
+			],
+			"payable": false,
+			"stateMutability": "view",
+			"type": "function"
+	},
+	{
+			"constant": false,
+			"inputs": [
+					{
+							"name": "_oracleAddr",
+							"type": "address"
+					},
+					{
+							"name": "_action",
+							"type": "bool"
+					}
+			],
+			"name": "authOracles",
+			"outputs": [
+					{
+							"name": "",
+							"type": "bool"
+					}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "function"
+	},
+	{
+			"inputs": [
+					{
+							"name": "_EFG_addr",
+							"type": "address"
+					},
+					{
+							"name": "_GPT_addr",
+							"type": "address"
+					}
+			],
+			"payable": false,
+			"stateMutability": "nonpayable",
+			"type": "constructor"
+	},
+	{
+			"anonymous": false,
+			"inputs": [
+					{
+							"indexed": false,
+							"name": "depositor",
+							"type": "address"
+					},
+					{
+							"indexed": false,
+							"name": "ecoc_amount",
+							"type": "uint256"
+					}
+			],
+			"name": "DepositECOCEvent",
+			"type": "event"
+	},
+	{
+			"anonymous": false,
+			"inputs": [
+					{
+							"indexed": false,
+							"name": "user_account",
+							"type": "address"
+					},
+					{
+							"indexed": false,
+							"name": "beneficiar",
+							"type": "address"
+					},
+					{
+							"indexed": false,
+							"name": "ecoc_amount",
+							"type": "uint256"
+					}
+			],
+			"name": "WithdrawECOCEvent",
+			"type": "event"
+	},
+	{
+			"anonymous": false,
+			"inputs": [
+					{
+							"indexed": false,
+							"name": "result",
+							"type": "bool"
+					},
+					{
+							"indexed": false,
+							"name": "beneficiar",
+							"type": "address"
+					},
+					{
+							"indexed": false,
+							"name": "efg_amount",
+							"type": "uint256"
+					}
+			],
+			"name": "WithdrawEFGEvent",
+			"type": "event"
+	},
+	{
+			"anonymous": false,
+			"inputs": [
+					{
+							"indexed": false,
+							"name": "result",
+							"type": "bool"
+					},
+					{
+							"indexed": false,
+							"name": "pool",
+							"type": "address"
+					},
+					{
+							"indexed": false,
+							"name": "borrower",
+							"type": "address"
+					},
+					{
+							"indexed": false,
+							"name": "ecoc_amount",
+							"type": "uint256"
+					},
+					{
+							"indexed": false,
+							"name": "locked_amount",
+							"type": "uint256"
+					}
+			],
+			"name": "LockEcocEvent",
+			"type": "event"
+	},
+	{
+			"anonymous": false,
+			"inputs": [
+					{
+							"indexed": false,
+							"name": "result",
+							"type": "bool"
+					},
+					{
+							"indexed": false,
+							"name": "pool",
+							"type": "address"
+					},
+					{
+							"indexed": false,
+							"name": "borrower",
+							"type": "address"
+					},
+					{
+							"indexed": false,
+							"name": "efg_eq_amount",
+							"type": "uint256"
+					}
+			],
+			"name": "MarginCallEvent",
+			"type": "event"
+	},
+	{
+			"anonymous": false,
+			"inputs": [
+					{
+							"indexed": false,
+							"name": "result",
+							"type": "bool"
+					},
+					{
+							"indexed": false,
+							"name": "debtors_addr",
+							"type": "address"
+					},
+					{
+							"indexed": false,
+							"name": "amount",
+							"type": "uint256"
+					}
+			],
+			"name": "RepayEvent",
+			"type": "event"
 	}
 ]

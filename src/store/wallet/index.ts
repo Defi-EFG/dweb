@@ -9,6 +9,7 @@ import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import { SendEcrc20Payload, SendEcocPayload } from '@/services/ecoc/types'
 import * as constants from '@/constants'
+import { getPrice } from '@/store/common'
 import { currencyInit } from './currency'
 
 @Module({ dynamic: true, store, namespaced: true, name: 'walletStore' })
@@ -73,7 +74,14 @@ export default class WalletModule extends VuexModule implements Wallet {
     if (currencyIndex < 0) {
       this.currencies.push(currencyData)
     } else {
-      this.currencies[currencyIndex].balance = currencyData.balance
+      this.currencies.splice(currencyIndex, 1, currencyData)
+    }
+  }
+
+  @Mutation
+  updateCurrencyByIndex(payload: { currencyIndex: number; currencyData: Currency }) {
+    if (payload.currencyIndex >= 0) {
+      this.currencies.splice(payload.currencyIndex, 1, payload.currencyData)
     }
   }
 
@@ -152,6 +160,18 @@ export default class WalletModule extends VuexModule implements Wallet {
     }
 
     return await Ecoc.SendEcocBalance(this.keystore, password, payload as SendEcocPayload)
+  }
+
+  @Action
+  async updateCurrenciesPrice() {
+    const currenciesList = this.currencies
+
+    for (const [index, currency] of currenciesList.entries()) {
+      currency.price = await getPrice(currency.name)
+      this.context.commit('updateCurrencyByIndex', { currencyIndex: index, currencyData: currency })
+    }
+
+    return true
   }
 
   @MutationAction

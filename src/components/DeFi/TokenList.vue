@@ -38,10 +38,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import BigNumber from 'bignumber.js'
 import WalletModule from '@/store/wallet'
 import { Currency } from '@/types/currency'
 import * as constants from '@/constants'
+import { getEstimatedValue } from '@/services/utils'
 
 @Component({
   components: {}
@@ -50,8 +50,9 @@ export default class TokenList extends Vue {
   walletStore = getModule(WalletModule)
   activeItem = -1
 
+  getEstimatedValue = getEstimatedValue
+
   get currencies() {
-    console.log(this.walletStore.currencies)
     return this.walletStore.currencies
   }
 
@@ -62,44 +63,39 @@ export default class TokenList extends Vue {
         type: '',
         balance: '300',
         style: constants.KNOWN_CURRENCY['ECOC'],
-        price: '1'
+        price: 1
       },
       {
         name: 'EFG',
         type: '',
         balance: '2.1234223',
         style: constants.KNOWN_CURRENCY['EFG'],
-        price: '1'
+        price: 1
       },
       {
         name: 'GPT',
         type: '',
         balance: '1.329478',
         style: constants.KNOWN_CURRENCY['GPT'],
-        price: '1'
+        price: 1
       },
       {
         name: 'USDT',
         type: '',
         balance: '4000',
         style: constants.KNOWN_CURRENCY['USDT'],
-        price: '1'
+        price: 1
       },
       {
         name: 'ETH',
         type: '',
         balance: '23.622',
         style: constants.KNOWN_CURRENCY['ETH'],
-        price: '1'
+        price: 1
       }
     ]
 
     return currency
-  }
-
-  getEstimatedValue(amount: string, price: string | null) {
-    if (!price) return 0
-    return new BigNumber(amount).multipliedBy(new BigNumber(price))
   }
 
   selectCurrency(index: number) {

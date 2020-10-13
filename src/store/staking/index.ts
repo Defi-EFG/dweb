@@ -7,17 +7,19 @@ import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 
 import { stakingContract } from '@/services/staking'
-import { SmartContract, Params, ExecutionResult } from '@/services/contract'
+import { Params, ExecutionResult } from '@/services/contract'
+import { stakingCurrency, rewardCurrency } from '@/store/common'
 
-const staking = new SmartContract(stakingContract.address, stakingContract.abi)
-const stakingCurrency = {
-  name: constants.EFG,
-  style: constants.KNOWN_CURRENCY[constants.EFG]
-}
-const rewardCurrency = {
-  name: constants.GPT,
-  style: constants.KNOWN_CURRENCY[constants.GPT]
-}
+const rewardHistory = [
+  {
+    amount: 0.56,
+    timestamp: 1602222563
+  },
+  {
+    amount: 5.5,
+    timestamp: 1602222563
+  }
+]
 
 @Module({ dynamic: true, store, namespaced: true, name: 'stakingStore' })
 export default class StakingModule extends VuexModule implements StakingPlatform {
@@ -31,14 +33,5 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   timestamp = 0
   totalStakedReward = 6.06
 
-  rewardHistory = [
-    {
-      amount: 0.56,
-      timestamp: 1602222563
-    },
-    {
-      amount: 5.5,
-      timestamp: 1602222563
-    }
-  ]
+  rewardHistory = rewardHistory
 }

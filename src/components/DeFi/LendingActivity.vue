@@ -87,9 +87,9 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import BigNumber from 'bignumber.js'
 import moment from 'moment'
 import LendingModule from '@/store/lending'
+import { getEstimatedValue } from '@/services/utils'
 
 @Component({})
 export default class LendingActivity extends Vue {
@@ -101,6 +101,8 @@ export default class LendingActivity extends Vue {
     activated: 'mdi-circle-slice-8'
   }
 
+  getEstimatedValue = getEstimatedValue
+
   get myCollateral() {
     return this.lendingStore.myCollateralAssets
   }
@@ -111,11 +113,6 @@ export default class LendingActivity extends Vue {
 
   get myActivity() {
     return this.lendingStore.myActivity
-  }
-
-  getEstimatedValue(amount: number, price: number) {
-    if (!price) return 0
-    return new BigNumber(amount).multipliedBy(new BigNumber(price))
   }
 
   getTime(timestamp: number) {

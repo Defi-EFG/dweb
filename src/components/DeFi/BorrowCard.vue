@@ -5,12 +5,12 @@
       <div class="wallet-balance mb-2">
         <span>Wallet Balance:</span>
         <v-spacer></v-spacer>
-        <span class="balance">500.00 {{ token }}</span>
+        <span class="balance">{{ walletBalance.toFixed(2) }} {{ currencyName }}</span>
       </div>
       <v-text-field
         class="amount-input"
         label="Borrow Amount"
-        :suffix="token"
+        :suffix="currencyName"
         v-model="borrowValue"
         height="43"
         color="#C074F9"
@@ -53,11 +53,11 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { CurrencyRate } from '@/types/currency'
+import { Currency, CurrencyRate } from '@/types/currency'
 
 @Component({})
 export default class BorrowCard extends Vue {
-  @Prop() token!: string
+  @Prop() currency!: Currency
 
   currencyRate: CurrencyRate = {
     ECOC: 1,
@@ -69,6 +69,14 @@ export default class BorrowCard extends Vue {
   val = 25
   minVal = 25
   borrowValue = 0
+
+  get walletBalance() {
+    return Number(this.currency.balance)
+  }
+
+  get currencyName() {
+    return this.currency.name
+  }
 
   limitValue(num: number) {
     if (this.val < num) {
@@ -89,13 +97,13 @@ export default class BorrowCard extends Vue {
   }
 
   get tokenConversion() {
-    return `${this.borrowValue} ${this.token} ≈ $${this.currencyRate[this.token] *
+    return `${this.borrowValue} ${this.currencyName} ≈ $${this.currencyRate[this.currencyName] *
       Number(this.borrowValue)}`
   }
 
   // BP = Borrow Power
   calculateBPUsed(borrowAmount: number) {
-    const dollarsAmount = Number(borrowAmount) * this.currencyRate[this.token]
+    const dollarsAmount = Number(borrowAmount) * this.currencyRate[this.currencyName]
     return (
       ((this.borrowBalance + dollarsAmount) / (this.supplyBalance * this.borrowPowerPercentage)) *
       100

@@ -15,8 +15,8 @@
         <v-card dark class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
-              <img src="@/assets/efg_logo.svg" />
-              <span> {{ selectedToken }}</span>
+              <img :src="selectedCurrency.style.icon" />
+              <span> {{ selectedCurrency.name }}</span>
             </v-toolbar-title>
           </v-toolbar>
 
@@ -25,20 +25,20 @@
               <v-col cols="6" class="inner-content-left">
                 <transition name="fade" mode="out-in">
                   <template v-if="mode === 'collateral'">
-                    <Collateral :token="selectedToken"></Collateral>
+                    <Collateral :currency="selectedCurrency"></Collateral>
                   </template>
                   <template v-else>
-                    <Borrow :token="selectedToken"></Borrow>
+                    <Borrow :currency="selectedCurrency"></Borrow>
                   </template>
                 </transition>
               </v-col>
               <v-col cols="6" class="inner-content-right">
                 <transition name="fade" mode="out-in">
                   <template v-if="mode === 'collateral'">
-                    <Withdraw :token="selectedToken"></Withdraw>
+                    <Withdraw :currency="selectedCurrency"></Withdraw>
                   </template>
                   <template v-else>
-                    <Repay :token="selectedToken"></Repay>
+                    <Repay :currency="selectedCurrency"></Repay>
                   </template>
                 </transition>
               </v-col>
@@ -49,10 +49,13 @@
       <v-col cols="4" class="content">
         <v-row>
           <v-col cols="12" class="pt-0 pb-0">
-            <CollateralToken @switchToCollateral="toCollateralToken"></CollateralToken>
+            <CollateralToken
+              :collateralList="collateralList"
+              @switchToCollateral="toCollateralToken"
+            ></CollateralToken>
           </v-col>
           <v-col cols="12" class="pb-0">
-            <SupplyMarket @switchToBorrow="toSupplyToken"></SupplyMarket>
+            <SupplyMarket :borrowList="borrowList" @switchToBorrow="toBorrowToken"></SupplyMarket>
           </v-col>
         </v-row>
       </v-col>
@@ -63,8 +66,10 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import * as constants from '@/constants'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
+import { Currency } from '@/types/currency'
 import SupplyBalance from '@/components/DeFi/SupplyBalance.vue'
 import BorrowBalance from '@/components/DeFi/BorrowBalance.vue'
 import LendingActivity from '@/components/DeFi/LendingActivity.vue'
@@ -93,7 +98,7 @@ export default class Lending extends Vue {
   lendingStore = getModule(LendingModule)
 
   mode = 'collateral'
-  selectedToken = 'ECOC'
+  selectedCurrency = this.collateralList[0].currency
 
   get collateralBalance() {
     return this.lendingStore.collateralBalance
@@ -111,28 +116,53 @@ export default class Lending extends Vue {
     return this.walletStore.address != ''
   }
 
+  get collateralsActivated() {
+    return this.lendingStore.collateralsActivated
+  }
+
+  get collateralList() {
+    return this.walletStore.currencies
+      .filter(currency => {
+        return constants.COLLATERAL_CURRENCIES.indexOf(currency.name) >= 0
+      })
+      .map(currency => {
+        return {
+          currency: currency,
+          activated: this.collateralsActivated.indexOf(currency.name) >= 0
+        }
+      })
+  }
+
+  get borrowList() {
+    return this.walletStore.currencies
+      .filter(currency => {
+        return constants.LOAN_CURRENCIES.indexOf(currency.name) >= 0
+      })
+      .map(currency => {
+        return {
+          currency: currency,
+          apy: this.lendingStore.loan.interestRate
+        }
+      })
+  }
+
   modeSwitch(val: string) {
     console.log('receive emit')
     this.mode = val
   }
 
-  toCollateralToken(token: string) {
+  toCollateralToken(currency: Currency) {
     this.mode = 'collateral'
-    console.log('selected', token)
-    this.selectedToken = token
+    this.selectedCurrency = currency
   }
 
-  toSupplyToken(token: string) {
+  toBorrowToken(currency: Currency) {
     this.mode = 'borrow'
-    this.selectedToken = token
+    this.selectedCurrency = currency
   }
 
   mounted() {
-    const currencyName = 'ECOC'
-    this.lendingStore.getRate(currencyName).then(console.log)
-    this.lendingStore.getInterestRate(currencyName).then(console.log)
-    this.lendingStore.getDebt('eJ2MXjCnSSpSvuDE8CdEDjwzSZgWxGfYBP').then(console.log)
-    this.lendingStore.getBorrowPower(currencyName).then(console.log)
+    //
   }
 }
 </script>

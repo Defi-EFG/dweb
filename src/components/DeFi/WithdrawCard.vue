@@ -6,13 +6,13 @@
         <span>Max Withdrawable:</span>
         <v-spacer></v-spacer>
         <span class="balance" @click="fillAmount(maxWithdraw)"
-          >{{ maxWithdraw.toFixed(2) }} {{ token }}</span
+          >{{ maxWithdraw.toFixed(2) }} {{ currencyName }}</span
         >
       </div>
       <v-text-field
         class="amount-input"
         label="Withdrawal Amount"
-        :suffix="token"
+        :suffix="currencyName"
         v-model="withdrawValue"
         height="43"
         color="#C074F9"
@@ -63,11 +63,11 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { CurrencyRate } from '@/types/currency'
+import { Currency, CurrencyRate } from '@/types/currency'
 
 @Component({})
 export default class Withdraw extends Vue {
-  @Prop() token!: string
+  @Prop() currency!: Currency
 
   currencyRate: CurrencyRate = {
     ECOC: 1,
@@ -78,7 +78,14 @@ export default class Withdraw extends Vue {
   val = 25
   minVal = 25
   withdrawValue = 0
-  maxWithdraw = 500
+
+  get maxWithdraw() {
+    return 0
+  }
+
+  get currencyName() {
+    return this.currency.name
+  }
 
   get supplyBalance() {
     return 1000
@@ -93,7 +100,7 @@ export default class Withdraw extends Vue {
   }
 
   get tokenConversion() {
-    return `${this.withdrawValue} ${this.token} ≈ $${this.currencyRate[this.token] *
+    return `${this.withdrawValue} ${this.currencyName} ≈ $${this.currencyRate[this.currencyName] *
       Number(this.withdrawValue)}`
   }
 
@@ -109,12 +116,12 @@ export default class Withdraw extends Vue {
 
   // BP = Borrow Power
   calculateTotalBP(withdrawAmount: number) {
-    const dollarsAmount = Number(withdrawAmount) * this.currencyRate[this.token]
+    const dollarsAmount = Number(withdrawAmount) * this.currencyRate[this.currencyName]
     return (this.supplyBalance - dollarsAmount) * this.borrowPowerPercentage
   }
 
   calculateBPUsed(withdrawAmount: number) {
-    const dollarsAmount = Number(withdrawAmount) * this.currencyRate[this.token]
+    const dollarsAmount = Number(withdrawAmount) * this.currencyRate[this.currencyName]
     return (this.borrowBalance / this.calculateTotalBP(withdrawAmount)) * 100
   }
 }

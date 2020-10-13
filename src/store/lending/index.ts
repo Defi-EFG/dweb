@@ -1,19 +1,15 @@
 import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '@/store'
 import { InsufficientBalance } from '@/exceptions/wallet'
-import { LendingPlatform, Loan } from '@/types/lending'
+import { LendingPlatform, Loan, Collateral } from '@/types/lending'
+import { Currency } from '@/types/currency'
 import * as constants from '@/constants'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 
 import { lendingContract } from '@/services/lending'
-import { SmartContract, Params, ExecutionResult } from '@/services/contract'
-
-const lending = new SmartContract(lendingContract.address, lendingContract.abi)
-const loanCurrency = {
-  name: constants.EFG,
-  style: constants.KNOWN_CURRENCY[constants.EFG]
-}
+import { Params, ExecutionResult } from '@/services/contract'
+import { lending, loanCurrency, getPrice } from '@/store/common'
 
 const myActivity = [
   {
@@ -69,6 +65,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
   myCollateralAssets = myCollateralAssets
   myActivity = myActivity
+  collateralsActivated = [] as string[]
 
   get myBorrowing() {
     return [
@@ -81,17 +78,33 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     ]
   }
 
+  @MutationAction
+  async activatedCollateral(currrencyName: string) {
+    const collateralsActivated = this.collateralsActivated
+    const index = collateralsActivated.indexOf(currrencyName)
+
+    if (index < 0) {
+      collateralsActivated.push(currrencyName)
+    }
+
+    return { collateralsActivated }
+  }
+
+  @MutationAction
+  async deactivatedCollateral(currrencyName: string) {
+    const collateralsActivated = this.collateralsActivated
+    const index = collateralsActivated.indexOf(currrencyName)
+
+    if (index >= 0) {
+      collateralsActivated.splice(index, 1)
+    }
+
+    return { collateralsActivated }
+  }
+
   @Action
   async getRate(currencyName: string) {
-    const params = {
-      methodArgs: [currencyName]
-    } as Params
-
-    const result = await lending.call('getEFGRates', params)
-
-    const executionResult = result.executionResult as ExecutionResult
-    const data = executionResult.formattedOutput['0'].toNumber()
-    return data
+    return await getPrice(currencyName)
   }
 
   @Action
@@ -123,7 +136,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   @Action
   async getBorrowPower(currencyName: string) {
     const params = {
-      methodArgs: []
+      methodArgs: [currencyName]
     } as Params
 
     const result = await lending.call('getCollateralRate', params)
