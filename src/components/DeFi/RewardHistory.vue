@@ -16,19 +16,11 @@
               <span>{{ rewardCurrencyName }}</span>
             </div>
           </v-col>
-<<<<<<< HEAD
-          <v-col class="ma-auto">
+          <v-col cols="auto">
             <div class="time">{{ getTime(item.timestamp) }}</div>
           </v-col>
-          <v-col class="ma-auto">
+          <v-col>
             <div class="value">{{ item.amount }} {{ rewardCurrencyName }}</div>
-=======
-          <v-col cols="auto" >
-            <div class="time">{{ item.timestamp }}</div>
-          </v-col>
-          <v-col >
-            <div class="value">{{ item.value }} {{ item.token }}</div>
->>>>>>> 137c6d2faaf5a7fa48e5cc7379e8ed2f27d68267
           </v-col>
         </v-row>
       </div>

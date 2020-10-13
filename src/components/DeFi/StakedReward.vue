@@ -2,23 +2,14 @@
   <v-card dark color="#2e3344" class="staked-reward">
     <v-card-text class="wrapper">
       <div class="total-reward">
-<<<<<<< HEAD
-        <p class="label">Your Staked Reward</p>
+        <p class="label mb-0">Your Staked Reward</p>
         <p class="value">{{ stakedReward }} {{ currencyName }}</p>
-=======
-        <p class="label mb-0">Total Staked Reward</p>
-        <p class="value">5.15349650 GPT</p>
->>>>>>> 137c6d2faaf5a7fa48e5cc7379e8ed2f27d68267
       </div>
 
       <div class="d-amount">
         <span>Withdraw Available</span>
         <v-spacer></v-spacer>
-<<<<<<< HEAD
-        <span>{{ withdrawAvailable.toFixed(2) }} {{ currencyName }}</span>
-=======
-        <span class="text-right">{{ depositedAmount.toFixed(2) }} GPT</span>
->>>>>>> 137c6d2faaf5a7fa48e5cc7379e8ed2f27d68267
+        <span class="text-right">{{ withdrawAvailable.toFixed(2) }} {{ currencyName }}</span>
       </div>
 
       <v-divider></v-divider>
