@@ -4,7 +4,7 @@
       <img src="@/assets/efg_logo_test.svg" class="img_background" />
       <v-container>
         <v-row>
-          <v-col class="12">
+          <v-col cols="12 " class="hover_animation">
             <img src="@/assets/efg_logo.svg" class="efg-logo" />
             <div class="text_header">{{ $t('views.main.name') }}</div>
             <div class="select_detailmain img_logo1">
@@ -37,15 +37,30 @@
               <div class="text_header_sub">
                 {{ $t('views.main.sub_name_1') }}
               </div>
+              <div class="text_header_sub">
+                {{ $t('views.main.sub_name_11') }}
+              </div>
+              <div class="text_header_sub">
+                {{ $t('views.main.sub_name_12') }}
+              </div>
+              <div class="text_header_sub">
+                {{ $t('views.main.sub_name_13') }}
+              </div>
             </div>
             <div class="open" :class="active == 'GTP' ? 'open_active' : undefined">
               <div class="text_header_sub">
                 {{ $t('views.main.sub_name_2') }}
               </div>
+              <div class="text_header_sub">
+                {{ $t('views.main.sub_name_22') }}
+              </div>
             </div>
             <div class="open" :class="active == 'efgandgpt' ? 'open_active' : undefined">
               <div class="text_header_sub">
                 {{ $t('views.main.sub_name_3') }}
+              </div>
+              <div class="text_header_sub">
+                {{ $t('views.main.sub_name_33') }}
               </div>
             </div>
             <div class="open" :class="active == 'work' ? 'open_active' : undefined">
@@ -59,30 +74,30 @@
                   title="Telegram"
                   class="img_logo1"
                   src="@/assets/Subtraction.svg"
-                  style="animation-delay: 1s;"
+                  style="animation-delay: 0.5s;"
               /></a>
               <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer">
                 <img
                   title="Github"
                   class="img_logo1"
                   src="@/assets/github.svg"
-                  style="animation-delay: 1.5s;"
+                  style="animation-delay: 1s;"
               /></a>
 
-              <a href="https://medium.com/@ecoc.efg" target="_blank">
+              <a href="https://medium.com/@EFG_DeFi" target="_blank">
                 <img
                   title="Medium"
                   class="img_logo1"
                   src="@/assets/medium.svg"
-                  style="animation-delay: 2s;"
+                  style="animation-delay: 1.5s;"
                 />
               </a>
-              <a href="https://twitter.com/EcocEfg" target="_blank">
+              <a href="https://twitter.com/EFG_DeFi" target="_blank">
                 <img
                   title="Twitter"
                   class="img_logo1"
                   src="@/assets/twitter.svg"
-                  style="animation-delay: 2.5s;"
+                  style="animation-delay: 2s;"
                 />
               </a>
             </div>
@@ -134,16 +149,12 @@
           </v-col>
           <v-col lg="3" md="3" cols="3" class="border_left">
             <div class="margintop color_1 textafter">
-              <span class="color_size"
-                >${{ item.EFGTotalSupply}}</span
-              >
+              <span class="color_size">${{ item.EFGTotalSupply }}</span>
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="3">
             <div class="margintop color_2 textafter">
-              <span class="color_size"
-                >${{ item.EFGTotalBorrowed}}</span
-              >
+              <span class="color_size">${{ item.EFGTotalBorrowed }}</span>
             </div>
           </v-col>
           <img class="row1_img" src="@/assets/backg_01.svg" />
@@ -190,23 +201,23 @@
         <v-row>
           <v-col cols="12" class="but_div_inline">
             <span class="but_div"
-              ><img class="img_text_but" src="@/assets/icon/currency/ecoc.svg" alt="" />
+              ><img class="img_text_but" src="@/assets/ECOC.svg" alt="" />
               <div class="text_but">ECOC</div></span
             >
             <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/usd.png" alt="" />
+              ><img class="img_text_but not_it" src="@/assets/USDT.svg" alt="" />
               <div class="text_but">USDT</div></span
             >
             <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/eth.png" alt="" />
+              ><img class="img_text_but not_it" src="@/assets/ETH.svg" alt="" />
               <div class="text_but">ETH</div></span
             >
             <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/tron.svg" alt="" />
+              ><img class="img_text_but not_it" src="@/assets/TRON .svg" alt="" />
               <div class="text_but">TRON</div></span
             >
             <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/dot.png" alt="" />
+              ><img class="img_text_but not_it" src="@/assets/DOT.svg" alt="" />
               <div class="text_but">DOT</div></span
             >
           </v-col>
@@ -248,7 +259,7 @@ export default class Main extends Vue {
   data() {
     return {
       liquidation: 20.0,
-      GPTprice: 10000,
+      GPTprice: '10,000',
       items: [
         {
           Loener: '...',
@@ -267,14 +278,29 @@ export default class Main extends Vue {
     this.active = name
     this.name = name
   }
+  readmore(name: string) {
+    this.active = name
+    this.name = name
+  }
 }
 </script>
 
 <style scoped>
+.readmore {
+  display: none;
+}
+#readmor_01 {
+  display: none;
+}
+#readmor_01_active {
+  display: block;
+}
 .open {
   display: none;
+  min-height: 230px;
+}
+.hover_animation {
   animation: text_header_sub 2s forwards;
-  height: 230px;
 }
 .open_active {
   display: block !important;
@@ -303,7 +329,7 @@ body {
 .sec_1 {
   background: transparent linear-gradient(180deg, #2c1635 0%, #070c1a 100%) 0% 0% no-repeat
     padding-box;
-  padding-top: 180px;
+  padding-top: 150px;
 }
 .sec_2 {
   background: #17181c;
@@ -311,7 +337,7 @@ body {
 }
 .sec_3 {
   background: #090c1b;
-  height: 200px;
+  height: 150px;
   border-bottom-left-radius: 50%;
   border-bottom-right-radius: 50%;
 }
@@ -333,7 +359,7 @@ body {
   opacity: 1;
   padding-top: 20px;
   text-indent: 4.5em;
-  font-size: 18px;
+  font-size: 16px;
   line-height: 1.3;
 }
 .sec_1 .social_icon {
@@ -395,7 +421,7 @@ body {
 }
 .sec_2 .roww3 img {
   width: 30px;
-  margin-right: 3px;
+  margin-right: 6px;
 }
 .sec_2 img {
   right: 0;
@@ -403,7 +429,7 @@ body {
   width: 130px;
 }
 .sub_head_supply {
-  color: #ffffff;
+  color: #cccccc;
   padding-left: 20px;
 }
 .head_supply3 {
@@ -454,7 +480,7 @@ body {
 }
 .sec_2 .row1 .margintop img {
   width: 30px;
-  margin-right: 2px;
+  margin-right: 6px;
 }
 .sec_2 .row1 .row1_img {
   position: absolute;
@@ -610,23 +636,23 @@ body {
 }
 
 .text_header {
-  animation: animatetop 2s forwards;
+  animation: animatetop 1s forwards;
   opacity: 5;
   position: relative;
 }
 .text_header_sub {
-  animation: text_header_sub 2s forwards;
+  animation: text_header_sub 1s forwards;
   opacity: 5;
   position: relative;
 }
 .efg-logo {
   transform-origin: 50% 50%;
   animation-name: icon_div;
-  animation-duration: 2s;
+  animation-duration: 1s;
   width: 60px;
 }
 .img_logo1 {
-  animation: img_logo1 2s forwards;
+  animation: img_logo1 1s forwards;
   position: relative;
   opacity: 0;
 }
