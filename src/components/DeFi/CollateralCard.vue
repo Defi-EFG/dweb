@@ -1,9 +1,9 @@
 <template>
-  <v-card dark color="#1D212E">
+  <v-card dark color="#1D212E" class="collateral-card">
     <v-card-text class="wrapper">
       <p class="action-label">Collateral</p>
       <div class="wallet-balance mb-2">
-        <span>Wallet Balance:</span>
+        <span class="text-left">Wallet Balance:</span>
         <v-spacer></v-spacer>
         <span class="balance" @click="fillAmount(walletBalance)"
           >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
@@ -16,6 +16,7 @@
         height="43"
         color="#C074F9"
         v-model="collateralAmount"
+        type="number"
         :hint="tokenConversion"
         persistent-hint
       ></v-text-field>
@@ -31,25 +32,32 @@
         ></v-progress-linear>
       </div>
       <div class="borrow-used">
-        <div>Borrow Power Used</div>
+        <div class="text-left">Borrow Power Used</div>
         <v-spacer></v-spacer>
-        <div>
+        <div class="text-right">
           <span>{{ bpUsed.toFixed(1) }}%</span>
           &rarr;
           <span class="after-calculated">{{ calculateBPUsed(collateralAmount).toFixed(1) }}%</span>
         </div>
       </div>
       <div class="borrow-total mt-1 mb-3">
-        <div>Total Borrow Power</div>
+        <div class="text-left">Total Borrow Power</div>
         <v-spacer></v-spacer>
-        <div>
+        <div class="text-right">
           <span>$800.00</span>
           &rarr;
           <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
         </div>
       </div>
       <v-divider />
-      <v-btn large block depressed class="submit-btn">Deposit</v-btn>
+      <v-btn
+        large
+        block
+        depressed
+        :disabled="!isCollateralable(collateralAmount, 'error')"
+        :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+        >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
+      >
     </v-card-text>
   </v-card>
 </template>
@@ -118,10 +126,25 @@ export default class Collateral extends Vue {
       100
     )
   }
+
+  isCollateralable(amount: number, type: string) {
+    const isEnough = amount <= this.walletBalance
+    const isValidAmount = amount >= 0
+    const isClickable = amount > 0
+
+    if (type === 'error') {
+      return isEnough && isClickable
+    }
+    return isEnough && isValidAmount
+  }
 }
 </script>
 
 <style lang="scss" scoped>
+.collateral-card {
+  width: 100%;
+}
+
 .wrapper {
   padding: 2rem;
   text-align: left;
@@ -141,6 +164,7 @@ export default class Collateral extends Vue {
   .balance {
     text-decoration: underline;
     cursor: pointer;
+    text-align: right;
   }
 }
 
@@ -174,6 +198,11 @@ export default class Collateral extends Vue {
   font-weight: bold;
   background: transparent linear-gradient(90deg, #3ba7c1 0%, #59289a 100%) 0% 0% no-repeat
     padding-box;
+}
+
+.disabled {
+  background: #8f8f8f !important;
+  cursor: no-drop;
 }
 </style>
 
@@ -213,6 +242,16 @@ export default class Collateral extends Vue {
     background-color: transparent !important;
     background-image: none !important;
     color: #c074f9 !important;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield; /* Firefox */
   }
 }
 </style>

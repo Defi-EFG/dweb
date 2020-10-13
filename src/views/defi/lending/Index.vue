@@ -6,12 +6,12 @@
         <div class="ml-1 mr-1"></div>
         <BorrowBalance :balance="borrowedBalance" :borrowPower="borrowPower"></BorrowBalance>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pr-0">
         <LendingActivity></LendingActivity>
       </v-col>
     </v-row>
     <v-row class="content-wrapper">
-      <v-col cols="8" class="content">
+      <v-col cols="8" class="content pb-0">
         <v-card dark class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
@@ -20,33 +20,31 @@
             </v-toolbar-title>
           </v-toolbar>
 
-          <v-card-text>
-            <v-row>
-              <v-col cols="6" class="inner-content-left">
-                <transition name="fade" mode="out-in">
-                  <template v-if="mode === 'collateral'">
-                    <Collateral :currency="selectedCurrency"></Collateral>
-                  </template>
-                  <template v-else>
-                    <Borrow :currency="selectedCurrency"></Borrow>
-                  </template>
-                </transition>
-              </v-col>
-              <v-col cols="6" class="inner-content-right">
-                <transition name="fade" mode="out-in">
-                  <template v-if="mode === 'collateral'">
-                    <Withdraw :currency="selectedCurrency"></Withdraw>
-                  </template>
-                  <template v-else>
-                    <Repay :currency="selectedCurrency"></Repay>
-                  </template>
-                </transition>
-              </v-col>
-            </v-row>
-          </v-card-text>
+          <v-row class="content-wrapper">
+            <v-col cols="6" class="inner-content pr-1">
+              <transition name="fade" mode="out-in">
+                <template v-if="mode === 'collateral'">
+                  <Collateral :currency="selectedCurrency"></Collateral>
+                </template>
+                <template v-else>
+                  <Borrow :currency="selectedCurrency"></Borrow>
+                </template>
+              </transition>
+            </v-col>
+            <v-col cols="6" class="inner-content pl-1">
+              <transition name="fade" mode="out-in">
+                <template v-if="mode === 'collateral'">
+                  <Withdraw :currency="selectedCurrency"></Withdraw>
+                </template>
+                <template v-else>
+                  <Repay :currency="selectedCurrency"></Repay>
+                </template>
+              </transition>
+            </v-col>
+          </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pb-0 pr-0">
         <v-row>
           <v-col cols="12" class="pt-0 pb-0">
             <CollateralToken

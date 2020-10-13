@@ -18,7 +18,7 @@
             <div class="total-balance">
               <span>Your Balance</span>
               <v-spacer></v-spacer>
-              <span>{{ balance.toFixed(2) }} {{ stakingCurrencyName }}</span>
+              <span class="text-right">{{ balance.toFixed(2) }} {{ stakingCurrencyName }}</span>
             </div>
 
             <div class="minimum-d">
@@ -160,6 +160,7 @@ export default class DepositWithdraw extends Vue {
     display: flex;
     padding: 13px 10px;
     .value {
+      text-align: left;
       opacity: 0.7;
     }
 
@@ -167,6 +168,7 @@ export default class DepositWithdraw extends Vue {
       text-decoration: underline;
       cursor: pointer;
       color: white;
+      text-align: right;
     }
   }
 
@@ -182,7 +184,7 @@ export default class DepositWithdraw extends Vue {
 
   .btn-w,
   .btn-d {
-    margin-top: 3rem;
+    margin-top: 2.5rem;
     margin-bottom: 1rem;
     border-radius: 5px;
     background: transparent linear-gradient(90deg, #8b41d6 0%, #6800fe 100%) 0% 0% no-repeat
@@ -190,7 +192,7 @@ export default class DepositWithdraw extends Vue {
   }
 
   .btn-w {
-    margin-top: 5.9rem;
+    margin-top: 5.3rem;
   }
 }
 </style>

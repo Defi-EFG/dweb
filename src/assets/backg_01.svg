@@ -1,1 +1,21 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="108.999" height="99.002" viewBox="0 0 108.999 99.002"><defs><style>.a{fill:#fff;opacity:0.27;}.b{opacity:0.55;mix-blend-mode:multiply;isolation:isolate;}.c{fill:url(#a);}.d{fill:url(#b);}.e{fill:url(#c);}.f{fill:url(#d);}.g{fill:#3b204c;}</style><linearGradient id="a" x1="0.96" y1="0.529" x2="0.215" y2="0.58" gradientUnits="objectBoundingBox"><stop offset="0" stop-color="#754097"/><stop offset="1" stop-color="#3b204c"/></linearGradient><linearGradient id="b" x1="0.147" y1="0.533" x2="0.89" y2="0.713" xlink:href="#a"/><linearGradient id="c" x1="0.241" y1="0.484" x2="0.912" y2="0.446" xlink:href="#a"/><linearGradient id="d" x1="0.891" y1="0.516" x2="0.088" y2="0.529" xlink:href="#a"/></defs><g transform="translate(-1387 -1012.999)"><path class="a" d="M-13538.183-4805a63.387,63.387,0,0,1-10.817-35.526,63.338,63.338,0,0,1,63.2-63.477,62.883,62.883,0,0,1,45.8,19.742V-4810a5,5,0,0,1-5,5Z" transform="translate(14936 5917)"/><g class="b" transform="translate(1413.999 1042)"><path class="c" d="M8.988,0h31.05a8.988,8.988,0,0,1,8.988,8.988v0a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0v0A8.988,8.988,0,0,1,8.988,0Z" transform="translate(0 34.667) rotate(-45)"/><path class="d" d="M0,0H23.7a8.988,8.988,0,0,1,8.988,8.988v0a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(25.423 36.978) rotate(-45)"/><path class="e" d="M0,0H49.026a0,0,0,0,1,0,0V0a8.988,8.988,0,0,1-8.988,8.988H8.988A8.988,8.988,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(28.311 62.978) rotate(-45)"/><path class="f" d="M8.988,0h31.05a8.988,8.988,0,0,1,8.988,8.988v0a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0v0A8.988,8.988,0,0,1,8.988,0Z" transform="translate(34.667 69.333) rotate(-135)"/><rect class="g" width="4.085" height="8.988" transform="translate(51.423 29.467) rotate(-135)"/></g></g></svg>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="74.001" height="67" viewBox="0 0 74.001 67">
+  <defs>
+    <linearGradient id="linear-gradient" x1="0.96" y1="0.529" x2="0.215" y2="0.58" gradientUnits="objectBoundingBox">
+      <stop offset="0" stop-color="#754097"/>
+      <stop offset="1" stop-color="#3b204c"/>
+    </linearGradient>
+    <linearGradient id="linear-gradient-2" x1="0.147" y1="0.533" x2="0.89" y2="0.713" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-3" x1="0.241" y1="0.484" x2="0.912" y2="0.446" xlink:href="#linear-gradient"/>
+    <linearGradient id="linear-gradient-4" x1="0.891" y1="0.516" x2="0.088" y2="0.529" xlink:href="#linear-gradient"/>
+  </defs>
+  <g id="Group_2970" data-name="Group 2970" transform="translate(-1386.768 -949.002)">
+    <path id="Intersection_3" data-name="Intersection 3" d="M7.343,67A42.925,42.925,0,0,1,74,13.361V62a5,5,0,0,1-5,5Z" transform="translate(1386.768 949.002)" fill="#fff"/>
+    <g id="Group_2390" data-name="Group 2390" transform="translate(1405.272 961.182)" style="mix-blend-mode: multiply;isolation: isolate">
+      <path id="Rectangle_1548" data-name="Rectangle 1548" d="M6.083,0H27.1A6.083,6.083,0,0,1,33.18,6.083v0a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0v0A6.083,6.083,0,0,1,6.083,0Z" transform="translate(0 23.461) rotate(-45)" fill="url(#linear-gradient)"/>
+      <path id="Rectangle_1549" data-name="Rectangle 1549" d="M0,0H16.037A6.083,6.083,0,0,1,22.12,6.083v0a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(17.205 25.026) rotate(-45)" fill="url(#linear-gradient-2)"/>
+      <path id="Rectangle_1550" data-name="Rectangle 1550" d="M0,0H33.18a0,0,0,0,1,0,0V0A6.083,6.083,0,0,1,27.1,6.083H6.083A6.083,6.083,0,0,1,0,0V0A0,0,0,0,1,0,0Z" transform="translate(19.16 42.622) rotate(-45)" fill="url(#linear-gradient-3)"/>
+      <path id="Rectangle_1551" data-name="Rectangle 1551" d="M6.083,0H27.1A6.083,6.083,0,0,1,33.18,6.083v0a0,0,0,0,1,0,0H0a0,0,0,0,1,0,0v0A6.083,6.083,0,0,1,6.083,0Z" transform="translate(23.461 46.923) rotate(-135)" fill="url(#linear-gradient-4)"/>
+      <rect id="Rectangle_1552" data-name="Rectangle 1552" width="2.765" height="6.083" transform="translate(34.801 19.942) rotate(-135)" fill="#3b204c"/>
+    </g>
+  </g>
+</svg>

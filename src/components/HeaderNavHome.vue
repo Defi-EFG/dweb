@@ -37,9 +37,6 @@
                           $t('views.titles.dashboard')
                         }}</v-btn>
                       </li>
-                      <!-- <li class="li_noberder">
-                        <v-btn outlined small @click="gotoDashboard">Dashboard</v-btn>
-                      </li> -->
                     </ul>
                   </div>
                 </v-list-item>
@@ -50,14 +47,9 @@
       </v-row>
       <language-switcher></language-switcher>
     </v-app-bar>
-
     <div class="undercontruction-dialog">
-      <v-dialog v-model="dialog" width="500">
-        <v-card>
-          <v-card-text>
-            <img class="img" :src="require(`@/assets/${underconstruction}`)" alt="" />
-          </v-card-text>
-        </v-card>
+      <v-dialog :content-class="'dialog-no-box'" v-model="dialog" width="500" id="hello">
+        <img class="img" :src="require(`@/assets/${underconstruction}`)" alt="" />
       </v-dialog>
     </div>
   </div>
@@ -77,11 +69,9 @@ export default class HeaderNavHome extends Vue {
   gotoHome() {
     this.$router.push('/')
   }
-  // gotoDashboard() {
-  //   this.$router.push('defi')
-  // }
   gotoDashboard() {
     this.$router.push('defi')
+    //this.dialog = true
   }
   get msg() {
     return this.$t('views.pdf')
@@ -91,32 +81,10 @@ export default class HeaderNavHome extends Vue {
   }
 }
 </script>
+
 <style lang="scss">
-.undercontruction-dialog .v-dialog {
-  border-radius: 4px;
-  margin: 24px;
-  overflow-y: auto;
-  pointer-events: auto;
-  transition: 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-  width: 100%;
-  z-index: inherit;
-  box-shadow: unset;
-}
-.undercontruction-dialog .v-dialog::before {
-  content: '';
-  max-width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  box-shadow: unset;
-  -webkit-backdrop-filter: unset;
-  backdrop-filter: unset;
-}
-.undercontruction-dialog .v-dialog img {
-  width: 30%;
- 
+.dialog-no-box {
+  box-shadow: unset !important;
 }
 </style>
 <style lang="scss" scoped>
@@ -145,6 +113,7 @@ export default class HeaderNavHome extends Vue {
     0px 9px 46px 8px rgba(0, 0, 0, 0.12);
   position: relative;
   border-radius: 5px;
+  background-color: #2c1635;
 }
 .menu_bu::before {
   content: '';
@@ -276,7 +245,7 @@ ul {
   }
 }
 .color_bg {
-  background: #2b1534 linear-gradient(180deg, #2c1635 0%, #2b1534 100%) 0% 0% no-repeat padding-box;
+  background: #24142f linear-gradient(180deg, #251430 0%, #251430 100%) 0% 0% no-repeat padding-box;
   position: fixed;
   width: 100%;
   transition: 0.3s;
@@ -348,6 +317,11 @@ ul {
   .v-btn--icon.v-size--default .v-icon,
   .v-btn--fab.v-size--default .v-icon {
     font-size: 40px;
+  }
+}
+@media only screen and (max-width: 670px) {
+  .color_bg {
+    padding: 4px 15px;
   }
 }
 </style>

@@ -2,8 +2,8 @@
   <v-card class="mx-auto sl-card" dark>
     <v-toolbar class="sl-header" flat dense>
       <v-toolbar-title>
-        <v-icon class="mr-2">mdi-database</v-icon>
-        <span>Staking</span>
+        <v-icon class="head-icon">mdi-database</v-icon>
+        <span>Staking List</span>
       </v-toolbar-title>
     </v-toolbar>
 
@@ -54,7 +54,12 @@ export default class StakingList extends Vue {
     padding-box;
 
   span {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .head-icon {
+    font-size: 20px;
+    margin-right: 0.5rem;
   }
 }
 

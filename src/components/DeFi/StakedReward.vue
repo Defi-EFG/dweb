@@ -1,20 +1,20 @@
 <template>
-  <v-card dark color="#2e3344">
+  <v-card dark color="#2e3344" class="staked-reward">
     <v-card-text class="wrapper">
       <div class="total-reward">
-        <p class="label">Your Staked Reward</p>
+        <p class="label mb-0">Your Staked Reward</p>
         <p class="value">{{ stakedReward }} {{ currencyName }}</p>
       </div>
 
       <div class="d-amount">
         <span>Withdraw Available</span>
         <v-spacer></v-spacer>
-        <span>{{ withdrawAvailable.toFixed(2) }} {{ currencyName }}</span>
+        <span class="text-right">{{ withdrawAvailable.toFixed(2) }} {{ currencyName }}</span>
       </div>
 
       <v-divider></v-divider>
 
-      <p class="reward-label">Reward Withdrawal</p>
+      <p class="reward-label mb-1">Reward Withdrawal</p>
 
       <div class="minimum-w">
         <v-spacer></v-spacer>
@@ -63,6 +63,10 @@ export default class StakedReward extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.staked-reward {
+  width: inherit;
+}
+
 .wrapper {
   padding: 1.2rem;
   padding-top: 3.11rem;
@@ -85,6 +89,7 @@ export default class StakedReward extends Vue {
   display: flex;
   padding: 13px 10px;
   .value {
+    text-align: left;
     opacity: 0.7;
   }
 
@@ -92,6 +97,7 @@ export default class StakedReward extends Vue {
     text-decoration: underline;
     cursor: pointer;
     color: white;
+    text-align: right;
   }
 }
 
@@ -118,12 +124,12 @@ export default class StakedReward extends Vue {
   }
 
   .value {
-    padding: 1rem 0;
+    padding-top: 1rem;
     background: transparent linear-gradient(90deg, #c074f9 0%, #deb6fe 100%) 0% 0% no-repeat
       padding-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: xx-large;
+    font-size: x-large;
     font-weight: bold;
   }
 }

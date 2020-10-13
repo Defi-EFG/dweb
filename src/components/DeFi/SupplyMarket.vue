@@ -58,8 +58,12 @@ export default class SupplyMarket extends Vue {
     padding-box;
 
   span {
-    font-size: 18px;
+    font-size: 16px;
   }
+}
+
+.market-token {
+  height: 100%;
 }
 
 .market-item {
@@ -112,7 +116,7 @@ export default class SupplyMarket extends Vue {
 
 <style lang="scss">
 .market-content {
-  height: 220px;
+  height: 229px;
   overflow: auto;
   .row {
     margin-left: 0;

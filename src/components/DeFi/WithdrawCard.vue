@@ -1,5 +1,5 @@
 <template>
-  <v-card dark color="#1D212E">
+  <v-card dark color="#1D212E" class="withdraw-card">
     <v-card-text class="wrapper">
       <p class="action-label">Withdraw</p>
       <div class="wallet-balance mb-2">
@@ -18,6 +18,7 @@
         color="#C074F9"
         :hint="tokenConversion"
         persistent-hint
+        type="number"
       ></v-text-field>
       <div class="borrow-power">
         <span class="label">Borrow Power</span>
@@ -31,18 +32,18 @@
         ></v-progress-linear>
       </div>
       <div class="borrow-used">
-        <div>Borrow Power Used</div>
+        <div class="text-left">Borrow Power Used</div>
         <v-spacer></v-spacer>
-        <div>
+        <div class="text-right">
           <span>25.0%</span>
           &rarr;
           <span class="after-calculated">{{ calculateBPUsed(withdrawValue).toFixed(1) }}%</span>
         </div>
       </div>
       <div class="borrow-total mt-1 mb-3">
-        <div>Total Borrow Power</div>
+        <div class="text-left">Total Borrow Power</div>
         <v-spacer></v-spacer>
-        <div>
+        <div class="text-right">
           <span>$800.00</span>
           &rarr;
           <span class="after-calculated">${{ calculateTotalBP(withdrawValue).toFixed(2) }}</span>
@@ -53,10 +54,10 @@
         large
         block
         depressed
-        :disabled="withdrawValue > maxWithdraw"
-        :class="withdrawValue > maxWithdraw ? 'submit-btn disabled' : 'submit-btn'"
+        :disabled="!isWithdrawable(withdrawValue, 'error')"
+        :class="isWithdrawable(withdrawValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       >
-        {{ withdrawValue > maxWithdraw ? 'Insufficient' : 'Withdraw' }}</v-btn
+        {{ isWithdrawable(withdrawValue, 'btn') ? 'Withdraw' : 'Insufficient' }}</v-btn
       >
     </v-card-text>
   </v-card>
@@ -121,13 +122,27 @@ export default class Withdraw extends Vue {
   }
 
   calculateBPUsed(withdrawAmount: number) {
-    const dollarsAmount = Number(withdrawAmount) * this.currencyRate[this.currencyName]
     return (this.borrowBalance / this.calculateTotalBP(withdrawAmount)) * 100
+  }
+
+  isWithdrawable(amount: number, type: string) {
+    const isEnough = amount <= this.maxWithdraw
+    const isValidAmount = amount >= 0
+    const isClickable = amount > 0
+
+    if (type === 'error') {
+      return isEnough && isClickable
+    }
+    return isEnough && isValidAmount
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.withdraw-card {
+  width: 100%;
+}
+
 .wrapper {
   padding: 2rem;
   text-align: left;
@@ -147,6 +162,7 @@ export default class Withdraw extends Vue {
   .balance {
     text-decoration: underline;
     cursor: pointer;
+    text-align: right;
   }
 }
 

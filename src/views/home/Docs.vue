@@ -7,7 +7,7 @@
             <div class="sibar_dc">
               <a
                 @click="onClickActive(active == 'Introduction')"
-                :class="active == 'Introduction' ? 'active' : undefined"
+                :class="active == 'Introduction' ? 'active' : ''"
                 href="#Introduction"
                 >{{ $t('views.docs.Introduction') }}</a
               >

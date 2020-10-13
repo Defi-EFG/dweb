@@ -5,16 +5,18 @@
         <HeaderNav />
       </div>
     </v-container>
-    <div class="content">
-      <DefiNav />
-      <div class="main-container">
-        <div class="inner-container container">
-          <transition name="fade" mode="out-in">
-            <router-view></router-view>
-          </transition>
+    <v-responsive>
+      <div class="content">
+        <DefiNav />
+        <div class="main-container">
+          <div class="inner-container">
+            <transition name="fade" mode="out-in">
+              <router-view></router-view>
+            </transition>
+          </div>
         </div>
       </div>
-    </div>
+    </v-responsive>
   </div>
 </template>
 
@@ -34,24 +36,24 @@ export default class Home extends Vue {}
 
 <style lang="scss" scoped>
 .layout {
+  background-attachment: fixed;
   min-height: 100vh;
   flex-direction: column;
   background: transparent linear-gradient(0deg, #191d2c 0%, #1a2036 100%) 0% 0% no-repeat
     padding-box;
 }
 .content {
-  padding: 0 45px 30px 45px;
+  margin: 0 70px 20px;
   display: flex;
   position: relative;
   flex: 1;
-  justify-content: center;
+  align-self: center;
   .row {
     width: 100%;
   }
 }
 
 .main-container {
-  display: flex;
   width: -webkit-fill-available;
   .inner-container {
     position: relative;
@@ -61,6 +63,12 @@ export default class Home extends Vue {}
 
 .address-bar {
   text-align: right;
+}
+
+@media (max-width: 1440px) {
+  .content {
+    margin: 0 20px 20px;
+  }
 }
 </style>
 

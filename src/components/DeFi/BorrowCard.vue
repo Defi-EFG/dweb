@@ -1,5 +1,5 @@
 <template>
-  <v-card dark color="#1D212E">
+  <v-card dark color="#1D212E" class="borrow-card">
     <v-card-text class="wrapper">
       <p class="action-label">Borrow</p>
       <div class="wallet-balance mb-2">
@@ -10,6 +10,7 @@
       <v-text-field
         class="amount-input"
         label="Borrow Amount"
+        type="number"
         :suffix="currencyName"
         v-model="borrowValue"
         height="43"
@@ -21,15 +22,16 @@
         <span class="label">Borrow Power</span>
         <v-slider
           class="borrow-slider"
-          v-model="val"
+          v-model="bpSlider"
           min="0"
           max="100"
           color="#c074f9"
           track-color="#E4E4E4"
-          thumb-color="#ffffff"
+          thumb-color="#E4E4E4"
           :hide-details="true"
-          @end="limitValue(25)"
-          @click="limitValue(25)"
+          thumb-label
+          @end="limitValue"
+          @click="limitSlider"
         ></v-slider>
       </div>
       <div class="borrow-used">
@@ -47,7 +49,14 @@
         <v-spacer></v-spacer>
         <span>2.90 %</span>
       </div>
-      <v-btn large block depressed class="submit-btn">Borrow</v-btn>
+      <v-btn
+        large
+        block
+        depressed
+        :disabled="!isBorrowable(borrowValue, 'error')"
+        :class="isBorrowable(borrowValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+        >{{ isBorrowable(borrowValue, 'btn') ? 'Borrow' : 'Not available' }}</v-btn
+      >
     </v-card-text>
   </v-card>
 </template>
@@ -66,8 +75,7 @@ export default class BorrowCard extends Vue {
     ETH: 10
   }
 
-  val = 25
-  minVal = 25
+  bpSlider = this.currentBPPercent
   borrowValue = 0
 
   get walletBalance() {
@@ -78,10 +86,23 @@ export default class BorrowCard extends Vue {
     return this.currency.name
   }
 
-  limitValue(num: number) {
-    if (this.val < num) {
-      this.val = num
+  // only for click event
+  limitSlider() {
+    if (this.bpSlider < this.currentBPPercent) {
+      this.bpSlider = this.currentBPPercent
     }
+
+    this.borrowValue = this.bpPercentToValue(this.bpSlider)
+    this.borrowValue = Math.round(this.borrowValue)
+  }
+
+  limitValue(num: number) {
+    if (num < this.currentBPPercent) {
+      this.bpSlider = this.currentBPPercent
+    }
+
+    this.borrowValue = this.bpPercentToValue(num)
+    this.borrowValue = Math.round(this.borrowValue)
   }
 
   get supplyBalance() {
@@ -101,18 +122,51 @@ export default class BorrowCard extends Vue {
       Number(this.borrowValue)}`
   }
 
+  get currentBPPercent() {
+    return (this.borrowBalance / (this.supplyBalance * this.borrowPowerPercentage)) * 100
+  }
+
   // BP = Borrow Power
   calculateBPUsed(borrowAmount: number) {
     const dollarsAmount = Number(borrowAmount) * this.currencyRate[this.currencyName]
-    return (
+    const bpPercent =
       ((this.borrowBalance + dollarsAmount) / (this.supplyBalance * this.borrowPowerPercentage)) *
       100
-    )
+    return bpPercent
+  }
+
+  bpPercentToValue(bp: number) {
+    return (bp / 100) * (this.supplyBalance * this.borrowPowerPercentage) - this.borrowBalance
+  }
+
+  isBorrowable(amount: number, type: string) {
+    const isEnough = amount <= this.supplyBalance * this.borrowPowerPercentage - this.borrowBalance
+    const isValidAmount = amount >= 0
+    const isClickable = amount > 0
+
+    if (type === 'error') {
+      return isEnough && isClickable
+    }
+    return isEnough && isValidAmount
+  }
+
+  @Watch('borrowValue')
+  borrowUpdated(val: any) {
+    if (this.borrowValue < 0) {
+      this.borrowValue = 0
+      this.bpSlider = this.currentBPPercent
+    }
+
+    this.bpSlider = this.calculateBPUsed(val)
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.borrow-card {
+  width: inherit;
+}
+
 .wrapper {
   text-align: left;
   padding: 2rem;
@@ -168,5 +222,18 @@ export default class BorrowCard extends Vue {
   font-weight: bold;
   background: transparent linear-gradient(90deg, #9c26df 0%, #661b91 100%) 0% 0% no-repeat
     padding-box;
+}
+
+.disabled {
+  background: #8f8f8f !important;
+  cursor: no-drop;
+}
+</style>
+
+<style lang="scss">
+.borrow-slider {
+  .v-slider__thumb-label {
+    background-color: #c074f9 !important;
+  }
 }
 </style>
