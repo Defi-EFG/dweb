@@ -5,9 +5,9 @@
         <div
           class="defi-menu"
           @click="menuSelect(index)"
-          :class="{ selected: index === activeItem }"
+          :class="{ selected: index === activePage }"
         >
-          <img :src="index === activeItem ? item.iconClicked : item.icon" /> {{ item.page }}
+          <img :src="index === activePage ? item.iconClicked : item.icon" /> {{ item.page }}
         </div>
       </div>
     </v-card-text>
@@ -20,7 +20,7 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component
 export default class DefiNav extends Vue {
   item = 0
-  activeItem = 0
+  activePage = 0
   items = [
     {
       page: 'wallet',
@@ -39,11 +39,25 @@ export default class DefiNav extends Vue {
     }
   ]
 
+  mounted() {
+    const currentMenu = this.getCurrentPageMenu(this.pageParams)
+    this.activePage = this.items.findIndex(item => item.page === currentMenu)
+  }
+
   menuSelect(index: number) {
-    if (index !== this.activeItem) {
-      this.activeItem = index
+    if (index !== this.activePage) {
+      this.activePage = index
       this.$router.push(`/defi/${this.items[index].page}`)
     }
+  }
+
+  getCurrentPageMenu(path: string) {
+    // take slash off
+    return path.substring('/defi'.length + 1)
+  }
+
+  get pageParams() {
+    return this.$router.currentRoute.path
   }
 }
 </script>
