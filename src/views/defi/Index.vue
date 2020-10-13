@@ -36,13 +36,14 @@ export default class Home extends Vue {}
 
 <style lang="scss" scoped>
 .layout {
+  background-attachment: fixed;
   min-height: 100vh;
   flex-direction: column;
   background: transparent linear-gradient(0deg, #191d2c 0%, #1a2036 100%) 0% 0% no-repeat
     padding-box;
 }
 .content {
-  margin: 0 70px;
+  margin: 0 70px 20px;
   display: flex;
   position: relative;
   flex: 1;
@@ -66,7 +67,7 @@ export default class Home extends Vue {}
 
 @media (max-width: 1440px) {
   .content {
-    margin: 0 20px;
+    margin: 0 20px 20px;
   }
 }
 </style>

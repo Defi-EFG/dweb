@@ -73,7 +73,7 @@ export default class TransactionComfirmationModal extends Vue {
 }
 </script>
 <style>
-.headline {
+/* .headline {
   border-bottom: 1px solid rgba(180, 180, 180, 0.555);
   border-bottom-right-radius: 0px !important;
   border-bottom-left-radius: 0px !important;
@@ -81,11 +81,11 @@ export default class TransactionComfirmationModal extends Vue {
 .blur-card .theme--light.v-sheet .theme--light.v-card {
   background-color: transparent !important;
   border-color: transparent !important;
-}
-.theme--light.v-sheet {
+} */
+/* .theme--light.v-sheet {
   border-color: transparent !important;
   background-color: transparent;
-}
+} */
 /* .v-input__slot:before {
   border: none !important;
 } */

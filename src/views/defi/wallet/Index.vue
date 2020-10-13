@@ -1,5 +1,6 @@
 <template>
   <div class="wallet-page">
+    <menu-dropdown></menu-dropdown>
     <v-row class="content-wrapper">
       <v-col cols="8" class="content">
         <token-list></token-list>
@@ -50,6 +51,7 @@ import ContactAddress from '@/components/DeFi/ContactAddress.vue'
 import ReceiveToken from '@/components/DeFi/ReceiveToken.vue'
 import SendToken from '@/components/DeFi/SendToken.vue'
 import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
+import MenuDropdown from '@/components/DeFi/MenuDropdown.vue'
 
 @Component({
   components: {
@@ -57,7 +59,8 @@ import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
     ContactAddress,
     ReceiveToken,
     SendToken,
-    TransactionHistory
+    TransactionHistory,
+    MenuDropdown
   }
 })
 export default class Wallet extends Vue {
