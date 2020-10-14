@@ -2,7 +2,7 @@
   <v-card class="mx-auto sl-card" dark>
     <v-toolbar class="sl-header" flat dense>
       <v-toolbar-title>
-        <v-icon class="mr-2">mdi-database</v-icon>
+        <v-icon class="head-icon">mdi-database</v-icon>
         <span>Staking List</span>
       </v-toolbar-title>
     </v-toolbar>
@@ -12,11 +12,11 @@
         <v-row>
           <v-col cols="auto" class="token d-flex">
             <img src="@/assets/efg_logo.svg" />
-            <span>{{ token.token }}</span>
+            <span>{{ token.currency.name }}</span>
           </v-col>
           <v-col class="reward">
-            <small>Total Staked Reward</small>
-            <div class="value">{{ token.value }} {{ token.token }}</div>
+            <small>Total Staking</small>
+            <div class="value">{{ token.amount }} {{ token.currency.name }}</div>
           </v-col>
         </v-row>
       </v-card>
@@ -25,18 +25,26 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import { CurrencyInfo } from '@/types/currency'
 
 @Component({})
 export default class StakingList extends Vue {
+  @Prop({ default: 0 }) readonly stakingAmount!: number
+  @Prop({ default: {} }) readonly stakingCurrency!: CurrencyInfo
+
   selected = false
 
-  tokenList = [
-    {
-      token: 'GPT',
-      value: '5.16349650'
-    }
-  ]
+  get tokenList() {
+    if (!this.stakingCurrency.name) return []
+
+    return [
+      {
+        currency: this.stakingCurrency,
+        amount: this.stakingAmount
+      }
+    ]
+  }
 }
 </script>
 
@@ -46,7 +54,12 @@ export default class StakingList extends Vue {
     padding-box;
 
   span {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .head-icon {
+    font-size: 20px;
+    margin-right: 0.5rem;
   }
 }
 

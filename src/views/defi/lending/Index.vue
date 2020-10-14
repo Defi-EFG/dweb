@@ -2,57 +2,85 @@
   <div class="lending-page">
     <v-row class="content-wrapper">
       <v-col cols="8" class="content">
-        <SupplyBalance></SupplyBalance>
+        <SupplyBalance :balance="collateralValue"></SupplyBalance>
         <div class="ml-1 mr-1"></div>
-        <BorrowBalance></BorrowBalance>
+        <BorrowBalance :balance="borrowedBalance" :maxBorrow="borrowPower"></BorrowBalance>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pr-0">
         <LendingActivity></LendingActivity>
       </v-col>
     </v-row>
     <v-row class="content-wrapper">
-      <v-col cols="8" class="content">
+      <v-col cols="8" class="content pb-0">
         <v-card dark class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
-              <img src="@/assets/efg_logo.svg" />
-              <span>ECOC</span>
+              <img :src="selectedCurrency.style.icon" />
+              <span> {{ selectedCurrency.name }}</span>
             </v-toolbar-title>
           </v-toolbar>
 
-          <v-card-text>
-            <v-row>
-              <v-col cols="6" class="inner-content-left">
-                <transition name="fade" mode="out-in">
-                  <template v-if="mode === 'collateral'">
-                    <Collateral :token="selectedToken"></Collateral>
-                  </template>
-                  <template v-else>
-                    <Borrow :token="selectedToken"></Borrow>
-                  </template>
-                </transition>
-              </v-col>
-              <v-col cols="6" class="inner-content-right">
-                <transition name="fade" mode="out-in">
-                  <template v-if="mode === 'collateral'">
-                    <Withdraw :token="selectedToken"></Withdraw>
-                  </template>
-                  <template v-else>
-                    <Repay :token="selectedToken"></Repay>
-                  </template>
-                </transition>
-              </v-col>
-            </v-row>
-          </v-card-text>
+          <v-row class="content-wrapper">
+            <v-col cols="6" class="inner-content pr-1">
+              <transition name="fade" mode="out-in">
+                <template v-if="mode === 'collateral'">
+                  <Collateral
+                    :currency="selectedCurrency"
+                    :collateralBalance="collateralBalance"
+                    :borrowBalance="borrowedBalance"
+                    :borrowPower="borrowPower"
+                    :borrowPowerPercentage="borrowPowerRate"
+                  ></Collateral>
+                </template>
+                <template v-else>
+                  <Borrow
+                    :currency="selectedCurrency"
+                    :collateralBalance="collateralBalance"
+                    :borrowBalance="borrowedBalance"
+                    :borrowPower="borrowPower"
+                    :interestRate="interestRate"
+                    :borrowPowerPercentage="borrowPowerRate"
+                  ></Borrow>
+                </template>
+              </transition>
+            </v-col>
+            <v-col cols="6" class="inner-content pl-1">
+              <transition name="fade" mode="out-in">
+                <template v-if="mode === 'collateral'">
+                  <Withdraw
+                    :currency="selectedCurrency"
+                    :collateralBalance="collateralBalance"
+                    :borrowBalance="borrowedBalance"
+                    :borrowPower="borrowPower"
+                    :borrowPowerPercentage="borrowPowerRate"
+                  ></Withdraw>
+                </template>
+                <template v-else>
+                  <Repay
+                    :currency="selectedCurrency"
+                    :collateralBalance="collateralBalance"
+                    :borrowBalance="borrowedBalance"
+                    :borrowPower="borrowPower"
+                    :interestRate="interestRate"
+                    :borrowPowerPercentage="borrowPowerRate"
+                  ></Repay>
+                </template>
+              </transition>
+            </v-col>
+          </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pb-0 pr-0">
         <v-row>
           <v-col cols="12" class="pt-0 pb-0">
-            <CollateralToken @switchToCollateral="toCollateralToken"></CollateralToken>
+            <CollateralToken
+              :collateralList="collateralList"
+              @switchToCollateral="toCollateralToken"
+              @onActivate="onActivate"
+            ></CollateralToken>
           </v-col>
           <v-col cols="12" class="pb-0">
-            <SupplyMarket @switchToBorrow="toSupplyToken"></SupplyMarket>
+            <SupplyMarket :borrowList="borrowList" @switchToBorrow="toBorrowToken"></SupplyMarket>
           </v-col>
         </v-row>
       </v-col>
@@ -62,6 +90,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import * as constants from '@/constants'
+import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
+import { Currency } from '@/types/currency'
 import SupplyBalance from '@/components/DeFi/SupplyBalance.vue'
 import BorrowBalance from '@/components/DeFi/BorrowBalance.vue'
 import LendingActivity from '@/components/DeFi/LendingActivity.vue'
@@ -86,24 +119,92 @@ import Repay from '@/components/DeFi/RepayCard.vue'
   }
 })
 export default class Lending extends Vue {
+  walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+
   mode = 'collateral'
-  // ECOC for default
-  selectedToken = 'ECOC'
+  selectedCurrency = this.collateralList[0].currency
+
+  get collateralValue() {
+    return this.lendingStore.collateralBalance
+  }
+
+  get collateralBalance() {
+    return this.lendingStore.collateralBalance
+  }
+
+  get borrowedBalance() {
+    return this.lendingStore.borrowedBalance
+  }
+
+  get borrowPowerRate() {
+    return this.lendingStore.borrowPowerRate / 100
+  }
+
+  get borrowPower() {
+    return this.collateralBalance * this.borrowPowerRate
+  }
+
+  get interestRate() {
+    return this.lendingStore.loan.interestRate
+  }
+
+  get isLoggedIn(): boolean {
+    return this.walletStore.address != ''
+  }
+
+  get collateralsActivated() {
+    return this.lendingStore.collateralsActivated
+  }
+
+  get collateralList() {
+    return this.walletStore.currencies
+      .filter(currency => {
+        return constants.COLLATERAL_CURRENCIES.indexOf(currency.name) >= 0
+      })
+      .map(currency => {
+        return {
+          currency: currency,
+          activated: this.collateralsActivated.indexOf(currency.name) >= 0
+        }
+      })
+  }
+
+  get borrowList() {
+    return this.walletStore.currencies
+      .filter(currency => {
+        return constants.LOAN_CURRENCIES.indexOf(currency.name) >= 0
+      })
+      .map(currency => {
+        return {
+          currency: currency,
+          apy: this.lendingStore.loan.interestRate
+        }
+      })
+  }
 
   modeSwitch(val: string) {
     console.log('receive emit')
     this.mode = val
   }
 
-  toCollateralToken(token: string) {
+  toCollateralToken(currency: Currency) {
     this.mode = 'collateral'
-    console.log('selected', token)
-    this.selectedToken = token
+    this.selectedCurrency = currency
   }
 
-  toSupplyToken(token: string) {
+  toBorrowToken(currency: Currency) {
     this.mode = 'borrow'
-    this.selectedToken = token
+    this.selectedCurrency = currency
+  }
+
+  onActivate(data: boolean) {
+    if (data) this.lendingStore.activatedCollateral(this.selectedCurrency.name)
+    else this.lendingStore.deactivatedCollateral(this.selectedCurrency.name)
+  }
+
+  mounted() {
+    //
   }
 }
 </script>

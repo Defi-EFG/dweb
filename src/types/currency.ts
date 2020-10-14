@@ -3,7 +3,7 @@ export interface Currency {
   type: string
   balance: string
   style?: Style
-  price?: string
+  price?: number
   tokenInfo?: Ecrc20
 }
 
@@ -13,6 +13,11 @@ export interface Ecrc20 {
   address: string
   decimals: string
   totalSupply: string
+}
+
+export interface CurrencyInfo {
+  name: string
+  style: Style
 }
 
 export interface Style {

@@ -2,6 +2,9 @@ import { Style } from '../types/currency'
 
 export const ECOC = 'ECOC'
 export const ETH = 'ETH'
+export const USDT = 'USDT'
+export const EFG = 'EFG'
+export const GPT = 'GPT'
 
 export const TYPE_RECEIVED = 'Received'
 export const TYPE_SENT = 'Sent'
@@ -11,6 +14,9 @@ export const TYPE_ECRC20 = 'ECRC-20'
 interface CurrencyStyle {
   [symbol: string]: Style
 }
+
+export const COLLATERAL_CURRENCIES = [ECOC]
+export const LOAN_CURRENCIES = [EFG]
 
 export const KNOWN_CURRENCY = {
   ECOC: {
@@ -38,4 +44,8 @@ export const KNOWN_CURRENCY = {
     icon: require('@/assets/icon/currency/gpt.svg'),
     mark: require('@/assets/wallet-token/gpt.svg')
   } as Style,
+  DEFAULT: {
+    icon: require('@/assets/icon/currency/default.svg'),
+    mark: require('@/assets/wallet-token/default.svg')
+  } as Style
 } as CurrencyStyle

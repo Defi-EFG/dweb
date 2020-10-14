@@ -16,15 +16,32 @@
         "underconstruction": "underconstruction.svg",
         "main": {
             "name": "ECOC Financial Growth",
-            "sub_name_1": "ECOC Financial Growth (EFG) token is a Dapp logic based on decentralization finance (DeFi) created by smart contracts. These tokens comply with ECRC-20 standard, which shares the same Interface of ERC-20 (Ethereum) standard.",
-            "sub_name_2": "The mechanism to function ECOC Financial Growth (EFG) token can offer a firmer credit channel for borrowers. Investors don’t need to sell their coins to get liquidity, they just deposit them as collateral and they can buy them back when they want. That way EFG token comes with new alternatives for investment, according to the basic mechanism of the cryptocurrency market and interest compensation depends on the borrowing period.",
+
+            "sub_name_efg": "EFG",
+            "sub_name_1": "(EFG) dApp is created based on smart contracts architecture. The basic logic is the system to be fully decentralized. The dApp goal is decentralized finance (DeFi). All the tokens, including the basic system tokens (EFG and GPT) and collateral assets, are ECRC-20 standard which is similar with ERC-20 (Ethereum) standard. They are freely transferable by users, and they can be even delegate handling(allowance). Additionally, the system can also accept ECOC (the native coin).",
+            "sub_name_11": "The EFG dApp can be cross-platform. This can be done with 'wrapped tokens.' Any assets (native coins or tokens) on any blockchain can be swapped in a decentralized way (atomic swaps), with wrapped tokens moving back and forth between Ecochain and the other blockchains. Wrapped tokens follow ECRC-20 standard so that they can join the dApp without problems.",
+            "sub_name_12": "EFG dApp also includes an Oracle system and open source client for user interface and interaction with the blockchains. Oracle system obtains real-time exchange rates from many different trusted sources and injects them into smart contracts. All these mean that the system stays decentralized.",
+            "sub_name_13": "EFG token details EFG has a total and fixed supply of one million tokens. That means that tokens can't be created, minted, or burned. The token shares the same interface as the ERC-20 (Ethereum) standard, as already mentioned. The interface standard provides the owner's functionality to transfer, allow some other entity to act for him, or even act on behalf of the other owner (if he gets an allowance from him). In short, it is easy even for third parties to build tools or clients to interact with EFG token.",
+
+            "sub_name_gpt": "GPT",
+            "sub_name_2": "GPT (Grace Period Token) is a token used to delay the settlement of mortgage assets. It can also be mined by using EFG mortgages that comply with the ECRC-20 standard. GPT is designed through the ECRC-20 standard smart contract and provides a total of 10,000 tokens. GPT provides the need for contract clearing extension because it can be used to increase the grace period for margin call notifications. It has become the main factor in the protection of investors' risk extension benefits in EFG's lending behavior.",
+            "sub_name_22": "",
+
+            "sub_name_efgandgpt": "Why EFG and GPT",
+            "sub_name_3": "EFG is a lending token in the ECOC ecosystem. Its design purpose is to promote the development of the ECOC ecosystem and improve the construction of the ECOC financial ecosystem. At the same time, EFG adopts hedging financial logic to achieve a high degree of balance and trust between the relationship between the borrower and the lender and the transaction market. Coin holders can use ECOC coins as collateral to withdraw. It solves the problem of holding cryptocurrency and those who need liquidity to invest in the cryptocurrency market without selling their assets. If he wants to maintain a long position in assets because investors believe that these assets will increase in value. In addition,",
+            "sub_name_33": "EFG token is about to launch GPT (Grace Period Token), which provides a more solid credit channel for borrowers to hedge. Hedging refers to investors placing bets on positions opposite to current positions in order to reduce the cycle risk of portfolio value fluctuations. Hedging is a strategy followed by rational investors (low risk and low expected profit). Currently, hedging (also called hedging) can only be done with a pair of cryptocurrencies. But in the future, when more currencies are introduced into the system, the combination of mortgage assets can be applied to hedging strategies. Because GPT was created to support EFG loans, GPT is used to delay the settlement of mortgage assets. Therefore, no matter what the exchange rate is, these innovative tokens are designed to support investors’ asset investment strategies.",
+
+            "sub_name_work": "How it works",
+            "sub_name_4": "Investors can just use ECOC as collateral to get a loan from ECOChain system, the system only accepts ECOC as collateral. The investor must pay interest to the system for the EFG token he received.  They are free to pay back their loan whenever they want. The investor must return exactly the amount of EFG token they borrowed plus the interest for the period elapsed. The interest rate is calculated daily, and the total interest depends on the block timestamps.  The investor has the option to receives a GPT rewarded token by staking EFG. This action brings him passive income because GPT has its value.  There is a demand for it because it can be used to increase the grace period of a margin call.",
+
             "supply": "Supply",
             "detail": "Details",
-            "supply_apy": "Supply APY (GPT)",
+            "loaner": "Loaner",
             "borrow_apy": "Borrow APY",
             "total_supply": "Total Supply",
             "total_borrowed": "Total Borrowed",
-            "liquidation": "Liquidation",
+            "deposit": "Deposit",
+            "estimated": "Estimated daily yield",
             "available": "Available (Total: 10,000 GPT)",
             "collateral": "Collateral"
         },
@@ -55,8 +72,8 @@
                 "head_sub": "ECOC Financial Growth (EFG) is a decentralized currency, building on ECRC-20 and sharing the same interface of ERC-20 (Ethereum) standard. EFG is created form ECOChain developers and trying to expand and strengthen the ecosystem, providing the desired missing attributes for users, reality, and stable prices. EFG aims to simplify DeFi for the general users and help boost their profits at the same time, even for those unfamiliar with the world of digital assets."
             },
             "detail3": {
-                "head": "Why EGF?",
-                "head_sub": "EFG brings an opportunity for increasing the investment value for users. Our goal is to make DeFi simple and accessible for everyone, even for the digital asset novices. As well as, gather a wide user base and create high utility services. Get ready to join a brand-new monetary,v"
+                "head": "Why EFG?",
+                "head_sub": "EFG brings an opportunity for increasing the investment value for users. Our goal is to make DeFi simple and accessible for everyone, even for the digital asset novices. As well as, gather a wide user base and create high utility services. Get ready to join a brand-new monetary,EFG!"
             }
 
         }

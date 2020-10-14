@@ -10,3 +10,8 @@ export const toDecimals = (value: number | string, decimals: number | string) =>
 export const toNumber = (value: string) => {
   return new BigNumber(value)
 }
+
+export const getEstimatedValue = (amount: number | string, price: number | string) => {
+  if (!price) return 0
+  return new BigNumber(amount).multipliedBy(new BigNumber(price)).toFixed(6)
+}

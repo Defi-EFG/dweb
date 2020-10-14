@@ -16,17 +16,24 @@
         class="collateral-item"
         v-for="(item, index) in collateralList"
         :key="index"
-        @click="switchToCollateral(item.token)"
+        @click="switchToCollateral(item.currency)"
       >
         <v-col cols="4" class="assets">
-          <img :src="require(`@/assets/icon/currency/${item.token.toLowerCase()}.svg`)" />
-          <span>{{ item.token }}</span>
+          <img :src="item.currency.style.icon" />
+          <span>{{ item.currency.name }}</span>
         </v-col>
         <v-col cols="5" class="balance">
-          <span>{{ item.value.toFixed(2) }} {{ item.token }}</span>
+          <span>{{ item.currency.balance }} {{ item.currency.name }}</span>
         </v-col>
-        <v-col cols="3" class="activate">
-          <v-switch color="#060606" :hide-details="true" inset v-model="item.activated"></v-switch>
+        <v-col cols="3" class="collateral">
+          <!-- <div class="collateral-status" :class="item.activated ? 'activated' : ''"></div> -->
+          <v-switch
+            color="#060606"
+            :hide-details="true"
+            :input-value="item.activated"
+            inset
+            @change="onActivate"
+          ></v-switch>
         </v-col>
       </v-row>
     </v-card-text>
@@ -34,30 +41,20 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Collateral } from '@/types/lending'
+import { Currency } from '@/types/currency'
 
 @Component({})
 export default class CollateralToken extends Vue {
-  collateralList = [
-    {
-      token: 'ECOC',
-      value: 2000,
-      activated: true
-    },
-    {
-      token: 'USDT',
-      value: 1000,
-      activated: false
-    },
-    {
-      token: 'ETH',
-      value: 500,
-      activated: false
-    }
-  ]
+  @Prop({ default: [] }) readonly collateralList!: Collateral[]
 
-  switchToCollateral(token: string) {
-    this.$emit('switchToCollateral', token)
+  switchToCollateral(currency: Currency) {
+    this.$emit('switchToCollateral', currency)
+  }
+
+  onActivate(data: boolean) {
+    this.$emit('onActivate', data)
   }
 }
 </script>
@@ -68,8 +65,12 @@ export default class CollateralToken extends Vue {
     padding-box;
 
   span {
-    font-size: 18px;
+    font-size: 16px;
   }
+}
+
+.collateral-token {
+  height: 100%;
 }
 
 .collateral-item {
@@ -99,8 +100,8 @@ export default class CollateralToken extends Vue {
     }
   }
 
-  .activate {
-    text-align: center;
+  .collateral {
+    text-align: -webkit-center;
   }
 }
 
@@ -112,11 +113,23 @@ export default class CollateralToken extends Vue {
 .supply-item:nth-last-child(1) {
   margin-bottom: 0;
 }
+
+.collateral-status {
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  border: 6px solid #212637;
+  background-color: #afb1b7;
+}
+
+.activated {
+  background-color: #c074f9 !important;
+}
 </style>
 
 <style lang="scss">
 .collateral-content {
-  height: 220px;
+  height: 230px;
   overflow: auto;
   .row {
     margin-left: 0;

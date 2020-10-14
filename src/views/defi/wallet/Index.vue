@@ -1,37 +1,41 @@
 <template>
   <div class="wallet-page">
+    <menu-dropdown></menu-dropdown>
     <v-row class="content-wrapper">
       <v-col cols="8" class="content">
         <token-list></token-list>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pr-0">
         <contact-address></contact-address>
       </v-col>
     </v-row>
     <v-row class="content-wrapper">
-      <v-col cols="8" class="content">
+      <v-col cols="8" class="content pb-0">
         <v-card dark class="tx-container">
           <v-toolbar :class="`receive-send-wrapper token-${selectedCurrencyName}`" dense flat>
             <v-toolbar-title class="token-symbol">
               <img
                 v-if="selectedCurrencyName"
-                :src="require(`@/assets/icon/vector/${selectedCurrencyName}.svg`)"
+                :src="
+                  require(`@/assets/icon/vector/${selectedCurrencyName}.svg` ||
+                    `@/assets/icon/vector/default.svg`)
+                "
               />
               <span>{{ selectedCurrencyName }}</span>
             </v-toolbar-title>
           </v-toolbar>
 
-          <v-row>
-            <v-col cols="6">
+          <v-row class="content-wrapper">
+            <v-col class="inner-content pr-1" cols="6">
               <receive-token></receive-token>
             </v-col>
-            <v-col cols="6">
+            <v-col class="inner-content pl-1" cols="6">
               <send-token></send-token>
             </v-col>
           </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4" class="content">
+      <v-col cols="4" class="content pb-0 pr-0">
         <transaction-history :page="'wallet'"></transaction-history>
       </v-col>
     </v-row>
@@ -47,6 +51,7 @@ import ContactAddress from '@/components/DeFi/ContactAddress.vue'
 import ReceiveToken from '@/components/DeFi/ReceiveToken.vue'
 import SendToken from '@/components/DeFi/SendToken.vue'
 import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
+import MenuDropdown from '@/components/DeFi/MenuDropdown.vue'
 
 @Component({
   components: {
@@ -54,7 +59,8 @@ import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
     ContactAddress,
     ReceiveToken,
     SendToken,
-    TransactionHistory
+    TransactionHistory,
+    MenuDropdown
   }
 })
 export default class Wallet extends Vue {
@@ -76,7 +82,7 @@ export default class Wallet extends Vue {
 
 <style lang="scss" scoped>
 .receive-send-wrapper {
-  background: transparent linear-gradient(268deg, #6212c9 0%, #9023bf 100%) 0% 0% no-repeat
+  background: transparent linear-gradient(268deg, #646464 0%, #474747 100%) 0% 0% no-repeat
     padding-box;
 }
 
@@ -116,9 +122,15 @@ export default class Wallet extends Vue {
 
 <style lang="scss">
 .content-wrapper {
+  margin-left: 0 !important;
+  margin-right: 0 !important;
   .content {
     padding-top: 0;
     padding-left: 0;
+    display: flex;
+  }
+
+  .inner-content {
     display: flex;
   }
 }

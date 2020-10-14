@@ -1,16 +1,16 @@
 <template>
-  <v-card class="mx-auto send-token" dark color="#1D212E">
+  <v-card class="send-token" dark color="#1D212E">
     <v-toolbar class="send-head" flat dense>
       <v-toolbar-title>
-        <v-icon class="mr-2">mdi-arrow-up-circle-outline</v-icon>
+        <v-icon class="head-icon">mdi-arrow-up-circle-outline</v-icon>
         <span>Send</span>
       </v-toolbar-title>
     </v-toolbar>
     <v-card-text class="text-center send-area">
       <div class="token-balance">
-        <span>ECOC Balance</span>
+        <span class="text-left">ECOC Balance</span>
         <v-spacer></v-spacer>
-        <span>{{ ecocBalance }} ECOC</span>
+        <span class="text-right">{{ ecocBalance }} ECOC</span>
       </div>
       <v-text-field
         label="To Address"
@@ -44,7 +44,9 @@
         </v-list-item-group>
       </div>
       <div class="withdraw-rate">
-        <span>{{ selectedCurrencyName }} Available: {{ selectedCurrencyBalance }}</span>
+        <span class="text-left"
+          >{{ selectedCurrencyName }} Available: {{ selectedCurrencyBalance }}</span
+        >
         <v-spacer></v-spacer>
         <span class="fb-btn" @click="withdrawAll(selectedCurrencyBalance)">Withdraw All</span>
       </div>
@@ -165,12 +167,21 @@ export default class SendToken extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.send-token {
+  width: 100%;
+}
+
 .send-head {
   background: transparent linear-gradient(270deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
     padding-box;
 
   span {
-    font-size: 18px;
+    font-size: 16px;
+  }
+
+  .head-icon {
+    font-size: 20px;
+    margin-right: 0.5rem;
   }
 }
 
@@ -212,6 +223,7 @@ export default class SendToken extends Vue {
     text-decoration: underline;
     color: white;
     cursor: pointer;
+    text-align: right;
   }
 }
 
@@ -239,7 +251,7 @@ export default class SendToken extends Vue {
 
 .send-btn {
   margin-bottom: 3rem;
-  margin-top: 4.2rem;
+  margin-top: 9rem;
   background-color: #363a4a !important;
   color: #c074f9;
   font-weight: bold;

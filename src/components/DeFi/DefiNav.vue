@@ -1,27 +1,17 @@
 <template>
-  <div id="nav">
-    <v-card width="219" class="drawer-container">
-      <v-navigation-drawer class="defi-drawer" dark floating permanent>
-        <v-list nav>
-          <v-list-item-group v-model="item" color="primary">
-            <v-list-item
-              v-for="(item, i) in items"
-              :key="i"
-              @click="$router.push(`/defi/${item.text}`)"
-            >
-              <v-list-item-icon>
-                <v-icon v-text="item.icon"></v-icon>
-              </v-list-item-icon>
-
-              <v-list-item-content>
-                <v-list-item-title v-text="item.text"></v-list-item-title>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list-item-group>
-        </v-list>
-      </v-navigation-drawer>
-    </v-card>
-  </div>
+  <v-card dark class="side-navbar">
+    <v-card-text class="inner-nav">
+      <div v-for="(item, index) in items" :key="index">
+        <div
+          class="defi-menu"
+          @click="menuSelect(index)"
+          :class="{ selected: index === activePage }"
+        >
+          <img :src="index === activePage ? item.iconClicked : item.icon" /> {{ item.page }}
+        </div>
+      </div>
+    </v-card-text>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -30,60 +20,80 @@ import { Component, Vue } from 'vue-property-decorator'
 @Component
 export default class DefiNav extends Vue {
   item = 0
+  activePage = 0
   items = [
-    { text: 'wallet', icon: 'mdi-folder' },
-    { text: 'lending', icon: 'mdi-account-multiple' },
-    { text: 'staking', icon: 'mdi-star' }
+    {
+      page: 'wallet',
+      icon: require('@/assets/icon/wallet-w.svg'),
+      iconClicked: require('@/assets/icon/wallet.svg')
+    },
+    {
+      page: 'lending',
+      icon: require('@/assets/icon/lending-w.svg'),
+      iconClicked: require('@/assets/icon/lending.svg')
+    },
+    {
+      page: 'staking',
+      icon: require('@/assets/icon/staking-w.svg'),
+      iconClicked: require('@/assets/icon/staking.svg')
+    }
   ]
+
+  mounted() {
+    const currentMenu = this.getCurrentPageMenu(this.pageParams)
+    this.activePage = this.items.findIndex(item => item.page === currentMenu)
+  }
+
+  menuSelect(index: number) {
+    if (index !== this.activePage) {
+      this.activePage = index
+      this.$router.push(`/defi/${this.items[index].page}`)
+    }
+  }
+
+  getCurrentPageMenu(path: string) {
+    // take slash off
+    return path.substring('/defi'.length + 1)
+  }
+
+  get pageParams() {
+    return this.$router.currentRoute.path
+  }
 }
 </script>
 
 <style lang="scss" scoped>
-#nav {
-  display: flex;
-  min-height: 80vh;
-  padding-top: 12px;
-  a {
-    font-weight: bold;
-    color: #2c3e50;
-
-    &.router-link-exact-active {
-      color: #b942a9;
-    }
-  }
-}
-
-.drawer-container {
-  border-radius: 8px !important;
-  background-color: #2f3345 !important;
-  border-color: #303546 !important;
-}
-
-.defi-drawer {
-  text-transform: capitalize;
-  padding-top: 1.5rem;
+.side-navbar {
   background: transparent linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
     padding-box;
-  border-radius: 5px !important;
 
-  .v-list-item__icon {
-    padding: 0.1rem 0 0.1rem 2rem;
-    margin-right: 10px !important;
+  margin-right: 12px;
+
+  .inner-nav {
+    padding: 1.7rem 0.5rem 1rem;
   }
+}
 
-  .v-item--active {
-    // background: rgba(255, 255, 255, 0.1) !important;
-    .v-list-item__icon {
-      color: #c074f9 !important;
-    }
-
-    .v-list-item__content {
-      color: #c074f9 !important;
-    }
+.defi-menu {
+  display: flex;
+  padding: 0.75rem 2.4rem;
+  margin-bottom: 8px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-transform: capitalize;
+  align-items: center;
+  img {
+    margin-right: 8px;
+    width: 22px;
   }
+}
 
-  .v-list-item--link:before {
-    background-color: #ffffff47;
-  }
+.defi-menu:hover {
+  background: #353848;
+}
+
+.selected {
+  background: #353848 !important;
+  color: #c074f9;
 }
 </style>

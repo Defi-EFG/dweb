@@ -18,7 +18,9 @@
         </template>
         <v-card rounded-lg width="389" class="v-card-wrapper">
           <v-card-title class="cardheadertitle"
-            ><h6>ECOC Wallet</h6>
+            ><h6>
+              ECOC Wallet: <span class="network">{{ network }}</span>
+            </h6>
             <v-btn text color="primary" class="mb-2" @click="logout()"
               ><span class="text-btn">Disconnect</span></v-btn
             ></v-card-title
@@ -97,6 +99,10 @@ export default class HeaderNav extends Vue {
     return this.walletStore.address
   }
 
+  get network() {
+    return this.walletStore.network
+  }
+
   closeUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
@@ -156,6 +162,9 @@ export default class HeaderNav extends Vue {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  .network {
+    color: #c074f9;
+  }
 }
 
 .cardheadertitle p,

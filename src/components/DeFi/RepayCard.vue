@@ -1,26 +1,29 @@
 <template>
-  <v-card dark color="#1D212E">
+  <v-card dark color="#1D212E" class="repay-card">
     <v-card-text class="wrapper">
       <p class="action-label">Repay</p>
       <div class="wallet-balance mb-2">
         <span>Wallet Balance:</span>
         <v-spacer></v-spacer>
         <span class="balance" @click="fillAmount(walletBalance)"
-          >{{ walletBalance.toFixed(2) }} {{ token }}</span
+          >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
         >
       </div>
       <v-text-field
         class="amount-input"
-        label="Collateral Amount"
-        v-model="collateralAmount"
-        :suffix="token"
+        label="Repay Amount"
+        v-model="repayAmount"
+        :suffix="currencyName"
+        type="number"
         height="43"
         color="#C074F9"
+        :hint="tokenConversion"
+        persistent-hint
       ></v-text-field>
       <div class="borrow-power">
         <span class="label">Borrow Power</span>
         <v-progress-linear
-          value="25"
+          :value="calculateBPUsed(repayAmount)"
           rounded
           color="#C074F9"
           background-color="#E4E4E4"
@@ -32,47 +35,110 @@
         <div>Borrow Power Used</div>
         <v-spacer></v-spacer>
         <div>
-          <span>25.0%</span>
+          <span>{{ bpUsed.toFixed(1) }}%</span>
           &rarr;
-          <span class="after-calculated">22.7%</span>
+          <span class="after-calculated">{{ calculateBPUsed(repayAmount).toFixed(1) }}%</span>
         </div>
       </div>
       <div class="borrow-total mt-1 mb-3">
         <div>Total Borrow Power</div>
         <v-spacer></v-spacer>
         <div>
-          <span>$800.00</span>
+          <span>${{ borrowPower }}</span>
           &rarr;
-          <span class="after-calculated">$880.00</span>
+          <span class="after-calculated">${{ calculateTotalBP(repayAmount).toFixed(2) }}</span>
         </div>
       </div>
       <v-divider />
       <div class="borrow-apy">
         <span class="label">Borrow APY</span>
         <v-spacer></v-spacer>
-        <span>2.90 %</span>
+        <span>{{ interestRate }} %</span>
       </div>
-      <v-btn large block depressed class="submit-btn">Repay</v-btn>
+      <v-btn
+        large
+        block
+        depressed
+        :disabled="!isRepayable(repayAmount, 'error')"
+        :class="isRepayable(repayAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+        >{{ isRepayable(repayAmount, 'btn') ? 'Repay' : 'Insufficient' }}</v-btn
+      >
     </v-card-text>
   </v-card>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Currency } from '@/types/currency'
 
 @Component({})
 export default class RepayCard extends Vue {
-  @Prop() token!: string
+  @Prop() currency!: Currency
+  @Prop() collateralBalance!: number
+  @Prop() borrowBalance!: number
+  @Prop() borrowPower!: number
+  @Prop() interestRate!: number
+  @Prop() borrowPowerPercentage!: number
 
-  walletBalance = 1000
-  collateralAmount: number | string = ''
+  repayAmount = 0
+
+  get walletBalance() {
+    return Number(this.currency.balance)
+  }
+
+  get currencyName() {
+    return this.currency.name
+  }
+
+  get currencyPrice() {
+    return this.currency.price || 0
+  }
+
+  get bpUsed() {
+    return (this.borrowBalance / this.borrowPower) * 100
+  }
+
+  get tokenConversion() {
+    return `${this.repayAmount} ${this.currencyName} ≈ ${this.currencyPrice *
+      Number(this.repayAmount)}`
+  }
 
   fillAmount(amount: number) {
-    this.collateralAmount = amount
+    this.repayAmount = amount
+  }
+
+  // BP = Borrow Power
+  calculateTotalBP(repayAmount: number) {
+    const dollarsAmount = Number(repayAmount) * this.currencyPrice
+    return (this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage
+  }
+
+  calculateBPUsed(repayAmount: number) {
+    const dollarsAmount = Number(repayAmount) * this.currencyPrice
+    return (
+      (this.borrowBalance /
+        ((this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage)) *
+      100
+    )
+  }
+
+  isRepayable(amount: number, type: string) {
+    const isEnough = amount <= this.walletBalance
+    const isValidAmount = amount >= 0
+    const isClickable = amount > 0
+
+    if (type === 'error') {
+      return isEnough && isClickable
+    }
+    return isEnough && isValidAmount
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.repay-card {
+  width: inherit;
+}
+
 .wrapper {
   text-align: left;
   padding: 2rem;
@@ -132,5 +198,10 @@ export default class RepayCard extends Vue {
   font-weight: bold;
   background: transparent linear-gradient(90deg, #9c26df 0%, #661b91 100%) 0% 0% no-repeat
     padding-box;
+}
+
+.disabled {
+  background: #8f8f8f !important;
+  cursor: no-drop;
 }
 </style>

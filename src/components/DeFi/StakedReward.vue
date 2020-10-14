@@ -1,33 +1,32 @@
 <template>
-  <v-card dark color="#2e3344">
+  <v-card dark color="#2e3344" class="staked-reward">
     <v-card-text class="wrapper">
       <div class="total-reward">
-        <p class="label">Total Staked Reward</p>
-        <p class="value">5.15349650 GPT</p>
+        <p class="label mb-0">Your Staked Reward</p>
+        <p class="value">{{ stakedReward }} {{ currencyName }}</p>
       </div>
 
       <div class="d-amount">
-        <span>Deposited amount</span>
+        <span>Withdraw Available</span>
         <v-spacer></v-spacer>
-        <span>{{ depositedAmount.toFixed(2) }} GPT</span>
+        <span class="text-right">{{ withdrawAvailable.toFixed(2) }} {{ currencyName }}</span>
       </div>
 
       <v-divider></v-divider>
 
-      <p class="reward-label">Reward Withdrawal</p>
+      <p class="reward-label mb-1">Reward Withdrawal</p>
 
       <div class="minimum-w">
-        <span class="value">Minimum Withdrawal: 1.00 GPT</span>
         <v-spacer></v-spacer>
-        <span class="all" @click="fillAmount(depositedAmount)">Withdraw All</span>
+        <span class="all" @click="fillAmount(withdrawAvailable)">Withdraw All</span>
       </div>
 
       <v-text-field
         class="staked-amount"
         placeholder="0"
         prefix="Amount"
-        suffix="GPT"
-        v-model="rewardAmount"
+        :suffix="currencyName"
+        v-model="withdrawAmount"
         single-line
         solo
         hide-details="true"
@@ -39,20 +38,35 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import { CurrencyInfo } from '@/types/currency'
 
 @Component({})
 export default class StakedReward extends Vue {
-  rewardAmount: string | number = ''
-  depositedAmount = 500
+  @Prop({ default: 0 }) readonly stakedReward!: number
+  @Prop({ default: {} }) readonly rewardCurrency!: CurrencyInfo
+
+  withdrawAmount: string | number = ''
+
+  get currencyName() {
+    return this.rewardCurrency.name
+  }
+
+  get withdrawAvailable() {
+    return this.stakedReward
+  }
 
   fillAmount(amount: number) {
-    this.rewardAmount = amount
+    this.withdrawAmount = amount
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.staked-reward {
+  width: inherit;
+}
+
 .wrapper {
   padding: 1.2rem;
   padding-top: 3.11rem;
@@ -75,6 +89,7 @@ export default class StakedReward extends Vue {
   display: flex;
   padding: 13px 10px;
   .value {
+    text-align: left;
     opacity: 0.7;
   }
 
@@ -82,6 +97,7 @@ export default class StakedReward extends Vue {
     text-decoration: underline;
     cursor: pointer;
     color: white;
+    text-align: right;
   }
 }
 
@@ -108,12 +124,12 @@ export default class StakedReward extends Vue {
   }
 
   .value {
-    padding: 1rem 0;
+    padding-top: 1rem;
     background: transparent linear-gradient(90deg, #c074f9 0%, #deb6fe 100%) 0% 0% no-repeat
       padding-box;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
-    font-size: xx-large;
+    font-size: x-large;
     font-weight: bold;
   }
 }

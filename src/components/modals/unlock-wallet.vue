@@ -251,6 +251,7 @@ export default class UnlockwalletModal extends Vue {
   show = false
   step = 1
   unlockwalletModal = this.visible
+
   rules = {
     required: (value: any) => {
       return !!value || 'Required.'
@@ -295,15 +296,19 @@ export default class UnlockwalletModal extends Vue {
   createStep() {
     this.step = 2
   }
+
   connectStep() {
     this.step = 4
   }
+
   welcomeStep() {
     this.step = 1
   }
+
   confirmKeystore() {
     this.step = 5
   }
+
   onUnlockWallet() {
     // const keystore =
     //   '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
@@ -311,17 +316,33 @@ export default class UnlockwalletModal extends Vue {
     const keystore = this.keystore
     const password = this.keystorePassword
     this.walletStore.importWallet({ keystore, password }).then(() => {
-      this.walletStore.updateBalance()
+      this.walletStore.updateBalance().then(() => {
+        this.walletStore.updateCurrenciesPrice()
+      })
       this.walletStore.updateTransactionsHistory()
 
       this.onClose()
     })
   }
+
+  getFormattedTime() {
+    const today = new Date()
+
+    const y = today.getFullYear()
+    const m = today.getMonth() + 1
+    const d = today.getDate()
+    const h = today.getHours()
+    const mi = today.getMinutes()
+    const sec = today.getSeconds()
+
+    return `${y}-${m}-${d}T${h}-${mi}-${sec}`
+  }
+
   downloadkeystore() {
     const blob = new Blob([this.createWalletKeystore], { type: 'application/json' })
     const link = document.createElement('a')
     link.href = window.URL.createObjectURL(blob)
-    link.download = 'keyStorefile.json'
+    link.download = `keystore-${this.getFormattedTime()}.json`
     link.click()
   }
 }

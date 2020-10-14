@@ -8,24 +8,6 @@ import { SendEcocPayload, SendEcrc20Payload } from './ecoc/types'
 import { encodeSendData } from './ecoc/ecrc20'
 import * as utils from './utils'
 
-const currencyColor = {
-  ECOC: 'BlueViolet',
-  ETH: 'SteelBlue',
-  USDT: 'SteelBlue',
-  EFG: 'SteelBlue',
-  GPT: 'SteelBlue',
-  DEFAULT: 'SteelBlue'
-}
-
-const currencyIcon = {
-  ECOC: require('@/assets/icon/currency/ecoc.svg'),
-  ETH: require('@/assets/icon/currency/eth.png'),
-  USDT: require('@/assets/icon/currency/usdt.png'),
-  EFG: require('@/assets/icon/currency/efg.svg'),
-  GPT: require('@/assets/icon/currency/gpt.svg'),
-  DEFAULT: require('@/assets/icon/currency/gpt.svg')
-}
-
 const isEcrc20 = (currency: Currency) => {
   return currency.type === constants.TYPE_ECRC20
 }
@@ -89,7 +71,8 @@ const getEcrc20Balance = async (address: string) => {
     currencies.push({
       name: token.contract.symbol,
       type: constants.TYPE_ECRC20,
-      style: constants.KNOWN_CURRENCY[token.contract.symbol],
+      style: Object.prototype.hasOwnProperty.call(constants.KNOWN_CURRENCY, token.contract.symbol) ?
+        constants.KNOWN_CURRENCY[token.contract.symbol] : constants.KNOWN_CURRENCY['DEFAULT'],
       balance: utils.toDecimals(token.amount, token.contract.decimals),
       tokenInfo: {
         name: token.contract.name,
@@ -154,6 +137,5 @@ export {
   getEcocBalance,
   getEcrc20Balance,
   getTxs,
-  isEcrc20,
-  currencyColor
+  isEcrc20
 }

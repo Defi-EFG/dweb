@@ -2,20 +2,23 @@
   <v-card dark class="borrow-card">
     <v-card-text>
       <span class="borrow-label">Borrow Balance</span>
-      <div class="borrow">${{ borrowBalance.toFixed(2) }}</div>
+      <div class="borrow">${{ balance.toFixed(2) }}</div>
       <div class="borrow-power">
-        <span class="power-label">Borrow Power</span>
+        <div class="label">
+          <span class="power-label">Borrow Power</span>
+          <span v-if="isLiquidate" class="liquid-label">Liquidation</span>
+        </div>
         <v-progress-linear
           background-color="#1D212E"
-          color="#C074F9"
+          :color="isLiquidate ? '#FF5656' : '#C074F9'"
           height="7"
           class="borrow-bar"
           :rounded="true"
-          :value="calculateBorrow(borrowBalance, maxBorrow)"
+          :value="calculateBorrow(balance, maxBorrow)"
         ></v-progress-linear>
         <div class="borrow-cap">
-          {{ calculateBorrow(borrowBalance, maxBorrow).toFixed(1) }}% ({{
-            `${borrowBalance.toFixed(2)}/${maxBorrow.toFixed(2)}`
+          {{ calculateBorrow(balance, maxBorrow).toFixed(1) }}% ({{
+            `${balance.toFixed(2)}/${maxBorrow.toFixed(2)}`
           }})
         </div>
       </div>
@@ -24,14 +27,17 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 
 @Component({})
 export default class BorrowBalance extends Vue {
-  borrowBalance = 200
-  maxBorrow = 800
+  @Prop({ default: 0 }) readonly balance!: number
+  @Prop({ default: 0 }) readonly maxBorrow!: number
+
+  isLiquidate = false
 
   calculateBorrow(val: number, max: number) {
+    if (max === 0) return 0
     return (val / max) * 100
   }
 }
@@ -61,6 +67,15 @@ export default class BorrowBalance extends Vue {
 
 .borrow-power {
   color: white;
+
+  .label {
+    display: flex;
+    justify-content: space-between;
+
+    .liquid-label {
+      color: #ff5656;
+    }
+  }
 
   .borrow-cap {
     text-align: right;
