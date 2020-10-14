@@ -5,7 +5,8 @@ const ECOC = {
   name: constants.ECOC,
   type: constants.TYPE_ECOC,
   style: constants.KNOWN_CURRENCY.ECOC,
-  balance: '1000'
+  balance: '1000',
+  price: 1
 } as Currency
 
 const EFG = {
