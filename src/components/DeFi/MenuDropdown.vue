@@ -1,6 +1,13 @@
 <template>
   <div class="menu-dropdown">
-    <v-select :menu-props="{ 'content-class': 'blurry-bg' }" :items="items" label="Solo field" solo>
+    <v-select
+      :menu-props="{ 'content-class': 'blurry-bg' }"
+      :items="items"
+      v-model="currentPage"
+      @change="menuSelect"
+      :hide-details="true"
+      solo
+    >
       <template v-slot:item="data">
         <img class="page-icon" :src="data.item.icon" />
         <span class="page-text">{{ data.item.page }}</span>
@@ -11,6 +18,7 @@
         <span class="page-text">{{ data.item.page }}</span>
       </template>
     </v-select>
+    <v-divider dark class="mt-3"></v-divider>
   </div>
 </template>
 
@@ -18,7 +26,6 @@
 import { Vue, Component } from 'vue-property-decorator'
 @Component({})
 export default class MenuDropdown extends Vue {
-  item = 0
   activePage = 0
   items = [
     {
@@ -38,16 +45,16 @@ export default class MenuDropdown extends Vue {
     }
   ]
 
+  currentPage: any = this.items[0]
+
   mounted() {
     const currentMenu = this.getCurrentPageMenu(this.pageParams)
     this.activePage = this.items.findIndex(item => item.page === currentMenu)
+    this.currentPage = this.items[this.activePage]
   }
 
-  menuSelect(index: number) {
-    if (index !== this.activePage) {
-      this.activePage = index
-      this.$router.push(`/defi/${this.items[index].page}`)
-    }
+  menuSelect(item: any) {
+    this.$router.push(`/defi/${item.page}`)
   }
 
   getCurrentPageMenu(path: string) {
@@ -116,6 +123,9 @@ export default class MenuDropdown extends Vue {
 }
 
 .menu-dropdown {
+  width: -webkit-fill-available;
+  margin-bottom: 0.75rem;
+
   .v-input__slot::before {
     content: '' !important;
     position: absolute !important;
