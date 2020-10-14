@@ -44,7 +44,9 @@
         </v-list-item-group>
       </div>
       <div class="withdraw-rate">
-        <span class="text-left">{{ selectedCurrencyName }} Available: {{ selectedCurrencyBalance }}</span>
+        <span class="text-left"
+          >{{ selectedCurrencyName }} Available: {{ selectedCurrencyBalance }}</span
+        >
         <v-spacer></v-spacer>
         <span class="fb-btn" @click="withdrawAll(selectedCurrencyBalance)">Withdraw All</span>
       </div>

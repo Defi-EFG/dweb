@@ -26,8 +26,14 @@
           <span>{{ item.currency.balance }} {{ item.currency.name }}</span>
         </v-col>
         <v-col cols="3" class="collateral">
-          <div class="collateral-status" :class="item.activated ? 'activated' : ''"></div>
-          <!-- <v-switch color="#060606" :hide-details="true" inset v-model="item.activated"></v-switch> -->
+          <!-- <div class="collateral-status" :class="item.activated ? 'activated' : ''"></div> -->
+          <v-switch
+            color="#060606"
+            :hide-details="true"
+            :input-value="item.activated"
+            inset
+            @change="onActivate"
+          ></v-switch>
         </v-col>
       </v-row>
     </v-card-text>
@@ -45,6 +51,10 @@ export default class CollateralToken extends Vue {
 
   switchToCollateral(currency: Currency) {
     this.$emit('switchToCollateral', currency)
+  }
+
+  onActivate(data: boolean) {
+    this.$emit('onActivate', data)
   }
 }
 </script>

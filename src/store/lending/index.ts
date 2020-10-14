@@ -80,7 +80,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
   @MutationAction
   async activatedCollateral(currrencyName: string) {
-    const collateralsActivated = this.collateralsActivated
+    const collateralsActivated = (this.state as any).collateralsActivated
     const index = collateralsActivated.indexOf(currrencyName)
 
     if (index < 0) {
@@ -92,7 +92,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
   @MutationAction
   async deactivatedCollateral(currrencyName: string) {
-    const collateralsActivated = this.collateralsActivated
+    const collateralsActivated = (this.state as any).collateralsActivated
     const index = collateralsActivated.indexOf(currrencyName)
 
     if (index >= 0) {

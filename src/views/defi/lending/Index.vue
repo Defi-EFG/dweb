@@ -50,6 +50,7 @@
             <CollateralToken
               :collateralList="collateralList"
               @switchToCollateral="toCollateralToken"
+              @onActivate="onActivate"
             ></CollateralToken>
           </v-col>
           <v-col cols="12" class="pb-0">
@@ -157,6 +158,11 @@ export default class Lending extends Vue {
   toBorrowToken(currency: Currency) {
     this.mode = 'borrow'
     this.selectedCurrency = currency
+  }
+
+  onActivate(data: boolean) {
+    if (data) this.lendingStore.activatedCollateral(this.selectedCurrency.name)
+    else this.lendingStore.deactivatedCollateral(this.selectedCurrency.name)
   }
 
   mounted() {
