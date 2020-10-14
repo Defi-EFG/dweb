@@ -30,8 +30,8 @@ export default {
   overflow: hidden;
   background-color: #44096b;
   cursor: pointer;
-  padding: 0px 4px;
-  height: 21px;
+    padding: 0px 5px;
+ 
   border-radius: 50%;
 }
 .text-reader .v-icon {

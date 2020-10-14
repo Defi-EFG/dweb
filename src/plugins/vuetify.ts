@@ -6,7 +6,8 @@ const MY_ICONS = {
   close: 'mdi-close',
   leftarrow: 'mdi-arrow-left',
   rightarrow: 'mdi-arrow-right',
-  upload: 'mdi-upload'
+  upload: 'mdi-upload',
+  circle: 'mdi-circle'
 }
 
 Vue.use(Vuetify)
