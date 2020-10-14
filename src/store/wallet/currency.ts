@@ -5,14 +5,15 @@ const ECOC = {
   name: constants.ECOC,
   type: constants.TYPE_ECOC,
   style: constants.KNOWN_CURRENCY.ECOC,
-  balance: '0'
+  balance: '1000'
 } as Currency
 
 const EFG = {
   name: constants.EFG,
   type: constants.TYPE_ECRC20,
   style: constants.KNOWN_CURRENCY.EFG,
-  balance: '0',
+  balance: '1000',
+  price: 1,
   tokenInfo: {
     name: constants.EFG,
     symbol: constants.EFG,
@@ -26,7 +27,7 @@ const GPT = {
   name: constants.GPT,
   type: constants.TYPE_ECRC20,
   style: constants.KNOWN_CURRENCY.GPT,
-  balance: '0',
+  balance: '1000',
   tokenInfo: {
     name: constants.GPT,
     symbol: constants.GPT,

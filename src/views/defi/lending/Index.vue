@@ -2,9 +2,9 @@
   <div class="lending-page">
     <v-row class="content-wrapper">
       <v-col cols="8" class="content">
-        <SupplyBalance :balance="collateralBalance"></SupplyBalance>
+        <SupplyBalance :balance="collateralValue"></SupplyBalance>
         <div class="ml-1 mr-1"></div>
-        <BorrowBalance :balance="borrowedBalance" :borrowPower="borrowPower"></BorrowBalance>
+        <BorrowBalance :balance="borrowedBalance" :maxBorrow="borrowPower"></BorrowBalance>
       </v-col>
       <v-col cols="4" class="content pr-0">
         <LendingActivity></LendingActivity>
@@ -24,20 +24,46 @@
             <v-col cols="6" class="inner-content pr-1">
               <transition name="fade" mode="out-in">
                 <template v-if="mode === 'collateral'">
-                  <Collateral :currency="selectedCurrency"></Collateral>
+                  <Collateral
+                    :currency="selectedCurrency"
+                    :collateralBalance="collateralBalance"
+                    :borrowBalance="borrowedBalance"
+                    :borrowPower="borrowPower"
+                    :borrowPowerPercentage="borrowPowerRate"
+                  ></Collateral>
                 </template>
                 <template v-else>
-                  <Borrow :currency="selectedCurrency"></Borrow>
+                  <Borrow
+                    :currency="selectedCurrency"
+                    :collateralBalance="collateralBalance"
+                    :borrowBalance="borrowedBalance"
+                    :borrowPower="borrowPower"
+                    :interestRate="interestRate"
+                    :borrowPowerPercentage="borrowPowerRate"
+                  ></Borrow>
                 </template>
               </transition>
             </v-col>
             <v-col cols="6" class="inner-content pl-1">
               <transition name="fade" mode="out-in">
                 <template v-if="mode === 'collateral'">
-                  <Withdraw :currency="selectedCurrency"></Withdraw>
+                  <Withdraw
+                    :currency="selectedCurrency"
+                    :collateralBalance="collateralBalance"
+                    :borrowBalance="borrowedBalance"
+                    :borrowPower="borrowPower"
+                    :borrowPowerPercentage="borrowPowerRate"
+                  ></Withdraw>
                 </template>
                 <template v-else>
-                  <Repay :currency="selectedCurrency"></Repay>
+                  <Repay
+                    :currency="selectedCurrency"
+                    :collateralBalance="collateralBalance"
+                    :borrowBalance="borrowedBalance"
+                    :borrowPower="borrowPower"
+                    :interestRate="interestRate"
+                    :borrowPowerPercentage="borrowPowerRate"
+                  ></Repay>
                 </template>
               </transition>
             </v-col>
@@ -99,6 +125,10 @@ export default class Lending extends Vue {
   mode = 'collateral'
   selectedCurrency = this.collateralList[0].currency
 
+  get collateralValue() {
+    return this.lendingStore.collateralBalance
+  }
+
   get collateralBalance() {
     return this.lendingStore.collateralBalance
   }
@@ -107,8 +137,16 @@ export default class Lending extends Vue {
     return this.lendingStore.borrowedBalance
   }
 
+  get borrowPowerRate() {
+    return this.lendingStore.borrowPowerRate / 100
+  }
+
   get borrowPower() {
-    return this.lendingStore.borrowPower
+    return this.collateralBalance * this.borrowPowerRate
+  }
+
+  get interestRate() {
+    return this.lendingStore.loan.interestRate
   }
 
   get isLoggedIn(): boolean {

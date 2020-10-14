@@ -44,7 +44,7 @@
         <div class="text-left">Total Borrow Power</div>
         <v-spacer></v-spacer>
         <div class="text-right">
-          <span>$800.00</span>
+          <span>${{ borrowPower }}</span>
           &rarr;
           <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
         </div>
@@ -63,19 +63,15 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Currency, CurrencyRate } from '@/types/currency'
+import { Currency } from '@/types/currency'
 
 @Component({})
 export default class Collateral extends Vue {
   @Prop() currency!: Currency
-
-  // mock data
-  // Token -> per Dollars
-  currencyRate: CurrencyRate = {
-    ECOC: 1,
-    USDT: 1,
-    ETH: 10
-  }
+  @Prop() collateralBalance!: number
+  @Prop() borrowBalance!: number
+  @Prop() borrowPower!: number
+  @Prop() borrowPowerPercentage!: number
 
   collateralAmount: number | string = 0
 
@@ -87,26 +83,17 @@ export default class Collateral extends Vue {
     return this.currency.name
   }
 
-  get supplyBalance() {
-    return 1000
-  }
-
-  get borrowBalance() {
-    return 200
-  }
-
-  get borrowPowerPercentage() {
-    return 0.8
+  get currencyPrice() {
+    return this.currency.price || 0
   }
 
   get bpUsed() {
-    return (this.borrowBalance / (this.supplyBalance * this.borrowPowerPercentage)) * 100
+    return (this.borrowBalance / this.borrowPower) * 100
   }
 
   get tokenConversion() {
-    return `${this.collateralAmount} ${this.currencyName} ≈ $${this.currencyRate[
-      this.currencyName
-    ] * Number(this.collateralAmount)}`
+    return `${this.collateralAmount} ${this.currencyName} ≈ ${this.currencyPrice *
+      Number(this.collateralAmount)}`
   }
 
   fillAmount(amount: number) {
@@ -115,14 +102,15 @@ export default class Collateral extends Vue {
 
   // BP = Borrow Power
   calculateTotalBP(colAmount: number) {
-    const dollarsAmount = Number(colAmount) * this.currencyRate[this.currencyName]
-    return (this.supplyBalance + dollarsAmount) * this.borrowPowerPercentage
+    const dollarsAmount = Number(colAmount) * this.currencyPrice
+    return (this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage
   }
 
   calculateBPUsed(colAmount: number) {
-    const dollarsAmount = Number(colAmount) * this.currencyRate[this.currencyName]
+    const dollarsAmount = Number(colAmount) * this.currencyPrice
     return (
-      (this.borrowBalance / ((this.supplyBalance + dollarsAmount) * this.borrowPowerPercentage)) *
+      (this.borrowBalance /
+        ((this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage)) *
       100
     )
   }

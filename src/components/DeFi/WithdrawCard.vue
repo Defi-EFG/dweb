@@ -35,7 +35,7 @@
         <div class="text-left">Borrow Power Used</div>
         <v-spacer></v-spacer>
         <div class="text-right">
-          <span>25.0%</span>
+          <span>{{ bpUsed.toFixed(1) }}%</span>
           &rarr;
           <span class="after-calculated">{{ calculateBPUsed(withdrawValue).toFixed(1) }}%</span>
         </div>
@@ -44,7 +44,7 @@
         <div class="text-left">Total Borrow Power</div>
         <v-spacer></v-spacer>
         <div class="text-right">
-          <span>$800.00</span>
+          <span>${{ borrowPower }}</span>
           &rarr;
           <span class="after-calculated">${{ calculateTotalBP(withdrawValue).toFixed(2) }}</span>
         </div>
@@ -64,17 +64,15 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Currency, CurrencyRate } from '@/types/currency'
+import { Currency } from '@/types/currency'
 
 @Component({})
 export default class Withdraw extends Vue {
   @Prop() currency!: Currency
-
-  currencyRate: CurrencyRate = {
-    ECOC: 1,
-    USDT: 1,
-    ETH: 10
-  }
+  @Prop() collateralBalance!: number
+  @Prop() borrowBalance!: number
+  @Prop() borrowPower!: number
+  @Prop() borrowPowerPercentage!: number
 
   val = 25
   minVal = 25
@@ -88,20 +86,16 @@ export default class Withdraw extends Vue {
     return this.currency.name
   }
 
-  get supplyBalance() {
-    return 1000
+  get currencyPrice() {
+    return this.currency.price || 0
   }
 
-  get borrowBalance() {
-    return 200
-  }
-
-  get borrowPowerPercentage() {
-    return 0.8
+  get bpUsed() {
+    return (this.borrowBalance / this.borrowPower) * 100
   }
 
   get tokenConversion() {
-    return `${this.withdrawValue} ${this.currencyName} ≈ $${this.currencyRate[this.currencyName] *
+    return `${this.withdrawValue} ${this.currencyName} ≈ ${this.currencyPrice *
       Number(this.withdrawValue)}`
   }
 
@@ -117,8 +111,8 @@ export default class Withdraw extends Vue {
 
   // BP = Borrow Power
   calculateTotalBP(withdrawAmount: number) {
-    const dollarsAmount = Number(withdrawAmount) * this.currencyRate[this.currencyName]
-    return (this.supplyBalance - dollarsAmount) * this.borrowPowerPercentage
+    const dollarsAmount = Number(withdrawAmount) * this.currencyPrice
+    return (this.collateralBalance - dollarsAmount) * this.borrowPowerPercentage
   }
 
   calculateBPUsed(withdrawAmount: number) {
@@ -133,6 +127,7 @@ export default class Withdraw extends Vue {
     if (type === 'error') {
       return isEnough && isClickable
     }
+
     return isEnough && isValidAmount
   }
 }

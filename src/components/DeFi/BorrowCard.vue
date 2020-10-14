@@ -38,7 +38,7 @@
         <div>Borrow Power Used</div>
         <v-spacer></v-spacer>
         <div>
-          <span>25.0%</span>
+          <span>{{ bpUsed.toFixed(1) }}%</span>
           &rarr;
           <span class="after-calculated">{{ calculateBPUsed(borrowValue).toFixed(1) }}%</span>
         </div>
@@ -47,7 +47,7 @@
       <div class="borrow-apy">
         <span class="label">Borrow APY</span>
         <v-spacer></v-spacer>
-        <span>2.90 %</span>
+        <span>{{ interestRate }} %</span>
       </div>
       <v-btn
         large
@@ -62,20 +62,18 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-import { Currency, CurrencyRate } from '@/types/currency'
+import { Currency } from '@/types/currency'
 
 @Component({})
 export default class BorrowCard extends Vue {
   @Prop() currency!: Currency
+  @Prop() collateralBalance!: number
+  @Prop() borrowBalance!: number
+  @Prop() borrowPower!: number
+  @Prop() interestRate!: number
+  @Prop() borrowPowerPercentage!: number
 
-  currencyRate: CurrencyRate = {
-    ECOC: 1,
-    USDT: 1,
-    EFG: 1,
-    ETH: 10
-  }
-
-  bpSlider = this.currentBPPercent
+  bpSlider = this.bpUsed
   borrowValue = 0
 
   get walletBalance() {
@@ -86,10 +84,23 @@ export default class BorrowCard extends Vue {
     return this.currency.name
   }
 
+  get currencyPrice() {
+    return this.currency.price || 0
+  }
+
+  get bpUsed() {
+    return (this.borrowBalance / this.borrowPower) * 100
+  }
+
+  get tokenConversion() {
+    return `${this.borrowValue} ${this.currencyName} ≈ ${this.currencyPrice *
+      Number(this.borrowValue)}`
+  }
+
   // only for click event
   limitSlider() {
-    if (this.bpSlider < this.currentBPPercent) {
-      this.bpSlider = this.currentBPPercent
+    if (this.bpSlider < this.bpUsed) {
+      this.bpSlider = this.bpUsed
     }
 
     this.borrowValue = this.bpPercentToValue(this.bpSlider)
@@ -97,50 +108,31 @@ export default class BorrowCard extends Vue {
   }
 
   limitValue(num: number) {
-    if (num < this.currentBPPercent) {
-      this.bpSlider = this.currentBPPercent
+    if (num < this.bpUsed) {
+      this.bpSlider = this.bpUsed
     }
 
     this.borrowValue = this.bpPercentToValue(num)
     this.borrowValue = Math.round(this.borrowValue)
   }
 
-  get supplyBalance() {
-    return 1000
-  }
-
-  get borrowBalance() {
-    return 200
-  }
-
-  get borrowPowerPercentage() {
-    return 0.8
-  }
-
-  get tokenConversion() {
-    return `${this.borrowValue} ${this.currencyName} ≈ $${this.currencyRate[this.currencyName] *
-      Number(this.borrowValue)}`
-  }
-
-  get currentBPPercent() {
-    return (this.borrowBalance / (this.supplyBalance * this.borrowPowerPercentage)) * 100
-  }
-
   // BP = Borrow Power
   calculateBPUsed(borrowAmount: number) {
-    const dollarsAmount = Number(borrowAmount) * this.currencyRate[this.currencyName]
+    const dollarsAmount = Number(borrowAmount) * this.currencyPrice
     const bpPercent =
-      ((this.borrowBalance + dollarsAmount) / (this.supplyBalance * this.borrowPowerPercentage)) *
+      ((this.borrowBalance + dollarsAmount) /
+        (this.collateralBalance * this.borrowPowerPercentage)) *
       100
     return bpPercent
   }
 
   bpPercentToValue(bp: number) {
-    return (bp / 100) * (this.supplyBalance * this.borrowPowerPercentage) - this.borrowBalance
+    return (bp / 100) * (this.collateralBalance * this.borrowPowerPercentage) - this.borrowBalance
   }
 
   isBorrowable(amount: number, type: string) {
-    const isEnough = amount <= this.supplyBalance * this.borrowPowerPercentage - this.borrowBalance
+    const isEnough =
+      amount <= this.collateralBalance * this.borrowPowerPercentage - this.borrowBalance
     const isValidAmount = amount >= 0
     const isClickable = amount > 0
 
@@ -154,7 +146,7 @@ export default class BorrowCard extends Vue {
   borrowUpdated(val: any) {
     if (this.borrowValue < 0) {
       this.borrowValue = 0
-      this.bpSlider = this.currentBPPercent
+      this.bpSlider = this.bpUsed
     }
 
     this.bpSlider = this.calculateBPUsed(val)

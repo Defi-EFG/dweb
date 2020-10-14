@@ -11,7 +11,7 @@
       </div>
       <v-text-field
         class="amount-input"
-        label="Collateral Amount"
+        label="Repay Amount"
         v-model="repayAmount"
         :suffix="currencyName"
         type="number"
@@ -35,7 +35,7 @@
         <div>Borrow Power Used</div>
         <v-spacer></v-spacer>
         <div>
-          <span>25.0%</span>
+          <span>{{ bpUsed.toFixed(1) }}%</span>
           &rarr;
           <span class="after-calculated">{{ calculateBPUsed(repayAmount).toFixed(1) }}%</span>
         </div>
@@ -44,7 +44,7 @@
         <div>Total Borrow Power</div>
         <v-spacer></v-spacer>
         <div>
-          <span>$800.00</span>
+          <span>${{ borrowPower }}</span>
           &rarr;
           <span class="after-calculated">${{ calculateTotalBP(repayAmount).toFixed(2) }}</span>
         </div>
@@ -53,7 +53,7 @@
       <div class="borrow-apy">
         <span class="label">Borrow APY</span>
         <v-spacer></v-spacer>
-        <span>2.90 %</span>
+        <span>{{ interestRate }} %</span>
       </div>
       <v-btn
         large
@@ -68,40 +68,18 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { Currency, CurrencyRate } from '@/types/currency'
+import { Currency } from '@/types/currency'
 
 @Component({})
 export default class RepayCard extends Vue {
   @Prop() currency!: Currency
+  @Prop() collateralBalance!: number
+  @Prop() borrowBalance!: number
+  @Prop() borrowPower!: number
+  @Prop() interestRate!: number
+  @Prop() borrowPowerPercentage!: number
 
   repayAmount = 0
-  currencyRate: CurrencyRate = {
-    ECOC: 1,
-    USDT: 1,
-    EFG: 1,
-    ETH: 10
-  }
-
-  get supplyBalance() {
-    return 1000
-  }
-
-  get borrowBalance() {
-    return 200
-  }
-
-  get borrowPowerPercentage() {
-    return 0.8
-  }
-
-  get bpUsed() {
-    return (this.borrowBalance / (this.supplyBalance * this.borrowPowerPercentage)) * 100
-  }
-
-  get tokenConversion() {
-    return `${this.repayAmount} ${this.currencyName} ≈ $${this.currencyRate[this.currencyName] *
-      this.repayAmount}`
-  }
 
   get walletBalance() {
     return Number(this.currency.balance)
@@ -111,20 +89,34 @@ export default class RepayCard extends Vue {
     return this.currency.name
   }
 
+  get currencyPrice() {
+    return this.currency.price || 0
+  }
+
+  get bpUsed() {
+    return (this.borrowBalance / this.borrowPower) * 100
+  }
+
+  get tokenConversion() {
+    return `${this.repayAmount} ${this.currencyName} ≈ ${this.currencyPrice *
+      Number(this.repayAmount)}`
+  }
+
   fillAmount(amount: number) {
     this.repayAmount = amount
   }
 
   // BP = Borrow Power
   calculateTotalBP(repayAmount: number) {
-    const dollarsAmount = Number(repayAmount) * this.currencyRate[this.currencyName]
-    return (this.supplyBalance + dollarsAmount) * this.borrowPowerPercentage
+    const dollarsAmount = Number(repayAmount) * this.currencyPrice
+    return (this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage
   }
 
   calculateBPUsed(repayAmount: number) {
-    const dollarsAmount = Number(repayAmount) * this.currencyRate[this.currencyName]
+    const dollarsAmount = Number(repayAmount) * this.currencyPrice
     return (
-      (this.borrowBalance / ((this.supplyBalance + dollarsAmount) * this.borrowPowerPercentage)) *
+      (this.borrowBalance /
+        ((this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage)) *
       100
     )
   }

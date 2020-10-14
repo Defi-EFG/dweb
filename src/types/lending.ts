@@ -39,7 +39,7 @@ export interface LendingPlatform {
   contract: Contract
   collateralBalance: number
   borrowedBalance: number
-  borrowPower: number
+  borrowPowerRate: number
   loan: Loan
 
   myCollateralAssets: CollateralAsset[]

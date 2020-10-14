@@ -51,7 +51,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   contract = lendingContract
   collateralBalance = 100
   borrowedBalance = 10
-  borrowPower = 80
+  borrowPowerRate = 80
 
   loan = {
     loaner: '',
