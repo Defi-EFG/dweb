@@ -18,9 +18,7 @@
         </template>
         <v-card rounded-lg width="389" class="v-card-wrapper">
           <v-card-title class="cardheadertitle"
-            ><h6>
-              ECOC Wallet: <span class="network">{{ network }}</span>
-            </h6>
+            ><h6>ECOC Wallet</h6>
             <v-btn text color="primary" class="mb-2" @click="logout()"
               ><span class="text-btn">Disconnect</span></v-btn
             ></v-card-title
@@ -29,52 +27,19 @@
             <v-alert rounded-lg dense color="#ebebeb" class="primary-address">
               <span>{{ addr }}</span>
             </v-alert>
-            <v-btn text color="#7900B5" class="mt-1" @click="checkPrivatekeyDialog = true">
+            <v-btn text color="#7900B5" class="mt-1" @click="checkPrivatekeyDialog">
               <span class="text-btn">Private Key</span>
             </v-btn></v-card-text
           >
         </v-card>
       </v-menu>
     </v-app-bar>
-    <v-dialog v-model="checkPrivatekeyDialog" max-width="440">
-      <v-card>
-        <v-card-title class="bg-header"
-          ><div>
-            <span>ECOC Wallet</span>
-          </div>
-          <div class="header-primarykey">
-            <v-icon color="white" class="mr-2">$circle</v-icon> <span>fffffffff</span>
-          </div>
-        </v-card-title>
-        <div class="bg-white">
-          <div class="d-flex">
-            <h3 class="header">Private Key</h3>
-            <img src="@/assets/primarykey.svg" alt="" />
-          </div>
-          <small >Please input keystore password to access private key</small>
-          <v-text-field 
-          class="mt-5"
-            v-model="keystorePassword"
-            name="input-10-1"
-            label="Keystore Password"
-            color="primary"
-            filled
-            elevation-0
-            dense
-          >
-          </v-text-field>
-          <div class="action-wrapper">
-            <v-btn large color="primary">Access</v-btn>
-          </div>
-        </div>
-      </v-card>
-    </v-dialog>
-
     <UnlockWallet
-      :visible="unlockWalletOpen"
       ref="unlockwalletModalRef"
+      :visible="unlockWalletOpen"
       @onClose="closeUnlockWallet"
     />
+    <PrivateKey :visiblemodalpk="accessPrivateKey" @onClose="onClose" />
   </div>
 </template>
 
@@ -83,26 +48,28 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import UnlockWallet from './modals/unlock-wallet.vue'
+import PrivateKey from './modals/primary-key-modal.vue'
 
 @Component({
   components: {
-    UnlockWallet
+    UnlockWallet,
+    PrivateKey
   }
 })
 export default class HeaderNav extends Vue {
   walletStore = getModule(WalletModule)
   unlockWalletOpen = false
-  checkPrivatekeyDialog = false
+  accessPrivateKey = false
   menu = false
-  keystorePassword: any = ''
+
   get addr() {
     return this.walletStore.address
   }
-
-  get network() {
-    return this.walletStore.network
+  checkPrivatekeyDialog() {
+    console.log('primary key')
+    this.accessPrivateKey = !this.accessPrivateKey
+    console.log(this.accessPrivateKey)
   }
-
   closeUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
@@ -111,6 +78,11 @@ export default class HeaderNav extends Vue {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
 
+  openprivatekeyDialog() {
+    this.accessPrivateKey = !this.accessPrivateKey 
+      
+
+  }
   logout() {
     this.walletStore.logout()
   }
@@ -162,9 +134,6 @@ export default class HeaderNav extends Vue {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .network {
-    color: #c074f9;
-  }
 }
 
 .cardheadertitle p,
@@ -197,46 +166,5 @@ export default class HeaderNav extends Vue {
     border-radius: 50%;
     margin-right: 6px;
   }
-}
-
-/*-----------private key show-------------*/
-.action-wrapper {
-  display: flex;
-
-  flex-direction: column;
-  text-align: center;
-}
-.bg-white {
-  background-color: white;
-  margin: 0px 29px;
-  padding: 26px;
-}
-.bg-header {
-  background-color: #44096b;
-  color: white;
-  margin: 10px 29px 0px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.bg-header span {
-  font-size: 15px;
-}
-.header-primarykey {
-  // border: 1px solid;
-  border-radius: 40px;
-  background: rgba(0, 0, 0, 0.219);
-  max-height: 100px;
-  padding: 0px 10px;
-  font-size: 15px;
-}
-.header-primarykey v-icon {
-  font-size: 14px;
-}
-
-.header {
-  color: #44096b;
-  margin-right: 4px;
-  font-weight: 900;
 }
 </style>

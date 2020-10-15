@@ -87,7 +87,6 @@
                     >Please set your password to generate a keystore file</small
                   >
                 </div>
-
                 <template>
                   <v-text-field
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -104,7 +103,6 @@
                     v-model="createWalletPassword"
                   ></v-text-field>
                 </template>
-
                 <v-text-field
                   :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                   name="input-10-2"
@@ -134,9 +132,7 @@
               </div>
             </v-card>
           </v-stepper-content>
-
           <!-- Connect ECOC Wallet-->
-
           <v-stepper-content step="4">
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
@@ -237,21 +233,17 @@ import TextReader from './text-reader.vue'
 })
 export default class UnlockwalletModal extends Vue {
   @Prop() visible!: boolean
-
   walletStore = getModule(WalletModule)
   upload = false
-
   keystore: any = ''
   keystorePassword = ''
   files = true
   createWalletKeystore = ''
   createWalletPassword = ''
   confirmPassword = ''
-
   show = false
   step = 1
   unlockwalletModal = this.visible
-
   rules = {
     required: (value: any) => {
       return !!value || 'Required.'
@@ -265,32 +257,23 @@ export default class UnlockwalletModal extends Vue {
   checkvisible() {
     this.unlockwalletModal = this.visible
   }
-
   onClose() {
     this.step = 1
     this.$emit('onClose')
   }
-
   onCreatewallet() {
     this.$emit('onCreatewallet')
   }
-
-  onSuccess() {
-    this.$emit('onSuccess')
-  }
-
   onCloseX() {
     this.onClose()
   }
 
   onCreateWallet() {
     const password = this.createWalletPassword
-
     this.walletStore.createNewWallet(password).then(keystore => {
       this.createWalletKeystore = keystore
       this.step = 3
     })
-    
   }
 
   createStep() {
@@ -327,14 +310,12 @@ export default class UnlockwalletModal extends Vue {
 
   getFormattedTime() {
     const today = new Date()
-
     const y = today.getFullYear()
     const m = today.getMonth() + 1
     const d = today.getDate()
     const h = today.getHours()
     const mi = today.getMinutes()
     const sec = today.getSeconds()
-
     return `${y}-${m}-${d}T${h}-${mi}-${sec}`
   }
 
