@@ -1,4 +1,4 @@
-import { Encoder, Decoder, Utils, Ecocjs } from 'ecoweb3'
+import { Encoder, Decoder, Ecocjs } from 'ecoweb3'
 import { ecocw3 } from '@/services/ecoc/ecocw3'
 import { Contract } from '@/types/contract'
 import { Utxo } from '@/types/transaction'
@@ -19,7 +19,7 @@ export interface ExecutionResult {
   codeDeposit: number
   depositSize: number
   excepted: string
-  formattedOutput: Record<string,any>
+  formattedOutput: Record<string, any>
   gasForDeposit: number
   gasRefunded: number
   gasUsed: number

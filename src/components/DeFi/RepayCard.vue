@@ -44,7 +44,7 @@
         <div>Total Borrow Power</div>
         <v-spacer></v-spacer>
         <div>
-          <span>${{ borrowPower }}</span>
+          <span>${{ borrowLimit }}</span>
           &rarr;
           <span class="after-calculated">${{ calculateTotalBP(repayAmount).toFixed(2) }}</span>
         </div>
@@ -75,7 +75,7 @@ export default class RepayCard extends Vue {
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
-  @Prop() borrowPower!: number
+  @Prop() borrowLimit!: number
   @Prop() interestRate!: number
   @Prop() borrowPowerPercentage!: number
 
@@ -94,7 +94,7 @@ export default class RepayCard extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowPower) * 100
+    return (this.borrowBalance / this.borrowLimit) * 100
   }
 
   get tokenConversion() {

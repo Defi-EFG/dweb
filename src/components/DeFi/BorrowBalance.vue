@@ -14,11 +14,11 @@
           height="7"
           class="borrow-bar"
           :rounded="true"
-          :value="calculateBorrow(balance, maxBorrow)"
+          :value="calculateBorrow(balance, borrowLimit)"
         ></v-progress-linear>
         <div class="borrow-cap">
-          {{ calculateBorrow(balance, maxBorrow).toFixed(1) }}% ({{
-            `${balance.toFixed(2)}/${maxBorrow.toFixed(2)}`
+          {{ calculateBorrow(balance, borrowLimit).toFixed(1) }}% ({{
+            `${balance.toFixed(2)}/${borrowLimit.toFixed(2)}`
           }})
         </div>
       </div>
@@ -32,9 +32,8 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 @Component({})
 export default class BorrowBalance extends Vue {
   @Prop({ default: 0 }) readonly balance!: number
-  @Prop({ default: 0 }) readonly maxBorrow!: number
-
-  isLiquidate = false
+  @Prop({ default: 0 }) readonly borrowLimit!: number
+  @Prop({ default: false }) readonly isLiquidate!: boolean
 
   calculateBorrow(val: number, max: number) {
     if (max === 0) return 0

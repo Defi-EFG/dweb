@@ -69,7 +69,7 @@ export default class BorrowCard extends Vue {
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
-  @Prop() borrowPower!: number
+  @Prop() borrowLimit!: number
   @Prop() interestRate!: number
   @Prop() borrowPowerPercentage!: number
 
@@ -89,7 +89,7 @@ export default class BorrowCard extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowPower) * 100
+    return (this.borrowBalance / this.borrowLimit) * 100
   }
 
   get tokenConversion() {

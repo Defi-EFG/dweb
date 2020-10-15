@@ -44,7 +44,7 @@
         <div class="text-left">Total Borrow Power</div>
         <v-spacer></v-spacer>
         <div class="text-right">
-          <span>${{ borrowPower }}</span>
+          <span>${{ borrowLimit }}</span>
           &rarr;
           <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
         </div>
@@ -70,7 +70,7 @@ export default class Collateral extends Vue {
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
-  @Prop() borrowPower!: number
+  @Prop() borrowLimit!: number
   @Prop() borrowPowerPercentage!: number
 
   collateralAmount: number | string = 0
@@ -88,7 +88,7 @@ export default class Collateral extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowPower) * 100
+    return (this.borrowBalance / this.borrowLimit) * 100
   }
 
   get tokenConversion() {

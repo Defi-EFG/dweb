@@ -8,8 +8,8 @@ import { TxList } from '@/types/transaction'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import { SendEcrc20Payload, SendEcocPayload } from '@/services/ecoc/types'
+import { lending } from '@/services/lending'
 import * as constants from '@/constants'
-import { getPrice } from '@/store/common'
 import { currencyInit } from './currency'
 
 @Module({ dynamic: true, store, namespaced: true, name: 'walletStore' })
@@ -167,7 +167,7 @@ export default class WalletModule extends VuexModule implements Wallet {
     const currenciesList = this.currencies
 
     for (const [index, currency] of currenciesList.entries()) {
-      currency.price = await getPrice(currency.name)
+      currency.price = await lending.getPrice(currency.name)
       this.context.commit('updateCurrencyByIndex', { currencyIndex: index, currencyData: currency })
     }
 

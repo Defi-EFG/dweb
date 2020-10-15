@@ -1,9 +1,9 @@
-import { Contract } from './contract'
 import { Currency, CurrencyInfo } from './currency'
 
 export interface Collateral {
   currency: Currency
   activated: boolean
+  collateralFactor: number
 }
 
 export interface Borrow {
@@ -14,7 +14,7 @@ export interface Borrow {
 export interface CollateralAsset {
   currency: CurrencyInfo
   amount: number
-  price: number
+  collateralFactor: number
 }
 
 export interface MyActivity {
@@ -36,12 +36,9 @@ export interface Loan {
 }
 
 export interface LendingPlatform {
-  contract: Contract
-  collateralBalance: number
-  borrowedBalance: number
-  borrowPowerRate: number
-  loan: Loan
+  address: string
 
+  loan: Loan
   myCollateralAssets: CollateralAsset[]
   myActivity: MyActivity[]
 

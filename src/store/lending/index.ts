@@ -1,15 +1,15 @@
 import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '@/store'
 import { InsufficientBalance } from '@/exceptions/wallet'
-import { LendingPlatform, Loan, Collateral } from '@/types/lending'
+import { LendingPlatform, Loan } from '@/types/lending'
 import { Currency } from '@/types/currency'
 import * as constants from '@/constants'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 
-import { lendingContract } from '@/services/lending'
-import { Params, ExecutionResult } from '@/services/contract'
-import { lending, loanCurrency, getPrice } from '@/store/common'
+import { lending } from '@/services/lending'
+import { Params } from '@/services/contract'
+import { loanCurrency } from '@/store/common'
 
 const myActivity = [
   {
@@ -41,22 +41,18 @@ const myCollateralAssets = [
       name: constants.ECOC,
       style: constants.KNOWN_CURRENCY[constants.ECOC]
     },
-    amount: 0,
-    price: 0
+    amount: 100,
+    collateralFactor: 0.6 // 60%
   }
 ]
 
 @Module({ dynamic: true, store, namespaced: true, name: 'lendingStore' })
 export default class LendingModule extends VuexModule implements LendingPlatform {
-  contract = lendingContract
-  collateralBalance = 100
-  borrowedBalance = 10
-  borrowPowerRate = 80
-
+  address = lending.address
   loan = {
-    loaner: '',
+    loaner: 'ES1jMgpCNbDcBUdXz1JkJVxJWGkkjxbJB',
     currency: loanCurrency,
-    amount: 0,
+    amount: 5,
     timestamp: 0,
     interestRate: 0.25,
     exchangeRate: 0,
@@ -73,7 +69,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
         currency: this.loan.currency,
         interestRate: this.loan.interestRate,
         amount: this.loan.amount,
-        exchangeRate: this.loan.exchangeRate
+        price: this.loan.exchangeRate
       }
     ]
   }
@@ -102,47 +98,13 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     return { collateralsActivated }
   }
 
-  @Action
-  async getRate(currencyName: string) {
-    return await getPrice(currencyName)
-  }
+  // @MutationAction
+  // async updateAsset(currencyName: string) {
+  //   return await lending.getPrice(currencyName)
+  // }
 
-  @Action
-  async getInterestRate(currencyName: string) {
-    const params: Params = {
-      methodArgs: [currencyName]
-    }
-
-    const result = await lending.call('getInterestRate', params)
-
-    const executionResult = result.executionResult as ExecutionResult
-    const data = executionResult.formattedOutput['0'].toNumber()
-    return data
-  }
-
-  @Action
-  async getDebt(address: string) {
-    const params: Params = {
-      methodArgs: [address]
-    }
-
-    const result = await lending.call('getDebt', params)
-
-    const executionResult = result.executionResult as ExecutionResult
-    const data = executionResult.formattedOutput['0'].toNumber()
-    return data
-  }
-
-  @Action
-  async getBorrowPower(currencyName: string) {
-    const params = {
-      methodArgs: [currencyName]
-    } as Params
-
-    const result = await lending.call('getCollateralRate', params)
-
-    const executionResult = result.executionResult as ExecutionResult
-    const data = executionResult.formattedOutput['0'].toNumber()
-    return data
-  }
+  // @MutationAction
+  // async updateRate(currencyName: string) {
+  //   return await lending.getPrice(currencyName)
+  // }
 }

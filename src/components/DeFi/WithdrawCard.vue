@@ -44,7 +44,7 @@
         <div class="text-left">Total Borrow Power</div>
         <v-spacer></v-spacer>
         <div class="text-right">
-          <span>${{ borrowPower }}</span>
+          <span>${{ borrowLimit }}</span>
           &rarr;
           <span class="after-calculated">${{ calculateTotalBP(withdrawValue).toFixed(2) }}</span>
         </div>
@@ -71,7 +71,7 @@ export default class Withdraw extends Vue {
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
-  @Prop() borrowPower!: number
+  @Prop() borrowLimit!: number
   @Prop() borrowPowerPercentage!: number
 
   val = 25
@@ -91,7 +91,7 @@ export default class Withdraw extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowPower) * 100
+    return (this.borrowBalance / this.borrowLimit) * 100
   }
 
   get tokenConversion() {
