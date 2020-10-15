@@ -2,13 +2,21 @@
   <v-card dark color="#1D212E" class="repay-card">
     <v-card-text class="wrapper">
       <p class="action-label">Repay</p>
-      <div class="wallet-balance mb-2">
-        <span>Wallet Balance:</span>
-        <v-spacer></v-spacer>
-        <span class="balance" @click="fillAmount(walletBalance)"
-          >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
-        >
+      <div class="repay-summary">
+        <div class="wallet-balance">
+          <span>Wallet Balance</span>
+          <v-spacer></v-spacer>
+          <span class="balance" @click="fillAmount(walletBalance)"
+            >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
+          >
+        </div>
+        <div class="debt">
+          <span>Debt</span>
+          <v-spacer></v-spacer>
+          <span class="balance">{{ debt.toFixed(2) }} {{ currencyName }}</span>
+        </div>
       </div>
+
       <v-text-field
         class="amount-input"
         label="Repay Amount"
@@ -41,12 +49,12 @@
         </div>
       </div>
       <div class="borrow-total mt-1 mb-3">
-        <div>Total Borrow Power</div>
+        <div class="text-left">Total Borrowed</div>
         <v-spacer></v-spacer>
-        <div>
-          <span>${{ borrowPower }}</span>
+        <div class="text-right">
+          <span>${{ debt }}</span>
           &rarr;
-          <span class="after-calculated">${{ calculateTotalBP(repayAmount).toFixed(2) }}</span>
+          <span class="after-calculated">${{ calculateDebt(repayAmount).toFixed(2) }}</span>
         </div>
       </div>
       <v-divider />
@@ -78,6 +86,7 @@ export default class RepayCard extends Vue {
   @Prop() borrowPower!: number
   @Prop() interestRate!: number
   @Prop() borrowPowerPercentage!: number
+  @Prop({ default: 10 }) debt!: number
 
   repayAmount = 0
 
@@ -103,13 +112,15 @@ export default class RepayCard extends Vue {
   }
 
   fillAmount(amount: number) {
-    this.repayAmount = amount
+    if (amount >= this.debt) {
+      this.repayAmount = this.debt
+    } else {
+      this.repayAmount = amount
+    }
   }
 
-  // BP = Borrow Power
-  calculateTotalBP(repayAmount: number) {
-    const dollarsAmount = Number(repayAmount) * this.currencyPrice
-    return (this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage
+  calculateDebt(repayAmount: number) {
+    return this.debt - repayAmount
   }
 
   calculateBPUsed(repayAmount: number) {
@@ -122,14 +133,14 @@ export default class RepayCard extends Vue {
   }
 
   isRepayable(amount: number, type: string) {
-    const isEnough = amount <= this.walletBalance
+    const isInRange = amount <= this.walletBalance && amount <= this.debt
     const isValidAmount = amount >= 0
     const isClickable = amount > 0
 
     if (type === 'error') {
-      return isEnough && isClickable
+      return isInRange && isClickable
     }
-    return isEnough && isValidAmount
+    return isInRange && isValidAmount
   }
 }
 </script>
@@ -144,11 +155,15 @@ export default class RepayCard extends Vue {
   padding: 2rem;
 }
 
+.repay-summary {
+  border-radius: 5px;
+  margin-bottom: 0.5rem;
+}
+
 .action-label {
   font-size: large;
   color: #c074f9;
   font-weight: 700;
-  margin-bottom: 2rem;
 }
 
 .borrow-apy,
@@ -164,6 +179,11 @@ export default class RepayCard extends Vue {
   .label {
     font-weight: 700;
   }
+}
+
+.debt {
+  display: flex;
+  opacity: 0.5;
 }
 
 .borrow-power {

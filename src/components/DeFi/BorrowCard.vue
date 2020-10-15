@@ -2,7 +2,7 @@
   <v-card dark color="#1D212E" class="borrow-card">
     <v-card-text class="wrapper">
       <p class="action-label">Borrow</p>
-      <div class="wallet-balance mb-2">
+      <div class="wallet-balance">
         <span>Wallet Balance:</span>
         <v-spacer></v-spacer>
         <span class="balance">{{ walletBalance.toFixed(2) }} {{ currencyName }}</span>
@@ -43,6 +43,15 @@
           <span class="after-calculated">{{ calculateBPUsed(borrowValue).toFixed(1) }}%</span>
         </div>
       </div>
+      <div class="borrow-total mt-1 mb-3">
+        <div class="text-left">Total Borrowed</div>
+        <v-spacer></v-spacer>
+        <div class="text-right">
+          <span>${{ borrowPower }}</span>
+          &rarr;
+          <span class="after-calculated">${{ borrowPower.toFixed(2) }}</span>
+        </div>
+      </div>
       <v-divider />
       <div class="borrow-apy">
         <span class="label">Borrow APY</span>
@@ -73,8 +82,12 @@ export default class BorrowCard extends Vue {
   @Prop() interestRate!: number
   @Prop() borrowPowerPercentage!: number
 
-  bpSlider = this.bpUsed
+  bpSlider = 0
   borrowValue = 0
+
+  mounted() {
+    this.bpSlider = this.bpUsed
+  }
 
   get walletBalance() {
     return Number(this.currency.balance)
@@ -104,7 +117,7 @@ export default class BorrowCard extends Vue {
     }
 
     this.borrowValue = this.bpPercentToValue(this.bpSlider)
-    this.borrowValue = Math.round(this.borrowValue)
+    this.borrowValue = Number(this.borrowValue.toFixed(2))
   }
 
   limitValue(num: number) {
@@ -113,7 +126,7 @@ export default class BorrowCard extends Vue {
     }
 
     this.borrowValue = this.bpPercentToValue(num)
-    this.borrowValue = Math.round(this.borrowValue)
+    this.borrowValue = Number(this.borrowValue.toFixed(2))
   }
 
   // BP = Borrow Power
@@ -127,12 +140,16 @@ export default class BorrowCard extends Vue {
   }
 
   bpPercentToValue(bp: number) {
-    return (bp / 100) * (this.collateralBalance * this.borrowPowerPercentage) - this.borrowBalance
+    const bpPercent =
+      ((bp / 100) * (this.collateralBalance * this.borrowPowerPercentage) - this.borrowBalance) /
+      this.currencyPrice
+    return bpPercent
   }
 
   isBorrowable(amount: number, type: string) {
     const isEnough =
-      amount <= this.collateralBalance * this.borrowPowerPercentage - this.borrowBalance
+      amount * this.currencyPrice <=
+      this.collateralBalance * this.borrowPowerPercentage - this.borrowBalance
     const isValidAmount = amount >= 0
     const isClickable = amount > 0
 
@@ -168,7 +185,7 @@ export default class BorrowCard extends Vue {
   font-size: large;
   color: #c074f9;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .borrow-apy,
@@ -179,6 +196,10 @@ export default class BorrowCard extends Vue {
   .label {
     font-weight: 700;
   }
+}
+
+.wallet-balance {
+  margin-bottom: 1.87rem;
 }
 
 .borrow-apy {
@@ -203,10 +224,10 @@ export default class BorrowCard extends Vue {
   }
 }
 
-.borrow-used {
-  margin-top: 1rem;
-  margin-bottom: 1.25rem;
-}
+// .borrow-used {
+//   margin-top: 1rem;
+//   margin-bottom: 1.25rem;
+// }
 
 .submit-btn {
   margin-top: 3.6rem;
