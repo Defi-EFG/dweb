@@ -1,73 +1,71 @@
 <template>
-  <v-card dark color="#1D212E" class="borrow-card">
-    <v-card-text class="wrapper">
-      <p class="action-label">Borrow</p>
-      <div class="wallet-balance">
-        <span>Wallet Balance:</span>
-        <v-spacer></v-spacer>
-        <span class="balance">{{ walletBalance.toFixed(2) }} {{ currencyName }}</span>
+  <div>
+    <p class="action-label">Borrow</p>
+    <div class="wallet-balance">
+      <span>Wallet Balance:</span>
+      <v-spacer></v-spacer>
+      <span class="balance">{{ walletBalance.toFixed(2) }} {{ currencyName }}</span>
+    </div>
+    <v-text-field
+      class="amount-input"
+      label="Borrow Amount"
+      type="number"
+      :suffix="currencyName"
+      v-model="borrowValue"
+      height="43"
+      color="#C074F9"
+      :hint="tokenConversion"
+      persistent-hint
+    ></v-text-field>
+    <div class="borrow-power">
+      <span class="label">Borrow Power</span>
+      <v-slider
+        class="borrow-slider"
+        v-model="bpSlider"
+        min="0"
+        max="100"
+        color="#c074f9"
+        track-color="#E4E4E4"
+        thumb-color="#E4E4E4"
+        :hide-details="true"
+        thumb-label
+        @end="limitValue"
+        @click="limitSlider"
+      ></v-slider>
+    </div>
+    <div class="borrow-used">
+      <div>Borrow Power Used</div>
+      <v-spacer></v-spacer>
+      <div>
+        <span>{{ bpUsed.toFixed(1) }}%</span>
+        &rarr;
+        <span class="after-calculated">{{ calculateBPUsed(borrowValue).toFixed(1) }}%</span>
       </div>
-      <v-text-field
-        class="amount-input"
-        label="Borrow Amount"
-        type="number"
-        :suffix="currencyName"
-        v-model="borrowValue"
-        height="43"
-        color="#C074F9"
-        :hint="tokenConversion"
-        persistent-hint
-      ></v-text-field>
-      <div class="borrow-power">
-        <span class="label">Borrow Power</span>
-        <v-slider
-          class="borrow-slider"
-          v-model="bpSlider"
-          min="0"
-          max="100"
-          color="#c074f9"
-          track-color="#E4E4E4"
-          thumb-color="#E4E4E4"
-          :hide-details="true"
-          thumb-label
-          @end="limitValue"
-          @click="limitSlider"
-        ></v-slider>
+    </div>
+    <div class="borrow-total mt-1 mb-3">
+      <div class="text-left">Total Borrowed</div>
+      <v-spacer></v-spacer>
+      <div class="text-right">
+        <span>${{ borrowPower }}</span>
+        &rarr;
+        <span class="after-calculated">${{ borrowPower.toFixed(2) }}</span>
       </div>
-      <div class="borrow-used">
-        <div>Borrow Power Used</div>
-        <v-spacer></v-spacer>
-        <div>
-          <span>{{ bpUsed.toFixed(1) }}%</span>
-          &rarr;
-          <span class="after-calculated">{{ calculateBPUsed(borrowValue).toFixed(1) }}%</span>
-        </div>
-      </div>
-      <div class="borrow-total mt-1 mb-3">
-        <div class="text-left">Total Borrowed</div>
-        <v-spacer></v-spacer>
-        <div class="text-right">
-          <span>${{ borrowPower }}</span>
-          &rarr;
-          <span class="after-calculated">${{ borrowPower.toFixed(2) }}</span>
-        </div>
-      </div>
-      <v-divider />
-      <div class="borrow-apy">
-        <span class="label">Borrow APY</span>
-        <v-spacer></v-spacer>
-        <span>{{ interestRate }} %</span>
-      </div>
-      <v-btn
-        large
-        block
-        depressed
-        :disabled="!isBorrowable(borrowValue, 'error')"
-        :class="isBorrowable(borrowValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
-        >{{ isBorrowable(borrowValue, 'btn') ? 'Borrow' : 'Not available' }}</v-btn
-      >
-    </v-card-text>
-  </v-card>
+    </div>
+    <v-divider />
+    <div class="borrow-apy">
+      <span class="label">Borrow APY</span>
+      <v-spacer></v-spacer>
+      <span>{{ interestRate }} %</span>
+    </div>
+    <v-btn
+      large
+      block
+      depressed
+      :disabled="!isBorrowable(borrowValue, 'error')"
+      :class="isBorrowable(borrowValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+      >{{ isBorrowable(borrowValue, 'btn') ? 'Borrow' : 'Not available' }}</v-btn
+    >
+  </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'

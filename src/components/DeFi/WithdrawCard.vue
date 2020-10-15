@@ -1,66 +1,64 @@
 <template>
-  <v-card dark color="#1D212E" class="withdraw-card">
-    <v-card-text class="wrapper">
-      <p class="action-label">Withdraw</p>
-      <div class="wallet-balance mb-2">
-        <span>Max Withdrawable:</span>
-        <v-spacer></v-spacer>
-        <span class="balance" @click="fillAmount(maxWithdraw)"
-          >{{ maxWithdraw.toFixed(2) }} {{ currencyName }}</span
-        >
-      </div>
-      <v-text-field
-        class="amount-input"
-        label="Withdrawal Amount"
-        :suffix="currencyName"
-        v-model="withdrawValue"
-        height="43"
+  <div>
+    <p class="action-label">Withdraw</p>
+    <div class="wallet-balance mb-2">
+      <span>Max Withdrawable:</span>
+      <v-spacer></v-spacer>
+      <span class="balance" @click="fillAmount(maxWithdraw)"
+        >{{ maxWithdraw.toFixed(2) }} {{ currencyName }}</span
+      >
+    </div>
+    <v-text-field
+      class="amount-input"
+      label="Withdrawal Amount"
+      :suffix="currencyName"
+      v-model="withdrawValue"
+      height="43"
+      color="#C074F9"
+      :hint="tokenConversion"
+      persistent-hint
+      type="number"
+    ></v-text-field>
+    <div class="borrow-power">
+      <span class="label">Borrow Power</span>
+      <v-progress-linear
+        :value="calculateBPUsed(withdrawValue)"
+        rounded
         color="#C074F9"
-        :hint="tokenConversion"
-        persistent-hint
-        type="number"
-      ></v-text-field>
-      <div class="borrow-power">
-        <span class="label">Borrow Power</span>
-        <v-progress-linear
-          :value="calculateBPUsed(withdrawValue)"
-          rounded
-          color="#C074F9"
-          background-color="#E4E4E4"
-          class="borrow-bar"
-          height="5"
-        ></v-progress-linear>
+        background-color="#E4E4E4"
+        class="borrow-bar"
+        height="5"
+      ></v-progress-linear>
+    </div>
+    <div class="borrow-used">
+      <div class="text-left">Borrow Power Used</div>
+      <v-spacer></v-spacer>
+      <div class="text-right">
+        <span>{{ bpUsed.toFixed(1) }}%</span>
+        &rarr;
+        <span class="after-calculated">{{ calculateBPUsed(withdrawValue).toFixed(1) }}%</span>
       </div>
-      <div class="borrow-used">
-        <div class="text-left">Borrow Power Used</div>
-        <v-spacer></v-spacer>
-        <div class="text-right">
-          <span>{{ bpUsed.toFixed(1) }}%</span>
-          &rarr;
-          <span class="after-calculated">{{ calculateBPUsed(withdrawValue).toFixed(1) }}%</span>
-        </div>
+    </div>
+    <div class="borrow-total mt-1 mb-3">
+      <div class="text-left">Total Borrow Power</div>
+      <v-spacer></v-spacer>
+      <div class="text-right">
+        <span>${{ borrowPower }}</span>
+        &rarr;
+        <span class="after-calculated">${{ calculateTotalBP(withdrawValue).toFixed(2) }}</span>
       </div>
-      <div class="borrow-total mt-1 mb-3">
-        <div class="text-left">Total Borrow Power</div>
-        <v-spacer></v-spacer>
-        <div class="text-right">
-          <span>${{ borrowPower }}</span>
-          &rarr;
-          <span class="after-calculated">${{ calculateTotalBP(withdrawValue).toFixed(2) }}</span>
-        </div>
-      </div>
-      <v-divider />
-      <v-btn
-        large
-        block
-        depressed
-        :disabled="!isWithdrawable(withdrawValue, 'error')"
-        :class="isWithdrawable(withdrawValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
-      >
-        {{ isWithdrawable(withdrawValue, 'btn') ? 'Withdraw' : 'Insufficient' }}</v-btn
-      >
-    </v-card-text>
-  </v-card>
+    </div>
+    <v-divider />
+    <v-btn
+      large
+      block
+      depressed
+      :disabled="!isWithdrawable(withdrawValue, 'error')"
+      :class="isWithdrawable(withdrawValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+    >
+      {{ isWithdrawable(withdrawValue, 'btn') ? 'Withdraw' : 'Insufficient' }}</v-btn
+    >
+  </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'

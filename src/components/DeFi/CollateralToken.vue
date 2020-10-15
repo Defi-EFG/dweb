@@ -27,7 +27,6 @@
         </v-col>
         <v-col cols="3" class="collateral">
           <div class="collateral-status" :class="item.activated ? 'activated' : ''"></div>
-          <!-- <v-switch color="#060606" :hide-details="true" inset v-model="item.activated"></v-switch> -->
         </v-col>
       </v-row>
     </v-card-text>

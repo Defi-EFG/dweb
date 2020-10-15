@@ -1,65 +1,63 @@
 <template>
-  <v-card dark color="#1D212E" class="collateral-card">
-    <v-card-text class="wrapper">
-      <p class="action-label">Collateral</p>
-      <div class="wallet-balance mb-2">
-        <span class="text-left">Wallet Balance:</span>
-        <v-spacer></v-spacer>
-        <span class="balance" @click="fillAmount(walletBalance)"
-          >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
-        >
-      </div>
-      <v-text-field
-        class="amount-input"
-        label="Collateral Amount"
-        :suffix="currencyName"
-        height="43"
-        color="#C074F9"
-        v-model="collateralAmount"
-        type="number"
-        :hint="tokenConversion"
-        persistent-hint
-      ></v-text-field>
-      <div class="borrow-power">
-        <span class="label">Borrow Power</span>
-        <v-progress-linear
-          :value="calculateBPUsed(collateralAmount)"
-          rounded
-          color="#C074F9"
-          background-color="#E4E4E4"
-          class="borrow-bar"
-          height="5"
-        ></v-progress-linear>
-      </div>
-      <div class="borrow-used">
-        <div class="text-left">Borrow Power Used</div>
-        <v-spacer></v-spacer>
-        <div class="text-right">
-          <span>{{ bpUsed.toFixed(1) }}%</span>
-          &rarr;
-          <span class="after-calculated">{{ calculateBPUsed(collateralAmount).toFixed(1) }}%</span>
-        </div>
-      </div>
-      <div class="borrow-total mt-1 mb-3">
-        <div class="text-left">Total Borrow Power</div>
-        <v-spacer></v-spacer>
-        <div class="text-right">
-          <span>${{ borrowPower }}</span>
-          &rarr;
-          <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
-        </div>
-      </div>
-      <v-divider />
-      <v-btn
-        large
-        block
-        depressed
-        :disabled="!isCollateralable(collateralAmount, 'error')"
-        :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
-        >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
+  <div>
+    <p class="action-label">Collateral</p>
+    <div class="wallet-balance mb-2">
+      <span class="text-left">Wallet Balance:</span>
+      <v-spacer></v-spacer>
+      <span class="balance" @click="fillAmount(walletBalance)"
+        >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
       >
-    </v-card-text>
-  </v-card>
+    </div>
+    <v-text-field
+      class="amount-input"
+      label="Collateral Amount"
+      :suffix="currencyName"
+      height="43"
+      color="#C074F9"
+      v-model="collateralAmount"
+      type="number"
+      :hint="tokenConversion"
+      persistent-hint
+    ></v-text-field>
+    <div class="borrow-power">
+      <span class="label">Borrow Power</span>
+      <v-progress-linear
+        :value="calculateBPUsed(collateralAmount)"
+        rounded
+        color="#C074F9"
+        background-color="#E4E4E4"
+        class="borrow-bar"
+        height="5"
+      ></v-progress-linear>
+    </div>
+    <div class="borrow-used">
+      <div class="text-left">Borrow Power Used</div>
+      <v-spacer></v-spacer>
+      <div class="text-right">
+        <span>{{ bpUsed.toFixed(1) }}%</span>
+        &rarr;
+        <span class="after-calculated">{{ calculateBPUsed(collateralAmount).toFixed(1) }}%</span>
+      </div>
+    </div>
+    <div class="borrow-total mt-1 mb-3">
+      <div class="text-left">Total Borrow Power</div>
+      <v-spacer></v-spacer>
+      <div class="text-right">
+        <span>${{ borrowPower }}</span>
+        &rarr;
+        <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
+      </div>
+    </div>
+    <v-divider />
+    <v-btn
+      large
+      block
+      depressed
+      :disabled="!isCollateralable(collateralAmount, 'error')"
+      :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+      >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
+    >
+  </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
