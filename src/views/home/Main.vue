@@ -149,12 +149,16 @@
           </v-col>
           <v-col lg="3" md="3" cols="3" class="border_left">
             <div class="margintop color_1 textafter">
-              <span class="color_size">${{ item.EFGTotalSupply }}</span>
+              <span class="color_size"
+                >${{ item.EFGTotalSupply | numberWithCommas({ decimal: 2 }) }}</span
+              >
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="3">
             <div class="margintop color_2 textafter">
-              <span class="color_size">${{ item.EFGTotalBorrowed }}</span>
+              <span class="color_size"
+                >${{ item.EFGTotalBorrowed | numberWithCommas({ decimal: 2 }) }}</span
+              >
             </div>
           </v-col>
           <img class="row1_img" src="@/assets/backg_01.svg" />
@@ -188,7 +192,7 @@
           </v-col>
           <v-col lg="6" md="6" cols="12" class="border_left1 Staking_dt">
             <div class="supply_name2">GPT - {{ $t('views.main.available') }}</div>
-            <div class="supply_price_color color_1">{{ GPTprice }} GPT</div>
+            <div class="supply_price_color color_1">{{ GPTprice | numberWithCommas() }} GPT</div>
           </v-col>
           <img class="bg_gpt" src="@/assets/backg_02.svg" />
         </v-row>
@@ -259,7 +263,7 @@ export default class Main extends Vue {
   name = 'EFG'
 
   liquidation = 20.0
-  GPTprice = '10,000'
+  GPTprice = 10000
 
   items = [
     {
