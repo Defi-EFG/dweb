@@ -1,7 +1,7 @@
 import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '@/store'
 import { InsufficientBalance } from '@/exceptions/wallet'
-import { LendingPlatform, Loan } from '@/types/lending'
+import { LendingPlatform, Loan, Loaner } from '@/types/lending'
 import { Currency } from '@/types/currency'
 import * as constants from '@/constants'
 import * as Ecoc from '@/services/wallet'
@@ -59,6 +59,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     interest: 0
   } as Loan
 
+  loaners = [] as Loaner[]
   myCollateralAssets = myCollateralAssets
   myActivity = myActivity
   collateralsActivated = [] as string[]

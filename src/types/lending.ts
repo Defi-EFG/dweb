@@ -1,4 +1,10 @@
 import { Currency, CurrencyInfo } from './currency'
+export interface Loaner {
+  currency: Currency
+  address: string
+  totalSupply: number
+  totalBorrowed: number
+}
 
 export interface Collateral {
   currency: Currency
@@ -39,6 +45,7 @@ export interface LendingPlatform {
   address: string
 
   loan: Loan
+  loaners: Loaner[]
   myCollateralAssets: CollateralAsset[]
   myActivity: MyActivity[]
 
