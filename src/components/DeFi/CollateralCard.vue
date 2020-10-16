@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="action-label">Collateral</p>
+    <p class="action-label" v-if="!isMobileDevice">Collateral</p>
     <div class="wallet-balance mb-2">
       <span class="text-left">Wallet Balance:</span>
       <v-spacer></v-spacer>
@@ -14,6 +14,7 @@
       :suffix="currencyName"
       height="43"
       color="#C074F9"
+      dark
       v-model="collateralAmount"
       type="number"
       :hint="tokenConversion"
@@ -48,8 +49,9 @@
         <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
       </div>
     </div>
-    <v-divider />
+    <v-divider dark />
     <v-btn
+      dark
       large
       block
       depressed
@@ -92,6 +94,10 @@ export default class Collateral extends Vue {
   get tokenConversion() {
     return `${this.collateralAmount} ${this.currencyName} ≈ ${this.currencyPrice *
       Number(this.collateralAmount)}`
+  }
+
+  get isMobileDevice() {
+    return window.innerWidth < 1264
   }
 
   fillAmount(amount: number) {

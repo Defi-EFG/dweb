@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="action-label">Withdraw</p>
+    <p class="action-label" v-if="!isMobileDevice">Withdraw</p>
     <div class="wallet-balance mb-2">
       <span>Max Withdrawable:</span>
       <v-spacer></v-spacer>
@@ -15,6 +15,7 @@
       v-model="withdrawValue"
       height="43"
       color="#C074F9"
+      dark
       :hint="tokenConversion"
       persistent-hint
       type="number"
@@ -50,6 +51,7 @@
     </div>
     <v-divider />
     <v-btn
+      dark
       large
       block
       depressed
@@ -75,6 +77,10 @@ export default class Withdraw extends Vue {
   val = 25
   minVal = 25
   withdrawValue = 0
+
+  get isMobileDevice() {
+    return window.innerWidth < 1264
+  }
 
   get maxWithdraw() {
     return 0

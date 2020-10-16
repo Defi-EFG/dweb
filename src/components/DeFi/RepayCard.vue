@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="action-label">Repay</p>
+    <p class="action-label" v-if="!isMobileDevice">Repay</p>
     <div class="repay-summary">
       <div class="wallet-balance">
         <span>Wallet Balance</span>
@@ -23,6 +23,7 @@
       :suffix="currencyName"
       type="number"
       height="43"
+      dark
       color="#C074F9"
       :hint="tokenConversion"
       persistent-hint
@@ -56,13 +57,14 @@
         <span class="after-calculated">${{ calculateDebt(repayAmount).toFixed(2) }}</span>
       </div>
     </div>
-    <v-divider />
+    <v-divider dark />
     <div class="borrow-apy">
       <span class="label">Borrow APY</span>
       <v-spacer></v-spacer>
       <span>{{ interestRate }} %</span>
     </div>
     <v-btn
+      dark
       large
       block
       depressed
@@ -87,6 +89,10 @@ export default class RepayCard extends Vue {
   @Prop({ default: 10 }) debt!: number
 
   repayAmount = 0
+
+  get isMobileDevice() {
+    return window.innerWidth < 1264
+  }
 
   get walletBalance() {
     return Number(this.currency.balance)
