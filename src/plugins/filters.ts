@@ -1,11 +1,6 @@
 import Vue from 'vue'
 import moment from 'moment'
 
-export function initFilters() {
-  Vue.filter('timeFromNow', timeFromNow)
-  Vue.filter('numberWithCommas', numberWithCommas)
-}
-
 export function timeFromNow(now: string | number) {
   return moment(now).fromNow()
 }
@@ -24,4 +19,9 @@ export function numberWithCommas(num: number, options?: { decimal?: number, fixe
     })
   }
   return num.toLocaleString()
+}
+
+export function initFilters() {
+  Vue.filter('timeFromNow', timeFromNow)
+  Vue.filter('numberWithCommas', numberWithCommas)
 }
