@@ -8,12 +8,45 @@
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
+
 @Component({
   components: {
     //
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+
+  polling = {} as NodeJS.Timeout
+
+  get isLoggedIn(): boolean {
+    return this.walletStore.address != ''
+  }
+
+  updateLatestData() {
+    if (this.isLoggedIn) {
+      this.walletStore.updateBalance().then(() => {
+        this.walletStore.updateCurrenciesPrice()
+      })
+      this.walletStore.updateTransactionsHistory()
+      this.lendingStore.updateLoan(this.walletStore.address)
+    }
+  }
+
+  startPooling() {
+    this.polling = setInterval(() => {
+      this.updateLatestData()
+    }, 10000)
+  }
+
+  created() {
+    this.startPooling()
+  }
+}
 </script>
 
 <style lang="scss">

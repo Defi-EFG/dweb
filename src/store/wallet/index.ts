@@ -166,10 +166,18 @@ export default class WalletModule extends VuexModule implements Wallet {
   async updateCurrenciesPrice() {
     const currenciesList = this.currencies
 
-    for (const [index, currency] of currenciesList.entries()) {
-      currency.price = await lending.getPrice(currency.name)
-      this.context.commit('updateCurrencyByIndex', { currencyIndex: index, currencyData: currency })
-    }
+    currenciesList.forEach(async (currency, index) => {
+      const currentPrice = currency.price
+      const price = await lending.getPrice(currency.name)
+
+      if (currentPrice !== price) {
+        currency.price = price
+        this.context.commit('updateCurrencyByIndex', {
+          currencyIndex: index,
+          currencyData: currency
+        })
+      }
+    })
 
     return true
   }

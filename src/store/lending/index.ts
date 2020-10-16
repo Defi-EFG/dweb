@@ -99,13 +99,31 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     return { collateralsActivated }
   }
 
+  @MutationAction
+  async updateLoan(address: string) {
+    const loan = (this.state as any).loan
+    const loanInfo = await lending.getLoanInfo(address)
+
+    if (loanInfo.interest <= 0) {
+      loanInfo.interest = await lending.getInterestRate('ECOC')
+    }
+
+    loan.loaner = loanInfo.pool
+    loan.amount = loanInfo.amount
+    loan.timestamp = loanInfo.timestamp
+    loan.interestRate = loanInfo.interestRate
+    loan.interest = loanInfo.interest
+
+    return { loan }
+  }
+
   // @MutationAction
-  // async updateAsset(currencyName: string) {
+  // async updateCollateral(address: string) {
   //   return await lending.getPrice(currencyName)
   // }
 
   // @MutationAction
-  // async updateRate(currencyName: string) {
+  // async updatePlatformInfo() {
   //   return await lending.getPrice(currencyName)
   // }
 }

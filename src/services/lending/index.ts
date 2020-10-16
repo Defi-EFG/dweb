@@ -93,7 +93,7 @@ export namespace lending {
     const executionResult = result.executionResult as ExecutionResult
     const res = executionResult.formattedOutput['0'].toNumber()
 
-    return res
+    return new BigNumber(res).dividedBy(1000).toNumber()
   }
 
   export const getInterestRate = async (currencyName: string) => {
@@ -105,7 +105,7 @@ export namespace lending {
     const executionResult = result.executionResult as ExecutionResult
     const res = executionResult.formattedOutput['0'].toNumber()
 
-    return res
+    return new BigNumber(res).dividedBy(1000).toNumber()
   }
 
   export const getDebt = async (
@@ -138,11 +138,13 @@ export namespace lending {
     const executionResult = result.executionResult as ExecutionResult
     const res = executionResult.formattedOutput
 
+    const interestRate = new BigNumber(res.interestRate).dividedBy(1000).toNumber()
+
     const loanInfo = {
       assetSymbol: Web3Utils.hexToUtf8(Utils.appendHexPrefix(res.assetSymbol)),
       amount: res.amount.toNumber(),
       timestamp: res.timestamp.toNumber(),
-      interestRate: res.interestRate.toNumber(),
+      interestRate: interestRate,
       interest: res.interest.toNumber(),
       pool: ''
     } as LoanInfo
