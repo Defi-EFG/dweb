@@ -108,7 +108,9 @@
         :collateralBalance="collateralBalance"
         :borrowBalance="borrowedBalance"
         :borrowPower="borrowPower"
+        :interestRate="interestRate"
         :borrowPowerPercentage="borrowPowerRate"
+        :borrowList="borrowList"
       ></CollateralSupplyMobile>
     </template>
   </div>
@@ -130,7 +132,7 @@ import CollateralToken from '@/components/DeFi/CollateralToken.vue'
 import SupplyMarket from '@/components/DeFi/SupplyMarket.vue'
 import Borrow from '@/components/DeFi/BorrowCard.vue'
 import Repay from '@/components/DeFi/RepayCard.vue'
-import CollateralSupplyMobile from '@/components/DeFi/CollateralSupplyMobile.vue'
+import CollateralSupplyMobile from '@/components/DeFi/Mobile/CollateralSupplyMobile.vue'
 
 @Component({
   components: {

@@ -22,6 +22,7 @@
             </div>
 
             <div class="minimum-d">
+              <span class="value">Minimum Deposit: 1.00 EFG</span>
               <v-spacer></v-spacer>
               <span class="all" @click="fillAmountDeposit(balance)">Deposit All</span>
             </div>
@@ -61,6 +62,7 @@
             </div>
 
             <div class="minimum-w">
+              <span class="value">Minimum Withdrawal: 1.00 GPT</span>
               <v-spacer></v-spacer>
               <span class="all" @click="fillAmountWithdraw(stakingAmount)">Withdraw All</span>
             </div>
@@ -75,7 +77,6 @@
               solo
               hide-details="true"
             ></v-text-field>
-
             <v-btn large block class="btn-w">Withdraw</v-btn>
           </v-card-text>
         </v-card>

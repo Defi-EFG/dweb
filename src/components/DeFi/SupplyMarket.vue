@@ -8,10 +8,9 @@
 
     <v-card-text class="market-content">
       <v-row class="market-label">
-        <v-col cols="3" class="text-center">Assets</v-col>
-        <v-col cols="3" class="text-center">APY</v-col>
-        <v-col cols="3" class="text-right">Wallet</v-col>
-        <v-col cols="3" class="text-center">Borrow</v-col>
+        <v-col cols="4">Assets</v-col>
+        <v-col cols="4" class="text-center">APY</v-col>
+        <v-col cols="4" class="text-right">Wallet</v-col>
       </v-row>
       <v-row
         class="market-item"
@@ -19,18 +18,15 @@
         :key="index"
         @click="switchBorrow(item.currency)"
       >
-        <v-col cols="3" class="assets">
+        <v-col cols="4" class="assets">
           <img :src="item.currency.style.icon" />
           <span>{{ item.currency.name }}</span>
         </v-col>
-        <v-col cols="3" class="apy">
+        <v-col cols="4" class="apy">
           <span>{{ item.apy }}%</span>
         </v-col>
-        <v-col cols="3" class="balance">
+        <v-col cols="4" class="balance">
           <span>{{ item.currency.balance }} {{ item.currency.name }}</span>
-        </v-col>
-        <v-col cols="3" class="borrow">
-          <span>Borrow</span>
         </v-col>
       </v-row>
     </v-card-text>
@@ -66,7 +62,12 @@ export default class SupplyMarket extends Vue {
   height: 100%;
 }
 
+.market-label {
+  padding: 0 5px;
+}
+
 .market-item {
+  padding: 0 5px;
   align-items: center;
   background: #323646;
   border-radius: 6px;
