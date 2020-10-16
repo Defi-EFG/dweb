@@ -56,7 +56,9 @@ export default class StakingChart extends Vue {
             bottom: 1
           }
         },
-        cutoutPercentage: 63
+        cutoutPercentage: 63,
+        responsive: true,
+        maintainAspectRatio: true
       }
     })
   }
@@ -93,7 +95,7 @@ export default class StakingChart extends Vue {
 }
 
 .token-detail {
-  margin: auto 0;
+  margin: auto;
   p {
     color: white;
   }
@@ -111,5 +113,16 @@ export default class StakingChart extends Vue {
   background-repeat: no-repeat;
   background-position: 50.4% 49.5%;
   background-size: 50px;
+}
+</style>
+
+<style lang="scss">
+@media (max-width: 1264px) {
+  .token-chart {
+    canvas {
+      width: 220px !important;
+      height: 115px !important;
+    }
+  }
 }
 </style>
