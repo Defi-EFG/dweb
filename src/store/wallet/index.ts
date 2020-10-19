@@ -29,6 +29,10 @@ export default class WalletModule extends VuexModule implements Wallet {
     return currencyInfo?.balance
   }
 
+  get currenciesList() {
+    return this.currencies
+  }
+
   get selectedCurrency() {
     return this.currencies[this.selectedCurrencyIndex]
   }
@@ -68,16 +72,19 @@ export default class WalletModule extends VuexModule implements Wallet {
     this.network = network
   }
 
+  // update everything except price
   @Mutation
   updateCurrencyInfo(currencyData: Currency) {
     const currencyIndex = this.currencies.findIndex(currency => currency.name === currencyData.name)
     if (currencyIndex < 0) {
       this.currencies.push(currencyData)
     } else {
+      currencyData.price = this.currencies[currencyIndex].price
       this.currencies.splice(currencyIndex, 1, currencyData)
     }
   }
 
+  //for update price
   @Mutation
   updateCurrencyByIndex(payload: { currencyIndex: number; currencyData: Currency }) {
     if (payload.currencyIndex >= 0) {
@@ -164,7 +171,7 @@ export default class WalletModule extends VuexModule implements Wallet {
 
   @Action
   async updateCurrenciesPrice() {
-    const currenciesList = this.currencies
+    const currenciesList = [...this.currenciesList]
 
     currenciesList.forEach(async (currency, index) => {
       const currentPrice = currency.price
@@ -172,10 +179,12 @@ export default class WalletModule extends VuexModule implements Wallet {
 
       if (currentPrice !== price) {
         currency.price = price
+
         this.context.commit('updateCurrencyByIndex', {
           currencyIndex: index,
           currencyData: currency
         })
+        this.context.commit('updateTime')
       }
     })
 

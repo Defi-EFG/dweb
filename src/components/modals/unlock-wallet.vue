@@ -313,11 +313,10 @@ export default class UnlockwalletModal extends Vue {
     // const password = '123456'
     const keystore = this.keystore
     const password = this.keystorePassword
-    this.walletStore.importWallet({ keystore, password }).then(() => {
-      this.walletStore.updateBalance().then(() => {
-        this.walletStore.updateCurrenciesPrice()
-      })
-      this.walletStore.updateTransactionsHistory()
+    this.walletStore.importWallet({ keystore, password }).then(async () => {
+      await this.walletStore.updateBalance()
+      await this.walletStore.updateCurrenciesPrice()
+      await this.walletStore.updateTransactionsHistory()
 
       this.onClose()
     })

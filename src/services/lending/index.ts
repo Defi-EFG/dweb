@@ -4,7 +4,7 @@ import { Decoder, Utils } from 'ecoweb3'
 import { SmartContract, Params, ExecutionResult } from '@/services/contract'
 import { Contract } from '@/types/contract'
 import lendingAbi from './abi.json'
-import { LoanInfo } from './types'
+import { LoanInfo, WalletParams } from './types'
 
 const lendingContract = {
   address: '2acc1ba4d0f8982f9785d2d629bf89d00e6693b8',
@@ -154,5 +154,101 @@ export namespace lending {
     }
 
     return loanInfo
+  }
+
+  //send to contract
+  export const depositColateral = async (
+    amount: number,
+    address: string,
+    poolAddress: string,
+    walletParams: WalletParams
+  ) => {
+    const params = {
+      methodArgs: [poolAddress, amount],
+      senderAddress: address,
+      amount: amount,
+      fee: walletParams.fee,
+      gasLimit: walletParams.gasLimit,
+      gasPrice: walletParams.gasPrice
+    } as Params
+
+    const keypair = walletParams.keypair
+    const utxoList = walletParams.utxoList
+
+    const result = await contract.sendTo('lockECOC', params, keypair, utxoList)
+    const txid = result.txid
+
+    return txid
+  }
+
+  export const borrow = async (
+    currencyName: string,
+    amount: number,
+    address: string,
+    poolAddress: string,
+    walletParams: WalletParams
+  ) => {
+    const params = {
+      methodArgs: [currencyName, poolAddress, amount],
+      senderAddress: address,
+      amount: 0,
+      fee: walletParams.fee,
+      gasLimit: walletParams.gasLimit,
+      gasPrice: walletParams.gasPrice
+    } as Params
+
+    const keypair = walletParams.keypair
+    const utxoList = walletParams.utxoList
+
+    const result = await contract.sendTo('borrow', params, keypair, utxoList)
+    const txid = result.txid
+
+    return txid
+  }
+
+  export const withdrawEFG = async (
+    amount: number,
+    address: string,
+    walletParams: WalletParams
+  ) => {
+    const params = {
+      methodArgs: [amount],
+      senderAddress: address,
+      amount: 0,
+      fee: walletParams.fee,
+      gasLimit: walletParams.gasLimit,
+      gasPrice: walletParams.gasPrice
+    } as Params
+
+    const keypair = walletParams.keypair
+    const utxoList = walletParams.utxoList
+
+    const result = await contract.sendTo('withdrawEFG', params, keypair, utxoList)
+    const txid = result.txid
+
+    return txid
+  }
+
+  export const withdrawECOC = async (
+    amount: number,
+    address: string,
+    walletParams: WalletParams
+  ) => {
+    const params = {
+      methodArgs: [amount, address],
+      senderAddress: address,
+      amount: 0,
+      fee: walletParams.fee,
+      gasLimit: walletParams.gasLimit,
+      gasPrice: walletParams.gasPrice
+    } as Params
+
+    const keypair = walletParams.keypair
+    const utxoList = walletParams.utxoList
+
+    const result = await contract.sendTo('withdrawECOC', params, keypair, utxoList)
+    const txid = result.txid
+
+    return txid
   }
 }

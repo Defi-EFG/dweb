@@ -3,13 +3,17 @@ import { ecocw3 } from '@/services/ecoc/ecocw3'
 import { Contract } from '@/types/contract'
 import { Utxo } from '@/types/transaction'
 
-const DEFAULT_AMOUNT = 0
-const DEFAULT_GAS_LIMIT = 250000
-const DEFAULT_GAS_PRICE = 0.0000004
+export const DEFAULT = {
+  DEFAULT_AMOUNT: 0,
+  DEFAULT_FEE: 0.01,
+  DEFAULT_GAS_LIMIT: 250000,
+  DEFAULT_GAS_PRICE: 40
+}
 
 export interface Params {
   methodArgs: (string | number)[]
   amount?: number
+  fee?: number
   gasLimit?: number
   gasPrice?: number
   senderAddress?: string
@@ -59,26 +63,34 @@ export class SmartContract implements Contract {
   }
 
   async sendTo(methodName: string, params: Params, keypair: any, utxoList: Utxo[]) {
-    const { amount, gasLimit, gasPrice } = params
-
     const encodedData = this.generateSendTx(methodName, params)
     const contractAddress = this.address
-    const amt = amount || DEFAULT_AMOUNT
-    const limit = gasLimit || DEFAULT_GAS_LIMIT
-    const price = gasPrice || DEFAULT_GAS_PRICE
 
-    const singedTx = Ecocjs.utils.buildSendToContractTransaction(
-      keypair,
+    const fromAddress = Ecocjs.utils.getAddress(keypair)
+    const network = keypair.network
+
+    const tx = Ecocjs.utils.generateSendToTx(
+      fromAddress,
       contractAddress,
       encodedData,
-      limit,
-      price * 1e8,
-      amt,
+      network,
+      params,
       utxoList
     )
+
+    const unsignedTx = tx.buildIncomplete()
+    const txInputLength = unsignedTx.ins.length
+    const txSize = unsignedTx.byteLength()
+
+    console.log('inputLength:', txInputLength, 'size:', txSize)
+
+    for (let i = 0; i < txInputLength; i++) {
+      tx.sign(i, keypair)
+    }
+
+    const singedTx = tx.build().toHex()
     const result = await ecocw3.api.sendRawTx(singedTx)
 
-    const data = result //Decoder.decodeCall(result, this.abi, methodName, true)
-    return data
+    return result
   }
 }

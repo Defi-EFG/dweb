@@ -8,7 +8,7 @@ import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 
 import { lending } from '@/services/lending'
-import { Params } from '@/services/contract'
+import { WalletParams } from '@/services/lending/types'
 import { loanCurrency } from '@/store/common'
 
 const myActivity = [
@@ -41,7 +41,7 @@ const myCollateralAssets = [
       name: constants.ECOC,
       style: constants.KNOWN_CURRENCY[constants.ECOC]
     },
-    amount: 100,
+    amount: 0,
     collateralFactor: 0.6 // 60%
   }
 ]
@@ -50,11 +50,11 @@ const myCollateralAssets = [
 export default class LendingModule extends VuexModule implements LendingPlatform {
   address = lending.address
   loan = {
-    loaner: 'ES1jMgpCNbDcBUdXz1JkJVxJWGkkjxbJB',
+    loaner: 'ePmXyrEkSmdNGvJ7rf9ofpX6HXF6uKHGeK',
     currency: loanCurrency,
-    amount: 5,
+    amount: 0,
     timestamp: 0,
-    interestRate: 0.25,
+    interestRate: 0,
     exchangeRate: 0,
     interest: 0
   } as Loan
@@ -104,8 +104,8 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     const loan = (this.state as any).loan
     const loanInfo = await lending.getLoanInfo(address)
 
-    if (loanInfo.interest <= 0) {
-      loanInfo.interest = await lending.getInterestRate('ECOC')
+    if (loanInfo.interestRate <= 0) {
+      loanInfo.interestRate = await lending.getInterestRate('ECOC')
     }
 
     loan.loaner = loanInfo.pool
@@ -117,13 +117,36 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     return { loan }
   }
 
-  // @MutationAction
-  // async updateCollateral(address: string) {
-  //   return await lending.getPrice(currencyName)
-  // }
+  @MutationAction
+  async updateCollateral(address: string) {
+    const myCollateralAssets = (this.state as any).myCollateralAssets
+    const poolAddress = (this.state as any).loan.loaner
 
-  // @MutationAction
-  // async updatePlatformInfo() {
-  //   return await lending.getPrice(currencyName)
-  // }
+    if (poolAddress === '') {
+      return {}
+    }
+
+    const res = await lending.getCollateralInfo(address, poolAddress)
+    myCollateralAssets.amount = res[0]
+
+    console.log(myCollateralAssets)
+    return { myCollateralAssets }
+  }
+
+  @Action
+  async depositCollateral(payloads: {
+    amount: number
+    address: string
+    poolAddress: string
+    walletParams: WalletParams
+  }) {
+    const { amount, address, poolAddress, walletParams } = payloads
+
+    try {
+      const txid = await lending.depositColateral(amount, address, poolAddress, walletParams)
+      return txid
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
 }

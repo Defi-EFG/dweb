@@ -27,13 +27,13 @@ export default class App extends Vue {
     return this.walletStore.address != ''
   }
 
-  updateLatestData() {
+  async updateLatestData() {
     if (this.isLoggedIn) {
-      this.walletStore.updateBalance().then(() => {
-        this.walletStore.updateCurrenciesPrice()
-      })
-      this.walletStore.updateTransactionsHistory()
-      this.lendingStore.updateLoan(this.walletStore.address)
+      await this.walletStore.updateBalance()
+      await this.walletStore.updateCurrenciesPrice()
+      await this.walletStore.updateTransactionsHistory()
+      await this.lendingStore.updateLoan(this.walletStore.address)
+      await this.lendingStore.updateCollateral(this.walletStore.address)
     }
   }
 

@@ -57,7 +57,8 @@ const getEcocBalance = async (address: string) => {
     name: constants.ECOC,
     type: constants.TYPE_ECOC,
     style: constants.KNOWN_CURRENCY.ECOC,
-    balance: balance.toString()
+    balance: balance.toString(),
+    price: 0
   } as Currency
 
   return currency
@@ -81,7 +82,8 @@ const getEcrc20Balance = async (address: string) => {
         address: token.contract.contract_address,
         decimals: token.contract.decimals,
         totalSupply: token.contract.total_supply
-      }
+      },
+      price: 0
     } as Currency)
   })
 

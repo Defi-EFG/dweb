@@ -56,6 +56,7 @@
         depressed
         :disabled="!isCollateralable(collateralAmount, 'error')"
         :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+        @click="depositCollateral"
         >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
       >
     </v-card-text>
@@ -63,10 +64,19 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
+import * as Ecoc from '@/services/wallet'
+import { WalletParams } from '@/services/lending/types'
+import { DEFAULT } from '@/services/contract'
 
 @Component({})
 export default class Collateral extends Vue {
+  walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
@@ -124,6 +134,41 @@ export default class Collateral extends Vue {
       return isEnough && isClickable
     }
     return isEnough && isValidAmount
+  }
+
+  async depositCollateral() {
+    const amount = 20
+    const password = '123456789'
+    const poolAddress = 'ePmXyrEkSmdNGvJ7rf9ofpX6HXF6uKHGeK'
+
+    const address = this.walletStore.address
+    const keystore = this.walletStore.keystore
+    const wallet = Ecoc.importFromKeystore(keystore, password)
+    const utxoList = await wallet.getUtxoList()
+
+    const walletParams = {
+      keypair: wallet.keypair,
+      utxoList: utxoList,
+      fee: DEFAULT.DEFAULT_FEE,
+      gasLimit: DEFAULT.DEFAULT_GAS_LIMIT,
+      gasPrice: DEFAULT.DEFAULT_GAS_PRICE
+    } as WalletParams
+
+    const payload = {
+      amount,
+      address,
+      poolAddress,
+      walletParams
+    }
+
+    this.lendingStore
+      .depositCollateral(payload)
+      .then(txid => {
+        console.log('Txid:', txid)
+      })
+      .catch(error => {
+        console.log('Error:', error)
+      })
   }
 }
 </script>
