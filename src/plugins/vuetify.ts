@@ -38,7 +38,7 @@ export default new Vuetify({
         error: '#FF8A65',
         lightgray: '#929292',
         white: '#FFFFFF',
-        transparent: 'transparent'
+        transparent: '#FFFFFF00'
       }
     }
   },
