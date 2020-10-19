@@ -6,10 +6,10 @@
     <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer"
       ><span>Github</span></a
     >
-    <a href="https://medium.com/@EFG_DeFi" target="_blank" rel="noopener noreferrer"
+    <a href="https://efg-defi.medium.com/" target="_blank" rel="noopener noreferrer"
       ><span>Medium</span></a
     >
-    <a href="https://medium.com/@EFG_DeFi" target="_blank" rel="noopener noreferrer">
+    <a href="https://twitter.com/EFG_DeFi" target="_blank" rel="noopener noreferrer">
       <span>Twitter</span></a
     >
   </div>
