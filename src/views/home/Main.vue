@@ -175,7 +175,7 @@
           </v-col>
         </v-row>
         <v-row class="row1 roww3">
-          <v-col lg="2" md="2" cols="6" class="Staking_dt">
+          <v-col lg="2" md="3" cols="6" class="Staking_dt">
             <img src="@/assets/gpt.svg" />
             <div class="supply_name">GPT</div>
             <div class="supply_text">{{ $t('views.main.deposit') }}</div>
