@@ -28,7 +28,7 @@ export default class StakingChart extends Vue {
   token = 'EFG - Total Supply'
   token2 = 'EFG - Total Borrowed'
   max = 418940265
-  currentValue = 530561041
+  currentValue = 130561041
 
   mounted() {
     this.renderChart(this.ctx, this.max, this.currentValue)
@@ -112,7 +112,8 @@ export default class StakingChart extends Vue {
   margin: auto 0;
   p {
     color: white;
-    margin-top: 10%;
+    margin-top: 7%;
+    margin-bottom: 3px;
   }
   .value {
     font-size: 25px;
