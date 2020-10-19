@@ -1,5 +1,5 @@
 <template>
-  <v-tabs grow background-color="#2F3446" dark class="tr-tabs">
+  <v-tabs show-arrows grow background-color="#2F3446" dark class="tr-tabs">
     <v-tab>Transaction History</v-tab>
     <v-tab>Reward History</v-tab>
 
