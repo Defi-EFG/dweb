@@ -56,11 +56,13 @@
     </v-card>
   </div>
 </template>
+
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 @Component({})
 export default class GasSetting extends Vue {}
 </script>
+
 <style lang="scss">
 .gas-customization .v-btn-toggle:not(.v-btn-toggle--dense) .v-btn.v-btn.v-size--default {
   height: 75px !important;

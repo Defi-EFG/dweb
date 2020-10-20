@@ -144,29 +144,33 @@ export default class WalletModule extends VuexModule implements Wallet {
     return true
   }
 
-  @Action
+  @Action({ rawError: true })
   async send(payload: SendPayload) {
     const currency = payload.currency
     const password = payload.password
 
-    if (Ecoc.isEcrc20(currency)) {
-      if (utils.toNumber(currency.balance).lt(payload.amount)) {
+    try {
+      if (Ecoc.isEcrc20(currency)) {
+        if (utils.toNumber(currency.balance).lt(payload.amount)) {
+          throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
+        }
+
+        return await Ecoc.sendEcrc20Balance(
+          this.keystore,
+          password,
+          currency,
+          payload as SendEcrc20Payload
+        )
+      }
+
+      if (utils.toNumber(currency.balance).lt(payload.amount + payload.fee)) {
         throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
       }
 
-      return await Ecoc.sendEcrc20Balance(
-        this.keystore,
-        password,
-        currency,
-        payload as SendEcrc20Payload
-      )
+      return await Ecoc.sendEcocBalance(this.keystore, password, payload as SendEcocPayload)
+    } catch (error) {
+      return Promise.reject(error)
     }
-
-    if (utils.toNumber(currency.balance).lt(payload.amount + payload.fee)) {
-      throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
-    }
-
-    return await Ecoc.sendEcocBalance(this.keystore, password, payload as SendEcocPayload)
   }
 
   @Action

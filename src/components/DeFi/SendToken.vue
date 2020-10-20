@@ -61,8 +61,14 @@
         type="number"
         hide-details="true"
       ></v-text-field>
-      <v-btn depressed block large class="send-btn" @click="onSend()">Send</v-btn>
-      <TransactionComfirmationModal :visible="sendialog" @onSuccess="sendialog" />
+      <v-btn depressed block large class="send-btn" @click="onOpenModal()">Send</v-btn>
+      <TransactionComfirmationModal
+        :visible="confirmTxModal"
+        :toAddr="toAddr"
+        :amount="amount"
+        @onSuccess="onSuccess"
+        @onClose="onClose"
+      />
     </v-card-text>
   </v-card>
 </template>
@@ -71,9 +77,9 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
 import { getModule } from 'vuex-module-decorators'
-import { SendPayload } from '@/types/wallet'
 import WalletModule from '@/store/wallet'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+
 @Component({
   components: {
     TransactionComfirmationModal
@@ -81,19 +87,15 @@ import TransactionComfirmationModal from '@/components/modals/transaction-confir
   directives: {
     clickOutside: vClickOutside.directive
   }
-
 })
 export default class SendToken extends Vue {
-  sendialog = false
+  confirmTxModal = false
 
   walletStore = getModule(WalletModule)
   displayContact = false
 
   toAddr = ''
   amount: number | string = 0
-  fee: number | string = 0.01
-  gasPrice: number | string = 40
-  gasLimit: number | string = 150000
 
   addrList = [
     {
@@ -133,45 +135,29 @@ export default class SendToken extends Vue {
     this.displayContact = false
   }
 
-  onunlockSuccess() {
-    this.sendialog = !this.sendialog
-  }
-
   onOpenModal() {
-    this.sendialog = !this.sendialog
+    if (this.toAddr && this.amount) {
+      this.confirmTxModal = !this.confirmTxModal
+    }
   }
 
-  onSend() {
-    const payload = {
-      currency: this.selectedCurrency,
-      password: '123456789',
-      to: this.toAddr,
-      amount: Number(this.amount),
-      fee: Number(this.fee),
-      gasLimit: Number(this.gasLimit),
-      gasPrice: Number(this.gasPrice)
-    } as SendPayload
-    console.log(payload)
-    this.currencySend(payload)
+  closeModal() {
+    this.confirmTxModal = false
   }
 
-  currencySend(payload: SendPayload) {
-    this.walletStore
-      .send(payload)
-      .then(txid => {
-        console.log(txid)
-        this.walletStore.updateBalance()
-      })
-      .catch(console.log)
+  onSuccess() {
+    this.toAddr = ''
+    this.amount = 0
+    this.closeModal()
+  }
+
+  onClose() {
+    this.closeModal()
   }
 
   withdrawAll(amount: number) {
     this.amount = amount
   }
-  
-
-
-
 }
 </script>
 

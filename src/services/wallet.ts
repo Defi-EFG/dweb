@@ -56,7 +56,7 @@ const importFromKeystore = (keystore: string | KeyStore, password: string) => {
 
 const getEcocBalance = async (address: string) => {
   const addressInfo = await EcocWallet.getAddressInfo(address)
-  const balance = addressInfo.balance - addressInfo.unconfirmedBalance
+  const balance = addressInfo.balance + addressInfo.unconfirmedBalance
 
   const currency = {
     name: constants.ECOC,
@@ -80,7 +80,7 @@ const getEcrc20Balance = async (address: string) => {
       style: Object.prototype.hasOwnProperty.call(constants.KNOWN_CURRENCY, token.contract.symbol)
         ? constants.KNOWN_CURRENCY[token.contract.symbol]
         : constants.KNOWN_CURRENCY['DEFAULT'],
-      balance: utils.toDecimals(token.amount, token.contract.decimals),
+      balance: utils.toDecimals(token.amount, token.contract.decimals).toString(),
       tokenInfo: {
         name: token.contract.name,
         symbol: token.contract.symbol,

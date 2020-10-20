@@ -3,70 +3,150 @@
     <v-card class="blur-card" color="#FFFFFF00">
       <v-card-title class="modal-header">
         <v-icon></v-icon>
-        <v-btn @click="sendialog = false" text><v-icon color="white">$close</v-icon></v-btn>
+        <v-btn text><v-icon color="white" @click="onClose">$close</v-icon></v-btn>
       </v-card-title>
       <div class="transaction-confirmation-wrapper ">
         <div class="d-flex ">
-          <div class="transaction-sender">Ed76D6...F985</div>
-          <div class="transaction-receiver">0x76D6...F065</div>
+          <div class="transaction-sender text-truncate">{{ walletAddress }}</div>
+          <div class="transaction-receiver text-truncate">{{ toAddr }}</div>
           <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
         </div>
         <div class="transaction-confirmation-content">
-          <GasSetting></GasSetting>
+          <!-- <GasSetting ></GasSetting> -->
           <h3><strong>Transaction Confirm</strong></h3>
           <small>Please confirm the transaction</small>
           <div class="transaction-confirmation-content-detail">
             <div class="send-detail border-bottom">
               <span class="gt">Send to</span>
               <div class="d-flex justify-end">
-                <p class="address">0x76D684b9D7C925A56B65u77637h18B235F065</p>
+                <p class="address">{{ toAddr }}</p>
               </div>
             </div>
             <div class="detail border-bottom">
               <span class="gt">Amount</span>
               <div class="d-flex justify-end">
-                <p>200.00</p>
-                <p class="ml-2">ECOC</p>
+                <p>{{ amount }}</p>
+                <p class="ml-2">{{ selectedCurrencyName }}</p>
               </div>
             </div>
           </div>
 
           <div class="detail border-bottom ">
-            <span class="gt">Gas Fee</span>
+            <span class="gt">Fee</span>
             <div class="text-end">
               <div class="d-flex justify-end">
-                <p>2.00</p>
+                <p>{{ fee }}</p>
                 <p class="ml-2">ECOC</p>
               </div>
               <v-btn small text color="primary">
-                <span class="gassetting">gas setting</span>
+                <span class="gassetting">fee setting</span>
               </v-btn>
             </div>
           </div>
           <v-form class="pt-4">
-            <v-text-field label="KeyStore Password" dense filled></v-text-field
+            <v-text-field
+              label="KeyStore Password"
+              v-model="password"
+              type="password"
+              dense
+              filled
+            ></v-text-field
           ></v-form>
+          <div class="error" v-if="errorMsg">
+            <p class="error">{{ errorMsg }}</p>
+          </div>
           <div class="action-transaction-confirmation">
-            <v-btn outlined large color="primary" class="text-capitalize">Cancel</v-btn>
-            <v-btn large depressed color="primary" class="text-capitalize">Confirm</v-btn>
+            <v-btn outlined large color="primary" class="text-capitalize" @click="onClose"
+              >Cancel</v-btn
+            >
+            <v-btn large depressed color="primary" class="text-capitalize" @click="onSend"
+              >Confirm</v-btn
+            >
           </div>
         </div>
       </div>
     </v-card>
   </v-dialog>
 </template>
+
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import { SendPayload } from '@/types/wallet'
+import WalletModule from '@/store/wallet'
 import GasSetting from './gas-setting-modal.vue'
+
 @Component({
-  components: {}
+  components: { GasSetting }
 })
 export default class TransactionComfirmationModal extends Vue {
-  sendialog = false
   @Prop() visible!: boolean
+  @Prop() toAddr!: string
+  @Prop() amount!: string
+
+  walletStore = getModule(WalletModule)
+  sendialog = false
+  errorMsg = ''
+  password = ''
+  fee: number | string = 0.01
+  gasPrice: number | string = 40
+  gasLimit: number | string = 150000
+
   @Watch('visible')
   show() {
     this.sendialog = this.visible
+  }
+
+  get walletAddress() {
+    return this.walletStore.address
+  }
+
+  get selectedCurrencyName() {
+    return this.selectedCurrency?.name || ''
+  }
+
+  get selectedCurrencyBalance() {
+    return this.selectedCurrency?.balance || ''
+  }
+
+  get selectedCurrency() {
+    return this.walletStore.selectedCurrency
+  }
+
+  onSuccess() {
+    this.$emit('onSuccess')
+  }
+
+  onClose() {
+    this.password = ''
+    this.errorMsg = ''
+    this.$emit('onClose')
+  }
+
+  onSend() {
+    const payload = {
+      currency: this.selectedCurrency,
+      password: this.password,
+      to: this.toAddr,
+      amount: Number(this.amount),
+      fee: Number(this.fee),
+      gasLimit: Number(this.gasLimit),
+      gasPrice: Number(this.gasPrice)
+    } as SendPayload
+    this.currencySend(payload)
+  }
+
+  currencySend(payload: SendPayload) {
+    this.walletStore
+      .send(payload)
+      .then(txid => {
+        console.log(txid)
+        this.walletStore.updateBalance()
+        this.onSuccess()
+      })
+      .catch(error => {
+        this.errorMsg = error.message
+      })
   }
 }
 </script>

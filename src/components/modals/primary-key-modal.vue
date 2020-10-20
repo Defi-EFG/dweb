@@ -46,7 +46,8 @@ export default class PrivateKey extends Vue {
   checkvisible() {
     this.checkPrivatekeyDialog = this.visiblemodalpk
   }
-   onClose() {
+
+  onClose() {
     this.$emit('onClose')
   }
 }
