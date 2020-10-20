@@ -1,9 +1,9 @@
 <template>
   <div class="lending-page">
     <v-row class="content-wrapper">
-      <v-col xl="8" lg="8" md="12" sm="12" class="content-1">
+      <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-1">
         <SupplyBalance :balance="collateralValue"></SupplyBalance>
-        <div class="ml-1 mr-1"></div>
+        <div class="col-spacer"></div>
         <BorrowBalance :balance="borrowedBalance" :maxBorrow="borrowPower"></BorrowBalance>
       </v-col>
       <v-col xl="4" lg="4" md="12" sm="12" class="content-2">
@@ -11,7 +11,7 @@
       </v-col>
     </v-row>
     <v-row v-if="!isLargeMobileDevice" class="content-wrapper">
-      <v-col xl="8" lg="8" md="12" sm="12" class="content-3">
+      <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-3">
         <v-card dark class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
@@ -276,6 +276,17 @@ export default class Lending extends Vue {
 
   &-right {
     padding: 0 0 0 4px;
+  }
+}
+
+.col-spacer {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+@media (max-width: 768px) {
+  .col-spacer {
+    padding-bottom: 12px;
   }
 }
 </style>

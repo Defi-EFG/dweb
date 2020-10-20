@@ -6,6 +6,7 @@
         <token-list v-else></token-list>
       </v-col>
       <v-col xl="4" lg="4" md="12" sm="12" cols="12" class="content-2">
+        <ReceiveSendMobile v-if="isMobileDevice"></ReceiveSendMobile>
         <v-card dark class="tx-container" v-if="isLargeMobileDevice">
           <v-toolbar :class="`receive-send-wrapper token-${selectedCurrencyName}`" dense flat>
             <v-toolbar-title class="token-symbol">
@@ -29,12 +30,12 @@
             </v-col>
           </v-row>
         </v-card>
-        <contact-address v-else></contact-address>
+        <contact-address v-if="!isMobileDevice && !isLargeMobileDevice"></contact-address>
       </v-col>
     </v-row>
     <v-row class="content-wrapper">
-      <v-col xl="8" lg="8" md="12" sm="12" xs="12" class="content-3">
-        <contact-address v-if="isLargeMobileDevice"></contact-address>
+      <v-col xl="8" lg="8" md="12" sm="12" xs="12" cols="12"  class="content-3">
+        <contact-address v-if="isLargeMobileDevice || isMobileDevice"></contact-address>
         <v-card dark class="tx-container" v-else>
           <v-toolbar :class="`receive-send-wrapper token-${selectedCurrencyName}`" dense flat>
             <v-toolbar-title class="token-symbol">
@@ -59,7 +60,7 @@
           </v-row>
         </v-card>
       </v-col>
-      <v-col xl="4" lg="4" md="12" sm="12" xs="12" class="content-4">
+      <v-col xl="4" lg="4" md="12" sm="12" xs="12" cols="12" class="content-4">
         <transaction-history :page="'wallet'"></transaction-history>
       </v-col>
     </v-row>
@@ -77,6 +78,7 @@ import SendToken from '@/components/DeFi/SendToken.vue'
 import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
 import MenuDropdown from '@/components/DeFi/MenuDropdown.vue'
 import MiniTokenList from '@/components/DeFi/Mobile/MiniTokenList.vue'
+import ReceiveSendMobile from '@/components/DeFi/Mobile/ReceiveSendMobile.vue'
 
 @Component({
   components: {
@@ -86,7 +88,8 @@ import MiniTokenList from '@/components/DeFi/Mobile/MiniTokenList.vue'
     SendToken,
     TransactionHistory,
     MenuDropdown,
-    MiniTokenList
+    MiniTokenList,
+    ReceiveSendMobile
   }
 })
 export default class Wallet extends Vue {
@@ -105,11 +108,11 @@ export default class Wallet extends Vue {
   }
 
   get isLargeMobileDevice() {
-    return window.innerWidth < 1264
+    return window.innerWidth < 1264 && window.innerWidth > 600
   }
 
   get isMobileDevice() {
-    return window.innerWidth <= 600
+    return window.innerWidth < 600
   }
 }
 </script>
@@ -189,6 +192,12 @@ export default class Wallet extends Vue {
 
   .inner-content {
     display: flex;
+  }
+
+  @media (max-width: 768px) {
+    .content-1 {
+      flex-wrap: wrap;
+    }
   }
 }
 

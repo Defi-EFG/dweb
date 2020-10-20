@@ -3,7 +3,7 @@
     <v-row class="content-wrapper">
       <v-col xl="8" lg="8" md="12" sm="12" class="content-1">
         <StakingList :stakingAmount="staking" :stakingCurrency="stakingCurrency"></StakingList>
-        <div class="ml-1 mr-1"></div>
+        <div class="col-spacer"></div>
         <StakingChart
           :currencyName="rewardCurrency.name"
           :total="totalReward"
@@ -159,6 +159,17 @@ export default class Staking extends Vue {
   img {
     width: 24px;
     margin-right: 0.8rem;
+  }
+}
+
+.col-spacer {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+@media (max-width: 768px) {
+  .col-spacer {
+    padding-bottom: 12px;
   }
 }
 </style>
