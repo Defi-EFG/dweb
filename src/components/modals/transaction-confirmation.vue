@@ -4,7 +4,7 @@
       <v-card class="blur-card">
         <v-card-title class="headline modal-header">
           <v-icon></v-icon>
-          <v-btn text><v-icon color="white">$close</v-icon></v-btn>
+          <v-btn text @click="close()"><v-icon color="white">$close</v-icon></v-btn>
         </v-card-title>
         <div class="transaction-confirmation-wrapper ">
           <div class="d-flex ">
@@ -67,8 +67,9 @@ export default class TransactionComfirmationModal extends Vue {
   sendialog = false
   @Prop() visible!: boolean
   @Watch('visible')
-  show() {
-    this.sendialog = this.visible
+  close() {
+    this.sendialog = !this.sendialog
+    console.log(this.sendialog)
   }
 }
 </script>
@@ -91,6 +92,9 @@ export default class TransactionComfirmationModal extends Vue {
 } */
 </style>
 <style lang="scss" scoped>
+#blurmodel {
+  backdrop-filter: blur(12px);
+}
 .v-dialog {
   background-color: transparent;
   position: relative;

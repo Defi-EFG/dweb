@@ -8,7 +8,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
+      <v-btn icon @click="addcontact">
         <v-icon>mdi-plus-circle-outline</v-icon>
       </v-btn>
     </v-toolbar>
@@ -23,23 +23,38 @@
         </v-list-item-content>
 
         <v-list-item-icon>
-          <v-btn fab icon x-small class="contact-btn">
+          <v-btn fab icon x-small class="contact-btn" @click="editcontact()">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn fab icon x-small class="contact-btn">
+          <v-btn fab icon x-small class="contact-btn" @click="deletecontact()">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </v-list-item-icon>
       </v-list-item>
     </v-list>
+    <Addcontact :visible="addcontactdialog" @onSuccess="addcontactdialog" />
+    <Editcontact :visible="editcontactdialog" @onSuccess="editcontactdialog" />
+    <Deletecontact :visible="deletecontactdialog" @onSuccess="deletecontactdialog" />
   </v-card>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import Addcontact from '@/components/modals/addcontact.vue'
+import Editcontact from '@/components/modals/editcontact.vue'
+import Deletecontact from '@/components/modals/deletecontact.vue'
 
-@Component({})
+@Component({
+  components: {
+    Addcontact,
+    Editcontact,
+    Deletecontact
+  }
+})
 export default class ContactAddress extends Vue {
+  addcontactdialog = false
+  editcontactdialog = false
+  deletecontactdialog = false
   contact = [
     {
       name: 'MXC',
@@ -50,6 +65,15 @@ export default class ContactAddress extends Vue {
       address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
     }
   ]
+  addcontact() {
+    this.addcontactdialog = !this.addcontactdialog
+  }
+  editcontact() {
+    this.editcontactdialog = !this.editcontactdialog
+  }
+  deletecontact() {
+    this.deletecontactdialog = !this.deletecontactdialog
+  }
 }
 </script>
 

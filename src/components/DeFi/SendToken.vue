@@ -60,7 +60,7 @@
         solo
         hide-details="true"
       ></v-text-field>
-      <v-btn depressed block large class="send-btn" @click="onunlockSuccess()">Send</v-btn>
+      <v-btn depressed block large class="send-btn" @click="senmodelsuccess()">Send</v-btn>
       <TransactionComfirmationModal :visible="sendialog" @onSuccess="sendialog" />
     </v-card-text>
   </v-card>
@@ -82,7 +82,7 @@ import TransactionComfirmationModal from '@/components/modals/transaction-confir
   }
 })
 export default class SendToken extends Vue {
-  sendialog = true
+  sendialog = false
 
   walletStore = getModule(WalletModule)
   displayContact = false
@@ -130,11 +130,9 @@ export default class SendToken extends Vue {
 
     this.displayContact = false
   }
-  onunlockSuccess() {
+  senmodelsuccess() {
     this.sendialog = !this.sendialog
-  }
-  onOpenModal() {
-    this.sendialog = !this.sendialog
+    console.log(this.sendialog)
   }
   onSend() {
     const payload = {
