@@ -6,7 +6,8 @@ const MY_ICONS = {
   close: 'mdi-close',
   leftarrow: 'mdi-arrow-left',
   rightarrow: 'mdi-arrow-right',
-  upload: 'mdi-upload'
+  upload: 'mdi-upload',
+  circle: 'mdi-circle'
 }
 
 Vue.use(Vuetify)
@@ -37,7 +38,7 @@ export default new Vuetify({
         error: '#FF8A65',
         lightgray: '#929292',
         white: '#FFFFFF',
-        transparent: 'transparent'
+        transparent: '#FFFFFF00'
       }
     }
   },
