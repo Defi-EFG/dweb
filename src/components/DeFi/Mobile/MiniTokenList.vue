@@ -2,8 +2,9 @@
   <div class="token-dropdown">
     <v-select
       :menu-props="{ 'content-class': 'blurry-bg' }"
-      :items="exampleCurrency"
-      v-model="currentPage"
+      :items="currencies"
+      v-model="currentToken"
+      @change="selectToken"
       :hide-details="true"
       solo
     >
@@ -33,7 +34,7 @@
           <v-spacer></v-spacer>
           <div class="balance">
             <div>{{ data.item.balance }} {{ data.item.name }}</div>
-            <small>≈{{ (data.item.balance * data.item.price).toFixed(2) }} USD</small>
+            <small>≈{{ getEstimatedValue(data.item.balance, data.item.price) }} USD</small>
           </div>
         </div>
       </template>
@@ -57,10 +58,10 @@ export default class MiniTokenList extends Vue {
 
   getEstimatedValue = getEstimatedValue
 
-  currentPage = {}
+  currentToken = {}
 
   mounted() {
-    this.currentPage = this.exampleCurrency[0]
+    this.currentToken = this.currencies[0]
   }
 
   get currencies() {
@@ -116,10 +117,10 @@ export default class MiniTokenList extends Vue {
     return currency
   }
 
-  selectCurrency(index: number) {
-    this.activeItem = index
-    this.walletStore.selectCurrency(index).then(() => {
-      //
+  selectToken(val: any) {
+    const currenyIndex = this.currencies.indexOf(val)
+    this.walletStore.selectCurrency(currenyIndex).then(() => {
+      // do something
     })
   }
 }
@@ -192,6 +193,10 @@ export default class MiniTokenList extends Vue {
   text-align: right;
   color: white;
 }
+
+.value {
+  color: white;
+}
 </style>
 
 <style lang="scss">
@@ -223,7 +228,6 @@ export default class MiniTokenList extends Vue {
 
 .token-dropdown {
   width: -webkit-fill-available;
-  margin-bottom: 0.75rem;
 
   .v-input__slot::before {
     content: '' !important;

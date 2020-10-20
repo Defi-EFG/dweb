@@ -137,7 +137,9 @@ export default class MenuDropdown extends Vue {
   }
 
   .v-input__slot {
+    padding: 0.8rem 12px 0.8rem 1.6rem !important;
     background: rgb(56, 61, 80) !important;
+    border-radius: 6px !important;
     // background: inherit !important;
   }
 
