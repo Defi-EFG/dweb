@@ -47,7 +47,7 @@ export class SmartContract implements Contract {
     return encodedData
   }
 
-  generateSendTx(methodName: string, params: Params) {
+  generateSendData(methodName: string, params: Params) {
     const { methodArgs } = params
     const encodedData = Encoder.constructData(this.abi, methodName, methodArgs)
 
@@ -62,8 +62,8 @@ export class SmartContract implements Contract {
     return data
   }
 
-  async sendTo(methodName: string, params: Params, keypair: any, utxoList: Utxo[]) {
-    const encodedData = this.generateSendTx(methodName, params)
+  async getSendToTx(methodName: string, params: Params, keypair: any, utxoList: Utxo[]) {
+    const encodedData = this.generateSendData(methodName, params)
     const contractAddress = this.address
 
     const fromAddress = Ecocjs.utils.getAddress(keypair)
@@ -80,17 +80,18 @@ export class SmartContract implements Contract {
 
     const unsignedTx = tx.buildIncomplete()
     const txInputLength = unsignedTx.ins.length
-    const txSize = unsignedTx.byteLength()
-
-    console.log('inputLength:', txInputLength, 'size:', txSize)
 
     for (let i = 0; i < txInputLength; i++) {
       tx.sign(i, keypair)
     }
 
     const singedTx = tx.build().toHex()
-    const result = await ecocw3.api.sendRawTx(singedTx)
 
+    return singedTx
+  }
+
+  static async send(singedTx: string) {
+    const result = await ecocw3.api.sendRawTx(singedTx)
     return result
   }
 }

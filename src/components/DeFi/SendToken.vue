@@ -58,9 +58,10 @@
         :suffix="selectedCurrencyName"
         single-line
         solo
+        type="number"
         hide-details="true"
       ></v-text-field>
-      <v-btn depressed block large class="send-btn" @click="onunlockSuccess()">Send</v-btn>
+      <v-btn depressed block large class="send-btn" @click="onSend()">Send</v-btn>
       <TransactionComfirmationModal :visible="sendialog" @onSuccess="sendialog" />
     </v-card-text>
   </v-card>
@@ -82,16 +83,16 @@ import TransactionComfirmationModal from '@/components/modals/transaction-confir
   }
 })
 export default class SendToken extends Vue {
-  sendialog = true
+  sendialog = false
 
   walletStore = getModule(WalletModule)
   displayContact = false
 
   toAddr = ''
-  amount = 0
-  fee = 0.01
-  gasPrice = 40
-  gasLimit = 150000
+  amount: number | string = 0
+  fee: number | string = 0.01
+  gasPrice: number | string = 40
+  gasLimit: number | string = 150000
 
   addrList = [
     {
@@ -130,23 +131,26 @@ export default class SendToken extends Vue {
 
     this.displayContact = false
   }
+
   onunlockSuccess() {
     this.sendialog = !this.sendialog
   }
+
   onOpenModal() {
     this.sendialog = !this.sendialog
   }
+
   onSend() {
     const payload = {
       currency: this.selectedCurrency,
-      password: '123456',
+      password: '123456789',
       to: this.toAddr,
-      amount: this.amount,
-      fee: this.fee,
-      gasLimit: this.gasLimit,
-      gasPrice: this.gasPrice
+      amount: Number(this.amount),
+      fee: Number(this.fee),
+      gasLimit: Number(this.gasLimit),
+      gasPrice: Number(this.gasPrice)
     } as SendPayload
-
+    console.log(payload)
     this.currencySend(payload)
   }
 

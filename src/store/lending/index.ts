@@ -8,7 +8,7 @@ import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 
 import { lending } from '@/services/lending'
-import { WalletParams } from '@/services/lending/types'
+import { WalletParams } from '@/services/ecoc/types'
 import { loanCurrency } from '@/store/common'
 
 const myActivity = [
@@ -136,14 +136,13 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   @Action
   async depositCollateral(payloads: {
     amount: number
-    address: string
     poolAddress: string
     walletParams: WalletParams
   }) {
-    const { amount, address, poolAddress, walletParams } = payloads
+    const { amount, poolAddress, walletParams } = payloads
 
     try {
-      const txid = await lending.depositColateral(amount, address, poolAddress, walletParams)
+      const txid = await lending.depositColateral(amount, poolAddress, walletParams)
       return txid
     } catch (error) {
       return Promise.reject(error)

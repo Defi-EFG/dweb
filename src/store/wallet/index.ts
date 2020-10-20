@@ -154,7 +154,7 @@ export default class WalletModule extends VuexModule implements Wallet {
         throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
       }
 
-      return await Ecoc.SendEcrc20Balance(
+      return await Ecoc.sendEcrc20Balance(
         this.keystore,
         password,
         currency,
@@ -166,7 +166,7 @@ export default class WalletModule extends VuexModule implements Wallet {
       throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
     }
 
-    return await Ecoc.SendEcocBalance(this.keystore, password, payload as SendEcocPayload)
+    return await Ecoc.sendEcocBalance(this.keystore, password, payload as SendEcocPayload)
   }
 
   @Action

@@ -40,7 +40,7 @@ export default class App extends Vue {
   startPooling() {
     this.polling = setInterval(() => {
       this.updateLatestData()
-    }, 10000)
+    }, 30000)
   }
 
   created() {

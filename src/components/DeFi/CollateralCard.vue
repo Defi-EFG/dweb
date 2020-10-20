@@ -69,7 +69,7 @@ import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
 import * as Ecoc from '@/services/wallet'
-import { WalletParams } from '@/services/lending/types'
+import { WalletParams } from '@/services/ecoc/types'
 import { DEFAULT } from '@/services/contract'
 
 @Component({})
@@ -147,6 +147,7 @@ export default class Collateral extends Vue {
     const utxoList = await wallet.getUtxoList()
 
     const walletParams = {
+      address: address,
       keypair: wallet.keypair,
       utxoList: utxoList,
       fee: DEFAULT.DEFAULT_FEE,
@@ -156,7 +157,6 @@ export default class Collateral extends Vue {
 
     const payload = {
       amount,
-      address,
       poolAddress,
       walletParams
     }

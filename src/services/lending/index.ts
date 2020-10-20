@@ -3,8 +3,9 @@ import Web3Utils from 'web3-utils'
 import { Decoder, Utils } from 'ecoweb3'
 import { SmartContract, Params, ExecutionResult } from '@/services/contract'
 import { Contract } from '@/types/contract'
+import { WalletParams } from '@/services/ecoc/types'
 import lendingAbi from './abi.json'
-import { LoanInfo, WalletParams } from './types'
+import { LoanInfo } from './types'
 
 const lendingContract = {
   address: '2acc1ba4d0f8982f9785d2d629bf89d00e6693b8',
@@ -159,13 +160,12 @@ export namespace lending {
   //send to contract
   export const depositColateral = async (
     amount: number,
-    address: string,
     poolAddress: string,
     walletParams: WalletParams
   ) => {
     const params = {
       methodArgs: [poolAddress, amount],
-      senderAddress: address,
+      senderAddress: walletParams.address,
       amount: amount,
       fee: walletParams.fee,
       gasLimit: walletParams.gasLimit,
@@ -175,22 +175,19 @@ export namespace lending {
     const keypair = walletParams.keypair
     const utxoList = walletParams.utxoList
 
-    const result = await contract.sendTo('lockECOC', params, keypair, utxoList)
-    const txid = result.txid
-
-    return txid
+    const rawTx = await contract.getSendToTx('lockECOC', params, keypair, utxoList)
+    return rawTx
   }
 
   export const borrow = async (
     currencyName: string,
     amount: number,
-    address: string,
     poolAddress: string,
     walletParams: WalletParams
   ) => {
     const params = {
       methodArgs: [currencyName, poolAddress, amount],
-      senderAddress: address,
+      senderAddress: walletParams.address,
       amount: 0,
       fee: walletParams.fee,
       gasLimit: walletParams.gasLimit,
@@ -200,20 +197,14 @@ export namespace lending {
     const keypair = walletParams.keypair
     const utxoList = walletParams.utxoList
 
-    const result = await contract.sendTo('borrow', params, keypair, utxoList)
-    const txid = result.txid
-
-    return txid
+    const rawTx = await contract.getSendToTx('borrow', params, keypair, utxoList)
+    return rawTx
   }
 
-  export const withdrawEFG = async (
-    amount: number,
-    address: string,
-    walletParams: WalletParams
-  ) => {
+  export const withdrawEFG = async (amount: number, walletParams: WalletParams) => {
     const params = {
       methodArgs: [amount],
-      senderAddress: address,
+      senderAddress: walletParams.address,
       amount: 0,
       fee: walletParams.fee,
       gasLimit: walletParams.gasLimit,
@@ -223,20 +214,15 @@ export namespace lending {
     const keypair = walletParams.keypair
     const utxoList = walletParams.utxoList
 
-    const result = await contract.sendTo('withdrawEFG', params, keypair, utxoList)
-    const txid = result.txid
-
-    return txid
+    const rawTx = await contract.getSendToTx('withdrawEFG', params, keypair, utxoList)
+    return rawTx
   }
 
-  export const withdrawECOC = async (
-    amount: number,
-    address: string,
-    walletParams: WalletParams
-  ) => {
+  export const withdrawECOC = async (amount: number, walletParams: WalletParams) => {
+    const toAddr = walletParams.address
     const params = {
-      methodArgs: [amount, address],
-      senderAddress: address,
+      methodArgs: [amount, toAddr],
+      senderAddress: walletParams.address,
       amount: 0,
       fee: walletParams.fee,
       gasLimit: walletParams.gasLimit,
@@ -246,9 +232,24 @@ export namespace lending {
     const keypair = walletParams.keypair
     const utxoList = walletParams.utxoList
 
-    const result = await contract.sendTo('withdrawECOC', params, keypair, utxoList)
-    const txid = result.txid
+    const rawTx = await contract.getSendToTx('withdrawECOC', params, keypair, utxoList)
+    return rawTx
+  }
 
-    return txid
+  export const repay = async (amount: number, walletParams: WalletParams) => {
+    const params = {
+      methodArgs: [amount],
+      senderAddress: walletParams.address,
+      amount: 0,
+      fee: walletParams.fee,
+      gasLimit: walletParams.gasLimit,
+      gasPrice: walletParams.gasPrice
+    } as Params
+
+    const keypair = walletParams.keypair
+    const utxoList = walletParams.utxoList
+
+    const rawTx = await contract.getSendToTx('repay', params, keypair, utxoList)
+    return rawTx
   }
 }

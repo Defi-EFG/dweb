@@ -1,15 +1,20 @@
 import * as constants from '@/constants'
 import EcocWallet from '@/services/ecoc/ecoc-wallet'
-import { Currency, Ecrc20 } from '@/types/currency'
+import { Ecrc20 } from '@/services/ecrc20'
+import { Currency, Ecrc20 as IEcrc20 } from '@/types/currency'
 import { KeyStore } from '@/types/keystore'
 import { createKeystore, getKeystoreContent, getKeystoreFromString } from '@/services/keystore'
 import { WalletError } from '@/exceptions/wallet'
-import { SendEcocPayload, SendEcrc20Payload } from './ecoc/types'
-import { encodeSendData } from './ecoc/ecrc20'
+import { SendEcocPayload, SendEcrc20Payload, WalletParams } from './ecoc/types'
 import * as utils from './utils'
 
 const isEcrc20 = (currency: Currency) => {
   return currency.type === constants.TYPE_ECRC20
+}
+
+const sendRawTx = async (rawTransaction: string) => {
+  const txid = await EcocWallet.sendRawTx(rawTransaction)
+  return txid
 }
 
 const generateNewKeystore = async (password: string) => {
@@ -90,19 +95,18 @@ const getEcrc20Balance = async (address: string) => {
   return currencies
 }
 
-export const SendEcocBalance = async (
+export const sendEcocBalance = async (
   keystore: KeyStore,
   password: string,
   payload: SendEcocPayload
 ) => {
   const wallet = importFromKeystore(keystore, password)
   const rawTransaction = await wallet.generateTx(payload)
-  const txid = await EcocWallet.sendRawTx(rawTransaction)
-
+  const txid = await sendRawTx(rawTransaction)
   return txid
 }
 
-export const SendEcrc20Balance = async (
+export const sendEcrc20Balance = async (
   keystore: KeyStore,
   password: string,
   currency: Currency,
@@ -112,19 +116,23 @@ export const SendEcrc20Balance = async (
     throw new WalletError("It's not ECRC-20 currency")
   }
 
-  const tokenInfo = currency.tokenInfo as Ecrc20
+  const tokenInfo = currency.tokenInfo as IEcrc20
 
   const wallet = importFromKeystore(keystore, password)
-  const encodedData = encodeSendData(tokenInfo, payload.to, payload.amount)
-  const rawTransaction = await await wallet.generateSendToContractTx(
-    tokenInfo.address,
-    encodedData,
-    payload.gasLimit,
-    payload.gasPrice,
-    payload.fee
-  )
-  const txid = await EcocWallet.sendRawTx(rawTransaction)
+  const utxoList = await wallet.getUtxoList()
+  const ecrc20 = new Ecrc20(tokenInfo)
 
+  const walletParams = {
+    address: wallet.address,
+    keypair: wallet.keypair,
+    utxoList: utxoList,
+    fee: payload.fee,
+    gasLimit: payload.gasLimit,
+    gasPrice: payload.gasPrice
+  } as WalletParams
+
+  const rawTransaction = await ecrc20.transfer(payload.to, payload.amount, walletParams)
+  const txid = await sendRawTx(rawTransaction)
   return txid
 }
 
@@ -134,6 +142,7 @@ const getTxs = async (address: string) => {
 }
 
 export {
+  sendRawTx,
   generateNewKeystore,
   importFromKeystore,
   getKeystore,
