@@ -53,7 +53,7 @@
             <div class="label pl-3">
               <span>Withdraw</span>
             </div>
-            <span class="pl-3">Please input the amount that you want to withdraw</span>
+            <span class="description">Please input the amount that you want to withdraw</span>
 
             <div class="d-amount">
               <span>Your Staking amount</span>
@@ -183,6 +183,10 @@ export default class DepositWithdraw extends Vue {
     opacity: 0.7;
   }
 
+  .description {
+    padding-left: 12px;
+  }
+
   .btn-w,
   .btn-d {
     margin-top: 2.5rem;
@@ -194,6 +198,23 @@ export default class DepositWithdraw extends Vue {
 
   .btn-w {
     margin-top: 5.3rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .withdrawal-amount,
+  .d-amount,
+  .minimum-w,
+  .description,
+  .note,
+  .minimum-d,
+  .deposit-amount,
+  .total-balance,
+  .label {
+    font-size: small;
+    span {
+      font-size: small;
+    }
   }
 }
 </style>

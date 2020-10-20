@@ -85,4 +85,14 @@ export default class SupplyMarketMobile extends Vue {
 .market-item:nth-last-child(1) {
   margin-bottom: 0;
 }
+
+@media (max-width: 768px) {
+  .market-label {
+    font-size: small;
+  }
+
+  .market-item {
+    font-size: small;
+  }
+}
 </style>

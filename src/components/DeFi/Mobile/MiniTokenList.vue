@@ -3,6 +3,7 @@
     <v-select
       :menu-props="{ 'content-class': 'blurry-bg' }"
       :items="currencies"
+      flat
       v-model="currentToken"
       @change="selectToken"
       :hide-details="true"

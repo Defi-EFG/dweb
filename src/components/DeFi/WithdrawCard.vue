@@ -3,7 +3,7 @@
     <p class="action-label" v-if="!isMobileDevice">Withdraw</p>
     <div class="wallet-balance mb-2">
       <span>Max Withdrawable:</span>
-      <v-spacer></v-spacer>
+      <v-spacer class="space"></v-spacer>
       <span class="balance" @click="fillAmount(maxWithdraw)"
         >{{ maxWithdraw.toFixed(2) }} {{ currencyName }}</span
       >
@@ -33,8 +33,8 @@
     </div>
     <div class="borrow-used">
       <div class="text-left">Borrow Power Used</div>
-      <v-spacer></v-spacer>
-      <div class="text-right">
+      <v-spacer class="space"></v-spacer>
+      <div class="bp-change">
         <span>{{ bpUsed.toFixed(1) }}%</span>
         &rarr;
         <span class="after-calculated">{{ calculateBPUsed(withdrawValue).toFixed(1) }}%</span>
@@ -42,14 +42,14 @@
     </div>
     <div class="borrow-total mt-1 mb-3">
       <div class="text-left">Total Borrow Power</div>
-      <v-spacer></v-spacer>
-      <div class="text-right">
+      <v-spacer class="space"></v-spacer>
+      <div class="bt-change">
         <span>${{ borrowPower }}</span>
         &rarr;
         <span class="after-calculated">${{ calculateTotalBP(withdrawValue).toFixed(2) }}</span>
       </div>
     </div>
-    <v-divider />
+    <v-divider dark />
     <v-btn
       dark
       large
@@ -183,6 +183,14 @@ export default class Withdraw extends Vue {
   display: flex;
   color: white;
 
+  .bp-change {
+    text-align: right;
+  }
+
+  .bt-change {
+    text-align: right;
+  }
+
   .after-calculated {
     color: #c074f9;
   }
@@ -200,6 +208,45 @@ export default class Withdraw extends Vue {
 .disabled {
   background: #8f8f8f !important;
   cursor: no-drop;
+}
+
+@media (max-width: 768px) {
+  .wallet-balance,
+  .borrow-power,
+  .borrow-used,
+  .borrow-total {
+    font-size: small;
+  }
+}
+
+@media (max-width: 425px) {
+  .wallet-balance {
+    flex-wrap: wrap;
+
+    .balance {
+      width: 100%;
+    }
+  }
+
+  .borrow-used {
+    flex-wrap: wrap;
+
+    .bp-change {
+      width: 100%;
+    }
+  }
+
+  .borrow-total {
+    flex-wrap: wrap;
+
+    .bt-change {
+      width: 100%;
+    }
+  }
+
+  .space {
+    flex-basis: 100%;
+  }
 }
 </style>
 

@@ -59,6 +59,12 @@ export default class CollateralWithdrawMobile extends Vue {
   border-bottom-left-radius: 6px;
   border-bottom-right-radius: 6px;
 }
+
+@media (max-width: 425px) {
+  .cw-tabs-item {
+    padding: 2rem 1.25rem;
+  }
+}
 </style>
 
 <style lang="scss">

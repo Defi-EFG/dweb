@@ -3,7 +3,7 @@
     <p class="action-label" v-if="!isMobileDevice">Borrow</p>
     <div class="wallet-balance">
       <span>Wallet Balance:</span>
-      <v-spacer></v-spacer>
+      <v-spacer class="space"></v-spacer>
       <span class="balance">{{ walletBalance.toFixed(2) }} {{ currencyName }}</span>
     </div>
     <v-text-field
@@ -36,8 +36,8 @@
     </div>
     <div class="borrow-used">
       <div>Borrow Power Used</div>
-      <v-spacer></v-spacer>
-      <div>
+      <v-spacer class="space"></v-spacer>
+      <div class="bp-change">
         <span>{{ bpUsed.toFixed(1) }}%</span>
         &rarr;
         <span class="after-calculated">{{ calculateBPUsed(borrowValue).toFixed(1) }}%</span>
@@ -45,8 +45,8 @@
     </div>
     <div class="borrow-total mt-1 mb-3">
       <div class="text-left">Total Borrowed</div>
-      <v-spacer></v-spacer>
-      <div class="text-right">
+      <v-spacer class="space"></v-spacer>
+      <div class="bt-change">
         <span>${{ borrowPower }}</span>
         &rarr;
         <span class="after-calculated">${{ borrowPower.toFixed(2) }}</span>
@@ -197,6 +197,10 @@ export default class BorrowCard extends Vue {
   display: flex;
   color: white;
 
+  .balance {
+    text-align: right;
+  }
+
   .label {
     font-weight: 700;
   }
@@ -223,6 +227,14 @@ export default class BorrowCard extends Vue {
   display: flex;
   color: white;
 
+  .bp-change {
+    text-align: right;
+  }
+
+  .bt-change {
+    text-align: right;
+  }
+
   .after-calculated {
     color: #c074f9;
   }
@@ -244,6 +256,46 @@ export default class BorrowCard extends Vue {
 .disabled {
   background: #8f8f8f !important;
   cursor: no-drop;
+}
+
+@media (max-width: 768px) {
+  .wallet-balance,
+  .borrow-power,
+  .borrow-used,
+  .borrow-total,
+  .borrow-apy {
+    font-size: small;
+  }
+}
+
+@media (max-width: 425px) {
+  .wallet-balance {
+    flex-wrap: wrap;
+
+    .balance {
+      width: 100%;
+    }
+  }
+
+  .borrow-used {
+    flex-wrap: wrap;
+
+    .bp-change {
+      width: 100%;
+    }
+  }
+
+  .borrow-total {
+    flex-wrap: wrap;
+
+    .bt-change {
+      width: 100%;
+    }
+  }
+
+  .space {
+    flex-basis: 100%;
+  }
 }
 </style>
 

@@ -1,7 +1,7 @@
 <template>
   <div class="staking-page">
     <v-row class="content-wrapper">
-      <v-col xl="8" lg="8" md="12" sm="12" class="content-1">
+      <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-1">
         <StakingList :stakingAmount="staking" :stakingCurrency="stakingCurrency"></StakingList>
         <div class="col-spacer"></div>
         <StakingChart
@@ -10,7 +10,7 @@
           :available="available"
         ></StakingChart>
       </v-col>
-      <v-col xl="4" lg="4" md="12" sm="12" class="content-2">
+      <v-col xl="4" lg="4" md="12" sm="12" cols="12" class="content-2">
         <v-card dark color="#222738" class="tx-container" v-if="isLargeMobileDevice">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
@@ -32,7 +32,7 @@
       </v-col>
     </v-row>
     <v-row class="content-wrapper">
-      <v-col xl="8" lg="8" md="12" sm="12" class="content-3">
+      <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-3">
         <StakedReward
           v-if="isLargeMobileDevice"
           :stakedReward="totalStakedReward"

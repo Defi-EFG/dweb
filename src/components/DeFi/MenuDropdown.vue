@@ -4,6 +4,7 @@
       :menu-props="{ 'content-class': 'blurry-bg' }"
       :items="items"
       v-model="currentPage"
+      flat
       @change="menuSelect"
       :hide-details="true"
       solo

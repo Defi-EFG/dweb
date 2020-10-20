@@ -3,7 +3,7 @@
     <v-card-text class="wrapper">
       <div class="total-reward">
         <p class="label mb-0">Your Staked Reward</p>
-        <p class="value">{{ stakedReward }} {{ currencyName }}</p>
+        <p class="value text-center">{{ stakedReward }} {{ currencyName }}</p>
       </div>
 
       <div class="d-amount">
@@ -140,6 +140,25 @@ export default class StakedReward extends Vue {
   font-size: larger;
   color: #c074f9;
   font-weight: 700;
+}
+
+@media (max-width: 425px) {
+  .total-reward {
+    .value {
+      font-size: large;
+      padding-top: 0.5rem;
+    }
+  }
+  
+  .staked-amount,
+  .minimum-w,
+  .d-amount {
+    font-size: small;
+  }
+
+  .reward-label {
+    font-size: 15px;
+  }
 }
 </style>
 

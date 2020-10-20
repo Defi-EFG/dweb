@@ -78,6 +78,12 @@ export default class CollateralSupplyMobile extends Vue {
   margin-top: 1rem;
   margin-bottom: 1rem;
 }
+
+@media (max-width: 425px) {
+  .cs-tabs-item {
+    padding: 0.7rem;
+  }
+}
 </style>
 
 <style lang="scss">

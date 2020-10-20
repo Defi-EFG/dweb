@@ -87,4 +87,14 @@ export default class CollateralTokenMobile extends Vue {
   border: 6px solid #212637;
   background-color: #afb1b7;
 }
+
+@media (max-width: 768px) {
+  .collateral-label {
+    font-size: small;
+  }
+
+  .collateral-item {
+    font-size: small;
+  }
+}
 </style>
