@@ -80,7 +80,6 @@ import TransactionComfirmationModal from '@/components/modals/transaction-confir
   directives: {
     clickOutside: vClickOutside.directive
   }
-
 })
 export default class SendToken extends Vue {
   sendialog = false
@@ -133,7 +132,6 @@ export default class SendToken extends Vue {
   }
   senmodelsuccess() {
     this.sendialog = !this.sendialog
-    console.log(this.sendialog)
   }
   onSend() {
     const payload = {
@@ -162,10 +160,6 @@ export default class SendToken extends Vue {
   withdrawAll(amount: number) {
     this.amount = amount
   }
-  
-
-
-
 }
 </script>
 

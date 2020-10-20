@@ -1,7 +1,7 @@
 <template>
   <div class="send-transaction">
     <v-dialog v-model="editcontactdialog" max-width="400">
-      <v-card class="blur-card">
+      <v-card class="">
         <v-card-title class="headline modal-header" id="headmodel">
           <div class="headtext">Edit contact</div>
           <v-icon></v-icon>
@@ -10,8 +10,8 @@
         <div class="transaction-confirmation-wrapper ">
           <div class="transaction-confirmation-content" id="solo">
             <v-form class="pt-4">
-              <v-text-field label="MXC"  solo></v-text-field>
-              <v-text-field label="cccc"  solo></v-text-field
+              <v-text-field label="MXC" solo></v-text-field>
+              <v-text-field label="cccc" solo></v-text-field
             ></v-form>
             <div class="action-transaction-confirmation">
               <v-btn outlined large color="primary" class="text-capitalize">Cancel</v-btn>

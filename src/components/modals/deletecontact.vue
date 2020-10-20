@@ -1,7 +1,7 @@
 <template>
   <div class="send-transaction">
     <v-dialog v-model="contactdialog" max-width="400">
-      <v-card class="blur-card">
+      <v-card class="">
         <v-card-title class="headline modal-header" id="headmodel">
           <div class="headtext">Delete contact</div>
           <v-icon></v-icon>
@@ -52,7 +52,9 @@ export default class Addcontact extends Vue {
   border-color: transparent !important;
   background-color: transparent;
 }*/
-.v-text-field fieldset, .v-text-field .v-input__control, .v-text-field .v-input__slot {
+.v-text-field fieldset,
+.v-text-field .v-input__control,
+.v-text-field .v-input__slot {
   border-radius: unset;
 }
 .v-input__slot:before {
