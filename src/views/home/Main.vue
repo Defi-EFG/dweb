@@ -84,7 +84,7 @@
                   style="animation-delay: 1s;"
               /></a>
 
-              <a href="https://medium.com/@EFG_DeFi" target="_blank">
+              <a href="https://efg-defi.medium.com/" target="_blank">
                 <img
                   title="Medium"
                   class="img_logo1"
