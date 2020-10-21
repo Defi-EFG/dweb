@@ -8,9 +8,9 @@
     </v-toolbar>
     <v-card-text class="text-center send-area">
       <div class="token-balance">
-        <span class="text-left">ECOC Balance</span>
+        <span class="text-left">{{ selectedCurrencyName }} Balance</span>
         <v-spacer></v-spacer>
-        <span class="text-right">{{ ecocBalance }} ECOC</span>
+        <span class="text-right">{{ selectedCurrencyBalance }} {{ selectedCurrencyName }}</span>
       </div>
       <v-text-field
         label="To Address"
@@ -44,9 +44,6 @@
         </v-list-item-group>
       </div>
       <div class="withdraw-rate">
-        <span class="text-left"
-          >{{ selectedCurrencyName }} Available: {{ selectedCurrencyBalance }}</span
-        >
         <v-spacer></v-spacer>
         <span class="fb-btn" @click="withdrawAll(selectedCurrencyBalance)">Withdraw All</span>
       </div>
