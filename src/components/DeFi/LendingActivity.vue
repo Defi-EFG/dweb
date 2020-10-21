@@ -5,7 +5,7 @@
       <v-tab>My borrowing</v-tab>
       <v-tab>My Activity</v-tab>
 
-      <v-tab-item>
+      <v-tab-item class="my-collateral">
         <v-card dark color="#2e3344">
           <v-card-text>
             <div class="supply-header">
@@ -28,7 +28,7 @@
         </v-card>
       </v-tab-item>
 
-      <v-tab-item>
+      <v-tab-item class="my-borrowing">
         <v-card dark color="#2e3344">
           <v-card-text>
             <div class="borrow-header">
@@ -55,7 +55,7 @@
         </v-card>
       </v-tab-item>
 
-      <v-tab-item>
+      <v-tab-item class="my-activity">
         <v-card dark color="#2e3344">
           <v-list color="#222738" class="activity-list">
             <v-list-item v-for="(act, index) in myActivity" :key="index" class="activity-item">
@@ -234,6 +234,40 @@ export default class LendingActivity extends Vue {
     color: white;
     display: flex;
     opacity: 0.6;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-collateral,
+  .my-borrowing,
+  .my-activity {
+    font-size: small;
+  }
+
+  .my-collateral {
+    .supply-header {
+      font-size: small;
+    }
+    
+    .supply-item {
+      font-size: small;
+    }
+  }
+
+  .my-borrowing {
+    .borrow-header {
+      font-size: small;
+    }
+
+    .borrow-item {
+      font-size: small;
+    }
+  }
+
+  .my-activity {
+    .activity-type{
+      font-size: small;
+    }
   }
 }
 </style>

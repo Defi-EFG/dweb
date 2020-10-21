@@ -3,7 +3,7 @@
     <v-app-bar class="efg-header" flat dark>
       <div class="home" @click="gotoHome">
         <img src="@/assets/efg_logo.svg" class="efg-logo" />
-        <v-toolbar-title>ECOC Finance Governance</v-toolbar-title>
+        <v-toolbar-title class="header-title">ECOC Finance Governance</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
       <template v-if="!addr">
@@ -160,7 +160,6 @@ export default class HeaderNav extends Vue {
   height: auto;
   padding: 7px 10px;
   background-color: #2a3047 !important;
-  margin-bottom: 10px;
 
   .dot-circle {
     height: 12px;
@@ -168,6 +167,12 @@ export default class HeaderNav extends Vue {
     background-color: #c074f9;
     border-radius: 50%;
     margin-right: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-title {
+    display: none;
   }
 }
 </style>

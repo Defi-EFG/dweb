@@ -56,6 +56,9 @@ export default class SupplyBalance extends Vue {
 }
 
 .liquid-countdown {
+  background: #151a2b;
+  border-radius: 5px;
+  padding: 8px;
   display: flex;
   justify-content: space-between;
 
@@ -68,6 +71,21 @@ export default class SupplyBalance extends Vue {
 
 .liquidate {
   color: #ff5656;
+}
+
+@media (max-width: 768px) {
+  .balance {
+    font-size: 29px;
+    padding-top: 1.8rem;
+  }
+
+  .loaner {
+    font-size: small;
+  }
+
+  .liquid-countdown {
+    font-size: small;
+  }
 }
 </style>
 

@@ -1,17 +1,17 @@
 <template>
   <div class="lending-page">
     <v-row class="content-wrapper">
-      <v-col cols="8" class="content">
+      <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-1">
         <SupplyBalance :balance="collateralBalance" :loaner="loaner"></SupplyBalance>
-        <div class="ml-1 mr-1"></div>
+        <div class="col-spacer"></div>
         <BorrowBalance :balance="borrowedBalance" :borrowLimit="borrowLimit"></BorrowBalance>
       </v-col>
-      <v-col cols="4" class="content pr-0">
+      <v-col xl="4" lg="4" md="12" sm="12" class="content-2">
         <LendingActivity></LendingActivity>
       </v-col>
     </v-row>
-    <v-row class="content-wrapper">
-      <v-col cols="8" class="content pb-0">
+    <v-row v-if="!isLargeMobileDevice" class="content-wrapper">
+      <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-3">
         <v-card dark class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
@@ -24,53 +24,69 @@
             <v-col cols="6" class="inner-content pr-1">
               <transition name="fade" mode="out-in">
                 <template v-if="mode === 'collateral'">
-                  <Collateral
-                    :currency="selectedCurrency"
-                    :collateralBalance="collateralBalance"
-                    :borrowBalance="borrowedBalance"
-                    :borrowLimit="borrowLimit"
-                    :borrowPowerPercentage="selectedCollateralFactor"
-                  ></Collateral>
+                  <v-card dark color="#1D212E" class="content-card">
+                    <v-card-text class="wrapper">
+                      <Collateral
+                        :currency="selectedCurrency"
+                        :collateralBalance="collateralBalance"
+                        :borrowBalance="borrowedBalance"
+                        :borrowLimit="borrowLimit"
+                        :borrowPowerPercentage="selectedCollateralFactor"
+                      ></Collateral>
+                    </v-card-text>
+                  </v-card>
                 </template>
                 <template v-else>
-                  <Borrow
-                    :currency="selectedCurrency"
-                    :collateralBalance="collateralBalance"
-                    :borrowBalance="borrowedBalance"
-                    :borrowLimit="borrowLimit"
-                    :interestRate="interestRate"
-                    :borrowPowerPercentage="selectedCollateralFactor"
-                  ></Borrow>
+                  <v-card dark color="#1D212E" class="content-card">
+                    <v-card-text class="wrapper">
+                      <Borrow
+                        :currency="selectedCurrency"
+                        :collateralBalance="collateralBalance"
+                        :borrowBalance="borrowedBalance"
+                        :borrowLimit="borrowLimit"
+                        :interestRate="interestRate"
+                        :borrowPowerPercentage="selectedCollateralFactor"
+                      ></Borrow>
+                    </v-card-text>
+                  </v-card>
                 </template>
               </transition>
             </v-col>
             <v-col cols="6" class="inner-content pl-1">
               <transition name="fade" mode="out-in">
                 <template v-if="mode === 'collateral'">
-                  <Withdraw
-                    :currency="selectedCurrency"
-                    :collateralBalance="collateralBalance"
-                    :borrowBalance="borrowedBalance"
-                    :borrowLimit="borrowLimit"
-                    :borrowPowerPercentage="selectedCollateralFactor"
-                  ></Withdraw>
+                  <v-card dark color="#1D212E" class="content-card">
+                    <v-card-text class="wrapper">
+                      <Withdraw
+                        :currency="selectedCurrency"
+                        :collateralBalance="collateralBalance"
+                        :borrowBalance="borrowedBalance"
+                        :borrowLimit="borrowLimit"
+                        :borrowPowerPercentage="selectedCollateralFactor"
+                      ></Withdraw>
+                    </v-card-text>
+                  </v-card>
                 </template>
                 <template v-else>
-                  <Repay
-                    :currency="selectedCurrency"
-                    :collateralBalance="collateralBalance"
-                    :borrowBalance="borrowedBalance"
-                    :borrowLimit="borrowLimit"
-                    :interestRate="interestRate"
-                    :borrowPowerPercentage="selectedCollateralFactor"
-                  ></Repay>
+                  <v-card dark color="#1D212E" class="content-card">
+                    <v-card-text class="wrapper">
+                      <Repay
+                        :currency="selectedCurrency"
+                        :collateralBalance="collateralBalance"
+                        :borrowBalance="borrowedBalance"
+                        :borrowLimit="borrowLimit"
+                        :interestRate="interestRate"
+                        :borrowPowerPercentage="selectedCollateralFactor"
+                      ></Repay>
+                    </v-card-text>
+                  </v-card>
                 </template>
               </transition>
             </v-col>
           </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4" class="content pb-0 pr-0">
+      <v-col cols="4" class="content-4">
         <v-row>
           <v-col cols="12" class="pt-0 pb-0">
             <CollateralToken
@@ -85,6 +101,18 @@
         </v-row>
       </v-col>
     </v-row>
+    <template v-else>
+      <CollateralSupplyMobile
+        :collateralList="collateralList"
+        :currency="selectedCurrency"
+        :collateralBalance="collateralBalance"
+        :borrowBalance="borrowedBalance"
+        :borrowPower="borrowPower"
+        :interestRate="interestRate"
+        :borrowPowerPercentage="borrowPowerRate"
+        :borrowList="borrowList"
+      ></CollateralSupplyMobile>
+    </template>
   </div>
 </template>
 
@@ -105,6 +133,7 @@ import CollateralToken from '@/components/DeFi/CollateralToken.vue'
 import SupplyMarket from '@/components/DeFi/SupplyMarket.vue'
 import Borrow from '@/components/DeFi/BorrowCard.vue'
 import Repay from '@/components/DeFi/RepayCard.vue'
+import CollateralSupplyMobile from '@/components/DeFi/Mobile/CollateralSupplyMobile.vue'
 
 @Component({
   components: {
@@ -116,7 +145,8 @@ import Repay from '@/components/DeFi/RepayCard.vue'
     CollateralToken,
     SupplyMarket,
     Borrow,
-    Repay
+    Repay,
+    CollateralSupplyMobile
   }
 })
 export default class Lending extends Vue {
@@ -211,6 +241,10 @@ export default class Lending extends Vue {
     return currency.price || 0
   }
 
+  get isLargeMobileDevice() {
+    return window.innerWidth < 1264
+  }
+
   modeSwitch(val: string) {
     console.log('receive emit')
     this.mode = val
@@ -243,6 +277,15 @@ export default class Lending extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.content-card {
+  width: 100%;
+}
+
+.wrapper {
+  padding: 2rem;
+  text-align: left;
+}
+
 .supply-withdraw-wrapper {
   background: transparent linear-gradient(270deg, #2e3344 0%, #303748 100%) 0% 0% no-repeat
     padding-box;
@@ -266,6 +309,17 @@ export default class Lending extends Vue {
 
   &-right {
     padding: 0 0 0 4px;
+  }
+}
+
+.col-spacer {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+@media (max-width: 768px) {
+  .col-spacer {
+    padding-bottom: 12px;
   }
 }
 </style>

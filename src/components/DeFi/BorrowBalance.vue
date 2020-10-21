@@ -86,6 +86,17 @@ export default class BorrowBalance extends Vue {
   margin-bottom: 1px;
   box-shadow: 0px 3px 6px #00000029;
 }
+
+@media (max-width: 768px) {
+  .borrow {
+    font-size: 29px;
+    padding-top: 1rem;
+  }
+
+  .borrow-power {
+    font-size: small;
+  }
+}
 </style>
 
 <style lang="scss">

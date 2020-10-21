@@ -122,22 +122,26 @@ export default class TransactionComfirmationModal extends Vue {
   }
 
   async onConfirm() {
-    const password = this.password
-    const address = this.walletStore.address
-    const keystore = this.walletStore.keystore
-    const wallet = Ecoc.importFromKeystore(keystore, password)
-    const utxoList = await wallet.getUtxoList()
+    try {
+      const password = this.password
+      const address = this.walletStore.address
+      const keystore = this.walletStore.keystore
+      const wallet = Ecoc.importFromKeystore(keystore, password)
+      const utxoList = await wallet.getUtxoList()
 
-    const walletParams = {
-      address: address,
-      keypair: wallet.keypair,
-      utxoList: utxoList,
-      fee: this.fee,
-      gasLimit: this.gasLimit,
-      gasPrice: this.gasPrice
-    } as WalletParams
+      const walletParams = {
+        address: address,
+        keypair: wallet.keypair,
+        utxoList: utxoList,
+        fee: this.fee,
+        gasLimit: this.gasLimit,
+        gasPrice: this.gasPrice
+      } as WalletParams
 
-    this.$emit('onConfirm', walletParams)
+      this.$emit('onConfirm', walletParams)
+    } catch (error) {
+      this.errorMsg = error.message
+    }
   }
 }
 </script>

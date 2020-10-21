@@ -56,7 +56,9 @@ export default class StakingChart extends Vue {
             bottom: 1
           }
         },
-        cutoutPercentage: 63
+        cutoutPercentage: 63,
+        responsive: true,
+        maintainAspectRatio: true
       }
     })
   }
@@ -93,7 +95,7 @@ export default class StakingChart extends Vue {
 }
 
 .token-detail {
-  margin: auto 0;
+  margin: auto;
   p {
     color: white;
   }
@@ -111,5 +113,59 @@ export default class StakingChart extends Vue {
   background-repeat: no-repeat;
   background-position: 50.4% 49.5%;
   background-size: 50px;
+}
+
+@media (max-width: 768px) {
+  .chart-card {
+    padding: 12px 2rem;
+  }
+  .token-detail {
+    margin: auto 0 auto auto;
+  }
+}
+
+@media (max-width: 600px) {
+  .chart-card {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 425px) {
+  .token-detail {
+    p {
+      font-size: small;
+    }
+    .value {
+      font-size: 20px;
+    }
+  }
+}
+</style>
+
+<style lang="scss">
+@media (max-width: 1264px) {
+  .token-chart {
+    canvas {
+      width: 220px !important;
+      height: 115px !important;
+    }
+  }
+
+  .value {
+    text-align: right;
+  }
+}
+
+@media (max-width: 425px) {
+  .token-chart {
+    canvas {
+      width: 180px !important;
+      height: 90px !important;
+    }
+  }
+
+  .token-logo {
+    background-size: 35px !important;
+  }
 }
 </style>
