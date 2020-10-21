@@ -221,7 +221,7 @@
             </v-card-title>
             <div class="transaction-confirmation-wrapper collateral_pddeful ">
               <div class="headtitle_collat">
-                <div class="headtitle_collat_head">
+                <div class="headtitle_collat_head font-bold">
                   Deposit Successful!<img src="@/assets/icon/Check.svg" alt="" />
                 </div>
                 <v-container colortextoutput>
@@ -249,10 +249,18 @@
                     >
                   </v-row>
                   <v-row class="showwallet2 showwalletcc">
-                    <v-col cols="6" class="nopadding font-bold ">Transaction Confirmed!</v-col>
-                    <v-col cols="6" class="textright nopadding">
-                      <img src="@/assets/icon/Txid.svg" alt="" />
-                      <img src="@/assets/icon/Copy.svg" alt="" />
+                    <v-col cols="8" class="nopadding font-bold ">Transaction Confirmed!</v-col>
+                    <v-col cols="4" class="textright nopadding">
+                      <v-btn class="icon" fab dark x-small color="primary">
+                        <v-icon dark>
+                          mdi-arrow-up
+                        </v-icon>
+                      </v-btn>
+                      <v-btn class="icon" fab dark x-small color="primary">
+                        <v-icon dark>
+                          mdi-content-copy
+                        </v-icon>
+                      </v-btn>
                     </v-col>
                   </v-row>
                   <v-row class="showwallet3 font-df">
@@ -329,6 +337,9 @@ export default class TransactionComfirmationModal extends Vue {
 }
 </style>
 <style lang="scss" scoped>
+.nopadding .icon {
+  transform: scale(0.8);
+}
 .row1 {
   color: #cccccc;
   position: relative;
@@ -576,7 +587,7 @@ export default class TransactionComfirmationModal extends Vue {
   padding: 0 20px;
 }
 .nopadding {
-  padding: 15px 12px;
+  padding: 15px 5px;
 }
 .nopadding img {
   width: 40px;
@@ -613,6 +624,7 @@ export default class TransactionComfirmationModal extends Vue {
 }
 .font-bold {
   font-weight: bold;
+  font-size: 17px;
 }
 .font-df {
   font-size: 13px;
