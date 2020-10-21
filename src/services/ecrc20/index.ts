@@ -2,7 +2,7 @@ import { Ecrc20 as IEcrc20 } from '@/types/currency'
 import { ecocw3 } from '@/services/ecoc/ecocw3'
 import { SmartContract, Params, ExecutionResult } from '@/services/contract'
 import { WalletParams } from '@/services/ecoc/types'
-import { fromDecimals, toDecimals } from '@/services/utils'
+import { fromDecimals } from '@/services/utils'
 import ecrc20Abi from './abi.json'
 
 export class Ecrc20 {

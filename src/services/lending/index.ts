@@ -8,7 +8,7 @@ import lendingAbi from './abi.json'
 import { LoanInfo } from './types'
 
 const lendingContract = {
-  address: '2acc1ba4d0f8982f9785d2d629bf89d00e6693b8',
+  address: '046457f41288d82089cdbb31ccd5e44398ff6784',
   abi: lendingAbi
 } as Contract
 
@@ -52,7 +52,7 @@ export namespace lending {
       methodArgs: [currencyName]
     } as Params
 
-    const result = await contract.call('getEFGRates', params)
+    const result = await contract.call('getUSDTRates', params)
     const executionResult = result.executionResult as ExecutionResult
     const price = executionResult.formattedOutput['0'].toNumber()
     const priceUsd = new BigNumber(price).dividedBy(new BigNumber(1000000)).toNumber()
@@ -72,15 +72,19 @@ export namespace lending {
     return res
   }
 
-  export const getCollateralInfo = async (address: string, poolAddress: string) => {
+  export const getCollateralInfo = async (
+    address: string,
+    poolAddress: string,
+    currencyName: string
+  ) => {
     const params = {
-      methodArgs: [poolAddress],
+      methodArgs: [poolAddress, currencyName],
       senderAddress: address
     } as Params
 
     const result = await contract.call('getCollateralInfo', params)
     const executionResult = result.executionResult as ExecutionResult
-    const res = executionResult.formattedOutput['0']
+    const res = executionResult.formattedOutput['0'].toNumber()
 
     return res
   }
@@ -97,9 +101,9 @@ export namespace lending {
     return new BigNumber(res).dividedBy(1000).toNumber()
   }
 
-  export const getInterestRate = async (currencyName: string) => {
+  export const getInterestRate = async () => {
     const params = {
-      methodArgs: [currencyName]
+      methodArgs: []
     } as Params
 
     const result = await contract.call('getInterestRate', params)
@@ -164,7 +168,7 @@ export namespace lending {
     walletParams: WalletParams
   ) => {
     const params = {
-      methodArgs: [poolAddress, amount],
+      methodArgs: [poolAddress],
       senderAddress: walletParams.address,
       amount: amount,
       fee: walletParams.fee,

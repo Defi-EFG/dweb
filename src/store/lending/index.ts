@@ -64,6 +64,9 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   myActivity = myActivity
   collateralsActivated = [] as string[]
 
+  lastUpdate = 0
+  status = constants.STATUS_SYNCED
+
   get myBorrowing() {
     return [
       {
@@ -73,6 +76,16 @@ export default class LendingModule extends VuexModule implements LendingPlatform
         price: this.loan.exchangeRate
       }
     ]
+  }
+
+  @Mutation
+  updateTime() {
+    this.lastUpdate = new Date().getTime()
+  }
+
+  @Mutation
+  updateStatus(status: string) {
+    this.status = status
   }
 
   @MutationAction
@@ -105,7 +118,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     const loanInfo = await lending.getLoanInfo(address)
 
     if (loanInfo.interestRate <= 0) {
-      loanInfo.interestRate = await lending.getInterestRate('ECOC')
+      loanInfo.interestRate = await lending.getInterestRate()
     }
 
     loan.loaner = loanInfo.pool
@@ -120,20 +133,32 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   @MutationAction
   async updateCollateral(address: string) {
     const myCollateralAssets = (this.state as any).myCollateralAssets
-    const poolAddress = (this.state as any).loan.loaner
+    const poolAddress = 'ePmXyrEkSmdNGvJ7rf9ofpX6HXF6uKHGeK' //(this.state as any).loan.loaner
 
-    if (poolAddress === '') {
-      return {}
-    }
+    const currencyName = myCollateralAssets[0].currency.name
 
-    const res = await lending.getCollateralInfo(address, poolAddress)
-    myCollateralAssets.amount = res[0]
+    // if (poolAddress === '') {
+    //   return {}
+    // }
 
-    console.log(myCollateralAssets)
+    const res = await lending.getCollateralInfo(address, poolAddress, currencyName)
+    myCollateralAssets[0].amount = res
+
     return { myCollateralAssets }
   }
 
   @Action
+  init() {
+    this.context.commit('updateTime')
+  }
+
+  @Action
+  synced() {
+    this.context.commit('updateStatus', constants.STATUS_SYNCED)
+    return constants.STATUS_SYNCED
+  }
+
+  @Action({ rawError: true })
   async depositCollateral(payloads: {
     amount: number
     poolAddress: string
@@ -142,7 +167,27 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     const { amount, poolAddress, walletParams } = payloads
 
     try {
-      const txid = await lending.depositColateral(amount, poolAddress, walletParams)
+      const rawTransaction = await lending.depositColateral(amount, poolAddress, walletParams)
+      const txid = await Ecoc.sendRawTx(rawTransaction)
+      this.context.commit('updateStatus', constants.STATUS_PENDING)
+      return txid
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+
+  @Action({ rawError: true })
+  async withdrawCollateral(payloads: {
+    amount: number
+    poolAddress: string
+    walletParams: WalletParams
+  }) {
+    const { amount, poolAddress, walletParams } = payloads
+
+    try {
+      const rawTransaction = await lending.depositColateral(amount, poolAddress, walletParams)
+      const txid = await Ecoc.sendRawTx(rawTransaction)
+      this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid
     } catch (error) {
       return Promise.reject(error)

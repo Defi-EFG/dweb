@@ -223,6 +223,8 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Loading from './loading-create-accout.vue'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
+import StakingModule from '@/store/staking'
 import TextReader from './text-reader.vue'
 
 @Component({
@@ -233,7 +235,11 @@ import TextReader from './text-reader.vue'
 })
 export default class UnlockwalletModal extends Vue {
   @Prop() visible!: boolean
+
   walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+  stakingStore = getModule(StakingModule)
+
   upload = false
   keystore: any = ''
   keystorePassword = ''
@@ -293,16 +299,9 @@ export default class UnlockwalletModal extends Vue {
   }
 
   onUnlockWallet() {
-    // const keystore =
-    //   '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
-    // const password = '123456'
     const keystore = this.keystore
     const password = this.keystorePassword
-    this.walletStore.importWallet({ keystore, password }).then(async () => {
-      await this.walletStore.updateBalance()
-      await this.walletStore.updateCurrenciesPrice()
-      await this.walletStore.updateTransactionsHistory()
-
+    this.walletStore.importWallet({ keystore, password }).then(() => {
       this.onClose()
     })
   }

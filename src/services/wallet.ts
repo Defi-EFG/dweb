@@ -5,7 +5,7 @@ import { Currency, Ecrc20 as IEcrc20 } from '@/types/currency'
 import { KeyStore } from '@/types/keystore'
 import { createKeystore, getKeystoreContent, getKeystoreFromString } from '@/services/keystore'
 import { WalletError } from '@/exceptions/wallet'
-import { SendEcocPayload, SendEcrc20Payload, WalletParams } from './ecoc/types'
+import { WalletParams } from './ecoc/types'
 import * as utils from './utils'
 
 const isEcrc20 = (currency: Currency) => {
@@ -95,43 +95,28 @@ const getEcrc20Balance = async (address: string) => {
   return currencies
 }
 
-export const sendEcocBalance = async (
-  keystore: KeyStore,
-  password: string,
-  payload: SendEcocPayload
-) => {
-  const wallet = importFromKeystore(keystore, password)
-  const rawTransaction = await wallet.generateTx(payload)
+export const sendEcocBalance = async (to: string, amount: number, walletParams: WalletParams) => {
+  const { keypair, utxoList, fee } = walletParams
+
+  const rawTransaction = await EcocWallet.generateTx(keypair, to, amount, fee, utxoList)
   const txid = await sendRawTx(rawTransaction)
   return txid
 }
 
 export const sendEcrc20Balance = async (
-  keystore: KeyStore,
-  password: string,
   currency: Currency,
-  payload: SendEcrc20Payload
+  to: string,
+  amount: number,
+  walletParams: WalletParams
 ) => {
   if (!isEcrc20(currency)) {
     throw new WalletError("It's not ECRC-20 currency")
   }
 
   const tokenInfo = currency.tokenInfo as IEcrc20
-
-  const wallet = importFromKeystore(keystore, password)
-  const utxoList = await wallet.getUtxoList()
   const ecrc20 = new Ecrc20(tokenInfo)
 
-  const walletParams = {
-    address: wallet.address,
-    keypair: wallet.keypair,
-    utxoList: utxoList,
-    fee: payload.fee,
-    gasLimit: payload.gasLimit,
-    gasPrice: payload.gasPrice
-  } as WalletParams
-
-  const rawTransaction = await ecrc20.transfer(payload.to, payload.amount, walletParams)
+  const rawTransaction = await ecrc20.transfer(to, amount, walletParams)
   const txid = await sendRawTx(rawTransaction)
   return txid
 }

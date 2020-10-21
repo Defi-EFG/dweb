@@ -7,7 +7,6 @@ import { Currency } from '@/types/currency'
 import { TxList } from '@/types/transaction'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
-import { SendEcrc20Payload, SendEcocPayload } from '@/services/ecoc/types'
 import { lending } from '@/services/lending'
 import * as constants from '@/constants'
 import { currencyInit } from './currency'
@@ -20,7 +19,9 @@ export default class WalletModule extends VuexModule implements Wallet {
   txList = {} as TxList
   currencies = currencyInit()
   selectedCurrencyIndex = 0
-  lastUpdate = 0
+  lastUpdate = 0 //timestamp
+  lastBlock = 0
+  status = constants.STATUS_SYNCED
 
   get ecoc() {
     if (this.currencies.length < 0) return 0
@@ -50,6 +51,7 @@ export default class WalletModule extends VuexModule implements Wallet {
     this.currencies = currencyInit()
     this.selectedCurrencyIndex = 0
     this.lastUpdate = 0
+    this.lastBlock = 0
   }
 
   @Mutation
@@ -70,6 +72,11 @@ export default class WalletModule extends VuexModule implements Wallet {
   @Mutation
   updateNetwork(network: string) {
     this.network = network
+  }
+
+  @Mutation
+  updateStatus(status: string) {
+    this.status = status
   }
 
   // update everything except price
@@ -95,6 +102,12 @@ export default class WalletModule extends VuexModule implements Wallet {
   @Mutation
   updateTransactions(txs: TxList) {
     this.txList = txs
+  }
+
+  @Action
+  synced() {
+    this.context.commit('updateStatus', constants.STATUS_SYNCED)
+    return constants.STATUS_SYNCED
   }
 
   @Action
@@ -146,28 +159,24 @@ export default class WalletModule extends VuexModule implements Wallet {
 
   @Action({ rawError: true })
   async send(payload: SendPayload) {
-    const currency = payload.currency
-    const password = payload.password
+    const { currency, to, amount, walletParams } = payload
 
     try {
       if (Ecoc.isEcrc20(currency)) {
-        if (utils.toNumber(currency.balance).lt(payload.amount)) {
+        if (utils.toNumber(currency.balance).lt(amount)) {
           throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
         }
 
-        return await Ecoc.sendEcrc20Balance(
-          this.keystore,
-          password,
-          currency,
-          payload as SendEcrc20Payload
-        )
+        const txid = await Ecoc.sendEcrc20Balance(currency, to, amount, walletParams)
+        return txid
       }
 
-      if (utils.toNumber(currency.balance).lt(payload.amount + payload.fee)) {
+      if (utils.toNumber(currency.balance).lt(amount + walletParams.fee)) {
         throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
       }
 
-      return await Ecoc.sendEcocBalance(this.keystore, password, payload as SendEcocPayload)
+      const txid = await Ecoc.sendEcocBalance(to, amount, walletParams)
+      return txid
     } catch (error) {
       return Promise.reject(error)
     }
@@ -215,5 +224,10 @@ export default class WalletModule extends VuexModule implements Wallet {
     return {
       selectedCurrencyIndex: currencyIndex
     }
+  }
+
+  @MutationAction
+  async updateLastBlock(blocknumber: number) {
+    return { lastBlock: blocknumber }
   }
 }

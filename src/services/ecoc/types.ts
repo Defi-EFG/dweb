@@ -48,18 +48,9 @@ export interface TxData {
   txs: Transaction[]
 }
 
-export interface SendEcocPayload {
+export interface SendPayload {
   to: string
   amount: number
-  fee: number
-}
-
-export interface SendEcrc20Payload {
-  to: string
-  amount: number
-  fee: number
-  gasPrice: number
-  gasLimit: number
 }
 
 export interface WalletParams {

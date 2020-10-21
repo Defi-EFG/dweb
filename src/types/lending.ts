@@ -50,4 +50,6 @@ export interface LendingPlatform {
   myActivity: MyActivity[]
 
   collateralsActivated: string[]
+  lastUpdate: number
+  status: string
 }

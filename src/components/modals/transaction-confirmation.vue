@@ -59,7 +59,7 @@
             <v-btn outlined large color="primary" class="text-capitalize" @click="onClose"
               >Cancel</v-btn
             >
-            <v-btn large depressed color="primary" class="text-capitalize" @click="onSend"
+            <v-btn large depressed color="primary" class="text-capitalize" @click="onConfirm"
               >Confirm</v-btn
             >
           </div>
@@ -72,29 +72,39 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import { SendPayload } from '@/types/wallet'
+import { WalletParams } from '@/services/ecoc/types'
+import { Currency } from '@/types/currency'
 import WalletModule from '@/store/wallet'
+import * as Ecoc from '@/services/wallet'
+import { DEFAULT } from '@/services/contract'
 import GasSetting from './gas-setting-modal.vue'
 
 @Component({
   components: { GasSetting }
 })
 export default class TransactionComfirmationModal extends Vue {
-  @Prop() visible!: boolean
+  @Prop({ default: {} }) currency!: Currency
+  @Prop({ default: false }) visible!: boolean
   @Prop() toAddr!: string
   @Prop() amount!: string
 
   walletStore = getModule(WalletModule)
+
   sendialog = false
   errorMsg = ''
   password = ''
-  fee: number | string = 0.01
-  gasPrice: number | string = 40
-  gasLimit: number | string = 150000
+
+  fee = DEFAULT.DEFAULT_FEE
+  gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
+  gasPrice = DEFAULT.DEFAULT_GAS_PRICE
 
   @Watch('visible')
   show() {
     this.sendialog = this.visible
+  }
+
+  get ecoc() {
+    return this.walletStore.ecoc
   }
 
   get walletAddress() {
@@ -102,19 +112,7 @@ export default class TransactionComfirmationModal extends Vue {
   }
 
   get selectedCurrencyName() {
-    return this.selectedCurrency?.name || ''
-  }
-
-  get selectedCurrencyBalance() {
-    return this.selectedCurrency?.balance || ''
-  }
-
-  get selectedCurrency() {
-    return this.walletStore.selectedCurrency
-  }
-
-  onSuccess() {
-    this.$emit('onSuccess')
+    return this.currency.name || ''
   }
 
   onClose() {
@@ -123,30 +121,23 @@ export default class TransactionComfirmationModal extends Vue {
     this.$emit('onClose')
   }
 
-  onSend() {
-    const payload = {
-      currency: this.selectedCurrency,
-      password: this.password,
-      to: this.toAddr,
-      amount: Number(this.amount),
-      fee: Number(this.fee),
-      gasLimit: Number(this.gasLimit),
-      gasPrice: Number(this.gasPrice)
-    } as SendPayload
-    this.currencySend(payload)
-  }
+  async onConfirm() {
+    const password = this.password
+    const address = this.walletStore.address
+    const keystore = this.walletStore.keystore
+    const wallet = Ecoc.importFromKeystore(keystore, password)
+    const utxoList = await wallet.getUtxoList()
 
-  currencySend(payload: SendPayload) {
-    this.walletStore
-      .send(payload)
-      .then(txid => {
-        console.log(txid)
-        this.walletStore.updateBalance()
-        this.onSuccess()
-      })
-      .catch(error => {
-        this.errorMsg = error.message
-      })
+    const walletParams = {
+      address: address,
+      keypair: wallet.keypair,
+      utxoList: utxoList,
+      fee: this.fee,
+      gasLimit: this.gasLimit,
+      gasPrice: this.gasPrice
+    } as WalletParams
+
+    this.$emit('onConfirm', walletParams)
   }
 }
 </script>

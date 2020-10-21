@@ -30,10 +30,11 @@ describe('Lending Smart Contract Test', () => {
   })
 
   it('can call getCollateralInfo functions', async () => {
+    const currencyName = 'ECOC'
     const poolAddress = 'ePmXyrEkSmdNGvJ7rf9ofpX6HXF6uKHGeK'
     const address = 'eEUuUn5eMoAY7UBgcWNpLifMHYyv8hvAWu'
-    const res = await lending.getCollateralInfo(address, poolAddress)
-    expect(res).to.be.an('array')
+    const res = await lending.getCollateralInfo(address, poolAddress, currencyName)
+    expect(res).to.be.an('number')
   })
 
   it('can call getCollateralRate functions', async () => {
@@ -43,8 +44,7 @@ describe('Lending Smart Contract Test', () => {
   })
 
   it('can call getInterestRate functions', async () => {
-    const currencyName = 'ECOC'
-    const res = await lending.getInterestRate(currencyName)
+    const res = await lending.getInterestRate()
     expect(res).to.be.an('number')
   })
 

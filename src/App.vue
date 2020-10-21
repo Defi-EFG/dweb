@@ -7,10 +7,11 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
+import StakingModule from '@/store/staking'
 
 @Component({
   components: {
@@ -20,6 +21,7 @@ import LendingModule from '@/store/lending'
 export default class App extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
+  stakingStore = getModule(StakingModule)
 
   polling = {} as NodeJS.Timeout
 
@@ -27,24 +29,53 @@ export default class App extends Vue {
     return this.walletStore.address != ''
   }
 
+  @Watch('isLoggedIn')
+  startstartPooling(value: boolean) {
+    if (value === true) {
+      console.log('Start Pooling')
+      this.stakingStore.init()
+      this.lendingStore.init()
+      this.startPooling()
+    } else {
+      console.log('Stop Pooling')
+      this.stopPooling()
+    }
+  }
+
   async updateLatestData() {
     if (this.isLoggedIn) {
+      const currenctBlock = 15210
+
+      //update wallet data
       await this.walletStore.updateBalance()
       await this.walletStore.updateCurrenciesPrice()
       await this.walletStore.updateTransactionsHistory()
+
+      //update lending platform
       await this.lendingStore.updateLoan(this.walletStore.address)
       await this.lendingStore.updateCollateral(this.walletStore.address)
+
+      //update staking platform
+      //await this.stakingStore.updateMintingInfo(this.walletStore.address)
+
+      // update latest block
+      await this.walletStore.updateLastBlock(currenctBlock)
+
+      this.walletStore.synced()
+      this.lendingStore.synced()
+      this.stakingStore.synced()
     }
   }
 
   startPooling() {
+    this.updateLatestData()
     this.polling = setInterval(() => {
       this.updateLatestData()
     }, 30000)
   }
 
-  created() {
-    this.startPooling()
+  stopPooling() {
+    this.polling = {} as NodeJS.Timeout
   }
 }
 </script>

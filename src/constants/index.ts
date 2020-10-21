@@ -11,6 +11,9 @@ export const TYPE_SENT = 'Sent'
 export const TYPE_ECOC = 'ECOC'
 export const TYPE_ECRC20 = 'ECRC-20'
 
+export const STATUS_SYNCED = 'synced'
+export const STATUS_PENDING = 'pending'
+
 interface CurrencyStyle {
   [symbol: string]: Style
 }

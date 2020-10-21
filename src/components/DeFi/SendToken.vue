@@ -66,7 +66,8 @@
         :visible="confirmTxModal"
         :toAddr="toAddr"
         :amount="amount"
-        @onSuccess="onSuccess"
+        :currency="selectedCurrency"
+        @onConfirm="onConfirm"
         @onClose="onClose"
       />
     </v-card-text>
@@ -74,10 +75,12 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
+import { SendPayload } from '@/types/wallet'
+import { WalletParams } from '@/services/ecoc/types'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 
 @Component({
@@ -96,6 +99,7 @@ export default class SendToken extends Vue {
 
   toAddr = ''
   amount: number | string = 0
+  errorMsg = ''
 
   addrList = [
     {
@@ -149,6 +153,34 @@ export default class SendToken extends Vue {
     this.toAddr = ''
     this.amount = 0
     this.closeModal()
+  }
+
+  onError(errorMsg: string) {
+    this.errorMsg = errorMsg
+    console.log(errorMsg)
+  }
+
+  onConfirm(walletParams: WalletParams) {
+    const payload = {
+      currency: this.selectedCurrency,
+      to: this.toAddr,
+      amount: Number(this.amount),
+      walletParams: walletParams
+    } as SendPayload
+    this.currencySend(payload)
+  }
+
+  currencySend(payload: SendPayload) {
+    this.walletStore
+      .send(payload)
+      .then(txid => {
+        console.log(txid)
+        this.walletStore.updateBalance()
+        this.onSuccess()
+      })
+      .catch(error => {
+        this.onError(error.message)
+      })
   }
 
   onClose() {
