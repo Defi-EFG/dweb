@@ -88,7 +88,7 @@ export default class DeFiFooter extends Vue {}
 
 .contact-icon {
   display: none;
-  margin: 0 6px;
+  margin: 0 12px;
 }
 
 @media (max-width: 1024px) {
@@ -98,6 +98,7 @@ export default class DeFiFooter extends Vue {}
     padding: 8px 21px;
     left: 0;
     border-top-right-radius: 6px;
+    box-shadow: 0 6px 12px #080808;
     border-bottom-right-radius: 6px;
   }
 }
