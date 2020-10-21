@@ -18,6 +18,7 @@
         </div>
       </div>
     </v-responsive>
+    <DeFiFooter></DeFiFooter>
   </div>
 </template>
 
@@ -26,12 +27,14 @@ import { Component, Vue } from 'vue-property-decorator'
 import DefiNav from '@/components/DeFi/DefiNav.vue'
 import HeaderNav from '@/components/HeaderNav.vue'
 import MenuDropdown from '@/components/DeFi/MenuDropdown.vue'
+import DeFiFooter from '@/components/DeFi/DeFiFooter.vue'
 
 @Component({
   components: {
     DefiNav,
     HeaderNav,
-    MenuDropdown
+    MenuDropdown,
+    DeFiFooter
   }
 })
 export default class Home extends Vue {
@@ -50,7 +53,7 @@ export default class Home extends Vue {
     padding-box;
 }
 .content {
-  margin: 0 70px 20px;
+  margin: 0 70px 35px;
   display: flex;
   position: relative;
   flex: 1;
