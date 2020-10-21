@@ -198,7 +198,7 @@
                     <v-text-field label="KeyStore Password" dense filled></v-text-field
                   ></v-form>
                   <div class="action-transaction-confirmation">
-                    <v-btn outlined large color="primary" class="text-capitalize">Cancel</v-btn>
+                    <v-btn outlined large color="primary" class="text-capitalize1">Cancel</v-btn>
                     <v-btn
                       large
                       depressed
@@ -221,7 +221,9 @@
             </v-card-title>
             <div class="transaction-confirmation-wrapper collateral_pddeful ">
               <div class="headtitle_collat">
-                <div class="headtitle_collat_head">Deposit Successful!</div>
+                <div class="headtitle_collat_head">
+                  Deposit Successful!<img src="@/assets/icon/Check.svg" alt="" />
+                </div>
                 <v-container colortextoutput>
                   <v-row class="border-bottom_1 ">
                     <v-col cols="6">Collateral</v-col>
@@ -247,16 +249,21 @@
                     >
                   </v-row>
                   <v-row class="showwallet2 showwalletcc">
-                    <v-col cols="6" class="nopadding">Transaction Confirmed!</v-col>
-                    <v-col cols="6" class="textright nopadding">Ed76...F985</v-col>
+                    <v-col cols="6" class="nopadding font-bold ">Transaction Confirmed!</v-col>
+                    <v-col cols="6" class="textright nopadding">
+                      <img src="@/assets/icon/Txid.svg" alt="" />
+                      <img src="@/assets/icon/Copy.svg" alt="" />
+                    </v-col>
                   </v-row>
-                  <v-row class="showwallet3">
+                  <v-row class="showwallet3 font-df">
                     <v-col cols="6" class="nopadding showwallet_bgd">Total Sent (Collateral)</v-col>
                     <v-col cols="6" class="textright nopadding showwallet_bgd2">-100.00 ECOC</v-col>
                   </v-row>
-                  <v-row class="showwallet4">
-                    <v-col cols="6" class="nopadding">Ending Balance:</v-col>
-                    <v-col cols="6" class="textright nopadding">1998.00 ECOC</v-col>
+                  <v-row class="showwallet4 font-df">
+                    <v-col cols="6" class="nopadding border-top-collat">Ending Balance:</v-col>
+                    <v-col cols="6" class="textright nopadding border-top-collat"
+                      >1998.00 ECOC</v-col
+                    >
                   </v-row>
                 </v-container>
               </div>
@@ -378,12 +385,20 @@ export default class TransactionComfirmationModal extends Vue {
   background-color: #b052ee !important;
   color: #ffffff;
 }
+.text-capitalize1 {
+  margin-top: 20px;
+  width: 100%;
+  color: #ffffff;
+}
 .headtitle_collat {
   padding: 20px 0;
 }
 .headtitle_collat_head {
   color: #ffffff;
   font-weight: bold;
+}
+.headtitle_collat_head img {
+  margin-left: 5px;
 }
 .headtitle_collat_sub {
   color: #cccccc99;
@@ -534,6 +549,7 @@ export default class TransactionComfirmationModal extends Vue {
 }
 .border-bottom_1 {
   border-bottom: 1px solid #cccccc4a;
+  font-size: 14px;
 }
 .textright {
   text-align: right;
@@ -543,7 +559,7 @@ export default class TransactionComfirmationModal extends Vue {
 }
 .showwallet {
   background-color: #44096b;
-  border-radius: 10px 10px 0 0;
+  border-radius: 5px 5px 0 0;
   padding: 0 20px;
 }
 .showwallet2 {
@@ -556,24 +572,28 @@ export default class TransactionComfirmationModal extends Vue {
 }
 .showwallet4 {
   background-color: #ffffff;
-  border-radius: 0 0 10px 10px;
+  border-radius: 0 0 5px 5px;
   padding: 0 20px;
 }
 .nopadding {
-  padding: 8px 12px;
+  padding: 15px 12px;
+}
+.nopadding img {
+  width: 40px;
+  margin-left: -10px;
 }
 .showwallet_bgd {
-  background-color: #dfdfdf;
+  background-color: #f5f5f5;
   border-radius: 5px 0 0 5px;
 }
 .showwallet_bgd2 {
-  background-color: #dfdfdf;
+  background-color: #f5f5f5;
   border-radius: 0 5px 5px 0;
 }
 .nametitlecollat {
   background: #2d0845;
   width: 78%;
-  padding: 3px 5px;
+  padding: 3px 13px;
   border-radius: 50px;
   float: right;
   text-align: center;
@@ -586,5 +606,15 @@ export default class TransactionComfirmationModal extends Vue {
   background-color: #ffffff;
   border-radius: 50%;
   margin-right: 6px;
+}
+.border-top-collat {
+  border-top: 1px solid #cccccc;
+  margin-top: 10px;
+}
+.font-bold {
+  font-weight: bold;
+}
+.font-df {
+  font-size: 13px;
 }
 </style>
