@@ -44,7 +44,7 @@
       <div class="text-left">Total Borrow Power</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowPower }}</span>
+        <span>${{ borrowLimit }}</span>
         &rarr;
         <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
       </div>
@@ -57,8 +57,18 @@
       depressed
       :disabled="!isCollateralable(collateralAmount, 'error')"
       :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+      @click="onOpenModal"
       >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
     >
+
+    <TransactionComfirmationModal
+      :visible="confirmTxModal"
+      :toAddr="contractAddr"
+      :amount="collateralAmount"
+      :currency="currency"
+      @onConfirm="depositCollateral"
+      @onClose="onClose"
+    />
   </div>
 </template>
 <script lang="ts">
@@ -67,11 +77,14 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
-import * as Ecoc from '@/services/wallet'
 import { WalletParams } from '@/services/ecoc/types'
-import { DEFAULT } from '@/services/contract'
+import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 
-@Component({})
+@Component({
+  components: {
+    TransactionComfirmationModal
+  }
+})
 export default class Collateral extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
@@ -82,7 +95,14 @@ export default class Collateral extends Vue {
   @Prop() borrowLimit!: number
   @Prop() borrowPowerPercentage!: number
 
+  poolAddress = 'eCpHawDrHpW9YpjdzDsN9b4imGbnMJbQeG'
+  errorMsg = ''
+  confirmTxModal = false
   collateralAmount: number | string = 0
+
+  get contractAddr() {
+    return this.lendingStore.address
+  }
 
   get walletBalance() {
     return Number(this.currency.balance)
@@ -139,24 +159,33 @@ export default class Collateral extends Vue {
     return isEnough && isValidAmount
   }
 
-  async depositCollateral() {
-    const amount = 20
-    const password = '123456789'
-    const poolAddress = 'ePmXyrEkSmdNGvJ7rf9ofpX6HXF6uKHGeK'
+  onOpenModal() {
+    if (this.collateralAmount) {
+      this.confirmTxModal = !this.confirmTxModal
+    }
+  }
 
-    const address = this.walletStore.address
-    const keystore = this.walletStore.keystore
-    const wallet = Ecoc.importFromKeystore(keystore, password)
-    const utxoList = await wallet.getUtxoList()
+  closeModal() {
+    this.confirmTxModal = false
+  }
 
-    const walletParams = {
-      address: address,
-      keypair: wallet.keypair,
-      utxoList: utxoList,
-      fee: DEFAULT.DEFAULT_FEE,
-      gasLimit: DEFAULT.DEFAULT_GAS_LIMIT,
-      gasPrice: DEFAULT.DEFAULT_GAS_PRICE
-    } as WalletParams
+  onSuccess() {
+    this.collateralAmount = 0
+    this.closeModal()
+  }
+
+  onError(errorMsg: string) {
+    this.errorMsg = errorMsg
+    console.log(errorMsg)
+  }
+
+  onClose() {
+    this.closeModal()
+  }
+
+  async depositCollateral(walletParams: WalletParams) {
+    const amount = Number(this.collateralAmount)
+    const poolAddress = this.poolAddress
 
     const payload = {
       amount,
@@ -168,9 +197,10 @@ export default class Collateral extends Vue {
       .depositCollateral(payload)
       .then(txid => {
         console.log('Txid:', txid)
+        this.onSuccess()
       })
       .catch(error => {
-        console.log('Error:', error)
+        this.onError(error.message)
       })
   }
 }

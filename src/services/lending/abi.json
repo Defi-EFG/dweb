@@ -18,7 +18,7 @@
     "name":"addNewPool",
     "outputs":[
       {
-        "name":"",
+        "name":"numberOfPools",
         "type":"uint256"
       }
     ],
@@ -76,23 +76,38 @@
     "constant":false,
     "inputs":[
       {
-        "name":"_symbol",
-        "type":"bytes8"
-      },
-      {
-        "name":"_rate",
+        "name":"_gpt_amount",
         "type":"uint256"
       }
     ],
-    "name":"setUSDTate",
+    "name":"extendGracePeriod",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
     "payable":false,
     "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_symbol",
+        "type":"bytes8"
+      }
+    ],
+    "name":"getUSDTRate",
+    "outputs":[
+      {
+        "name":"exchangeRate",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
     "type":"function"
   },
   {
@@ -106,7 +121,7 @@
     "name":"getEFGBalance",
     "outputs":[
       {
-        "name":"",
+        "name":"availableEFG",
         "type":"uint256"
       }
     ],
@@ -133,7 +148,7 @@
     "name":"borrow",
     "outputs":[
       {
-        "name":"",
+        "name":"borrowedEFG",
         "type":"uint256"
       }
     ],
@@ -156,7 +171,7 @@
     "name":"withdrawGPT",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -175,7 +190,7 @@
     "name":"repay",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -202,7 +217,7 @@
     "name":"lockAsset",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -244,7 +259,7 @@
     "name":"withdrawEFG",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -260,7 +275,7 @@
     "name":"getInterestRate",
     "outputs":[
       {
-        "name":"",
+        "name":"EFGInterestRate",
         "type":"uint256"
       }
     ],
@@ -279,7 +294,7 @@
     "name":"setInterestRate",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -302,7 +317,7 @@
     "name":"setCollateralRate",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -311,22 +326,26 @@
     "type":"function"
   },
   {
-    "constant":true,
+    "constant":false,
     "inputs":[
       {
         "name":"_symbol",
         "type":"bytes8"
-      }
-    ],
-    "name":"getUSDTRates",
-    "outputs":[
+      },
       {
-        "name":"",
+        "name":"_rate",
         "type":"uint256"
       }
     ],
+    "name":"setUSDTRate",
+    "outputs":[
+      {
+        "name":"result",
+        "type":"bool"
+      }
+    ],
     "payable":false,
-    "stateMutability":"view",
+    "stateMutability":"nonpayable",
     "type":"function"
   },
   {
@@ -344,7 +363,7 @@
     "name":"withdrawAsset",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -363,7 +382,7 @@
     "name":"marginCall",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -386,7 +405,7 @@
     "name":"addNewAsset",
     "outputs":[
       {
-        "name":"",
+        "name":"numberOfAssets",
         "type":"uint256"
       }
     ],
@@ -405,7 +424,7 @@
     "name":"lockECOC",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -424,7 +443,7 @@
     "name":"getCollateralRate",
     "outputs":[
       {
-        "name":"",
+        "name":"collaterlRate",
         "type":"uint256"
       }
     ],
@@ -443,11 +462,11 @@
     "name":"getDebt",
     "outputs":[
       {
-        "name":"",
+        "name":"totalDebt",
         "type":"uint256"
       },
       {
-        "name":"",
+        "name":"pollAddress",
         "type":"address"
       }
     ],
@@ -470,12 +489,35 @@
     "name":"withdrawECOC",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
     "payable":true,
     "stateMutability":"payable",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_symbol",
+        "type":"bytes8"
+      },
+      {
+        "name":"_depositor",
+        "type":"address"
+      }
+    ],
+    "name":"getDepositedPool",
+    "outputs":[
+      {
+        "name":"pollAddress",
+        "type":"address"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
     "type":"function"
   },
   {
@@ -548,7 +590,7 @@
     "name":"authOracles",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -782,6 +824,28 @@
       }
     ],
     "name":"RepayEvent",
+    "type":"event"
+  },
+  {
+    "anonymous":false,
+    "inputs":[
+      {
+        "indexed":false,
+        "name":"result",
+        "type":"bool"
+      },
+      {
+        "indexed":false,
+        "name":"debtors_addr",
+        "type":"address"
+      },
+      {
+        "indexed":false,
+        "name":"amount",
+        "type":"uint256"
+      }
+    ],
+    "name":"ExtendGracePeriodEvent",
     "type":"event"
   }
 ]

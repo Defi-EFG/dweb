@@ -44,7 +44,7 @@
       <div class="text-left">Total Borrow Power</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowPower }}</span>
+        <span>${{ borrowLimit }}</span>
         &rarr;
         <span class="after-calculated">${{ calculateTotalBP(withdrawValue).toFixed(2) }}</span>
       </div>

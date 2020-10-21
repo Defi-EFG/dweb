@@ -50,7 +50,7 @@ const myCollateralAssets = [
 export default class LendingModule extends VuexModule implements LendingPlatform {
   address = lending.address
   loan = {
-    loaner: 'ePmXyrEkSmdNGvJ7rf9ofpX6HXF6uKHGeK',
+    loaner: '',
     currency: loanCurrency,
     amount: 0,
     timestamp: 0,
@@ -133,13 +133,13 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   @MutationAction
   async updateCollateral(address: string) {
     const myCollateralAssets = (this.state as any).myCollateralAssets
-    const poolAddress = 'ePmXyrEkSmdNGvJ7rf9ofpX6HXF6uKHGeK' //(this.state as any).loan.loaner
+    let poolAddress = (this.state as any).loan.loaner
 
     const currencyName = myCollateralAssets[0].currency.name
 
-    // if (poolAddress === '') {
-    //   return {}
-    // }
+    if (poolAddress === '') {
+      poolAddress = await lending.getDepositedPool(address, currencyName)
+    }
 
     const res = await lending.getCollateralInfo(address, poolAddress, currencyName)
     myCollateralAssets[0].amount = res

@@ -8,7 +8,7 @@ import lendingAbi from './abi.json'
 import { LoanInfo } from './types'
 
 const lendingContract = {
-  address: '046457f41288d82089cdbb31ccd5e44398ff6784',
+  address: '84657142e092d9bdf3d06fdec68d1d67b0e03812',
   abi: lendingAbi
 } as Contract
 
@@ -28,6 +28,21 @@ export namespace lending {
     const poolsAddress = pools.map(pool => Decoder.toEcoAddress(pool))
 
     return poolsAddress
+  }
+
+  export const getDepositedPool = async (address: string, currencyName: string) => {
+    const params = {
+      methodArgs: [currencyName, address]
+    } as Params
+
+    const result = await contract.call('getDepositedPool', params)
+    const executionResult = result.executionResult as ExecutionResult
+    let poolAddress = executionResult.formattedOutput['0'] as string
+
+    if (!poolAddress) return ''
+
+    poolAddress = Decoder.toEcoAddress(poolAddress)
+    return poolAddress
   }
 
   export const getPoolInfo = async (
@@ -52,7 +67,7 @@ export namespace lending {
       methodArgs: [currencyName]
     } as Params
 
-    const result = await contract.call('getUSDTRates', params)
+    const result = await contract.call('getUSDTRate', params)
     const executionResult = result.executionResult as ExecutionResult
     const price = executionResult.formattedOutput['0'].toNumber()
     const priceUsd = new BigNumber(price).dividedBy(new BigNumber(1000000)).toNumber()
