@@ -10,12 +10,12 @@
     <v-card-text :class="page">
       <v-list color="#222738" class="tx-list">
         <v-list-item
-          v-for="(tx, index) in transactionsHistory"
+          v-for="(tx, index) in exampleHistory"
           :key="index"
           class="tx-item"
           @click="displayHistory"
         >
-          <v-icon class="mr-3">
+          <v-icon class="tx-icon">
             {{
               isReceived(tx.type) ? 'mdi-arrow-down-circle-outline' : 'mdi-arrow-up-circle-outline'
             }}
@@ -60,6 +60,67 @@ export default class TransactionHistory extends Vue {
 
   get address() {
     return this.walletStore.address
+  }
+
+  get exampleHistory() {
+    return [
+      {
+        type: 'received',
+        subtype: 'withdraw',
+        address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
+        value: 10,
+        currency: 'ECOC',
+        time: '1603190771752'
+      },
+      {
+        type: 'sent',
+        subtype: 'repay',
+        address: '0x91A31A1C5197DD101e91B0747B02560f41E2f532',
+        value: 891.14,
+        currency: 'ECOC',
+        time: '1603190771752'
+      },
+      {
+        type: 'received',
+        subtype: 'borrow',
+        address: '0x91A31A1C5197DD101e91B0747B02560f41E2f532',
+        value: 100,
+        currency: 'ECOC',
+        time: '1603190771752'
+      },
+      {
+        type: 'sent',
+        subtype: 'deposit',
+        address: '0x91A31A1C5197DD101e91B0747B02560f41E2f532',
+        value: 50,
+        currency: 'ECOC',
+        time: '1603190771752'
+      },
+      {
+        type: 'sent',
+        subtype: '',
+        address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
+        value: 50,
+        currency: 'ECOC',
+        time: '1603190771752'
+      },
+      {
+        type: 'received',
+        subtype: '',
+        address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
+        value: 100,
+        currency: 'ECOC',
+        time: '1603190771752'
+      },
+      {
+        type: 'sent',
+        subtype: 'borrow',
+        address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
+        value: 100,
+        currency: 'ECOC',
+        time: '1603190771752'
+      }
+    ]
   }
 
   get transactionsHistory() {
@@ -180,6 +241,10 @@ export default class TransactionHistory extends Vue {
   opacity: 0.6;
 }
 
+.tx-icon {
+  margin-right: 12px;
+}
+
 .staking {
   height: 217px;
   overflow: auto;
@@ -219,6 +284,16 @@ export default class TransactionHistory extends Vue {
     border-radius: 6px;
   }
 }
+
+@media (max-width: 425px) {
+  .tx-icon {
+    display: none;
+  }
+  .tx-type {
+    font-size: small;
+  }
+}
+
 </style>
 
 <style lang="scss">

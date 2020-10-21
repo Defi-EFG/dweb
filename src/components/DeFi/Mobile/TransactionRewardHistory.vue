@@ -6,12 +6,12 @@
     <v-tab-item class="tr-tabs-item">
       <v-list color="#222738" class="tx-list">
         <v-list-item
-          v-for="(tx, index) in transactionsHistory"
+          v-for="(tx, index) in exampleHistory"
           :key="index"
           class="tx-item"
           @click="displayHistory"
         >
-          <v-icon class="mr-3">
+          <v-icon dark class="tx-icon">
             {{
               isReceived(tx.type) ? 'mdi-arrow-down-circle-outline' : 'mdi-arrow-up-circle-outline'
             }}
@@ -39,17 +39,21 @@
     <v-tab-item class="tr-tabs-item">
       <div class="history-items" v-for="(item, index) in rewardList" :key="index">
         <v-row>
-          <v-col>
+          <v-col class="ma-auto token-col">
             <div class="token">
               <img src="@/assets/gpt.svg" />
               <span>{{ rewardCurrencyName }}</span>
             </div>
           </v-col>
-          <v-col cols="auto">
-            <div class="time">{{ getTime(item.timestamp) }}</div>
+          <v-col cols="auto" class="time-col">
+            <div class="time">
+              <div class="remain">{{ getTime(item.timestamp).remain }}</div>
+              <small class="timestamp">{{ getTime(item.timestamp).timestamp }}</small>
+            </div>
           </v-col>
-          <v-col>
+          <v-col class="ma-auto value-col">
             <div class="value">{{ item.amount }} {{ rewardCurrencyName }}</div>
+            <small class="timestamp">{{ getTime(item.timestamp).timestamp }}</small>
           </v-col>
         </v-row>
       </div>
@@ -77,6 +81,67 @@ export default class TransactionRewardHistory extends Vue {
 
   get address() {
     return this.walletStore.address
+  }
+
+  get exampleHistory() {
+    return [
+      {
+        type: 'received',
+        subtype: 'withdraw',
+        address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
+        value: 10,
+        currency: 'ECOC',
+        time: '1603190771752'
+      },
+      {
+        type: 'sent',
+        subtype: 'repay',
+        address: '0x91A31A1C5197DD101e91B0747B02560f41E2f532',
+        value: 891.14,
+        currency: 'ECOC',
+        time: '1603190771752'
+      },
+      {
+        type: 'received',
+        subtype: 'borrow',
+        address: '0x91A31A1C5197DD101e91B0747B02560f41E2f532',
+        value: 100,
+        currency: 'ECOC',
+        time: '1603190771752'
+      },
+      {
+        type: 'sent',
+        subtype: 'deposit',
+        address: '0x91A31A1C5197DD101e91B0747B02560f41E2f532',
+        value: 50,
+        currency: 'ECOC',
+        time: '1603190771752'
+      },
+      {
+        type: 'sent',
+        subtype: '',
+        address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
+        value: 50,
+        currency: 'ECOC',
+        time: '1603190771752'
+      },
+      {
+        type: 'received',
+        subtype: '',
+        address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
+        value: 100,
+        currency: 'ECOC',
+        time: '1603190771752'
+      },
+      {
+        type: 'sent',
+        subtype: 'borrow',
+        address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
+        value: 100,
+        currency: 'ECOC',
+        time: '1603190771752'
+      }
+    ]
   }
 
   get transactionsHistory() {
@@ -132,10 +197,17 @@ export default class TransactionRewardHistory extends Vue {
 
   getTime(timestamp: number) {
     if (timestamp) {
-      return `${moment(timestamp * 1000)
+      const timeMsg = moment(timestamp * 1000)
         .startOf('minute')
-        .fromNow()} (${moment(timestamp * 1000).format('YYYY-MM-DD HH:mm')})`
+        .fromNow()
+
+      return {
+        remain: timeMsg,
+        timestamp: moment(timestamp * 1000).format('YYYY-MM-DD HH:mm')
+      }
     }
+
+    return { remain: '', timestamp }
   }
 
   displayHistory() {
@@ -162,7 +234,7 @@ export default class TransactionRewardHistory extends Vue {
 .tr-tabs-item {
   background: #222738;
   color: white;
-  padding: 1.2rem;
+  padding: 0.5rem 0.2rem;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 }
@@ -190,6 +262,10 @@ export default class TransactionRewardHistory extends Vue {
   color: white;
   display: flex;
   opacity: 0.6;
+}
+
+.tx-icon {
+  margin-right: 12px;
 }
 
 .staking {
@@ -233,7 +309,7 @@ export default class TransactionRewardHistory extends Vue {
 }
 
 .history-items {
-  // display: flex;
+  margin: 6px 12px 12px;
   padding: 3px;
   background: #363a4a7e;
   border-radius: 5px;
@@ -262,6 +338,14 @@ export default class TransactionRewardHistory extends Vue {
 
   .time {
     text-align: center;
+
+    .remain {
+      margin-bottom: -6px;
+    }
+  }
+
+  .timestamp {
+    opacity: 0.5;
   }
 
   .value {
@@ -271,6 +355,35 @@ export default class TransactionRewardHistory extends Vue {
 
 .history-items:nth-last-child(1) {
   margin-bottom: 0;
+}
+
+@media (max-width: 425px) {
+  .tx-icon {
+    display: none;
+  }
+  .tx-type {
+    font-size: small;
+  }
+
+  .token {
+    font-size: small;
+    img {
+      width: 24px !important;
+    }
+  }
+
+  .time-col {
+    display: none;
+  }
+
+  .value-col {
+    text-align: right;
+    font-size: small;
+
+    .value {
+      margin-bottom: -6px;
+    }
+  }
 }
 </style>
 
