@@ -51,6 +51,7 @@
       </div>
       <v-divider />
       <v-btn
+        @click="Collateralmodels()"
         large
         block
         depressed
@@ -59,21 +60,31 @@
         >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
       >
     </v-card-text>
+    <Collateralmodel :visible="Collateralmodel" @onSuccess="Collateralmodel" />
   </v-card>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Currency } from '@/types/currency'
+import Collateralmodel from '@/components/modals/collateralmodel.vue'
 
-@Component({})
+@Component({
+  components: {
+    Collateralmodel
+  }
+})
 export default class Collateral extends Vue {
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
   @Prop() borrowPower!: number
   @Prop() borrowPowerPercentage!: number
-
+  Collateralmodel = false
   collateralAmount: number | string = 0
+
+  Collateralmodels() {
+    this.Collateralmodel = !this.Collateralmodel
+  }
 
   get walletBalance() {
     return Number(this.currency.balance)

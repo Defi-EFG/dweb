@@ -35,7 +35,6 @@ export default class Editcontactdialog extends Vue {
   @Watch('visible')
   close() {
     this.editcontactdialog = !this.editcontactdialog
-    console.log(this.editcontactdialog)
   }
 }
 </script>

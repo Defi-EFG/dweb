@@ -39,7 +39,7 @@
       :visible="unlockWalletOpen"
       @onClose="closeUnlockWallet"
     />
-    <PrivateKey :visiblemodalpk="accessPrivateKey" @onClose="onClose" />
+    <PrivateKey :visiblemodalpk="accessPrivateKey" @onClose="onClose()" />
   </div>
 </template>
 

@@ -27,13 +27,12 @@ import GasSetting from './gas-setting-modal.vue'
 @Component({
   components: {}
 })
-export default class Addcontact extends Vue {
+export default class Deletecontact extends Vue {
   contactdialog = false
   @Prop() visible!: boolean
   @Watch('visible')
   close() {
     this.contactdialog = !this.contactdialog
-    console.log(this.contactdialog)
   }
 }
 </script>

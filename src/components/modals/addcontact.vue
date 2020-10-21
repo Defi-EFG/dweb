@@ -35,7 +35,6 @@ export default class Addcontact extends Vue {
   @Watch('visible')
   close() {
     this.addcontactdialog = !this.addcontactdialog
-    console.log(this.addcontactdialog)
   }
 }
 </script>
