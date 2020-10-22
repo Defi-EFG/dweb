@@ -1,6 +1,6 @@
 import { Currency, CurrencyInfo } from './currency'
 export interface Loaner {
-  currency: Currency
+  currency: CurrencyInfo
   address: string
   totalSupply: number
   totalBorrowed: number

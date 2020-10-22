@@ -147,6 +147,36 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     return { myCollateralAssets }
   }
 
+  @MutationAction
+  async updateLoners() {
+    const loaners = (this.state as any).loaners as Loaner[]
+    const allPools = await lending.getAllPools()
+
+    allPools.forEach(async lonerAddress => {
+      const poolInfo = await lending.getPoolInfo(lonerAddress)
+      const existingLoanerIndex = loaners.findIndex(loaner => {
+        loaner.address === lonerAddress
+      })
+
+      if (existingLoanerIndex < 0) {
+        const newLoaner = {
+          currency: loanCurrency,
+          address: lonerAddress,
+          totalSupply: 100000,
+          totalBorrowed: 0
+        } as Loaner
+        loaners.push(newLoaner)
+      } else {
+        const existingLoaner = loaners[existingLoanerIndex]
+
+        existingLoaner.totalBorrowed = existingLoaner.totalSupply - poolInfo.remainingEFG
+        loaners.splice(existingLoanerIndex, 1, existingLoaner)
+      }
+    })
+
+    return { loaners }
+  }
+
   @Action
   init() {
     this.context.commit('updateTime')
