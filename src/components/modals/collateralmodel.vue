@@ -32,92 +32,29 @@
                     </v-row>
                   </div>
                   <div class="row2" id="style-1">
-                    <v-row class="row1 roww2">
+                    <v-row
+                      v-for="(item, i) in items"
+                      :key="i"
+                      class="row1 roww2"
+                      @click="selectLoaner((name = item.loaner))"
+                    >
                       <v-col lg="4" md="4" cols="4">
                         <div class="margintop Loener">
-                          1jMgdd...kjxbJB
+                          {{ truncateAddress(item.loaner) }}
                         </div>
                       </v-col>
                       <v-col lg="4" md="4" cols="4">
                         <div class="margintop color_1 textafter">
-                          <span class="color_size1">$8,123,456.79</span>
+                          <span class="color_size1">
+                            {{ item.supply | numberWithCommas({ decimal: 2 }) }}</span
+                          >
                         </div>
                       </v-col>
                       <v-col lg="4" md="4" cols="4">
                         <div class="margintop color_2 textafter">
-                          <span class="color_size2">$4,189,402.65</span>
-                        </div>
-                      </v-col>
-                      <img class="row1_img" src="@/assets/backg_01.svg" />
-                    </v-row>
-                    <v-row class="row1 roww2">
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop Loener">
-                          1jMgdd...kjxbJB
-                        </div>
-                      </v-col>
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop color_1 textafter">
-                          <span class="color_size1">$8,123,456.79</span>
-                        </div>
-                      </v-col>
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop color_2 textafter">
-                          <span class="color_size2">$4,189,402.65</span>
-                        </div>
-                      </v-col>
-                      <img class="row1_img" src="@/assets/backg_01.svg" />
-                    </v-row>
-                    <v-row class="row1 roww2">
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop Loener">
-                          1jMgdd...kjxbJB
-                        </div>
-                      </v-col>
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop color_1 textafter">
-                          <span class="color_size1">$8,123,456.79</span>
-                        </div>
-                      </v-col>
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop color_2 textafter">
-                          <span class="color_size2">$4,189,402.65</span>
-                        </div>
-                      </v-col>
-                      <img class="row1_img" src="@/assets/backg_01.svg" />
-                    </v-row>
-                    <v-row class="row1 roww2">
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop Loener">
-                          1jMgdd...kjxbJB
-                        </div>
-                      </v-col>
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop color_1 textafter">
-                          <span class="color_size1">$8,123,456.79</span>
-                        </div>
-                      </v-col>
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop color_2 textafter">
-                          <span class="color_size2">$4,189,402.65</span>
-                        </div>
-                      </v-col>
-                      <img class="row1_img" src="@/assets/backg_01.svg" />
-                    </v-row>
-                    <v-row class="row1 roww2">
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop Loener">
-                          1jMgdd...kjxbJB
-                        </div>
-                      </v-col>
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop color_1 textafter">
-                          <span class="color_size1">$8,123,456.79</span>
-                        </div>
-                      </v-col>
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop color_2 textafter">
-                          <span class="color_size2">$4,189,402.65</span>
+                          <span class="color_size2">
+                            {{ item.borrowed | numberWithCommas({ decimal: 2 }) }}</span
+                          >
                         </div>
                       </v-col>
                       <img class="row1_img" src="@/assets/backg_01.svg" />
@@ -125,7 +62,13 @@
                   </div>
                 </v-container>
               </div>
-              <v-btn large depressed class="text-capitalize" @click="connectStep()">Select</v-btn>
+              <v-btn
+                large
+                depressed
+                :class="name != '' ? 'text-capitalize' : 'disabled'"
+                @click="connectStep()"
+                >Select</v-btn
+              >
             </div>
           </v-card>
         </v-stepper-content>
@@ -148,7 +91,7 @@
               </div>
               <div class="transaction-confirmation-content outputselect">
                 <span>Loaner</span>
-                <div>ES1jMgpCNbDcBUdXz1JkJVxJWGkkjxbJB</div>
+                <v-text-field v-model="selectdata" class="showlite" disabled solo></v-text-field>
               </div>
               <v-btn large depressed class="text-capitalize" @click="nextcollat()">Next</v-btn>
             </div>
@@ -213,6 +156,24 @@
             </div>
           </v-card>
         </v-stepper-content>
+
+        <v-stepper-content step="4" id="loadding">
+          <v-card color="#FFFFFF00">
+            <v-card-content>
+              <div class="generate-keydtore">
+                <v-progress-circular
+                  :rotate="360"
+                  :size="120"
+                  :width="9"
+                  color="white"
+                  indeterminate
+                ></v-progress-circular>
+                <p>Generating keystore file...</p>
+              </div>
+            </v-card-content>
+          </v-card>
+        </v-stepper-content>
+
         <v-stepper-content step="5">
           <v-card color="#FFFFFF00">
             <v-card-title class="modal-header">
@@ -288,16 +249,43 @@ import GasSetting from './gas-setting-modal.vue'
 @Component({
   components: {}
 })
-export default class TransactionComfirmationModal extends Vue {
-  Collateralmodel = false
-  step = 1
+export default class Collateralmodel extends Vue {
   @Prop() visible!: boolean
   @Watch('visible')
+  Collateralmodel = false
+  step = 1
+  name = ''
+  selectdata = ''
+  items = [
+    {
+      loaner: 'MgpCNdddddddddddddddJWGkk1',
+      supply: 812345679,
+      borrowed: 412345679
+    },
+    {
+      loaner: 'MgpCNsdadasdasdasdsgJWGkk2',
+      supply: 8123456799,
+      borrowed: 412345679
+    },
+    {
+      loaner: 'MgpCNdasdasdasdasdsaJWGkk3',
+      supply: 812345679,
+      borrowed: 412345679
+    }
+  ]
   close() {
     this.Collateralmodel = !this.Collateralmodel
   }
-  connectStep() {
-    this.step = 2
+  onLoading() {
+    this.$emit('onLoading')
+  }
+  selectLoaner(name: string) {
+    this.selectdata = name
+  }
+  connectStep(selectdata: string) {
+    if (this.selectdata != '') {
+      this.step = 2
+    }
   }
   leftarrow() {
     this.step = 1
@@ -309,11 +297,35 @@ export default class TransactionComfirmationModal extends Vue {
     this.step = 2
   }
   outputsuccess() {
-    this.step = 5
+    this.step = 4
+  }
+  truncateAddress(addr: string) {
+    const separator = '...'
+    const charsToShow = 8
+    const frontChars = Math.ceil(charsToShow / 2)
+    const backChars = Math.floor(charsToShow / 2)
+    return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
   }
 }
 </script>
 <style lang="scss">
+.outputselect {
+  color: #cccccc;
+  .v-text-field.v-text-field--solo:not(.v-text-field--solo-flat)
+    > .v-input__control
+    > .v-input__slot {
+    box-shadow: unset !important;
+    background-color: #3a3b4400;
+    color: #ffffff !important;
+  }
+  .v-text-field.v-text-field--solo .v-input__control {
+    min-height: unset;
+  }
+  .theme--light.v-input--is-disabled input,
+  .theme--light.v-input--is-disabled textarea {
+    color: #ffffff !important;
+  }
+}
 .theme--light.v-stepper {
   background: #ffffff00 !important;
 }
@@ -337,6 +349,25 @@ export default class TransactionComfirmationModal extends Vue {
 }
 </style>
 <style lang="scss" scoped>
+.disabled {
+  background: #8b8b8b !important;
+  cursor: no-drop;
+  width: 100%;
+}
+.generate-keydtore {
+  height: 506px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.generate-keydtore p {
+  color: #ffffff;
+}
+.generate-keydtore p {
+  margin-top: 15px;
+}
 .nopadding .icon {
   transform: scale(0.8);
 }
@@ -366,6 +397,10 @@ export default class TransactionComfirmationModal extends Vue {
   display: flex;
   background-color: #1f2027;
   border-radius: 3px;
+  cursor: pointer;
+}
+.roww2:hover {
+  background-color: #2a2c33;
 }
 #style-1::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -391,10 +426,10 @@ export default class TransactionComfirmationModal extends Vue {
   color: #c074f9;
 }
 .text-capitalize {
-  margin-top: 20px;
   width: 100%;
   background-color: #b052ee !important;
   color: #ffffff;
+  transition: 0.5s;
 }
 .text-capitalize1 {
   margin-top: 20px;
@@ -533,7 +568,7 @@ export default class TransactionComfirmationModal extends Vue {
   line-height: 1.1;
 }
 .content-wrapper img {
-  width: 80px;
+  width: 60px;
 }
 .outputselect {
   text-align: center;
