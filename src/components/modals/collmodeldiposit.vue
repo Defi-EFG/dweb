@@ -33,10 +33,10 @@
                   </div>
                   <div class="row2" id="style-1">
                     <v-row
-                      v-for="(item, i) in items"
+                      v-for="(item, i) in Loanerlist"
                       :key="i"
-                      :class="name == item.loaner ? 'active row1 roww2' : 'row1 roww2'"
-                      @click="selectLoaner((name = item.loaner))"
+                      :class="Loanername == item.loaner ? 'active row1 roww2' : 'row1 roww2'"
+                      @click="selectLoaner((Loanername = item.loaner))"
                     >
                       <v-col lg="4" md="4" cols="4">
                         <div class="margintop Loener">
@@ -65,7 +65,7 @@
               <v-btn
                 large
                 depressed
-                :class="name != '' ? 'text-capitalize' : 'disabled'"
+                :class="Loanername != '' ? 'text-capitalize' : 'disabled'"
                 @click="connectStep()"
                 >Select</v-btn
               >
@@ -90,8 +90,8 @@
                 </p>
               </div>
               <div class="transaction-confirmation-content outputselect">
-                <span>Loaner</span>
-                <v-text-field v-model="selectdata" class="showlite" disabled solo></v-text-field>
+                <span>Loaner</span><br />
+                <input type="text" v-model="selectdata" disabled />
               </div>
               <v-btn large depressed class="text-capitalize" @click="nextcollat()">Next</v-btn>
             </div>
@@ -112,8 +112,7 @@
               </div>
               <div class="transaction-confirmation-content">
                 <div class="collateral_pd">
-                  <GasSetting></GasSetting>
-                  <h3><strong>Transaction Confirm</strong></h3>
+                  <h2><strong>Transaction Confirm</strong></h2>
                   <small>Please confirm the transaction</small>
                   <div class="transaction-confirmation-content-detail">
                     <div class="detail">
@@ -132,9 +131,6 @@
                         <p>2.00</p>
                         <p class="ml-2">ECOC</p>
                       </div>
-                      <v-btn small text color="primary">
-                        <span class="gassetting">gas setting</span>
-                      </v-btn>
                     </div>
                   </div>
                   <v-form class="pt-4">
@@ -157,22 +153,20 @@
           </v-card>
         </v-stepper-content>
 
-        <!-- <v-stepper-content step="4" id="loadding">
+        <v-stepper-content step="4" id="loadding">
           <v-card color="#FFFFFF00">
-            <v-card-content>
-              <div class="generate-keydtore">
-                <v-progress-circular
-                  :rotate="360"
-                  :size="120"
-                  :width="9"
-                  color="white"
-                  indeterminate
-                ></v-progress-circular>
-                <p>Generating keystore file...</p>
-              </div>
-            </v-card-content>
+            <div class="generate-keydtore">
+              <v-progress-circular
+                rotate="360"
+                size="120"
+                width="9"
+                color="white"
+                indeterminate
+              ></v-progress-circular>
+              <p>Generating keystore file...</p>
+            </div>
           </v-card>
-        </v-stepper-content> -->
+        </v-stepper-content>
 
         <v-stepper-content step="5">
           <v-card color="#FFFFFF00">
@@ -249,31 +243,32 @@ import GasSetting from './gas-setting-modal.vue'
 @Component({
   components: {}
 })
-export default class Collatmodel extends Vue {
+export default class Collmodeldiposit extends Vue {
   Collateralmodel = false
   step = 1
-  name = ''
+  Loanername = ''
   selectdata = ''
   active = ''
-  items = [
+  Loanerlist = [
     {
-      loaner: 'MgpCNdddddddddddddddJWGkk1MgpCNdddddddddddddddJWdkk1',
+      loaner: 'MgpCNdddddddddddddddJWGkk1MgpCNddddddddd',
       supply: 812345679,
       borrowed: 412345679
     },
     {
-      loaner: 'MgpCNdddddddddddddddJWGkk1MgpCNdddddddddddddddJWGkk1',
+      loaner: 'MgpCNdddddddddddddddJWGkk1MgpCNdddddddd1',
       supply: 8123456799,
       borrowed: 412345679
     },
     {
-      loaner: 'MgpCNdasdasdasdasdsaJWGkk3MgpCNdddddddddddddddJWGkk1',
+      loaner: 'MgpCNdddddddddddddddJWGkk1MgpCNdddddddd5',
       supply: 812345679,
       borrowed: 412345679
     }
   ]
 
   @Prop() visible!: boolean
+  @Prop() amount!: number
   @Watch('visible')
   close() {
     this.Collateralmodel = !this.Collateralmodel
@@ -281,9 +276,9 @@ export default class Collatmodel extends Vue {
   onLoading() {
     this.$emit('onLoading')
   }
-  selectLoaner(name: string) {
-    this.selectdata = name
-    this.active = name
+  selectLoaner(Loanername: string) {
+    this.selectdata = Loanername
+    this.active = Loanername
   }
   connectStep(selectdata: string) {
     if (this.selectdata != '') {
@@ -300,7 +295,7 @@ export default class Collatmodel extends Vue {
     this.step = 2
   }
   outputsuccess() {
-    this.step = 4
+    this.step = 5
   }
   truncateAddress(addr: string) {
     const separator = '...'
@@ -331,6 +326,7 @@ export default class Collatmodel extends Vue {
 }
 .theme--light.v-stepper {
   background: #ffffff00 !important;
+  padding-bottom: 40px;
 }
 .blur-card {
   background-color: transparent;
@@ -356,8 +352,7 @@ export default class Collatmodel extends Vue {
   background: #8b8b8b !important;
   cursor: no-drop;
   width: 100%;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 20px;
 }
 .generate-keydtore {
   height: 506px;
@@ -435,16 +430,16 @@ export default class Collatmodel extends Vue {
   background-color: #b052ee !important;
   color: #ffffff;
   transition: 0.5s;
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-top: 20px;
 }
 .text-capitalize1 {
   margin-top: 20px;
   width: 100%;
   color: #ffffff;
+  text-transform: capitalize;
 }
 .headtitle_collat {
-  padding: 20px 0;
+  padding: 20px 0 0 0;
 }
 .headtitle_collat_head {
   color: #ffffff;
@@ -476,8 +471,8 @@ export default class Collatmodel extends Vue {
   box-shadow: none;
 }
 .transaction-confirmation-wrapper {
-  margin: 16px;
-  border-radius: 8px;
+  margin: 16px 16px 0 16px;
+  border-radius: 3px;
   overflow: hidden;
   position: relative;
 }
@@ -489,6 +484,9 @@ export default class Collatmodel extends Vue {
   padding: 17px;
   font-size: 0.8em;
 }
+#collat {
+  height: 450px;
+}
 .collat_bg {
   background-color: #6e6f7d38;
 }
@@ -498,8 +496,10 @@ export default class Collatmodel extends Vue {
 .transaction-confirmation-content {
   font-size: 13px;
 }
-.transaction-confirmation-content h3 {
+.transaction-confirmation-content h3,
+h2 {
   color: #370757;
+  font-weight: 500;
 }
 .action-transaction-confirmation .v-btn {
   border: 2px solid #44096b;
@@ -549,7 +549,7 @@ export default class Collatmodel extends Vue {
 }
 .send-detail,
 .detail {
-  padding: 10px 4px;
+  padding: 5px 4px;
 }
 .detail:nth-last-of-type(2) {
   padding-bottom: 0px;
@@ -569,13 +569,15 @@ export default class Collatmodel extends Vue {
 .content-wrapper {
   text-align: center;
   color: #cccccc;
-  padding: 20px;
+  padding: 0px 20px 20px 20px;
 }
 .content-wrapper p {
   line-height: 1.1;
 }
 .content-wrapper img {
   width: 60px;
+  margin-top: 17px;
+  margin-bottom: 25px;
 }
 .outputselect {
   text-align: center;
@@ -584,8 +586,14 @@ export default class Collatmodel extends Vue {
   border-radius: 5px;
   background-color: #6e6f7d38;
 }
+.outputselect input {
+  width: 100%;
+  color: #929292;
+  text-align: center;
+  font-size: 16px;
+}
 .outputselect span {
-  font-size: 11px;
+  font-size: 13px;
 }
 .collateral_pd {
   padding: 20px;
@@ -672,6 +680,6 @@ export default class Collatmodel extends Vue {
   font-size: 13px;
 }
 .active {
-  background-color: #4a2752;
+  background-color: #441753;
 }
 </style>
