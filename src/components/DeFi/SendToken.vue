@@ -61,13 +61,14 @@
         hide-details="true"
       ></v-text-field>
       <v-btn depressed block large class="send-btn" @click="onunlockSuccess()">Send</v-btn>
-      <TransactionComfirmationModal :visible="sendialog" @onSuccess="sendialog" />
+
+      <TransactionComfirmationModal :visible="sendialog" />
     </v-card-text>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
 import { getModule } from 'vuex-module-decorators'
 import { SendPayload } from '@/types/wallet'
@@ -80,7 +81,6 @@ import TransactionComfirmationModal from '@/components/modals/transaction-confir
   directives: {
     clickOutside: vClickOutside.directive
   }
-
 })
 export default class SendToken extends Vue {
   sendialog = true
@@ -93,6 +93,12 @@ export default class SendToken extends Vue {
   fee = 0.01
   gasPrice = 40
   gasLimit = 150000
+  @Prop() visible!: boolean
+  @Watch('visible')
+  sdsd() {
+    this.sendialog = true
+    console.log(this.sendialog)
+  }
 
   addrList = [
     {
@@ -164,10 +170,6 @@ export default class SendToken extends Vue {
   withdrawAll(amount: number) {
     this.amount = amount
   }
-  
-
-
-
 }
 </script>
 
