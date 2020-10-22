@@ -1,8 +1,6 @@
 import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '@/store'
-import { InsufficientBalance } from '@/exceptions/wallet'
 import { LendingPlatform, Loan, Loaner } from '@/types/lending'
-import { Currency } from '@/types/currency'
 import * as constants from '@/constants'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
@@ -114,6 +112,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
   @MutationAction
   async updateLoan(address: string) {
+    const currencyName = myCollateralAssets[0].currency.name
     const loan = (this.state as any).loan
     const loanInfo = await lending.getLoanInfo(address)
 
@@ -121,7 +120,12 @@ export default class LendingModule extends VuexModule implements LendingPlatform
       loanInfo.interestRate = await lending.getInterestRate()
     }
 
-    loan.loaner = loanInfo.pool
+    if (loanInfo.pool === '') {
+      loan.loaner = await lending.getDepositedPool(address, currencyName)
+    } else {
+      loan.loaner = loanInfo.pool
+    }
+
     loan.amount = loanInfo.amount
     loan.timestamp = loanInfo.timestamp
     loan.interestRate = loanInfo.interestRate
@@ -133,16 +137,18 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   @MutationAction
   async updateCollateral(address: string) {
     const myCollateralAssets = (this.state as any).myCollateralAssets
-    let poolAddress = (this.state as any).loan.loaner
-
     const currencyName = myCollateralAssets[0].currency.name
 
-    if (poolAddress === '') {
-      poolAddress = await lending.getDepositedPool(address, currencyName)
+    const res = await lending.getCollateralInfo(address, currencyName)
+    let decimals = 8
+
+    if (currencyName === 'USDT') {
+      decimals = 4
+    } else if (currencyName === 'ETH') {
+      decimals = 16
     }
 
-    const res = await lending.getCollateralInfo(address, poolAddress, currencyName)
-    myCollateralAssets[0].amount = res
+    myCollateralAssets[0].amount = utils.toDecimals(res, decimals)
 
     return { myCollateralAssets }
   }
@@ -152,16 +158,14 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     const loaners = (this.state as any).loaners as Loaner[]
     const allPools = await lending.getAllPools()
 
-    allPools.forEach(async lonerAddress => {
-      const poolInfo = await lending.getPoolInfo(lonerAddress)
-      const existingLoanerIndex = loaners.findIndex(loaner => {
-        loaner.address === lonerAddress
-      })
+    allPools.forEach(async address => {
+      const poolInfo = await lending.getPoolInfo(address)
+      const existingLoanerIndex = loaners.findIndex(loaner => loaner.address === address)
 
       if (existingLoanerIndex < 0) {
         const newLoaner = {
           currency: loanCurrency,
-          address: lonerAddress,
+          address: address,
           totalSupply: 100000,
           totalBorrowed: 0
         } as Loaner
@@ -216,6 +220,21 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
     try {
       const rawTransaction = await lending.depositColateral(amount, poolAddress, walletParams)
+      const txid = await Ecoc.sendRawTx(rawTransaction)
+      this.context.commit('updateStatus', constants.STATUS_PENDING)
+      return txid
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+
+  @Action({ rawError: true })
+  async borrow(payloads: { amount: number; poolAddress: string; walletParams: WalletParams }) {
+    const { amount, poolAddress, walletParams } = payloads
+    const currencyName = myCollateralAssets[0].currency.name
+
+    try {
+      const rawTransaction = await lending.borrow(currencyName, amount, poolAddress, walletParams)
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid

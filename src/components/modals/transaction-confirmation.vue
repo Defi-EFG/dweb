@@ -8,7 +8,7 @@
       <div class="transaction-confirmation-wrapper ">
         <div class="d-flex ">
           <div class="transaction-sender text-truncate">{{ walletAddress }}</div>
-          <div class="transaction-receiver text-truncate">{{ toAddr }}</div>
+          <div class="transaction-receiver text-truncate">{{ addressFilter(toAddr) }}</div>
           <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
         </div>
         <div class="transaction-confirmation-content">
@@ -90,6 +90,9 @@ export default class TransactionComfirmationModal extends Vue {
 
   walletStore = getModule(WalletModule)
 
+  lendingContractAddress = '85635434f6c52f3aaecb8f9c5763223bc07875c7'
+  stakingContractAddress = 'b0b56e3d1b82be8f309dccff96b27e521b785b49'
+
   sendialog = false
   errorMsg = ''
   password = ''
@@ -115,6 +118,12 @@ export default class TransactionComfirmationModal extends Vue {
     return this.currency.name || ''
   }
 
+  addressFilter(address: string) {
+    if (address == this.lendingContractAddress) return 'Lending Platform'
+    else if (address == this.stakingContractAddress) return 'Staking Platform'
+    else return address
+  }
+
   onClose() {
     this.password = ''
     this.errorMsg = ''
@@ -138,6 +147,8 @@ export default class TransactionComfirmationModal extends Vue {
         gasPrice: this.gasPrice
       } as WalletParams
 
+      this.password = ''
+      this.errorMsg = ''
       this.$emit('onConfirm', walletParams)
     } catch (error) {
       this.errorMsg = error.message

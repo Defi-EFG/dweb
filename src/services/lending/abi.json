@@ -229,7 +229,7 @@
     "constant":true,
     "inputs":[
       {
-        "name":"_pool_addr",
+        "name":"_debtors_addr",
         "type":"address"
       },
       {

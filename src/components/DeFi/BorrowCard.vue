@@ -47,9 +47,9 @@
       <div class="text-left">Total Borrowed</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowPower }}</span>
+        <span>${{ borrowLimit }}</span>
         &rarr;
-        <span class="after-calculated">${{ borrowPower.toFixed(2) }}</span>
+        <span class="after-calculated">${{ borrowLimit.toFixed(2) }}</span>
       </div>
     </div>
     <v-divider dark />
@@ -71,10 +71,15 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
+import { WalletParams } from '@/services/ecoc/types'
 
 @Component({})
 export default class BorrowCard extends Vue {
+  lendingStore = getModule(LendingModule)
+
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
@@ -84,6 +89,9 @@ export default class BorrowCard extends Vue {
 
   bpSlider = 0
   borrowValue = 0
+
+  errorMsg = ''
+  confirmTxModal = false
 
   mounted() {
     this.bpSlider = this.bpUsed
@@ -171,6 +179,51 @@ export default class BorrowCard extends Vue {
     }
 
     this.bpSlider = this.calculateBPUsed(val)
+  }
+
+  onOpenModal() {
+    if (this.borrowValue) {
+      this.confirmTxModal = !this.confirmTxModal
+    }
+  }
+
+  closeModal() {
+    this.confirmTxModal = false
+  }
+
+  onSuccess() {
+    this.borrowValue = 0
+    this.closeModal()
+  }
+
+  onError(errorMsg: string) {
+    this.errorMsg = errorMsg
+    console.log(errorMsg)
+  }
+
+  onClose() {
+    this.closeModal()
+  }
+
+  async Borrow(walletParams: WalletParams) {
+    const amount = Number(this.borrowValue)
+    const poolAddress = this.lendingStore.loan.loaner
+
+    const payload = {
+      amount,
+      poolAddress,
+      walletParams
+    }
+
+    this.lendingStore
+      .borrow(payload)
+      .then(txid => {
+        console.log('Txid:', txid)
+        this.onSuccess()
+      })
+      .catch(error => {
+        this.onError(error.message)
+      })
   }
 }
 </script>

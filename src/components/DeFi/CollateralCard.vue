@@ -95,7 +95,7 @@ export default class Collateral extends Vue {
   @Prop() borrowLimit!: number
   @Prop() borrowPowerPercentage!: number
 
-  poolAddress = 'eCpHawDrHpW9YpjdzDsN9b4imGbnMJbQeG'
+  poolAddress = 'eLssy68wougpN3FMJDiimjk5MLg23Q46De'
   errorMsg = ''
   confirmTxModal = false
   collateralAmount: number | string = 0

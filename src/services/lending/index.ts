@@ -8,7 +8,7 @@ import lendingAbi from './abi.json'
 import { LoanInfo } from './types'
 
 const lendingContract = {
-  address: '84657142e092d9bdf3d06fdec68d1d67b0e03812',
+  address: '85635434f6c52f3aaecb8f9c5763223bc07875c7',
   abi: lendingAbi
 } as Contract
 
@@ -25,7 +25,7 @@ export namespace lending {
     const result = await contract.call('getAllPools', params)
     const executionResult = result.executionResult as ExecutionResult
     const pools = executionResult.formattedOutput['0'] as string[]
-    const poolsAddress = pools.map(pool => Decoder.toEcoAddress(pool))
+    const poolsAddress = pools.map(pool => Decoder.toEcoAddress(pool)) as string[]
 
     return poolsAddress
   }
@@ -87,14 +87,9 @@ export namespace lending {
     return res
   }
 
-  export const getCollateralInfo = async (
-    address: string,
-    poolAddress: string,
-    currencyName: string
-  ) => {
+  export const getCollateralInfo = async (address: string, currencyName: string) => {
     const params = {
-      methodArgs: [poolAddress, currencyName],
-      senderAddress: address
+      methodArgs: [address, currencyName]
     } as Params
 
     const result = await contract.call('getCollateralInfo', params)
