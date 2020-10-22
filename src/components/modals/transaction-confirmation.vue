@@ -133,8 +133,8 @@ export default class TransactionComfirmationModal extends Vue {
   walletStore = getModule(WalletModule)
   gassetting = false
   sendialog = false
-  gasPrice :any
-  gasLimit :any
+  gasPrice:any = ''
+  gasLimit:any = ''
   @Prop() visible!: boolean
 
   get addr() {
