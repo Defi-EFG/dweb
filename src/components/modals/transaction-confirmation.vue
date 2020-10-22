@@ -8,8 +8,8 @@
         </v-card-title>
         <div class="transaction-confirmation-wrapper ">
           <div class="d-flex ">
-            <div class="transaction-sender">Ed76D6...F985</div>
-            <div class="transaction-receiver">0x76D6...F065</div>
+            <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
+            <div class="transaction-receiver">receiver</div>
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
@@ -19,13 +19,14 @@
               <div class="send-detail border-bottom">
                 <span class="gt">Send to</span>
                 <div class="d-flex justify-end">
-                  <p class="address">0x76D684b9D7C925A56B65u77637h18B235F065</p>
+                  <p class="address">receiver</p>
                 </div>
               </div>
               <div class="detail border-bottom">
                 <span class="gt">Amount</span>
                 <div class="d-flex justify-end">
-                  <p>200.00</p>
+                  <p></p>
+                  <!-- number -->
                   <p class="ml-2">ECOC</p>
                 </div>
               </div>
@@ -35,7 +36,8 @@
               <span class="gt">Gas Fee</span>
               <div class="text-end">
                 <div class="d-flex justify-end">
-                  <p>2.00</p>
+                  <p></p>
+                  <!-- number -->
                   <p class="ml-2">ECOC</p>
                 </div>
                 <v-btn @click="gasSetting()" small text color="primary">
@@ -47,7 +49,14 @@
               <v-text-field label="KeyStore Password" dense filled></v-text-field
             ></v-form>
             <div class="action-transaction-confirmation">
-              <v-btn @click="sendialog = false" outlined large color="primary" class="text-capitalize">Cancel</v-btn>
+              <v-btn
+                @click="sendialog = false"
+                outlined
+                large
+                color="primary"
+                class="text-capitalize"
+                >Cancel</v-btn
+              >
               <v-btn large depressed color="primary" class="text-capitalize">Confirm</v-btn>
             </div>
           </div>
@@ -91,14 +100,14 @@
           </div>
           <div class="inputnumber d-flex justify-space-between">
             <v-col cols="6" class="pb-0">
-              <label for="Gas price:">Gas price:</label><v-text-field type="number"></v-text-field>
+              <label for="Gas price:">Gas price:</label><v-text-field   type="number" v-model="gasPrice"></v-text-field>
             </v-col>
             <v-col cols="6" class="pb-0">
-              <label for="Gas limit:">Gas limit:</label><v-text-field type="number"></v-text-field>
+              <label for="Gas limit:">Gas limit:</label><v-text-field  type="number" v-model="gasLimit"></v-text-field>
             </v-col>
           </div>
 
-          <div class="d-flex justify-space-between py-4">
+          <div class="d-flex justify-space-between py-2">
             <p>New Transaction Fee:</p>
             <div class="text-end">
               <p class="mb-0">3.00 ECOC</p>
@@ -115,14 +124,22 @@
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
-
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
 @Component({
   components: {}
 })
 export default class TransactionComfirmationModal extends Vue {
+  walletStore = getModule(WalletModule)
   gassetting = false
   sendialog = false
+  gasPrice :any
+  gasLimit :any
   @Prop() visible!: boolean
+
+  get addr() {
+    return this.walletStore.address
+  }
 
   @Watch('visible')
   checkSendModalActive() {
@@ -133,6 +150,13 @@ export default class TransactionComfirmationModal extends Vue {
   }
   gasSetting() {
     this.gassetting = true
+  }
+  truncateAddress(addr: string) {
+    const separator = '...'
+    const charsToShow = 8
+    const frontChars = Math.ceil(charsToShow / 2)
+    const backChars = Math.floor(charsToShow / 2)
+    return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
   }
 }
 </script>
@@ -299,7 +323,7 @@ export default class TransactionComfirmationModal extends Vue {
   background: transparent linear-gradient(180deg, #d2bae2 0%, #f9ecff 100%);
 }
 .inputnumber {
-  padding: 8px 0px;
+
   border-bottom: 1px solid rgba(177, 169, 170, 0.466);
 }
 
