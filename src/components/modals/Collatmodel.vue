@@ -35,7 +35,7 @@
                     <v-row
                       v-for="(item, i) in items"
                       :key="i"
-                      class="row1 roww2"
+                      :class="name == item.loaner ? 'active row1 roww2' : 'row1 roww2'"
                       @click="selectLoaner((name = item.loaner))"
                     >
                       <v-col lg="4" md="4" cols="4">
@@ -46,14 +46,14 @@
                       <v-col lg="4" md="4" cols="4">
                         <div class="margintop color_1 textafter">
                           <span class="color_size1">
-                            {{ item.supply | numberWithCommas({ decimal: 2 }) }}</span
+                            ${{ item.supply | numberWithCommas({ decimal: 2 }) }}</span
                           >
                         </div>
                       </v-col>
                       <v-col lg="4" md="4" cols="4">
                         <div class="margintop color_2 textafter">
                           <span class="color_size2">
-                            {{ item.borrowed | numberWithCommas({ decimal: 2 }) }}</span
+                            ${{ item.borrowed | numberWithCommas({ decimal: 2 }) }}</span
                           >
                         </div>
                       </v-col>
@@ -157,7 +157,7 @@
           </v-card>
         </v-stepper-content>
 
-        <v-stepper-content step="4" id="loadding">
+        <!-- <v-stepper-content step="4" id="loadding">
           <v-card color="#FFFFFF00">
             <v-card-content>
               <div class="generate-keydtore">
@@ -172,7 +172,7 @@
               </div>
             </v-card-content>
           </v-card>
-        </v-stepper-content>
+        </v-stepper-content> -->
 
         <v-stepper-content step="5">
           <v-card color="#FFFFFF00">
@@ -249,30 +249,32 @@ import GasSetting from './gas-setting-modal.vue'
 @Component({
   components: {}
 })
-export default class Collateralmodel extends Vue {
-  @Prop() visible!: boolean
-  @Watch('visible')
+export default class Collatmodel extends Vue {
   Collateralmodel = false
   step = 1
   name = ''
   selectdata = ''
+  active = ''
   items = [
     {
-      loaner: 'MgpCNdddddddddddddddJWGkk1',
+      loaner: 'MgpCNdddddddddddddddJWGkk1MgpCNdddddddddddddddJWdkk1',
       supply: 812345679,
       borrowed: 412345679
     },
     {
-      loaner: 'MgpCNsdadasdasdasdsgJWGkk2',
+      loaner: 'MgpCNdddddddddddddddJWGkk1MgpCNdddddddddddddddJWGkk1',
       supply: 8123456799,
       borrowed: 412345679
     },
     {
-      loaner: 'MgpCNdasdasdasdasdsaJWGkk3',
+      loaner: 'MgpCNdasdasdasdasdsaJWGkk3MgpCNdddddddddddddddJWGkk1',
       supply: 812345679,
       borrowed: 412345679
     }
   ]
+
+  @Prop() visible!: boolean
+  @Watch('visible')
   close() {
     this.Collateralmodel = !this.Collateralmodel
   }
@@ -281,6 +283,7 @@ export default class Collateralmodel extends Vue {
   }
   selectLoaner(name: string) {
     this.selectdata = name
+    this.active = name
   }
   connectStep(selectdata: string) {
     if (this.selectdata != '') {
@@ -353,6 +356,8 @@ export default class Collateralmodel extends Vue {
   background: #8b8b8b !important;
   cursor: no-drop;
   width: 100%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .generate-keydtore {
   height: 506px;
@@ -400,7 +405,7 @@ export default class Collateralmodel extends Vue {
   cursor: pointer;
 }
 .roww2:hover {
-  background-color: #2a2c33;
+  background-color: #4a2752;
 }
 #style-1::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
@@ -430,6 +435,8 @@ export default class Collateralmodel extends Vue {
   background-color: #b052ee !important;
   color: #ffffff;
   transition: 0.5s;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 .text-capitalize1 {
   margin-top: 20px;
@@ -663,5 +670,8 @@ export default class Collateralmodel extends Vue {
 }
 .font-df {
   font-size: 13px;
+}
+.active {
+  background-color: #4a2752;
 }
 </style>

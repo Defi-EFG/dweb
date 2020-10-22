@@ -60,17 +60,17 @@
         >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
       >
     </v-card-text>
-    <Collateralmodel :visible="Collateralmodel" @onSuccess="Collateralmodel" />
+    <Collatmodel :visible="Collateralmodel" @onSuccess="Collateralmodel" />
   </v-card>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Currency } from '@/types/currency'
-import Collateralmodel from '@/components/modals/collateralmodel.vue'
+import Collatmodel from '@/components/modals/Collatmodel.vue'
 
 @Component({
   components: {
-    Collateralmodel
+    Collatmodel
   }
 })
 export default class Collateral extends Vue {
