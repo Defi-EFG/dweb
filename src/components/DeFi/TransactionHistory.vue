@@ -39,6 +39,7 @@
         </v-list-item>
       </v-list>
     </v-card-text>
+    <TransactionDetailModal :showDialog.sync="showTxModal"></TransactionDetailModal>
   </v-card>
 </template>
 
@@ -50,13 +51,19 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import { TxValueIn, TxValueOut } from '@/types/transaction'
 import * as constants from '@/constants'
+import TransactionDetailModal from '@/components/modals/TransactionDetailModal.vue'
 
-@Component({})
+@Component({
+  components: {
+    TransactionDetailModal
+  }
+})
 export default class TransactionHistory extends Vue {
   @Prop() page!: string
 
   walletStore = getModule(WalletModule)
   defiAddr = '0x91A31A1C5197DD101e91B0747B02560f41E2f532'
+  showTxModal = false
 
   get address() {
     return this.walletStore.address
@@ -183,7 +190,7 @@ export default class TransactionHistory extends Vue {
   }
 
   displayHistory() {
-    console.log('clicked')
+    this.showTxModal = !this.showTxModal
   }
 
   truncateAddress(addr: string) {
@@ -293,7 +300,6 @@ export default class TransactionHistory extends Vue {
     font-size: small;
   }
 }
-
 </style>
 
 <style lang="scss">
