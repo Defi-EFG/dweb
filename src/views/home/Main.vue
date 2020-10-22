@@ -25,7 +25,7 @@
                     :class="active == 'efgandgpt' ? 'active' : undefined"
                     >{{ $t('views.main.sub_name_efgandgpt') }}</a
                   >
-                  <a
+                  <a style="display:none"
                     @click="onClickActive('work')"
                     :class="active == 'work' ? 'active' : undefined"
                     >{{ $t('views.main.sub_name_work') }}</a

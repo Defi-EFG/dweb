@@ -29,6 +29,10 @@
             <div class="sun_Introduction">
               {{ $t('views.docs.detail3.head_sub') }}
             </div>
+            <div class="head_Introduction">{{ $t('views.main.sub_name_work') }}</div>
+            <div class="sun_Introduction">
+              {{ $t('views.main.sub_name_4') }}
+            </div>
           </section>
         </v-col>
       </v-row>

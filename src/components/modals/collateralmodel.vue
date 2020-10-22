@@ -226,16 +226,16 @@
                 </div>
                 <v-container colortextoutput>
                   <v-row class="border-bottom_1 ">
-                    <v-col cols="6">Collateral</v-col>
-                    <v-col cols="6" class="textright">+100.00 ECOC</v-col>
+                    <v-col cols="6" class="nopadding">Collateral</v-col>
+                    <v-col cols="6" class="textright nopadding">+100.00 ECOC</v-col>
                   </v-row>
                   <v-row class="border-bottom_1">
-                    <v-col cols="6">Borrow Power Used (New)</v-col>
-                    <v-col cols="6" class="textright">22.7 %</v-col>
+                    <v-col cols="6" class="nopadding">Borrow Power Used (New)</v-col>
+                    <v-col cols="6" class="textright nopadding">22.7 %</v-col>
                   </v-row>
                   <v-row class="border-bottom_1">
-                    <v-col cols="6">Total Borrow Power (New)</v-col>
-                    <v-col cols="6" class="textright">$880.00</v-col>
+                    <v-col cols="6" class="nopadding">Total Borrow Power (New)</v-col>
+                    <v-col cols="6" class="textright nopadding">$880.00</v-col>
                   </v-row>
                 </v-container>
                 <v-container>
