@@ -11,7 +11,9 @@
 
       <v-card-text class="td-body">
         <div class="tx-type">
-          <span>Received (Withdraw)</span>
+          <span
+            >{{ tx.type }} <span class="text-capitalize">({{ tx.subtype }})</span></span
+          >
           <v-spacer></v-spacer>
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
@@ -33,7 +35,7 @@
                 color="primary"
                 v-bind="attrs"
                 v-on="on"
-                @click="doCopy"
+                @click="doCopy(tx.id)"
               >
                 <v-icon dark>
                   mdi-content-copy
@@ -45,41 +47,56 @@
         </div>
         <v-divider></v-divider>
         <div class="tx-direction">
-          <small>From: Lending (DeFi)</small>
-          <v-icon small>mdi-arrow-right</v-icon>
-          <small>To: 0x76D684b9D7C925A5...</small>
+          <div class="from">
+            <small>From:</small>
+            <v-spacer />
+            <small>{{ tx.type === direction.TYPE_SENT ? address : tx.address }}</small>
+          </div>
+          <div class="to">
+            <small>To:</small>
+            <v-spacer />
+            <small>{{ tx.type === direction.TYPE_RECEIVED ? address : tx.address }}</small>
+          </div>
         </div>
 
         <div class="tx-detail">
           <div class="date">
             <span>Date</span>
             <v-spacer></v-spacer>
-            <span class="val">2020-09-17 02:56:41</span>
+            <span class="val">{{ getTime(tx.time) }}</span>
           </div>
           <v-divider class="space"></v-divider>
           <div class="currency">
             <span>Currency</span>
             <v-spacer></v-spacer>
-            <span class="val">ECOC</span>
+            <span class="val">{{ tx.currency }}</span>
           </div>
           <v-divider class="space"></v-divider>
           <div class="type">
             <span>Type</span>
             <v-spacer></v-spacer>
-            <span class="val">Receive</span>
+            <span class="val">{{ tx.type }}</span>
           </div>
           <v-divider class="space"></v-divider>
           <div class="amount">
             <span>Amount</span>
             <v-spacer></v-spacer>
-            <span class="val">22050.050</span>
+            <span class="val">{{ tx.value }}</span>
           </div>
           <v-divider class="space"></v-divider>
-          <div class="status">
-            <span>Status</span>
+          <div class="confirm">
+            <span>Confirmations</span>
             <v-spacer></v-spacer>
-            <span class="val">Completed</span>
+            <span class="val">{{ tx.confirmations }}</span>
           </div>
+          <template v-if="tx.status">
+            <v-divider class="space"></v-divider>
+            <div class="status">
+              <span>Status</span>
+              <v-spacer></v-spacer>
+              <span class="val">{{ tx.status }}</span>
+            </div>
+          </template>
         </div>
       </v-card-text>
     </v-card>
@@ -87,29 +104,44 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, PropSync } from 'vue-property-decorator'
+import { Vue, Component, PropSync, Prop } from 'vue-property-decorator'
+import { copyToClipboard } from '@/services/utils'
+import { TxHistory } from '@/types/transaction'
+import WalletModule from '@/store/wallet'
+import moment from 'moment'
+import { getModule } from 'vuex-module-decorators'
+import * as constants from '@/constants'
 
 @Component({})
 export default class TransactionDetailModal extends Vue {
   @PropSync('showDialog', { type: Boolean }) visible!: boolean
-
-  txId = 'asdsghpsjosjr;sjgioewflksnklgskfjslkfjklas'
-
+  @Prop() tx!: TxHistory
+  walletStore = getModule(WalletModule)
   copyMsg = 'Copy TxID'
+
+  get address() {
+    return this.walletStore.address || ''
+  }
+
+  get direction() {
+    return constants
+  }
 
   close() {
     this.$emit('update:showDialog', false)
   }
 
-  doCopy() {
-    navigator.clipboard.writeText('<empty clipboard>').then(
-      function() {
-        console.log('copied success')
-      },
-      function() {
-        /* clipboard write failed */
-      }
-    )
+  doCopy(val: string) {
+    copyToClipboard(val)
+    this.copyMsg = 'Copied'
+
+    setTimeout(() => {
+      this.copyMsg = 'Copy TxID'
+    }, 1000)
+  }
+  
+  getTime(time: number) {
+    return moment(time).format("YYYY-MM-DD HH:mm:ss")
   }
 
   get show() {
@@ -147,8 +179,11 @@ export default class TransactionDetailModal extends Vue {
 .tx-direction {
   padding-top: 4px;
   color: black;
-  display: flex;
   justify-content: space-between;
+  .to,
+  .from {
+    display: flex;
+  }
 }
 
 .tx-btn {
@@ -162,6 +197,7 @@ export default class TransactionDetailModal extends Vue {
   .val {
     color: black;
   }
+  .confirm,
   .date,
   .currency,
   .type,

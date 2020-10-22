@@ -16,7 +16,7 @@
         <p class="addr-label">ECOC Wallet Address:</p>
         <div class="copyable-addr">
           <div class="text-truncate addr">{{ address }}</div>
-          <v-btn icon small dark class="copy" @click="copyAddress">
+          <v-btn icon small dark class="copy" @click="copyAddress(address)">
             <v-icon small>mdi-content-copy</v-icon>
           </v-btn>
         </div>
@@ -97,6 +97,7 @@ import { getModule } from 'vuex-module-decorators'
 import { SendPayload } from '@/types/wallet'
 import WalletModule from '@/store/wallet'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import { copyToClipboard } from '@/services/utils'
 
 @Component({
   components: {
@@ -196,13 +197,8 @@ export default class ReceiveSendMobile extends Vue {
     this.amount = amount
   }
 
-  copyAddress() {
-    const el = document.createElement('textarea')
-    el.value = this.address
-    document.body.appendChild(el)
-    el.select()
-    document.execCommand('copy')
-    document.body.removeChild(el)
+  copyAddress(addr: string) {
+    copyToClipboard(addr)
     this.showCopy = true
 
     setTimeout(() => {
