@@ -124,8 +124,11 @@ export default class TransactionComfirmationModal extends Vue {
   sendialog = false
   @Prop() visible!: boolean
   @Watch('visible')
-  show() {
+  checkSendModalActive() {
     this.sendialog = this.visible
+    if (this.sendialog !== true) {
+      this.sendialog = true
+    }
   }
   gasSetting() {
     console.log('gassetting')
@@ -253,7 +256,6 @@ export default class TransactionComfirmationModal extends Vue {
   text-decoration: underline;
   height: auto;
 }
-
 .gassetting {
   letter-spacing: 0px;
   font-size: 10px;

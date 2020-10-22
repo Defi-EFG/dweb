@@ -220,7 +220,7 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import Loading from './loading-create-accout.vue'
+import Loading from './loading.vue'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import TextReader from './text-reader.vue'
