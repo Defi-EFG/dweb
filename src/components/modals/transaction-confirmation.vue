@@ -38,7 +38,7 @@
                   <p>2.00</p>
                   <p class="ml-2">ECOC</p>
                 </div>
-                <v-btn @click="gassetting = true" small text color="primary">
+                <v-btn @click="gasSetting()" small text color="primary">
                   <span class="gassetting">gas setting</span>
                 </v-btn>
               </div>
@@ -47,7 +47,7 @@
               <v-text-field label="KeyStore Password" dense filled></v-text-field
             ></v-form>
             <div class="action-transaction-confirmation">
-              <v-btn outlined large color="primary" class="text-capitalize">Cancel</v-btn>
+              <v-btn @click="sendialog = false" outlined large color="primary" class="text-capitalize">Cancel</v-btn>
               <v-btn large depressed color="primary" class="text-capitalize">Confirm</v-btn>
             </div>
           </div>
@@ -57,10 +57,10 @@
 
     <v-dialog v-model="gassetting" max-width="370" class="content-gas-setting">
       <v-card>
-    <div class="d-flex justify-lg-space-between pt-3 ">
+        <div class="d-flex justify-lg-space-between pt-3 ">
           <v-icon></v-icon>
           <v-btn text @click="gassetting = false"><v-icon>$close</v-icon></v-btn>
-       </div>
+        </div>
         <div class="content-gas-setting">
           <h3>Gas Customization</h3>
           <small>Increase the processing time of your transaction by using higher gas fee</small>
@@ -123,6 +123,7 @@ export default class TransactionComfirmationModal extends Vue {
   gassetting = false
   sendialog = false
   @Prop() visible!: boolean
+
   @Watch('visible')
   checkSendModalActive() {
     this.sendialog = this.visible
@@ -131,7 +132,7 @@ export default class TransactionComfirmationModal extends Vue {
     }
   }
   gasSetting() {
-    console.log('gassetting')
+    this.gassetting = true
   }
 }
 </script>
@@ -157,7 +158,7 @@ export default class TransactionComfirmationModal extends Vue {
 </style>
 <style lang="scss" scoped>
 .content-gas-setting {
- padding: 0px 25px 20px;
+  padding: 0px 25px 20px;
 }
 .icon-send {
   display: flex;
