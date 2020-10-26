@@ -114,25 +114,35 @@
                 <div class="collateral_pd">
                   <h2><strong>Transaction Confirm</strong></h2>
                   <small>Please confirm the transaction</small>
-                  <div class="transaction-confirmation-content-detail">
+                  <div class="div_prices">
+                    <div class="transaction-confirmation-content-detail">
+                      <div class="detail">
+                        <span class="gt">Amount</span>
+                        <div class="d-flex justify-end">
+                          <p>200.00</p>
+                          <p class="ml-2">ECOC</p>
+                        </div>
+                      </div>
+                    </div>
                     <div class="detail">
-                      <span class="gt">Amount</span>
-                      <div class="d-flex justify-end">
-                        <p>200.00</p>
-                        <p class="ml-2">ECOC</p>
+                      <span class="gt">Gas Fee</span>
+                      <div class="text-end">
+                        <div class="d-flex justify-end">
+                          <p>2.00</p>
+                          <p class="ml-2">ECOC</p>
+                        </div>
                       </div>
                     </div>
                   </div>
-
-                  <div class="detail border-bottom ">
-                    <span class="gt">Gas Fee</span>
-                    <div class="text-end">
-                      <div class="d-flex justify-end">
-                        <p>2.00</p>
-                        <p class="ml-2">ECOC</p>
-                      </div>
+                  <div class="detail">
+                    <span class="gt"></span>
+                    <div class="text-end gt">
+                      <v-btn small text color="primary">
+                        <span class="gassetting">gas setting</span>
+                      </v-btn>
                     </div>
                   </div>
+                  <div class="border-bottom"></div>
                   <v-form class="pt-4">
                     <v-text-field label="KeyStore Password" dense filled></v-text-field
                   ></v-form>
@@ -470,6 +480,11 @@ export default class Collmodeldiposit extends Vue {
 .v-sheet.v-card:not(.v-sheet--outlined) {
   box-shadow: none;
 }
+.div_prices {
+  background-color: #f0f0f0;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
 .transaction-confirmation-wrapper {
   margin: 16px 16px 0 16px;
   border-radius: 3px;
@@ -604,6 +619,9 @@ h2 {
 .collateral_margin {
   margin-left: 35px;
   margin-right: 35px;
+}
+.gas_seting {
+  padding: 2px 0;
 }
 .colortextoutput {
   color: #cccccc;
