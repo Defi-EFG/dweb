@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="Collateralmodel" max-width="500" class="send-transaction" id="collat">
+  <v-dialog v-model="show" max-width="500" class="send-transaction" id="collat">
     <v-stepper v-model="step" class="blur-card">
       <v-stepper-items>
         <!-- Welcome to ECOC Finance Governance -->
@@ -7,7 +7,7 @@
           <v-card color="#FFFFFF00">
             <v-card-title class="modal-header">
               <v-icon></v-icon>
-              <v-btn @click="close()" text><v-icon color="white">$close</v-icon></v-btn>
+              <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
             </v-card-title>
             <div class="transaction-confirmation-wrapper collateral_pddeful ">
               <div class="headtitle_collat">
@@ -77,7 +77,7 @@
           <v-card color="#FFFFFF00">
             <v-card-title class="modal-header">
               <v-btn @click="leftarrow()" text><v-icon color="white">$leftarrow</v-icon></v-btn>
-              <v-btn @click="close()" text><v-icon color="white">$close</v-icon></v-btn>
+              <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
             </v-card-title>
             <div class="transaction-confirmation-wrapper collateral_pddeful">
               <div class="content-wrapper ">
@@ -102,7 +102,7 @@
           <v-card color="#FFFFFF00">
             <v-card-title class="modal-header">
               <v-btn @click="leftarrow3()" text><v-icon color="white">$leftarrow</v-icon></v-btn>
-              <v-btn @click="close()" text><v-icon color="white">$close</v-icon></v-btn>
+              <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
             </v-card-title>
             <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin">
               <div class="d-flex ">
@@ -182,7 +182,7 @@
           <v-card color="#FFFFFF00">
             <v-card-title class="modal-header">
               <v-icon></v-icon>
-              <v-btn @click="close()" text><v-icon color="white">$close</v-icon></v-btn>
+              <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
             </v-card-title>
             <div class="transaction-confirmation-wrapper collateral_pddeful ">
               <div class="headtitle_collat">
@@ -254,7 +254,6 @@ import GasSetting from './gas-setting-modal.vue'
   components: {}
 })
 export default class Collmodeldiposit extends Vue {
-  Collateralmodel = false
   step = 1
   Loanername = ''
   selectdata = ''
@@ -279,17 +278,24 @@ export default class Collmodeldiposit extends Vue {
 
   @Prop() visible!: boolean
   @Prop() amount!: number
-  @Watch('visible')
-  close() {
-    this.Collateralmodel = !this.Collateralmodel
+
+  get show() {
+    return this.visible
   }
+
+  onClose() {
+    this.$emit('onClose')
+  }
+
   onLoading() {
     this.$emit('onLoading')
   }
+
   selectLoaner(Loanername: string) {
     this.selectdata = Loanername
     this.active = Loanername
   }
+
   connectStep(selectdata: string) {
     if (this.selectdata != '') {
       this.step = 2
