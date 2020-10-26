@@ -139,9 +139,9 @@ export default class TransactionDetailModal extends Vue {
       this.copyMsg = 'Copy TxID'
     }, 1000)
   }
-  
+
   getTime(time: number) {
-    return moment(time).format("YYYY-MM-DD HH:mm:ss")
+    return moment(time).format('YYYY-MM-DD HH:mm:ss')
   }
 
   get show() {

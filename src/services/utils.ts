@@ -4,7 +4,14 @@ export const toDecimals = (value: number | string, decimals: number | string) =>
   const expo = new BigNumber(10).pow(new BigNumber(decimals))
   const res = new BigNumber(value).dividedBy(expo)
 
-  return res.toString()
+  return res
+}
+
+export const fromDecimals = (value: number | string, decimals: number | string) => {
+  const expo = new BigNumber(10).pow(new BigNumber(decimals))
+  const res = new BigNumber(value).multipliedBy(expo)
+
+  return res
 }
 
 export const toNumber = (value: string) => {
@@ -17,9 +24,12 @@ export const getEstimatedValue = (amount: number | string, price: number | strin
 }
 
 export const copyToClipboard = (text: string) => {
-  navigator.clipboard.writeText(text).then(function () {
-    /* clipboard successfully set */
-  }, function () {
-    console.error('Copy failed')
-  });
+  navigator.clipboard.writeText(text).then(
+    function() {
+      /* clipboard successfully set */
+    },
+    function() {
+      console.error('Copy failed')
+    }
+  )
 }

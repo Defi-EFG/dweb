@@ -44,14 +44,14 @@
       <div class="text-left">Total Borrow Power</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowPower }}</span>
+        <span>${{ borrowLimit }}</span>
         &rarr;
         <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
       </div>
     </div>
     <v-divider dark />
     <v-btn
-      @click="openCollateralmodels()"
+      @click="openCollateralmodals()"
       dark
       large
       block
@@ -62,13 +62,19 @@
     >
     <Collatmodel
       :visible="collateralmodel"
-      @onSuccess="closeCollateralmodels"
-      @onClose="closeCollateralmodels"
+      :toAddr="contractAddr"
+      :amount="collateralAmount"
+      :currency="currency"
+      @onSuccess="onSuccess"
+      @onClose="closeCollateralmodals"
     />
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
 import Collatmodel from '@/components/modals/collmodeldiposit.vue'
 
@@ -78,21 +84,33 @@ import Collatmodel from '@/components/modals/collmodeldiposit.vue'
   }
 })
 export default class Collateral extends Vue {
+  walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
-  @Prop() borrowPower!: number
+  @Prop() borrowLimit!: number
   @Prop() borrowPowerPercentage!: number
 
   collateralmodel = false
   collateralAmount: number | string = 0
 
-  openCollateralmodels() {
+  openCollateralmodals() {
     this.collateralmodel = !this.collateralmodel
   }
 
-  closeCollateralmodels() {
+  closeCollateralmodals() {
     this.collateralmodel = !this.collateralmodel
+  }
+
+  onSuccess() {
+    this.collateralAmount = 0
+    this.closeCollateralmodals()
+  }
+
+  get contractAddr() {
+    return this.lendingStore.address
   }
 
   get walletBalance() {
@@ -108,7 +126,7 @@ export default class Collateral extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowPower) * 100
+    return (this.borrowBalance / this.borrowLimit) * 100
   }
 
   get tokenConversion() {

@@ -39,7 +39,7 @@
       :visible="unlockWalletOpen"
       @onClose="closeUnlockWallet"
     />
-    <PrivateKey :visiblemodalpk="accessPrivateKey" @onClose="onClose()" />
+    <PrivateKey :visiblemodalpk="accessPrivateKey" @onClose="onClosePrivateKey" />
   </div>
 </template>
 
@@ -77,6 +77,11 @@ export default class HeaderNav extends Vue {
   openprivatekeyDialog() {
     this.accessPrivateKey = !this.accessPrivateKey
   }
+
+  onClosePrivateKey() {
+    this.accessPrivateKey = false
+  }
+
   logout() {
     this.walletStore.logout()
   }

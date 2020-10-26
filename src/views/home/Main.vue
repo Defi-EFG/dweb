@@ -25,7 +25,8 @@
                     :class="active == 'efgandgpt' ? 'active' : undefined"
                     >{{ $t('views.main.sub_name_efgandgpt') }}</a
                   >
-                  <a style="display:none"
+                  <a
+                    style="display:none"
                     @click="onClickActive('work')"
                     :class="active == 'work' ? 'active' : undefined"
                     >{{ $t('views.main.sub_name_work') }}</a
@@ -139,25 +140,25 @@
           <v-col lg="2" md="2" cols="2">
             <div class="margintop">
               <img src="@/assets/efg_01.svg" />
-              EFG
+              {{ item.currency.name }}
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="4">
-            <div class="margintop Loener">
-              {{ item.Loener }}
+            <div class="text-truncate margintop Loener">
+              {{ item.address }}
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="3" class="border_left">
             <div class="margintop color_1 textafter">
               <span class="color_size"
-                >${{ item.EFGTotalSupply | numberWithCommas({ decimal: 2 }) }}</span
+                >${{ item.totalSupply | numberWithCommas({ decimal: 2 }) }}</span
               >
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="3">
             <div class="margintop color_2 textafter">
               <span class="color_size"
-                >${{ item.EFGTotalBorrowed | numberWithCommas({ decimal: 2 }) }}</span
+                >${{ item.totalBorrowed | numberWithCommas({ decimal: 2 }) }}</span
               >
             </div>
           </v-col>
@@ -252,11 +253,19 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import LendingModule from '@/store/lending'
 
 @Component({})
 export default class Main extends Vue {
+  lendingStore = getModule(LendingModule)
+
   get msg() {
     return this.$t('views.mainslider')
+  }
+
+  get items() {
+    return this.lendingStore.loaners
   }
 
   active = 'EFG'
@@ -264,19 +273,6 @@ export default class Main extends Vue {
 
   liquidation = 20.0
   GPTprice = 10000
-
-  items = [
-    {
-      Loener: '...',
-      EFGTotalSupply: 0,
-      EFGTotalBorrowed: 0
-    },
-    {
-      Loener: '...',
-      EFGTotalSupply: 0,
-      EFGTotalBorrowed: 0
-    }
-  ]
 
   onClickActive(name: string) {
     this.active = name
@@ -286,6 +282,10 @@ export default class Main extends Vue {
   readmore(name: string) {
     this.active = name
     this.name = name
+  }
+
+  mounted() {
+    this.lendingStore.updateLoners()
   }
 }
 </script>
