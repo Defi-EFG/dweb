@@ -510,7 +510,7 @@ export default class Collmodeldiposit extends Vue {
 }
 .div_prices {
   background-color: #f0f0f0;
-  padding: 3px 10px;
+  padding: 5px 10px 3px 10px;
   border-radius: 3px;
 }
 .transaction-confirmation-wrapper {

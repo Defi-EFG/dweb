@@ -160,7 +160,6 @@ export default class PrivateKey extends Vue {
 }
 .bg-white {
   background-color: white;
-  margin: 0px 29px;
   padding: 26px;
 }
 .bg-header {

@@ -5,7 +5,7 @@
         <v-card-title class="headline modal-header" id="headmodel">
           <div class="headtext">Edit contact</div>
           <v-icon></v-icon>
-          <v-btn text><v-icon color="white" @click="onClose()">$close</v-icon></v-btn>
+          <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
         </v-card-title>
         <div class="transaction-confirmation-wrapper ">
           <div class="transaction-confirmation-content" id="solo">
