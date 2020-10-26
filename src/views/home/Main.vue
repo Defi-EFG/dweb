@@ -115,7 +115,7 @@
     <section class="sec_2">
       <v-container>
         <v-row class="row1">
-          <v-col lg="2" md="2" cols="2">
+          <v-col lg="3" md="3" cols="2">
             <div class="supply sub_head_supply">
               {{ $t('views.main.supply') }}
             </div>
@@ -137,7 +137,7 @@
           </v-col>
         </v-row>
         <v-row v-for="(item, i) in items" :key="i" class="row1 roww2">
-          <v-col lg="2" md="2" cols="2">
+          <v-col lg="3" md="3" cols="2">
             <div class="margintop">
               <img src="@/assets/efg_01.svg" />
               {{ item.currency.name }}
@@ -145,7 +145,7 @@
           </v-col>
           <v-col lg="3" md="3" cols="4">
             <div class="text-truncate margintop Loener">
-              {{ item.address }}
+              {{ truncateAddress(item.address) }}
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="3" class="border_left">
@@ -287,6 +287,13 @@ export default class Main extends Vue {
   mounted() {
     this.lendingStore.updateLoners()
   }
+  truncateAddress(addr: string) {
+    const separator = '...'
+    const charsToShow = 12
+    const frontChars = Math.ceil(charsToShow / 2)
+    const backChars = Math.floor(charsToShow / 2)
+    return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
+  }
 }
 </script>
 
@@ -426,7 +433,6 @@ body {
 }
 .sec_2 .roww3 img {
   width: 30px;
-  margin-right: 6px;
 }
 .sec_2 img {
   right: 0;
@@ -467,6 +473,7 @@ body {
   display: inline;
   position: relative;
   top: -10px;
+  margin-left: 5px;
 }
 .sec_2 .row1 .margintopimg {
   padding-top: 16px;
@@ -775,24 +782,6 @@ body {
   }
 }
 
-@media only screen and (max-width: 933px) {
-  .sec_2 .row1 .color_size {
-    width: 35px;
-    overflow: hidden;
-    text-overflow: clip;
-    position: relative;
-    z-index: 1;
-  }
-  .sec_2 .row1 .textafter::after {
-    content: 'M';
-    font-size: 18px;
-  }
-  .Loener {
-    width: 35px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
 @media only screen and (max-width: 670px) {
   .total_supply .price_text {
     font-size: 30px;
