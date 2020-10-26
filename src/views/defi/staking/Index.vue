@@ -1,22 +1,44 @@
 <template>
   <div class="staking-page">
     <v-row class="content-wrapper">
-      <v-col cols="8" class="content">
+      <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-1">
         <StakingList :stakingAmount="staking" :stakingCurrency="stakingCurrency"></StakingList>
-        <div class="ml-1 mr-1"></div>
+        <div class="col-spacer"></div>
         <StakingChart
           :currencyName="rewardCurrency.name"
           :total="totalReward"
           :available="available"
         ></StakingChart>
       </v-col>
-      <v-col cols="4" class="content pr-0">
-        <TransactionHistory :page="'staking'"></TransactionHistory>
+      <v-col xl="4" lg="4" md="12" sm="12" cols="12" class="content-2">
+        <v-card dark color="#222738" class="tx-container" v-if="isLargeMobileDevice">
+          <v-toolbar class="supply-withdraw-wrapper" dense flat>
+            <v-toolbar-title class="token-symbol">
+              <img :src="stakingCurrency.style.icon" />
+              <span>{{ stakingCurrency.name }}</span>
+            </v-toolbar-title>
+          </v-toolbar>
+          <v-row class="content-wrapper">
+            <v-col cols="12" class="inner-content">
+              <DepositWithdraw
+                :balance="stakingBalance"
+                :stakingAmount="staking"
+                :stakingCurrency="stakingCurrency"
+              ></DepositWithdraw>
+            </v-col>
+          </v-row>
+        </v-card>
+        <TransactionHistory v-else :page="'staking'"></TransactionHistory>
       </v-col>
     </v-row>
     <v-row class="content-wrapper">
-      <v-col cols="8" class="content pb-0">
-        <v-card dark color="#222738" class="tx-container">
+      <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-3">
+        <StakedReward
+          v-if="isLargeMobileDevice"
+          :stakedReward="totalStakedReward"
+          :rewardCurrency="rewardCurrency"
+        ></StakedReward>
+        <v-card v-else dark color="#222738" class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
               <img :src="stakingCurrency.style.icon" />
@@ -40,8 +62,14 @@
           </v-row>
         </v-card>
       </v-col>
-      <v-col cols="4" class="content pr-0">
+      <v-col xl="4" lg="4" md="12" sm="12" class="content-4">
+        <TransactionRewardHistory
+          v-if="isLargeMobileDevice"
+          :rewardList="rewardHistory"
+          :rewardCurrencyName="rewardCurrency.name"
+        ></TransactionRewardHistory>
         <RewardHistory
+          v-else
           :rewardList="rewardHistory"
           :rewardCurrencyName="rewardCurrency.name"
         ></RewardHistory>
@@ -62,6 +90,7 @@ import StakingChart from '@/components/DeFi/StakingChart.vue'
 import DepositWithdraw from '@/components/DeFi/DepositWithdraw.vue'
 import StakedReward from '@/components/DeFi/StakedReward.vue'
 import RewardHistory from '@/components/DeFi/RewardHistory.vue'
+import TransactionRewardHistory from '@/components/DeFi/Mobile/TransactionRewardHistory.vue'
 
 @Component({
   components: {
@@ -70,7 +99,8 @@ import RewardHistory from '@/components/DeFi/RewardHistory.vue'
     StakingChart,
     DepositWithdraw,
     StakedReward,
-    RewardHistory
+    RewardHistory,
+    TransactionRewardHistory
   }
 })
 export default class Staking extends Vue {
@@ -108,6 +138,10 @@ export default class Staking extends Vue {
   get rewardCurrency() {
     return this.stakingStore.rewardCurrency
   }
+
+  get isLargeMobileDevice() {
+    return window.innerWidth < 1264
+  }
 }
 </script>
 
@@ -125,6 +159,17 @@ export default class Staking extends Vue {
   img {
     width: 24px;
     margin-right: 0.8rem;
+  }
+}
+
+.col-spacer {
+  margin-left: 4px;
+  margin-right: 4px;
+}
+
+@media (max-width: 768px) {
+  .col-spacer {
+    padding-bottom: 12px;
   }
 }
 </style>

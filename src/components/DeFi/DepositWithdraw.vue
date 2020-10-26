@@ -22,6 +22,7 @@
             </div>
 
             <div class="minimum-d">
+              <span class="value">Minimum Deposit: 1.00 EFG</span>
               <v-spacer></v-spacer>
               <span class="all" @click="fillAmountDeposit(balance)">Deposit All</span>
             </div>
@@ -52,7 +53,7 @@
             <div class="label pl-3">
               <span>Withdraw</span>
             </div>
-            <span class="pl-3">Please input the amount that you want to withdraw</span>
+            <span class="description">Please input the amount that you want to withdraw</span>
 
             <div class="d-amount">
               <span>Your Staking amount</span>
@@ -61,6 +62,7 @@
             </div>
 
             <div class="minimum-w">
+              <span class="value">Minimum Withdrawal: 1.00 GPT</span>
               <v-spacer></v-spacer>
               <span class="all" @click="fillAmountWithdraw(stakingAmount)">Withdraw All</span>
             </div>
@@ -75,7 +77,6 @@
               solo
               hide-details="true"
             ></v-text-field>
-
             <v-btn large block class="btn-w">Withdraw</v-btn>
           </v-card-text>
         </v-card>
@@ -182,6 +183,10 @@ export default class DepositWithdraw extends Vue {
     opacity: 0.7;
   }
 
+  .description {
+    padding-left: 12px;
+  }
+
   .btn-w,
   .btn-d {
     margin-top: 2.5rem;
@@ -193,6 +198,23 @@ export default class DepositWithdraw extends Vue {
 
   .btn-w {
     margin-top: 5.3rem;
+  }
+}
+
+@media (max-width: 425px) {
+  .withdrawal-amount,
+  .d-amount,
+  .minimum-w,
+  .description,
+  .note,
+  .minimum-d,
+  .deposit-amount,
+  .total-balance,
+  .label {
+    font-size: small;
+    span {
+      font-size: small;
+    }
   }
 }
 </style>

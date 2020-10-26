@@ -7,7 +7,8 @@
     </v-container>
     <v-responsive>
       <div class="content">
-        <DefiNav />
+        <DefiNav v-if="!isMobileDevice" />
+        <MenuDropdown v-else />
         <div class="main-container">
           <div class="inner-container">
             <transition name="fade" mode="out-in">
@@ -17,6 +18,7 @@
         </div>
       </div>
     </v-responsive>
+    <DeFiFooter></DeFiFooter>
   </div>
 </template>
 
@@ -24,14 +26,22 @@
 import { Component, Vue } from 'vue-property-decorator'
 import DefiNav from '@/components/DeFi/DefiNav.vue'
 import HeaderNav from '@/components/HeaderNav.vue'
+import MenuDropdown from '@/components/DeFi/MenuDropdown.vue'
+import DeFiFooter from '@/components/DeFi/DeFiFooter.vue'
 
 @Component({
   components: {
     DefiNav,
-    HeaderNav
+    HeaderNav,
+    MenuDropdown,
+    DeFiFooter
   }
 })
-export default class Home extends Vue {}
+export default class Home extends Vue {
+  get isMobileDevice() {
+    return window.innerWidth < 1264
+  }
+}
 </script>
 
 <style lang="scss" scoped>
@@ -43,7 +53,7 @@ export default class Home extends Vue {}
     padding-box;
 }
 .content {
-  margin: 0 70px 20px;
+  margin: 0 70px 35px;
   display: flex;
   position: relative;
   flex: 1;
@@ -68,6 +78,12 @@ export default class Home extends Vue {}
 @media (max-width: 1440px) {
   .content {
     margin: 0 20px 20px;
+  }
+}
+
+@media (max-width: 1264px) {
+  .content {
+    flex-wrap: wrap;
   }
 }
 </style>

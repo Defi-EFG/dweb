@@ -8,9 +8,9 @@
     </v-toolbar>
     <v-card-text class="text-center send-area">
       <div class="token-balance">
-        <span class="text-left">ECOC Balance</span>
+        <span class="text-left">{{ selectedCurrencyName }} Balance</span>
         <v-spacer></v-spacer>
-        <span class="text-right">{{ ecocBalance }} ECOC</span>
+        <span class="text-right">{{ selectedCurrencyBalance }} {{ selectedCurrencyName }}</span>
       </div>
       <v-text-field
         label="To Address"
@@ -44,9 +44,6 @@
         </v-list-item-group>
       </div>
       <div class="withdraw-rate">
-        <span class="text-left"
-          >{{ selectedCurrencyName }} Available: {{ selectedCurrencyBalance }}</span
-        >
         <v-spacer></v-spacer>
         <span class="fb-btn" @click="withdrawAll(selectedCurrencyBalance)">Withdraw All</span>
       </div>
@@ -62,12 +59,15 @@
       ></v-text-field>
       <v-btn depressed block large class="send-btn" @click="senmodelsuccess()">Send</v-btn>
       <TransactionComfirmationModal :visible="sendialog" @onSuccess="sendialog" />
+      <v-btn depressed block large class="send-btn" @click="onunlockSuccess()">Send</v-btn>
+
+      <TransactionComfirmationModal :visible="sendialog" />
     </v-card-text>
   </v-card>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
 import vClickOutside from 'v-click-outside'
 import { getModule } from 'vuex-module-decorators'
 import { SendPayload } from '@/types/wallet'
@@ -92,6 +92,12 @@ export default class SendToken extends Vue {
   fee = 0.01
   gasPrice = 40
   gasLimit = 150000
+  @Prop() visible!: boolean
+  @Watch('visible')
+  sdsd() {
+    this.sendialog = true
+    console.log(this.sendialog)
+  }
 
   addrList = [
     {

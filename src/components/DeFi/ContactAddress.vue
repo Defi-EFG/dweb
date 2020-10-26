@@ -18,7 +18,7 @@
         <v-icon class="mr-3">mdi-account-circle</v-icon>
 
         <v-list-item-content>
-          <v-list-item-title>{{ contact.name }}</v-list-item-title>
+          <v-list-item-title class="addr-name">{{ contact.name }}</v-list-item-title>
           <small class="addr-value text-truncate">{{ contact.address }}</small>
         </v-list-item-content>
 
@@ -133,5 +133,14 @@ export default class ContactAddress extends Vue {
 
 .addr-value {
   opacity: 0.7;
+}
+
+@media (max-width: 425px) {
+  .address-item {
+    font-size: small;
+    .addr-name {
+      font-size: small;
+    }
+  }
 }
 </style>

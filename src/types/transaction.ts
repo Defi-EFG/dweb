@@ -1,3 +1,5 @@
+import BigNumber from 'bignumber.js'
+
 export interface TxList {
   pagesTotal: number
   txs: Transaction[]
@@ -90,4 +92,16 @@ export interface Utxo {
   isStake: boolean
   height: number
   confirmations: number
+}
+
+export interface TxHistory {
+  id: string
+  type: string
+  subtype: string
+  address: string
+  value: number | BigNumber
+  currency: string
+  time: string | number
+  confirmations: number
+  status?: string
 }

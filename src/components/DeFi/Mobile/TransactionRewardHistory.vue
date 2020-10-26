@@ -1,13 +1,9 @@
 <template>
-  <v-card class="mx-auto tx-history" dark color="#222738">
-    <v-toolbar class="tx-history-head" flat dense>
-      <v-toolbar-title>
-        <v-icon class="head-icon">mdi-clock</v-icon>
-        <span>Transaction History</span>
-      </v-toolbar-title>
-    </v-toolbar>
+  <v-tabs show-arrows grow background-color="#2F3446" dark class="tr-tabs">
+    <v-tab>Transaction History</v-tab>
+    <v-tab>Reward History</v-tab>
 
-    <v-card-text :class="page">
+    <v-tab-item class="tr-tabs-item">
       <v-list color="#222738" class="tx-list">
         <v-list-item
           v-for="(tx, index) in exampleHistory"
@@ -15,7 +11,7 @@
           class="tx-item"
           @click="displayHistory(tx)"
         >
-          <v-icon class="tx-icon">
+          <v-icon dark class="tx-icon">
             {{
               isReceived(tx.type) ? 'mdi-arrow-down-circle-outline' : 'mdi-arrow-up-circle-outline'
             }}
@@ -38,9 +34,32 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-    </v-card-text>
+    </v-tab-item>
+
+    <v-tab-item class="tr-tabs-item">
+      <div class="history-items" v-for="(item, index) in rewardList" :key="index">
+        <v-row>
+          <v-col class="ma-auto token-col">
+            <div class="token">
+              <img src="@/assets/gpt.svg" />
+              <span>{{ rewardCurrencyName }}</span>
+            </div>
+          </v-col>
+          <v-col cols="auto" class="time-col">
+            <div class="time">
+              <div class="remain">{{ getTime(item.timestamp).remain }}</div>
+              <small class="timestamp">{{ getTime(item.timestamp).timestamp }}</small>
+            </div>
+          </v-col>
+          <v-col class="ma-auto value-col">
+            <div class="value">{{ item.amount }} {{ rewardCurrencyName }}</div>
+            <small class="timestamp">{{ getTime(item.timestamp).timestamp }}</small>
+          </v-col>
+        </v-row>
+      </div>
+    </v-tab-item>
     <TransactionDetailModal :showDialog.sync="showTxModal" :tx="sentTx"></TransactionDetailModal>
-  </v-card>
+  </v-tabs>
 </template>
 
 <script lang="ts">
@@ -50,6 +69,7 @@ import moment from 'moment'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import { TxValueIn, TxValueOut, TxHistory } from '@/types/transaction'
+import { RewardHistory as Rewardlist } from '@/types/staking'
 import * as constants from '@/constants'
 import TransactionDetailModal from '@/components/modals/TransactionDetailModal.vue'
 
@@ -58,8 +78,9 @@ import TransactionDetailModal from '@/components/modals/TransactionDetailModal.v
     TransactionDetailModal
   }
 })
-export default class TransactionHistory extends Vue {
-  @Prop() page!: string
+export default class TransactionRewardHistory extends Vue {
+  @Prop({ default: [] }) readonly rewardList!: Rewardlist
+  @Prop({ default: '###' }) readonly rewardCurrencyName!: string
 
   walletStore = getModule(WalletModule)
   defiAddr = '0x91A31A1C5197DD101e91B0747B02560f41E2f532'
@@ -164,15 +185,13 @@ export default class TransactionHistory extends Vue {
       const type = new BigNumber(value).lt(0) ? constants.TYPE_SENT : constants.TYPE_RECEIVED
 
       return {
-        id: '',
         type: type,
         subtype: '',
         address: '',
         value: value,
         currency: currency,
-        time: this.getTime(txs.time),
-        confirmations: 0
-      } as TxHistory
+        time: this.getTime(txs.time)
+      }
     })
   }
 
@@ -206,10 +225,17 @@ export default class TransactionHistory extends Vue {
 
   getTime(timestamp: number) {
     if (timestamp) {
-      return `${moment(timestamp * 1000)
+      const timeMsg = moment(timestamp * 1000)
         .startOf('minute')
-        .fromNow()} (${moment(timestamp * 1000).format('YYYY-MM-DD HH:mm')})`
+        .fromNow()
+
+      return {
+        remain: timeMsg,
+        timestamp: moment(timestamp * 1000).format('YYYY-MM-DD HH:mm')
+      }
     }
+
+    return { remain: '', timestamp }
   }
 
   displayHistory(tx: TxHistory) {
@@ -229,22 +255,17 @@ export default class TransactionHistory extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.tx-history {
-  width: inherit;
+.tr-tabs {
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
-.tx-history-head {
-  background: transparent linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
-    padding-box;
-
-  span {
-    font-size: 16px;
-  }
-
-  .head-icon {
-    font-size: 20px;
-    margin-right: 8px;
-  }
+.tr-tabs-item {
+  background: #222738;
+  color: white;
+  padding: 0.5rem 0.2rem;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .tx-item {
@@ -316,6 +337,55 @@ export default class TransactionHistory extends Vue {
   }
 }
 
+.history-items {
+  margin: 6px 12px 12px;
+  padding: 3px;
+  background: #363a4a7e;
+  border-radius: 5px;
+  // justify-content: space-between;
+  align-items: center;
+  color: white;
+  margin-bottom: 0.5rem;
+
+  .row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
+
+  .token {
+    display: flex;
+    align-items: center;
+    img {
+      width: 28px;
+      margin-right: 0.5rem;
+    }
+
+    span {
+      text-transform: uppercase;
+    }
+  }
+
+  .time {
+    text-align: center;
+
+    .remain {
+      margin-bottom: -6px;
+    }
+  }
+
+  .timestamp {
+    opacity: 0.5;
+  }
+
+  .value {
+    text-align: right;
+  }
+}
+
+.history-items:nth-last-child(1) {
+  margin-bottom: 0;
+}
+
 @media (max-width: 425px) {
   .tx-icon {
     display: none;
@@ -323,13 +393,38 @@ export default class TransactionHistory extends Vue {
   .tx-type {
     font-size: small;
   }
+
+  .token {
+    font-size: small;
+    img {
+      width: 24px !important;
+    }
+  }
+
+  .time-col {
+    display: none;
+  }
+
+  .value-col {
+    text-align: right;
+    font-size: small;
+
+    .value {
+      margin-bottom: -6px;
+    }
+  }
 }
 </style>
 
 <style lang="scss">
-.tx-history {
-  .v-card__text {
-    padding: 0 !important;
+.tr-tabs {
+  .v-tabs-items {
+    background: #222738;
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+  }
+  .v-tabs-slider {
+    background-color: #c074f9;
   }
 }
 </style>

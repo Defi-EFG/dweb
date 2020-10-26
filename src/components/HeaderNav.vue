@@ -3,7 +3,7 @@
     <v-app-bar class="efg-header" flat dark>
       <div class="home" @click="gotoHome">
         <img src="@/assets/efg_logo.svg" class="efg-logo" />
-        <v-toolbar-title>ECOC Finance Governance</v-toolbar-title>
+        <v-toolbar-title class="header-title">ECOC Finance Governance</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
       <template v-if="!addr">
@@ -48,7 +48,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import UnlockWallet from './modals/unlock-wallet.vue'
-import PrivateKey from './modals/primary-key-modal.vue'
+import PrivateKey from './modals/private-key-modal.vue'
 
 @Component({
   components: {
@@ -66,38 +66,33 @@ export default class HeaderNav extends Vue {
     return this.walletStore.address
   }
   checkPrivatekeyDialog() {
-    console.log('primary key')
     this.accessPrivateKey = !this.accessPrivateKey
-    console.log(this.accessPrivateKey)
   }
   closeUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
-
   openUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
-
   openprivatekeyDialog() {
-    this.accessPrivateKey = !this.accessPrivateKey 
-      
-
+    this.accessPrivateKey = !this.accessPrivateKey
   }
   logout() {
     this.walletStore.logout()
   }
+  onClose() {
+    console.log('onclose')
+  }
   gotoHome() {
     this.$router.push('/')
   }
+
   truncateAddress(addr: string) {
     const separator = '...'
     const charsToShow = 8
     const frontChars = Math.ceil(charsToShow / 2)
     const backChars = Math.floor(charsToShow / 2)
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
-  }
-  PrivateKey() {
-    console.log('privateModal')
   }
 }
 </script>
@@ -157,7 +152,6 @@ export default class HeaderNav extends Vue {
   height: auto;
   padding: 7px 10px;
   background-color: #2a3047 !important;
-  margin-bottom: 10px;
 
   .dot-circle {
     height: 12px;
@@ -165,6 +159,12 @@ export default class HeaderNav extends Vue {
     background-color: #c074f9;
     border-radius: 50%;
     margin-right: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-title {
+    display: none;
   }
 }
 </style>
