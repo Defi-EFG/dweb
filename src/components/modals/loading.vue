@@ -9,16 +9,18 @@
             :width="9"
             indeterminate
           ></v-progress-circular>
-          <p>Generating keystore file...</p>
+          <p>{{ msg }}</p>
         </div>
       </v-card-content>
     </v-dialog>
   </div>
 </template>
-<script>
-import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
+<script lang="ts">
+import { Component, Vue, Prop } from 'vue-property-decorator'
 @Component({})
-export default class Loading extends Vue {}
+export default class Loading extends Vue {
+  @Prop({ default: 'Generating keystore file...' }) msg!: string
+}
 </script>
 <style scoped>
 .generate-keydtore {

@@ -139,10 +139,9 @@ import { Currency } from '@/types/currency'
 import WalletModule from '@/store/wallet'
 import * as Ecoc from '@/services/wallet'
 import { DEFAULT } from '@/services/contract'
-import GasSetting from './gas-setting-modal.vue'
 
 @Component({
-  components: { GasSetting }
+  components: {}
 })
 export default class TransactionComfirmationModal extends Vue {
   @Prop({ default: {} }) currency!: Currency
