@@ -1,6 +1,6 @@
 <template>
   <div class="send-transaction">
-    <v-dialog v-model="show" max-width="400">
+    <v-dialog v-model="visible" max-width="400">
       <v-card class="">
         <v-card-title class="headline modal-header" id="headmodel">
           <div class="headtext">Edit contact</div>
@@ -24,19 +24,16 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch, PropSync } from 'vue-property-decorator'
 import GasSetting from './gas-setting-modal.vue'
 @Component({
   components: {}
 })
 export default class Editcontactdialog extends Vue {
-  editcontactdialog = false
-  @Prop() visible!: boolean
-  get show() {
-    return this.visible
-  }
+  @PropSync('showDialog', { type: Boolean }) visible!: boolean
   onClose() {
     this.$emit('onClose')
+    this.$emit('update:showDialog', false)
   }
   onSuccess() {
     this.$emit('onSuccess')

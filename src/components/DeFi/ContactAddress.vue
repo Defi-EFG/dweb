@@ -34,16 +34,19 @@
     </v-list>
     <Addcontact
       :visible="addcontactdialog"
+      :showDialog.sync="addcontactdialog"
       @onSuccessAdd="addcontactdialog"
       @onClose="closeAddcontact"
     />
     <Editcontact
       :visible="editcontactdialog"
+      :showDialog.sync="editcontactdialog"
       @onSuccess="editcontactdialog"
       @onClose="closeEditcontact"
     />
     <Deletecontact
       :visible="deletecontactdialog"
+      :showDialog.sync="deletecontactdialog"
       @onSuccess="deletecontactdialog"
       @onClose="closeDeletecontact"
     />

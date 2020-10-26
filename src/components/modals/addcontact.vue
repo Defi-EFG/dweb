@@ -1,11 +1,11 @@
 <template>
   <div class="send-transaction">
-    <v-dialog v-model="show" max-width="400">
+    <v-dialog v-model="visible" max-width="400">
       <v-card class="">
         <v-card-title class="headline modal-header" id="headmodel">
           <div class="headtext">Add contact</div>
           <v-icon></v-icon>
-          <v-btn text @click="onClose()"><v-icon color="white">$close</v-icon></v-btn>
+          <v-btn  @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
         </v-card-title>
         <div class="transaction-confirmation-wrapper ">
           <div class="transaction-confirmation-content" id="soloadd">
@@ -24,18 +24,16 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch ,PropSync } from 'vue-property-decorator'
 import GasSetting from './gas-setting-modal.vue'
 @Component({
   components: {}
 })
 export default class Addcontact extends Vue {
-  @Prop() visible!: boolean
-  get show() {
-    return this.visible
-  }
+  @PropSync('showDialog', { type: Boolean }) visible!: boolean
   onClose() {
     this.$emit('onClose')
+    this.$emit('update:showDialog', false)
   }
   onSuccessAdd() {
     this.$emit('onSuccess')
