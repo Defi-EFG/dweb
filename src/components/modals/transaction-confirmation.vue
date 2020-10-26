@@ -1,72 +1,134 @@
 <template>
-  <v-dialog v-model="sendialog" max-width="400" class="send-transaction">
-    <v-card class="blur-card" color="#FFFFFF00">
-      <v-card-title class="modal-header">
-        <v-icon></v-icon>
-        <v-btn text><v-icon color="white" @click="onClose">$close</v-icon></v-btn>
-      </v-card-title>
-      <div class="transaction-confirmation-wrapper ">
-        <div class="d-flex ">
-          <div class="transaction-sender text-truncate">{{ walletAddress }}</div>
-          <div class="transaction-receiver text-truncate">{{ addressFilter(toAddr) }}</div>
-          <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
+  <div>
+    <v-dialog v-model="sendialog" max-width="400" class="send-transaction">
+      <v-card class="blur-card" color="#FFFFFF00">
+        <v-card-title class="modal-header">
+          <v-icon></v-icon>
+          <v-btn @click="sendialog = false" text><v-icon color="white">$close</v-icon></v-btn>
+        </v-card-title>
+        <div class="transaction-confirmation-wrapper ">
+          <div class="d-flex ">
+            <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
+            <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
+            <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
+          </div>
+          <div class="transaction-confirmation-content">
+            <h3><strong>Transaction Confirm</strong></h3>
+            <small>Please confirm the transaction</small>
+            <div class="transaction-confirmation-content-detail">
+              <div class="send-detail border-bottom">
+                <span class="gt">Send to</span>
+                <div class="d-flex justify-end">
+                  <p class="address">{{ toAddr }}</p>
+                </div>
+              </div>
+              <div class="detail border-bottom">
+                <span class="gt">Amount</span>
+                <div class="d-flex justify-end">
+                  <p></p>
+                  <!-- number -->
+                  <p class="ml-2">ECOC</p>
+                </div>
+              </div>
+            </div>
+
+            <div class="detail border-bottom ">
+              <span class="gt">Gas Fee</span>
+              <div class="text-end">
+                <div class="d-flex justify-end">
+                  <p></p>
+                  <!-- number -->
+                  <p class="ml-2">ECOC</p>
+                </div>
+                <v-btn @click="gasSetting()" small text color="primary">
+                  <span class="gassetting">gas setting</span>
+                </v-btn>
+              </div>
+            </div>
+            <v-form class="pt-4">
+              <v-text-field
+                label="KeyStore Password"
+                v-model="password"
+                type="password"
+                dense
+                filled
+              ></v-text-field
+            ></v-form>
+            <div class="action-transaction-confirmation">
+              <v-btn
+                @click="sendialog = false"
+                outlined
+                large
+                color="primary"
+                class="text-capitalize"
+                >Cancel</v-btn
+              >
+              <v-btn large depressed color="primary" class="text-capitalize">Confirm</v-btn>
+            </div>
+          </div>
         </div>
-        <div class="transaction-confirmation-content">
-          <!-- <GasSetting ></GasSetting> -->
-          <h3><strong>Transaction Confirm</strong></h3>
-          <small>Please confirm the transaction</small>
-          <div class="transaction-confirmation-content-detail">
-            <div class="send-detail border-bottom">
-              <span class="gt">Send to</span>
-              <div class="d-flex justify-end">
-                <p class="address">{{ toAddr }}</p>
-              </div>
-            </div>
-            <div class="detail border-bottom">
-              <span class="gt">Amount</span>
-              <div class="d-flex justify-end">
-                <p>{{ amount }}</p>
-                <p class="ml-2">{{ selectedCurrencyName }}</p>
-              </div>
-            </div>
+      </v-card>
+    </v-dialog>
+
+    <v-dialog v-model="gassetting" max-width="370" class="content-gas-setting">
+      <v-card>
+        <div class="d-flex justify-lg-space-between pt-3 ">
+          <v-icon></v-icon>
+          <v-btn text @click="gassetting = false"><v-icon>$close</v-icon></v-btn>
+        </div>
+        <div class="content-gas-setting">
+          <h3>Gas Customization</h3>
+          <small>Increase the processing time of your transaction by using higher gas fee</small>
+          <div class="gas-customization">
+            <v-btn-toggle tile group>
+              <v-btn>
+                <div class="gas-custom-btn-group">
+                  <p>Slow</p>
+                  <p>-20 min</p>
+                  <p>1.00 ECOC</p>
+                </div>
+              </v-btn>
+              <v-btn>
+                <div class="gas-custom-btn-group">
+                  <p>Average</p>
+                  <p>-20 min</p>
+                  <p>1.00 ECOC</p>
+                </div></v-btn
+              >
+              <v-btn>
+                <div class="gas-custom-btn-group">
+                  <p>Fast</p>
+                  <p>-20min</p>
+                  <p>1.00 ECOC</p>
+                </div></v-btn
+              >
+            </v-btn-toggle>
+          </div>
+          <div class="inputnumber d-flex justify-space-between">
+            <v-col cols="6" class="pb-0">
+              <label for="Gas price:">Gas price:</label
+              ><v-text-field type="number" v-model="gasPrice"></v-text-field>
+            </v-col>
+            <v-col cols="6" class="pb-0">
+              <label for="Gas limit:">Gas limit:</label
+              ><v-text-field type="number" v-model="gasLimit"></v-text-field>
+            </v-col>
           </div>
 
-          <div class="detail border-bottom ">
-            <span class="gt">Fee</span>
+          <div class="d-flex justify-space-between py-2">
+            <p>New Transaction Fee:</p>
             <div class="text-end">
-              <div class="d-flex justify-end">
-                <p>{{ fee }}</p>
-                <p class="ml-2">ECOC</p>
-              </div>
-              <v-btn small text color="primary">
-                <span class="gassetting">fee setting</span>
-              </v-btn>
+              <p class="mb-0">3.00 ECOC</p>
+              <small>-20 sec</small>
             </div>
           </div>
-          <v-form class="pt-4">
-            <v-text-field
-              label="KeyStore Password"
-              v-model="password"
-              type="password"
-              dense
-              filled
-            ></v-text-field
-          ></v-form>
-          <div class="error" v-if="errorMsg">
-            <p class="error">{{ errorMsg }}</p>
-          </div>
-          <div class="action-transaction-confirmation">
-            <v-btn outlined large color="primary" class="text-capitalize" @click="onClose"
-              >Cancel</v-btn
-            >
-            <v-btn large depressed color="primary" class="text-capitalize" @click="onConfirm"
-              >Confirm</v-btn
-            >
+          <div class="save-button ">
+            <v-btn color="primary" depressed block>save</v-btn>
           </div>
         </div>
-      </div>
-    </v-card>
-  </v-dialog>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 
 <script lang="ts">
@@ -94,6 +156,7 @@ export default class TransactionComfirmationModal extends Vue {
   stakingContractAddress = 'b0b56e3d1b82be8f309dccff96b27e521b785b49'
 
   sendialog = false
+  gassetting = false
   errorMsg = ''
   password = ''
 
@@ -101,9 +164,28 @@ export default class TransactionComfirmationModal extends Vue {
   gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
 
+  get addr() {
+    return this.walletStore.address
+  }
+
   @Watch('visible')
-  show() {
+  checkSendModalActive() {
     this.sendialog = this.visible
+    if (this.sendialog !== true) {
+      this.sendialog = true
+    }
+  }
+
+  gasSetting() {
+    this.gassetting = true
+  }
+
+  truncateAddress(addr: string) {
+    const separator = '...'
+    const charsToShow = 8
+    const frontChars = Math.ceil(charsToShow / 2)
+    const backChars = Math.floor(charsToShow / 2)
+    return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
   }
 
   get ecoc() {
@@ -177,6 +259,9 @@ export default class TransactionComfirmationModal extends Vue {
 }
 </style>
 <style lang="scss" scoped>
+.content-gas-setting {
+  padding: 0px 25px 20px;
+}
 .icon-send {
   display: flex;
   align-items: center;
@@ -274,9 +359,63 @@ export default class TransactionComfirmationModal extends Vue {
   text-decoration: underline;
   height: auto;
 }
-
 .gassetting {
   letter-spacing: 0px;
   font-size: 10px;
+}
+</style>
+<style lang="scss">
+.gas-customization .v-btn-toggle:not(.v-btn-toggle--dense) .v-btn.v-btn.v-size--default {
+  height: 75px !important;
+  border-radius: 5px !important;
+  box-shadow: 0px 3px 6px #00000029;
+  border: transparent;
+  width: 106px;
+  margin: 0;
+  margin-right: 8px;
+  letter-spacing: 0px;
+  font-size: 0.8em;
+}
+.gas-customization {
+  padding: 20px 0px;
+  border-bottom: 1px solid rgba(177, 169, 170, 0.466);
+}
+.gas-custom-btn-group {
+  display: flex;
+  flex-direction: column;
+  text-align: end;
+  text-transform: capitalize;
+}
+
+.gas-custom-btn-group p {
+  margin: 0px;
+  color: black;
+}
+.gas-custom-btn-group p:nth-of-type(1) {
+  font-size: 12px;
+  font-weight: 800;
+}
+.gas-customization .v-btn--active {
+  background-color: transparent !important;
+  background-color: white;
+  background: transparent linear-gradient(180deg, #d2bae2 0%, #f9ecff 100%);
+}
+.inputnumber {
+  border-bottom: 1px solid rgba(177, 169, 170, 0.466);
+}
+
+.inputnumber .v-text-field__slot {
+  background-color: rgba(218, 218, 218, 0.288);
+  border-radius: 5px;
+  padding-left: 0px 0px 0px 8px;
+}
+.inputnumber .v-text-field {
+  padding-top: 0px;
+}
+
+.inputnumber input[type='number']::-webkit-inner-spin-button,
+.inputnumber input[type='number']::-webkit-outer-spin-button {
+  opacity: 1;
+  padding: 15px 3px;
 }
 </style>

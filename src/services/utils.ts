@@ -22,3 +22,14 @@ export const getEstimatedValue = (amount: number | string, price: number | strin
   if (!price) return 0
   return new BigNumber(amount).multipliedBy(new BigNumber(price)).toFixed(6)
 }
+
+export const copyToClipboard = (text: string) => {
+  navigator.clipboard.writeText(text).then(
+    function() {
+      /* clipboard successfully set */
+    },
+    function() {
+      console.error('Copy failed')
+    }
+  )
+}

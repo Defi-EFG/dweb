@@ -48,7 +48,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import UnlockWallet from './modals/unlock-wallet.vue'
-import PrivateKey from './modals/primary-key-modal.vue'
+import PrivateKey from './modals/private-key-modal.vue'
 
 @Component({
   components: {
@@ -66,41 +66,38 @@ export default class HeaderNav extends Vue {
     return this.walletStore.address
   }
   checkPrivatekeyDialog() {
-    console.log('primary key')
     this.accessPrivateKey = !this.accessPrivateKey
-    console.log(this.accessPrivateKey)
   }
   closeUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
-
   openUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
-
   openprivatekeyDialog() {
     this.accessPrivateKey = !this.accessPrivateKey
   }
 
   onClosePrivateKey() {
-    return this.accessPrivateKey = false
+    this.accessPrivateKey = false
   }
 
   logout() {
     this.walletStore.logout()
   }
+  onClose() {
+    console.log('onclose')
+  }
   gotoHome() {
     this.$router.push('/')
   }
+
   truncateAddress(addr: string) {
     const separator = '...'
     const charsToShow = 8
     const frontChars = Math.ceil(charsToShow / 2)
     const backChars = Math.floor(charsToShow / 2)
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
-  }
-  PrivateKey() {
-    console.log('privateModal')
   }
 }
 </script>

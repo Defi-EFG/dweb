@@ -7,7 +7,6 @@
             :rotate="360"
             :size="120"
             :width="9"
-            color="primary"
             indeterminate
           ></v-progress-circular>
           <p>Generating keystore file...</p>
@@ -19,11 +18,7 @@
 <script>
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 @Component({})
-export default class Loading extends Vue {
-  onLoading() {
-    this.$emit('onLoading')
-  }
-}
+export default class Loading extends Vue {}
 </script>
 <style scoped>
 .generate-keydtore {

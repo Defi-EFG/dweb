@@ -248,7 +248,7 @@ export default class LendingActivity extends Vue {
     .supply-header {
       font-size: small;
     }
-    
+
     .supply-item {
       font-size: small;
     }
@@ -265,7 +265,7 @@ export default class LendingActivity extends Vue {
   }
 
   .my-activity {
-    .activity-type{
+    .activity-type {
       font-size: small;
     }
   }
