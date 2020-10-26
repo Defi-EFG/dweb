@@ -5,6 +5,7 @@ import { StakingPlatform } from '@/types/staking'
 import { staking as stakingContract } from '@/services/staking'
 import * as Ecoc from '@/services/wallet'
 import * as constants from '@/constants'
+import * as utils from '@/services/utils'
 import { stakingCurrency, rewardCurrency } from '@/store/common'
 
 const rewardHistory = [
@@ -57,13 +58,14 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   @MutationAction
   async updateMintingInfo(address: string) {
     const available = await stakingContract.unclaimedGPT()
+    const decimals = 4
     const { stakingAmount, timestamp, unclaimedReward } = await stakingContract.mintingInfo(address)
 
     return {
       staking: stakingAmount,
       timestamp: timestamp,
       totalStakedReward: unclaimedReward,
-      available: available,
+      available: utils.toDecimals(available, decimals).toNumber(),
       lastUpdate: new Date().getTime()
     }
   }

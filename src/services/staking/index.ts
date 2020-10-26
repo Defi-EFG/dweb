@@ -4,7 +4,7 @@ import { WalletParams } from '@/services/ecoc/types'
 import stakingAbi from './abi.json'
 
 const stakingContract = {
-  address: 'b0b56e3d1b82be8f309dccff96b27e521b785b49',
+  address: '4256b4716da534dda16de01b963130c94244b845',
   abi: stakingAbi
 } as Contract
 
