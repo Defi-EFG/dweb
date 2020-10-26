@@ -106,8 +106,10 @@
             </v-card-title>
             <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin">
               <div class="d-flex ">
-                <div class="transaction-sender">{{ truncateAddress(walletAddres) }}</div>
-                <div class="transaction-receiver curser" @click="doCopy(toAddr)">
+                <div class="transaction-sender curser" @click="doCopy(walletAddres)">
+                  {{ truncateAddress(walletAddres) }}
+                </div>
+                <div class="transaction-receiver curser" @click="doCopy(walletToAddr)">
                   Lending Platform
                 </div>
                 <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
@@ -125,13 +127,13 @@
                           <p class="ml-2">ECOC</p>
                         </div>
                       </div>
-                    </div>
-                    <div class="detail">
-                      <span class="gt">Gas Fee</span>
-                      <div class="text-end">
-                        <div class="d-flex justify-end">
-                          <p>2.00</p>
-                          <p class="ml-2">ECOC</p>
+                      <div class="detail">
+                        <span class="gt">Gas Fee</span>
+                        <div class="text-end">
+                          <div class="d-flex justify-end">
+                            <p>{{ fee }}</p>
+                            <p class="ml-2">ECOC</p>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -140,13 +142,21 @@
                     <span class="gt"></span>
                     <div class="text-end gt">
                       <v-btn small text color="primary">
-                        <span class="gassetting">gas setting</span>
+                        <span class="gassetting">GAS SETTING</span>
                       </v-btn>
                     </div>
                   </div>
                   <div class="border-bottom"></div>
                   <v-form class="pt-4">
-                    <v-text-field label="KeyStore Password" dense filled></v-text-field
+                    <v-text-field
+                      v-model="password"
+                      label="Keystore Password"
+                      dense
+                      filled
+                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                      :type="show1 ? 'text' : 'password'"
+                      @click:append="show1 = !show1"
+                    ></v-text-field
                   ></v-form>
                   <div class="action-transaction-confirmation">
                     <v-btn outlined large color="primary" class="text-capitalize1">Cancel</v-btn>
@@ -271,11 +281,16 @@ export default class Collmodeldiposit extends Vue {
   fee = DEFAULT.DEFAULT_FEE
   gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
+  show1 = false
+  password = ''
 
   @Prop() visible!: boolean
   @Prop() amount!: number
   @Prop() toAddr!: string
 
+  get walletToAddr() {
+    return this.toAddr
+  }
   get walletAddres() {
     return this.walletStore.address
   }
@@ -381,6 +396,9 @@ export default class Collmodeldiposit extends Vue {
 .theme--light.v-stepper {
   background: #ffffff00 !important;
   padding-bottom: 40px;
+}
+small {
+  font-size: 14px;
 }
 .blur-card {
   background-color: transparent;
@@ -528,6 +546,7 @@ export default class Collmodeldiposit extends Vue {
   background-color: #f0f0f0;
   padding: 5px 10px 3px 10px;
   border-radius: 3px;
+  margin-top: 5px;
 }
 .transaction-confirmation-wrapper {
   margin: 16px 16px 0 16px;
@@ -624,6 +643,7 @@ h2 {
 .gassetting {
   letter-spacing: 0px;
   font-size: 10px;
+  padding: 4px;
 }
 .content-wrapper {
   text-align: center;
