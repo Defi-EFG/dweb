@@ -152,23 +152,11 @@
                       label="Your keystore text..."
                       outlined
                       v-model="keystore"
-                      req
+                      required
+                      :rules="[rules.required, rules.jsonformat]"
                     ></v-textarea>
                     <text-reader @load="keystore = $event"></text-reader>
-                    <div class="action-wrapper">
-                      <v-btn
-                        large
-                        v-if="upload || keystore.length > 6"
-                        @click="confirmKeystore"
-                        class="mb-5"
-                        color="primary"
-                      >
-                        <h4 class="text-capitalize font-weight-light">Next</h4>
-                      </v-btn>
-                      <v-btn v-else large class="mb-5" color="primary" disabled>
-                        <h4 class="text-capitalize font-weight-light">Next</h4>
-                      </v-btn>
-                    </div>
+                    <div class="action-wrapper"></div>
                   </div>
                 </template>
               </div>
@@ -244,12 +232,20 @@ export default class UnlockwalletModal extends Vue {
   show = false
   step = 1
   unlockwalletModal = this.visible
+
   rules = {
     required: (value: any) => {
       return !!value || 'Required.'
     },
     min: (v: any) => {
       return v.length >= 6 || 'Min 6 characters'
+    },
+    jsonformat: (jsonformat: any) => {
+      const obj = JSON.parse(jsonformat)
+      // const version = obj.version
+      const isVersionIncluded = Object.prototype.hasOwnProperty.call(obj, "version")
+
+      return 
     }
   }
 
@@ -261,9 +257,6 @@ export default class UnlockwalletModal extends Vue {
     this.step = 1
     this.$emit('onClose')
   }
-  // onCreatewallet() {
-  //   this.$emit('onCreatewallet')
-  // }
   onCloseX() {
     this.onClose()
   }
@@ -272,13 +265,10 @@ export default class UnlockwalletModal extends Vue {
     const password = this.createWalletPassword
     this.walletStore.createNewWallet(password).then(keystore => {
       this.createWalletKeystore = keystore
-
       if (password.length < 6) {
-        console.log('<6')
         this.step = 2
       } else if (password != this.confirmPassword) {
         this.step = 2
-        console.log('mismatch')
       } else {
         this.step = 3
       }
@@ -298,7 +288,12 @@ export default class UnlockwalletModal extends Vue {
   }
 
   confirmKeystore() {
-    this.step = 5
+    const obj = JSON.parse(this.keystore)
+    if ('version' in obj && 'content' in obj && 'crypto' in obj) {
+      console.log('pass')
+    } else {
+      console.log('0')
+    }
   }
 
   onUnlockWallet() {
