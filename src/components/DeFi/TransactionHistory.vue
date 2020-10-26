@@ -13,7 +13,7 @@
           v-for="(tx, index) in exampleHistory"
           :key="index"
           class="tx-item"
-          @click="displayHistory"
+          @click="displayHistory(tx)"
         >
           <v-icon class="tx-icon">
             {{
@@ -39,6 +39,7 @@
         </v-list-item>
       </v-list>
     </v-card-text>
+    <TransactionDetailModal :showDialog.sync="showTxModal" :tx="sentTx"></TransactionDetailModal>
   </v-card>
 </template>
 
@@ -48,15 +49,22 @@ import BigNumber from 'bignumber.js'
 import moment from 'moment'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
-import { TxValueIn, TxValueOut } from '@/types/transaction'
+import { TxValueIn, TxValueOut, TxHistory } from '@/types/transaction'
 import * as constants from '@/constants'
+import TransactionDetailModal from '@/components/modals/TransactionDetailModal.vue'
 
-@Component({})
+@Component({
+  components: {
+    TransactionDetailModal
+  }
+})
 export default class TransactionHistory extends Vue {
   @Prop() page!: string
 
   walletStore = getModule(WalletModule)
   defiAddr = '0x91A31A1C5197DD101e91B0747B02560f41E2f532'
+  showTxModal = false
+  sentTx: TxHistory = {} as TxHistory
 
   get address() {
     return this.walletStore.address
@@ -65,61 +73,81 @@ export default class TransactionHistory extends Vue {
   get exampleHistory() {
     return [
       {
-        type: 'received',
+        id: '0xd05c5d8e0d553213411593bb171fb238a2504e442c3824b3a79c25551197492f',
+        type: 'Received',
         subtype: 'withdraw',
         address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
         value: 10,
         currency: 'ECOC',
-        time: '1603190771752'
-      },
+        time: new Date().getTime(),
+        confirmations: 1,
+        status: 'Completed'
+      } as TxHistory,
       {
-        type: 'sent',
+        id: '0xd05c5d8e0d553213411593bb171fb238a2504e442c3824b3a79c25551197492f',
+        type: 'Sent',
         subtype: 'repay',
         address: '0x91A31A1C5197DD101e91B0747B02560f41E2f532',
         value: 891.14,
         currency: 'ECOC',
-        time: '1603190771752'
-      },
+        time: new Date().getTime(),
+        confirmations: 0,
+        status: 'Pending'
+      } as TxHistory,
       {
-        type: 'received',
+        type: 'Received',
         subtype: 'borrow',
         address: '0x91A31A1C5197DD101e91B0747B02560f41E2f532',
         value: 100,
         currency: 'ECOC',
-        time: '1603190771752'
-      },
+        time: new Date().getTime(),
+        confirmations: 0,
+        status: 'Rejected'
+      } as TxHistory,
       {
-        type: 'sent',
+        id: '0xd05c5d8e0d553213411593bb171fb238a2504e442c3824b3a79c25551197492f',
+        type: 'Sent',
         subtype: 'deposit',
         address: '0x91A31A1C5197DD101e91B0747B02560f41E2f532',
         value: 50,
         currency: 'ECOC',
-        time: '1603190771752'
-      },
+        time: new Date().getTime(),
+        confirmations: 1,
+        status: 'Completed'
+      } as TxHistory,
       {
-        type: 'sent',
+        id: '0xd05c5d8e0d553213411593bb171fb238a2504e442c3824b3a79c25551197492f',
+        type: 'Sent',
         subtype: '',
         address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
         value: 50,
         currency: 'ECOC',
-        time: '1603190771752'
-      },
+        time: new Date().getTime(),
+        confirmations: 1,
+        status: 'Completed'
+      } as TxHistory,
       {
-        type: 'received',
+        id: '0xd05c5d8e0d553213411593bb171fb238a2504e442c3824b3a79c25551197492f',
+        type: 'Received',
         subtype: '',
         address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
         value: 100,
         currency: 'ECOC',
-        time: '1603190771752'
-      },
+        time: new Date().getTime(),
+        confirmations: 0,
+        status: 'Pending'
+      } as TxHistory,
       {
-        type: 'sent',
+        id: '0xd05c5d8e0d553213411593bb171fb238a2504e442c3824b3a79c25551197492f',
+        type: 'Sent',
         subtype: 'borrow',
         address: '0x041725E91C771C05Dd3b650600CbAf2Dd5D2158E',
         value: 100,
         currency: 'ECOC',
-        time: '1603190771752'
-      }
+        time: new Date().getTime(),
+        confirmations: 0,
+        status: 'Pending'
+      } as TxHistory
     ]
   }
 
@@ -136,13 +164,15 @@ export default class TransactionHistory extends Vue {
       const type = new BigNumber(value).lt(0) ? constants.TYPE_SENT : constants.TYPE_RECEIVED
 
       return {
+        id: '',
         type: type,
         subtype: '',
         address: '',
         value: value,
         currency: currency,
-        time: this.getTime(txs.time)
-      }
+        time: this.getTime(txs.time),
+        confirmations: 0
+      } as TxHistory
     })
   }
 
@@ -182,8 +212,9 @@ export default class TransactionHistory extends Vue {
     }
   }
 
-  displayHistory() {
-    console.log('clicked')
+  displayHistory(tx: TxHistory) {
+    this.showTxModal = !this.showTxModal
+    this.sentTx = tx
   }
 
   truncateAddress(addr: string) {
@@ -293,7 +324,6 @@ export default class TransactionHistory extends Vue {
     font-size: small;
   }
 }
-
 </style>
 
 <style lang="scss">
