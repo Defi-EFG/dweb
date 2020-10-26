@@ -149,7 +149,7 @@ export default class StakedReward extends Vue {
       padding-top: 0.5rem;
     }
   }
-  
+
   .staked-amount,
   .minimum-w,
   .d-amount {

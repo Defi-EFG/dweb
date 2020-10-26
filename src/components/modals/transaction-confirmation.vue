@@ -9,7 +9,7 @@
         <div class="transaction-confirmation-wrapper ">
           <div class="d-flex ">
             <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
-            <div class="transaction-receiver">receiver</div>
+            <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
@@ -19,7 +19,7 @@
               <div class="send-detail border-bottom">
                 <span class="gt">Send to</span>
                 <div class="d-flex justify-end">
-                  <p class="address">receiver</p>
+                  <p class="address">{{ toAddr }}</p>
                 </div>
               </div>
               <div class="detail border-bottom">
@@ -46,7 +46,13 @@
               </div>
             </div>
             <v-form class="pt-4">
-              <v-text-field label="KeyStore Password" dense filled></v-text-field
+              <v-text-field
+                label="KeyStore Password"
+                v-model="password"
+                type="password"
+                dense
+                filled
+              ></v-text-field
             ></v-form>
             <div class="action-transaction-confirmation">
               <v-btn
@@ -100,10 +106,12 @@
           </div>
           <div class="inputnumber d-flex justify-space-between">
             <v-col cols="6" class="pb-0">
-              <label for="Gas price:">Gas price:</label><v-text-field   type="number" v-model="gasPrice"></v-text-field>
+              <label for="Gas price:">Gas price:</label
+              ><v-text-field type="number" v-model="gasPrice"></v-text-field>
             </v-col>
             <v-col cols="6" class="pb-0">
-              <label for="Gas limit:">Gas limit:</label><v-text-field  type="number" v-model="gasLimit"></v-text-field>
+              <label for="Gas limit:">Gas limit:</label
+              ><v-text-field type="number" v-model="gasLimit"></v-text-field>
             </v-col>
           </div>
 
@@ -122,20 +130,38 @@
     </v-dialog>
   </div>
 </template>
+
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import { WalletParams } from '@/services/ecoc/types'
+import { Currency } from '@/types/currency'
 import WalletModule from '@/store/wallet'
+import * as Ecoc from '@/services/wallet'
+import { DEFAULT } from '@/services/contract'
+
 @Component({
   components: {}
 })
 export default class TransactionComfirmationModal extends Vue {
+  @Prop({ default: {} }) currency!: Currency
+  @Prop({ default: false }) visible!: boolean
+  @Prop() toAddr!: string
+  @Prop() amount!: string
+
   walletStore = getModule(WalletModule)
-  gassetting = false
+
+  lendingContractAddress = '85635434f6c52f3aaecb8f9c5763223bc07875c7'
+  stakingContractAddress = 'b0b56e3d1b82be8f309dccff96b27e521b785b49'
+
   sendialog = false
-  gasPrice:any = ''
-  gasLimit:any = ''
-  @Prop() visible!: boolean
+  gassetting = false
+  errorMsg = ''
+  password = ''
+
+  fee = DEFAULT.DEFAULT_FEE
+  gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
+  gasPrice = DEFAULT.DEFAULT_GAS_PRICE
 
   get addr() {
     return this.walletStore.address
@@ -148,15 +174,66 @@ export default class TransactionComfirmationModal extends Vue {
       this.sendialog = true
     }
   }
+
   gasSetting() {
     this.gassetting = true
   }
+
   truncateAddress(addr: string) {
     const separator = '...'
     const charsToShow = 8
     const frontChars = Math.ceil(charsToShow / 2)
     const backChars = Math.floor(charsToShow / 2)
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
+  }
+
+  get ecoc() {
+    return this.walletStore.ecoc
+  }
+
+  get walletAddress() {
+    return this.walletStore.address
+  }
+
+  get selectedCurrencyName() {
+    return this.currency.name || ''
+  }
+
+  addressFilter(address: string) {
+    if (address == this.lendingContractAddress) return 'Lending Platform'
+    else if (address == this.stakingContractAddress) return 'Staking Platform'
+    else return address
+  }
+
+  onClose() {
+    this.password = ''
+    this.errorMsg = ''
+    this.$emit('onClose')
+  }
+
+  async onConfirm() {
+    try {
+      const password = this.password
+      const address = this.walletStore.address
+      const keystore = this.walletStore.keystore
+      const wallet = Ecoc.importFromKeystore(keystore, password)
+      const utxoList = await wallet.getUtxoList()
+
+      const walletParams = {
+        address: address,
+        keypair: wallet.keypair,
+        utxoList: utxoList,
+        fee: this.fee,
+        gasLimit: this.gasLimit,
+        gasPrice: this.gasPrice
+      } as WalletParams
+
+      this.password = ''
+      this.errorMsg = ''
+      this.$emit('onConfirm', walletParams)
+    } catch (error) {
+      this.errorMsg = error.message
+    }
   }
 }
 </script>
@@ -323,7 +400,6 @@ export default class TransactionComfirmationModal extends Vue {
   background: transparent linear-gradient(180deg, #d2bae2 0%, #f9ecff 100%);
 }
 .inputnumber {
-
   border-bottom: 1px solid rgba(177, 169, 170, 0.466);
 }
 

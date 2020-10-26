@@ -1,8 +1,7 @@
-import { Contract } from './contract'
 import { CurrencyInfo } from './currency'
 
 export interface StakingPlatform {
-  contract: Contract
+  address: string
 
   stakingCurrency: CurrencyInfo
   rewardCurrency: CurrencyInfo
@@ -14,6 +13,8 @@ export interface StakingPlatform {
   totalStakedReward: number
 
   rewardHistory: RewardHistory[]
+  lastUpdate: number
+  status: string
 }
 
 export interface RewardHistory {

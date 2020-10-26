@@ -139,22 +139,22 @@
           <v-col lg="2" md="2" cols="2">
             <div class="margintop">
               <img src="@/assets/efg_01.svg" />
-              EFG
+              {{ item.currency.name }}
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="4">
-            <div class="margintop Loener">
-              {{ item.Loener }}
+            <div class="text-truncate margintop Loener">
+              {{ item.address }}
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="3" class="border_left">
             <div class="margintop color_1 textafter">
-              <span class="color_size">${{ item.EFGTotalSupply }}</span>
+              <span class="color_size">${{ item.totalSupply }}</span>
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="3">
             <div class="margintop color_2 textafter">
-              <span class="color_size">${{ item.EFGTotalBorrowed }}</span>
+              <span class="color_size">${{ item.totalBorrowed }}</span>
             </div>
           </v-col>
           <img class="row1_img" src="@/assets/backg_01.svg" />
@@ -248,11 +248,19 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import LendingModule from '@/store/lending'
 
 @Component({})
 export default class Main extends Vue {
+  lendingStore = getModule(LendingModule)
+
   get msg() {
     return this.$t('views.mainslider')
+  }
+
+  get items() {
+    return this.lendingStore.loaners
   }
 
   active = 'EFG'
@@ -260,19 +268,6 @@ export default class Main extends Vue {
 
   liquidation = 20.0
   GPTprice = '10,000'
-
-  items = [
-    {
-      Loener: '...',
-      EFGTotalSupply: 0,
-      EFGTotalBorrowed: 0
-    },
-    {
-      Loener: '...',
-      EFGTotalSupply: 0,
-      EFGTotalBorrowed: 0
-    }
-  ]
 
   onClickActive(name: string) {
     this.active = name
@@ -282,6 +277,10 @@ export default class Main extends Vue {
   readmore(name: string) {
     this.active = name
     this.name = name
+  }
+
+  mounted() {
+    this.lendingStore.updateLoners()
   }
 }
 </script>

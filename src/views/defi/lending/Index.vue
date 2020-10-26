@@ -2,9 +2,9 @@
   <div class="lending-page">
     <v-row class="content-wrapper">
       <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-1">
-        <SupplyBalance :balance="collateralValue"></SupplyBalance>
+        <SupplyBalance :balance="collateralBalance" :loaner="loaner"></SupplyBalance>
         <div class="col-spacer"></div>
-        <BorrowBalance :balance="borrowedBalance" :maxBorrow="borrowPower"></BorrowBalance>
+        <BorrowBalance :balance="borrowedBalance" :borrowLimit="borrowLimit"></BorrowBalance>
       </v-col>
       <v-col xl="4" lg="4" md="12" sm="12" class="content-2">
         <LendingActivity></LendingActivity>
@@ -30,8 +30,8 @@
                         :currency="selectedCurrency"
                         :collateralBalance="collateralBalance"
                         :borrowBalance="borrowedBalance"
-                        :borrowPower="borrowPower"
-                        :borrowPowerPercentage="borrowPowerRate"
+                        :borrowLimit="borrowLimit"
+                        :borrowPowerPercentage="selectedCollateralFactor"
                       ></Collateral>
                     </v-card-text>
                   </v-card>
@@ -43,9 +43,9 @@
                         :currency="selectedCurrency"
                         :collateralBalance="collateralBalance"
                         :borrowBalance="borrowedBalance"
-                        :borrowPower="borrowPower"
+                        :borrowLimit="borrowLimit"
                         :interestRate="interestRate"
-                        :borrowPowerPercentage="borrowPowerRate"
+                        :borrowPowerPercentage="selectedCollateralFactor"
                       ></Borrow>
                     </v-card-text>
                   </v-card>
@@ -61,8 +61,8 @@
                         :currency="selectedCurrency"
                         :collateralBalance="collateralBalance"
                         :borrowBalance="borrowedBalance"
-                        :borrowPower="borrowPower"
-                        :borrowPowerPercentage="borrowPowerRate"
+                        :borrowLimit="borrowLimit"
+                        :borrowPowerPercentage="selectedCollateralFactor"
                       ></Withdraw>
                     </v-card-text>
                   </v-card>
@@ -74,9 +74,9 @@
                         :currency="selectedCurrency"
                         :collateralBalance="collateralBalance"
                         :borrowBalance="borrowedBalance"
-                        :borrowPower="borrowPower"
+                        :borrowLimit="borrowLimit"
                         :interestRate="interestRate"
-                        :borrowPowerPercentage="borrowPowerRate"
+                        :borrowPowerPercentage="selectedCollateralFactor"
                       ></Repay>
                     </v-card-text>
                   </v-card>
@@ -123,6 +123,7 @@ import * as constants from '@/constants'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
+import { CollateralAsset } from '@/types/lending'
 import SupplyBalance from '@/components/DeFi/SupplyBalance.vue'
 import BorrowBalance from '@/components/DeFi/BorrowBalance.vue'
 import LendingActivity from '@/components/DeFi/LendingActivity.vue'
@@ -153,34 +154,55 @@ export default class Lending extends Vue {
   lendingStore = getModule(LendingModule)
 
   mode = 'collateral'
+  selectedCollateralFactor = this.myCollateral[0].collateralFactor
   selectedCurrency = this.collateralList[0].currency
 
-  get collateralValue() {
-    return this.lendingStore.collateralBalance
+  get isLoggedIn(): boolean {
+    return this.walletStore.address != ''
   }
 
+  get loaner() {
+    return this.lendingStore.loan.loaner
+  }
+
+  get myCollateral() {
+    return this.lendingStore.myCollateralAssets
+  }
+
+  get myBorrowing() {
+    return this.lendingStore.myBorrowing
+  }
+
+  get borrowLimit() {
+    return this.myCollateral.reduce(
+      (prev, collateral) =>
+        prev +
+        collateral.amount *
+          collateral.collateralFactor *
+          this.getCurrencyPrice(collateral.currency.name),
+      0
+    )
+  }
+
+  // get all collateral Amount * it's current price
   get collateralBalance() {
-    return this.lendingStore.collateralBalance
+    return this.myCollateral.reduce(
+      (prev, collateral) =>
+        prev + collateral.amount * this.getCurrencyPrice(collateral.currency.name),
+      0
+    )
   }
 
+  // get all dept * it's current price
   get borrowedBalance() {
-    return this.lendingStore.borrowedBalance
-  }
-
-  get borrowPowerRate() {
-    return this.lendingStore.borrowPowerRate / 100
-  }
-
-  get borrowPower() {
-    return this.collateralBalance * this.borrowPowerRate
+    return this.myBorrowing.reduce(
+      (prev, borrowing) => prev + borrowing.amount * this.getCurrencyPrice(borrowing.currency.name),
+      0
+    )
   }
 
   get interestRate() {
     return this.lendingStore.loan.interestRate
-  }
-
-  get isLoggedIn(): boolean {
-    return this.walletStore.address != ''
   }
 
   get collateralsActivated() {
@@ -213,6 +235,12 @@ export default class Lending extends Vue {
       })
   }
 
+  getCurrencyPrice(currencyName: string): number {
+    const currency = this.walletStore.currencies.find(currency => currency.name === currencyName)
+    if (!currency) return 0
+    return currency.price || 0
+  }
+
   get isLargeMobileDevice() {
     return window.innerWidth < 1264
   }
@@ -225,6 +253,11 @@ export default class Lending extends Vue {
   toCollateralToken(currency: Currency) {
     this.mode = 'collateral'
     this.selectedCurrency = currency
+    const collateral = this.myCollateral.find(
+      collateral => collateral.currency.name === currency.name
+    ) as CollateralAsset
+
+    this.selectedCollateralFactor = collateral.collateralFactor || 0
   }
 
   toBorrowToken(currency: Currency) {

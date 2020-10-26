@@ -7,9 +7,8 @@ import { Currency } from '@/types/currency'
 import { TxList } from '@/types/transaction'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
-import { SendEcrc20Payload, SendEcocPayload } from '@/services/ecoc/types'
+import { lending } from '@/services/lending'
 import * as constants from '@/constants'
-import { getPrice } from '@/store/common'
 import { currencyInit } from './currency'
 
 @Module({ dynamic: true, store, namespaced: true, name: 'walletStore' })
@@ -20,13 +19,19 @@ export default class WalletModule extends VuexModule implements Wallet {
   txList = {} as TxList
   currencies = currencyInit()
   selectedCurrencyIndex = 0
-  lastUpdate = 0
+  lastUpdate = 0 //timestamp
+  lastBlock = 0
+  status = constants.STATUS_SYNCED
 
   get ecoc() {
     if (this.currencies.length < 0) return 0
 
     const currencyInfo = this.currencies.find(currency => currency.name === constants.ECOC)
     return currencyInfo?.balance
+  }
+
+  get currenciesList() {
+    return this.currencies
   }
 
   get selectedCurrency() {
@@ -46,6 +51,7 @@ export default class WalletModule extends VuexModule implements Wallet {
     this.currencies = currencyInit()
     this.selectedCurrencyIndex = 0
     this.lastUpdate = 0
+    this.lastBlock = 0
   }
 
   @Mutation
@@ -69,15 +75,23 @@ export default class WalletModule extends VuexModule implements Wallet {
   }
 
   @Mutation
+  updateStatus(status: string) {
+    this.status = status
+  }
+
+  // update everything except price
+  @Mutation
   updateCurrencyInfo(currencyData: Currency) {
     const currencyIndex = this.currencies.findIndex(currency => currency.name === currencyData.name)
     if (currencyIndex < 0) {
       this.currencies.push(currencyData)
     } else {
+      currencyData.price = this.currencies[currencyIndex].price
       this.currencies.splice(currencyIndex, 1, currencyData)
     }
   }
 
+  //for update price
   @Mutation
   updateCurrencyByIndex(payload: { currencyIndex: number; currencyData: Currency }) {
     if (payload.currencyIndex >= 0) {
@@ -88,6 +102,12 @@ export default class WalletModule extends VuexModule implements Wallet {
   @Mutation
   updateTransactions(txs: TxList) {
     this.txList = txs
+  }
+
+  @Action
+  synced() {
+    this.context.commit('updateStatus', constants.STATUS_SYNCED)
+    return constants.STATUS_SYNCED
   }
 
   @Action
@@ -137,39 +157,49 @@ export default class WalletModule extends VuexModule implements Wallet {
     return true
   }
 
-  @Action
+  @Action({ rawError: true })
   async send(payload: SendPayload) {
-    const currency = payload.currency
-    const password = payload.password
+    const { currency, to, amount, walletParams } = payload
 
-    if (Ecoc.isEcrc20(currency)) {
-      if (utils.toNumber(currency.balance).lt(payload.amount)) {
+    try {
+      if (Ecoc.isEcrc20(currency)) {
+        if (utils.toNumber(currency.balance).lt(amount)) {
+          throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
+        }
+
+        const txid = await Ecoc.sendEcrc20Balance(currency, to, amount, walletParams)
+        return txid
+      }
+
+      if (utils.toNumber(currency.balance).lt(amount + walletParams.fee)) {
         throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
       }
 
-      return await Ecoc.SendEcrc20Balance(
-        this.keystore,
-        password,
-        currency,
-        payload as SendEcrc20Payload
-      )
+      const txid = await Ecoc.sendEcocBalance(to, amount, walletParams)
+      return txid
+    } catch (error) {
+      return Promise.reject(error)
     }
-
-    if (utils.toNumber(currency.balance).lt(payload.amount + payload.fee)) {
-      throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
-    }
-
-    return await Ecoc.SendEcocBalance(this.keystore, password, payload as SendEcocPayload)
   }
 
   @Action
   async updateCurrenciesPrice() {
-    const currenciesList = this.currencies
+    const currenciesList = [...this.currenciesList]
 
-    for (const [index, currency] of currenciesList.entries()) {
-      currency.price = await getPrice(currency.name)
-      this.context.commit('updateCurrencyByIndex', { currencyIndex: index, currencyData: currency })
-    }
+    currenciesList.forEach(async (currency, index) => {
+      const currentPrice = currency.price
+      const price = await lending.getPrice(currency.name)
+
+      if (currentPrice !== price) {
+        currency.price = price
+
+        this.context.commit('updateCurrencyByIndex', {
+          currencyIndex: index,
+          currencyData: currency
+        })
+        this.context.commit('updateTime')
+      }
+    })
 
     return true
   }
@@ -194,5 +224,10 @@ export default class WalletModule extends VuexModule implements Wallet {
     return {
       selectedCurrencyIndex: currencyIndex
     }
+  }
+
+  @MutationAction
+  async updateLastBlock(blocknumber: number) {
+    return { lastBlock: blocknumber }
   }
 }
