@@ -151,6 +151,7 @@ export default class TransactionComfirmationModal extends Vue {
   gasPrice: any = ''
   gasLimit: any = ''
   show = false
+  keystore: any = ''
   keystorePassword = ''
   @Prop() visible!: boolean
   rules = {
