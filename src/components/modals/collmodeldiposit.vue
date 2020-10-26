@@ -106,8 +106,10 @@
             </v-card-title>
             <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin">
               <div class="d-flex ">
-                <div class="transaction-sender">Ed76D6...F985</div>
-                <div class="transaction-receiver">0x76D6...F065</div>
+                <div class="transaction-sender">{{ truncateAddress(walletAddres) }}</div>
+                <div class="transaction-receiver curser" @click="doCopy(toAddr)">
+                  Lending Platform
+                </div>
                 <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
               </div>
               <div class="transaction-confirmation-content">
@@ -119,7 +121,7 @@
                       <div class="detail">
                         <span class="gt">Amount</span>
                         <div class="d-flex justify-end">
-                          <p>200.00</p>
+                          <p>{{ amount }}</p>
                           <p class="ml-2">ECOC</p>
                         </div>
                       </div>
@@ -254,6 +256,8 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import { WalletParams } from '@/services/ecoc/types'
+import { copyToClipboard } from '@/services/utils'
+import { DEFAULT } from '@/services/contract'
 @Component({
   components: {}
 })
@@ -264,9 +268,17 @@ export default class Collmodeldiposit extends Vue {
   Loanername = ''
   selectdata = ''
   active = ''
+  fee = DEFAULT.DEFAULT_FEE
+  gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
+  gasPrice = DEFAULT.DEFAULT_GAS_PRICE
 
   @Prop() visible!: boolean
   @Prop() amount!: number
+  @Prop() toAddr!: string
+
+  get walletAddres() {
+    return this.walletStore.address
+  }
 
   get Loanerlist() {
     return this.lendingStore.loaners
@@ -312,7 +324,7 @@ export default class Collmodeldiposit extends Vue {
   }
   truncateAddress(addr: string) {
     const separator = '...'
-    const charsToShow = 8
+    const charsToShow = 10
     const frontChars = Math.ceil(charsToShow / 2)
     const backChars = Math.floor(charsToShow / 2)
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
@@ -341,6 +353,10 @@ export default class Collmodeldiposit extends Vue {
       .catch(error => {
         this.onError(error.message)
       })
+  }
+  doCopy(val: string) {
+    copyToClipboard(val)
+    this.toAddr = 'Copied'
   }
 }
 </script>
@@ -688,6 +704,9 @@ h2 {
 .nopadding img {
   width: 40px;
   margin-left: -10px;
+}
+.curser {
+  cursor: pointer;
 }
 .showwallet_bgd {
   background-color: #f5f5f5;
