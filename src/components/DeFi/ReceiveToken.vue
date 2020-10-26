@@ -18,7 +18,7 @@
         <p class="mb-1">ECOC Wallet Address:</p>
         <div class="copyable-addr">
           <div class="text-truncate">{{ address }}</div>
-          <v-btn icon small class="copy" @click="copyAddress">
+          <v-btn icon small class="copy" @click="copyAddress(address)">
             <v-icon small>mdi-content-copy</v-icon>
           </v-btn>
         </div>
@@ -37,6 +37,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import VueQrcode from '@chenfengyuan/vue-qrcode'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
+import { copyToClipboard } from '@/services/utils'
 
 @Component({
   components: {
@@ -48,13 +49,8 @@ export default class ReceiveToken extends Vue {
   showCopy = false
   showQr = false
 
-  copyAddress() {
-    const el = document.createElement('textarea')
-    el.value = this.address
-    document.body.appendChild(el)
-    el.select()
-    document.execCommand('copy')
-    document.body.removeChild(el)
+  copyAddress(addr: string) {
+    copyToClipboard(addr)
     this.showCopy = true
 
     setTimeout(() => {

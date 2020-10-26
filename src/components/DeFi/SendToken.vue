@@ -161,10 +161,6 @@ export default class SendToken extends Vue {
   withdrawAll(amount: number) {
     this.amount = amount
   }
-  
-
-
-
 }
 </script>
 
