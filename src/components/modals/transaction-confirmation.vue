@@ -45,9 +45,24 @@
                 </v-btn>
               </div>
             </div>
+
             <v-form class="pt-4">
-              <v-text-field label="KeyStore Password" dense filled></v-text-field
+              <v-text-field
+                v-model="keystorePassword"
+                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                name="input-10-1"
+                :type="show ? 'text' : 'password'"
+                @click:append="show = !show"
+                label="Keystore Password"
+                color="primary"
+                filled
+                :rules="[rules.required, rules.min]"
+                elevation-0
+                dense
+                required
+              ></v-text-field
             ></v-form>
+
             <div class="action-transaction-confirmation">
               <v-btn
                 @click="sendialog = false"
@@ -63,7 +78,6 @@
         </div>
       </v-card>
     </v-dialog>
-
     <v-dialog v-model="gassetting" max-width="370" class="content-gas-setting">
       <v-card>
         <div class="d-flex justify-lg-space-between pt-3 ">
@@ -100,13 +114,14 @@
           </div>
           <div class="inputnumber d-flex justify-space-between">
             <v-col cols="6" class="pb-0">
-              <label for="Gas price:">Gas price:</label><v-text-field   type="number" v-model="gasPrice"></v-text-field>
+              <label for="Gas price:">Gas price:</label
+              ><v-text-field type="number" v-model="gasPrice"></v-text-field>
             </v-col>
             <v-col cols="6" class="pb-0">
-              <label for="Gas limit:">Gas limit:</label><v-text-field  type="number" v-model="gasLimit"></v-text-field>
+              <label for="Gas limit:">Gas limit:</label
+              ><v-text-field type="number" v-model="gasLimit"></v-text-field>
             </v-col>
           </div>
-
           <div class="d-flex justify-space-between py-2">
             <p>New Transaction Fee:</p>
             <div class="text-end">
@@ -133,9 +148,18 @@ export default class TransactionComfirmationModal extends Vue {
   walletStore = getModule(WalletModule)
   gassetting = false
   sendialog = false
-  gasPrice:any = ''
-  gasLimit:any = ''
+  gasPrice: any = ''
+  gasLimit: any = ''
+  show = false
   @Prop() visible!: boolean
+  rules = {
+    required: (value: any) => {
+      return !!value || 'Required.'
+    },
+    min: (v: any) => {
+      return v.length >= 6 || 'Min 6 characters'
+    }
+  }
 
   get addr() {
     return this.walletStore.address
@@ -323,7 +347,6 @@ export default class TransactionComfirmationModal extends Vue {
   background: transparent linear-gradient(180deg, #d2bae2 0%, #f9ecff 100%);
 }
 .inputnumber {
-
   border-bottom: 1px solid rgba(177, 169, 170, 0.466);
 }
 
