@@ -35,25 +35,25 @@
                     <v-row
                       v-for="(item, i) in Loanerlist"
                       :key="i"
-                      :class="Loanername == item.loaner ? 'active row1 roww2' : 'row1 roww2'"
-                      @click="selectLoaner((Loanername = item.loaner))"
+                      :class="Loanername == item.address ? 'active row1 roww2' : 'row1 roww2'"
+                      @click="selectLoaner((Loanername = item.address))"
                     >
                       <v-col lg="4" md="4" cols="4">
                         <div class="margintop Loener">
-                          {{ truncateAddress(item.loaner) }}
+                          {{ truncateAddress(item.address) }}
                         </div>
                       </v-col>
                       <v-col lg="4" md="4" cols="4">
                         <div class="margintop color_1 textafter">
                           <span class="color_size1">
-                            ${{ item.supply | numberWithCommas({ decimal: 2 }) }}</span
+                            ${{ item.totalSupply | numberWithCommas({ decimal: 2 }) }}</span
                           >
                         </div>
                       </v-col>
                       <v-col lg="4" md="4" cols="4">
                         <div class="margintop color_2 textafter">
                           <span class="color_size2">
-                            ${{ item.borrowed | numberWithCommas({ decimal: 2 }) }}</span
+                            ${{ item.totalBorrowed | numberWithCommas({ decimal: 2 }) }}</span
                           >
                         </div>
                       </v-col>
@@ -250,34 +250,27 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import GasSetting from './gas-setting-modal.vue'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
+import { WalletParams } from '@/services/ecoc/types'
 @Component({
   components: {}
 })
 export default class Collmodeldiposit extends Vue {
+  walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
   step = 1
   Loanername = ''
   selectdata = ''
   active = ''
-  Loanerlist = [
-    {
-      loaner: 'MgpCNdddddddddddddddJWGkk1MgpCNddddddddd',
-      supply: 812345679,
-      borrowed: 412345679
-    },
-    {
-      loaner: 'MgpCNdddddddddddddddJWGkk1MgpCNdddddddd1',
-      supply: 8123456799,
-      borrowed: 412345679
-    },
-    {
-      loaner: 'MgpCNdddddddddddddddJWGkk1MgpCNdddddddd5',
-      supply: 812345679,
-      borrowed: 412345679
-    }
-  ]
 
   @Prop() visible!: boolean
   @Prop() amount!: number
+
+  get Loanerlist() {
+    return this.lendingStore.loaners
+  }
 
   get show() {
     return this.visible
@@ -289,6 +282,10 @@ export default class Collmodeldiposit extends Vue {
 
   onLoading() {
     this.$emit('onLoading')
+  }
+
+  onSuccess() {
+    this.$emit('onSuccess')
   }
 
   selectLoaner(Loanername: string) {
@@ -319,6 +316,31 @@ export default class Collmodeldiposit extends Vue {
     const frontChars = Math.ceil(charsToShow / 2)
     const backChars = Math.floor(charsToShow / 2)
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
+  }
+
+  onError(errorMsg: string) {
+    console.log(errorMsg)
+  }
+
+  async depositCollateral(walletParams: WalletParams) {
+    const amount = Number(this.amount)
+    const poolAddress = this.selectdata
+
+    const payload = {
+      amount,
+      poolAddress,
+      walletParams
+    }
+
+    this.lendingStore
+      .depositCollateral(payload)
+      .then(txid => {
+        console.log('Txid:', txid)
+        this.onSuccess()
+      })
+      .catch(error => {
+        this.onError(error.message)
+      })
   }
 }
 </script>
