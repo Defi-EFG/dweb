@@ -1,11 +1,11 @@
 <template>
   <div class="send-transaction">
-    <v-dialog v-model="contactdialog" max-width="400">
+    <v-dialog v-model="show" max-width="400">
       <v-card class="">
         <v-card-title class="headline modal-header" id="headmodel">
           <div class="headtext">Delete contact</div>
           <v-icon></v-icon>
-          <v-btn text><v-icon color="white" @click="close()">$close</v-icon></v-btn>
+          <v-btn text><v-icon color="white" @click="onClose()">$close</v-icon></v-btn>
         </v-card-title>
         <div class="transaction-confirmation-wrapper ">
           <div class="transaction-confirmation-content">
@@ -30,9 +30,14 @@ import GasSetting from './gas-setting-modal.vue'
 export default class Deletecontact extends Vue {
   contactdialog = false
   @Prop() visible!: boolean
-  @Watch('visible')
-  close() {
-    this.contactdialog = !this.contactdialog
+  get show() {
+    return this.visible
+  }
+  onClose() {
+    this.$emit('onClose')
+  }
+  onSuccessAdd() {
+    this.$emit('onSuccess')
   }
 }
 </script>

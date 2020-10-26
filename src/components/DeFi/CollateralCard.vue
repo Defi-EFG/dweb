@@ -130,7 +130,7 @@ export default class Collateral extends Vue {
   }
 
   get tokenConversion() {
-    return `${this.collateralAmount} ${this.currencyName} ≈ ${this.currencyPrice *
+    return `${this.collateralAmount} ${this.currencyName} ≈ $${this.currencyPrice *
       Number(this.collateralAmount)}`
   }
 
