@@ -26,6 +26,7 @@
                     >{{ $t('views.main.sub_name_efgandgpt') }}</a
                   >
                   <a
+                    style="display:none"
                     @click="onClickActive('work')"
                     :class="active == 'work' ? 'active' : undefined"
                     >{{ $t('views.main.sub_name_work') }}</a
@@ -114,7 +115,7 @@
     <section class="sec_2">
       <v-container>
         <v-row class="row1">
-          <v-col lg="2" md="2" cols="2">
+          <v-col lg="3" md="3" cols="2">
             <div class="supply sub_head_supply">
               {{ $t('views.main.supply') }}
             </div>
@@ -136,7 +137,7 @@
           </v-col>
         </v-row>
         <v-row v-for="(item, i) in items" :key="i" class="row1 roww2">
-          <v-col lg="2" md="2" cols="2">
+          <v-col lg="3" md="3" cols="2">
             <div class="margintop">
               <img src="@/assets/efg_01.svg" />
               {{ item.currency.name }}
@@ -144,17 +145,21 @@
           </v-col>
           <v-col lg="3" md="3" cols="4">
             <div class="text-truncate margintop Loener">
-              {{ item.address }}
+              {{ truncateAddress(item.address) }}
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="3" class="border_left">
             <div class="margintop color_1 textafter">
-              <span class="color_size">${{ item.totalSupply }}</span>
+              <span class="color_size"
+                >${{ item.totalSupply | numberWithCommas({ decimal: 2 }) }}</span
+              >
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="3">
             <div class="margintop color_2 textafter">
-              <span class="color_size">${{ item.totalBorrowed }}</span>
+              <span class="color_size"
+                >${{ item.totalBorrowed | numberWithCommas({ decimal: 2 }) }}</span
+              >
             </div>
           </v-col>
           <img class="row1_img" src="@/assets/backg_01.svg" />
@@ -171,7 +176,7 @@
           </v-col>
         </v-row>
         <v-row class="row1 roww3">
-          <v-col lg="2" md="2" cols="6" class="Staking_dt">
+          <v-col lg="3" md="3" cols="6" class="Staking_dt">
             <img src="@/assets/gpt.svg" />
             <div class="supply_name">GPT</div>
             <div class="supply_text">{{ $t('views.main.deposit') }}</div>
@@ -188,7 +193,7 @@
           </v-col>
           <v-col lg="6" md="6" cols="12" class="border_left1 Staking_dt">
             <div class="supply_name2">GPT - {{ $t('views.main.available') }}</div>
-            <div class="supply_price_color color_1">{{ GPTprice }} GPT</div>
+            <div class="supply_price_color color_1">{{ GPTprice | numberWithCommas() }} GPT</div>
           </v-col>
           <img class="bg_gpt" src="@/assets/backg_02.svg" />
         </v-row>
@@ -267,7 +272,7 @@ export default class Main extends Vue {
   name = 'EFG'
 
   liquidation = 20.0
-  GPTprice = '10,000'
+  GPTprice = 10000
 
   onClickActive(name: string) {
     this.active = name
@@ -281,6 +286,13 @@ export default class Main extends Vue {
 
   mounted() {
     this.lendingStore.updateLoners()
+  }
+  truncateAddress(addr: string) {
+    const separator = '...'
+    const charsToShow = 12
+    const frontChars = Math.ceil(charsToShow / 2)
+    const backChars = Math.floor(charsToShow / 2)
+    return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
   }
 }
 </script>
@@ -421,7 +433,6 @@ body {
 }
 .sec_2 .roww3 img {
   width: 30px;
-  margin-right: 6px;
 }
 .sec_2 img {
   right: 0;
@@ -462,6 +473,7 @@ body {
   display: inline;
   position: relative;
   top: -10px;
+  margin-left: 5px;
 }
 .sec_2 .row1 .margintopimg {
   padding-top: 16px;
@@ -770,24 +782,6 @@ body {
   }
 }
 
-@media only screen and (max-width: 933px) {
-  .sec_2 .row1 .color_size {
-    width: 35px;
-    overflow: hidden;
-    text-overflow: clip;
-    position: relative;
-    z-index: 1;
-  }
-  .sec_2 .row1 .textafter::after {
-    content: 'M';
-    font-size: 18px;
-  }
-  .Loener {
-    width: 35px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-}
 @media only screen and (max-width: 670px) {
   .total_supply .price_text {
     font-size: 30px;

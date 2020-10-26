@@ -8,7 +8,7 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon>
+      <v-btn icon @click="openAddcontact()">
         <v-icon>mdi-plus-circle-outline</v-icon>
       </v-btn>
     </v-toolbar>
@@ -23,23 +23,53 @@
         </v-list-item-content>
 
         <v-list-item-icon>
-          <v-btn fab icon x-small class="contact-btn">
+          <v-btn fab icon x-small class="contact-btn" @click="openEditcontact()">
             <v-icon>mdi-pencil</v-icon>
           </v-btn>
-          <v-btn fab icon x-small class="contact-btn">
+          <v-btn fab icon x-small class="contact-btn" @click="openDeletecontact()">
             <v-icon>mdi-delete</v-icon>
           </v-btn>
         </v-list-item-icon>
       </v-list-item>
     </v-list>
+    <Addcontact
+      :visible="addcontactdialog"
+      :showDialog.sync="addcontactdialog"
+      @onSuccessAdd="addcontactdialog"
+      @onClose="closeAddcontact"
+    />
+    <Editcontact
+      :visible="editcontactdialog"
+      :showDialog.sync="editcontactdialog"
+      @onSuccess="editcontactdialog"
+      @onClose="closeEditcontact"
+    />
+    <Deletecontact
+      :visible="deletecontactdialog"
+      :showDialog.sync="deletecontactdialog"
+      @onSuccess="deletecontactdialog"
+      @onClose="closeDeletecontact"
+    />
   </v-card>
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
+import Addcontact from '@/components/modals/addcontact.vue'
+import Editcontact from '@/components/modals/editcontact.vue'
+import Deletecontact from '@/components/modals/deletecontact.vue'
 
-@Component({})
+@Component({
+  components: {
+    Addcontact,
+    Editcontact,
+    Deletecontact
+  }
+})
 export default class ContactAddress extends Vue {
+  addcontactdialog = false
+  editcontactdialog = false
+  deletecontactdialog = false
   contact = [
     {
       name: 'MXC',
@@ -50,6 +80,27 @@ export default class ContactAddress extends Vue {
       address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
     }
   ]
+  openAddcontact() {
+    this.addcontactdialog = !this.addcontactdialog
+  }
+  closeAddcontact() {
+    this.addcontactdialog = !this.addcontactdialog
+  }
+  openEditcontact() {
+    this.editcontactdialog = !this.editcontactdialog
+  }
+  closeEditcontact() {
+    this.editcontactdialog = !this.editcontactdialog
+  }
+  openDeletecontact() {
+    this.deletecontactdialog = !this.deletecontactdialog
+  }
+  closeDeletecontact() {
+    this.deletecontactdialog = !this.deletecontactdialog
+  }
+  onSuccessAdd() {
+    this.closeAddcontact()
+  }
 }
 </script>
 
