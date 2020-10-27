@@ -22,7 +22,7 @@
             </div>
             <div v-for="(item, i) in msg" :key="i">
               <div class="head_Introduction">
-                {{ item.head }} — <span>{{ item.headsub }}</span
+                {{ item.head }} - <span>{{ item.headsub }}</span
                 ><br />
               </div>
             </div>
@@ -126,7 +126,7 @@ export default class Docs extends Vue {
 }
 
 .sec_doc2 .head_Introduction {
-  font-size: 20px;
+  font-size: 16px;
   letter-spacing: 0px;
   color: #010101;
   opacity: 1;
@@ -137,7 +137,7 @@ export default class Docs extends Vue {
 }
 .sec_doc2 .head_Introduction span {
   font-weight: 200;
-  font-size: 18px;
+  font-size: 14px;
   letter-spacing: 0px;
   opacity: 1;
   margin-bottom: 5px;
