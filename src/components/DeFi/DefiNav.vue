@@ -23,17 +23,17 @@ export default class DefiNav extends Vue {
   activePage = 0
   items = [
     {
-      page: 'wallet',
+      page: this.$t('views.wallet'),
       icon: require('@/assets/icon/wallet-w.svg'),
       iconClicked: require('@/assets/icon/wallet.svg')
     },
     {
-      page: 'lending',
+      page: this.$t('views.lending'),
       icon: require('@/assets/icon/lending-w.svg'),
       iconClicked: require('@/assets/icon/lending.svg')
     },
     {
-      page: 'staking',
+      page: this.$t('views.staking'),
       icon: require('@/assets/icon/staking-w.svg'),
       iconClicked: require('@/assets/icon/staking.svg')
     }

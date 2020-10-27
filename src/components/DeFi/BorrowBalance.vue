@@ -1,7 +1,7 @@
 <template>
   <v-card dark class="borrow-card">
     <v-card-text>
-      <span class="borrow-label">Borrow Balance</span>
+      <span class="borrow-label">{{ $t('views.lendingpage.borrowbalance') }}</span>
       <div class="borrow">${{ balance.toFixed(2) }}</div>
       <div class="borrow-power">
         <div class="label">

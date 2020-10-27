@@ -3,7 +3,7 @@
     <v-toolbar class="receive-head" flat dense>
       <v-toolbar-title>
         <v-icon class="head-icon">mdi-arrow-down-circle-outline</v-icon>
-        <span>Receive</span>
+        <span>{{ $t('views.walletpage.receive') }}</span>
       </v-toolbar-title>
     </v-toolbar>
     <v-card-text class="text-center">
@@ -15,7 +15,7 @@
         :options="{ width: 200, height: 200 }"
       ></VueQrcode>
       <div class="address-area">
-        <p class="mb-1">ECOC Wallet Address:</p>
+        <p class="mb-1">ECOC {{ $t('views.walletpage.address') }}:</p>
         <div class="copyable-addr">
           <div class="text-truncate">{{ address }}</div>
           <v-btn icon small class="copy" @click="copyAddress(address)">

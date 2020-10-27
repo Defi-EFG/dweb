@@ -75,6 +75,19 @@
                 "head_sub": "EFG为用户带来了增加投资价值的机会。我们的目标是提供DeFi简单化、易用，即使对于数字资产的新手用户。同时，聚集广泛的用户群和创造高效用的服务。准备加入一个全新的货币，EFG！"
             }
 
+        },
+        "wallet": "钱包",
+        "lending": "Lending",
+        "staking": "Staking",
+        "walletpage": {
+            "unlockwallet": "Unlock Wallet",
+            "contactaddress": "Contact Address",
+            "receive": "收款",
+            "send": "发送",
+            "transactionhistory": "交易历史记录",
+            "balance": "余额",
+            "withdrawall": "全提现",
+            "address": "钱包地址"
         }
     },
     "components": {

@@ -3,12 +3,14 @@
     <v-toolbar class="send-head" flat dense>
       <v-toolbar-title>
         <v-icon class="head-icon">mdi-arrow-up-circle-outline</v-icon>
-        <span>Send</span>
+        <span>{{ $t('views.walletpage.send') }}</span>
       </v-toolbar-title>
     </v-toolbar>
     <v-card-text class="text-center send-area">
       <div class="token-balance">
-        <span class="text-left">{{ selectedCurrencyName }} Balance</span>
+        <span class="text-left"
+          >{{ selectedCurrencyName }} {{ $t('views.walletpage.balance') }}</span
+        >
         <v-spacer></v-spacer>
         <span class="text-right">{{ selectedCurrencyBalance }} {{ selectedCurrencyName }}</span>
       </div>
@@ -45,7 +47,9 @@
       </div>
       <div class="withdraw-rate">
         <v-spacer></v-spacer>
-        <span class="fb-btn" @click="withdrawAll(selectedCurrencyBalance)">Withdraw All</span>
+        <span class="fb-btn" @click="withdrawAll(selectedCurrencyBalance)">
+          {{ $t('views.walletpage.withdrawall') }}</span
+        >
       </div>
       <v-text-field
         class="withdraw-amount"

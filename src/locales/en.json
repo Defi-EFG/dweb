@@ -78,6 +78,23 @@
                 "head_sub": "EFG brings an opportunity for increasing the investment value for users. Our goal is to make DeFi simple and accessible for everyone, even for the digital asset novices. As well as, gather a wide user base and create high utility services. Get ready to join a brand-new monetary,EFG!"
             }
 
+        },
+        "wallet": "Wallet",
+        "lending": "Lending",
+        "staking": "Staking",
+        "walletpage": {
+            "unlockwallet": "Unlock Wallet",
+            "contactaddress": "Contact Address",
+            "receive": "Receive",
+            "send": "Send",
+            "transactionhistory": "Transaction History",
+            "balance": "Balance",
+            "withdrawall": "Withdraw All",
+            "address": "Wallet Address"
+        },
+        "lendingpage": {
+            "collateralbalance": "Collateral Balance",
+            "borrowbalance": "Borrow Balance"
         }
     },
     "components": {
