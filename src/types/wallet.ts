@@ -1,5 +1,5 @@
 import { KeyStore } from './keystore'
-import { TxList } from './transaction'
+import { TxList, PendingTransaction } from './transaction'
 import { Currency } from './currency'
 import { WalletParams } from '@/services/ecoc/types'
 
@@ -13,6 +13,7 @@ export interface Wallet {
   lastUpdate: number
   lastBlock: number
   status: string
+  pendingTransactions: PendingTransaction[]
 }
 
 export interface SendPayload {

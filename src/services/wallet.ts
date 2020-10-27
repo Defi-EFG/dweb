@@ -126,6 +126,11 @@ const getTxs = async (address: string) => {
   return txs
 }
 
+const getUtxos = async (address: string) => {
+  const utxos = await EcocWallet.getUtxoList(address)
+  return utxos
+}
+
 export {
   sendRawTx,
   generateNewKeystore,
@@ -134,5 +139,6 @@ export {
   getEcocBalance,
   getEcrc20Balance,
   getTxs,
+  getUtxos,
   isEcrc20
 }
