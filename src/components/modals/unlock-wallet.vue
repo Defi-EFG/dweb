@@ -8,7 +8,7 @@
             <v-card>
               <v-card-title class="headline modal-header">
                 <v-icon></v-icon>
-                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="content-wrapper ">
                 <div class="content-logo ">
@@ -42,8 +42,8 @@
           <v-stepper-content step="3">
             <v-card>
               <v-card-title class="headline modal-header">
-                <v-btn text disabled><v-icon></v-icon></v-btn>
-                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon disabled><v-icon></v-icon></v-btn>
+                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-4">
@@ -77,8 +77,8 @@
           <v-stepper-content step="2">
             <v-card>
               <v-card-title class="headline modal-header">
-                <v-btn text @click="welcomeStep"><v-icon>$leftarrow</v-icon></v-btn>
-                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon @click="welcomeStep"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
@@ -136,8 +136,8 @@
           <v-stepper-content step="4">
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
-                <v-btn text @click="welcomeStep"><v-icon>$leftarrow</v-icon></v-btn>
-                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon @click="welcomeStep"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
@@ -153,10 +153,23 @@
                       outlined
                       v-model="keystore"
                       required
-                      :rules="[rules.required, rules.jsonformat]"
+                      :rules="[rules.required]"
                     ></v-textarea>
                     <text-reader @load="keystore = $event"></text-reader>
-                    <div class="action-wrapper"></div>
+                    <div class="action-wrapper">
+                      <v-btn
+                        large
+                        v-if="upload || keystore.length > 6"
+                        @click="confirmKeystore"
+                        class="mb-5"
+                        color="primary"
+                      >
+                        <h4 class="text-capitalize font-weight-light">Next</h4>
+                      </v-btn>
+                      <v-btn v-else large class="mb-5" color="primary" disabled>
+                        <h4 class="text-capitalize font-weight-light">Next</h4>
+                      </v-btn>
+                    </div>
                   </div>
                 </template>
               </div>
@@ -168,8 +181,8 @@
           <v-stepper-content step="5">
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
-                <v-btn text @click="connectStep"><v-icon>$leftarrow</v-icon></v-btn>
-                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon @click="connectStep"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
@@ -239,14 +252,14 @@ export default class UnlockwalletModal extends Vue {
     },
     min: (v: any) => {
       return v.length >= 6 || 'Min 6 characters'
-    },
-    jsonformat: (jsonformat: any) => {
-      const obj = JSON.parse(jsonformat)
-      // const version = obj.version
-      const isVersionIncluded = Object.prototype.hasOwnProperty.call(obj, "version")
-
-      return 
     }
+    // jsonformat: (jsonformat: any) => {
+    //   const obj = JSON.parse(jsonformat)
+    //   // const version = obj.version
+    //   const isVersionIncluded = Object.prototype.hasOwnProperty.call(obj, "version")
+
+    //   return
+    // }
   }
 
   @Watch('visible')
@@ -288,12 +301,13 @@ export default class UnlockwalletModal extends Vue {
   }
 
   confirmKeystore() {
-    const obj = JSON.parse(this.keystore)
-    if ('version' in obj && 'content' in obj && 'crypto' in obj) {
-      console.log('pass')
-    } else {
-      console.log('0')
-    }
+    // const obj = JSON.parse(this.keystore)
+    // if ('version' in obj && 'content' in obj && 'crypto' in obj) {
+    //   console.log('pass')
+    // } else {
+    //   console.log('0')
+    // }
+    this.step = 5
   }
 
   onUnlockWallet() {

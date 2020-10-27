@@ -17,7 +17,7 @@
           <v-spacer></v-spacer>
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn class="tx-btn" fab dark x-small color="primary" v-bind="attrs" v-on="on">
+              <v-btn icon class="tx-btn" fab dark x-small color="primary" v-bind="attrs" v-on="on">
                 <v-icon dark>
                   mdi-arrow-up
                 </v-icon>
@@ -139,9 +139,9 @@ export default class TransactionDetailModal extends Vue {
       this.copyMsg = 'Copy TxID'
     }, 1000)
   }
-  
+
   getTime(time: number) {
-    return moment(time).format("YYYY-MM-DD HH:mm:ss")
+    return moment(time).format('YYYY-MM-DD HH:mm:ss')
   }
 
   get show() {

@@ -4,7 +4,7 @@
       <v-card class="blur-card" color="#FFFFFF00">
         <v-card-title class="modal-header">
           <v-icon></v-icon>
-          <v-btn @click="sendialog = false" text><v-icon color="white">$close</v-icon></v-btn>
+          <v-btn @click="sendialog = false" icon><v-icon color="white">$close</v-icon></v-btn>
         </v-card-title>
         <div class="transaction-confirmation-wrapper ">
           <div class="d-flex ">

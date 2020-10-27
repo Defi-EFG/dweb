@@ -113,7 +113,7 @@ export default class ReceiveSendMobile extends Vue {
   showCopy = false
   showQr = false
 
-  sendialog = true
+  ialog = true
   displayContact = false
 
   toAddr = ''
