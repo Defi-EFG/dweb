@@ -18,8 +18,8 @@ const sendRawTx = async (rawTransaction: string) => {
 }
 
 const generateNewKeystore = async (password: string) => {
-  // create new wallet default is mainnet
-  const wallet = await EcocWallet.createNewWallet()
+  // create new wallet default is testnet
+  const wallet = await EcocWallet.createNewWallet('Testnet')
 
   if (!wallet) {
     throw new WalletError('Can not generate new wallet')

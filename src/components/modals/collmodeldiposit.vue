@@ -269,7 +269,7 @@ export default class Collmodeldiposit extends Vue {
   @Prop() amount!: number
 
   get Loanerlist() {
-    return this.lendingStore.loaners
+    return this.lendingStore.pools
   }
 
   get show() {

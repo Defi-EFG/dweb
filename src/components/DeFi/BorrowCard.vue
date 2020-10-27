@@ -226,7 +226,7 @@ export default class BorrowCard extends Vue {
 
   onConfirm(walletParams: WalletParams) {
     const amount = Number(this.borrowValue)
-    const poolAddress = this.lendingStore.loan.loaner
+    const poolAddress = this.lendingStore.loan.poolAddr
 
     const payload = {
       amount,
