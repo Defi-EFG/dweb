@@ -9,9 +9,9 @@
       <v-col cols="6">
         <div class="token-detail">
           <p>{{ token }}</p>
-          <div class="value">{{ currentValue }}</div>
+          <div class="value">{{ max | numberWithCommas({ decimal: 2 }) }}</div>
           <p>{{ token2 }}</p>
-          <div class="value2">{{ currentValue }}</div>
+          <div class="value2">{{ currentValue | numberWithCommas({ decimal: 2 }) }}</div>
         </div>
       </v-col>
     </v-row>
@@ -27,8 +27,8 @@ import Chart from 'chart.js'
 export default class StakingChart extends Vue {
   token = 'EFG - Total Supply'
   token2 = 'EFG - Total Borrowed'
-  max = 4189402.65
-  currentValue = 5305610.41
+  max = 418940265
+  currentValue = 130561041
 
   mounted() {
     this.renderChart(this.ctx, this.max, this.currentValue)
@@ -112,7 +112,8 @@ export default class StakingChart extends Vue {
   margin: auto 0;
   p {
     color: white;
-    margin-top: 10%;
+    margin-top: 7%;
+    margin-bottom: 3px;
   }
   .value {
     font-size: 25px;

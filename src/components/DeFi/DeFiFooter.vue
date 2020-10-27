@@ -2,7 +2,7 @@
   <div id="footer">
     <div class="latest-block">
       <div class="dot-circle"></div>
-      <div>Latest Block: 87621</div>
+      <div>Latest Block: {{ latestBlock }}</div>
     </div>
     <div class="contact">
       <a href="https://t.me/EFGtoken" target="_blank" rel="noopener noreferrer"
@@ -42,9 +42,17 @@
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
 
 @Component({})
-export default class DeFiFooter extends Vue {}
+export default class DeFiFooter extends Vue {
+  walletStore = getModule(WalletModule)
+
+  get latestBlock() {
+    return this.walletStore.lastBlock
+  }
+}
 </script>
 
 <style lang="scss" scoped>

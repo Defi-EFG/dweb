@@ -34,7 +34,7 @@
       </v-col>
     </v-row>
     <v-row class="content-wrapper">
-      <v-col xl="8" lg="8" md="12" sm="12" xs="12" cols="12"  class="content-3">
+      <v-col xl="8" lg="8" md="12" sm="12" xs="12" cols="12" class="content-3">
         <contact-address v-if="isLargeMobileDevice || isMobileDevice"></contact-address>
         <v-card dark class="tx-container" v-else>
           <v-toolbar :class="`receive-send-wrapper token-${selectedCurrencyName}`" dense flat>

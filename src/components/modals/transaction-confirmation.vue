@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="sendialog" max-width="400" class="send-transaction">
+    <v-dialog v-model="show" max-width="400" class="send-transaction">
       <v-card class="blur-card" color="#FFFFFF00">
         <v-card-title class="modal-header">
           <v-icon></v-icon>
@@ -9,7 +9,7 @@
         <div class="transaction-confirmation-wrapper ">
           <div class="d-flex ">
             <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
-            <div class="transaction-receiver">receiver</div>
+            <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
@@ -19,15 +19,14 @@
               <div class="send-detail border-bottom">
                 <span class="gt">Send to</span>
                 <div class="d-flex justify-end">
-                  <p class="address">receiver</p>
+                  <p class="address">{{ toAddr }}</p>
                 </div>
               </div>
               <div class="detail border-bottom">
                 <span class="gt">Amount</span>
                 <div class="d-flex justify-end">
-                  <p></p>
-                  <!-- number -->
-                  <p class="ml-2">ECOC</p>
+                  <p>{{ amount }}</p>
+                  <p class="ml-2">{{ selectedCurrencyName }}</p>
                 </div>
               </div>
             </div>
@@ -36,8 +35,7 @@
               <span class="gt">Gas Fee</span>
               <div class="text-end">
                 <div class="d-flex justify-end">
-                  <p></p>
-                  <!-- number -->
+                  <p>{{ fee }}</p>
                   <p class="ml-2">ECOC</p>
                 </div>
                 <v-btn @click="gasSetting()" small text color="primary">
@@ -48,31 +46,23 @@
 
             <v-form class="pt-4">
               <v-text-field
-                v-model="keystorePassword"
-                :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                name="input-10-1"
-                :type="show ? 'text' : 'password'"
-                @click:append="show = !show"
-                label="Keystore Password"
-                color="primary"
-                filled
-                :rules="[rules.required, rules.min]"
-                elevation-0
+                label="KeyStore Password"
+                v-model="password"
+                type="password"
                 dense
-                required
+                filled
               ></v-text-field
             ></v-form>
-
+            <div v-if="errorMsg">
+              <p class="error">{{ errorMsg }}</p>
+            </div>
             <div class="action-transaction-confirmation">
-              <v-btn
-                @click="sendialog = false"
-                outlined
-                large
-                color="primary"
-                class="text-capitalize"
+              <v-btn outlined large color="primary" class="text-capitalize" @click="onClose"
                 >Cancel</v-btn
               >
-              <v-btn large depressed color="primary" class="text-capitalize">Confirm</v-btn>
+              <v-btn large depressed color="primary" class="text-capitalize" @click="onConfirm"
+                >Confirm</v-btn
+              >
             </div>
           </div>
         </div>
@@ -137,16 +127,34 @@
     </v-dialog>
   </div>
 </template>
+
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import { WalletParams } from '@/services/ecoc/types'
+import { Currency } from '@/types/currency'
 import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
+import StakingModule from '@/store/staking'
+import * as Ecoc from '@/services/wallet'
+import { DEFAULT } from '@/services/contract'
+
 @Component({
   components: {}
 })
 export default class TransactionComfirmationModal extends Vue {
+  @Prop({ default: {} }) currency!: Currency
+  @Prop({ default: false }) visible!: boolean
+  @Prop() toAddr!: string
+  @Prop() amount!: string
+
   walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+  stakingStore = getModule(StakingModule)
+
   gassetting = false
+  errorMsg = ''
+  password = ''
   sendialog = false
   gasPrice: any = ''
   gasLimit: any = ''
@@ -163,26 +171,85 @@ export default class TransactionComfirmationModal extends Vue {
     }
   }
 
+  fee = DEFAULT.DEFAULT_FEE
+  gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
+  gasPrice = DEFAULT.DEFAULT_GAS_PRICE
+
+  get show() {
+    return this.visible
+  }
+
   get addr() {
     return this.walletStore.address
   }
 
-  @Watch('visible')
-  checkSendModalActive() {
-    this.sendialog = this.visible
-    if (this.sendialog !== true) {
-      this.sendialog = true
-    }
+  get lendingContractAddress() {
+    return this.lendingStore.address
   }
+
+  get stakingContractAddress() {
+    return this.stakingStore.address
+  }
+
   gasSetting() {
     this.gassetting = true
   }
+
   truncateAddress(addr: string) {
     const separator = '...'
     const charsToShow = 8
     const frontChars = Math.ceil(charsToShow / 2)
     const backChars = Math.floor(charsToShow / 2)
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
+  }
+
+  get ecoc() {
+    return this.walletStore.ecoc
+  }
+
+  get walletAddress() {
+    return this.walletStore.address
+  }
+
+  get selectedCurrencyName() {
+    return this.currency.name || ''
+  }
+
+  addressFilter(address: string) {
+    if (address == this.lendingContractAddress) return 'Lending Platform'
+    else if (address == this.stakingContractAddress) return 'Staking Platform'
+    else return address
+  }
+
+  onClose() {
+    this.password = ''
+    this.errorMsg = ''
+    this.$emit('onClose')
+  }
+
+  async onConfirm() {
+    try {
+      const password = this.password
+      const address = this.walletStore.address
+      const keystore = this.walletStore.keystore
+      const wallet = Ecoc.importFromKeystore(keystore, password)
+      const utxoList = await wallet.getUtxoList()
+
+      const walletParams = {
+        address: address,
+        keypair: wallet.keypair,
+        utxoList: utxoList,
+        fee: this.fee,
+        gasLimit: this.gasLimit,
+        gasPrice: this.gasPrice
+      } as WalletParams
+
+      this.password = ''
+      this.errorMsg = ''
+      this.$emit('onConfirm', walletParams)
+    } catch (error) {
+      this.errorMsg = error.message
+    }
   }
 }
 </script>

@@ -82,8 +82,15 @@
           solo
           hide-details="true"
         ></v-text-field>
-        <v-btn dark depressed block large class="send-btn" @click="onunlockSuccess()">Send</v-btn>
-        <TransactionComfirmationModal :visible="sendialog" @onSuccess="sendialog" />
+        <v-btn dark depressed block large class="send-btn" @click="onOpenModal()">Send</v-btn>
+        <TransactionComfirmationModal
+          :visible="confirmTxModal"
+          :toAddr="toAddr"
+          :amount="amount"
+          :currency="selectedCurrency"
+          @onConfirm="onConfirm"
+          @onClose="onClose"
+        />
       </div>
     </v-tab-item>
   </v-tabs>
@@ -95,6 +102,7 @@ import VueQrcode from '@chenfengyuan/vue-qrcode'
 import vClickOutside from 'v-click-outside'
 import { getModule } from 'vuex-module-decorators'
 import { SendPayload } from '@/types/wallet'
+import { WalletParams } from '@/services/ecoc/types'
 import WalletModule from '@/store/wallet'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 import { copyToClipboard } from '@/services/utils'
@@ -113,7 +121,7 @@ export default class ReceiveSendMobile extends Vue {
   showCopy = false
   showQr = false
 
-  sendialog = true
+  confirmTxModal = false
   displayContact = false
 
   toAddr = ''
@@ -121,6 +129,8 @@ export default class ReceiveSendMobile extends Vue {
   fee = 0.01
   gasPrice = 40
   gasLimit = 150000
+
+  errorMsg = ''
 
   addrList = [
     {
@@ -163,23 +173,35 @@ export default class ReceiveSendMobile extends Vue {
 
     this.displayContact = false
   }
-  onunlockSuccess() {
-    this.sendialog = !this.sendialog
-  }
+
   onOpenModal() {
-    this.sendialog = !this.sendialog
+    if (this.toAddr && this.amount) {
+      this.confirmTxModal = !this.confirmTxModal
+    }
   }
-  onSend() {
+
+  closeModal() {
+    this.confirmTxModal = false
+  }
+
+  onSuccess() {
+    this.toAddr = ''
+    this.amount = 0
+    this.closeModal()
+  }
+
+  onError(errorMsg: string) {
+    this.errorMsg = errorMsg
+    console.log(errorMsg)
+  }
+
+  onConfirm(walletParams: WalletParams) {
     const payload = {
       currency: this.selectedCurrency,
-      password: '123456',
       to: this.toAddr,
-      amount: this.amount,
-      fee: this.fee,
-      gasLimit: this.gasLimit,
-      gasPrice: this.gasPrice
+      amount: Number(this.amount),
+      walletParams: walletParams
     } as SendPayload
-
     this.currencySend(payload)
   }
 
@@ -189,8 +211,15 @@ export default class ReceiveSendMobile extends Vue {
       .then(txid => {
         console.log(txid)
         this.walletStore.updateBalance()
+        this.onSuccess()
       })
-      .catch(console.log)
+      .catch(error => {
+        this.onError(error.message)
+      })
+  }
+
+  onClose() {
+    this.closeModal()
   }
 
   withdrawAll(amount: number) {
