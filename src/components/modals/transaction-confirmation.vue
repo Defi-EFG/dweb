@@ -43,7 +43,6 @@
                 </v-btn>
               </div>
             </div>
-
             <v-form class="pt-4">
               <v-text-field
                 label="KeyStore Password"
@@ -68,6 +67,7 @@
         </div>
       </v-card>
     </v-dialog>
+
     <v-dialog v-model="gassetting" max-width="370" class="content-gas-setting">
       <v-card>
         <div class="d-flex justify-lg-space-between pt-3 ">
@@ -112,6 +112,7 @@
               ><v-text-field type="number" v-model="gasLimit"></v-text-field>
             </v-col>
           </div>
+
           <div class="d-flex justify-space-between py-2">
             <p>New Transaction Fee:</p>
             <div class="text-end">
@@ -155,13 +156,9 @@ export default class TransactionComfirmationModal extends Vue {
   gassetting = false
   errorMsg = ''
   password = ''
-  sendialog = false
-  gasPrice: any = ''
-  gasLimit: any = ''
-  show = false
   keystore: any = ''
   keystorePassword = ''
-  @Prop() visible!: boolean
+
   rules = {
     required: (value: any) => {
       return !!value || 'Required.'
@@ -170,7 +167,6 @@ export default class TransactionComfirmationModal extends Vue {
       return v.length >= 6 || 'Min 6 characters'
     }
   }
-
   fee = DEFAULT.DEFAULT_FEE
   gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
