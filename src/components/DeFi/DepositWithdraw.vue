@@ -175,6 +175,8 @@ export default class DepositWithdraw extends Vue {
 
   closeConfirmTxModal() {
     this.amount = 0
+    this.depositAmount = 0
+    this.withdrawAmount = 0
     this.actionType = ''
     this.confirmTxModal = false
   }
