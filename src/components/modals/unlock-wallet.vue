@@ -199,7 +199,7 @@
                     label="Keystore Password"
                     color="primary"
                     filled
-                    :rules="[rules.required, rules.min]"
+                    :rules="[rules.required, rules.min, rules.msgerror]"
                     elevation-0
                     dense
                     required
@@ -227,7 +227,7 @@ import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import StakingModule from '@/store/staking'
 import TextReader from './text-reader.vue'
-
+import * as Ecoc from '@/services/wallet'
 @Component({
   components: {
     Loading,
@@ -251,6 +251,8 @@ export default class UnlockwalletModal extends Vue {
   show = false
   step = 1
   unlockwalletModal = this.visible
+  errorMsg = ''
+  password = ''
 
   rules = {
     required: (value: any) => {
@@ -258,6 +260,9 @@ export default class UnlockwalletModal extends Vue {
     },
     min: (v: any) => {
       return v.length >= 6 || 'Min 6 characters'
+    },
+    msgerror: (v: any) => {
+      return v.error || 'Invalid keystore or password'
     }
     // jsonformat: (jsonformat: any) => {
     //   const obj = JSON.parse(jsonformat)
@@ -316,14 +321,30 @@ export default class UnlockwalletModal extends Vue {
     this.step = 5
   }
 
-  onUnlockWallet() {
+  // async onUnlockWallet() {
+  //   // console.log(this.keystore)
+  //   // console.log(this.keystorePassword)
+  //   try {
+  //     const password = this.password
+  //     const address = this.walletStore.address
+  //     const keystore = this.walletStore.keystore
+  //     const wallet = Ecoc.importFromKeystore(keystore, password)
+  //     const utxoList = await wallet.getUtxoList()
+  //     this.password = ''
+  //     this.errorMsg = ''
+  //   } catch (error) {
+  //     this.errorMsg = error.message
+  //     console.log((this.errorMsg = error.message))
+  //   }
+  // }
+
+  async onUnlockWallet() {
     const keystore = this.keystore
     const password = this.keystorePassword
     this.walletStore.importWallet({ keystore, password }).then(() => {
       this.onClose()
     })
   }
-
   getFormattedTime() {
     const today = new Date()
     const y = today.getFullYear()
@@ -341,6 +362,12 @@ export default class UnlockwalletModal extends Vue {
     link.href = window.URL.createObjectURL(blob)
     link.download = `keystore-${this.getFormattedTime()}.json`
     link.click()
+  }
+  get ecoc() {
+    return this.walletStore.ecoc
+  }
+  get walletAddress() {
+    return this.walletStore.address
   }
 }
 </script>
