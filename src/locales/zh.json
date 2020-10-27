@@ -60,38 +60,38 @@
                 "subtitle": "我们相信规模、可视性和时间是对智能合约安全真正的关键考验，它就是用户的安全性和适用性的关键点。ECOC Financial Growth（EFG）Token的开发人员为了建造最佳金融渠道而努力不停的开发。"
             }
         ],
-        "Introduction": "Guide",
+        "Introduction": "指南",
         "docs": [{
-                "head": "Collateral ",
-                "headsub": "In order to borrow the EFG Token from dApp, users need to firstly supply ECOC coins as collateral. Meanwhile, users cannot redeem or transfer collateral while it is locked."
+                "head": "抵押资产 ",
+                "headsub": "要从dApp借用EFG代币，用户首先需要提供ECOC作为抵押资产。ECOC当抵押资产被锁定时，用户不能赎回或转让抵押资产。"
             },
             {
-                "head": "Account Liquidity",
-                "headsub": "How can you know what is your maximum allowed borrowing in EFG token. It depends on how much ECOC have you deposited as collateral. In EFG dApp the user must repay in EFG token the loan. Repay amount is based on calculations depending on the maximum borrowed collateral amount in ratio of 60%. The function calculates your account’s liquidity, which is based on EFG current value of the maximum allowed borrowing amount. But you would never borrow this much at once because your account may instantly be liquidated if the price moves in the wrong direction."
+                "head": "账户流动性",
+                "headsub": "你怎么知道你在EFG代币中允许的最大借款是多少。这取决于你存入多少ECOC作为抵押资产。在EFG dApp中，用户必须用EFG偿还贷款。根据最高借款抵押金额计算的偿还金额为60%。该函数计算您的帐户流动性，它基于最大允许借款金额的EFG当前值。如果价格向错误的方向移动，你一次借了过多贷款，你可能会立即被清算你的账户。"
             },
             {
-                "head": "Total debt",
-                "headsub": " This is the user’s current borrowed amount plus the total interest that needs to be repaid. The maximum EFG token that users can borrow is the 60% of the total collateral value of ECOC. This is calculated with a simple to use function of the EFG dApp."
+                "head": "债务总额",
+                "headsub": "这是用户当前的借款金额加上应该支付的利息。用户可借用的最高EFG代币为ECOC总抵押资产价值的60%。系统通过EFG-dApp的函数计算此值。"
             },
             {
-                "head": "The Borrow Rate",
-                "headsub": "Borrowers owe the prevailing interest rate of the asset they are borrowing. The borrowed loan and interest do not have to be repaid daily unless the amount of the collateral plus the borrower's interest equal or more than 60% of the total deposited collateral amount. On this occasion, the EFG dApp system can liquidate the collateral."
+                "head": "借款利率",
+                "headsub": "借款人欠他们所借资产的现行利率。借款及利息无须每日支付，除非抵押物的数额加上利息等于或超过存入抵押资产总额的60%。在这种情况下，EFG dApp系统可以清算抵押资产。"
             },
             {
-                "head": "Withdrawal ",
-                "headsub": "The borrower can reclaim the collateral back. To do this he must first repay the loan and pay the borrower's total interest. The total debt is calculated by using the repay function in the EFG dApp at the time that the debtor repays back the loan."
+                "head": "赎回 ",
+                "headsub": "借款人可以赎回抵押资产。要赎回抵押资产，借款人必须偿还贷款并支付借款的全部利息。当债务偿还贷款时，EFG dApp中的还款函数用于计算总债务。"
             },
             {
-                "head": "Liquidation ",
-                "headsub": "A borrowing account becomes insolvent when the Borrow Balance exceeds the amount allowed by calculating as a ratio of 60% of the collateral amount. Having your account liquidated is bad because you lose all of your collateral."
+                "head": "清算 ",
+                "headsub": "当借款余额超过抵押资产金额60%的比率时，借款账户即破产。如果被清算了你的账户，你将失去所有抵押资产不可赎回。 "
             },
             {
-                "head": "Free Market",
-                "headsub": "The EFG token that is supplied to the user can also be used as speculation in the cryptocurrency or financial markets. "
+                "head": "自由市场",
+                "headsub": "用户可以使用提供的EFG代币在加密货币或金融市场进行投机。"
             },
             {
-                "head": "Oracles ",
-                "headsub": "Oracles are the only entities that are authorized to inject real-world data into the smart contract. Specifically, they inject the exchange rates for each second(timestamp) of each pair of EFG (asset / USDT)."
+                "head": "神谕系统 ",
+                "headsub": "oracle是唯一被授权向智能合约注入区块链外数据的实体。具体来说，他们注入每对EFG（资产/USDT）每秒的汇率（时间戳）。"
             }
 
         ]
