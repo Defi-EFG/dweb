@@ -109,7 +109,9 @@ export default class Staking extends Vue {
 
   get stakingBalance() {
     const currencyName = this.stakingCurrency.name
-    const currency = this.walletStore.currenciesList.find(currency => currency.name === currencyName)
+    const currency = this.walletStore.currenciesList.find(
+      currency => currency.name === currencyName
+    )
     if (!currency) return 0
 
     const balance = Number(currency.balance)

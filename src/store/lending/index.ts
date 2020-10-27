@@ -194,14 +194,20 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
   @Action({ rawError: true })
   async depositCollateral(payloads: {
+    currencyName: string
     amount: number
     poolAddress: string
     walletParams: WalletParams
   }) {
-    const { amount, poolAddress, walletParams } = payloads
+    const { currencyName, amount, poolAddress, walletParams } = payloads
 
     try {
-      const rawTransaction = await lending.depositColateral(amount, poolAddress, walletParams)
+      let rawTransaction
+      if (currencyName === 'ECOC') {
+        rawTransaction = await lending.depositColateral(amount, poolAddress, walletParams)
+      } else {
+        rawTransaction = await lending.depositColateral(amount, poolAddress, walletParams)
+      }
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid
@@ -212,14 +218,20 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
   @Action({ rawError: true })
   async withdrawCollateral(payloads: {
+    currencyName: string
     amount: number
-    poolAddress: string
     walletParams: WalletParams
   }) {
-    const { amount, poolAddress, walletParams } = payloads
+    const { amount, currencyName, walletParams } = payloads
 
     try {
-      const rawTransaction = await lending.depositColateral(amount, poolAddress, walletParams)
+      let rawTransaction
+      if (currencyName === 'ECOC') {
+        rawTransaction = await lending.withdrawECOC(amount, walletParams)
+      } else {
+        rawTransaction = await lending.withdrawECOC(amount, walletParams)
+      }
+
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid
@@ -229,12 +241,25 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   }
 
   @Action({ rawError: true })
-  async borrow(payloads: { amount: number; poolAddress: string; walletParams: WalletParams }) {
-    const { amount, poolAddress, walletParams } = payloads
-    const currencyName = myCollateralAssets[0].currency.name
+  async borrow(payloads: { amount: number; walletParams: WalletParams }) {
+    const { amount, walletParams } = payloads
 
     try {
-      const rawTransaction = await lending.borrow(currencyName, amount, poolAddress, walletParams)
+      const rawTransaction = await lending.borrow(amount, walletParams)
+      const txid = await Ecoc.sendRawTx(rawTransaction)
+      this.context.commit('updateStatus', constants.STATUS_PENDING)
+      return txid
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+
+  @Action({ rawError: true })
+  async repay(payloads: { amount: number; walletParams: WalletParams }) {
+    const { amount, walletParams } = payloads
+
+    try {
+      const rawTransaction = await lending.repay(amount, walletParams)
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid

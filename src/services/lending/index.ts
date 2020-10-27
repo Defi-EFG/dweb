@@ -193,14 +193,9 @@ export namespace lending {
     return rawTx
   }
 
-  export const borrow = async (
-    currencyName: string,
-    amount: number,
-    poolAddress: string,
-    walletParams: WalletParams
-  ) => {
+  export const borrow = async (amount: number, walletParams: WalletParams) => {
     const params = {
-      methodArgs: [currencyName, poolAddress, amount],
+      methodArgs: [amount],
       senderAddress: walletParams.address,
       amount: 0,
       fee: walletParams.fee,

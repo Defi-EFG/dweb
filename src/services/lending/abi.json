@@ -95,6 +95,25 @@
     "constant":true,
     "inputs":[
       {
+        "name":"_depositors_addr",
+        "type":"address"
+      }
+    ],
+    "name":"getUserPool",
+    "outputs":[
+      {
+        "name":"",
+        "type":"address"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
         "name":"_symbol",
         "type":"bytes8"
       }
@@ -133,33 +152,6 @@
     "constant":false,
     "inputs":[
       {
-        "name":"_symbol",
-        "type":"bytes8"
-      },
-      {
-        "name":"_pool_addr",
-        "type":"address"
-      },
-      {
-        "name":"_amount",
-        "type":"uint256"
-      }
-    ],
-    "name":"borrow",
-    "outputs":[
-      {
-        "name":"borrowedEFG",
-        "type":"uint256"
-      }
-    ],
-    "payable":false,
-    "stateMutability":"nonpayable",
-    "type":"function"
-  },
-  {
-    "constant":false,
-    "inputs":[
-      {
         "name":"_beneficiar",
         "type":"address"
       },
@@ -183,11 +175,19 @@
     "constant":false,
     "inputs":[
       {
+        "name":"_symbol",
+        "type":"bytes8"
+      },
+      {
         "name":"_amount",
         "type":"uint256"
+      },
+      {
+        "name":"_pool_addr",
+        "type":"address"
       }
     ],
-    "name":"repay",
+    "name":"depositAsset",
     "outputs":[
       {
         "name":"result",
@@ -202,19 +202,11 @@
     "constant":false,
     "inputs":[
       {
-        "name":"_symbol",
-        "type":"bytes8"
-      },
-      {
         "name":"_amount",
         "type":"uint256"
-      },
-      {
-        "name":"_pool_addr",
-        "type":"address"
       }
     ],
-    "name":"lockAsset",
+    "name":"repay",
     "outputs":[
       {
         "name":"result",
@@ -414,25 +406,6 @@
     "type":"function"
   },
   {
-    "constant":false,
-    "inputs":[
-      {
-        "name":"_pool_addr",
-        "type":"address"
-      }
-    ],
-    "name":"lockECOC",
-    "outputs":[
-      {
-        "name":"result",
-        "type":"bool"
-      }
-    ],
-    "payable":true,
-    "stateMutability":"payable",
-    "type":"function"
-  },
-  {
     "constant":true,
     "inputs":[
       {
@@ -466,7 +439,7 @@
         "type":"uint256"
       },
       {
-        "name":"pollAddress",
+        "name":"poolAddress",
         "type":"address"
       }
     ],
@@ -498,26 +471,41 @@
     "type":"function"
   },
   {
-    "constant":true,
+    "constant":false,
     "inputs":[
       {
-        "name":"_symbol",
-        "type":"bytes8"
-      },
-      {
-        "name":"_depositor",
-        "type":"address"
+        "name":"_amount",
+        "type":"uint256"
       }
     ],
-    "name":"getDepositedPool",
+    "name":"borrow",
     "outputs":[
       {
-        "name":"pollAddress",
-        "type":"address"
+        "name":"borrowedEFG",
+        "type":"uint256"
       }
     ],
     "payable":false,
-    "stateMutability":"view",
+    "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "constant":false,
+    "inputs":[
+      {
+        "name":"_pool_addr",
+        "type":"address"
+      }
+    ],
+    "name":"depositECOC",
+    "outputs":[
+      {
+        "name":"result",
+        "type":"bool"
+      }
+    ],
+    "payable":true,
+    "stateMutability":"payable",
     "type":"function"
   },
   {
@@ -546,10 +534,6 @@
     ],
     "name":"getLoanInfo",
     "outputs":[
-      {
-        "name":"assetSymbol",
-        "type":"bytes8"
-      },
       {
         "name":"amount",
         "type":"uint256"
@@ -632,7 +616,7 @@
         "type":"uint256"
       }
     ],
-    "name":"LockECOCEvent",
+    "name":"DepositECOCEvent",
     "type":"event"
   },
   {
@@ -659,7 +643,7 @@
         "type":"uint256"
       }
     ],
-    "name":"LockAssetEvent",
+    "name":"DepositAssetEvent",
     "type":"event"
   },
   {
@@ -789,16 +773,6 @@
         "indexed":false,
         "name":"borrower",
         "type":"address"
-      },
-      {
-        "indexed":false,
-        "name":"assetSymbol",
-        "type":"bytes32"
-      },
-      {
-        "indexed":false,
-        "name":"asset_amount",
-        "type":"uint256"
       }
     ],
     "name":"MarginCallEvent",

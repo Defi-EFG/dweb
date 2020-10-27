@@ -5,7 +5,7 @@ export function timeFromNow(now: string | number) {
   return moment(now).fromNow()
 }
 
-export function numberWithCommas(num: number, options?: { decimal?: number, fixed?: number }) {
+export function numberWithCommas(num: number, options?: { decimal?: number; fixed?: number }) {
   if (!options) {
     return num.toLocaleString()
   }

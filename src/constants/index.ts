@@ -13,6 +13,12 @@ export const TYPE_ECRC20 = 'ECRC-20'
 
 export const STATUS_SYNCED = 'synced'
 export const STATUS_PENDING = 'pending'
+export const STATUS_CONFIRMED = 'confirmed'
+
+export const TX_DEPOSIT = 'Deposting'
+export const TX_WITHDRAW = 'Withdrawing'
+export const TX_BORROW = 'Borrowing'
+export const TX_REPAY = 'Repaying'
 
 interface CurrencyStyle {
   [symbol: string]: Style

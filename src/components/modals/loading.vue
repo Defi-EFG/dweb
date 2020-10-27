@@ -20,6 +20,8 @@ import { Component, Vue, Prop } from 'vue-property-decorator'
 @Component({})
 export default class Loading extends Vue {
   @Prop({ default: 'Generating keystore file...' }) msg!: string
+
+  loading = true
 }
 </script>
 <style scoped>
