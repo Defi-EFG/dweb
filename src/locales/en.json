@@ -73,7 +73,7 @@
                 "headsub": "How can you know what is your maximum allowed borrowing in EFG token. It depends on how much ECOC have you deposited as collateral. In EFG dApp the user must repay in EFG token the loan. Repay amount is based on calculations depending on the maximum borrowed collateral amount in ratio of 60%. The function calculates your account’s liquidity, which is based on EFG current value of the maximum allowed borrowing amount. But you would never borrow this much at once because your account may instantly be liquidated if the price moves in the wrong direction."
             },
             {
-                "head": "Total debt",
+                "head": "Total Debt",
                 "headsub": " This is the user’s current borrowed amount plus the total interest that needs to be repaid. The maximum EFG token that users can borrow is the 60% of the total collateral value of ECOC. This is calculated with a simple to use function of the EFG dApp."
             },
             {

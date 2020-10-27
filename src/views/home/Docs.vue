@@ -119,8 +119,8 @@ export default class Docs extends Vue {
 }
 .sec_doc2 .img .docs_head {
   width: 100%;
-  margin-bottom: 30px;
-  font-size: 30px;
+  margin-bottom: 20px;
+  font-size: 20px;
   text-transform: uppercase;
   font-weight: bold;
 }
