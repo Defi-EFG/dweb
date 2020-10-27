@@ -60,22 +60,41 @@
                 "subtitle": "我们相信规模、可视性和时间是对智能合约安全真正的关键考验，它就是用户的安全性和适用性的关键点。ECOC Financial Growth（EFG）Token的开发人员为了建造最佳金融渠道而努力不停的开发。"
             }
         ],
-        "docs": {
-            "Introduction": "Introduction",
-            "detail1": {
-                "head": "什么是DeFi？",
-                "head_sub": "去中心化金融（DeFi）是指在区块链系统之上开发的金融应用程序组成的生态系统。DeFi的目标是重建没有中介的传统金融体系。市场上的许多传统行为，如借贷，现在可以通过去中心化的开源系统完成。"
+        "Introduction": "Guide",
+        "docs": [{
+                "head": "Collateral ",
+                "headsub": "In order to borrow the EFG Token from dApp, users need to firstly supply ECOC coins as collateral. Meanwhile, users cannot redeem or transfer collateral while it is locked."
             },
-            "detail2": {
-                "head": "什么是ECOC Financial Growth（EFG）",
-                "head_sub": "ECOC Financial Growth（EFG）是一种去中心化的数字加密货币，建立在ECRC-20的基础上，共享ERC-20（以太坊）标准的相同接口。EFG是由 ECOChain开发平台创建的。 ECOChain 认为扩展和加强生态系统，为用户、现实和稳定的价格提供所需的缺失属性。同时，EFG 提供用户和不熟悉的用户简单化的 Defi 平台，而提高他们的利润。"
+            {
+                "head": "Account Liquidity",
+                "headsub": "How can you know what is your maximum allowed borrowing in EFG token. It depends on how much ECOC have you deposited as collateral. In EFG dApp the user must repay in EFG token the loan. Repay amount is based on calculations depending on the maximum borrowed collateral amount in ratio of 60%. The function calculates your account’s liquidity, which is based on EFG current value of the maximum allowed borrowing amount. But you would never borrow this much at once because your account may instantly be liquidated if the price moves in the wrong direction."
             },
-            "detail3": {
-                "head": "为什么选择EFG？",
-                "head_sub": "EFG为用户带来了增加投资价值的机会。我们的目标是提供DeFi简单化、易用，即使对于数字资产的新手用户。同时，聚集广泛的用户群和创造高效用的服务。准备加入一个全新的货币，EFG！"
+            {
+                "head": "Total debt",
+                "headsub": " This is the user’s current borrowed amount plus the total interest that needs to be repaid. The maximum EFG token that users can borrow is the 60% of the total collateral value of ECOC. This is calculated with a simple to use function of the EFG dApp."
+            },
+            {
+                "head": "The Borrow Rate",
+                "headsub": "Borrowers owe the prevailing interest rate of the asset they are borrowing. The borrowed loan and interest do not have to be repaid daily unless the amount of the collateral plus the borrower's interest equal or more than 60% of the total deposited collateral amount. On this occasion, the EFG dApp system can liquidate the collateral."
+            },
+            {
+                "head": "Withdrawal ",
+                "headsub": "The borrower can reclaim the collateral back. To do this he must first repay the loan and pay the borrower's total interest. The total debt is calculated by using the repay function in the EFG dApp at the time that the debtor repays back the loan."
+            },
+            {
+                "head": "Liquidation ",
+                "headsub": "A borrowing account becomes insolvent when the Borrow Balance exceeds the amount allowed by calculating as a ratio of 60% of the collateral amount. Having your account liquidated is bad because you lose all of your collateral."
+            },
+            {
+                "head": "Free Market",
+                "headsub": "The EFG token that is supplied to the user can also be used as speculation in the cryptocurrency or financial markets. "
+            },
+            {
+                "head": "Oracles ",
+                "headsub": "Oracles are the only entities that are authorized to inject real-world data into the smart contract. Specifically, they inject the exchange rates for each second(timestamp) of each pair of EFG (asset / USDT)."
             }
 
-        }
+        ]
     },
     "components": {
 
