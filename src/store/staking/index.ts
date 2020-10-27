@@ -1,6 +1,5 @@
 import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '@/store'
-import { InsufficientBalance } from '@/exceptions/wallet'
 import { WalletParams } from '@/services/ecoc/types'
 import { StakingPlatform } from '@/types/staking'
 import { staking as stakingContract } from '@/services/staking'
@@ -103,15 +102,20 @@ export default class StakingModule extends VuexModule implements StakingPlatform
     const fullAmount = utils.fromDecimals(amount, decimals).toNumber()
 
     try {
-      const approveTx = await efg.approve(stakingContract.address, amount, walletParams)
-      await Ecoc.sendRawTx(approveTx) // waiting for ecrc-20 approve
-      const newUtxos = await Ecoc.getUtxos(walletParams.address)
+      const allowance = await efg.allowance(walletParams.address, stakingContract.address)
+      if (fullAmount > allowance) {
+        // waiting for ecrc-20 approve
+        const approveTx = await efg.approve(stakingContract.address, amount, walletParams)
+        const approveTxid = await Ecoc.sendRawTx(approveTx)
 
-      if (!newUtxos || newUtxos.length < 0) {
-        return Promise.reject(new InsufficientBalance('Not enough utxo to spend'))
+        console.log('Waiting for confirmation')
+        await Ecoc.waitForConfirmation(approveTxid)
+        console.log('Confirmed')
+
+        const newUtxos = await Ecoc.getUtxos(walletParams.address)
+        walletParams.utxoList = newUtxos
       }
 
-      walletParams.utxoList = newUtxos
       const depositTx = await stakingContract.mintGPT(fullAmount, walletParams)
       const txid = await Ecoc.sendRawTx(depositTx)
       this.context.commit('updateStatus', constants.STATUS_PENDING)

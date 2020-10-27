@@ -131,6 +131,22 @@ const getUtxos = async (address: string) => {
   return utxos
 }
 
+const waitForConfirmation = (txid: string) => {
+  return new Promise((resolve, reject) => {
+    let txResult
+    setInterval(async () => {
+      try {
+        txResult = await EcocWallet.getTxInfo(txid)
+        if (txResult.confirmations > 0) {
+          return resolve(true)
+        }
+      } catch (error) {
+        reject(error)
+      }
+    }, 10000)
+  })
+}
+
 export {
   sendRawTx,
   generateNewKeystore,
@@ -140,5 +156,6 @@ export {
   getEcrc20Balance,
   getTxs,
   getUtxos,
-  isEcrc20
+  isEcrc20,
+  waitForConfirmation
 }
