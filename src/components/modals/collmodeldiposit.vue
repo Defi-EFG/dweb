@@ -1,263 +1,327 @@
 <template>
-  <v-dialog v-model="show" max-width="500" class="send-transaction" id="collat">
-    <v-stepper v-model="step" class="blur-card">
-      <v-stepper-items>
-        <!-- Welcome to ECOC Finance Governance -->
-        <v-stepper-content step="1">
-          <v-card color="#FFFFFF00">
-            <v-card-title class="modal-header">
-              <v-icon></v-icon>
-              <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
-            </v-card-title>
-            <div class="transaction-confirmation-wrapper collateral_pddeful ">
-              <div class="headtitle_collat">
-                <div class="headtitle_collat_head">Select the Loaner</div>
-                <div class="headtitle_collat_sub">
-                  You can only change the loaner once you repay all the borrowed.
-                </div>
-              </div>
-              <div class="transaction-confirmation-content collat_bg">
-                <v-container>
-                  <div class="texttitle_hade">
-                    <v-row class="row1 ">
-                      <v-col lg="4" md="4" cols="4">
-                        {{ $t('views.main.loaner') }}
-                      </v-col>
-                      <v-col lg="4" md="4" cols="4">
-                        {{ $t('views.main.total_supply') }}
-                      </v-col>
-                      <v-col lg="4" md="4" cols="4">
-                        {{ $t('views.main.total_borrowed') }}
-                      </v-col>
-                    </v-row>
+  <div>
+    <v-dialog v-model="show" max-width="500" class="send-transaction" id="collat">
+      <v-stepper v-model="step" class="blur-card">
+        <v-stepper-items>
+          <!-- Welcome to ECOC Finance Governance -->
+          <v-stepper-content step="1">
+            <v-card color="#FFFFFF00">
+              <v-card-title class="modal-header">
+                <v-icon></v-icon>
+                <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
+              </v-card-title>
+              <div class="transaction-confirmation-wrapper collateral_pddeful ">
+                <div class="headtitle_collat">
+                  <div class="headtitle_collat_head">Select the Loaner</div>
+                  <div class="headtitle_collat_sub">
+                    You can only change the loaner once you repay all the borrowed.
                   </div>
-                  <div class="row2" id="style-1">
-                    <v-row
-                      v-for="(item, i) in Loanerlist"
-                      :key="i"
-                      :class="Loanername == item.address ? 'active row1 roww2' : 'row1 roww2'"
-                      @click="selectLoaner((Loanername = item.address))"
-                    >
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop Loener">
-                          {{ truncateAddress(item.address) }}
-                        </div>
-                      </v-col>
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop color_1 textafter">
-                          <span class="color_size1">
-                            ${{ item.totalSupply | numberWithCommas({ decimal: 2 }) }}</span
-                          >
-                        </div>
-                      </v-col>
-                      <v-col lg="4" md="4" cols="4">
-                        <div class="margintop color_2 textafter">
-                          <span class="color_size2">
-                            ${{ item.totalBorrowed | numberWithCommas({ decimal: 2 }) }}</span
-                          >
-                        </div>
-                      </v-col>
-                      <img class="row1_img" src="@/assets/backg_01.svg" />
-                    </v-row>
+                </div>
+                <div class="transaction-confirmation-content collat_bg">
+                  <v-container>
+                    <div class="texttitle_hade">
+                      <v-row class="row1 ">
+                        <v-col lg="4" md="4" cols="4">
+                          {{ $t('views.main.loaner') }}
+                        </v-col>
+                        <v-col lg="4" md="4" cols="4">
+                          {{ $t('views.main.total_supply') }}
+                        </v-col>
+                        <v-col lg="4" md="4" cols="4">
+                          {{ $t('views.main.total_borrowed') }}
+                        </v-col>
+                      </v-row>
+                    </div>
+                    <div class="row2" id="style-1">
+                      <v-row
+                        v-for="(item, i) in Loanerlist"
+                        :key="i"
+                        :class="Loanername == item.address ? 'active row1 roww2' : 'row1 roww2'"
+                        @click="selectLoaner((Loanername = item.address))"
+                      >
+                        <v-col lg="4" md="4" cols="4">
+                          <div class="margintop Loener">
+                            {{ truncateAddress(item.address) }}
+                          </div>
+                        </v-col>
+                        <v-col lg="4" md="4" cols="4">
+                          <div class="margintop color_1 textafter">
+                            <span class="color_size1">
+                              ${{ item.totalSupply | numberWithCommas({ decimal: 2 }) }}</span
+                            >
+                          </div>
+                        </v-col>
+                        <v-col lg="4" md="4" cols="4">
+                          <div class="margintop color_2 textafter">
+                            <span class="color_size2">
+                              ${{ item.totalBorrowed | numberWithCommas({ decimal: 2 }) }}</span
+                            >
+                          </div>
+                        </v-col>
+                        <img class="row1_img" src="@/assets/backg_01.svg" />
+                      </v-row>
+                    </div>
+                  </v-container>
+                </div>
+                <v-btn
+                  large
+                  depressed
+                  :class="Loanername != '' ? 'text-capitalize' : 'disabled'"
+                  @click="connectStep()"
+                  >Select</v-btn
+                >
+              </div>
+            </v-card>
+          </v-stepper-content>
+
+          <v-stepper-content step="2">
+            <v-card color="#FFFFFF00">
+              <v-card-title class="modal-header">
+                <v-btn @click="leftarrow()" text><v-icon color="white">$leftarrow</v-icon></v-btn>
+                <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
+              </v-card-title>
+              <div class="transaction-confirmation-wrapper collateral_pddeful">
+                <div class="content-wrapper ">
+                  <div class="content-logo ">
+                    <div class="logo"><img src="@/assets/ECOC.svg" alt="" /></div>
                   </div>
-                </v-container>
+                  <h3 class="">Use ECOC as a collateral?</h3>
+                  <p class="lightgray--text">
+                    You can deposit more once you repay all the borrowed. (Borrow power is 0)
+                  </p>
+                </div>
+                <div class="transaction-confirmation-content outputselect">
+                  <span>Loaner</span><br />
+                  <input type="text" v-model="selectdata" disabled />
+                </div>
+                <v-btn large depressed class="text-capitalize" @click="nextcollat()">Next</v-btn>
               </div>
-              <v-btn
-                large
-                depressed
-                :class="Loanername != '' ? 'text-capitalize' : 'disabled'"
-                @click="connectStep()"
-                >Select</v-btn
-              >
-            </div>
-          </v-card>
-        </v-stepper-content>
+            </v-card>
+          </v-stepper-content>
 
-        <v-stepper-content step="2">
-          <v-card color="#FFFFFF00">
-            <v-card-title class="modal-header">
-              <v-btn @click="leftarrow()" text><v-icon color="white">$leftarrow</v-icon></v-btn>
-              <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
-            </v-card-title>
-            <div class="transaction-confirmation-wrapper collateral_pddeful">
-              <div class="content-wrapper ">
-                <div class="content-logo ">
-                  <div class="logo"><img src="@/assets/ECOC.svg" alt="" /></div>
+          <v-stepper-content step="3">
+            <v-card color="#FFFFFF00">
+              <v-card-title class="modal-header">
+                <v-btn @click="leftarrow3()" text><v-icon color="white">$leftarrow</v-icon></v-btn>
+                <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
+              </v-card-title>
+              <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin">
+                <div class="d-flex ">
+                  <div class="transaction-sender curser" @click="doCopy(walletAddres)">
+                    {{ truncateAddress(walletAddres) }}
+                  </div>
+                  <div class="transaction-receiver curser" @click="doCopy(walletToAddr)">
+                    Lending Platform
+                  </div>
+                  <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
                 </div>
-                <h3 class="">Use ECOC as a collateral?</h3>
-                <p class="lightgray--text">
-                  You can deposit more once you repay all the borrowed. (Borrow power is 0)
-                </p>
-              </div>
-              <div class="transaction-confirmation-content outputselect">
-                <span>Loaner</span><br />
-                <input type="text" v-model="selectdata" disabled />
-              </div>
-              <v-btn large depressed class="text-capitalize" @click="nextcollat()">Next</v-btn>
-            </div>
-          </v-card>
-        </v-stepper-content>
-
-        <v-stepper-content step="3">
-          <v-card color="#FFFFFF00">
-            <v-card-title class="modal-header">
-              <v-btn @click="leftarrow3()" text><v-icon color="white">$leftarrow</v-icon></v-btn>
-              <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
-            </v-card-title>
-            <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin">
-              <div class="d-flex ">
-                <div class="transaction-sender curser" @click="doCopy(walletAddres)">
-                  {{ truncateAddress(walletAddres) }}
-                </div>
-                <div class="transaction-receiver curser" @click="doCopy(walletToAddr)">
-                  Lending Platform
-                </div>
-                <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
-              </div>
-              <div class="transaction-confirmation-content">
-                <div class="collateral_pd">
-                  <h2><strong>Transaction Confirm</strong></h2>
-                  <small>Please confirm the transaction</small>
-                  <div class="div_prices">
-                    <div class="transaction-confirmation-content-detail">
-                      <div class="detail">
-                        <span class="gt">Amount</span>
-                        <div class="d-flex justify-end">
-                          <p>{{ amount }}</p>
-                          <p class="ml-2">ECOC</p>
-                        </div>
-                      </div>
-                      <div class="detail">
-                        <span class="gt">Gas Fee</span>
-                        <div class="text-end">
+                <div class="transaction-confirmation-content">
+                  <div class="collateral_pd">
+                    <h2><strong>Transaction Confirm</strong></h2>
+                    <small>Please confirm the transaction</small>
+                    <div class="div_prices">
+                      <div class="transaction-confirmation-content-detail">
+                        <div class="detail">
+                          <span class="gt">Amount</span>
                           <div class="d-flex justify-end">
-                            <p>{{ fee }}</p>
+                            <p>{{ amount }}</p>
                             <p class="ml-2">ECOC</p>
+                          </div>
+                        </div>
+                        <div class="detail">
+                          <span class="gt">Gas Fee</span>
+                          <div class="text-end">
+                            <div class="d-flex justify-end">
+                              <p>{{ fee }}</p>
+                              <p class="ml-2">ECOC</p>
+                            </div>
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                  <div class="detail">
-                    <span class="gt"></span>
-                    <div class="text-end gt">
-                      <v-btn small text color="primary">
-                        <span class="gassetting">GAS SETTING</span>
-                      </v-btn>
+                    <div class="detail">
+                      <span class="gt"></span>
+                      <div class="text-end gt">
+                        <v-btn small text color="primary" @click="gasSetting()">
+                          <span class="gassetting">GAS SETTING</span>
+                        </v-btn>
+                      </div>
+                    </div>
+                    <div class="border-bottom"></div>
+                    <v-form class="pt-4">
+                      <v-text-field
+                        v-model="password"
+                        label="Keystore Password"
+                        dense
+                        filled
+                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="show1 ? 'text' : 'password'"
+                        @click:append="show1 = !show1"
+                      ></v-text-field
+                    ></v-form>
+                    <div class="action-transaction-confirmation">
+                      <v-btn outlined large color="primary" class="text-capitalize1">Cancel</v-btn>
+                      <v-btn
+                        large
+                        depressed
+                        color="primary"
+                        class="text-capitalize"
+                        @click="outputsuccess()"
+                        >Confirm</v-btn
+                      >
                     </div>
                   </div>
-                  <div class="border-bottom"></div>
-                  <v-form class="pt-4">
-                    <v-text-field
-                      v-model="password"
-                      label="Keystore Password"
-                      dense
-                      filled
-                      :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                      :type="show1 ? 'text' : 'password'"
-                      @click:append="show1 = !show1"
-                    ></v-text-field
-                  ></v-form>
-                  <div class="action-transaction-confirmation">
-                    <v-btn outlined large color="primary" class="text-capitalize1">Cancel</v-btn>
-                    <v-btn
-                      large
-                      depressed
-                      color="primary"
-                      class="text-capitalize"
-                      @click="outputsuccess()"
-                      >Confirm</v-btn
-                    >
+                </div>
+              </div>
+            </v-card>
+          </v-stepper-content>
+
+          <v-stepper-content step="4" id="loadding">
+            <v-card color="#FFFFFF00">
+              <div class="generate-keydtore">
+                <v-progress-circular
+                  rotate="360"
+                  size="120"
+                  width="9"
+                  color="white"
+                  indeterminate
+                ></v-progress-circular>
+                <p>Generating keystore file...</p>
+              </div>
+            </v-card>
+          </v-stepper-content>
+
+          <v-stepper-content step="5">
+            <v-card color="#FFFFFF00">
+              <v-card-title class="modal-header">
+                <v-icon></v-icon>
+                <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
+              </v-card-title>
+              <div class="transaction-confirmation-wrapper collateral_pddeful ">
+                <div class="headtitle_collat">
+                  <div class="headtitle_collat_head font-bold">
+                    Deposit Successful!<img src="@/assets/icon/Check.svg" alt="" />
                   </div>
+                  <v-container colortextoutput>
+                    <v-row class="border-bottom_1 ">
+                      <v-col cols="6" class="nopadding">Collateral</v-col>
+                      <v-col cols="6" class="textright nopadding">+100.00 ECOC</v-col>
+                    </v-row>
+                    <v-row class="border-bottom_1">
+                      <v-col cols="6" class="nopadding">Borrow Power Used (New)</v-col>
+                      <v-col cols="6" class="textright nopadding">22.7 %</v-col>
+                    </v-row>
+                    <v-row class="border-bottom_1">
+                      <v-col cols="6" class="nopadding">Total Borrow Power (New)</v-col>
+                      <v-col cols="6" class="textright nopadding">$880.00</v-col>
+                    </v-row>
+                  </v-container>
+                  <v-container>
+                    <v-row class="headshowwallet showwallet">
+                      <v-col cols="6">ECOC Wallet</v-col>
+                      <v-col cols="6" class="textright"
+                        ><div class="nametitlecollat">
+                          <div class="dot-circle"></div>
+                          Ed76...F985
+                        </div></v-col
+                      >
+                    </v-row>
+                    <v-row class="showwallet2 showwalletcc">
+                      <v-col cols="8" class="nopadding font-bold ">Transaction Confirmed!</v-col>
+                      <v-col cols="4" class="textright nopadding">
+                        <v-btn class="icon" fab dark x-small color="primary">
+                          <v-icon dark>
+                            mdi-arrow-up
+                          </v-icon>
+                        </v-btn>
+                        <v-btn class="icon" fab dark x-small color="primary">
+                          <v-icon dark>
+                            mdi-content-copy
+                          </v-icon>
+                        </v-btn>
+                      </v-col>
+                    </v-row>
+                    <v-row class="showwallet3 font-df">
+                      <v-col cols="6" class="nopadding showwallet_bgd"
+                        >Total Sent (Collateral)</v-col
+                      >
+                      <v-col cols="6" class="textright nopadding showwallet_bgd2"
+                        >-100.00 ECOC</v-col
+                      >
+                    </v-row>
+                    <v-row class="showwallet4 font-df">
+                      <v-col cols="6" class="nopadding border-top-collat">Ending Balance:</v-col>
+                      <v-col cols="6" class="textright nopadding border-top-collat"
+                        >1998.00 ECOC</v-col
+                      >
+                    </v-row>
+                  </v-container>
                 </div>
               </div>
-            </div>
-          </v-card>
-        </v-stepper-content>
-
-        <v-stepper-content step="4" id="loadding">
-          <v-card color="#FFFFFF00">
-            <div class="generate-keydtore">
-              <v-progress-circular
-                rotate="360"
-                size="120"
-                width="9"
-                color="white"
-                indeterminate
-              ></v-progress-circular>
-              <p>Generating keystore file...</p>
-            </div>
-          </v-card>
-        </v-stepper-content>
-
-        <v-stepper-content step="5">
-          <v-card color="#FFFFFF00">
-            <v-card-title class="modal-header">
-              <v-icon></v-icon>
-              <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
-            </v-card-title>
-            <div class="transaction-confirmation-wrapper collateral_pddeful ">
-              <div class="headtitle_collat">
-                <div class="headtitle_collat_head font-bold">
-                  Deposit Successful!<img src="@/assets/icon/Check.svg" alt="" />
+            </v-card>
+          </v-stepper-content>
+        </v-stepper-items>
+      </v-stepper>
+    </v-dialog>
+    <v-dialog v-model="gassetting" max-width="450" class="content-gas-setting">
+      <v-card>
+        <div class="d-flex justify-lg-space-between pt-3 ">
+          <v-icon></v-icon>
+          <v-btn text @click="gassetting = false"><v-icon>$close</v-icon></v-btn>
+        </div>
+        <div class="content-gas-setting gas_seting_modal">
+          <h3>Gas Customization</h3>
+          <small>Increase the processing time of your transaction by using higher gas fee</small>
+          <div class="gas-customization">
+            <v-btn-toggle tile group>
+              <v-btn>
+                <div class="gas-custom-btn-group">
+                  <p>Slow</p>
+                  <p>-20 min</p>
+                  <p>1.00 ECOC</p>
                 </div>
-                <v-container colortextoutput>
-                  <v-row class="border-bottom_1 ">
-                    <v-col cols="6" class="nopadding">Collateral</v-col>
-                    <v-col cols="6" class="textright nopadding">+100.00 ECOC</v-col>
-                  </v-row>
-                  <v-row class="border-bottom_1">
-                    <v-col cols="6" class="nopadding">Borrow Power Used (New)</v-col>
-                    <v-col cols="6" class="textright nopadding">22.7 %</v-col>
-                  </v-row>
-                  <v-row class="border-bottom_1">
-                    <v-col cols="6" class="nopadding">Total Borrow Power (New)</v-col>
-                    <v-col cols="6" class="textright nopadding">$880.00</v-col>
-                  </v-row>
-                </v-container>
-                <v-container>
-                  <v-row class="headshowwallet showwallet">
-                    <v-col cols="6">ECOC Wallet</v-col>
-                    <v-col cols="6" class="textright"
-                      ><div class="nametitlecollat">
-                        <div class="dot-circle"></div>
-                        Ed76...F985
-                      </div></v-col
-                    >
-                  </v-row>
-                  <v-row class="showwallet2 showwalletcc">
-                    <v-col cols="8" class="nopadding font-bold ">Transaction Confirmed!</v-col>
-                    <v-col cols="4" class="textright nopadding">
-                      <v-btn class="icon" fab dark x-small color="primary">
-                        <v-icon dark>
-                          mdi-arrow-up
-                        </v-icon>
-                      </v-btn>
-                      <v-btn class="icon" fab dark x-small color="primary">
-                        <v-icon dark>
-                          mdi-content-copy
-                        </v-icon>
-                      </v-btn>
-                    </v-col>
-                  </v-row>
-                  <v-row class="showwallet3 font-df">
-                    <v-col cols="6" class="nopadding showwallet_bgd">Total Sent (Collateral)</v-col>
-                    <v-col cols="6" class="textright nopadding showwallet_bgd2">-100.00 ECOC</v-col>
-                  </v-row>
-                  <v-row class="showwallet4 font-df">
-                    <v-col cols="6" class="nopadding border-top-collat">Ending Balance:</v-col>
-                    <v-col cols="6" class="textright nopadding border-top-collat"
-                      >1998.00 ECOC</v-col
-                    >
-                  </v-row>
-                </v-container>
-              </div>
+              </v-btn>
+              <v-btn>
+                <div class="gas-custom-btn-group">
+                  <p>Average</p>
+                  <p>-20 min</p>
+                  <p>1.00 ECOC</p>
+                </div></v-btn
+              >
+              <v-btn>
+                <div class="gas-custom-btn-group">
+                  <p>Fast</p>
+                  <p>-20min</p>
+                  <p>1.00 ECOC</p>
+                </div></v-btn
+              >
+            </v-btn-toggle>
+          </div>
+          <div class="inputnumber d-flex justify-space-between">
+            <v-col cols="6" class="pb-0">
+              <label for="Gas price:">Gas price:</label
+              ><v-text-field type="number" v-model="gasPrice"></v-text-field>
+            </v-col>
+            <v-col cols="6" class="pb-0">
+              <label for="Gas limit:">Gas limit:</label
+              ><v-text-field type="number" v-model="gasLimit"></v-text-field>
+            </v-col>
+          </div>
+
+          <div class="d-flex justify-space-between py-2">
+            <p>New Transaction Fee:</p>
+            <div class="text-end">
+              <p class="mb-0">3.00 ECOC</p>
+              <small>-20 sec</small>
             </div>
-          </v-card>
-        </v-stepper-content>
-      </v-stepper-items>
-    </v-stepper>
-  </v-dialog>
+          </div>
+          <div class="save-button ">
+            <v-btn color="primary" depressed block>save</v-btn>
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
+  </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
@@ -283,6 +347,7 @@ export default class Collmodeldiposit extends Vue {
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
   show1 = false
   password = ''
+  gassetting = false
 
   @Prop() visible!: boolean
   @Prop() amount!: number
@@ -325,6 +390,11 @@ export default class Collmodeldiposit extends Vue {
       this.step = 2
     }
   }
+
+  gasSetting() {
+    this.gassetting = true
+  }
+
   leftarrow() {
     this.step = 1
   }
@@ -335,7 +405,7 @@ export default class Collmodeldiposit extends Vue {
     this.step = 2
   }
   outputsuccess() {
-    this.step = 5
+    this.step = 4
   }
   truncateAddress(addr: string) {
     const separator = '...'
@@ -376,6 +446,12 @@ export default class Collmodeldiposit extends Vue {
 }
 </script>
 <style lang="scss">
+.gas_seting_modal {
+  padding: 15px;
+  .gas-customization .v-btn-toggle:not(.v-btn-toggle--dense) .v-btn.v-btn.v-size--default{
+    width: 46.5%;
+  }
+}
 .outputselect {
   color: #cccccc;
   .v-text-field.v-text-field--solo:not(.v-text-field--solo-flat)
