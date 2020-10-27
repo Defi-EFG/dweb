@@ -1,10 +1,8 @@
 <template>
   <v-card dark class="balance-card">
     <v-card-text>
-      <span class="balance-label">Supply Balance</span>
-      <div class="loaner">
-        Loaner: ES1jMgpCNbDcBUdXz1JkJVxJWGkkjxbJB
-      </div>
+      <span class="balance-label">Collateral Balance</span>
+      <div class="loaner">Loaner: {{ loaner }}</div>
       <div class="balance" :class="isLiquidate ? 'liquidate' : ''">${{ balance.toFixed(2) }}</div>
       <div class="liquid-countdown" v-show="isLiquidate">
         <span>Counting down 5 blocks to liquidation...</span>
@@ -20,7 +18,8 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 @Component({})
 export default class SupplyBalance extends Vue {
   @Prop({ default: 0 }) readonly balance!: number
-  isLiquidate = false
+  @Prop({ default: '' }) readonly loaner!: string
+  @Prop({ default: false }) readonly isLiquidate!: boolean
 }
 </script>
 
@@ -57,6 +56,9 @@ export default class SupplyBalance extends Vue {
 }
 
 .liquid-countdown {
+  background: #151a2b;
+  border-radius: 5px;
+  padding: 8px;
   display: flex;
   justify-content: space-between;
 
@@ -69,6 +71,21 @@ export default class SupplyBalance extends Vue {
 
 .liquidate {
   color: #ff5656;
+}
+
+@media (max-width: 768px) {
+  .balance {
+    font-size: 29px;
+    padding-top: 1.8rem;
+  }
+
+  .loaner {
+    font-size: small;
+  }
+
+  .liquid-countdown {
+    font-size: small;
+  }
 }
 </style>
 

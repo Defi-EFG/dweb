@@ -5,7 +5,7 @@
       <v-tab>My borrowing</v-tab>
       <v-tab>My Activity</v-tab>
 
-      <v-tab-item>
+      <v-tab-item class="my-collateral">
         <v-card dark color="#2e3344">
           <v-card-text>
             <div class="supply-header">
@@ -18,7 +18,9 @@
                 <span>{{ item.currency.name }}</span>
               </div>
               <div class="balance">
-                <div>${{ getEstimatedValue(item.amount, item.price).toFixed(2) }}</div>
+                <div>
+                  ${{ getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)) }}
+                </div>
                 <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
               </div>
             </div>
@@ -26,7 +28,7 @@
         </v-card>
       </v-tab-item>
 
-      <v-tab-item>
+      <v-tab-item class="my-borrowing">
         <v-card dark color="#2e3344">
           <v-card-text>
             <div class="borrow-header">
@@ -43,7 +45,9 @@
                 <span>{{ item.interestRate }}%</span>
               </div>
               <div class="balance">
-                <div>${{ getEstimatedValue(item.amount, item.exchangeRate).toFixed(2) }}</div>
+                <div>
+                  ${{ getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)) }}
+                </div>
                 <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
               </div>
             </div>
@@ -51,7 +55,7 @@
         </v-card>
       </v-tab-item>
 
-      <v-tab-item>
+      <v-tab-item class="my-activity">
         <v-card dark color="#2e3344">
           <v-list color="#222738" class="activity-list">
             <v-list-item v-for="(act, index) in myActivity" :key="index" class="activity-item">
@@ -65,7 +69,7 @@
                   <span v-else>{{ act.activityName }} ({{ act.currencyName }})</span>
                   <v-spacer></v-spacer>
                   <span v-if="act.activityName != 'activated'"
-                    >${{ getEstimatedValue(act.amount, act.price).toFixed(2) }}</span
+                    >${{ getEstimatedValue(act.amount, act.price) }}</span
                   >
                 </v-list-item-title>
                 <div class="activity-date">
@@ -88,11 +92,13 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import moment from 'moment'
+import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import { getEstimatedValue } from '@/services/utils'
 
 @Component({})
 export default class LendingActivity extends Vue {
+  walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
 
   activityIcon = {
@@ -113,6 +119,12 @@ export default class LendingActivity extends Vue {
 
   get myActivity() {
     return this.lendingStore.myActivity
+  }
+
+  getCurrencyPrice(currencyName: string): number {
+    const currency = this.walletStore.currencies.find(currency => currency.name === currencyName)
+    if (!currency) return 0
+    return currency.price || 0
   }
 
   getTime(timestamp: number) {
@@ -222,6 +234,40 @@ export default class LendingActivity extends Vue {
     color: white;
     display: flex;
     opacity: 0.6;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-collateral,
+  .my-borrowing,
+  .my-activity {
+    font-size: small;
+  }
+
+  .my-collateral {
+    .supply-header {
+      font-size: small;
+    }
+
+    .supply-item {
+      font-size: small;
+    }
+  }
+
+  .my-borrowing {
+    .borrow-header {
+      font-size: small;
+    }
+
+    .borrow-item {
+      font-size: small;
+    }
+  }
+
+  .my-activity {
+    .activity-type {
+      font-size: small;
+    }
   }
 }
 </style>

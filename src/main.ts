@@ -6,9 +6,9 @@ import router from './router'
 import store from './store'
 import { messages, defaultLocale } from '@/i18n'
 import vuetify from './plugins/vuetify'
-// import { initFilters } from '@/plugins/filters'
+import { initFilters } from '@/plugins/filters'
 
-// initFilters()
+initFilters()
 
 Vue.config.productionTip = false
 Vue.use(VueI18n)

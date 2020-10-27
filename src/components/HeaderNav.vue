@@ -3,7 +3,7 @@
     <v-app-bar class="efg-header" flat dark>
       <div class="home" @click="gotoHome">
         <img src="@/assets/efg_logo.svg" class="efg-logo" />
-        <v-toolbar-title>ECOC Finance Governance</v-toolbar-title>
+        <v-toolbar-title class="header-title">ECOC Finance Governance</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
       <template v-if="!addr">
@@ -18,9 +18,7 @@
         </template>
         <v-card rounded-lg width="389" class="v-card-wrapper">
           <v-card-title class="cardheadertitle"
-            ><h6>
-              ECOC Wallet: <span class="network">{{ network }}</span>
-            </h6>
+            ><h6>ECOC Wallet</h6>
             <v-btn text color="primary" class="mb-2" @click="logout()"
               ><span class="text-btn">Disconnect</span></v-btn
             ></v-card-title
@@ -29,7 +27,7 @@
             <v-alert rounded-lg dense color="#ebebeb" class="primary-address">
               <span>{{ addr }}</span>
             </v-alert>
-            <v-btn text color="#7900B5" class="mt-1">
+            <v-btn text color="#7900B5" class="mt-1" @click="checkPrivatekeyDialog">
               <span class="text-btn">Private Key</span>
             </v-btn></v-card-text
           >
@@ -37,10 +35,11 @@
       </v-menu>
     </v-app-bar>
     <UnlockWallet
-      :visible="unlockWalletOpen"
       ref="unlockwalletModalRef"
+      :visible="unlockWalletOpen"
       @onClose="closeUnlockWallet"
     />
+    <PrivateKey :visiblemodalpk="accessPrivateKey" @onClose="onClosePrivateKey" />
   </div>
 </template>
 
@@ -49,37 +48,46 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import UnlockWallet from './modals/unlock-wallet.vue'
+import PrivateKey from './modals/private-key-modal.vue'
+
 @Component({
   components: {
-    UnlockWallet
+    UnlockWallet,
+    PrivateKey
   }
 })
 export default class HeaderNav extends Vue {
   walletStore = getModule(WalletModule)
   unlockWalletOpen = false
-
+  accessPrivateKey = false
   menu = false
 
   get addr() {
     return this.walletStore.address
   }
-
-  get network() {
-    return this.walletStore.network
+  checkPrivatekeyDialog() {
+    this.accessPrivateKey = !this.accessPrivateKey
   }
-
   closeUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
-
   openUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
+  }
+  openprivatekeyDialog() {
+    this.accessPrivateKey = !this.accessPrivateKey
+  }
+
+  onClosePrivateKey() {
+    this.accessPrivateKey = false
   }
 
   logout() {
     this.walletStore.logout()
   }
-
+  onClose() {
+    console.log('onclose')
+  }
   gotoHome() {
     this.$router.push('/')
   }
@@ -126,9 +134,6 @@ export default class HeaderNav extends Vue {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  .network {
-    color: #c074f9;
-  }
 }
 
 .cardheadertitle p,
@@ -152,7 +157,6 @@ export default class HeaderNav extends Vue {
   height: auto;
   padding: 7px 10px;
   background-color: #2a3047 !important;
-  margin-bottom: 10px;
 
   .dot-circle {
     height: 12px;
@@ -160,6 +164,12 @@ export default class HeaderNav extends Vue {
     background-color: #c074f9;
     border-radius: 50%;
     margin-right: 6px;
+  }
+}
+
+@media (max-width: 600px) {
+  .header-title {
+    display: none;
   }
 }
 </style>

@@ -9,6 +9,7 @@
       <div class="desktop_menu">
         <router-link :to="{ name: 'home-docs' }">{{ $t('views.titles.docs') }}</router-link>
         <a :href="msg" target="_blank">{{ $t('views.titles.whitepaper') }}</a>
+        <a :href="msgpdf" target="_blank">{{ $t('views.titles.yellow') }}</a>
         <v-btn outlined small @click="gotoDashboard">{{ $t('views.titles.dashboard') }}</v-btn>
       </div>
       <v-row id="menu_s">
@@ -31,6 +32,9 @@
                       </li>
                       <li>
                         <a :href="msg" target="_blank">{{ $t('views.titles.whitepaper') }}</a>
+                      </li>
+                      <li>
+                        <a :href="msgpdf" target="_blank">{{ $t('views.titles.yellow') }}</a>
                       </li>
                       <li class="li_noberder">
                         <v-btn outlined small @click="gotoDashboard">{{
@@ -75,6 +79,9 @@ export default class HeaderNavHome extends Vue {
   }
   get msg() {
     return this.$t('views.pdf')
+  }
+  get msgpdf() {
+    return this.$t('views.yellowpdf')
   }
   get underconstruction() {
     return this.$t('views.underconstruction')

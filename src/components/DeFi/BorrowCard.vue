@@ -1,80 +1,105 @@
 <template>
-  <v-card dark color="#1D212E" class="borrow-card">
-    <v-card-text class="wrapper">
-      <p class="action-label">Borrow</p>
-      <div class="wallet-balance mb-2">
-        <span>Wallet Balance:</span>
-        <v-spacer></v-spacer>
-        <span class="balance">{{ walletBalance.toFixed(2) }} {{ currencyName }}</span>
+  <div>
+    <p class="action-label" v-if="!isMobileDevice">Borrow</p>
+    <div class="wallet-balance">
+      <span>Wallet Balance:</span>
+      <v-spacer class="space"></v-spacer>
+      <span class="balance">{{ walletBalance.toFixed(2) }} {{ currencyName }}</span>
+    </div>
+    <v-text-field
+      class="amount-input"
+      label="Borrow Amount"
+      type="number"
+      :suffix="currencyName"
+      v-model="borrowValue"
+      height="43"
+      dark
+      color="#C074F9"
+      :hint="tokenConversion"
+      persistent-hint
+    ></v-text-field>
+    <div class="borrow-power">
+      <span class="label">Borrow Power</span>
+      <v-slider
+        class="borrow-slider"
+        v-model="bpSlider"
+        min="0"
+        max="100"
+        color="#c074f9"
+        track-color="#E4E4E4"
+        thumb-color="#E4E4E4"
+        :hide-details="true"
+        thumb-label
+        @end="limitValue"
+        @click="limitSlider"
+      ></v-slider>
+    </div>
+    <div class="borrow-used">
+      <div>Borrow Power Used</div>
+      <v-spacer class="space"></v-spacer>
+      <div class="bp-change">
+        <span>{{ bpUsed.toFixed(1) }}%</span>
+        &rarr;
+        <span class="after-calculated">{{ calculateBPUsed(borrowValue).toFixed(1) }}%</span>
       </div>
-      <v-text-field
-        class="amount-input"
-        label="Borrow Amount"
-        type="number"
-        :suffix="currencyName"
-        v-model="borrowValue"
-        height="43"
-        color="#C074F9"
-        :hint="tokenConversion"
-        persistent-hint
-      ></v-text-field>
-      <div class="borrow-power">
-        <span class="label">Borrow Power</span>
-        <v-slider
-          class="borrow-slider"
-          v-model="bpSlider"
-          min="0"
-          max="100"
-          color="#c074f9"
-          track-color="#E4E4E4"
-          thumb-color="#E4E4E4"
-          :hide-details="true"
-          thumb-label
-          @end="limitValue"
-          @click="limitSlider"
-        ></v-slider>
+    </div>
+    <div class="borrow-total mt-1 mb-3">
+      <div class="text-left">Total Borrowed</div>
+      <v-spacer class="space"></v-spacer>
+      <div class="bt-change">
+        <span>${{ borrowLimit }}</span>
+        &rarr;
+        <span class="after-calculated">${{ borrowLimit.toFixed(2) }}</span>
       </div>
-      <div class="borrow-used">
-        <div>Borrow Power Used</div>
-        <v-spacer></v-spacer>
-        <div>
-          <span>{{ bpUsed.toFixed(1) }}%</span>
-          &rarr;
-          <span class="after-calculated">{{ calculateBPUsed(borrowValue).toFixed(1) }}%</span>
-        </div>
-      </div>
-      <v-divider />
-      <div class="borrow-apy">
-        <span class="label">Borrow APY</span>
-        <v-spacer></v-spacer>
-        <span>{{ interestRate }} %</span>
-      </div>
-      <v-btn
-        large
-        block
-        depressed
-        :disabled="!isBorrowable(borrowValue, 'error')"
-        :class="isBorrowable(borrowValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
-        >{{ isBorrowable(borrowValue, 'btn') ? 'Borrow' : 'Not available' }}</v-btn
-      >
-    </v-card-text>
-  </v-card>
+    </div>
+    <v-divider dark />
+    <div class="borrow-apy">
+      <span class="label">Borrow APY</span>
+      <v-spacer></v-spacer>
+      <span>{{ interestRate }} %</span>
+    </div>
+    <v-btn
+      dark
+      large
+      block
+      depressed
+      :disabled="!isBorrowable(borrowValue, 'error')"
+      :class="isBorrowable(borrowValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+      >{{ isBorrowable(borrowValue, 'btn') ? 'Borrow' : 'Not available' }}</v-btn
+    >
+  </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
+import { WalletParams } from '@/services/ecoc/types'
 
 @Component({})
 export default class BorrowCard extends Vue {
+  lendingStore = getModule(LendingModule)
+
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
-  @Prop() borrowPower!: number
+  @Prop() borrowLimit!: number
   @Prop() interestRate!: number
   @Prop() borrowPowerPercentage!: number
 
-  bpSlider = this.bpUsed
+  bpSlider = 0
   borrowValue = 0
+
+  errorMsg = ''
+  confirmTxModal = false
+
+  mounted() {
+    this.bpSlider = this.bpUsed
+  }
+
+  get isMobileDevice() {
+    return window.innerWidth < 1264
+  }
 
   get walletBalance() {
     return Number(this.currency.balance)
@@ -89,7 +114,7 @@ export default class BorrowCard extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowPower) * 100
+    return (this.borrowBalance / this.borrowLimit) * 100
   }
 
   get tokenConversion() {
@@ -104,7 +129,7 @@ export default class BorrowCard extends Vue {
     }
 
     this.borrowValue = this.bpPercentToValue(this.bpSlider)
-    this.borrowValue = Math.round(this.borrowValue)
+    this.borrowValue = Number(this.borrowValue.toFixed(2))
   }
 
   limitValue(num: number) {
@@ -113,7 +138,7 @@ export default class BorrowCard extends Vue {
     }
 
     this.borrowValue = this.bpPercentToValue(num)
-    this.borrowValue = Math.round(this.borrowValue)
+    this.borrowValue = Number(this.borrowValue.toFixed(2))
   }
 
   // BP = Borrow Power
@@ -127,12 +152,16 @@ export default class BorrowCard extends Vue {
   }
 
   bpPercentToValue(bp: number) {
-    return (bp / 100) * (this.collateralBalance * this.borrowPowerPercentage) - this.borrowBalance
+    const bpPercent =
+      ((bp / 100) * (this.collateralBalance * this.borrowPowerPercentage) - this.borrowBalance) /
+      this.currencyPrice
+    return bpPercent
   }
 
   isBorrowable(amount: number, type: string) {
     const isEnough =
-      amount <= this.collateralBalance * this.borrowPowerPercentage - this.borrowBalance
+      amount * this.currencyPrice <=
+      this.collateralBalance * this.borrowPowerPercentage - this.borrowBalance
     const isValidAmount = amount >= 0
     const isClickable = amount > 0
 
@@ -151,6 +180,51 @@ export default class BorrowCard extends Vue {
 
     this.bpSlider = this.calculateBPUsed(val)
   }
+
+  onOpenModal() {
+    if (this.borrowValue) {
+      this.confirmTxModal = !this.confirmTxModal
+    }
+  }
+
+  closeModal() {
+    this.confirmTxModal = false
+  }
+
+  onSuccess() {
+    this.borrowValue = 0
+    this.closeModal()
+  }
+
+  onError(errorMsg: string) {
+    this.errorMsg = errorMsg
+    console.log(errorMsg)
+  }
+
+  onClose() {
+    this.closeModal()
+  }
+
+  async Borrow(walletParams: WalletParams) {
+    const amount = Number(this.borrowValue)
+    const poolAddress = this.lendingStore.loan.loaner
+
+    const payload = {
+      amount,
+      poolAddress,
+      walletParams
+    }
+
+    this.lendingStore
+      .borrow(payload)
+      .then(txid => {
+        console.log('Txid:', txid)
+        this.onSuccess()
+      })
+      .catch(error => {
+        this.onError(error.message)
+      })
+  }
 }
 </script>
 
@@ -168,7 +242,7 @@ export default class BorrowCard extends Vue {
   font-size: large;
   color: #c074f9;
   font-weight: 700;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 
 .borrow-apy,
@@ -176,9 +250,17 @@ export default class BorrowCard extends Vue {
   display: flex;
   color: white;
 
+  .balance {
+    text-align: right;
+  }
+
   .label {
     font-weight: 700;
   }
+}
+
+.wallet-balance {
+  margin-bottom: 1.87rem;
 }
 
 .borrow-apy {
@@ -198,15 +280,23 @@ export default class BorrowCard extends Vue {
   display: flex;
   color: white;
 
+  .bp-change {
+    text-align: right;
+  }
+
+  .bt-change {
+    text-align: right;
+  }
+
   .after-calculated {
     color: #c074f9;
   }
 }
 
-.borrow-used {
-  margin-top: 1rem;
-  margin-bottom: 1.25rem;
-}
+// .borrow-used {
+//   margin-top: 1rem;
+//   margin-bottom: 1.25rem;
+// }
 
 .submit-btn {
   margin-top: 3.6rem;
@@ -219,6 +309,46 @@ export default class BorrowCard extends Vue {
 .disabled {
   background: #8f8f8f !important;
   cursor: no-drop;
+}
+
+@media (max-width: 768px) {
+  .wallet-balance,
+  .borrow-power,
+  .borrow-used,
+  .borrow-total,
+  .borrow-apy {
+    font-size: small;
+  }
+}
+
+@media (max-width: 425px) {
+  .wallet-balance {
+    flex-wrap: wrap;
+
+    .balance {
+      width: 100%;
+    }
+  }
+
+  .borrow-used {
+    flex-wrap: wrap;
+
+    .bp-change {
+      width: 100%;
+    }
+  }
+
+  .borrow-total {
+    flex-wrap: wrap;
+
+    .bt-change {
+      width: 100%;
+    }
+  }
+
+  .space {
+    flex-basis: 100%;
+  }
 }
 </style>
 

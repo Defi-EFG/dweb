@@ -1,6 +1,7 @@
 import { KeyStore } from './keystore'
 import { TxList } from './transaction'
 import { Currency } from './currency'
+import { WalletParams } from '@/services/ecoc/types'
 
 export interface Wallet {
   address: string
@@ -10,14 +11,13 @@ export interface Wallet {
   currencies: Currency[]
   selectedCurrencyIndex: number
   lastUpdate: number
+  lastBlock: number
+  status: string
 }
 
 export interface SendPayload {
   currency: Currency
-  password: string
   to: string
   amount: number
-  fee: number
-  gasLimit?: number
-  gasPrice?: number
+  walletParams: WalletParams
 }

@@ -1,79 +1,117 @@
 <template>
-  <v-card dark color="#1D212E" class="collateral-card">
-    <v-card-text class="wrapper">
-      <p class="action-label">Collateral</p>
-      <div class="wallet-balance mb-2">
-        <span class="text-left">Wallet Balance:</span>
-        <v-spacer></v-spacer>
-        <span class="balance" @click="fillAmount(walletBalance)"
-          >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
-        >
-      </div>
-      <v-text-field
-        class="amount-input"
-        label="Collateral Amount"
-        :suffix="currencyName"
-        height="43"
-        color="#C074F9"
-        v-model="collateralAmount"
-        type="number"
-        :hint="tokenConversion"
-        persistent-hint
-      ></v-text-field>
-      <div class="borrow-power">
-        <span class="label">Borrow Power</span>
-        <v-progress-linear
-          :value="calculateBPUsed(collateralAmount)"
-          rounded
-          color="#C074F9"
-          background-color="#E4E4E4"
-          class="borrow-bar"
-          height="5"
-        ></v-progress-linear>
-      </div>
-      <div class="borrow-used">
-        <div class="text-left">Borrow Power Used</div>
-        <v-spacer></v-spacer>
-        <div class="text-right">
-          <span>{{ bpUsed.toFixed(1) }}%</span>
-          &rarr;
-          <span class="after-calculated">{{ calculateBPUsed(collateralAmount).toFixed(1) }}%</span>
-        </div>
-      </div>
-      <div class="borrow-total mt-1 mb-3">
-        <div class="text-left">Total Borrow Power</div>
-        <v-spacer></v-spacer>
-        <div class="text-right">
-          <span>${{ borrowPower }}</span>
-          &rarr;
-          <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
-        </div>
-      </div>
-      <v-divider />
-      <v-btn
-        large
-        block
-        depressed
-        :disabled="!isCollateralable(collateralAmount, 'error')"
-        :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
-        >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
+  <div>
+    <p class="action-label" v-if="!isMobileDevice">Collateral</p>
+    <div class="wallet-balance mb-2">
+      <span class="text-left">Wallet Balance:</span>
+      <v-spacer></v-spacer>
+      <span class="balance" @click="fillAmount(walletBalance)"
+        >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
       >
-    </v-card-text>
-  </v-card>
+    </div>
+    <v-text-field
+      class="amount-input"
+      label="Collateral Amount"
+      :suffix="currencyName"
+      height="43"
+      color="#C074F9"
+      dark
+      v-model="collateralAmount"
+      type="number"
+      :hint="tokenConversion"
+      persistent-hint
+    ></v-text-field>
+    <div class="borrow-power">
+      <span class="label">Borrow Power</span>
+      <v-progress-linear
+        :value="calculateBPUsed(collateralAmount)"
+        rounded
+        color="#C074F9"
+        background-color="#E4E4E4"
+        class="borrow-bar"
+        height="5"
+      ></v-progress-linear>
+    </div>
+    <div class="borrow-used">
+      <div class="text-left">Borrow Power Used</div>
+      <v-spacer class="space"></v-spacer>
+      <div class="bp-change">
+        <span>{{ bpUsed.toFixed(1) }}%</span>
+        &rarr;
+        <span class="after-calculated">{{ calculateBPUsed(collateralAmount).toFixed(1) }}%</span>
+      </div>
+    </div>
+    <div class="borrow-total mt-1 mb-3">
+      <div class="text-left">Total Borrow Power</div>
+      <v-spacer class="space"></v-spacer>
+      <div class="bt-change">
+        <span>${{ borrowLimit }}</span>
+        &rarr;
+        <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
+      </div>
+    </div>
+    <v-divider dark />
+    <v-btn
+      @click="openCollateralmodals()"
+      dark
+      large
+      block
+      depressed
+      :disabled="!isCollateralable(collateralAmount, 'error')"
+      :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+      >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
+    >
+    <Collatmodel
+      :visible="collateralmodel"
+      :toAddr="contractAddr"
+      :amount="collateralAmount"
+      :currency="currency"
+      @onSuccess="onSuccess"
+      @onClose="closeCollateralmodals"
+    />
+  </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
+import Collatmodel from '@/components/modals/collmodeldiposit.vue'
 
-@Component({})
+@Component({
+  components: {
+    Collatmodel
+  }
+})
 export default class Collateral extends Vue {
+  walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
-  @Prop() borrowPower!: number
+  @Prop() borrowLimit!: number
   @Prop() borrowPowerPercentage!: number
 
+  collateralmodel = false
   collateralAmount: number | string = 0
+
+  openCollateralmodals() {
+    this.collateralmodel = !this.collateralmodel
+  }
+
+  closeCollateralmodals() {
+    this.collateralmodel = !this.collateralmodel
+  }
+
+  onSuccess() {
+    this.collateralAmount = 0
+    this.closeCollateralmodals()
+  }
+
+  get contractAddr() {
+    return this.lendingStore.address
+  }
 
   get walletBalance() {
     return Number(this.currency.balance)
@@ -88,12 +126,16 @@ export default class Collateral extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowPower) * 100
+    return (this.borrowBalance / this.borrowLimit) * 100
   }
 
   get tokenConversion() {
-    return `${this.collateralAmount} ${this.currencyName} ≈ ${this.currencyPrice *
+    return `${this.collateralAmount} ${this.currencyName} ≈ $${this.currencyPrice *
       Number(this.collateralAmount)}`
+  }
+
+  get isMobileDevice() {
+    return window.innerWidth < 1264
   }
 
   fillAmount(amount: number) {
@@ -174,6 +216,14 @@ export default class Collateral extends Vue {
   display: flex;
   color: white;
 
+  .bp-change {
+    text-align: right;
+  }
+
+  .bt-change {
+    text-align: right;
+  }
+
   .after-calculated {
     color: #c074f9;
   }
@@ -191,6 +241,45 @@ export default class Collateral extends Vue {
 .disabled {
   background: #8f8f8f !important;
   cursor: no-drop;
+}
+
+@media (max-width: 768px) {
+  .wallet-balance,
+  .borrow-power,
+  .borrow-used,
+  .borrow-total {
+    font-size: small;
+  }
+}
+
+@media (max-width: 425px) {
+  .wallet-balance {
+    flex-wrap: wrap;
+
+    .balance {
+      width: 100%;
+    }
+  }
+
+  .borrow-used {
+    flex-wrap: wrap;
+
+    .bp-change {
+      width: 100%;
+    }
+  }
+
+  .borrow-total {
+    flex-wrap: wrap;
+
+    .bt-change {
+      width: 100%;
+    }
+  }
+
+  .space {
+    flex-basis: 100%;
+  }
 }
 </style>
 

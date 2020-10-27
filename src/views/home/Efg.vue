@@ -40,7 +40,9 @@
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
-              <line-chart></line-chart>
+              <template>
+                <LineChart id="1"></LineChart>
+              </template>
             </div>
           </v-col>
         </v-row>

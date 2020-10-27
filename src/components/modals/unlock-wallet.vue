@@ -87,7 +87,6 @@
                     >Please set your password to generate a keystore file</small
                   >
                 </div>
-
                 <template>
                   <v-text-field
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -104,7 +103,6 @@
                     v-model="createWalletPassword"
                   ></v-text-field>
                 </template>
-
                 <v-text-field
                   :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                   name="input-10-2"
@@ -134,9 +132,7 @@
               </div>
             </v-card>
           </v-stepper-content>
-
           <!-- Connect ECOC Wallet-->
-
           <v-stepper-content step="4">
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
@@ -224,9 +220,11 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import Loading from './loading-create-accout.vue'
+import Loading from './loading.vue'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
+import StakingModule from '@/store/staking'
 import TextReader from './text-reader.vue'
 
 @Component({
@@ -239,25 +237,25 @@ export default class UnlockwalletModal extends Vue {
   @Prop() visible!: boolean
 
   walletStore = getModule(WalletModule)
-  upload = false
+  lendingStore = getModule(LendingModule)
+  stakingStore = getModule(StakingModule)
 
+  upload = false
   keystore: any = ''
   keystorePassword = ''
   files = true
   createWalletKeystore = ''
   createWalletPassword = ''
   confirmPassword = ''
-
   show = false
   step = 1
   unlockwalletModal = this.visible
-
   rules = {
     required: (value: any) => {
       return !!value || 'Required.'
     },
     min: (v: any) => {
-      return v.length >= 8 || 'Min 8 characters'
+      return v.length >= 6 || 'Min 6 characters'
     }
   }
 
@@ -265,20 +263,13 @@ export default class UnlockwalletModal extends Vue {
   checkvisible() {
     this.unlockwalletModal = this.visible
   }
-
   onClose() {
     this.step = 1
     this.$emit('onClose')
   }
-
   onCreatewallet() {
     this.$emit('onCreatewallet')
   }
-
-  onSuccess() {
-    this.$emit('onSuccess')
-  }
-
   onCloseX() {
     this.onClose()
   }
@@ -308,31 +299,21 @@ export default class UnlockwalletModal extends Vue {
   }
 
   onUnlockWallet() {
-    // const keystore =
-    //   '{"version":"0.1","content":"U2FsdGVkX1/yXKNPYET2cpz51xwd02WyRZEkzuT7z1iH/SXW1s5OpKsSy5V/CUjMdziEw99eOVeuLWThC39xCyhW/kUqKu7q9ot47YD4rRo=","crypto":{"cipher":"AES"}}'
-    // const password = '123456'
     const keystore = this.keystore
     const password = this.keystorePassword
     this.walletStore.importWallet({ keystore, password }).then(() => {
-      this.walletStore.updateBalance().then(() => {
-        this.walletStore.updateCurrenciesPrice()
-      })
-      this.walletStore.updateTransactionsHistory()
-
       this.onClose()
     })
   }
 
   getFormattedTime() {
     const today = new Date()
-
     const y = today.getFullYear()
     const m = today.getMonth() + 1
     const d = today.getDate()
     const h = today.getHours()
     const mi = today.getMinutes()
     const sec = today.getSeconds()
-
     return `${y}-${m}-${d}T${h}-${mi}-${sec}`
   }
 

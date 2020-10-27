@@ -1,51 +1,78 @@
 <template>
-  <v-card dark color="#2e3344" class="staked-reward">
-    <v-card-text class="wrapper">
-      <div class="total-reward">
-        <p class="label mb-0">Your Staked Reward</p>
-        <p class="value">{{ stakedReward }} {{ currencyName }}</p>
-      </div>
+  <div>
+    <v-card dark color="#2e3344" class="staked-reward">
+      <v-card-text class="wrapper">
+        <div class="total-reward">
+          <p class="label mb-0">Your Staked Reward</p>
+          <p class="value text-center">{{ stakedReward }} {{ currencyName }}</p>
+        </div>
 
-      <div class="d-amount">
-        <span>Withdraw Available</span>
-        <v-spacer></v-spacer>
-        <span class="text-right">{{ withdrawAvailable.toFixed(2) }} {{ currencyName }}</span>
-      </div>
+        <div class="d-amount">
+          <span>Withdraw Available</span>
+          <v-spacer></v-spacer>
+          <span class="text-right">{{ withdrawAvailable.toFixed(2) }} {{ currencyName }}</span>
+        </div>
 
-      <v-divider></v-divider>
+        <v-divider></v-divider>
 
-      <p class="reward-label mb-1">Reward Withdrawal</p>
+        <p class="reward-label mb-1">Reward Withdrawal</p>
 
-      <div class="minimum-w">
-        <v-spacer></v-spacer>
-        <span class="all" @click="fillAmount(withdrawAvailable)">Withdraw All</span>
-      </div>
+        <div class="minimum-w">
+          <span class="value">Minimum Withdrawal: 1.00 GPT</span>
+          <v-spacer></v-spacer>
+          <span class="all" @click="fillAmount(withdrawAvailable)">Withdraw All</span>
+        </div>
 
-      <v-text-field
-        class="staked-amount"
-        placeholder="0"
-        prefix="Amount"
-        :suffix="currencyName"
-        v-model="withdrawAmount"
-        single-line
-        solo
-        hide-details="true"
-      ></v-text-field>
+        <v-text-field
+          class="staked-amount"
+          placeholder="0"
+          prefix="Amount"
+          :suffix="currencyName"
+          v-model="withdrawAmount"
+          single-line
+          solo
+          hide-details="true"
+        ></v-text-field>
 
-      <v-btn large block depressed class="reward-btn">Withdraw Reward</v-btn>
-    </v-card-text>
-  </v-card>
+        <v-btn large block depressed class="reward-btn" @click="openConfirmTxModal"
+          >Withdraw Reward</v-btn
+        >
+      </v-card-text>
+    </v-card>
+    <TransactionComfirmationModal
+      :visible="confirmTxModal"
+      :toAddr="contractAddr"
+      :amount="withdrawAmount"
+      :currency="currency"
+      @onConfirm="onConfirm"
+      @onClose="closeConfirmTxModal"
+    />
+  </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
 import { CurrencyInfo } from '@/types/currency'
+import WalletModule from '@/store/wallet'
+import StakingModule from '@/store/staking'
+import { WalletParams } from '@/services/ecoc/types'
+import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 
-@Component({})
+@Component({
+  components: {
+    TransactionComfirmationModal
+  }
+})
 export default class StakedReward extends Vue {
+  walletStore = getModule(WalletModule)
+  stakingStore = getModule(StakingModule)
+
   @Prop({ default: 0 }) readonly stakedReward!: number
   @Prop({ default: {} }) readonly rewardCurrency!: CurrencyInfo
 
+  confirmTxModal = false
+  errorMsg = ''
   withdrawAmount: string | number = ''
 
   get currencyName() {
@@ -56,8 +83,56 @@ export default class StakedReward extends Vue {
     return this.stakedReward
   }
 
+  get currency() {
+    const stakingCurrency = this.walletStore.currenciesList.find(
+      currency => currency.name === this.currencyName
+    )
+
+    return stakingCurrency || {}
+  }
+
+  get contractAddr() {
+    return this.stakingStore.address
+  }
+
   fillAmount(amount: number) {
     this.withdrawAmount = amount
+  }
+
+  openConfirmTxModal() {
+    this.confirmTxModal = !this.confirmTxModal
+  }
+
+  closeConfirmTxModal() {
+    this.withdrawAmount = 0
+    this.confirmTxModal = false
+  }
+
+  onSuccess() {
+    this.closeConfirmTxModal()
+  }
+
+  onError(errorMsg: string) {
+    this.errorMsg = errorMsg
+    console.log(errorMsg)
+  }
+
+  onConfirm(walletParams: WalletParams) {
+    const amount = Number(this.withdrawAmount)
+    const payload = {
+      amount,
+      walletParams
+    }
+
+    this.stakingStore
+      .claim(payload)
+      .then(txid => {
+        console.log('Txid:', txid)
+        this.onSuccess()
+      })
+      .catch(error => {
+        this.onError(error.message)
+      })
   }
 }
 </script>
@@ -139,6 +214,25 @@ export default class StakedReward extends Vue {
   font-size: larger;
   color: #c074f9;
   font-weight: 700;
+}
+
+@media (max-width: 425px) {
+  .total-reward {
+    .value {
+      font-size: large;
+      padding-top: 0.5rem;
+    }
+  }
+
+  .staked-amount,
+  .minimum-w,
+  .d-amount {
+    font-size: small;
+  }
+
+  .reward-label {
+    font-size: 15px;
+  }
 }
 </style>
 

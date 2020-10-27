@@ -1,4 +1,4 @@
-import { Transaction } from '@/types/transaction'
+import { Transaction, Utxo } from '@/types/transaction'
 
 export interface EWallet {
   keypair: any
@@ -48,16 +48,16 @@ export interface TxData {
   txs: Transaction[]
 }
 
-export interface SendEcocPayload {
+export interface SendPayload {
   to: string
   amount: number
-  fee: number
 }
 
-export interface SendEcrc20Payload {
-  to: string
-  amount: number
+export interface WalletParams {
+  address: string
+  keypair: any
+  utxoList: Utxo[]
   fee: number
-  gasPrice: number
   gasLimit: number
+  gasPrice: number
 }
