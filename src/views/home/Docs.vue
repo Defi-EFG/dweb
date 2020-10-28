@@ -43,7 +43,6 @@ export default class Docs extends Vue {
   onClickActive() {
     this.active = 'Introduction'
     this.name = 'home-docs'
-    this.$store.dispatch('addAction')
   }
 
   onClickActive2() {

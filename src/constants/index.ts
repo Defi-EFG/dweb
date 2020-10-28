@@ -15,6 +15,7 @@ export const STATUS_SYNCED = 'synced'
 export const STATUS_PENDING = 'pending'
 export const STATUS_CONFIRMED = 'confirmed'
 
+export const TX_TRANSFER = 'Transfering'
 export const TX_DEPOSIT = 'Deposting'
 export const TX_WITHDRAW = 'Withdrawing'
 export const TX_BORROW = 'Borrowing'

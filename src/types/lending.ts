@@ -4,6 +4,7 @@ export interface Pool {
   address: string
   totalSupply: number
   totalBorrowed: number
+  remaining: number
 }
 
 export interface Collateral {
@@ -54,5 +55,6 @@ export interface LendingPlatform {
 
   collateralsActivated: string[]
   lastUpdate: number
+  isLiquidation: boolean
   status: string
 }

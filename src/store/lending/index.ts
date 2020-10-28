@@ -4,10 +4,10 @@ import { LendingPlatform, Loan, Pool, CollateralAsset } from '@/types/lending'
 import * as constants from '@/constants'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
-
+import { Ecrc20 } from '@/services/ecrc20'
 import { lending } from '@/services/lending'
 import { WalletParams } from '@/services/ecoc/types'
-import { loanCurrency } from '@/store/common'
+import { loanCurrency, getCurrencyDecimals, getTokenInfo } from '@/store/common'
 
 const myActivity = [
   {
@@ -66,6 +66,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   collateralsActivated = [] as string[]
 
   lastUpdate = 0
+  isLiquidation = true
   status = constants.STATUS_SYNCED
 
   get myBorrowing() {
@@ -149,13 +150,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     const res = await lending.getCollateralInfo(address)
 
     res.forEach(collateral => {
-      let decimals = 8
-      if (collateral.currencyName === 'USDT') {
-        decimals = 4
-      } else if (collateral.currencyName === 'ETH') {
-        decimals = 16
-      }
-
+      const decimals = getCurrencyDecimals(collateral.currencyName)
       const index = myCollateralAssets.findIndex(
         asset => asset.currency.name === collateral.currencyName
       )
@@ -190,24 +185,35 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     allPools.forEach(async address => {
       const poolInfo = await lending.getPoolInfo(address)
       const existingLoanerIndex = pools.findIndex(pool => pool.address === address)
+      const loanDecimals = 8
+      const remainingEFG = utils.toDecimals(poolInfo.remainingEFG, loanDecimals).toNumber()
 
       if (existingLoanerIndex < 0) {
         const newLoaner = {
           currency: loanCurrency,
           address: address,
           totalSupply: 100000,
-          totalBorrowed: 0
+          remaining: remainingEFG,
+          totalBorrowed: 100000 - remainingEFG
         } as Pool
         pools.push(newLoaner)
       } else {
         const existingLoaner = pools[existingLoanerIndex]
 
-        existingLoaner.totalBorrowed = existingLoaner.totalSupply - poolInfo.remainingEFG
+        existingLoaner.remaining = remainingEFG
+        existingLoaner.totalBorrowed = existingLoaner.totalSupply - remainingEFG
         pools.splice(existingLoanerIndex, 1, existingLoaner)
       }
     })
 
     return { pools }
+  }
+
+  @MutationAction
+  async updateLiquidation(address: string) {
+    const isLiquidation = await lending.canSeize(address)
+
+    return { isLiquidation }
   }
 
   @Action
@@ -235,8 +241,33 @@ export default class LendingModule extends VuexModule implements LendingPlatform
       if (currencyName === 'ECOC') {
         rawTransaction = await lending.depositECOC(amount, poolAddress, walletParams)
       } else {
-        rawTransaction = await lending.depositECOC(amount, poolAddress, walletParams)
+        const tokenInfo = getTokenInfo(currencyName)
+        const token = new Ecrc20(tokenInfo)
+        const decimals = tokenInfo.decimals
+        const fullAmount = utils.fromDecimals(amount, decimals).toNumber()
+
+        const allowance = await token.allowance(walletParams.address, lending.address)
+        if (fullAmount > allowance) {
+          // waiting for ecrc-20 approve
+          const approveTx = await token.approve(lending.address, amount, walletParams)
+          const approveTxid = await Ecoc.sendRawTx(approveTx)
+
+          console.log('Waiting for confirmation')
+          await Ecoc.waitForConfirmation(approveTxid)
+          console.log('Confirmed')
+
+          const newUtxos = await Ecoc.getUtxos(walletParams.address)
+          walletParams.utxoList = newUtxos
+        }
+
+        rawTransaction = await lending.depositAsset(
+          currencyName,
+          fullAmount,
+          poolAddress,
+          walletParams
+        )
       }
+
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid
@@ -252,13 +283,15 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     walletParams: WalletParams
   }) {
     const { amount, currencyName, walletParams } = payloads
+    const decimals = getCurrencyDecimals(currencyName)
+    const fullAmount = utils.fromDecimals(amount, decimals).toNumber()
 
     try {
       let rawTransaction
       if (currencyName === 'ECOC') {
-        rawTransaction = await lending.withdrawECOC(amount, walletParams)
+        rawTransaction = await lending.withdrawECOC(fullAmount, walletParams)
       } else {
-        rawTransaction = await lending.withdrawECOC(amount, walletParams)
+        rawTransaction = await lending.withdrawAsset(currencyName, fullAmount, walletParams)
       }
 
       const txid = await Ecoc.sendRawTx(rawTransaction)
@@ -272,9 +305,11 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   @Action({ rawError: true })
   async borrow(payloads: { amount: number; walletParams: WalletParams }) {
     const { amount, walletParams } = payloads
+    const decimals = getCurrencyDecimals(loanCurrency.name)
+    const fullAmount = utils.fromDecimals(amount, decimals).toNumber()
 
     try {
-      const rawTransaction = await lending.borrow(amount, walletParams)
+      const rawTransaction = await lending.borrow(fullAmount, walletParams)
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid
@@ -286,9 +321,27 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   @Action({ rawError: true })
   async repay(payloads: { amount: number; walletParams: WalletParams }) {
     const { amount, walletParams } = payloads
+    const tokenInfo = getTokenInfo(loanCurrency.name)
+    const token = new Ecrc20(tokenInfo)
+    const decimals = tokenInfo.decimals
+    const fullAmount = utils.fromDecimals(amount, decimals).toNumber()
 
     try {
-      const rawTransaction = await lending.repay(amount, walletParams)
+      const allowance = await token.allowance(walletParams.address, lending.address)
+      if (fullAmount > allowance) {
+        // waiting for ecrc-20 approve
+        const approveTx = await token.approve(lending.address, amount, walletParams)
+        const approveTxid = await Ecoc.sendRawTx(approveTx)
+
+        console.log('Waiting for confirmation')
+        await Ecoc.waitForConfirmation(approveTxid)
+        console.log('Confirmed')
+
+        const newUtxos = await Ecoc.getUtxos(walletParams.address)
+        walletParams.utxoList = newUtxos
+      }
+
+      const rawTransaction = await lending.repay(fullAmount, walletParams)
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid

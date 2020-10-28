@@ -337,6 +337,7 @@ import { Currency } from '@/types/currency'
 import { DEFAULT } from '@/services/contract'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
+import * as constants from '@/constants'
 
 @Component({
   components: {}
@@ -511,6 +512,7 @@ export default class Collmodeldiposit extends Vue {
       .then(txid => {
         setTimeout(() => {
           console.log('Txid:', txid)
+          this.walletStore.addPendingTx(txid, constants.TX_DEPOSIT)
           this.onSuccess()
         }, 1000)
       })

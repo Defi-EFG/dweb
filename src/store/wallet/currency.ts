@@ -38,6 +38,34 @@ export const GPT = {
   }
 } as Currency
 
+export const USDT = {
+  name: constants.USDT,
+  type: constants.TYPE_ECRC20,
+  style: constants.KNOWN_CURRENCY.USDT,
+  balance: '0',
+  tokenInfo: {
+    name: constants.USDT,
+    symbol: constants.USDT,
+    address: '',
+    decimals: '4',
+    totalSupply: '100000'
+  }
+} as Currency
+
+export const ETH = {
+  name: constants.ETH,
+  type: constants.TYPE_ECRC20,
+  style: constants.KNOWN_CURRENCY.ETH,
+  balance: '0',
+  tokenInfo: {
+    name: constants.ETH,
+    symbol: constants.ETH,
+    address: '',
+    decimals: '16',
+    totalSupply: '100000'
+  }
+} as Currency
+
 export const currencyInit = () => {
   return [ECOC, EFG, GPT] as Currency[]
 }

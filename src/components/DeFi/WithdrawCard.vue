@@ -77,6 +77,8 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { Currency } from '@/types/currency'
 import LendingModule from '@/store/lending'
+import WalletModule from '@/store/wallet'
+import * as constants from '@/constants'
 import { WalletParams } from '@/services/ecoc/types'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 
@@ -86,6 +88,7 @@ import TransactionComfirmationModal from '@/components/modals/transaction-confir
   }
 })
 export default class Withdraw extends Vue {
+  walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
 
   @Prop() currency!: Currency
@@ -119,7 +122,7 @@ export default class Withdraw extends Vue {
     )
     if (!selectedCollateral) return 0
 
-    return selectedCollateral.amount
+    return 1000 // selectedCollateral.amount
   }
 
   get currencyName() {
@@ -191,7 +194,7 @@ export default class Withdraw extends Vue {
 
   onConfirm(walletParams: WalletParams) {
     const amount = Number(this.withdrawValue)
-    const currencyName = 'ECOC'
+    const currencyName = this.currencyName
 
     const payload = {
       currencyName,
@@ -203,6 +206,7 @@ export default class Withdraw extends Vue {
       .withdrawCollateral(payload)
       .then(txid => {
         console.log('Txid:', txid)
+        this.walletStore.addPendingTx(txid, constants.TX_WITHDRAW)
         this.onSuccess()
       })
       .catch(error => {

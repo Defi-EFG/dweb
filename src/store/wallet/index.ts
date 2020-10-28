@@ -25,7 +25,7 @@ export default class WalletModule extends VuexModule implements Wallet {
   pendingTransactions = [] as PendingTransaction[]
 
   get ecoc() {
-    if (this.currencies.length < 0) return 0
+    if (this.currencies.length <= 0) return 0
 
     const currencyInfo = this.currencies.find(currency => currency.name === constants.ECOC)
     return currencyInfo?.balance
@@ -41,6 +41,10 @@ export default class WalletModule extends VuexModule implements Wallet {
 
   get numberOfCurrency() {
     return this.currencies.length
+  }
+
+  get pendingTransaction() {
+    return this.pendingTransactions[0]
   }
 
   @Mutation
@@ -233,17 +237,19 @@ export default class WalletModule extends VuexModule implements Wallet {
   }
 
   @MutationAction
-  async addPendingTx(txid: string, type: string) {
+  async addPendingTx(txid: string, txType: string) {
     const pendingTransactions = (this.state as any).pendingTransactions as PendingTransaction[]
-    if (!pendingTransactions) {
+
+    const index = pendingTransactions.findIndex(tx => tx.txid === txid)
+    if (index >= 0) {
       return {}
     }
 
     const pendingTransaction = {
-      txid,
-      type,
+      txid: txid,
+      type: txType,
       status: constants.STATUS_PENDING
-    }
+    } as PendingTransaction
 
     pendingTransactions.splice(pendingTransactions.length, 1, pendingTransaction)
 
@@ -263,7 +269,7 @@ export default class WalletModule extends VuexModule implements Wallet {
       txid: pendingTransactions[index].txid,
       type: pendingTransactions[index].type,
       status: status
-    }
+    } as PendingTransaction
 
     pendingTransactions.splice(index, 1, pendingTransaction)
 

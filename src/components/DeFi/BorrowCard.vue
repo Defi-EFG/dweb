@@ -82,9 +82,11 @@
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
 import { WalletParams } from '@/services/ecoc/types'
+import * as constants from '@/constants'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 
 @Component({
@@ -93,6 +95,7 @@ import TransactionComfirmationModal from '@/components/modals/transaction-confir
   }
 })
 export default class BorrowCard extends Vue {
+  walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
 
   @Prop() currency!: Currency
@@ -238,6 +241,7 @@ export default class BorrowCard extends Vue {
       .borrow(payload)
       .then(txid => {
         console.log('Txid:', txid)
+        this.walletStore.addPendingTx(txid, constants.TX_BORROW)
         this.onSuccess()
       })
       .catch(error => {

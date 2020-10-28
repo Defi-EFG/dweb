@@ -202,29 +202,6 @@
     "constant":true,
     "inputs":[
       {
-        "name":"_debtors_addr",
-        "type":"address"
-      }
-    ],
-    "name":"getCollateralInfo",
-    "outputs":[
-      {
-        "name":"collateralSymbol",
-        "type":"bytes8[]"
-      },
-      {
-        "name":"collateralAmount",
-        "type":"uint256[]"
-      }
-    ],
-    "payable":false,
-    "stateMutability":"view",
-    "type":"function"
-  },
-  {
-    "constant":true,
-    "inputs":[
-      {
         "name":"_pool_addr",
         "type":"address"
       }
@@ -311,6 +288,25 @@
     ],
     "payable":false,
     "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_debtors_addr",
+        "type":"address"
+      }
+    ],
+    "name":"getCollateralAmount",
+    "outputs":[
+      {
+        "name":"collateralAmount",
+        "type":"uint256[]"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
     "type":"function"
   },
   {
@@ -553,6 +549,25 @@
       {
         "name":"allPools",
         "type":"address[]"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_debtors_addr",
+        "type":"address"
+      }
+    ],
+    "name":"getCollateralSymbols",
+    "outputs":[
+      {
+        "name":"collateralSymbol",
+        "type":"bytes8[]"
       }
     ],
     "payable":false,

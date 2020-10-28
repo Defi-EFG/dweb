@@ -87,9 +87,11 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import { Currency } from '@/types/currency'
+import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
+import { Currency } from '@/types/currency'
 import { WalletParams } from '@/services/ecoc/types'
+import * as constants from '@/constants'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 import Loading from '@/components/modals/loading.vue'
 
@@ -100,6 +102,7 @@ import Loading from '@/components/modals/loading.vue'
   }
 })
 export default class RepayCard extends Vue {
+  walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
 
   @Prop() currency!: Currency
@@ -210,6 +213,7 @@ export default class RepayCard extends Vue {
       .repay(payload)
       .then(txid => {
         console.log('Txid:', txid)
+        this.walletStore.addPendingTx(txid, constants.TX_REPAY)
         this.onSuccess()
       })
       .catch(error => {

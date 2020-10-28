@@ -107,6 +107,7 @@ import WalletModule from '@/store/wallet'
 import StakingModule from '@/store/staking'
 import { WalletParams } from '@/services/ecoc/types'
 import { CurrencyInfo } from '@/types/currency'
+import * as constants from '@/constants'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 import Loading from '@/components/modals/loading.vue'
 
@@ -215,6 +216,7 @@ export default class DepositWithdraw extends Vue {
         .then(txid => {
           setTimeout(() => {
             console.log('Txid:', txid)
+            this.walletStore.addPendingTx(txid, constants.TX_DEPOSIT)
             this.onSuccess()
           }, 1000)
         })
@@ -228,6 +230,7 @@ export default class DepositWithdraw extends Vue {
         .then(txid => {
           setTimeout(() => {
             console.log('Txid:', txid)
+            this.walletStore.addPendingTx(txid, constants.TX_WITHDRAW)
             this.onSuccess()
           }, 1000)
         })

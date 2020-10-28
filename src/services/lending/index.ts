@@ -109,15 +109,18 @@ export namespace lending {
       methodArgs: [address]
     } as Params
 
-    const result = await contract.call('getCollateralInfo', params)
-    const executionResult = result.executionResult as ExecutionResult
-    const collateralSymbol = executionResult.formattedOutput.collateralSymbol
-    const collateralAmount = executionResult.formattedOutput.collateralAmount
+    const resultSymbols = await contract.call('getCollateralSymbols', params)
+    const executionResultSymbols = resultSymbols.executionResult as ExecutionResult
+    const symbols = executionResultSymbols.formattedOutput.collateralSymbol
 
-    const collateralList = collateralSymbol.map((symbol: string, index: number) => {
+    const resultAmounts = await contract.call('getCollateralAmount', params)
+    const executionResultAmounts = resultAmounts.executionResult as ExecutionResult
+    const amounts = executionResultAmounts.formattedOutput.collateralAmount
+
+    const collateralList = symbols.map((symbol: string, index: number) => {
       return {
         currencyName: symbol,
-        amount: collateralAmount[index].toNumber()
+        amount: amounts[index].toNumber()
       } as Collateral
     })
 
@@ -292,6 +295,27 @@ export namespace lending {
     const utxoList = walletParams.utxoList
 
     const rawTx = await contract.getSendToTx('withdrawECOC', params, keypair, utxoList)
+    return rawTx
+  }
+
+  export const withdrawAsset = async (
+    currencyName: string,
+    amount: number,
+    walletParams: WalletParams
+  ) => {
+    const params = {
+      methodArgs: [currencyName, amount],
+      senderAddress: walletParams.address,
+      amount: 0,
+      fee: walletParams.fee,
+      gasLimit: walletParams.gasLimit,
+      gasPrice: walletParams.gasPrice
+    } as Params
+
+    const keypair = walletParams.keypair
+    const utxoList = walletParams.utxoList
+
+    const rawTx = await contract.getSendToTx('withdrawAsset', params, keypair, utxoList)
     return rawTx
   }
 

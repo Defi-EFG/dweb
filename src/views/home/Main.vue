@@ -150,16 +150,12 @@
           </v-col>
           <v-col lg="3" md="3" cols="3" class="border_left">
             <div class="margintop color_1 textafter">
-              <span class="color_size"
-                >${{ item.totalSupply | numberWithCommas({ decimal: 2 }) }}</span
-              >
+              <span class="color_size">${{ item.totalSupply | numberWithCommas() }}</span>
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="3">
             <div class="margintop color_2 textafter">
-              <span class="color_size"
-                >${{ item.totalBorrowed | numberWithCommas({ decimal: 2 }) }}</span
-              >
+              <span class="color_size">${{ item.totalBorrowed | numberWithCommas() }}</span>
             </div>
           </v-col>
           <img class="row1_img" src="@/assets/backg_01.svg" />

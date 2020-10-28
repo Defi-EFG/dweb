@@ -78,6 +78,7 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import { SendPayload } from '@/types/wallet'
 import { WalletParams } from '@/services/ecoc/types'
+import * as constants from '@/constants'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 
 @Component({
@@ -173,6 +174,7 @@ export default class SendToken extends Vue {
       .then(txid => {
         console.log(txid)
         this.walletStore.updateBalance()
+        this.walletStore.addPendingTx(txid, constants.TX_TRANSFER)
         this.onSuccess()
       })
       .catch(error => {
