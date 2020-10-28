@@ -1,5 +1,5 @@
 import { Currency, CurrencyInfo } from './currency'
-export interface Loaner {
+export interface Pool {
   currency: CurrencyInfo
   address: string
   totalSupply: number
@@ -32,20 +32,23 @@ export interface MyActivity {
 }
 
 export interface Loan {
-  loaner: string
+  poolAddr: string
   currency: CurrencyInfo
   amount: number
   timestamp: number
   interestRate: number
   exchangeRate: number
   interest: number
+  EFGInitialRate: number
+  lastGracePeriod: number
+  remainingGPT: number
 }
 
 export interface LendingPlatform {
   address: string
 
   loan: Loan
-  loaners: Loaner[]
+  pools: Pool[]
   myCollateralAssets: CollateralAsset[]
   myActivity: MyActivity[]
 

@@ -95,7 +95,7 @@ export default class SendToken extends Vue {
   displayContact = false
 
   toAddr = ''
-  amount: number | string = 0
+  amount: number | string = ''
   errorMsg = ''
 
   addrList = [

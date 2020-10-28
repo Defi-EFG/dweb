@@ -7,8 +7,13 @@ import { WalletParams } from '@/services/ecoc/types'
 import lendingAbi from './abi.json'
 import { LoanInfo } from './types'
 
+interface Collateral {
+  currencyName: string
+  amount: number
+}
+
 const lendingContract = {
-  address: '85635434f6c52f3aaecb8f9c5763223bc07875c7',
+  address: '63edc8a019a1c44eea93fde23d1bc9ed3373742f',
   abi: lendingAbi
 } as Contract
 
@@ -16,6 +21,18 @@ const contract = new SmartContract(lendingContract.address, lendingContract.abi)
 
 export namespace lending {
   export const address = lendingContract.address
+
+  export const canSeize = async (address: string) => {
+    const params = {
+      methodArgs: [address]
+    } as Params
+
+    const result = await contract.call('canSeize', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const res = executionResult.formattedOutput['0'] as boolean
+
+    return res
+  }
 
   export const getAllPools = async () => {
     const params = {
@@ -30,12 +47,12 @@ export namespace lending {
     return poolsAddress
   }
 
-  export const getDepositedPool = async (address: string, currencyName: string) => {
+  export const getUserPool = async (address: string) => {
     const params = {
-      methodArgs: [currencyName, address]
+      methodArgs: [address]
     } as Params
 
-    const result = await contract.call('getDepositedPool', params)
+    const result = await contract.call('getUserPool', params)
     const executionResult = result.executionResult as ExecutionResult
     let poolAddress = executionResult.formattedOutput['0'] as string
 
@@ -87,16 +104,24 @@ export namespace lending {
     return res
   }
 
-  export const getCollateralInfo = async (address: string, currencyName: string) => {
+  export const getCollateralInfo = async (address: string) => {
     const params = {
-      methodArgs: [address, currencyName]
+      methodArgs: [address]
     } as Params
 
     const result = await contract.call('getCollateralInfo', params)
     const executionResult = result.executionResult as ExecutionResult
-    const res = executionResult.formattedOutput['0'].toNumber()
+    const collateralSymbol = executionResult.formattedOutput.collateralSymbol
+    const collateralAmount = executionResult.formattedOutput.collateralAmount
 
-    return res
+    const collateralList = collateralSymbol.map((symbol: string, index: number) => {
+      return {
+        currencyName: symbol,
+        amount: collateralAmount[index].toNumber()
+      } as Collateral
+    })
+
+    return collateralList as Collateral[]
   }
 
   export const getCollateralRate = async (currencyName: string) => {
@@ -156,23 +181,26 @@ export namespace lending {
     const interestRate = new BigNumber(res.interestRate).dividedBy(1000).toNumber()
 
     const loanInfo = {
-      assetSymbol: Web3Utils.hexToUtf8(Utils.appendHexPrefix(res.assetSymbol)),
+      assetSymbol: 'EFG',
       amount: res.amount.toNumber(),
       timestamp: res.timestamp.toNumber(),
       interestRate: interestRate,
       interest: res.interest.toNumber(),
-      pool: ''
+      poolAddr: '',
+      EFGInitialRate: res.EFGInitialRate,
+      lastGracePeriod: res.lastGracePeriod,
+      remainingGPT: res.remainingGPT
     } as LoanInfo
 
     if (loanInfo.amount > 0) {
-      loanInfo.pool = Decoder.toEcoAddress(res.pool)
+      loanInfo.poolAddr = Decoder.toEcoAddress(res.poolAddr)
     }
 
     return loanInfo
   }
 
   //send to contract
-  export const depositColateral = async (
+  export const depositECOC = async (
     amount: number,
     poolAddress: string,
     walletParams: WalletParams
@@ -189,7 +217,29 @@ export namespace lending {
     const keypair = walletParams.keypair
     const utxoList = walletParams.utxoList
 
-    const rawTx = await contract.getSendToTx('lockECOC', params, keypair, utxoList)
+    const rawTx = await contract.getSendToTx('depositECOC', params, keypair, utxoList)
+    return rawTx
+  }
+
+  export const depositAsset = async (
+    currencyName: string,
+    amount: number,
+    poolAddress: string,
+    walletParams: WalletParams
+  ) => {
+    const params = {
+      methodArgs: [currencyName, amount, poolAddress],
+      senderAddress: walletParams.address,
+      amount: 0,
+      fee: walletParams.fee,
+      gasLimit: walletParams.gasLimit,
+      gasPrice: walletParams.gasPrice
+    } as Params
+
+    const keypair = walletParams.keypair
+    const utxoList = walletParams.utxoList
+
+    const rawTx = await contract.getSendToTx('depositAsset', params, keypair, utxoList)
     return rawTx
   }
 
@@ -259,6 +309,23 @@ export namespace lending {
     const utxoList = walletParams.utxoList
 
     const rawTx = await contract.getSendToTx('repay', params, keypair, utxoList)
+    return rawTx
+  }
+
+  export const extendGracePeriod = async (amount: number, walletParams: WalletParams) => {
+    const params = {
+      methodArgs: [amount],
+      senderAddress: walletParams.address,
+      amount: 0,
+      fee: walletParams.fee,
+      gasLimit: walletParams.gasLimit,
+      gasPrice: walletParams.gasPrice
+    } as Params
+
+    const keypair = walletParams.keypair
+    const utxoList = walletParams.utxoList
+
+    const rawTx = await contract.getSendToTx('extendGracePeriod', params, keypair, utxoList)
     return rawTx
   }
 }

@@ -125,10 +125,7 @@ export default class ReceiveSendMobile extends Vue {
   displayContact = false
 
   toAddr = ''
-  amount = 0
-  fee = 0.01
-  gasPrice = 40
-  gasLimit = 150000
+  amount: number | string = ''
 
   errorMsg = ''
 

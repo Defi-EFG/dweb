@@ -265,7 +265,7 @@ export default class Main extends Vue {
   }
 
   get items() {
-    return this.lendingStore.loaners
+    return this.lendingStore.pools
   }
 
   active = 'EFG'

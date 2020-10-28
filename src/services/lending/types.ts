@@ -4,5 +4,8 @@ export interface LoanInfo {
   timestamp: number
   interestRate: number
   interest: number
-  pool: string
+  poolAddr: string
+  EFGInitialRate: number
+  lastGracePeriod: number
+  remainingGPT: number
 }
