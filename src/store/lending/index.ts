@@ -146,7 +146,6 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   @MutationAction
   async updateCollateral(address: string) {
     const myCollateralAssets = (this.state as any).myCollateralAssets as CollateralAsset[]
-
     const res = await lending.getCollateralInfo(address)
 
     res.forEach(collateral => {

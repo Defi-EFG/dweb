@@ -72,7 +72,7 @@
       <v-card>
         <div class="d-flex justify-lg-space-between pt-3 ">
           <v-icon></v-icon>
-          <v-btn text @click="gassetting = false"><v-icon>$close</v-icon></v-btn>
+          <v-btn text @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
         </div>
         <div class="content-gas-setting">
           <h3>Gas Customization</h3>
@@ -80,24 +80,21 @@
           <div class="gas-customization">
             <v-btn-toggle tile group>
               <v-btn>
-                <div class="gas-custom-btn-group">
+                <div class="gas-custom-btn-group" @click="fee = feeSlow">
                   <p>Slow</p>
-                  <p>-20 min</p>
-                  <p>1.00 ECOC</p>
+                  <p>{{ feeSlow }} ECOC</p>
                 </div>
               </v-btn>
               <v-btn>
-                <div class="gas-custom-btn-group">
+                <div class="gas-custom-btn-group" @click="fee = feeAverage">
                   <p>Average</p>
-                  <p>-20 min</p>
-                  <p>1.00 ECOC</p>
+                  <p>{{ feeAverage }} ECOC</p>
                 </div></v-btn
               >
               <v-btn>
-                <div class="gas-custom-btn-group">
+                <div class="gas-custom-btn-group" @click="fee = feeFast">
                   <p>Fast</p>
-                  <p>-20min</p>
-                  <p>1.00 ECOC</p>
+                  <p>{{ feeFast }} ECOC</p>
                 </div></v-btn
               >
             </v-btn-toggle>
@@ -114,14 +111,13 @@
           </div>
 
           <div class="d-flex justify-space-between py-2">
-            <p>New Transaction Fee:</p>
+            <p>Total Transaction Fee:</p>
             <div class="text-end">
-              <p class="mb-0">3.00 ECOC</p>
-              <small>-20 sec</small>
+              <p class="mb-0">{{ totalFee }} ECOC</p>
             </div>
           </div>
           <div class="save-button ">
-            <v-btn color="primary" depressed block>save</v-btn>
+            <v-btn color="primary" depressed block @click="closeGasSetting">save</v-btn>
           </div>
         </div>
       </v-card>
@@ -138,6 +134,7 @@ import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import StakingModule from '@/store/staking'
 import * as Ecoc from '@/services/wallet'
+import * as utils from '@/services/utils'
 import { DEFAULT } from '@/services/contract'
 
 @Component({
@@ -153,6 +150,10 @@ export default class TransactionComfirmationModal extends Vue {
   lendingStore = getModule(LendingModule)
   stakingStore = getModule(StakingModule)
 
+  feeSlow = 0.004
+  feeAverage = 0.01
+  feeFast = 0.1
+
   gassetting = false
   errorMsg = ''
   password = ''
@@ -163,6 +164,10 @@ export default class TransactionComfirmationModal extends Vue {
 
   get show() {
     return this.visible
+  }
+
+  get totalFee() {
+    return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
   }
 
   get addr() {
@@ -179,6 +184,10 @@ export default class TransactionComfirmationModal extends Vue {
 
   gasSetting() {
     this.gassetting = true
+  }
+
+  closeGasSetting() {
+    this.gassetting = false
   }
 
   truncateAddress(addr: string) {
