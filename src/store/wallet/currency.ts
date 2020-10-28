@@ -1,7 +1,7 @@
 import * as constants from '@/constants'
 import { Currency } from '@/types/currency'
 
-const ECOC = {
+export const ECOC = {
   name: constants.ECOC,
   type: constants.TYPE_ECOC,
   style: constants.KNOWN_CURRENCY.ECOC,
@@ -9,7 +9,7 @@ const ECOC = {
   price: 0
 } as Currency
 
-const EFG = {
+export const EFG = {
   name: constants.EFG,
   type: constants.TYPE_ECRC20,
   style: constants.KNOWN_CURRENCY.EFG,
@@ -24,7 +24,7 @@ const EFG = {
   }
 } as Currency
 
-const GPT = {
+export const GPT = {
   name: constants.GPT,
   type: constants.TYPE_ECRC20,
   style: constants.KNOWN_CURRENCY.GPT,

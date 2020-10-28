@@ -199,6 +199,48 @@
     "type":"function"
   },
   {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_debtors_addr",
+        "type":"address"
+      }
+    ],
+    "name":"getCollateralInfo",
+    "outputs":[
+      {
+        "name":"collateralSymbol",
+        "type":"bytes8[]"
+      },
+      {
+        "name":"collateralAmount",
+        "type":"uint256[]"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_pool_addr",
+        "type":"address"
+      }
+    ],
+    "name":"listPoolUsers",
+    "outputs":[
+      {
+        "name":"members",
+        "type":"address[]"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
     "constant":false,
     "inputs":[
       {
@@ -215,29 +257,6 @@
     ],
     "payable":false,
     "stateMutability":"nonpayable",
-    "type":"function"
-  },
-  {
-    "constant":true,
-    "inputs":[
-      {
-        "name":"_debtors_addr",
-        "type":"address"
-      },
-      {
-        "name":"_symbol",
-        "type":"bytes8"
-      }
-    ],
-    "name":"getCollateralInfo",
-    "outputs":[
-      {
-        "name":"",
-        "type":"uint256"
-      }
-    ],
-    "payable":false,
-    "stateMutability":"view",
     "type":"function"
   },
   {
@@ -471,6 +490,22 @@
     "type":"function"
   },
   {
+    "constant":true,
+    "inputs":[
+      
+    ],
+    "name":"availableGPT",
+    "outputs":[
+      {
+        "name":"available_GPT",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
     "constant":false,
     "inputs":[
       {
@@ -516,7 +551,7 @@
     "name":"getAllPools",
     "outputs":[
       {
-        "name":"",
+        "name":"allPools",
         "type":"address[]"
       }
     ],
@@ -551,8 +586,39 @@
         "type":"uint256"
       },
       {
+        "name":"EFGInitialRate",
+        "type":"uint256"
+      },
+      {
+        "name":"lastGracePeriod",
+        "type":"uint256"
+      },
+      {
+        "name":"remainingGPT",
+        "type":"uint256"
+      },
+      {
         "name":"poolAddr",
         "type":"address"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_pool_addr",
+        "type":"address"
+      }
+    ],
+    "name":"listLiquidable",
+    "outputs":[
+      {
+        "name":"allLiquidable",
+        "type":"address[]"
       }
     ],
     "payable":false,
@@ -580,6 +646,25 @@
     ],
     "payable":false,
     "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_debtors_addr",
+        "type":"address"
+      }
+    ],
+    "name":"canSeize",
+    "outputs":[
+      {
+        "name":"seizable",
+        "type":"bool"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
     "type":"function"
   },
   {

@@ -11,7 +11,7 @@
             "lending": "Lending",
             "whitepaper": "White Paper",
             "dashboard": "Dashboard",
-            "yellow": "Yellow"
+            "yellow": "Yellow Paper"
         },
         "yellowpdf": "https://efg.finance/media/Oracles_yellow_paper_en.pdf",
         "pdf": "https://efg.finance/media/efg-whitepaper.pdf",
@@ -63,40 +63,60 @@
                 "subtitle": "We believe that size, visibility, and time are the true test for the security of smart contracts and make the determination of security and suitability for users. ECOC Financial Growth (EFG) Token's developers never stop to develop the best financial channel."
             }
         ],
-        "docs": {
-            "Introduction": "Introduction",
-            "detail1": {
-                "head": "What is DeFi?",
-                "head_sub": "Decentralized Finance or DeFi refers to the ecosystem comprised of financial applications that are being developed on top of blockchain systems. DeFi aims to recreate the traditional financial system without intermediaries. Many of the traditional actions in the markets such as lending or borrowing can now be done through a decentralized open-source network."
+        "Introduction": "Guide",
+        "docs": [{
+                "head": "Collateral ",
+                "headsub": "In order to borrow the EFG Token from dApp, users need to firstly supply ECOC coins as collateral. Meanwhile, users cannot redeem or transfer collateral while it is locked."
             },
-            "detail2": {
-                "head": "What is ECOC Financial Growth (EFG)",
-                "head_sub": "ECOC Financial Growth (EFG) is a decentralized currency, building on ECRC-20 and sharing the same interface of ERC-20 (Ethereum) standard. EFG is created form ECOChain developers and trying to expand and strengthen the ecosystem, providing the desired missing attributes for users, reality, and stable prices. EFG aims to simplify DeFi for the general users and help boost their profits at the same time, even for those unfamiliar with the world of digital assets."
+            {
+                "head": "Account Liquidity",
+                "headsub": "How can you know what is your maximum allowed borrowing in EFG token. It depends on how much ECOC have you deposited as collateral. In EFG dApp the user must repay in EFG token the loan. Repay amount is based on calculations depending on the maximum borrowed collateral amount in ratio of 60%. The function calculates your account’s liquidity, which is based on EFG current value of the maximum allowed borrowing amount. But you would never borrow this much at once because your account may instantly be liquidated if the price moves in the wrong direction."
             },
-            "detail3": {
-                "head": "Why EFG?",
-                "head_sub": "EFG brings an opportunity for increasing the investment value for users. Our goal is to make DeFi simple and accessible for everyone, even for the digital asset novices. As well as, gather a wide user base and create high utility services. Get ready to join a brand-new monetary,EFG!"
+            {
+                "head": "Total Debt",
+                "headsub": " This is the user’s current borrowed amount plus the total interest that needs to be repaid. The maximum EFG token that users can borrow is the 60% of the total collateral value of ECOC. This is calculated with a simple to use function of the EFG dApp."
+            },
+            {
+                "head": "The Borrow Rate",
+                "headsub": "Borrowers owe the prevailing interest rate of the asset they are borrowing. The borrowed loan and interest do not have to be repaid daily unless the amount of the collateral plus the borrower's interest equal or more than 60% of the total deposited collateral amount. On this occasion, the EFG dApp system can liquidate the collateral."
+            },
+            {
+                "head": "Withdrawal ",
+                "headsub": "The borrower can reclaim the collateral back. To do this he must first repay the loan and pay the borrower's total interest. The total debt is calculated by using the repay function in the EFG dApp at the time that the debtor repays back the loan."
+            },
+            {
+                "head": "Liquidation ",
+                "headsub": "A borrowing account becomes insolvent when the Borrow Balance exceeds the amount allowed by calculating as a ratio of 60% of the collateral amount. Having your account liquidated is bad because you lose all of your collateral."
+            },
+            {
+                "head": "Free Market",
+                "headsub": "The EFG token that is supplied to the user can also be used as speculation in the cryptocurrency or financial markets. "
+            },
+            {
+                "head": "Oracles ",
+                "headsub": "Oracles are the only entities that are authorized to inject real-world data into the smart contract. Specifically, they inject the exchange rates for each second(timestamp) of each pair of EFG (asset / USDT)."
             }
+        ]
 
-        },
-        "wallet": "Wallet",
-        "lending": "Lending",
-        "staking": "Staking",
-        "walletpage": {
-            "unlockwallet": "Unlock Wallet",
-            "contactaddress": "Contact Address",
-            "receive": "Receive",
-            "send": "Send",
-            "transactionhistory": "Transaction History",
-            "balance": "Balance",
-            "withdrawall": "Withdraw All",
-            "address": "Wallet Address"
-        },
-        "lendingpage": {
-            "collateralbalance": "Collateral Balance",
-            "borrowbalance": "Borrow Balance"
-        }
     },
+    "wallet": "Wallet",
+    "lending": "Lending",
+    "staking": "Staking",
+    "walletpage": {
+        "unlockwallet": "Unlock Wallet",
+        "contactaddress": "Contact Address",
+        "receive": "Receive",
+        "send": "Send",
+        "transactionhistory": "Transaction History",
+        "balance": "Balance",
+        "withdrawall": "Withdraw All",
+        "address": "Wallet Address"
+    },
+    "lendingpage": {
+        "collateralbalance": "Collateral Balance",
+        "borrowbalance": "Borrow Balance"
+    },
+
     "components": {
 
     },

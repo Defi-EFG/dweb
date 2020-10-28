@@ -18,8 +18,8 @@ const sendRawTx = async (rawTransaction: string) => {
 }
 
 const generateNewKeystore = async (password: string) => {
-  // create new wallet default is mainnet
-  const wallet = await EcocWallet.createNewWallet()
+  // create new wallet default is testnet
+  const wallet = await EcocWallet.createNewWallet('Testnet')
 
   if (!wallet) {
     throw new WalletError('Can not generate new wallet')
@@ -126,6 +126,27 @@ const getTxs = async (address: string) => {
   return txs
 }
 
+const getUtxos = async (address: string) => {
+  const utxos = await EcocWallet.getUtxoList(address)
+  return utxos
+}
+
+const waitForConfirmation = (txid: string) => {
+  return new Promise((resolve, reject) => {
+    let txResult
+    setInterval(async () => {
+      try {
+        txResult = await EcocWallet.getTxInfo(txid)
+        if (txResult.confirmations > 0) {
+          return resolve(true)
+        }
+      } catch (error) {
+        reject(error)
+      }
+    }, 10000)
+  })
+}
+
 export {
   sendRawTx,
   generateNewKeystore,
@@ -134,5 +155,7 @@ export {
   getEcocBalance,
   getEcrc20Balance,
   getTxs,
-  isEcrc20
+  getUtxos,
+  isEcrc20,
+  waitForConfirmation
 }

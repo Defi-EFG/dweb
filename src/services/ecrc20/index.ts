@@ -33,7 +33,7 @@ export class Ecrc20 {
     const result = await this.contract.call('totalSupply', params)
     const executionResult = result.executionResult as ExecutionResult
     const data = executionResult.formattedOutput['0']
-    return data.toNumber()
+    return data.toNumber() as number
   }
 
   async decimals() {
@@ -44,7 +44,7 @@ export class Ecrc20 {
     const result = await this.contract.call('decimals', params)
     const executionResult = result.executionResult as ExecutionResult
     const data = executionResult.formattedOutput['0']
-    return data.toNumber()
+    return data.toNumber() as number
   }
 
   async balanceOf(address: string) {
@@ -55,7 +55,7 @@ export class Ecrc20 {
     const result = await this.contract.call('balanceOf', params)
     const executionResult = result.executionResult as ExecutionResult
     const data = executionResult.formattedOutput['0']
-    return data.toNumber()
+    return data.toNumber() as number
   }
 
   async symbol() {
@@ -77,7 +77,7 @@ export class Ecrc20 {
     const result = await this.contract.call('allowance', params)
     const executionResult = result.executionResult as ExecutionResult
     const data = executionResult.formattedOutput['0']
-    return data.toNumber()
+    return data.toNumber() as number
   }
 
   async transfer(to: string, amount: number, walletParams: WalletParams) {
@@ -96,7 +96,7 @@ export class Ecrc20 {
     const utxoList = walletParams.utxoList
 
     const rawTx = await this.contract.getSendToTx('transfer', params, keypair, utxoList)
-    return rawTx
+    return rawTx as string
   }
 
   async approve(spender: string, amount: number, walletParams: WalletParams) {
@@ -115,7 +115,7 @@ export class Ecrc20 {
     const utxoList = walletParams.utxoList
 
     const rawTx = await this.contract.getSendToTx('approve', params, keypair, utxoList)
-    return rawTx
+    return rawTx as string
   }
 
   static async getEcrc20Info(contractAddress: string) {

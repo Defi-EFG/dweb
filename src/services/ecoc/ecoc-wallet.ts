@@ -2,7 +2,7 @@ import * as bip39 from 'bip39'
 import * as bip32 from 'bip32'
 import { Ecocjs } from 'ecoweb3'
 
-import { Utxo } from '@/types/transaction'
+import { Utxo, Transaction } from '@/types/transaction'
 import { EWallet, AddressInfo, TxData, Erc20Info } from './types'
 import { ECOC_MAINNET, ECOC_TESTNET } from './constants'
 import { ecocw3, changeToNetwork } from './ecocw3'
@@ -124,6 +124,10 @@ export default class EcocWallet implements EWallet {
 
   static async getAddressInfo(address: string) {
     return (await ecocw3.api.getAddressInfo(address)) as AddressInfo
+  }
+
+  static async getTxInfo(txid: string) {
+    return (await ecocw3.api.getTxInfo(txid)) as Transaction
   }
 
   static async getTxList(address: string) {

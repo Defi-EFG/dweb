@@ -162,7 +162,7 @@ export default class Lending extends Vue {
   }
 
   get loaner() {
-    return this.lendingStore.loan.loaner
+    return this.lendingStore.loan.poolAddr
   }
 
   get myCollateral() {
