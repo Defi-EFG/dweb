@@ -2,15 +2,15 @@
   <v-card class="mx-auto collateral-token" color="#222738" dark>
     <v-toolbar class="collateral-token-head" flat dense>
       <v-toolbar-title>
-        <span>Collateral</span>
+        <span>{{ $t('views.lendingpage.collateral') }}</span>
       </v-toolbar-title>
     </v-toolbar>
 
     <v-card-text class="collateral-content">
       <v-row class="collateral-label">
-        <v-col cols="4">Assets</v-col>
-        <v-col cols="5" class="text-right">Wallet</v-col>
-        <v-col cols="3" class="text-center">Collateral</v-col>
+        <v-col cols="4">{{ $t('views.lendingpage.assets') }}</v-col>
+        <v-col cols="5" class="text-right">{{ $t('views.lendingpage.wallet') }}</v-col>
+        <v-col cols="3" class="text-center">{{ $t('views.lendingpage.collateral') }}</v-col>
       </v-row>
       <v-row
         class="collateral-item"

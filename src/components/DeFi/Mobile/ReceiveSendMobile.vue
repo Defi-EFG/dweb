@@ -1,7 +1,7 @@
 <template>
   <v-tabs show-arrows grow background-color="#2F3446" dark class="rs-tabs">
     <v-tab><v-icon class="mr-2">mdi-arrow-down-circle-outline</v-icon> Receive</v-tab>
-    <v-tab><v-icon class="mr-2">mdi-arrow-up-circle-outline</v-icon> Send</v-tab>
+    <v-tab><v-icon class="mr-2">mdi-arrow-up-circle-outline</v-icon>Send</v-tab>
 
     <v-tab-item class="rs-tabs-item">
       <div v-if="!address" class="empty-div"></div>

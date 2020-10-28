@@ -2,8 +2,8 @@
   <div>
     <v-card dark class="tab-container">
       <v-tabs grow background-color="#191c26" class="dw-tabs" :hide-slider="true" show-arrows>
-        <v-tab>Deposit</v-tab>
-        <v-tab>Withdraw</v-tab>
+        <v-tab>{{ $t('views.stakingpage.deposit') }}</v-tab>
+        <v-tab>{{ $t('views.stakingpage.withdraw') }}</v-tab>
 
         <v-tab-item>
           <v-card dark color="#2e3344" class="deposit">
@@ -17,21 +17,23 @@
               >
 
               <div class="total-balance">
-                <span>Your Balance</span>
+                <span>{{ $t('views.stakingpage.yourbalance') }}</span>
                 <v-spacer></v-spacer>
                 <span class="text-right">{{ balance.toFixed(2) }} {{ stakingCurrencyName }}</span>
               </div>
 
               <div class="minimum-d">
-                <span class="value">Minimum Deposit: 1.00 EFG</span>
+                <span class="value">{{ $t('views.stakingpage.minimum') }}</span>
                 <v-spacer></v-spacer>
-                <span class="all" @click="fillAmountDeposit(balance)">Deposit All</span>
+                <span class="all" @click="fillAmountDeposit(balance)">{{
+                  $t('views.stakingpage.depositall')
+                }}</span>
               </div>
 
               <v-text-field
                 class="deposit-amount"
                 placeholder="0"
-                prefix="Deposit Amount"
+                :prefix="prefix.depositamount"
                 v-model="depositAmount"
                 :suffix="stakingCurrencyName"
                 single-line
@@ -40,12 +42,12 @@
               ></v-text-field>
 
               <div class="note">
-                <span>Note: Reward earning will start after the deposit completed.</span>
+                <span>{{ $t('views.stakingpage.note') }}</span>
               </div>
 
-              <v-btn large block class="btn-d" @click="openConfirmTxModal(TYPE_DEPOSIT)"
-                >Deposit</v-btn
-              >
+              <v-btn large block class="btn-d" @click="openConfirmTxModal(TYPE_DEPOSIT)">{{
+                $t('views.stakingpage.deposit')
+              }}</v-btn>
             </v-card-text>
           </v-card>
         </v-tab-item>
@@ -54,9 +56,9 @@
           <v-card dark color="#2e3344" class="withdraw">
             <v-card-text class="wrapper">
               <div class="label pl-3">
-                <span>Withdraw</span>
+                <span>{{ $t('views.stakingpage.withdraw') }}</span>
               </div>
-              <span class="description">Please input the amount that you want to withdraw</span>
+              <span class="description">{{ $t('views.stakingpage.pleaseinput') }}</span>
 
               <div class="d-amount">
                 <span>Your Staking amount</span>
@@ -65,24 +67,26 @@
               </div>
 
               <div class="minimum-w">
-                <span class="value">Minimum Withdrawal: 1.00 GPT</span>
+                <span class="value">{{ $t('views.stakingpage.minimum') }}</span>
                 <v-spacer></v-spacer>
-                <span class="all" @click="fillAmountWithdraw(stakingAmount)">Withdraw All</span>
+                <span class="all" @click="fillAmountWithdraw(stakingAmount)">{{
+                  $t('views.stakingpage.withdrawAll')
+                }}</span>
               </div>
 
               <v-text-field
                 class="withdrawal-amount"
                 placeholder="0"
-                prefix="Withdrawal Amount"
+                :prefix="prefix.withdrawalamount"
                 v-model="withdrawAmount"
                 :suffix="stakingCurrencyName"
                 single-line
                 solo
                 hide-details="true"
               ></v-text-field>
-              <v-btn large block class="btn-w" @click="openConfirmTxModal(TYPE_WITHDRAW)"
-                >Withdraw</v-btn
-              >
+              <v-btn large block class="btn-w" @click="openConfirmTxModal(TYPE_WITHDRAW)">{{
+                $t('views.stakingpage.withdraw')
+              }}</v-btn>
             </v-card-text>
           </v-card>
         </v-tab-item>
@@ -132,6 +136,10 @@ export default class DepositWithdraw extends Vue {
   withdrawAmount: string | number = ''
 
   amount: string | number = 0
+
+  get prefix() {
+    return this.$t('views.stakingpage')
+  }
 
   get currency() {
     const stakingCurrency = this.walletStore.currenciesList.find(

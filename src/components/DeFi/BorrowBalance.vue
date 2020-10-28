@@ -5,7 +5,7 @@
       <div class="borrow">${{ balance.toFixed(2) }}</div>
       <div class="borrow-power">
         <div class="label">
-          <span class="power-label">Borrow Power</span>
+          <span class="power-label">{{ $t('views.lendingpage.borrowpower') }}</span>
           <span v-if="isLiquidate" class="liquid-label">Liquidation</span>
         </div>
         <v-progress-linear

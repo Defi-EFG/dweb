@@ -21,7 +21,7 @@
             </v-col>
             <v-col cols="12" class="mt-auto">
               <div class="token-balance text-right">
-                <div class="label">Total Balance</div>
+                <div class="label">{{ $t('views.walletpage.totalbalance') }}</div>
                 <div class="value">{{ currency.balance }} {{ currency.name }}</div>
                 <div class="estimated">
                   ≈ {{ getEstimatedValue(currency.balance, currency.price) }} USD

@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p class="action-label" v-if="!isMobileDevice">Collateral</p>
+    <p class="action-label" v-if="!isMobileDevice">{{ $t('views.lendingpage.collateral') }}</p>
     <div class="wallet-balance mb-2">
-      <span class="text-left">Wallet Balance:</span>
+      <span class="text-left">{{ $t('views.lendingpage.Walletbalance') }}</span>
       <v-spacer></v-spacer>
       <span class="balance" @click="fillAmount(walletBalance)"
         >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
@@ -10,7 +10,7 @@
     </div>
     <v-text-field
       class="amount-input"
-      label="Collateral Amount"
+      :label="lable.collateralamount"
       :suffix="currencyName"
       height="43"
       color="#C074F9"
@@ -21,7 +21,7 @@
       persistent-hint
     ></v-text-field>
     <div class="borrow-power">
-      <span class="label">Borrow Power</span>
+      <span class="label">{{ $t('views.lendingpage.borrowpower') }}</span>
       <v-progress-linear
         :value="calculateBPUsed(collateralAmount)"
         rounded
@@ -32,7 +32,7 @@
       ></v-progress-linear>
     </div>
     <div class="borrow-used">
-      <div class="text-left">Borrow Power Used</div>
+      <div class="text-left">{{ $t('views.lendingpage.borrowpowerused') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bp-change">
         <span>{{ bpUsed.toFixed(1) }}%</span>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="borrow-total mt-1 mb-3">
-      <div class="text-left">Total Borrow Power</div>
+      <div class="text-left">{{ $t('views.lendingpage.totalborrowpower') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
         <span>${{ borrowLimit }}</span>
@@ -58,7 +58,7 @@
       depressed
       :disabled="!isCollateralable(collateralAmount, 'error')"
       :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
-      >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
+      >{{ isCollateralable(collateralAmount) ? lable.deposit : 'Not available' }}</v-btn
     >
     <Collatmodel
       :visible="collateralmodel"
@@ -86,6 +86,9 @@ import Collatmodel from '@/components/modals/collmodeldiposit.vue'
 export default class Collateral extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
+  get lable() {
+    return this.$t('views.lendingpage')
+  }
 
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number

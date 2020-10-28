@@ -1,16 +1,16 @@
 <template>
   <v-card dark class="lending-card">
     <v-tabs grow background-color="#252B3D" class="lending-tabs" :hide-slider="true" show-arrows>
-      <v-tab>My Collateral</v-tab>
-      <v-tab>My borrowing</v-tab>
-      <v-tab>My Activity</v-tab>
+      <v-tab>{{ $t('views.lendingpage.mycollateral') }}</v-tab>
+      <v-tab>{{ $t('views.lendingpage.myborrowing') }} </v-tab>
+      <v-tab>{{ $t('views.lendingpage.myactivity') }} </v-tab>
 
       <v-tab-item class="my-collateral">
         <v-card dark color="#2e3344">
           <v-card-text>
             <div class="supply-header">
-              <div>Assets</div>
-              <div>Balance</div>
+              <div>{{ $t('views.lendingpage.assets') }}</div>
+              <div>{{ $t('views.lendingpage.balance') }}</div>
             </div>
             <div class="supply-item" v-for="(item, index) in myCollateral" :key="index">
               <div class="assets">
@@ -32,9 +32,9 @@
         <v-card dark color="#2e3344">
           <v-card-text>
             <div class="borrow-header">
-              <div class="mr-3">Assets</div>
-              <div>Inrerest Rate</div>
-              <div>Balance</div>
+              <div class="mr-3">{{ $t('views.lendingpage.assets') }}</div>
+              <div>{{ $t('views.lendingpage.inrerestrate') }}</div>
+              <div>{{ $t('views.lendingpage.balance') }}</div>
             </div>
             <div class="borrow-item" v-for="(item, index) in myBorrowing" :key="index">
               <div class="assets">

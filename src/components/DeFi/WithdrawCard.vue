@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p class="action-label" v-if="!isMobileDevice">Withdraw</p>
+    <p class="action-label" v-if="!isMobileDevice">{{ $t('views.lendingpage.withdraw') }}</p>
     <div class="wallet-balance mb-2">
-      <span>Max Withdrawable:</span>
+      <span>{{ $t('views.lendingpage.maxwithdrawable') }}</span>
       <v-spacer class="space"></v-spacer>
       <span class="balance" @click="fillAmount(maxWithdraw)"
         >{{ maxWithdraw.toFixed(2) }} {{ currencyName }}</span
@@ -10,7 +10,7 @@
     </div>
     <v-text-field
       class="amount-input"
-      label="Withdrawal Amount"
+      :label="lable.withdrawalamount"
       :suffix="currencyName"
       v-model="withdrawValue"
       height="43"
@@ -21,7 +21,7 @@
       type="number"
     ></v-text-field>
     <div class="borrow-power">
-      <span class="label">Borrow Power</span>
+      <span class="label">{{ $t('views.lendingpage.borrowpower') }}</span>
       <v-progress-linear
         :value="calculateBPUsed(withdrawValue)"
         rounded
@@ -32,7 +32,7 @@
       ></v-progress-linear>
     </div>
     <div class="borrow-used">
-      <div class="text-left">Borrow Power Used</div>
+      <div class="text-left">{{ $t('views.lendingpage.borrowpowerused') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bp-change">
         <span>{{ bpUsed.toFixed(1) }}%</span>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="borrow-total mt-1 mb-3">
-      <div class="text-left">Total Borrow Power</div>
+      <div class="text-left">{{ $t('views.lendingpage.totalborrowpower') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
         <span>${{ borrowLimit }}</span>
@@ -59,7 +59,7 @@
       :class="isWithdrawable(withdrawValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="openConfirmTxModal"
     >
-      {{ isWithdrawable(withdrawValue, 'btn') ? 'Withdraw' : 'Insufficient' }}</v-btn
+      {{ isWithdrawable(withdrawValue, 'btn') ? lable.withdraw : 'Insufficient' }}</v-btn
     >
     <TransactionComfirmationModal
       :visible="confirmTxModal"
@@ -100,7 +100,9 @@ export default class Withdraw extends Vue {
   val = 25
   minVal = 25
   withdrawValue = 0
-
+  get lable() {
+    return this.$t('views.lendingpage')
+  }
   get myCollateral() {
     return this.lendingStore.myCollateralAssets
   }
