@@ -10,8 +10,10 @@
             "staking": "Staking",
             "lending": "Lending",
             "whitepaper": "白皮书",
-            "dashboard": "仪表板"
+            "dashboard": "仪表板",
+            "yellow": "黄皮书"
         },
+        "yellowpdf": "https://efg.finance/media/Oracles_yellow_paper_zh.pdf",
         "pdf": "https://efg.finance/media/efg-whitepaperzh.pdf",
         "underconstruction": "underconstructionzh.svg",
         "main": {
@@ -58,22 +60,41 @@
                 "subtitle": "我们相信规模、可视性和时间是对智能合约安全真正的关键考验，它就是用户的安全性和适用性的关键点。ECOC Financial Growth（EFG）Token的开发人员为了建造最佳金融渠道而努力不停的开发。"
             }
         ],
-        "docs": {
-            "Introduction": "Introduction",
-            "detail1": {
-                "head": "什么是DeFi？",
-                "head_sub": "去中心化金融（DeFi）是指在区块链系统之上开发的金融应用程序组成的生态系统。DeFi的目标是重建没有中介的传统金融体系。市场上的许多传统行为，如借贷，现在可以通过去中心化的开源系统完成。"
+        "Introduction": "指南",
+        "docs": [{
+                "head": "抵押资产 ",
+                "headsub": "要从dApp借用EFG代币，用户首先需要提供ECOC作为抵押资产。ECOC当抵押资产被锁定时，用户不能赎回或转让抵押资产。"
             },
-            "detail2": {
-                "head": "什么是ECOC Financial Growth（EFG）",
-                "head_sub": "ECOC Financial Growth（EFG）是一种去中心化的数字加密货币，建立在ECRC-20的基础上，共享ERC-20（以太坊）标准的相同接口。EFG是由 ECOChain开发平台创建的。 ECOChain 认为扩展和加强生态系统，为用户、现实和稳定的价格提供所需的缺失属性。同时，EFG 提供用户和不熟悉的用户简单化的 Defi 平台，而提高他们的利润。"
+            {
+                "head": "账户流动性",
+                "headsub": "你怎么知道你在EFG代币中允许的最大借款是多少。这取决于你存入多少ECOC作为抵押资产。在EFG dApp中，用户必须用EFG偿还贷款。根据最高借款抵押金额计算的偿还金额为60%。该函数计算您的帐户流动性，它基于最大允许借款金额的EFG当前值。如果价格向错误的方向移动，你一次借了过多贷款，你可能会立即被清算你的账户。"
             },
-            "detail3": {
-                "head": "为什么选择EFG？",
-                "head_sub": "EFG为用户带来了增加投资价值的机会。我们的目标是提供DeFi简单化、易用，即使对于数字资产的新手用户。同时，聚集广泛的用户群和创造高效用的服务。准备加入一个全新的货币，EFG！"
+            {
+                "head": "债务总额",
+                "headsub": "这是用户当前的借款金额加上应该支付的利息。用户可借用的最高EFG代币为ECOC总抵押资产价值的60%。系统通过EFG-dApp的函数计算此值。"
+            },
+            {
+                "head": "借款利率",
+                "headsub": "借款人欠他们所借资产的现行利率。借款及利息无须每日支付，除非抵押物的数额加上利息等于或超过存入抵押资产总额的60%。在这种情况下，EFG dApp系统可以清算抵押资产。"
+            },
+            {
+                "head": "赎回 ",
+                "headsub": "借款人可以赎回抵押资产。要赎回抵押资产，借款人必须偿还贷款并支付借款的全部利息。当债务偿还贷款时，EFG dApp中的还款函数用于计算总债务。"
+            },
+            {
+                "head": "清算 ",
+                "headsub": "当借款余额超过抵押资产金额60%的比率时，借款账户即破产。如果被清算了你的账户，你将失去所有抵押资产不可赎回。 "
+            },
+            {
+                "head": "自由市场",
+                "headsub": "用户可以使用提供的EFG代币在加密货币或金融市场进行投机。"
+            },
+            {
+                "head": "神谕系统 ",
+                "headsub": "oracle是唯一被授权向智能合约注入区块链外数据的实体。具体来说，他们注入每对EFG（资产/USDT）每秒的汇率（时间戳）。"
             }
 
-        }
+        ]
     },
     "components": {
 

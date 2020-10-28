@@ -361,7 +361,7 @@ export default class Collmodeldiposit extends Vue {
   }
 
   get Loanerlist() {
-    return this.lendingStore.loaners
+    return this.lendingStore.pools
   }
 
   get show() {
@@ -422,8 +422,10 @@ export default class Collmodeldiposit extends Vue {
   async depositCollateral(walletParams: WalletParams) {
     const amount = Number(this.amount)
     const poolAddress = this.selectdata
+    const currencyName = 'ECOC'
 
     const payload = {
+      currencyName,
       amount,
       poolAddress,
       walletParams
