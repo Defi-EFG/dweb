@@ -96,6 +96,7 @@
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
     />
+    <Loading :msg="loadingMsg" :loading="loading" @onClose="loading = false" />
   </div>
 </template>
 
@@ -107,10 +108,12 @@ import StakingModule from '@/store/staking'
 import { WalletParams } from '@/services/ecoc/types'
 import { CurrencyInfo } from '@/types/currency'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import Loading from '@/components/modals/loading.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal
+    TransactionComfirmationModal,
+    Loading
   }
 })
 export default class DepositWithdraw extends Vue {
@@ -126,6 +129,8 @@ export default class DepositWithdraw extends Vue {
 
   actionType = ''
   confirmTxModal = false
+  loading = false
+  loadingMsg = ''
   errorMsg = ''
 
   depositAmount: string | number = ''
@@ -182,15 +187,21 @@ export default class DepositWithdraw extends Vue {
   }
 
   onSuccess() {
+    this.loading = false
+    this.loadingMsg = ''
     this.closeConfirmTxModal()
   }
 
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
+    this.loading = false
+    this.loadingMsg = ''
     console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
+    this.loading = true
+
     const amount = Number(this.amount)
     const payload = {
       amount,
@@ -198,23 +209,27 @@ export default class DepositWithdraw extends Vue {
     }
 
     if (this.actionType === this.TYPE_DEPOSIT) {
-      console.log('Deposit')
+      this.loadingMsg = 'Currency Approving...'
       this.stakingStore
         .deposit(payload)
         .then(txid => {
-          console.log('Txid:', txid)
-          this.onSuccess()
+          setTimeout(() => {
+            console.log('Txid:', txid)
+            this.onSuccess()
+          }, 1000)
         })
         .catch(error => {
           this.onError(error.message)
         })
     } else if (this.actionType === this.TYPE_WITHDRAW) {
-      console.log('Withdraw')
+      this.loadingMsg = 'Sending Transaction...'
       this.stakingStore
         .withdraw(payload)
         .then(txid => {
-          console.log('Txid:', txid)
-          this.onSuccess()
+          setTimeout(() => {
+            console.log('Txid:', txid)
+            this.onSuccess()
+          }, 1000)
         })
         .catch(error => {
           this.onError(error.message)

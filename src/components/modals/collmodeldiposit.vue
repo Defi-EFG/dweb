@@ -191,7 +191,7 @@
                     color="white"
                     indeterminate
                   ></v-progress-circular>
-                  <p>Currency Approving...</p>
+                  <p>{{ loadingMsg }}</p>
                 </div>
               </v-card>
             </div>
@@ -356,6 +356,7 @@ export default class Collmodeldiposit extends Vue {
 
   gassetting = false
   loading = false
+  loadingMsg = 'Currency Approving...'
   errorMsg = ''
   password = ''
 
@@ -508,8 +509,10 @@ export default class Collmodeldiposit extends Vue {
     this.lendingStore
       .depositCollateral(payload)
       .then(txid => {
-        console.log('Txid:', txid)
-        this.onSuccess()
+        setTimeout(() => {
+          console.log('Txid:', txid)
+          this.onSuccess()
+        }, 1000)
       })
       .catch(error => {
         this.onError(error.message)

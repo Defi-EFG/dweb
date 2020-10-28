@@ -248,6 +248,7 @@ export default class TransactionComfirmationModal extends Vue {
   }
 }
 </script>
+
 <style>
 .blur-card {
   background-color: transparent;

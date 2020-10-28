@@ -81,6 +81,7 @@
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
     />
+    <Loading :msg="loadingMsg" :loading="loading" @onClose="loading = false" />
   </div>
 </template>
 <script lang="ts">
@@ -90,10 +91,12 @@ import { Currency } from '@/types/currency'
 import LendingModule from '@/store/lending'
 import { WalletParams } from '@/services/ecoc/types'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import Loading from '@/components/modals/loading.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal
+    TransactionComfirmationModal,
+    Loading
   }
 })
 export default class RepayCard extends Vue {
@@ -108,7 +111,9 @@ export default class RepayCard extends Vue {
   @Prop({ default: 10 }) debt!: number
 
   confirmTxModal = false
+  loading = false
   errorMsg = ''
+  loadingMsg = 'Currency Approving...'
   repayAmount = 0
 
   get contractAddr() {
@@ -182,15 +187,18 @@ export default class RepayCard extends Vue {
   }
 
   onSuccess() {
+    this.loading = false
     this.closeConfirmTxModal()
   }
 
   onError(errorMsg: string) {
+    this.loading = false
     this.errorMsg = errorMsg
     console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
+    this.loading = true
     const amount = Number(this.repayAmount)
 
     const payload = {
