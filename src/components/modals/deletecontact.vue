@@ -1,5 +1,5 @@
 <template>
-  <div class="send-transaction">
+  <div class="delete">
     <v-dialog v-model="visible" max-width="400">
       <v-card class="">
         <v-card-title class="headline modal-header" id="headmodel">
@@ -7,12 +7,14 @@
           <v-icon></v-icon>
           <v-btn text @click="onClose()"><v-icon color="white">$close</v-icon></v-btn>
         </v-card-title>
-        <div class="transaction-confirmation-wrapper ">
-          <div class="transaction-confirmation-content">
+        <div class="delete-contact">
+          <div class="delete-contact">
             <div class="headtext_m">Delete</div>
             <div class="headtext_span">Are you sure you want to delete this contact?</div>
-            <div class="action-transaction-confirmation">
-              <v-btn outlined large color="primary" class="text-capitalize">Cancel</v-btn>
+            <div class="delete-contact-detail">
+              <v-btn @click="onClose()" outlined large color="primary" class="text-capitalize"
+                >Cancel</v-btn
+              >
               <v-btn large depressed color="primary" class="text-capitalize">Delete</v-btn>
             </div>
           </div>
@@ -22,8 +24,7 @@
   </div>
 </template>
 <script lang="ts">
-import { Vue, Component, Prop, Watch, PropSync } from 'vue-property-decorator'
-import GasSetting from './gas-setting-modal.vue'
+import { Vue, Component, PropSync } from 'vue-property-decorator'
 @Component({
   components: {}
 })
@@ -31,7 +32,6 @@ export default class Deletecontact extends Vue {
   @PropSync('showDialog', { type: Boolean }) visible!: boolean
 
   onClose() {
-    this.$emit('onClose')
     this.$emit('update:showDialog', false)
   }
   onSuccessAdd() {
@@ -40,20 +40,6 @@ export default class Deletecontact extends Vue {
 }
 </script>
 <style>
-/*.headline {
-  border-bottom: 1px solid rgba(180, 180, 180, 0.555);
-  border-bottom-right-radius: 3px !important;
-  border-bottom-left-radius: 3px !important;
-}
-
-.blur-card .theme--light.v-sheet .theme--light.v-card {
-  background-color: transparent !important;
-  border-color: transparent !important;
-}
-.theme--light.v-sheet {
-  border-color: transparent !important;
-  background-color: transparent;
-}*/
 .v-text-field fieldset,
 .v-text-field .v-input__control,
 .v-text-field .v-input__slot {
@@ -92,21 +78,13 @@ export default class Deletecontact extends Vue {
   position: relative;
   color: white;
 }
-.transaction-confirmation-content {
+.delete-contact {
   padding: 20px 10px;
   background-color: white;
   font-size: 13px;
 }
 
-.transaction-confirmation-wrapper {
-  margin: 0px 16px;
-  border-radius: 8px;
-  overflow: hidden;
-  position: relative;
-  padding: 20px 0;
-}
-
-.action-transaction-confirmation .v-btn {
+.delete-contact-detail .v-btn {
   border: 2px solid #44096b;
 }
 .transaction-receiver {
@@ -116,7 +94,7 @@ export default class Deletecontact extends Vue {
   background-color: #44096b;
   border-right: 1px solid rgba(180, 180, 180, 0.555);
 }
-.action-transaction-confirmation,
+.delete-contact-detail,
 .detail,
 .modal-header {
   display: flex;
@@ -130,12 +108,8 @@ export default class Deletecontact extends Vue {
   position: relative;
 }
 
-.action-transaction-confirmation button {
+.delete-contact-detail button {
   width: 48%;
-}
-.transaction-confirmation-content-detail p {
-  margin: 0;
-  text-align: end;
 }
 .detail p {
   margin: 0;
