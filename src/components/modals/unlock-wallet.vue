@@ -53,6 +53,7 @@
                     :width="9"
                     color="primary"
                     :value="this.value"
+                    indeterminate
                   ></v-progress-circular>
                   <p>{{ msg }}</p>
                 </div>
@@ -300,7 +301,7 @@ export default class UnlockwalletModal extends Vue {
         this.createWalletKeystore = keystore
         if (this.createWalletKeystore === keystore) {
           setInterval(() => {
-            this.value += 15
+            this.value += 50
             if (this.value === 101) {
               clearInterval(this.value)
               return (this.value = 0)
