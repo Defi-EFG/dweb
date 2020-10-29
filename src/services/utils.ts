@@ -14,8 +14,20 @@ export const fromDecimals = (value: number | string, decimals: number | string) 
   return res
 }
 
-export const toNumber = (value: string) => {
+export const toNumber = (value: number | string) => {
   return new BigNumber(value)
+}
+
+export const getEcocTotalFee = (
+  fee: number | string,
+  gasPrice: number | string,
+  gasLimit: number | string
+) => {
+  const satoshi = new BigNumber(100000000)
+  const totalFee = new BigNumber(fee)
+  const totalGas = new BigNumber(gasPrice).dividedBy(satoshi).multipliedBy(gasLimit)
+
+  return totalFee.plus(totalGas).toNumber()
 }
 
 export const getEstimatedValue = (amount: number | string, price: number | string) => {

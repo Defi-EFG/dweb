@@ -65,19 +65,37 @@
       depressed
       :disabled="!isBorrowable(borrowValue, 'error')"
       :class="isBorrowable(borrowValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+      @click="onOpenModal"
       >{{ isBorrowable(borrowValue, 'btn') ? 'Borrow' : 'Not available' }}</v-btn
     >
+    <TransactionComfirmationModal
+      :visible="confirmTxModal"
+      :toAddr="contractAddr"
+      :amount="borrowValue"
+      :currency="currency"
+      @onConfirm="onConfirm"
+      @onClose="onClose"
+    />
   </div>
 </template>
+
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
 import { WalletParams } from '@/services/ecoc/types'
+import * as constants from '@/constants'
+import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 
-@Component({})
+@Component({
+  components: {
+    TransactionComfirmationModal
+  }
+})
 export default class BorrowCard extends Vue {
+  walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
 
   @Prop() currency!: Currency
@@ -95,6 +113,10 @@ export default class BorrowCard extends Vue {
 
   mounted() {
     this.bpSlider = this.bpUsed
+  }
+
+  get contractAddr() {
+    return this.lendingStore.address
   }
 
   get isMobileDevice() {
@@ -205,9 +227,9 @@ export default class BorrowCard extends Vue {
     this.closeModal()
   }
 
-  async Borrow(walletParams: WalletParams) {
+  onConfirm(walletParams: WalletParams) {
     const amount = Number(this.borrowValue)
-    const poolAddress = this.lendingStore.loan.loaner
+    const poolAddress = this.lendingStore.loan.poolAddr
 
     const payload = {
       amount,
@@ -219,6 +241,7 @@ export default class BorrowCard extends Vue {
       .borrow(payload)
       .then(txid => {
         console.log('Txid:', txid)
+        this.walletStore.addPendingTx(txid, constants.TX_BORROW)
         this.onSuccess()
       })
       .catch(error => {

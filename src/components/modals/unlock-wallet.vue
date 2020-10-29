@@ -239,7 +239,7 @@
 
                 <div class="action-wrapper">
                   <v-btn large class="mb-5" color="primary" @click="onUnlockWallet()">
-                    <h4 class="text-capitalize font-weight-light">Create</h4>
+                    <h4 class="text-capitalize font-weight-light">Connect</h4>
                   </v-btn>
                 </div>
               </div>

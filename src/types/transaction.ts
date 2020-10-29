@@ -105,3 +105,9 @@ export interface TxHistory {
   confirmations: number
   status?: string
 }
+
+export interface PendingTransaction {
+  type: string
+  txid: string
+  status: string
+}

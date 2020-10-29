@@ -57,6 +57,7 @@ import { CurrencyInfo } from '@/types/currency'
 import WalletModule from '@/store/wallet'
 import StakingModule from '@/store/staking'
 import { WalletParams } from '@/services/ecoc/types'
+import * as constants from '@/constants'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 
 @Component({
@@ -128,6 +129,7 @@ export default class StakedReward extends Vue {
       .claim(payload)
       .then(txid => {
         console.log('Txid:', txid)
+        this.walletStore.addPendingTx(txid, constants.TX_WITHDRAW)
         this.onSuccess()
       })
       .catch(error => {

@@ -3,10 +3,12 @@ import store from '@/store'
 import { WalletParams } from '@/services/ecoc/types'
 import { StakingPlatform } from '@/types/staking'
 import { staking as stakingContract } from '@/services/staking'
+import { Ecrc20 } from '@/services/ecrc20'
 import * as Ecoc from '@/services/wallet'
 import * as constants from '@/constants'
 import * as utils from '@/services/utils'
 import { stakingCurrency, rewardCurrency } from '@/store/common'
+import { EFG, GPT } from '@/store/wallet/currency'
 
 const rewardHistory = [
   {
@@ -58,14 +60,16 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   @MutationAction
   async updateMintingInfo(address: string) {
     const available = await stakingContract.unclaimedGPT()
-    const decimals = 4
     const { stakingAmount, timestamp, unclaimedReward } = await stakingContract.mintingInfo(address)
 
+    const rewardDecimals = GPT.tokenInfo?.decimals as string
+    const stakingDecimals = EFG.tokenInfo?.decimals as string
+
     return {
-      staking: stakingAmount,
+      staking: utils.toDecimals(stakingAmount, stakingDecimals).toNumber(),
       timestamp: timestamp,
-      totalStakedReward: unclaimedReward,
-      available: utils.toDecimals(available, decimals).toNumber(),
+      totalStakedReward: utils.toDecimals(unclaimedReward, rewardDecimals).toNumber(),
+      available: utils.toDecimals(available, rewardDecimals).toNumber(),
       lastUpdate: new Date().getTime()
     }
   }
@@ -87,10 +91,33 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   @Action({ rawError: true })
   async deposit(payloads: { amount: number; walletParams: WalletParams }) {
     const { amount, walletParams } = payloads
+    const tokenInfo = EFG.tokenInfo
+
+    if (!tokenInfo) {
+      return Promise.reject(new Error('Wrong Currency'))
+    }
+
+    const efg = new Ecrc20(tokenInfo)
+    const decimals = tokenInfo.decimals
+    const fullAmount = utils.fromDecimals(amount, decimals).toNumber()
 
     try {
-      const rawTransaction = await stakingContract.mintGPT(amount, walletParams)
-      const txid = await Ecoc.sendRawTx(rawTransaction)
+      const allowance = await efg.allowance(walletParams.address, stakingContract.address)
+      if (fullAmount > allowance) {
+        // waiting for ecrc-20 approve
+        const approveTx = await efg.approve(stakingContract.address, amount, walletParams)
+        const approveTxid = await Ecoc.sendRawTx(approveTx)
+
+        console.log('Waiting for confirmation')
+        await Ecoc.waitForConfirmation(approveTxid)
+        console.log('Confirmed')
+
+        const newUtxos = await Ecoc.getUtxos(walletParams.address)
+        walletParams.utxoList = newUtxos
+      }
+
+      const depositTx = await stakingContract.mintGPT(fullAmount, walletParams)
+      const txid = await Ecoc.sendRawTx(depositTx)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid
     } catch (error) {
@@ -101,9 +128,11 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   @Action({ rawError: true })
   async withdraw(payloads: { amount: number; walletParams: WalletParams }) {
     const { amount, walletParams } = payloads
+    const decimals = EFG.tokenInfo?.decimals as string
+    const fullAmount = utils.fromDecimals(amount, decimals).toNumber()
 
     try {
-      const rawTransaction = await stakingContract.withdrawEFG(amount, walletParams)
+      const rawTransaction = await stakingContract.withdrawEFG(fullAmount, walletParams)
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid

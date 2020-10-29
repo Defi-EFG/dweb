@@ -2,9 +2,17 @@
   <div class="lending-page">
     <v-row class="content-wrapper">
       <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-1">
-        <SupplyBalance :balance="collateralBalance" :loaner="loaner"></SupplyBalance>
+        <SupplyBalance
+          :balance="collateralBalance"
+          :loaner="loaner"
+          :isLiquidate="isLiquidation"
+        ></SupplyBalance>
         <div class="col-spacer"></div>
-        <BorrowBalance :balance="borrowedBalance" :borrowLimit="borrowLimit"></BorrowBalance>
+        <BorrowBalance
+          :balance="borrowedBalance"
+          :borrowLimit="borrowLimit"
+          :isLiquidate="isLiquidation"
+        ></BorrowBalance>
       </v-col>
       <v-col xl="4" lg="4" md="12" sm="12" class="content-2">
         <LendingActivity></LendingActivity>
@@ -161,8 +169,12 @@ export default class Lending extends Vue {
     return this.walletStore.address != ''
   }
 
+  get isLiquidation() {
+    return this.lendingStore.isLiquidation
+  }
+
   get loaner() {
-    return this.lendingStore.loan.loaner
+    return this.lendingStore.loan.poolAddr
   }
 
   get myCollateral() {
