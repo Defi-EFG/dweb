@@ -170,7 +170,16 @@
                       required
                       :rules="[rules.required]"
                     ></v-textarea>
+
                     <text-reader @load="keystore = $event"></text-reader>
+                 
+                    <div class="errorMsg" v-if="errorMsg2">
+                      <span>{{ errorMsg2 }}</span>
+                    </div>
+                    <div class="errorMsg" v-else-if="errormsg">
+                      <span>{{ errormsg }}</span>
+                    </div>
+
                     <div class="action-wrapper">
                       <v-btn
                         large
@@ -206,21 +215,28 @@
                   <small class="lightgray--text">Please input your keystore password</small>
                 </div>
                 <template>
-                  <v-text-field
-                    v-model="keystorePassword"
-                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    name="input-10-1"
-                    :type="show ? 'text' : 'password'"
-                    @click:append="show = !show"
-                    label="Keystore Password"
-                    color="primary"
-                    filled
-                    :rules="[rules.required, rules.min, rules.msgerror]"
-                    elevation-0
-                    dense
-                    required
-                  ></v-text-field>
+                  <v-form ref="form">
+                    <v-text-field
+                      v-model="keystorePassword"
+                      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                      name="input-10-1"
+                      :type="show ? 'text' : 'password'"
+                      @click:append="show = !show"
+                      label="Keystore Password"
+                      color="primary"
+                      filled
+                      :rules="[rules.required, rules.min]"
+                      elevation-0
+                      dense
+                      required
+                    ></v-text-field
+                  ></v-form>
                 </template>
+
+                <div class="errorMsg" v-if="errorMsg">
+                  <span>{{ errorMsg }}</span>
+                </div>
+
                 <div class="action-wrapper">
                   <v-btn large class="mb-5" color="primary" @click="onUnlockWallet()">
                     <h4 class="text-capitalize font-weight-light">Create</h4>
@@ -268,6 +284,8 @@ export default class UnlockwalletModal extends Vue {
   step = 1
   unlockwalletModal = this.visible
   errorMsg = ''
+  errorMsg2 = ''
+  errormsg = ''
   password = ''
   value = 0
   rules = {
@@ -276,9 +294,6 @@ export default class UnlockwalletModal extends Vue {
     },
     min: (v: any) => {
       return v.length >= 6 || 'Min 6 characters'
-    },
-    msgerror: (v: any) => {
-      return v.errorMsg || 'Your keystore password is incorrect.'
     }
   }
 
@@ -337,10 +352,13 @@ export default class UnlockwalletModal extends Vue {
       const obj = JSON.parse(this.keystore)
       if ('version' in obj && 'content' in obj && 'crypto' in obj) {
         this.step = 5
+      } else {
+        this.errormsg = 'Wrong format of keystore text'
+        console.log(this.errormsg)
       }
     } catch (error) {
-      this.errorMsg = error.message
-      console.log((this.errorMsg = error.message))
+      this.errorMsg2 = 'Wrong format of keystore file'
+      console.log(this.errorMsg2)
     }
   }
 
@@ -352,11 +370,13 @@ export default class UnlockwalletModal extends Vue {
       const keystoreq = this.walletStore.keystore
       const wallet = Ecoc.importFromKeystore(keystore, password)
       const utxoList = await wallet.getUtxoList()
+      console.log(this.$refs)
       this.walletStore.importWallet({ keystore, password }).then(() => {
         this.onClose()
       })
     } catch (error) {
       this.errorMsg = error.message
+      console.log(this.errorMsg)
     }
   }
 
@@ -604,5 +624,12 @@ v-btn {
 }
 .generate-keystore p {
   margin-top: 15px;
+}
+.errorMsg {
+  background-color: white;
+  color: red;
+
+  font-size: 10px;
+  padding: 4px;
 }
 </style>

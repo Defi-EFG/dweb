@@ -45,16 +45,21 @@
             </div>
             <v-form class="pt-4">
               <v-text-field
+                :rules="[rules.required, rules.min ]"
                 label="KeyStore Password"
                 v-model="password"
                 type="password"
                 dense
                 filled
+              
               ></v-text-field
             ></v-form>
-            <div v-if="errorMsg">
-              <p class="error">{{ errorMsg }}</p>
+
+
+              <div class="errorMsg" v-if="errorMsg">
+              <span>{{ errorMsg }}</span>
             </div>
+
             <div class="action-transaction-confirmation">
               <v-btn outlined large color="primary" class="text-capitalize" @click="onClose"
                 >Cancel</v-btn
@@ -139,6 +144,7 @@ import LendingModule from '@/store/lending'
 import StakingModule from '@/store/staking'
 import * as Ecoc from '@/services/wallet'
 import { DEFAULT } from '@/services/contract'
+import { invalid } from 'moment'
 
 @Component({
   components: {}
@@ -165,6 +171,9 @@ export default class TransactionComfirmationModal extends Vue {
     },
     min: (v: any) => {
       return v.length >= 6 || 'Min 6 characters'
+    },
+    invalid:(v:any) => {
+      return v.errorMsg || 'Invalid keystore or password'
     }
   }
   fee = DEFAULT.DEFAULT_FEE
@@ -245,6 +254,7 @@ export default class TransactionComfirmationModal extends Vue {
       this.$emit('onConfirm', walletParams)
     } catch (error) {
       this.errorMsg = error.message
+  
     }
   }
 }
@@ -270,6 +280,7 @@ export default class TransactionComfirmationModal extends Vue {
 }
 </style>
 <style lang="scss" scoped>
+
 .content-gas-setting {
   padding: 0px 25px 20px;
 }
@@ -428,5 +439,11 @@ export default class TransactionComfirmationModal extends Vue {
 .inputnumber input[type='number']::-webkit-outer-spin-button {
   opacity: 1;
   padding: 15px 3px;
+}.errorMsg{
+background-color: white;
+color:red ;
+
+font-size: 10px;
+padding: 4px;
 }
 </style>
