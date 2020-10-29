@@ -7,7 +7,13 @@ import * as utils from '@/services/utils'
 import { Ecrc20 } from '@/services/ecrc20'
 import { lending } from '@/services/lending'
 import { WalletParams } from '@/services/ecoc/types'
-import { loanCurrency, getCurrencyDecimals, getTokenInfo } from '@/store/common'
+import {
+  loanCurrency,
+  rewardCurrency as extendCurrency,
+  getCurrencyDecimals,
+  getTokenInfo
+} from '@/store/common'
+import { now } from 'moment'
 
 const myActivity = [
   {
@@ -56,7 +62,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     exchangeRate: 0,
     interest: 0,
     EFGInitialRate: 0,
-    lastGracePeriod: 0,
+    lastGracePeriod: now() / 1000 + 120,
     remainingGPT: 0
   } as Loan
 
@@ -227,6 +233,16 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     return constants.STATUS_SYNCED
   }
 
+  @Action
+  async getEstimatedGPT(address: string) {
+    const fullAmount = await lending.getEstimatedGPT(address)
+    const tokenInfo = getTokenInfo(extendCurrency.name)
+    const decimals = tokenInfo.decimals
+    const amount = utils.toDecimals(fullAmount, decimals).toNumber()
+
+    return amount as number
+  }
+
   @Action({ rawError: true })
   async depositCollateral(payloads: {
     currencyName: string
@@ -342,6 +358,38 @@ export default class LendingModule extends VuexModule implements LendingPlatform
       }
 
       const rawTransaction = await lending.repay(fullAmount, walletParams)
+      const txid = await Ecoc.sendRawTx(rawTransaction)
+      this.context.commit('updateStatus', constants.STATUS_PENDING)
+      return txid
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+
+  @Action({ rawError: true })
+  async extendGracePeriod(payloads: { amount: number; walletParams: WalletParams }) {
+    const { amount, walletParams } = payloads
+    const tokenInfo = getTokenInfo(extendCurrency.name)
+    const token = new Ecrc20(tokenInfo)
+    const decimals = tokenInfo.decimals
+    const fullAmount = utils.fromDecimals(amount, decimals).toNumber()
+
+    try {
+      const allowance = await token.allowance(walletParams.address, lending.address)
+      if (fullAmount > allowance) {
+        // waiting for ecrc-20 approve
+        const approveTx = await token.approve(lending.address, amount, walletParams)
+        const approveTxid = await Ecoc.sendRawTx(approveTx)
+
+        console.log('Waiting for confirmation')
+        await Ecoc.waitForConfirmation(approveTxid)
+        console.log('Confirmed')
+
+        const newUtxos = await Ecoc.getUtxos(walletParams.address)
+        walletParams.utxoList = newUtxos
+      }
+
+      const rawTransaction = await lending.extendGracePeriod(fullAmount, walletParams)
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid

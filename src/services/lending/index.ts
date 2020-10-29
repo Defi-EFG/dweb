@@ -34,6 +34,18 @@ export namespace lending {
     return res
   }
 
+  export const getEstimatedGPT = async (address: string) => {
+    const params = {
+      methodArgs: [address]
+    } as Params
+
+    const result = await contract.call('getEstimatedGPT', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const res = executionResult.formattedOutput['0'].toNumber() as number
+
+    return res
+  }
+
   export const getAllPools = async () => {
     const params = {
       methodArgs: []
