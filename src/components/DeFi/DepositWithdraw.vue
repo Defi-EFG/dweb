@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dw-wrapper">
     <v-card dark class="tab-container">
       <v-tabs grow background-color="#191c26" class="dw-tabs" :hide-slider="true" show-arrows>
         <v-tab>Deposit</v-tab>
@@ -243,6 +243,11 @@ export default class DepositWithdraw extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.dw-wrapper {
+  display: flex;
+  width: -webkit-fill-available;
+}
+
 .tab-container {
   width: inherit;
   text-align: left;
@@ -315,7 +320,7 @@ export default class DepositWithdraw extends Vue {
 
   .btn-w,
   .btn-d {
-    margin-top: 2.5rem;
+    margin-top: 3.5rem;
     margin-bottom: 1rem;
     border-radius: 5px;
     background: transparent linear-gradient(90deg, #8b41d6 0%, #6800fe 100%) 0% 0% no-repeat
