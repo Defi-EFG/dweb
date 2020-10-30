@@ -17,13 +17,38 @@ export default class AddressBookModule extends VuexModule {
   subscribeToFirebase(userAddr: string) {
     this.connectFirebaseRef(userAddr)
     this.firebaseData.on('value', contact => {
-      this.setContactList(contact.val())
+      if (contact.exists()) {
+        this.setContactList(contact.val())
+      } else {
+        this.createNewRef(userAddr)
+      }
     })
   }
 
   @Action
   addNewContact(contact: Contact) {
-    this.firebaseData.child(contact.name).set(contact)
+    this.firebaseData.push(contact)
+    this.firebaseData.once('value', contact => {
+      if (contact.child('created').exists()) {
+        this.firebaseData.child('created').remove()
+      }
+    })
+  }
+
+  @Action
+  updateContact(payload: { uid: string; contact: Contact }) {
+    this.firebaseData.child(payload.uid).set(payload.contact)
+  }
+
+  @Action
+  removeContact(uid: string) {
+    this.firebaseData.child(uid).remove()
+  }
+
+  @Action
+  createNewRef(ref: string) {
+    const newCreated = { created: true }
+    db.ref(ref).set(newCreated)
   }
 
   @Mutation
@@ -35,10 +60,4 @@ export default class AddressBookModule extends VuexModule {
   setContactList(contact: Contact[]) {
     this.contactList = contact
   }
-
-  // @Mutation
-  // addToContactList(contact: Contact) {
-
-  // }
-
 }
