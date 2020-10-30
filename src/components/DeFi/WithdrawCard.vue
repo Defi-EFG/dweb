@@ -57,33 +57,72 @@
       depressed
       :disabled="!isWithdrawable(withdrawValue, 'error')"
       :class="isWithdrawable(withdrawValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+      @click="openConfirmTxModal"
     >
       {{ isWithdrawable(withdrawValue, 'btn') ? 'Withdraw' : 'Insufficient' }}</v-btn
     >
+    <TransactionComfirmationModal
+      :visible="confirmTxModal"
+      :toAddr="contractAddr"
+      :amount="withdrawValue"
+      :currency="currency"
+      @onConfirm="onConfirm"
+      @onClose="closeConfirmTxModal"
+    />
   </div>
 </template>
+
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
 import { Currency } from '@/types/currency'
+import LendingModule from '@/store/lending'
+import WalletModule from '@/store/wallet'
+import * as constants from '@/constants'
+import { WalletParams } from '@/services/ecoc/types'
+import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
 
-@Component({})
+@Component({
+  components: {
+    TransactionComfirmationModal
+  }
+})
 export default class Withdraw extends Vue {
+  walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
   @Prop() borrowLimit!: number
   @Prop() borrowPowerPercentage!: number
 
+  confirmTxModal = false
+  errorMsg = ''
+
   val = 25
   minVal = 25
   withdrawValue = 0
+
+  get myCollateral() {
+    return this.lendingStore.myCollateralAssets
+  }
+
+  get contractAddr() {
+    return this.lendingStore.address
+  }
 
   get isMobileDevice() {
     return window.innerWidth < 1264
   }
 
   get maxWithdraw() {
-    return 0
+    const selectedCollateral = this.myCollateral.find(
+      asset => asset.currency.name === this.currencyName
+    )
+    if (!selectedCollateral) return 0
+
+    return 1000 // selectedCollateral.amount
   }
 
   get currencyName() {
@@ -133,6 +172,46 @@ export default class Withdraw extends Vue {
     }
 
     return isEnough && isValidAmount
+  }
+
+  openConfirmTxModal() {
+    this.confirmTxModal = !this.confirmTxModal
+  }
+
+  closeConfirmTxModal() {
+    this.withdrawValue = 0
+    this.confirmTxModal = false
+  }
+
+  onSuccess() {
+    this.closeConfirmTxModal()
+  }
+
+  onError(errorMsg: string) {
+    this.errorMsg = errorMsg
+    console.log(errorMsg)
+  }
+
+  onConfirm(walletParams: WalletParams) {
+    const amount = Number(this.withdrawValue)
+    const currencyName = this.currencyName
+
+    const payload = {
+      currencyName,
+      amount,
+      walletParams
+    }
+
+    this.lendingStore
+      .withdrawCollateral(payload)
+      .then(txid => {
+        console.log('Txid:', txid)
+        this.walletStore.addPendingTx(txid, constants.TX_WITHDRAW)
+        this.onSuccess()
+      })
+      .catch(error => {
+        this.onError(error.message)
+      })
   }
 }
 </script>

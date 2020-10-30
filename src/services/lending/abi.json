@@ -95,6 +95,25 @@
     "constant":true,
     "inputs":[
       {
+        "name":"_depositors_addr",
+        "type":"address"
+      }
+    ],
+    "name":"getUserPool",
+    "outputs":[
+      {
+        "name":"",
+        "type":"address"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
         "name":"_symbol",
         "type":"bytes8"
       }
@@ -133,33 +152,6 @@
     "constant":false,
     "inputs":[
       {
-        "name":"_symbol",
-        "type":"bytes8"
-      },
-      {
-        "name":"_pool_addr",
-        "type":"address"
-      },
-      {
-        "name":"_amount",
-        "type":"uint256"
-      }
-    ],
-    "name":"borrow",
-    "outputs":[
-      {
-        "name":"borrowedEFG",
-        "type":"uint256"
-      }
-    ],
-    "payable":false,
-    "stateMutability":"nonpayable",
-    "type":"function"
-  },
-  {
-    "constant":false,
-    "inputs":[
-      {
         "name":"_beneficiar",
         "type":"address"
       },
@@ -183,25 +175,6 @@
     "constant":false,
     "inputs":[
       {
-        "name":"_amount",
-        "type":"uint256"
-      }
-    ],
-    "name":"repay",
-    "outputs":[
-      {
-        "name":"result",
-        "type":"bool"
-      }
-    ],
-    "payable":false,
-    "stateMutability":"nonpayable",
-    "type":"function"
-  },
-  {
-    "constant":false,
-    "inputs":[
-      {
         "name":"_symbol",
         "type":"bytes8"
       },
@@ -214,7 +187,7 @@
         "type":"address"
       }
     ],
-    "name":"lockAsset",
+    "name":"depositAsset",
     "outputs":[
       {
         "name":"result",
@@ -229,23 +202,38 @@
     "constant":true,
     "inputs":[
       {
-        "name":"_debtors_addr",
+        "name":"_pool_addr",
         "type":"address"
-      },
-      {
-        "name":"_symbol",
-        "type":"bytes8"
       }
     ],
-    "name":"getCollateralInfo",
+    "name":"listPoolUsers",
     "outputs":[
       {
-        "name":"",
-        "type":"uint256"
+        "name":"members",
+        "type":"address[]"
       }
     ],
     "payable":false,
     "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":false,
+    "inputs":[
+      {
+        "name":"_amount",
+        "type":"uint256"
+      }
+    ],
+    "name":"repay",
+    "outputs":[
+      {
+        "name":"result",
+        "type":"bool"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"nonpayable",
     "type":"function"
   },
   {
@@ -300,6 +288,25 @@
     ],
     "payable":false,
     "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_debtors_addr",
+        "type":"address"
+      }
+    ],
+    "name":"getCollateralAmount",
+    "outputs":[
+      {
+        "name":"collateralAmount",
+        "type":"uint256[]"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
     "type":"function"
   },
   {
@@ -414,25 +421,6 @@
     "type":"function"
   },
   {
-    "constant":false,
-    "inputs":[
-      {
-        "name":"_pool_addr",
-        "type":"address"
-      }
-    ],
-    "name":"lockECOC",
-    "outputs":[
-      {
-        "name":"result",
-        "type":"bool"
-      }
-    ],
-    "payable":true,
-    "stateMutability":"payable",
-    "type":"function"
-  },
-  {
     "constant":true,
     "inputs":[
       {
@@ -466,7 +454,7 @@
         "type":"uint256"
       },
       {
-        "name":"pollAddress",
+        "name":"poolAddress",
         "type":"address"
       }
     ],
@@ -500,24 +488,55 @@
   {
     "constant":true,
     "inputs":[
-      {
-        "name":"_symbol",
-        "type":"bytes8"
-      },
-      {
-        "name":"_depositor",
-        "type":"address"
-      }
+      
     ],
-    "name":"getDepositedPool",
+    "name":"availableGPT",
     "outputs":[
       {
-        "name":"pollAddress",
-        "type":"address"
+        "name":"available_GPT",
+        "type":"uint256"
       }
     ],
     "payable":false,
     "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":false,
+    "inputs":[
+      {
+        "name":"_amount",
+        "type":"uint256"
+      }
+    ],
+    "name":"borrow",
+    "outputs":[
+      {
+        "name":"borrowedEFG",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "constant":false,
+    "inputs":[
+      {
+        "name":"_pool_addr",
+        "type":"address"
+      }
+    ],
+    "name":"depositECOC",
+    "outputs":[
+      {
+        "name":"result",
+        "type":"bool"
+      }
+    ],
+    "payable":true,
+    "stateMutability":"payable",
     "type":"function"
   },
   {
@@ -528,8 +547,27 @@
     "name":"getAllPools",
     "outputs":[
       {
-        "name":"",
+        "name":"allPools",
         "type":"address[]"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_debtors_addr",
+        "type":"address"
+      }
+    ],
+    "name":"getCollateralSymbols",
+    "outputs":[
+      {
+        "name":"collateralSymbol",
+        "type":"bytes8[]"
       }
     ],
     "payable":false,
@@ -547,10 +585,6 @@
     "name":"getLoanInfo",
     "outputs":[
       {
-        "name":"assetSymbol",
-        "type":"bytes8"
-      },
-      {
         "name":"amount",
         "type":"uint256"
       },
@@ -567,8 +601,39 @@
         "type":"uint256"
       },
       {
+        "name":"EFGInitialRate",
+        "type":"uint256"
+      },
+      {
+        "name":"lastGracePeriod",
+        "type":"uint256"
+      },
+      {
+        "name":"remainingGPT",
+        "type":"uint256"
+      },
+      {
         "name":"poolAddr",
         "type":"address"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_pool_addr",
+        "type":"address"
+      }
+    ],
+    "name":"listLiquidable",
+    "outputs":[
+      {
+        "name":"allLiquidable",
+        "type":"address[]"
       }
     ],
     "payable":false,
@@ -596,6 +661,25 @@
     ],
     "payable":false,
     "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_debtors_addr",
+        "type":"address"
+      }
+    ],
+    "name":"canSeize",
+    "outputs":[
+      {
+        "name":"seizable",
+        "type":"bool"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
     "type":"function"
   },
   {
@@ -632,7 +716,7 @@
         "type":"uint256"
       }
     ],
-    "name":"LockECOCEvent",
+    "name":"DepositECOCEvent",
     "type":"event"
   },
   {
@@ -659,7 +743,7 @@
         "type":"uint256"
       }
     ],
-    "name":"LockAssetEvent",
+    "name":"DepositAssetEvent",
     "type":"event"
   },
   {
@@ -789,16 +873,6 @@
         "indexed":false,
         "name":"borrower",
         "type":"address"
-      },
-      {
-        "indexed":false,
-        "name":"assetSymbol",
-        "type":"bytes32"
-      },
-      {
-        "indexed":false,
-        "name":"asset_amount",
-        "type":"uint256"
       }
     ],
     "name":"MarginCallEvent",

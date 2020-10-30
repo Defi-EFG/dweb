@@ -1,10 +1,10 @@
 <template>
   <div>
-    <v-dialog v-model="sendialog" max-width="400" class="send-transaction">
+    <v-dialog v-model="show" max-width="400" class="send-transaction">
       <v-card class="blur-card" color="#FFFFFF00">
         <v-card-title class="modal-header">
           <v-icon></v-icon>
-          <v-btn @click="sendialog = false" text><v-icon color="white">$close</v-icon></v-btn>
+          <v-btn @click="onClose" text><v-icon color="white">$close</v-icon></v-btn>
         </v-card-title>
         <div class="transaction-confirmation-wrapper ">
           <div class="d-flex ">
@@ -25,9 +25,8 @@
               <div class="detail border-bottom">
                 <span class="gt">Amount</span>
                 <div class="d-flex justify-end">
-                  <p></p>
-                  <!-- number -->
-                  <p class="ml-2">ECOC</p>
+                  <p>{{ amount }}</p>
+                  <p class="ml-2">{{ selectedCurrencyName }}</p>
                 </div>
               </div>
             </div>
@@ -36,8 +35,7 @@
               <span class="gt">Gas Fee</span>
               <div class="text-end">
                 <div class="d-flex justify-end">
-                  <p></p>
-                  <!-- number -->
+                  <p>{{ fee }}</p>
                   <p class="ml-2">ECOC</p>
                 </div>
                 <v-btn @click="gasSetting()" small text color="primary">
@@ -54,16 +52,16 @@
                 filled
               ></v-text-field
             ></v-form>
+            <div v-if="errorMsg">
+              <p class="error">{{ errorMsg }}</p>
+            </div>
             <div class="action-transaction-confirmation">
-              <v-btn
-                @click="sendialog = false"
-                outlined
-                large
-                color="primary"
-                class="text-capitalize"
+              <v-btn outlined large color="primary" class="text-capitalize" @click="onClose"
                 >Cancel</v-btn
               >
-              <v-btn large depressed color="primary" class="text-capitalize">Confirm</v-btn>
+              <v-btn large depressed color="primary" class="text-capitalize" @click="onConfirm"
+                >Confirm</v-btn
+              >
             </div>
           </div>
         </div>
@@ -74,7 +72,7 @@
       <v-card>
         <div class="d-flex justify-lg-space-between pt-3 ">
           <v-icon></v-icon>
-          <v-btn text @click="gassetting = false"><v-icon>$close</v-icon></v-btn>
+          <v-btn text @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
         </div>
         <div class="content-gas-setting">
           <h3>Gas Customization</h3>
@@ -82,24 +80,21 @@
           <div class="gas-customization">
             <v-btn-toggle tile group>
               <v-btn>
-                <div class="gas-custom-btn-group">
+                <div class="gas-custom-btn-group" @click="fee = feeSlow">
                   <p>Slow</p>
-                  <p>-20 min</p>
-                  <p>1.00 ECOC</p>
+                  <p>{{ feeSlow }} ECOC</p>
                 </div>
               </v-btn>
               <v-btn>
-                <div class="gas-custom-btn-group">
+                <div class="gas-custom-btn-group" @click="fee = feeAverage">
                   <p>Average</p>
-                  <p>-20 min</p>
-                  <p>1.00 ECOC</p>
+                  <p>{{ feeAverage }} ECOC</p>
                 </div></v-btn
               >
               <v-btn>
-                <div class="gas-custom-btn-group">
+                <div class="gas-custom-btn-group" @click="fee = feeFast">
                   <p>Fast</p>
-                  <p>-20min</p>
-                  <p>1.00 ECOC</p>
+                  <p>{{ feeFast }} ECOC</p>
                 </div></v-btn
               >
             </v-btn-toggle>
@@ -116,14 +111,13 @@
           </div>
 
           <div class="d-flex justify-space-between py-2">
-            <p>New Transaction Fee:</p>
+            <p>Total Transaction Fee:</p>
             <div class="text-end">
-              <p class="mb-0">3.00 ECOC</p>
-              <small>-20 sec</small>
+              <p class="mb-0">{{ totalFee }} ECOC</p>
             </div>
           </div>
           <div class="save-button ">
-            <v-btn color="primary" depressed block>save</v-btn>
+            <v-btn color="primary" depressed block @click="closeGasSetting">save</v-btn>
           </div>
         </div>
       </v-card>
@@ -132,12 +126,15 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { WalletParams } from '@/services/ecoc/types'
 import { Currency } from '@/types/currency'
 import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
+import StakingModule from '@/store/staking'
 import * as Ecoc from '@/services/wallet'
+import * as utils from '@/services/utils'
 import { DEFAULT } from '@/services/contract'
 
 @Component({
@@ -150,11 +147,13 @@ export default class TransactionComfirmationModal extends Vue {
   @Prop() amount!: string
 
   walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+  stakingStore = getModule(StakingModule)
 
-  lendingContractAddress = '85635434f6c52f3aaecb8f9c5763223bc07875c7'
-  stakingContractAddress = 'b0b56e3d1b82be8f309dccff96b27e521b785b49'
+  feeSlow = 0.004
+  feeAverage = 0.01
+  feeFast = 0.1
 
-  sendialog = false
   gassetting = false
   errorMsg = ''
   password = ''
@@ -163,19 +162,32 @@ export default class TransactionComfirmationModal extends Vue {
   gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
 
+  get show() {
+    return this.visible
+  }
+
+  get totalFee() {
+    return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
+  }
+
   get addr() {
     return this.walletStore.address
   }
 
-  checkSendModalActive() {
-    this.sendialog = this.visible
-    if (this.sendialog !== true) {
-      this.sendialog = true
-    }
+  get lendingContractAddress() {
+    return this.lendingStore.address
+  }
+
+  get stakingContractAddress() {
+    return this.stakingStore.address
   }
 
   gasSetting() {
     this.gassetting = true
+  }
+
+  closeGasSetting() {
+    this.gassetting = false
   }
 
   truncateAddress(addr: string) {
@@ -236,6 +248,7 @@ export default class TransactionComfirmationModal extends Vue {
   }
 }
 </script>
+
 <style>
 .blur-card {
   background-color: transparent;

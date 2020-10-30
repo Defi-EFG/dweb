@@ -9,29 +9,22 @@
                 @click="onClickActive(active == 'Introduction')"
                 :class="active == 'Introduction' ? 'active' : ''"
                 href="#Introduction"
-                >{{ $t('views.docs.Introduction') }}</a
+                >{{ $t('views.Introduction') }}</a
               >
             </div>
           </section>
         </v-col>
         <v-col lg="9" md="9" cols="12" style="padding:0px;">
           <section id="Introduction" class="sec_doc2">
-            <div class="head_Introduction">{{ $t('views.docs.detail1.head') }}</div>
-            <div class="sun_Introduction">
-              {{ $t('views.docs.detail1.head_sub') }}
+            <div class="img">
+              <div class="docs_head">{{ $t('views.Introduction') }}</div>
+              <img src="@/assets/docs01.png" alt="" />
             </div>
-            <div class="head_Introduction">{{ $t('views.docs.detail2.head') }}</div>
-            <div class="sun_Introduction">
-              {{ $t('views.docs.detail2.head_sub') }}
-            </div>
-
-            <div class="head_Introduction">{{ $t('views.docs.detail3.head') }}</div>
-            <div class="sun_Introduction">
-              {{ $t('views.docs.detail3.head_sub') }}
-            </div>
-            <div class="head_Introduction">{{ $t('views.main.sub_name_work') }}</div>
-            <div class="sun_Introduction">
-              {{ $t('views.main.sub_name_4') }}
+            <div v-for="(item, i) in msg" :key="i">
+              <div class="head_Introduction">
+                {{ item.head }} - <span>{{ item.headsub }}</span
+                ><br />
+              </div>
             </div>
           </section>
         </v-col>
@@ -40,23 +33,25 @@
   </div>
 </template>
 
-<script>
-export default {
-  data: () => ({
-    active: 'Introduction',
-    name: ''
-  }),
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+@Component({})
+export default class Docs extends Vue {
+  active = 'Introduction'
+  name = ''
 
-  methods: {
-    onClickActive() {
-      this.active = 'Introduction'
-      this.name = 'home-docs'
-      this.$store.dispatch('addAction')
-    },
-    onClickActive2() {
-      this.active = 'Guides'
-      this.name = 'home-docs'
-    }
+  onClickActive() {
+    this.active = 'Introduction'
+    this.name = 'home-docs'
+  }
+
+  onClickActive2() {
+    this.active = 'Guides'
+    this.name = 'home-docs'
+  }
+
+  get msg() {
+    return this.$t('views.docs')
   }
 }
 </script>
@@ -115,15 +110,39 @@ export default {
   padding: 150px 30px 400px 82px;
   height: 100%;
 }
+.sec_doc2 .img img {
+  width: 100%;
+  margin-bottom: 40px;
+  box-shadow: 0px 0px 20px 1px #cccccc;
+  border-radius: 5px;
+}
+.sec_doc2 .img .docs_head {
+  width: 100%;
+  margin-bottom: 20px;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
 .sec_doc2 .head_Introduction {
-  font: normal normal bold 16px/21px Segoe UI;
+  font-size: 16px;
   letter-spacing: 0px;
-  color: #000000;
+  color: #010101;
+  opacity: 1;
+  margin-bottom: 40px;
+  font-weight: bold;
+  line-height: 1.2;
+  text-align: justify;
+}
+.sec_doc2 .head_Introduction span {
+  font-weight: 200;
+  font-size: 14px;
+  letter-spacing: 0px;
   opacity: 1;
   margin-bottom: 5px;
 }
 .sec_doc2 .sun_Introduction {
-  font: normal normal normal 16px/21px Segoe UI;
+  font-size: 20px;
   letter-spacing: 0px;
   color: #434141;
   opacity: 1;

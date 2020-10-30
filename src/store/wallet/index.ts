@@ -4,7 +4,7 @@ import { InsufficientBalance } from '@/exceptions/wallet'
 import { Wallet, SendPayload } from '@/types/wallet'
 import { KeyStore } from '@/types/keystore'
 import { Currency } from '@/types/currency'
-import { TxList } from '@/types/transaction'
+import { TxList, PendingTransaction } from '@/types/transaction'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import { lending } from '@/services/lending'
@@ -22,9 +22,10 @@ export default class WalletModule extends VuexModule implements Wallet {
   lastUpdate = 0 //timestamp
   lastBlock = 0
   status = constants.STATUS_SYNCED
+  pendingTransactions = [] as PendingTransaction[]
 
   get ecoc() {
-    if (this.currencies.length < 0) return 0
+    if (this.currencies.length <= 0) return 0
 
     const currencyInfo = this.currencies.find(currency => currency.name === constants.ECOC)
     return currencyInfo?.balance
@@ -44,6 +45,9 @@ export default class WalletModule extends VuexModule implements Wallet {
 
   get isWalletUnlocked() {
     return !!this.address
+    
+  get pendingTransaction() {
+    return this.pendingTransactions[0]
   }
 
   @Mutation
@@ -233,5 +237,59 @@ export default class WalletModule extends VuexModule implements Wallet {
   @MutationAction
   async updateLastBlock(blocknumber: number) {
     return { lastBlock: blocknumber }
+  }
+
+  @MutationAction
+  async addPendingTx(txid: string, txType: string) {
+    const pendingTransactions = (this.state as any).pendingTransactions as PendingTransaction[]
+
+    const index = pendingTransactions.findIndex(tx => tx.txid === txid)
+    if (index >= 0) {
+      return {}
+    }
+
+    const pendingTransaction = {
+      txid: txid,
+      type: txType,
+      status: constants.STATUS_PENDING
+    } as PendingTransaction
+
+    pendingTransactions.splice(pendingTransactions.length, 1, pendingTransaction)
+
+    return { pendingTransactions }
+  }
+
+  @MutationAction
+  async updatePendingTx(txid: string, status: string) {
+    const pendingTransactions = (this.state as any).pendingTransactions as PendingTransaction[]
+
+    const index = pendingTransactions.findIndex(tx => tx.txid === txid)
+    if (index < 0) {
+      return {}
+    }
+
+    const pendingTransaction = {
+      txid: pendingTransactions[index].txid,
+      type: pendingTransactions[index].type,
+      status: status
+    } as PendingTransaction
+
+    pendingTransactions.splice(index, 1, pendingTransaction)
+
+    return { pendingTransactions }
+  }
+
+  @MutationAction
+  async removePendingTx(txid: string) {
+    const pendingTransactions = (this.state as any).pendingTransactions as PendingTransaction[]
+
+    const index = pendingTransactions.findIndex(tx => tx.txid === txid)
+    if (index < 0) {
+      return {}
+    }
+
+    pendingTransactions.splice(index, 1)
+
+    return { pendingTransactions }
   }
 }

@@ -7,7 +7,7 @@
     "name":"unclaimedGPT",
     "outputs":[
       {
-        "name":"",
+        "name":"contractGPTBalance",
         "type":"uint256"
       }
     ],
@@ -26,7 +26,7 @@
     "name":"claimStakedGPT",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -49,7 +49,7 @@
     "name":"withdrawEFG",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -68,7 +68,7 @@
     "name":"mintGPT",
     "outputs":[
       {
-        "name":"",
+        "name":"result",
         "type":"bool"
       }
     ],
@@ -87,15 +87,15 @@
     "name":"mintingInfo",
     "outputs":[
       {
-        "name":"",
+        "name":"lockedEFG",
         "type":"uint256"
       },
       {
-        "name":"",
+        "name":"lastTimestamp",
         "type":"uint256"
       },
       {
-        "name":"",
+        "name":"unclaimedAmount",
         "type":"uint256"
       }
     ],

@@ -70,16 +70,41 @@
       depressed
       :disabled="!isRepayable(repayAmount, 'error')"
       :class="isRepayable(repayAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
+      @click="openConfirmTxModal"
       >{{ isRepayable(repayAmount, 'btn') ? 'Repay' : 'Insufficient' }}</v-btn
     >
+    <TransactionComfirmationModal
+      :visible="confirmTxModal"
+      :toAddr="contractAddr"
+      :amount="repayAmount"
+      :currency="currency"
+      @onConfirm="onConfirm"
+      @onClose="closeConfirmTxModal"
+    />
+    <Loading :msg="loadingMsg" :loading="loading" @onClose="loading = false" />
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
+import { WalletParams } from '@/services/ecoc/types'
+import * as constants from '@/constants'
+import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import Loading from '@/components/modals/loading.vue'
 
-@Component({})
+@Component({
+  components: {
+    TransactionComfirmationModal,
+    Loading
+  }
+})
 export default class RepayCard extends Vue {
+  walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
@@ -88,7 +113,15 @@ export default class RepayCard extends Vue {
   @Prop() borrowPowerPercentage!: number
   @Prop({ default: 10 }) debt!: number
 
+  confirmTxModal = false
+  loading = false
+  errorMsg = ''
+  loadingMsg = 'Currency Approving...'
   repayAmount = 0
+
+  get contractAddr() {
+    return this.lendingStore.address
+  }
 
   get isMobileDevice() {
     return window.innerWidth < 1264
@@ -145,6 +178,47 @@ export default class RepayCard extends Vue {
       return isInRange && isClickable
     }
     return isInRange && isValidAmount
+  }
+
+  openConfirmTxModal() {
+    this.confirmTxModal = !this.confirmTxModal
+  }
+
+  closeConfirmTxModal() {
+    this.repayAmount = 0
+    this.confirmTxModal = false
+  }
+
+  onSuccess() {
+    this.loading = false
+    this.closeConfirmTxModal()
+  }
+
+  onError(errorMsg: string) {
+    this.loading = false
+    this.errorMsg = errorMsg
+    console.log(errorMsg)
+  }
+
+  onConfirm(walletParams: WalletParams) {
+    this.loading = true
+    const amount = Number(this.repayAmount)
+
+    const payload = {
+      amount,
+      walletParams
+    }
+
+    this.lendingStore
+      .repay(payload)
+      .then(txid => {
+        console.log('Txid:', txid)
+        this.walletStore.addPendingTx(txid, constants.TX_REPAY)
+        this.onSuccess()
+      })
+      .catch(error => {
+        this.onError(error.message)
+      })
   }
 }
 </script>

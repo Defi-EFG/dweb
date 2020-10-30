@@ -24,6 +24,8 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
 import DefiNav from '@/components/DeFi/DefiNav.vue'
 import HeaderNav from '@/components/HeaderNav.vue'
 import MenuDropdown from '@/components/DeFi/MenuDropdown.vue'
@@ -38,6 +40,12 @@ import DeFiFooter from '@/components/DeFi/DeFiFooter.vue'
   }
 })
 export default class Home extends Vue {
+  walletStore = getModule(WalletModule)
+
+  get pendingTransaction() {
+    return this.walletStore.pendingTransaction
+  }
+
   get isMobileDevice() {
     return window.innerWidth < 1264
   }
