@@ -23,7 +23,7 @@ export namespace lending {
   export const address = lendingContract.address
 
   export const canSeize = async (address: string) => {
-    return true
+    return false
     // const params = {
     //   methodArgs: [address]
     // } as Params

@@ -45,7 +45,8 @@ export default class WalletModule extends VuexModule implements Wallet {
 
   get isWalletUnlocked() {
     return !!this.address
-    
+  }
+
   get pendingTransaction() {
     return this.pendingTransactions[0]
   }
