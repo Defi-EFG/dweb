@@ -62,17 +62,6 @@ export default class Deletecontact extends Vue {
   }
 }
 </script>
-<style>
-.v-text-field fieldset,
-.v-text-field .v-input__control,
-.v-text-field .v-input__slot {
-  border-radius: unset;
-}
-.v-input__slot:before {
-  border: none !important;
-  border-radius: 5px;
-}
-</style>
 <style lang="scss" scoped>
 .headtext_m {
   color: #44096b;

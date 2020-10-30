@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="stake-wrapper">
     <v-card dark color="#2e3344" class="staked-reward">
       <v-card-text class="wrapper">
         <div class="total-reward">
@@ -140,8 +140,13 @@ export default class StakedReward extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.stake-wrapper {
+  display: flex;
+  width: -webkit-fill-available;
+}
+
 .staked-reward {
-  width: inherit;
+  width: -webkit-fill-available;
 }
 
 .wrapper {
@@ -151,7 +156,7 @@ export default class StakedReward extends Vue {
 }
 
 .d-amount {
-  margin-top: 1.5rem;
+  margin-top: 2.5rem;
   margin-bottom: 1.5rem;
   display: flex;
   padding: 10px;

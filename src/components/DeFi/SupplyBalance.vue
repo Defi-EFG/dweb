@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="balance-wrapper">
     <v-card dark class="balance-card">
       <v-card-text>
         <span class="balance-label">Collateral Balance</span>
@@ -152,6 +152,11 @@ export default class SupplyBalance extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.balance-wrapper {
+  display: flex;
+  width: -webkit-fill-available;
+}
+
 .balance-card {
   background: #2e3344;
   padding-left: 0.5rem;
