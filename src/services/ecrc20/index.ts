@@ -1,7 +1,7 @@
 import { Ecrc20 as IEcrc20 } from '@/types/currency'
 import { ecocw3 } from '@/services/ecoc/ecocw3'
 import { SmartContract, Params, ExecutionResult } from '@/services/contract'
-import { WalletParams } from '@/services/ecoc/types'
+import { WalletParams, TokenInfo } from '@/services/ecoc/types'
 import { fromDecimals } from '@/services/utils'
 import ecrc20Abi from './abi.json'
 
@@ -118,7 +118,7 @@ export class Ecrc20 {
     return rawTx as string
   }
 
-  static async getEcrc20Info(contractAddress: string) {
+  static async getEcrc20Info(contractAddress: string): Promise<TokenInfo> {
     return await ecocw3.api.getTokenInfo(contractAddress)
   }
 }

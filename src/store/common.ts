@@ -19,10 +19,10 @@ export const rewardCurrency = {
 
 export const getCurrencyDecimals = (currencyName: string) => {
   if (currencyName === ECOC.name) return '8'
-  if (currencyName === ETH.name) return ETH.tokenInfo?.symbol as string
-  if (currencyName === USDT.name) return USDT.tokenInfo?.symbol as string
-  if (currencyName === EFG.name) return EFG.tokenInfo?.symbol as string
-  if (currencyName === GPT.name) return GPT.tokenInfo?.symbol as string
+  if (currencyName === ETH.name) return ETH.tokenInfo?.decimals as string
+  if (currencyName === USDT.name) return USDT.tokenInfo?.decimals as string
+  if (currencyName === EFG.name) return EFG.tokenInfo?.decimals as string
+  if (currencyName === GPT.name) return GPT.tokenInfo?.decimals as string
 
   return '0'
 }

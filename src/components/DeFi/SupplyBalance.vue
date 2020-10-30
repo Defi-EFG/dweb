@@ -3,7 +3,7 @@
     <v-card dark class="balance-card">
       <v-card-text>
         <span class="balance-label">Collateral Balance</span>
-        <div class="loaner">Loaner: {{ loaner }}</div>
+        <div class="loaner">Loaner: {{ poolAddr }}</div>
         <div class="balance" :class="isLiquidate ? 'liquidate' : ''">${{ balance.toFixed(2) }}</div>
         <div class="liquid-countdown" v-show="isLiquidate">
           <span>Counting down 5 blocks to liquidation...</span>
@@ -48,7 +48,7 @@ import Loading from '@/components/modals/loading.vue'
 })
 export default class SupplyBalance extends Vue {
   @Prop({ default: 0 }) readonly balance!: number
-  @Prop({ default: '' }) readonly loaner!: string
+  @Prop({ default: '' }) readonly poolAddr!: string
   @Prop({ default: false }) readonly isLiquidate!: boolean
 
   walletStore = getModule(WalletModule)
@@ -93,7 +93,7 @@ export default class SupplyBalance extends Vue {
   }
 
   async getEstimatedGPT() {
-    return 1520.654 //await this.lendingStore.getEstimatedGPT(this.address)
+    return await this.lendingStore.getEstimatedGPT(this.address)
   }
 
   openConfirmTxModal() {

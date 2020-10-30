@@ -43,6 +43,17 @@ export interface Erc20Info {
   }
 }
 
+export interface TokenInfo {
+  contract_address: string
+  total_supply: string
+  decimals: string
+  name: string
+  symbol: string
+  version: string
+  transfers_count: number
+  holders_count: number
+}
+
 export interface TxData {
   pagesTotal: number
   txs: Transaction[]

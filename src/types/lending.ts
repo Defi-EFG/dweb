@@ -8,7 +8,7 @@ export interface Pool {
 }
 
 export interface Collateral {
-  currency: Currency
+  currencyName: string
   activated: boolean
   collateralFactor: number
 }
@@ -47,13 +47,17 @@ export interface Loan {
 
 export interface LendingPlatform {
   address: string
-
-  loan: Loan
   pools: Pool[]
+
+  borrowLimit: number // in efg
+  borrowBalance: number // total debt in efg
+  loan: Loan
+
   myCollateralAssets: CollateralAsset[]
+  supportedCollateralAssets: Collateral[]
+
   myActivity: MyActivity[]
 
-  collateralsActivated: string[]
   lastUpdate: number
   isLiquidation: boolean
   status: string

@@ -23,27 +23,55 @@ export namespace lending {
   export const address = lendingContract.address
 
   export const canSeize = async (address: string) => {
-    const params = {
-      methodArgs: [address]
-    } as Params
+    return true
+    // const params = {
+    //   methodArgs: [address]
+    // } as Params
 
-    const result = await contract.call('canSeize', params)
-    const executionResult = result.executionResult as ExecutionResult
-    const res = executionResult.formattedOutput['0'] as boolean
+    // const result = await contract.call('canSeize', params)
+    // const executionResult = result.executionResult as ExecutionResult
+    // const res = executionResult.formattedOutput['0'] as boolean
 
-    return res
+    // return res
+  }
+
+  export const getBorrowLimit = async (address: string) => {
+    return 5000000000
+    // const params = {
+    //   methodArgs: [address]
+    // } as Params
+
+    // const result = await contract.call('getBorrowLimit', params)
+    // const executionResult = result.executionResult as ExecutionResult
+    // const res = executionResult.formattedOutput['0'].toNumber() as number
+
+    // return res
   }
 
   export const getEstimatedGPT = async (address: string) => {
-    const params = {
-      methodArgs: [address]
-    } as Params
+    return 15240000
+    // const params = {
+    //   methodArgs: [address]
+    // } as Params
 
-    const result = await contract.call('getEstimatedGPT', params)
-    const executionResult = result.executionResult as ExecutionResult
-    const res = executionResult.formattedOutput['0'].toNumber() as number
+    // const result = await contract.call('getEstimatedGPT', params)
+    // const executionResult = result.executionResult as ExecutionResult
+    // const res = executionResult.formattedOutput['0'].toNumber() as number
 
-    return res
+    // return res
+  }
+
+  export const getAllAssets = async () => {
+    return ['29fa3b8bb3ec7a59d98e269b90875f944744c70c']
+    // const params = {
+    //   methodArgs: []
+    // } as Params
+
+    // const result = await contract.call('getAllAssets', params)
+    // const executionResult = result.executionResult as ExecutionResult
+    // const contractAddresses = executionResult.formattedOutput.allAcceptedAssets as string[]
+
+    // return contractAddresses
   }
 
   export const getAllPools = async () => {
@@ -148,7 +176,7 @@ export namespace lending {
     const executionResult = result.executionResult as ExecutionResult
     const res = executionResult.formattedOutput['0'].toNumber()
 
-    return new BigNumber(res).dividedBy(1000).toNumber()
+    return new BigNumber(res).dividedBy(10000).toNumber()
   }
 
   export const getInterestRate = async () => {
@@ -176,7 +204,7 @@ export namespace lending {
 
     const totalDebt = res['0'].toNumber()
     if (totalDebt <= 0) {
-      return { totalDebt: 0, poolAddress: '' }
+      return { totalDebt: 1000000000, poolAddress: 'MockupAddress' }
     }
 
     const poolAddress = Decoder.toEcoAddress(res['1'])

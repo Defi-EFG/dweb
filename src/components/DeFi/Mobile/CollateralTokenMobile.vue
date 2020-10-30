@@ -33,6 +33,14 @@ import { Currency } from '@/types/currency'
 @Component({})
 export default class CollateralTokenMobile extends Vue {
   @Prop({ default: [] }) readonly collateralList!: Collateral[]
+
+  switchToCollateral(currency: Currency) {
+    this.$emit('switchToCollateral', currency)
+  }
+
+  onActivate(data: boolean) {
+    this.$emit('onActivate', data)
+  }
 }
 </script>
 
