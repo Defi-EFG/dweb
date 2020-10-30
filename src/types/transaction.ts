@@ -21,6 +21,7 @@ export interface Transaction {
   size: number
   valueIn: number
   fees: number
+  receipt?: TxReceipt[]
 }
 
 export interface TxValueIn {

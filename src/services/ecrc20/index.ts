@@ -1,4 +1,5 @@
 import { Ecrc20 as IEcrc20 } from '@/types/currency'
+import { TxReceipt } from '@/types/transaction'
 import { ecocw3 } from '@/services/ecoc/ecocw3'
 import { SmartContract, Params, ExecutionResult } from '@/services/contract'
 import { WalletParams, TokenInfo } from '@/services/ecoc/types'
@@ -120,5 +121,10 @@ export class Ecrc20 {
 
   static async getEcrc20Info(contractAddress: string): Promise<TokenInfo> {
     return await ecocw3.api.getTokenInfo(contractAddress)
+  }
+
+  static decode(rawOutput: TxReceipt[]) {
+    const contractMetadata = { Token: ecrc20Abi }
+    return SmartContract.decodeSearchLog(rawOutput, contractMetadata)
   }
 }

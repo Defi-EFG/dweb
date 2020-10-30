@@ -76,7 +76,7 @@ export default class StakingModule extends VuexModule implements StakingPlatform
 
   @Action
   init() {
-    const totalReward = 10000
+    const totalReward = 1000
     this.context.commit('updateTotalReward', totalReward)
     this.context.commit('updateAvailable', totalReward)
     this.context.commit('updateTime')

@@ -10,7 +10,7 @@
     <v-card-text :class="page">
       <v-list color="#222738" class="tx-list">
         <v-list-item
-          v-for="(tx, index) in exampleHistory"
+          v-for="(tx, index) in transactionsHistory"
           :key="index"
           class="tx-item"
           @click="displayHistory(tx)"
@@ -28,10 +28,7 @@
               {{ tx.value }} {{ tx.currency }}
             </v-list-item-title>
             <div class="tx-addr">
-              <small>
-                {{ isReceived(tx.type) ? 'From' : 'To' }}:
-                {{ tx.address === defiAddr ? 'Lending (DeFi)' : truncateAddress(tx.address) }}
-              </small>
+              <small> TxID: {{ truncate(tx.id, 20) }} </small>
               <v-spacer></v-spacer>
               <small>{{ tx.time }}</small>
             </div>
@@ -51,6 +48,8 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import { TxValueIn, TxValueOut, TxHistory } from '@/types/transaction'
 import * as constants from '@/constants'
+import * as utils from '@/services/utils'
+import { Ecrc20 } from '@/services/ecrc20'
 import TransactionDetailModal from '@/components/modals/TransactionDetailModal.vue'
 
 @Component({
@@ -158,20 +157,32 @@ export default class TransactionHistory extends Vue {
       return []
     }
 
-    return txs.map(txs => {
-      const currency = txs.isEcrc20Transfer ? 'ECRC-20' : 'ECOC'
-      const value = this.getBalanceChanged(txs.vin, txs.vout)
+    return txs.map(tx => {
+      const currencyType = 'ECOC'
+      const value = this.getBalanceChanged(tx.vin, tx.vout)
       const type = new BigNumber(value).lt(0) ? constants.TYPE_SENT : constants.TYPE_RECEIVED
+      const status = tx.confirmations ? constants.STATUS_CONFIRMED : constants.STATUS_PENDING
+      let address = ''
+      let txResult
+
+      if (tx.receipt) {
+        address = tx.receipt[0].contractAddress
+        txResult = Ecrc20.decode(tx.receipt)
+        console.log(txResult[0].log[0])
+      }
+
+      const subtype = this.truncate(this.addressFilter(address))
 
       return {
-        id: '',
+        id: tx.txid,
         type: type,
-        subtype: '',
-        address: '',
+        subtype: subtype,
+        address: address,
         value: value,
-        currency: currency,
-        time: this.getTime(txs.time),
-        confirmations: 0
+        currency: currencyType,
+        time: this.getTime(tx.time),
+        confirmations: tx.confirmations,
+        status: status
       } as TxHistory
     })
   }
@@ -217,13 +228,18 @@ export default class TransactionHistory extends Vue {
     this.sentTx = tx
   }
 
-  truncateAddress(addr: string) {
+  truncate(msg: string, charsToShow = 20) {
+    if (msg.length <= charsToShow) return msg
+
     const separator = '...'
-    const charsToShow = 8
     const frontChars = Math.ceil(charsToShow / 2)
     const backChars = Math.floor(charsToShow / 2)
 
-    return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
+    return msg.substr(0, frontChars) + separator + msg.substr(msg.length - backChars)
+  }
+
+  addressFilter(address: string) {
+    return utils.addressFilter(address)
   }
 }
 </script>
