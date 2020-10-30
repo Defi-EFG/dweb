@@ -111,6 +111,25 @@
     "type":"function"
   },
   {
+    "constant":false,
+    "inputs":[
+      {
+        "name":"_EFG_amount",
+        "type":"uint256"
+      }
+    ],
+    "name":"increaseCapital",
+    "outputs":[
+      {
+        "name":"result",
+        "type":"bool"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
     "constant":true,
     "inputs":[
       {
@@ -169,6 +188,22 @@
     ],
     "payable":false,
     "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      
+    ],
+    "name":"getAllAssets",
+    "outputs":[
+      {
+        "name":"allAcceptedAssets",
+        "type":"address[]"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
     "type":"function"
   },
   {
@@ -356,6 +391,25 @@
     "type":"function"
   },
   {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_depositors_addr",
+        "type":"address"
+      }
+    ],
+    "name":"getBorrowLimit",
+    "outputs":[
+      {
+        "name":"lendable",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
     "constant":false,
     "inputs":[
       {
@@ -418,6 +472,25 @@
     ],
     "payable":false,
     "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_debtors_addr",
+        "type":"address"
+      }
+    ],
+    "name":"getEstimatedGPT",
+    "outputs":[
+      {
+        "name":"GPTamount",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
     "type":"function"
   },
   {
@@ -701,6 +774,28 @@
     "payable":false,
     "stateMutability":"nonpayable",
     "type":"fallback"
+  },
+  {
+    "anonymous":false,
+    "inputs":[
+      {
+        "indexed":false,
+        "name":"result",
+        "type":"bool"
+      },
+      {
+        "indexed":false,
+        "name":"pool_founder",
+        "type":"address"
+      },
+      {
+        "indexed":false,
+        "name":"EFG_amount",
+        "type":"uint256"
+      }
+    ],
+    "name":"IncreaseCapitalEvent",
+    "type":"event"
   },
   {
     "anonymous":false,

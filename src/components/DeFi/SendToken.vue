@@ -21,26 +21,32 @@
         v-model="toAddr"
       >
         <template v-slot:append-outer>
-          <div class="address-book" @click="displayContact = !displayContact">
+          <div class="address-book" @click="displayContactList">
             <v-icon>mdi-book-variant</v-icon>
           </div>
         </template>
       </v-text-field>
       <div class="contact-address" v-if="displayContact" v-click-outside="onClickOutside">
         <v-list-item-group color="#363a4a" class="address-list">
-          <v-list-item
-            v-for="(contact, index) in addrList"
-            :key="index"
-            class="address-item"
-            @click="selectAddress(contact.address)"
-          >
-            <v-icon class="mr-3">mdi-account-circle</v-icon>
+          <template v-if="'created' in contactList">
+            <div class="empty-message">No contact address</div>
+          </template>
 
-            <v-list-item-content>
-              {{ contact.name }}
-              <small class="addr-value text-truncate">{{ contact.address }}</small>
-            </v-list-item-content>
-          </v-list-item>
+          <template v-else>
+            <v-list-item
+              v-for="(contact, index) in contactList"
+              :key="index"
+              class="address-item"
+              @click="selectAddress(contact.address)"
+            >
+              <v-icon class="mr-3">mdi-account-circle</v-icon>
+
+              <v-list-item-content>
+                {{ contact.name }}
+                <small class="addr-value text-truncate">{{ contact.address }}</small>
+              </v-list-item-content>
+            </v-list-item>
+          </template>
         </v-list-item-group>
       </div>
       <div class="withdraw-rate">
@@ -77,6 +83,7 @@ import vClickOutside from 'v-click-outside'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import { SendPayload } from '@/types/wallet'
+import AddressBookModule from '@/store/address-book'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
 import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
@@ -92,6 +99,7 @@ import TransactionComfirmationModal from '@/components/modals/transaction-confir
 export default class SendToken extends Vue {
   confirmTxModal = false
 
+  addressStore = getModule(AddressBookModule)
   walletStore = getModule(WalletModule)
   displayContact = false
 
@@ -109,6 +117,14 @@ export default class SendToken extends Vue {
       address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
     }
   ]
+
+  get isWalletReady() {
+    return this.walletStore.isWalletUnlocked
+  }
+
+  get contactList() {
+    return this.addressStore.addressBook
+  }
 
   get ecocBalance() {
     return this.walletStore.ecoc
@@ -132,8 +148,6 @@ export default class SendToken extends Vue {
   }
 
   onClickOutside() {
-    console.log('clicked outside')
-
     this.displayContact = false
   }
 
@@ -188,6 +202,12 @@ export default class SendToken extends Vue {
 
   withdrawAll(amount: number) {
     this.amount = amount
+  }
+
+  displayContactList() {
+    if (this.isWalletReady) {
+      this.displayContact = !this.displayContact
+    }
   }
 }
 </script>
@@ -284,6 +304,7 @@ export default class SendToken extends Vue {
 }
 
 .contact-address {
+  box-shadow: 0px 7px 8px 0px #1d212ebd;
   z-index: 1;
   position: absolute;
   background: #363a4a;
@@ -310,6 +331,12 @@ export default class SendToken extends Vue {
 }
 .address-item:nth-last-child(1) {
   border-bottom: 0;
+}
+
+.empty-message {
+  color: white;
+  opacity: 0.4;
+  padding: 1rem;
 }
 </style>
 

@@ -8,7 +8,7 @@
         :currency="currency"
         :collateralBalance="collateralBalance"
         :borrowBalance="borrowBalance"
-        :borrowPower="borrowPower"
+        :borrowLimit="borrowLimit"
         :interestRate="interestRate"
         :borrowPowerPercentage="borrowPowerPercentage"
       ></Borrow>
@@ -19,7 +19,7 @@
         :currency="currency"
         :collateralBalance="collateralBalance"
         :borrowBalance="borrowBalance"
-        :borrowPower="borrowPower"
+        :borrowLimit="borrowLimit"
         :interestRate="interestRate"
         :borrowPowerPercentage="borrowPowerPercentage"
       ></Repay>
@@ -43,7 +43,7 @@ export default class BorrowRepayMobile extends Vue {
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
-  @Prop() borrowPower!: number
+  @Prop() borrowLimit!: number
   @Prop() borrowPowerPercentage!: number
   @Prop() interestRate!: number
 }

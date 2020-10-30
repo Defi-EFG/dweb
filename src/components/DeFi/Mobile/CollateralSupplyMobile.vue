@@ -10,7 +10,7 @@
         :currency="currency"
         :collateralBalance="collateralBalance"
         :borrowBalance="borrowBalance"
-        :borrowPower="borrowPower"
+        :borrowLimit="borrowLimit"
         :borrowPowerPercentage="borrowPowerPercentage"
       ></CollateralWithdrawMobile>
     </v-tab-item>
@@ -22,7 +22,7 @@
         :currency="currency"
         :collateralBalance="collateralBalance"
         :borrowBalance="borrowBalance"
-        :borrowPower="borrowPower"
+        :borrowLimit="borrowLimit"
         :interestRate="interestRate"
         :borrowPowerPercentage="borrowPowerPercentage"
       ></BorrowRepayMobile>
@@ -53,7 +53,7 @@ export default class CollateralSupplyMobile extends Vue {
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
-  @Prop() borrowPower!: number
+  @Prop() borrowLimit!: number
   @Prop() borrowPowerPercentage!: number
   @Prop() interestRate!: number
   @Prop({ default: [] }) readonly borrowList!: Borrow[]

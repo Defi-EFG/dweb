@@ -4,7 +4,7 @@
       <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-1">
         <SupplyBalance
           :balance="collateralBalance"
-          :loaner="loaner"
+          :poolAddr="poolAddr"
           :isLiquidate="isLiquidation"
         ></SupplyBalance>
         <div class="col-spacer"></div>
@@ -115,9 +115,9 @@
         :currency="selectedCurrency"
         :collateralBalance="collateralBalance"
         :borrowBalance="borrowedBalance"
-        :borrowPower="borrowPower"
+        :borrowLimit="borrowLimit"
         :interestRate="interestRate"
-        :borrowPowerPercentage="borrowPowerRate"
+        :borrowPowerPercentage="selectedCollateralFactor"
         :borrowList="borrowList"
       ></CollateralSupplyMobile>
     </template>
@@ -131,7 +131,6 @@ import * as constants from '@/constants'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
-import { CollateralAsset } from '@/types/lending'
 import SupplyBalance from '@/components/DeFi/SupplyBalance.vue'
 import BorrowBalance from '@/components/DeFi/BorrowBalance.vue'
 import LendingActivity from '@/components/DeFi/LendingActivity.vue'
@@ -162,7 +161,7 @@ export default class Lending extends Vue {
   lendingStore = getModule(LendingModule)
 
   mode = 'collateral'
-  selectedCollateralFactor = this.myCollateral[0].collateralFactor
+  selectedCollateralFactor = this.collateralList[0].collateralFactor
   selectedCurrency = this.collateralList[0].currency
 
   get isLoggedIn(): boolean {
@@ -173,7 +172,7 @@ export default class Lending extends Vue {
     return this.lendingStore.isLiquidation
   }
 
-  get loaner() {
+  get poolAddr() {
     return this.lendingStore.loan.poolAddr
   }
 
@@ -186,14 +185,14 @@ export default class Lending extends Vue {
   }
 
   get borrowLimit() {
-    return this.myCollateral.reduce(
-      (prev, collateral) =>
-        prev +
-        collateral.amount *
-          collateral.collateralFactor *
-          this.getCurrencyPrice(collateral.currency.name),
-      0
-    )
+    const currencyName = 'EFG'
+    return this.lendingStore.borrowLimit * this.getCurrencyPrice(currencyName)
+  }
+
+  // get all dept * it's current price
+  get borrowedBalance() {
+    const currencyName = 'EFG'
+    return this.lendingStore.borrowBalance * this.getCurrencyPrice(currencyName)
   }
 
   // get all collateral Amount * it's current price
@@ -205,33 +204,25 @@ export default class Lending extends Vue {
     )
   }
 
-  // get all dept * it's current price
-  get borrowedBalance() {
-    return this.myBorrowing.reduce(
-      (prev, borrowing) => prev + borrowing.amount * this.getCurrencyPrice(borrowing.currency.name),
-      0
-    )
-  }
-
   get interestRate() {
     return this.lendingStore.loan.interestRate
   }
 
-  get collateralsActivated() {
-    return this.lendingStore.collateralsActivated
-  }
-
   get collateralList() {
-    return this.walletStore.currencies
-      .filter(currency => {
-        return constants.COLLATERAL_CURRENCIES.indexOf(currency.name) >= 0
-      })
-      .map(currency => {
+    const supportedAssets = this.lendingStore.supportedCollateralAssets
+      .map(asset => {
+        const currency = this.walletStore.currencies.find(
+          currency => currency.name === asset.currencyName
+        )
         return {
-          currency: currency,
-          activated: this.collateralsActivated.indexOf(currency.name) >= 0
+          currency: currency as Currency,
+          activated: asset.activated,
+          collateralFactor: asset.collateralFactor
         }
       })
+      .filter(asset => !!asset.currency)
+
+    return supportedAssets
   }
 
   get borrowList() {
@@ -265,11 +256,13 @@ export default class Lending extends Vue {
   toCollateralToken(currency: Currency) {
     this.mode = 'collateral'
     this.selectedCurrency = currency
-    const collateral = this.myCollateral.find(
-      collateral => collateral.currency.name === currency.name
-    ) as CollateralAsset
 
-    this.selectedCollateralFactor = collateral.collateralFactor || 0
+    const collateral = this.collateralList.find(
+      collateral => collateral.currency.name === currency.name
+    )
+
+    if (collateral) this.selectedCollateralFactor = collateral.collateralFactor
+    else this.selectedCollateralFactor = 0
   }
 
   toBorrowToken(currency: Currency) {
@@ -278,8 +271,7 @@ export default class Lending extends Vue {
   }
 
   onActivate(data: boolean) {
-    if (data) this.lendingStore.activatedCollateral(this.selectedCurrency.name)
-    else this.lendingStore.deactivatedCollateral(this.selectedCurrency.name)
+    return data
   }
 
   mounted() {

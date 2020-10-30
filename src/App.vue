@@ -52,9 +52,11 @@ export default class App extends Vue {
       await this.walletStore.updateTransactionsHistory()
 
       //update lending platform
-      //await this.lendingStore.updateLoan(this.walletStore.address)
-      //await this.lendingStore.updateCollateral(this.walletStore.address)
-      //await this.lendingStore.updateLiquidation(this.walletStore.address)
+      await this.lendingStore.updateLoan(this.walletStore.address)
+      await this.lendingStore.updateCollateral(this.walletStore.address)
+      await this.lendingStore.updateLiquidation(this.walletStore.address)
+      await this.lendingStore.updateBalance(this.walletStore.address)
+      await this.lendingStore.updateSupprtedAssets()
       await this.lendingStore.updateLoners()
 
       //update staking platform

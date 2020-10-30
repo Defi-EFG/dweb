@@ -1,25 +1,153 @@
 <template>
-  <v-card dark class="balance-card">
-    <v-card-text>
-      <span class="balance-label">Collateral Balance</span>
-      <div class="loaner">Loaner: {{ loaner }}</div>
-      <div class="balance" :class="isLiquidate ? 'liquidate' : ''">${{ balance.toFixed(2) }}</div>
-      <div class="liquid-countdown" v-show="isLiquidate">
-        <span>Counting down 5 blocks to liquidation...</span>
-        <span class="extend-btn">Extend</span>
-      </div>
-    </v-card-text>
-  </v-card>
+  <div>
+    <v-card dark class="balance-card">
+      <v-card-text>
+        <span class="balance-label">Collateral Balance</span>
+        <div class="loaner">Loaner: {{ poolAddr }}</div>
+        <div class="balance" :class="isLiquidate ? 'liquidate' : ''">${{ balance.toFixed(2) }}</div>
+        <div class="liquid-countdown" v-show="isLiquidate">
+          <span>Counting down 5 blocks to liquidation...</span>
+          <span class="extend-btn" @click="openConfirmTxModal">Extend</span>
+        </div>
+        <div class="liquid-countdown" v-show="extentTimeRemaining">
+          <span>{{ extentTimeRemaining }}</span>
+        </div>
+      </v-card-text>
+    </v-card>
+    <TransactionComfirmationModal
+      :txType="confirmTxType"
+      :visible="confirmTxModal"
+      :toAddr="contractAddr"
+      :amount="estimatedGPT"
+      :currency="currency"
+      @onConfirm="onConfirm"
+      @onClose="closeConfirmTxModal"
+    />
+    <Loading :msg="loadingMsg" :loading="loading" @onClose="loading = false" />
+  </div>
 </template>
 
 <script lang="ts">
+import moment from 'moment'
 import { Vue, Component, Prop } from 'vue-property-decorator'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
+import * as constants from '@/constants'
+import { WalletParams } from '@/services/ecoc/types'
+import { rewardCurrency as extendCurrency } from '@/store/common'
+import * as utils from '@/services/utils'
+import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import Loading from '@/components/modals/loading.vue'
 
-@Component({})
+@Component({
+  components: {
+    TransactionComfirmationModal,
+    Loading
+  }
+})
 export default class SupplyBalance extends Vue {
   @Prop({ default: 0 }) readonly balance!: number
-  @Prop({ default: '' }) readonly loaner!: string
+  @Prop({ default: '' }) readonly poolAddr!: string
   @Prop({ default: false }) readonly isLiquidate!: boolean
+
+  walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+
+  confirmTxModal = false
+  confirmTxType = 'liquidation'
+  errorMsg = ''
+
+  loading = false
+  loadingMsg = ''
+
+  estimatedGPT: string | number = '0'
+  safetyFactor = 0.01
+
+  get address() {
+    return this.walletStore.address
+  }
+
+  // unix timestamp in second
+  get currentTimestamp() {
+    return moment().unix()
+  }
+
+  get extentTimeRemaining(): string {
+    const lastGracePeriod = this.lendingStore.loan.lastGracePeriod //unix timestamp in second
+    if (lastGracePeriod === 0) return ''
+
+    const timeDiff = lastGracePeriod - this.currentTimestamp
+    if (timeDiff < 0) return ''
+
+    const dur = moment.duration(timeDiff * 1000)
+    return `${dur.hours()} hrs ${dur.minutes()} min ${dur.seconds()} sec until liquidation.`
+  }
+
+  get contractAddr() {
+    return this.lendingStore.address
+  }
+
+  get currency() {
+    return this.walletStore.currenciesList.find(currency => currency.name === extendCurrency.name)
+  }
+
+  async getEstimatedGPT() {
+    return await this.lendingStore.getEstimatedGPT(this.address)
+  }
+
+  openConfirmTxModal() {
+    this.getEstimatedGPT().then(amount => {
+      this.estimatedGPT = utils
+        .toNumber(amount)
+        .multipliedBy(1 + this.safetyFactor)
+        .toNumber()
+        .toFixed(4)
+      this.confirmTxModal = true
+    })
+  }
+
+  closeConfirmTxModal() {
+    this.estimatedGPT = '0'
+    this.confirmTxModal = false
+  }
+
+  onSuccess() {
+    this.loading = false
+    this.loadingMsg = ''
+    this.closeConfirmTxModal()
+  }
+
+  onError(errorMsg: string) {
+    this.errorMsg = errorMsg
+    this.loading = false
+    this.loadingMsg = ''
+    console.log(errorMsg)
+  }
+
+  onConfirm(walletParams: WalletParams) {
+    this.loading = true
+    this.loadingMsg = 'Currency Approving...'
+    const amount = Number(this.estimatedGPT)
+
+    const payload = {
+      amount,
+      walletParams
+    }
+
+    this.lendingStore
+      .extendGracePeriod(payload)
+      .then(txid => {
+        setTimeout(() => {
+          console.log('Txid:', txid)
+          this.walletStore.addPendingTx(txid, constants.TX_DEPOSIT)
+          this.onSuccess()
+        }, 1000)
+      })
+      .catch(error => {
+        this.onError(error.message)
+      })
+  }
 }
 </script>
 
