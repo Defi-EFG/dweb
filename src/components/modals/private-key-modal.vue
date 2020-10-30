@@ -4,8 +4,8 @@
       <v-card class="blur-card" color="#FFFFFF00" elevation="0">
         <v-card-title class="modal-header d-flex justify-space-between">
           <v-icon></v-icon>
-          <v-btn @click="checkPrivatekeyDialog = false" text
-            ><v-icon color="white">$close</v-icon></v-btn
+          <v-btn icon @click="checkPrivatekeyDialog = false" text
+            ><v-icon  color="white">$close</v-icon></v-btn
           >
         </v-card-title>
         <v-card-title class="bg-header mt-7"
@@ -75,7 +75,7 @@ export default class PrivateKey extends Vue {
   walletStore = getModule(WalletModule)
 
   @Prop() visiblemodalpk!: boolean
-  checkPrivatekeyDialog: any = ''
+  checkPrivatekeyDialog = false
   keystorePassword: any = ''
   show = false
   showCopy = false
@@ -84,7 +84,9 @@ export default class PrivateKey extends Vue {
 
   @Watch('visiblemodalpk')
   checkvisible() {
-    this.checkPrivatekeyDialog = this.visiblemodalpk
+    if (this.checkPrivatekeyDialog === false) {
+      this.checkPrivatekeyDialog = !this.checkPrivatekeyDialog
+    }
   }
   get addr() {
     return this.walletStore.address

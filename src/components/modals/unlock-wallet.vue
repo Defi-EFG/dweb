@@ -8,7 +8,7 @@
             <v-card>
               <v-card-title class="headline modal-header">
                 <v-icon></v-icon>
-                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="content-wrapper ">
                 <div class="content-logo ">
@@ -42,33 +42,48 @@
           <v-stepper-content step="3">
             <v-card>
               <v-card-title class="headline modal-header">
-                <v-btn text disabled><v-icon></v-icon></v-btn>
-                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon disabled><v-icon></v-icon></v-btn>
+                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
-              <div class="create-wallet-wraper bg-white rounded-lg">
-                <div class="pb-5 mb-4">
-                  <h3 class="primary--text"><b>Keystore File Generated!</b></h3>
-                  <small class="lightgray--text"
-                    >Please save your keystore file to connect your wallet.</small
-                  >
+              <template v-if="this.value < 100">
+                <div class="generate-keystore bg-white">
+                  <v-progress-circular
+                    :rotate="360"
+                    :size="120"
+                    :width="9"
+                    color="primary"
+                    :value="this.value"
+                    indeterminate
+                  ></v-progress-circular>
+                  <p>{{ msg }}</p>
                 </div>
-                <v-textarea
-                  name="input-7-1"
-                  filled
-                  :value="createWalletKeystore"
-                  auto-grow
-                  disabled
-                ></v-textarea>
-                <div class="action-wrapper">
-                  <v-btn large class="mb-5" color="primary" @click="downloadkeystore()">
-                    <h4 class="text-capitalize font-weight-light">Download Keystore File</h4>
-                  </v-btn>
-                  <small class="connect">
-                    Already saved your keystore file?.
-                    <v-btn text @click="connectStep">Connect</v-btn>
-                  </small>
+              </template>
+              <template v-else-if="this.value >= 100">
+                <div class="create-wallet-wraper bg-white rounded-lg">
+                  <div class="pb-5 mb-4">
+                    <h3 class="primary--text"><b>Keystore File Generated!</b></h3>
+                    <small class="lightgray--text"
+                      >Please save your keystore file to connect your wallet.</small
+                    >
+                  </div>
+                  <v-textarea
+                    name="input-7-1"
+                    filled
+                    :value="createWalletKeystore"
+                    auto-grow
+                    disabled
+                  ></v-textarea>
+                  <div class="action-wrapper">
+                    <v-btn large class="mb-5" color="primary" @click="downloadkeystore()">
+                      <h4 class="text-capitalize font-weight-light">Download Keystore File</h4>
+                    </v-btn>
+                    <small class="connect">
+                      Already saved your keystore file?.
+                      <v-btn text @click="connectStep">Connect</v-btn>
+                    </small>
+                  </div>
                 </div>
-              </div>
+              </template>
             </v-card>
           </v-stepper-content>
 
@@ -77,8 +92,8 @@
           <v-stepper-content step="2">
             <v-card>
               <v-card-title class="headline modal-header">
-                <v-btn text @click="welcomeStep"><v-icon>$leftarrow</v-icon></v-btn>
-                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon @click="welcomeStep"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
@@ -136,8 +151,8 @@
           <v-stepper-content step="4">
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
-                <v-btn text @click="welcomeStep"><v-icon>$leftarrow</v-icon></v-btn>
-                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon @click="welcomeStep"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
@@ -152,9 +167,19 @@
                       label="Your keystore text..."
                       outlined
                       v-model="keystore"
-                      req
+                      required
+                      :rules="[rules.required]"
                     ></v-textarea>
+
                     <text-reader @load="keystore = $event"></text-reader>
+                 
+                    <div class="errorMsg" v-if="errorMsg2">
+                      <span>{{ errorMsg2 }}</span>
+                    </div>
+                    <div class="errorMsg" v-else-if="errormsg">
+                      <span>{{ errormsg }}</span>
+                    </div>
+
                     <div class="action-wrapper">
                       <v-btn
                         large
@@ -180,30 +205,38 @@
           <v-stepper-content step="5">
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
-                <v-btn text @click="connectStep"><v-icon>$leftarrow</v-icon></v-btn>
-                <v-btn text @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon @click="connectStep"><v-icon>$leftarrow</v-icon></v-btn>
+                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
+
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
                   <h3 class="primary--text"><b>Keystore password</b></h3>
                   <small class="lightgray--text">Please input your keystore password</small>
                 </div>
                 <template>
-                  <v-text-field
-                    v-model="keystorePassword"
-                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                    name="input-10-1"
-                    :type="show ? 'text' : 'password'"
-                    @click:append="show = !show"
-                    label="Keystore Password"
-                    color="primary"
-                    filled
-                    :rules="[rules.required, rules.min]"
-                    elevation-0
-                    dense
-                    required
-                  ></v-text-field>
+                  <v-form ref="form">
+                    <v-text-field
+                      v-model="keystorePassword"
+                      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                      name="input-10-1"
+                      :type="show ? 'text' : 'password'"
+                      @click:append="show = !show"
+                      label="Keystore Password"
+                      color="primary"
+                      filled
+                      :rules="[rules.required, rules.min]"
+                      elevation-0
+                      dense
+                      required
+                    ></v-text-field
+                  ></v-form>
                 </template>
+
+                <div class="errorMsg" v-if="errorMsg">
+                  <span>{{ errorMsg }}</span>
+                </div>
+
                 <div class="action-wrapper">
                   <v-btn large class="mb-5" color="primary" @click="onUnlockWallet()">
                     <h4 class="text-capitalize font-weight-light">Connect</h4>
@@ -226,7 +259,7 @@ import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import StakingModule from '@/store/staking'
 import TextReader from './text-reader.vue'
-
+import * as Ecoc from '@/services/wallet'
 @Component({
   components: {
     Loading,
@@ -235,7 +268,7 @@ import TextReader from './text-reader.vue'
 })
 export default class UnlockwalletModal extends Vue {
   @Prop() visible!: boolean
-
+  @Prop({ default: 'Generating keystore file...' }) msg!: string
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
   stakingStore = getModule(StakingModule)
@@ -250,6 +283,11 @@ export default class UnlockwalletModal extends Vue {
   show = false
   step = 1
   unlockwalletModal = this.visible
+  errorMsg = ''
+  errorMsg2 = ''
+  errormsg = ''
+  password = ''
+  value = 0
   rules = {
     required: (value: any) => {
       return !!value || 'Required.'
@@ -267,9 +305,6 @@ export default class UnlockwalletModal extends Vue {
     this.step = 1
     this.$emit('onClose')
   }
-  onCreatewallet() {
-    this.$emit('onCreatewallet')
-  }
   onCloseX() {
     this.onClose()
   }
@@ -277,8 +312,26 @@ export default class UnlockwalletModal extends Vue {
   onCreateWallet() {
     const password = this.createWalletPassword
     this.walletStore.createNewWallet(password).then(keystore => {
-      this.createWalletKeystore = keystore
-      this.step = 3
+      if (this.createWalletKeystore === '') {
+        this.createWalletKeystore = keystore
+        if (this.createWalletKeystore === keystore) {
+          setInterval(() => {
+            this.value += 50
+            if (this.value === 101) {
+              clearInterval(this.value)
+              return (this.value = 0)
+            }
+          }, 1000)
+        }
+      }
+
+      if (password.length < 6) {
+        this.step = 2
+      } else if (password != this.confirmPassword) {
+        this.step = 2
+      } else {
+        this.step = 3
+      }
     })
   }
 
@@ -294,16 +347,37 @@ export default class UnlockwalletModal extends Vue {
     this.step = 1
   }
 
-  confirmKeystore() {
-    this.step = 5
+  async confirmKeystore() {
+    try {
+      const obj = JSON.parse(this.keystore)
+      if ('version' in obj && 'content' in obj && 'crypto' in obj) {
+        this.step = 5
+      } else {
+        this.errormsg = 'Wrong format of keystore text'
+        console.log(this.errormsg)
+      }
+    } catch (error) {
+      this.errorMsg2 = 'Wrong format of keystore file'
+      console.log(this.errorMsg2)
+    }
   }
 
-  onUnlockWallet() {
-    const keystore = this.keystore
-    const password = this.keystorePassword
-    this.walletStore.importWallet({ keystore, password }).then(() => {
-      this.onClose()
-    })
+  async onUnlockWallet() {
+    try {
+      const keystore = this.keystore
+      const password = this.keystorePassword
+      const address = this.walletStore.address
+      const keystoreq = this.walletStore.keystore
+      const wallet = Ecoc.importFromKeystore(keystore, password)
+      const utxoList = await wallet.getUtxoList()
+      console.log(this.$refs)
+      this.walletStore.importWallet({ keystore, password }).then(() => {
+        this.onClose()
+      })
+    } catch (error) {
+      this.errorMsg = error.message
+      console.log(this.errorMsg)
+    }
   }
 
   getFormattedTime() {
@@ -323,6 +397,12 @@ export default class UnlockwalletModal extends Vue {
     link.href = window.URL.createObjectURL(blob)
     link.download = `keystore-${this.getFormattedTime()}.json`
     link.click()
+  }
+  get ecoc() {
+    return this.walletStore.ecoc
+  }
+  get walletAddress() {
+    return this.walletStore.address
   }
 }
 </script>
@@ -533,5 +613,23 @@ v-btn {
 }
 .theme--dark.v-app-bar.v-toolbar.v-sheet {
   background-color: #27272700;
+}
+.generate-keystore {
+  height: 460px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.generate-keystore p {
+  margin-top: 15px;
+}
+.errorMsg {
+  background-color: white;
+  color: red;
+
+  font-size: 10px;
+  padding: 4px;
 }
 </style>
