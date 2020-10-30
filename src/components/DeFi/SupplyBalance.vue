@@ -37,8 +37,8 @@ import * as constants from '@/constants'
 import { WalletParams } from '@/services/ecoc/types'
 import { rewardCurrency as extendCurrency } from '@/store/common'
 import * as utils from '@/services/utils'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
-import Loading from '@/components/modals/loading.vue'
+import TransactionComfirmationModal from '@/components/modals/TransactionComfirmation.vue'
+import Loading from '@/components/modals/LoadingComponent.vue'
 
 @Component({
   components: {

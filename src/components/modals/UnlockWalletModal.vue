@@ -171,7 +171,7 @@
                       :rules="[rules.required]"
                     ></v-textarea>
 
-                    <text-reader @load="keystore = $event"></text-reader>
+                    <TextReaderComponent @load="keystore = $event"></TextReaderComponent>
                  
                     <div class="errorMsg" v-if="errorMsg2">
                       <span>{{ errorMsg2 }}</span>
@@ -253,17 +253,17 @@
 
 <script lang="ts">
 import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
-import Loading from './loading.vue'
+import Loading from './LoadingComponent.vue'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import StakingModule from '@/store/staking'
-import TextReader from './text-reader.vue'
+import TextReaderComponent from './TextReaderComponent.vue'
 import * as Ecoc from '@/services/wallet'
 @Component({
   components: {
     Loading,
-    TextReader
+    TextReaderComponent
   }
 })
 export default class UnlockwalletModal extends Vue {

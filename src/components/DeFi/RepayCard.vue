@@ -92,8 +92,8 @@ import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
-import Loading from '@/components/modals/loading.vue'
+import TransactionComfirmationModal from '@/components/modals/TransactionComfirmation.vue'
+import Loading from '@/components/modals/LoadingComponent.vue'
 
 @Component({
   components: {

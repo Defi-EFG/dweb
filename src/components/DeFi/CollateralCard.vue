@@ -76,7 +76,7 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
-import Collatmodel from '@/components/modals/collmodeldiposit.vue'
+import Collatmodel from '@/components/modals/CollateralModal.vue'
 
 @Component({
   components: {

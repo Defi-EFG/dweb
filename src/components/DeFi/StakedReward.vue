@@ -58,7 +58,7 @@ import WalletModule from '@/store/wallet'
 import StakingModule from '@/store/staking'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionComfirmationModal from '@/components/modals/TransactionComfirmation.vue'
 
 @Component({
   components: {

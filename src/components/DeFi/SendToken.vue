@@ -86,7 +86,7 @@ import { SendPayload } from '@/types/wallet'
 import AddressBookModule from '@/store/address-book'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionComfirmationModal from '@/components/modals/TransactionComfirmation.vue'
 
 @Component({
   components: {

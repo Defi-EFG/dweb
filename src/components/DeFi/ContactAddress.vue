@@ -54,7 +54,7 @@
 <script lang="ts">
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import AddEditContact from '@/components/modals/AddEditContact.vue'
-import Editcontact from '@/components/modals/editcontact.vue'
+import Editcontact from '@/components/modals/EditContact.vue'
 import DeleteContact from '@/components/modals/DeleteContact.vue'
 import AddressBookModule from '@/store/address-book'
 import WalletModule from '@/store/wallet'

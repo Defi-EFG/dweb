@@ -108,8 +108,8 @@ import StakingModule from '@/store/staking'
 import { WalletParams } from '@/services/ecoc/types'
 import { CurrencyInfo } from '@/types/currency'
 import * as constants from '@/constants'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
-import Loading from '@/components/modals/loading.vue'
+import TransactionComfirmationModal from '@/components/modals/TransactionComfirmation.vue'
+import Loading from '@/components/modals/LoadingComponent.vue'
 
 @Component({
   components: {

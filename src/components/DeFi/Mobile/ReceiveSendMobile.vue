@@ -104,7 +104,7 @@ import { getModule } from 'vuex-module-decorators'
 import { SendPayload } from '@/types/wallet'
 import { WalletParams } from '@/services/ecoc/types'
 import WalletModule from '@/store/wallet'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionComfirmationModal from '@/components/modals/TransactionComfirmation.vue'
 import { copyToClipboard } from '@/services/utils'
 
 @Component({

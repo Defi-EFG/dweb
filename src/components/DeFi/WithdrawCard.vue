@@ -80,7 +80,7 @@ import LendingModule from '@/store/lending'
 import WalletModule from '@/store/wallet'
 import * as constants from '@/constants'
 import { WalletParams } from '@/services/ecoc/types'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionComfirmationModal from '@/components/modals/TransactionComfirmation.vue'
 
 @Component({
   components: {
