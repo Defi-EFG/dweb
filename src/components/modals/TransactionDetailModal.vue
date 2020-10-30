@@ -17,7 +17,7 @@
           <v-spacer></v-spacer>
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn class="tx-btn" fab dark x-small color="primary" v-bind="attrs" v-on="on">
+              <v-btn icon class="tx-btn" fab dark x-small color="primary" v-bind="attrs" v-on="on">
                 <v-icon dark>
                   mdi-arrow-up
                 </v-icon>
