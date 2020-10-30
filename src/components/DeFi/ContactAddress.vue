@@ -8,98 +8,122 @@
 
       <v-spacer></v-spacer>
 
-      <v-btn icon @click="openAddcontact()">
+      <v-btn icon :disabled="!isReady" @click="openAddcontact()">
         <v-icon>mdi-plus-circle-outline</v-icon>
       </v-btn>
     </v-toolbar>
 
     <v-list color="#222738" class="address-list">
-      <v-list-item v-for="(contact, index) in contact" :key="index" class="address-item">
-        <v-icon class="mr-3">mdi-account-circle</v-icon>
+      <v-list-item v-for="(contact, index) in contactList" :key="index" class="address-item">
+        <template v-if="'created' in contactList">
+          <div class="empty-message">
+            <v-icon class="book-icon">mdi-book-open-page-variant-outline</v-icon>
+            <div class="message">No contact address</div>
+          </div>
+        </template>
 
-        <v-list-item-content>
-          <v-list-item-title class="addr-name">{{ contact.name }}</v-list-item-title>
-          <small class="addr-value text-truncate">{{ contact.address }}</small>
-        </v-list-item-content>
+        <template v-else>
+          <v-icon class="mr-3">mdi-account-circle</v-icon>
 
-        <v-list-item-icon>
-          <v-btn fab icon x-small class="contact-btn" @click="openEditcontact()">
-            <v-icon>mdi-pencil</v-icon>
-          </v-btn>
-          <v-btn fab icon x-small class="contact-btn" @click="openDeletecontact()">
-            <v-icon>mdi-delete</v-icon>
-          </v-btn>
-        </v-list-item-icon>
+          <v-list-item-content>
+            <v-list-item-title class="addr-name">{{ contact.name }}</v-list-item-title>
+            <small class="addr-value text-truncate">{{ contact.address }}</small>
+          </v-list-item-content>
+
+          <v-list-item-icon>
+            <v-btn fab icon x-small class="contact-btn" @click="openEditcontact(contact)">
+              <v-icon>mdi-pencil</v-icon>
+            </v-btn>
+            <v-btn fab icon x-small class="contact-btn" @click="openDeletecontact(contact)">
+              <v-icon>mdi-delete</v-icon>
+            </v-btn>
+          </v-list-item-icon>
+        </template>
       </v-list-item>
     </v-list>
-    <Addcontact
-      :visible="addcontactdialog"
-      :showDialog.sync="addcontactdialog"
-      @onSuccessAdd="addcontactdialog"
-      @onClose="closeAddcontact"
+    <AddEditContact
+      :toAdd.sync="addMode"
+      :toEdit.sync="editMode"
+      :editContact="editContact"
+      :showDialog.sync="displayAddEdit"
     />
-    <Editcontact
-      :visible="editcontactdialog"
-      :showDialog.sync="editcontactdialog"
-      @onSuccess="editcontactdialog"
-      @onClose="closeEditcontact"
-    />
-    <Deletecontact
-      :visible="deletecontactdialog"
-      :showDialog.sync="deletecontactdialog"
-      @onSuccess="deletecontactdialog"
-      @onClose="closeDeletecontact"
-    />
+    <DeleteContact :showDialog.sync="displayDelete" :contact="editContact" />
   </v-card>
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
-import Addcontact from '@/components/modals/addcontact.vue'
+import { Vue, Component, Watch } from 'vue-property-decorator'
+import AddEditContact from '@/components/modals/AddEditContact.vue'
 import Editcontact from '@/components/modals/editcontact.vue'
-import Deletecontact from '@/components/modals/deletecontact.vue'
+import DeleteContact from '@/components/modals/DeleteContact.vue'
+import AddressBookModule from '@/store/address-book'
+import WalletModule from '@/store/wallet'
+import { getModule } from 'vuex-module-decorators'
+import { Contact } from '@/types/contact'
 
 @Component({
   components: {
-    Addcontact,
+    AddEditContact,
     Editcontact,
-    Deletecontact
+    DeleteContact
   }
 })
 export default class ContactAddress extends Vue {
-  addcontactdialog = false
-  editcontactdialog = false
-  deletecontactdialog = false
-  contact = [
-    {
-      name: 'MXC',
-      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
-    },
-    {
-      name: 'Bitrex',
-      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
-    }
-  ]
+  addressStore = getModule(AddressBookModule)
+  walletStore = getModule(WalletModule)
+
+  displayAddEdit = false
+  displayDelete = false
+  addMode = false
+  editMode = false
+  editContact: Contact = {} as Contact
+
+  get walletAddr() {
+    return this.walletStore.address
+  }
+
+  get isReady() {
+    return this.walletStore.isWalletUnlocked
+  }
+
+  get contactList() {
+    return this.addressStore.addressBook
+  }
+
   openAddcontact() {
-    this.addcontactdialog = !this.addcontactdialog
+    if (this.isReady) {
+      this.addMode = true
+      this.editMode = false
+      this.displayAddEdit = !this.displayAddEdit
+    }
   }
-  closeAddcontact() {
-    this.addcontactdialog = !this.addcontactdialog
+
+  openEditcontact(contact: Contact) {
+    if (this.isReady) {
+      this.editMode = true
+      this.addMode = false
+      this.editContact = Object.assign({}, contact)
+      this.displayAddEdit = !this.displayAddEdit
+    }
   }
-  openEditcontact() {
-    this.editcontactdialog = !this.editcontactdialog
+
+  openDeletecontact(contact: Contact) {
+    this.editContact = Object.assign({}, contact)
+    this.displayDelete = !this.displayDelete
   }
-  closeEditcontact() {
-    this.editcontactdialog = !this.editcontactdialog
+
+  mounted() {
+    if (this.walletStore.isWalletUnlocked) {
+      this.addressStore.subscribeToFirebase(this.walletAddr)
+    }
   }
-  openDeletecontact() {
-    this.deletecontactdialog = !this.deletecontactdialog
-  }
-  closeDeletecontact() {
-    this.deletecontactdialog = !this.deletecontactdialog
-  }
-  onSuccessAdd() {
-    this.closeAddcontact()
+
+  @Watch('isReady')
+  onLoggedIn(ready: any) {
+    if (ready) {
+      console.log('ready', this.walletAddr)
+      this.addressStore.subscribeToFirebase(this.walletAddr)
+    }
   }
 }
 </script>
@@ -160,6 +184,22 @@ export default class ContactAddress extends Vue {
 
 .addr-value {
   opacity: 0.7;
+}
+
+.empty-message {
+  opacity: 0.3;
+  margin: auto;
+  text-align: center;
+  padding-top: 2.7rem;
+
+  .book-icon {
+    font-size: -webkit-xxx-large;
+  }
+
+  .message {
+    padding-top: 0.2rem;
+    font-weight: 700;
+  }
 }
 
 @media (max-width: 425px) {
