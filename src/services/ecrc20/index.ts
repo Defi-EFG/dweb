@@ -5,6 +5,7 @@ import { SmartContract, Params, ExecutionResult } from '@/services/contract'
 import { WalletParams, TokenInfo } from '@/services/ecoc/types'
 import { fromDecimals } from '@/services/utils'
 import ecrc20Abi from './abi.json'
+import knownTokensInfo from './tokens-info.json'
 
 export class Ecrc20 {
   contract = {} as SmartContract
@@ -124,7 +125,11 @@ export class Ecrc20 {
   }
 
   static decode(rawOutput: TxReceipt[]) {
-    const contractMetadata = { Token: ecrc20Abi }
+    const contractMetadata = { Ecrc: { abi: ecrc20Abi } }
     return SmartContract.decodeSearchLog(rawOutput, contractMetadata)
+  }
+
+  static getKnownTokensInfo(contractAddress: string) {
+    return knownTokensInfo.find(token => token.address === contractAddress)
   }
 }

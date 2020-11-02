@@ -1,15 +1,41 @@
 import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
+import BigNumber from 'bignumber.js'
 import store from '@/store'
 import { InsufficientBalance } from '@/exceptions/wallet'
 import { Wallet, SendPayload } from '@/types/wallet'
 import { KeyStore } from '@/types/keystore'
 import { Currency } from '@/types/currency'
-import { TxList, PendingTransaction } from '@/types/transaction'
+import { TxList, PendingTransaction, TxHistory, TxValueIn, TxValueOut } from '@/types/transaction'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
+import { Ecrc20 } from '@/services/ecrc20'
 import { lending } from '@/services/lending'
 import * as constants from '@/constants'
 import { currencyInit } from './currency'
+
+const getBalanceChanged = (address: string, vin: TxValueIn[], vout: TxValueOut[]) => {
+  let balanceIn
+  let balanceOut
+
+  try {
+    balanceIn = vin.reduce((sum, vtx) => {
+      if (vtx.addr === address) return sum.plus(vtx.value as number)
+      return sum.plus(0)
+    }, new BigNumber(0))
+
+    balanceOut = vout.reduce((sum, vtx) => {
+      if (vtx.scriptPubKey.addresses && vtx.scriptPubKey.addresses[0] === address) {
+        return sum.plus(vtx.value)
+      }
+
+      return sum.plus(0)
+    }, new BigNumber(0))
+  } catch (error) {
+    return new BigNumber(0)
+  }
+
+  return balanceOut.minus(balanceIn)
+}
 
 @Module({ dynamic: true, store, namespaced: true, name: 'walletStore' })
 export default class WalletModule extends VuexModule implements Wallet {
@@ -49,6 +75,51 @@ export default class WalletModule extends VuexModule implements Wallet {
 
   get pendingTransaction() {
     return this.pendingTransactions[0]
+  }
+
+  get transactionsHistory() {
+    const txs = this.txList.txs
+
+    if (!txs) {
+      return []
+    }
+
+    return txs.map(tx => {
+      let currencyType = constants.ECOC
+      let value = getBalanceChanged(this.address, tx.vin, tx.vout)
+      const type = new BigNumber(value).lt(0) ? constants.TYPE_SENT : constants.TYPE_RECEIVED
+      const status = tx.confirmations ? constants.STATUS_CONFIRMED : constants.STATUS_PENDING
+      let address = ''
+      let subtype
+      let txResult
+
+      if (tx.receipt) {
+        address = tx.receipt[0].contractAddress
+        txResult = Ecrc20.decode(tx.receipt)
+        const tokenInfo = Ecrc20.getKnownTokensInfo(address)
+
+        if (tokenInfo) {
+          const decimals = tokenInfo.decimals
+          currencyType = tokenInfo.symbol
+          subtype = 'ECRC-20'
+          value = utils.toDecimals(txResult[0].log[0].value.toNumber(), decimals)
+        } else {
+          subtype = utils.addressFilter(address)
+        }
+      }
+
+      return {
+        id: tx.txid,
+        type: type,
+        subtype: subtype,
+        address: address,
+        value: value.abs(),
+        currency: currencyType,
+        time: tx.time,
+        confirmations: tx.confirmations,
+        status: status
+      } as TxHistory
+    })
   }
 
   @Mutation
