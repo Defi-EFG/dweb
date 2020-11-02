@@ -116,7 +116,7 @@
 <script lang="ts">
 import { Vue, Component, PropSync, Prop } from 'vue-property-decorator'
 import { copyToClipboard } from '@/services/utils'
-import { Transaction } from '@/types/transaction'
+import { Transaction, TxHistory } from '@/types/transaction'
 import WalletModule from '@/store/wallet'
 import moment from 'moment'
 import { getModule } from 'vuex-module-decorators'
@@ -133,7 +133,11 @@ export default class TransactionDetailModal extends Vue {
   txInfo = {} as Transaction
 
   get tx() {
-    return this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
+    if (this.txid) {
+      return this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
+    }
+
+    return {} as TxHistory
   }
 
   get address() {
@@ -178,7 +182,7 @@ export default class TransactionDetailModal extends Vue {
   }
 
   mounted() {
-    this.getTxInfo()
+    //this.getTxInfo()
   }
 }
 </script>
