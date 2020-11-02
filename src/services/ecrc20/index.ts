@@ -1,11 +1,13 @@
 import { Ecrc20 as IEcrc20 } from '@/types/currency'
 import { TxReceipt } from '@/types/transaction'
 import { ecocw3 } from '@/services/ecoc/ecocw3'
+import { ECOC_MAINNET } from '@/services/ecoc/constants'
 import { SmartContract, Params, ExecutionResult } from '@/services/contract'
 import { WalletParams, TokenInfo } from '@/services/ecoc/types'
 import { fromDecimals } from '@/services/utils'
 import ecrc20Abi from './abi.json'
 import knownTokensInfo from './tokens-info.json'
+import knownTokensInfoTestnet from './tokens-info-testnet.json'
 
 export class Ecrc20 {
   contract = {} as SmartContract
@@ -129,7 +131,11 @@ export class Ecrc20 {
     return SmartContract.decodeSearchLog(rawOutput, contractMetadata)
   }
 
-  static getKnownTokensInfo(contractAddress: string) {
-    return knownTokensInfo.find(token => token.address === contractAddress)
+  static getKnownTokensInfo(contractAddress: string, networkStr = ECOC_MAINNET) {
+    if (networkStr === ECOC_MAINNET) {
+      return knownTokensInfo.find(token => token.address === contractAddress)
+    }
+
+    return knownTokensInfoTestnet.find(token => token.address === contractAddress)
   }
 }

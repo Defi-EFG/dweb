@@ -105,6 +105,7 @@ export interface TxHistory {
   time: string | number
   confirmations: number
   status?: string
+  txResult?: any[]
 }
 
 export interface PendingTransaction {

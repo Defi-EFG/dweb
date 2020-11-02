@@ -1,41 +1,17 @@
 import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
-import BigNumber from 'bignumber.js'
 import store from '@/store'
 import { InsufficientBalance } from '@/exceptions/wallet'
 import { Wallet, SendPayload } from '@/types/wallet'
 import { KeyStore } from '@/types/keystore'
 import { Currency } from '@/types/currency'
-import { TxList, PendingTransaction, TxHistory, TxValueIn, TxValueOut } from '@/types/transaction'
+import { TxList, PendingTransaction, TxHistory } from '@/types/transaction'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import { Ecrc20 } from '@/services/ecrc20'
 import { lending } from '@/services/lending'
 import * as constants from '@/constants'
 import { currencyInit } from './currency'
-
-const getBalanceChanged = (address: string, vin: TxValueIn[], vout: TxValueOut[]) => {
-  let balanceIn
-  let balanceOut
-
-  try {
-    balanceIn = vin.reduce((sum, vtx) => {
-      if (vtx.addr === address) return sum.plus(vtx.value as number)
-      return sum.plus(0)
-    }, new BigNumber(0))
-
-    balanceOut = vout.reduce((sum, vtx) => {
-      if (vtx.scriptPubKey.addresses && vtx.scriptPubKey.addresses[0] === address) {
-        return sum.plus(vtx.value)
-      }
-
-      return sum.plus(0)
-    }, new BigNumber(0))
-  } catch (error) {
-    return new BigNumber(0)
-  }
-
-  return balanceOut.minus(balanceIn)
-}
+import { getBalanceChanged } from './utils'
 
 @Module({ dynamic: true, store, namespaced: true, name: 'walletStore' })
 export default class WalletModule extends VuexModule implements Wallet {
@@ -87,16 +63,16 @@ export default class WalletModule extends VuexModule implements Wallet {
     return txs.map(tx => {
       let currencyType = constants.ECOC
       let value = getBalanceChanged(this.address, tx.vin, tx.vout)
-      const type = new BigNumber(value).lt(0) ? constants.TYPE_SENT : constants.TYPE_RECEIVED
+      const type = value.lt(0) ? constants.TYPE_SENT : constants.TYPE_RECEIVED
       const status = tx.confirmations ? constants.STATUS_CONFIRMED : constants.STATUS_PENDING
       let address = ''
       let subtype
-      let txResult
+      let txResult = []
 
       if (tx.receipt) {
         address = tx.receipt[0].contractAddress
         txResult = Ecrc20.decode(tx.receipt)
-        const tokenInfo = Ecrc20.getKnownTokensInfo(address)
+        const tokenInfo = Ecrc20.getKnownTokensInfo(address, this.network)
 
         if (tokenInfo) {
           const decimals = tokenInfo.decimals
@@ -117,7 +93,8 @@ export default class WalletModule extends VuexModule implements Wallet {
         currency: currencyType,
         time: tx.time,
         confirmations: tx.confirmations,
-        status: status
+        status: status,
+        txResult: txResult
       } as TxHistory
     })
   }
@@ -342,21 +319,21 @@ export default class WalletModule extends VuexModule implements Wallet {
   }
 
   @MutationAction
-  async updatePendingTx(txid: string, status: string) {
+  async updatePendingTxStatus() {
     const pendingTransactions = (this.state as any).pendingTransactions as PendingTransaction[]
+    const confirmationNeeded = 1
 
-    const index = pendingTransactions.findIndex(tx => tx.txid === txid)
-    if (index < 0) {
-      return {}
-    }
-
-    const pendingTransaction = {
-      txid: pendingTransactions[index].txid,
-      type: pendingTransactions[index].type,
-      status: status
-    } as PendingTransaction
-
-    pendingTransactions.splice(index, 1, pendingTransaction)
+    pendingTransactions.forEach(async (tx, index) => {
+      try {
+        const txResult = await Ecoc.getTxInfo(tx.txid)
+        if (txResult.confirmations >= confirmationNeeded) {
+          tx.status = constants.STATUS_CONFIRMED
+          pendingTransactions.splice(index, 1, tx)
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    })
 
     return { pendingTransactions }
   }
