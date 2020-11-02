@@ -1,6 +1,11 @@
 <template>
   <div class="tx-noti">
-    <v-badge color="#FFB300" :content="getPendingTx(txList)" :value="getPendingTx(txList)" overlap>
+    <v-badge
+      color="#FFB300"
+      :content="getPendingTxNumber(txList)"
+      :value="getPendingTxNumber(txList)"
+      overlap
+    >
       <v-img
         class="noti-sign"
         src="@/assets/exchange.svg"
@@ -43,10 +48,13 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { PendingTransaction } from '@/types/transaction'
 import { copyToClipboard } from '@/services/utils'
+import { getModule } from 'vuex-module-decorators'
+import WalletModule from '@/store/wallet'
 
 @Component({})
 export default class TxNotifications extends Vue {
   displayNotiList = false
+  walletStore = getModule(WalletModule)
 
   txList = [
     {
@@ -61,7 +69,15 @@ export default class TxNotifications extends Vue {
     } as PendingTransaction
   ]
 
-  getPendingTx(txs: PendingTransaction[]) {
+  mounted() {
+    console.log('tx list', this.txPendingList)
+  }
+
+  get txPendingList() {
+    return this.walletStore.pendingTransactions
+  }
+
+  getPendingTxNumber(txs: PendingTransaction[]) {
     const onPendingTx = txs.filter(tx => tx.status === 'pending')
     return onPendingTx.length
   }
