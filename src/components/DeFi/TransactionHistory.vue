@@ -13,7 +13,7 @@
           v-for="(tx, index) in transactionsHistory"
           :key="index"
           class="tx-item"
-          @click="displayHistory(tx)"
+          @click="displayHistory(tx.id)"
         >
           <v-icon class="tx-icon">
             {{
@@ -36,7 +36,10 @@
         </v-list-item>
       </v-list>
     </v-card-text>
-    <TransactionDetailModal :showDialog.sync="showTxModal" :tx="sentTx"></TransactionDetailModal>
+    <TransactionDetailModal
+      :showDialog.sync="showTxModal"
+      :txid="showTxId"
+    ></TransactionDetailModal>
   </v-card>
 </template>
 
@@ -45,7 +48,6 @@ import { Vue, Component, Prop } from 'vue-property-decorator'
 import moment from 'moment'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
-import { TxHistory } from '@/types/transaction'
 import * as constants from '@/constants'
 import TransactionDetailModal from '@/components/modals/TransactionDetailModal.vue'
 
@@ -58,9 +60,8 @@ export default class TransactionHistory extends Vue {
   @Prop() page!: string
 
   walletStore = getModule(WalletModule)
-  defiAddr = '0x91A31A1C5197DD101e91B0747B02560f41E2f532'
   showTxModal = false
-  sentTx: TxHistory = {} as TxHistory
+  showTxId = ''
 
   get address() {
     return this.walletStore.address
@@ -82,9 +83,9 @@ export default class TransactionHistory extends Vue {
     }
   }
 
-  displayHistory(tx: TxHistory) {
+  displayHistory(txid: string) {
     this.showTxModal = !this.showTxModal
-    this.sentTx = tx
+    this.showTxId = txid
   }
 
   truncate(msg: string, charsToShow = 20) {

@@ -17,7 +17,17 @@
           <v-spacer></v-spacer>
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
-              <v-btn icon class="tx-btn" fab dark x-small color="primary" v-bind="attrs" v-on="on">
+              <v-btn
+                icon
+                class="tx-btn"
+                fab
+                dark
+                x-small
+                color="primary"
+                v-bind="attrs"
+                v-on="on"
+                @click="goToExplorer(tx.id)"
+              >
                 <v-icon dark>
                   mdi-arrow-up
                 </v-icon>
@@ -106,18 +116,25 @@
 <script lang="ts">
 import { Vue, Component, PropSync, Prop } from 'vue-property-decorator'
 import { copyToClipboard } from '@/services/utils'
-import { TxHistory } from '@/types/transaction'
+import { Transaction } from '@/types/transaction'
 import WalletModule from '@/store/wallet'
 import moment from 'moment'
 import { getModule } from 'vuex-module-decorators'
 import * as constants from '@/constants'
+import * as utils from '@/services/utils'
 
 @Component({})
 export default class TransactionDetailModal extends Vue {
   @PropSync('showDialog', { type: Boolean }) visible!: boolean
-  @Prop() tx!: TxHistory
+  @Prop({ default: '' }) txid!: string
   walletStore = getModule(WalletModule)
   copyMsg = 'Copy TxID'
+
+  txInfo = {} as Transaction
+
+  get tx() {
+    return this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
+  }
 
   get address() {
     return this.walletStore.address || ''
@@ -125,6 +142,10 @@ export default class TransactionDetailModal extends Vue {
 
   get direction() {
     return constants
+  }
+
+  get show() {
+    return this.visible
   }
 
   close() {
@@ -140,12 +161,24 @@ export default class TransactionDetailModal extends Vue {
     }, 1000)
   }
 
-  getTime(time: number) {
-    return moment(time).format('YYYY-MM-DD HH:mm:ss')
+  getTime(timestamp: number) {
+    return moment(timestamp * 1000).format('YYYY-MM-DD HH:mm:ss')
   }
 
-  get show() {
-    return this.visible
+  getTxInfo() {
+    this.walletStore.getTxInfo(this.txid).then(tx => {
+      this.txInfo = tx
+      console.log(this.txInfo)
+    })
+  }
+
+  goToExplorer(txid: string) {
+    const explorerUrl = utils.getExplorerUrl(this.walletStore.network)
+    window.open(`${explorerUrl}/tx/${txid}`)
+  }
+
+  mounted() {
+    this.getTxInfo()
   }
 }
 </script>

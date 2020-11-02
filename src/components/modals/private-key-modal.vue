@@ -5,7 +5,7 @@
         <v-card-title class="modal-header d-flex justify-space-between">
           <v-icon></v-icon>
           <v-btn icon @click="checkPrivatekeyDialog = false" text
-            ><v-icon  color="white">$close</v-icon></v-btn
+            ><v-icon color="white">$close</v-icon></v-btn
           >
         </v-card-title>
         <v-card-title class="bg-header mt-7"
