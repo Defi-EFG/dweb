@@ -555,7 +555,6 @@ export default class Collmodeldiposit extends Vue {
 }
 .theme--light.v-stepper {
   background: #ffffff00 !important;
-  padding-bottom: 40px;
 }
 .blur-card {
   background-color: transparent;
