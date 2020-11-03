@@ -149,8 +149,8 @@
                         label="KeyStore Password"
                         v-model="password"
                         :rules="[rules.required, rules.min]"
-                        :type="show1 ? 'text' : 'password'"
-                        :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                        :type="showpassword ? 'text' : 'password'"
+                        :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
                         dense
                         filled
                       ></v-text-field
@@ -363,22 +363,22 @@ export default class Collmodeldiposit extends Vue {
   errorMsg = ''
   password = ''
 
-show1= false
+  showpassword = false
   step = 1
   Loanername = ''
   selectdata = ''
   active = ''
- 
+
   fee = DEFAULT.DEFAULT_FEE
   gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
 
- rules= {
-          required: (value:any) => !!value || 'Required.',
-          min: (v:any) => v.length >= 8 || 'Min 8 characters',
-          emailMatch: () => (`The email and password you entered don't match`),
-        }
-    
+  rules = {
+    required: (value: any) => !!value || 'Required.',
+    min: (v: any) => v.length >= 8 || 'Min 8 characters',
+    emailMatch: () => `The email and password you entered don't match`
+  }
+
   get totalFee() {
     return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
   }
