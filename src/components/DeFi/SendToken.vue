@@ -372,4 +372,23 @@ export default class SendToken extends Vue {
 v-dialog {
   border: 1pc solid red;
 }
+
+.withdraw-amount {
+  input:-internal-autofill-selected {
+    appearance: menulist-button;
+    background-color: transparent !important;
+    background-image: none !important;
+    color: #c074f9 !important;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield; /* Firefox */
+  }
+}
 </style>

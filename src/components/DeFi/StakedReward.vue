@@ -26,6 +26,7 @@
         <v-text-field
           class="staked-amount"
           placeholder="0"
+          type="number"
           prefix="Amount"
           :suffix="currencyName"
           v-model="withdrawAmount"
@@ -260,6 +261,23 @@ export default class StakedReward extends Vue {
 
   input {
     text-align: right;
+  }
+
+  input:-internal-autofill-selected {
+    appearance: menulist-button;
+    background-color: transparent !important;
+    background-image: none !important;
+    color: #c074f9 !important;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield; /* Firefox */
   }
 }
 </style>

@@ -29,6 +29,7 @@
               </div>
 
               <v-text-field
+                type="number"
                 class="deposit-amount"
                 placeholder="0"
                 prefix="Deposit Amount"
@@ -73,6 +74,7 @@
               <v-text-field
                 class="withdrawal-amount"
                 placeholder="0"
+                type="number"
                 prefix="Withdrawal Amount"
                 v-model="withdrawAmount"
                 :suffix="stakingCurrencyName"
@@ -378,6 +380,23 @@ export default class DepositWithdraw extends Vue {
 
   input {
     text-align: right;
+  }
+
+  input:-internal-autofill-selected {
+    appearance: menulist-button;
+    background-color: transparent !important;
+    background-image: none !important;
+    color: #c074f9 !important;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield; /* Firefox */
   }
 }
 </style>
