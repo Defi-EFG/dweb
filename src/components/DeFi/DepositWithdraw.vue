@@ -216,7 +216,7 @@ export default class DepositWithdraw extends Vue {
         .then(txid => {
           setTimeout(() => {
             console.log('Txid:', txid)
-            this.walletStore.addPendingTx(txid, constants.TX_DEPOSIT)
+            this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
             this.onSuccess()
           }, 1000)
         })
@@ -230,7 +230,7 @@ export default class DepositWithdraw extends Vue {
         .then(txid => {
           setTimeout(() => {
             console.log('Txid:', txid)
-            this.walletStore.addPendingTx(txid, constants.TX_WITHDRAW)
+            this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
             this.onSuccess()
           }, 1000)
         })

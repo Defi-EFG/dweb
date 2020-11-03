@@ -241,7 +241,7 @@ export default class BorrowCard extends Vue {
       .borrow(payload)
       .then(txid => {
         console.log('Txid:', txid)
-        this.walletStore.addPendingTx(txid, constants.TX_BORROW)
+        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_BORROW })
         this.onSuccess()
       })
       .catch(error => {

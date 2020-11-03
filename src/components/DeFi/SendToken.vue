@@ -188,11 +188,11 @@ export default class SendToken extends Vue {
       .then(txid => {
         console.log(txid)
         this.walletStore.updateBalance()
-        this.walletStore.addPendingTx(txid, constants.TX_TRANSFER)
+        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_TRANSFER })
         this.onSuccess()
       })
       .catch(error => {
-        this.onError(error.message)
+        this.onError(`ERROR__ ${error.message}`)
       })
   }
 

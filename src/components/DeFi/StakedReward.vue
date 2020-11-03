@@ -129,7 +129,7 @@ export default class StakedReward extends Vue {
       .claim(payload)
       .then(txid => {
         console.log('Txid:', txid)
-        this.walletStore.addPendingTx(txid, constants.TX_WITHDRAW)
+        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
         this.onSuccess()
       })
       .catch(error => {
