@@ -66,6 +66,9 @@ export const ETH = {
   }
 } as Currency
 
+export const EWETH = ETH
+export const EWUSDT = USDT
+
 export const currencyInit = () => {
-  return [ECOC, EFG, GPT, USDT, ETH] as Currency[]
+  return [ECOC, EFG, GPT] as Currency[]
 }

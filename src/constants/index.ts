@@ -5,6 +5,8 @@ export const ETH = 'ETH'
 export const USDT = 'USDT'
 export const EFG = 'EFG'
 export const GPT = 'GPT'
+export const EWETH = 'EWETH'
+export const EWUSDT = 'EWUSDT'
 
 export const TYPE_RECEIVED = 'Received'
 export const TYPE_SENT = 'Sent'
@@ -48,6 +50,14 @@ export const KNOWN_CURRENCY = {
   ETH: {
     icon: require('@/assets/icon/currency/eth.svg'),
     mark: require('@/assets/wallet-token/ether.svg')
+  } as Style,
+  EWETH: {
+    icon: require('@/assets/icon/currency/eth.svg'),
+    mark: require('@/assets/wallet-token/ether.svg')
+  } as Style,
+  EWUSDT: {
+    icon: require('@/assets/icon/currency/usdt.svg'),
+    mark: require('@/assets/wallet-token/usdt.svg')
   } as Style,
   // Temporary currency, please remove when project done
   BCST: {

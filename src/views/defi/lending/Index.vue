@@ -199,6 +199,7 @@ export default class Lending extends Vue {
   }
 
   get collateralList() {
+    console.log(this.lendingStore.supportedCollateralAssets)
     const supportedAssets = this.lendingStore.supportedCollateralAssets
       .map(asset => {
         const currency = this.walletStore.currencies.find(
