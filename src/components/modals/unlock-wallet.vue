@@ -163,7 +163,7 @@
                   <div class="upload_input">
                     <v-textarea
                       filled
-                      auto-grow
+                     
                       label="Your keystore text..."
                       outlined
                       v-model="keystore"
@@ -441,6 +441,7 @@ export default class UnlockwalletModal extends Vue {
   padding: 4px;
   font-size: revert;
 }
+
 </style>
 <style lang="scss" scoped>
 .connect {
