@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="show" max-width="500" class="send-transaction" id="collat">
+    <v-dialog v-model="show" max-width="420" class="send-transaction" id="collat">
       <v-stepper v-model="step" class="blur-card">
         <v-stepper-items>
           <!-- Welcome to ECOC Finance Governance -->
@@ -8,7 +8,7 @@
             <v-card color="#FFFFFF00">
               <v-card-title class="modal-header">
                 <v-icon></v-icon>
-                <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
+                <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
               <div class="transaction-confirmation-wrapper collateral_pddeful ">
                 <div class="headtitle_collat">
@@ -77,8 +77,8 @@
           <v-stepper-content step="2">
             <v-card color="#FFFFFF00">
               <v-card-title class="modal-header">
-                <v-btn @click="leftarrow()" text><v-icon color="white">$leftarrow</v-icon></v-btn>
-                <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
+                <v-btn @click="leftarrow()" icon><v-icon color="white">$leftarrow</v-icon></v-btn>
+                <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
               <div class="transaction-confirmation-wrapper collateral_pddeful">
                 <div class="content-wrapper ">
@@ -102,8 +102,8 @@
           <v-stepper-content step="3">
             <v-card color="#FFFFFF00">
               <v-card-title class="modal-header">
-                <v-btn @click="leftarrow3()" text><v-icon color="white">$leftarrow</v-icon></v-btn>
-                <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
+                <v-btn @click="leftarrow3()" icon><v-icon color="white">$leftarrow</v-icon></v-btn>
+                <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
               <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin">
                 <div class="d-flex ">
@@ -148,13 +148,15 @@
                       <v-text-field
                         label="KeyStore Password"
                         v-model="password"
-                        type="password"
+                        :rules="[rules.required, rules.min]"
+                        :type="showpassword ? 'text' : 'password'"
+                        :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
                         dense
                         filled
                       ></v-text-field
                     ></v-form>
                     <div v-if="errorMsg">
-                      <p class="error">{{ errorMsg }}</p>
+                      <span class="errorMsg">{{ errorMsg }}</span>
                     </div>
                     <div class="action-transaction-confirmation">
                       <v-btn
@@ -274,7 +276,7 @@
       <v-card>
         <div class="d-flex justify-lg-space-between pt-3 ">
           <v-icon></v-icon>
-          <v-btn text @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
+          <v-btn icon @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
         </div>
         <div class="content-gas-setting">
           <h3>Gas Customization</h3>
@@ -361,6 +363,7 @@ export default class Collmodeldiposit extends Vue {
   errorMsg = ''
   password = ''
 
+  showpassword = false
   step = 1
   Loanername = ''
   selectdata = ''
@@ -369,6 +372,12 @@ export default class Collmodeldiposit extends Vue {
   fee = DEFAULT.DEFAULT_FEE
   gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
+
+  rules = {
+    required: (value: any) => !!value || 'Required.',
+    min: (v: any) => v.length >= 8 || 'Min 8 characters',
+    emailMatch: () => `The email and password you entered don't match`
+  }
 
   get totalFee() {
     return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
@@ -546,7 +555,6 @@ export default class Collmodeldiposit extends Vue {
 }
 .theme--light.v-stepper {
   background: #ffffff00 !important;
-  padding-bottom: 40px;
 }
 .blur-card {
   background-color: transparent;
