@@ -521,7 +521,7 @@ export default class Collmodeldiposit extends Vue {
       .then(txid => {
         setTimeout(() => {
           console.log('Txid:', txid)
-          this.walletStore.addPendingTx(txid, constants.TX_DEPOSIT)
+          this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
           this.onSuccess()
         }, 1000)
       })
