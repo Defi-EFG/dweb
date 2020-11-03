@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="stake-wrapper">
     <v-card dark color="#2e3344" class="staked-reward">
       <v-card-text class="wrapper">
         <div class="total-reward">
@@ -26,6 +26,7 @@
         <v-text-field
           class="staked-amount"
           placeholder="0"
+          type="number"
           prefix="Amount"
           :suffix="currencyName"
           v-model="withdrawAmount"
@@ -129,7 +130,7 @@ export default class StakedReward extends Vue {
       .claim(payload)
       .then(txid => {
         console.log('Txid:', txid)
-        this.walletStore.addPendingTx(txid, constants.TX_WITHDRAW)
+        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
         this.onSuccess()
       })
       .catch(error => {
@@ -140,8 +141,13 @@ export default class StakedReward extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.stake-wrapper {
+  display: flex;
+  width: -webkit-fill-available;
+}
+
 .staked-reward {
-  width: inherit;
+  width: -webkit-fill-available;
 }
 
 .wrapper {
@@ -151,7 +157,7 @@ export default class StakedReward extends Vue {
 }
 
 .d-amount {
-  margin-top: 1.5rem;
+  margin-top: 2.5rem;
   margin-bottom: 1.5rem;
   display: flex;
   padding: 10px;
@@ -255,6 +261,23 @@ export default class StakedReward extends Vue {
 
   input {
     text-align: right;
+  }
+
+  input:-internal-autofill-selected {
+    appearance: menulist-button;
+    background-color: transparent !important;
+    background-image: none !important;
+    color: #c074f9 !important;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield; /* Firefox */
   }
 }
 </style>

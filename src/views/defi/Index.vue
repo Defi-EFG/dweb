@@ -81,6 +81,8 @@ export default class Home extends Vue {
 
 .address-bar {
   text-align: right;
+  position: relative;
+  z-index: 1;
 }
 
 @media (max-width: 1440px) {

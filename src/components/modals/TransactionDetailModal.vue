@@ -18,7 +18,6 @@
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                icon
                 class="tx-btn"
                 fab
                 dark

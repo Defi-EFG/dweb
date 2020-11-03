@@ -188,11 +188,11 @@ export default class SendToken extends Vue {
       .then(txid => {
         console.log(txid)
         this.walletStore.updateBalance()
-        this.walletStore.addPendingTx(txid, constants.TX_TRANSFER)
+        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_TRANSFER })
         this.onSuccess()
       })
       .catch(error => {
-        this.onError(error.message)
+        this.onError(`ERROR__ ${error.message}`)
       })
   }
 
@@ -371,5 +371,24 @@ export default class SendToken extends Vue {
 }
 v-dialog {
   border: 1pc solid red;
+}
+
+.withdraw-amount {
+  input:-internal-autofill-selected {
+    appearance: menulist-button;
+    background-color: transparent !important;
+    background-image: none !important;
+    color: #c074f9 !important;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield; /* Firefox */
+  }
 }
 </style>

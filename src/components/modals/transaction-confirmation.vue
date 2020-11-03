@@ -4,12 +4,12 @@
       <v-card class="blur-card" color="#FFFFFF00">
         <v-card-title class="modal-header">
           <v-icon></v-icon>
-          <v-btn @click="sendialog = false" icon><v-icon color="white">$close</v-icon></v-btn>
+          <v-btn @click="onClose" icon><v-icon color="white">$close</v-icon></v-btn>
         </v-card-title>
         <div class="transaction-confirmation-wrapper ">
           <div class="d-flex ">
             <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
-            <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
+            <div class="transaction-receiver">{{ truncateAddress(addressFilter(toAddr)) }}</div>
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
@@ -45,10 +45,11 @@
             </div>
             <v-form class="pt-4">
               <v-text-field
+                :type="showpassword ? 'text' : 'password'"
                 :rules="[rules.required, rules.min]"
                 label="KeyStore Password"
                 v-model="password"
-                type="password"
+                :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
                 dense
                 filled
               ></v-text-field
@@ -75,7 +76,7 @@
       <v-card>
         <div class="d-flex justify-lg-space-between pt-3 ">
           <v-icon></v-icon>
-          <v-btn text @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
+          <v-btn icon @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
         </div>
         <div class="content-gas-setting">
           <h3>Gas Customization</h3>
@@ -139,7 +140,6 @@ import StakingModule from '@/store/staking'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import { DEFAULT } from '@/services/contract'
-import { invalid } from 'moment'
 
 @Component({
   components: {}
@@ -163,16 +163,13 @@ export default class TransactionComfirmationModal extends Vue {
   password = ''
   keystore: any = ''
   keystorePassword = ''
-
+  showpassword = false
   rules = {
     required: (value: any) => {
       return !!value || 'Required.'
     },
     min: (v: any) => {
       return v.length >= 6 || 'Min 6 characters'
-    },
-    invalid: (v: any) => {
-      return v.errorMsg || 'Invalid keystore or password'
     }
   }
   fee = DEFAULT.DEFAULT_FEE

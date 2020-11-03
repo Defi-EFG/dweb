@@ -6,6 +6,7 @@
         <v-toolbar-title class="header-title">ECOC Finance Governance</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
+      <TxNotifications v-if="isWalletUnlocked"></TxNotifications>
       <template v-if="!addr">
         <v-btn outlined small @click="openUnlockWallet">Unlock Wallet</v-btn>
       </template>
@@ -49,11 +50,13 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import UnlockWallet from './modals/unlock-wallet.vue'
 import PrivateKey from './modals/private-key-modal.vue'
+import TxNotifications from '@/components/DeFi/TxNotifications.vue'
 
 @Component({
   components: {
     UnlockWallet,
-    PrivateKey
+    PrivateKey,
+    TxNotifications
   }
 })
 export default class HeaderNav extends Vue {
@@ -65,6 +68,11 @@ export default class HeaderNav extends Vue {
   get addr() {
     return this.walletStore.address
   }
+
+  get isWalletUnlocked() {
+    return this.walletStore.isWalletUnlocked
+  }
+
   checkPrivatekeyDialog() {
     this.accessPrivateKey = !this.accessPrivateKey
   }

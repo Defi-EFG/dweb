@@ -212,7 +212,7 @@ export default class RepayCard extends Vue {
       .repay(payload)
       .then(txid => {
         console.log('Txid:', txid)
-        this.walletStore.addPendingTx(txid, constants.TX_REPAY)
+        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_REPAY })
         this.onSuccess()
       })
       .catch(error => {
