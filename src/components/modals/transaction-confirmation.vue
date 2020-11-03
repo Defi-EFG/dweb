@@ -45,11 +45,11 @@
             </div>
             <v-form class="pt-4">
               <v-text-field
-                 :type="show1 ? 'text' : 'password'"
+                :type="showpassword ? 'text' : 'password'"
                 :rules="[rules.required, rules.min]"
                 label="KeyStore Password"
                 v-model="password"
-               :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
+                :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
                 dense
                 filled
               ></v-text-field
@@ -140,7 +140,6 @@ import StakingModule from '@/store/staking'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import { DEFAULT } from '@/services/contract'
-import { invalid } from 'moment'
 
 @Component({
   components: {}
@@ -164,16 +163,13 @@ export default class TransactionComfirmationModal extends Vue {
   password = ''
   keystore: any = ''
   keystorePassword = ''
- show1= false
+  showpassword = false
   rules = {
     required: (value: any) => {
       return !!value || 'Required.'
     },
     min: (v: any) => {
       return v.length >= 6 || 'Min 6 characters'
-    },
-    invalid: (v: any) => {
-      return v.errorMsg || 'Invalid keystore or password'
     }
   }
   fee = DEFAULT.DEFAULT_FEE

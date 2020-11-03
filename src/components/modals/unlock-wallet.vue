@@ -366,17 +366,13 @@ export default class UnlockwalletModal extends Vue {
     try {
       const keystore = this.keystore
       const password = this.keystorePassword
-      const address = this.walletStore.address
-      const keystoreq = this.walletStore.keystore
-      const wallet = Ecoc.importFromKeystore(keystore, password)
-      const utxoList = await wallet.getUtxoList()
-      console.log(this.$refs)
+   
+
       this.walletStore.importWallet({ keystore, password }).then(() => {
         this.onClose()
       })
     } catch (error) {
       this.errorMsg = error.message
-      console.log(this.errorMsg)
     }
   }
 
