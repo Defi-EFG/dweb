@@ -187,7 +187,7 @@ export namespace lending {
     const executionResult = result.executionResult as ExecutionResult
     const res = executionResult.formattedOutput['0'].toNumber()
 
-    return new BigNumber(res).dividedBy(1000).toNumber()
+    return new BigNumber(res).dividedBy(100).toNumber()
   }
 
   export const getDebt = async (
@@ -220,7 +220,7 @@ export namespace lending {
     const executionResult = result.executionResult as ExecutionResult
     const res = executionResult.formattedOutput
 
-    const interestRate = new BigNumber(res.interestRate).dividedBy(1000).toNumber()
+    const interestRate = new BigNumber(res.interestRate).dividedBy(100).toNumber()
 
     const loanInfo = {
       assetSymbol: 'EFG',

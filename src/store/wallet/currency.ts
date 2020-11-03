@@ -20,7 +20,7 @@ export const EFG = {
     symbol: constants.EFG,
     address: '465bb1e07d460f86c1cfc0809ef97bd41f8a88b5',
     decimals: '8',
-    totalSupply: '1000000'
+    totalSupply: '100000000000000'
   }
 } as Currency
 
@@ -34,7 +34,7 @@ export const GPT = {
     symbol: constants.GPT,
     address: '01b4f96074cc86042bc9c98e4f3fbb17b82f0501',
     decimals: '4',
-    totalSupply: '10000'
+    totalSupply: '100000000'
   }
 } as Currency
 
@@ -46,9 +46,9 @@ export const USDT = {
   tokenInfo: {
     name: constants.USDT,
     symbol: constants.USDT,
-    address: '',
-    decimals: '4',
-    totalSupply: '100000'
+    address: 'c701bd8a2c19d580a38c2344dd1bcd4d192f84d7',
+    decimals: '8',
+    totalSupply: '1000000000000'
   }
 } as Currency
 
@@ -60,12 +60,12 @@ export const ETH = {
   tokenInfo: {
     name: constants.ETH,
     symbol: constants.ETH,
-    address: '',
-    decimals: '16',
-    totalSupply: '100000'
+    address: '151189fdd10a9d77efa48355c61f14513d60cf4a',
+    decimals: '8',
+    totalSupply: '100000000000'
   }
 } as Currency
 
 export const currencyInit = () => {
-  return [ECOC, EFG, GPT] as Currency[]
+  return [ECOC, EFG, GPT, USDT, ETH] as Currency[]
 }

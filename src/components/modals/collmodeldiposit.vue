@@ -463,7 +463,7 @@ export default class Collmodeldiposit extends Vue {
 
   truncateAddress(addr: string) {
     const separator = '...'
-    const charsToShow = 8
+    const charsToShow = 10
     const frontChars = Math.ceil(charsToShow / 2)
     const backChars = Math.floor(charsToShow / 2)
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)

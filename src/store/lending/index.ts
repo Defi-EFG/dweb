@@ -1,6 +1,13 @@
 import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '@/store'
-import { LendingPlatform, Loan, Pool, CollateralAsset, Collateral } from '@/types/lending'
+import {
+  LendingPlatform,
+  Loan,
+  Pool,
+  CollateralAsset,
+  Collateral,
+  MyActivity
+} from '@/types/lending'
 import { Currency } from '@/types/currency'
 import * as constants from '@/constants'
 import * as Ecoc from '@/services/wallet'
@@ -15,30 +22,6 @@ import {
   getTokenInfo
 } from '@/store/common'
 import { now } from 'moment'
-
-const myActivity = [
-  {
-    activityName: 'borrow',
-    currencyName: 'EFG',
-    timestamp: 1602222563,
-    amount: 200,
-    price: 0
-  },
-  {
-    activityName: 'deposit',
-    currencyName: 'ECOC',
-    timestamp: 1602222563,
-    amount: 1000,
-    price: 0
-  },
-  {
-    activityName: 'activated',
-    currencyName: 'ECOC',
-    timestamp: 1602222563,
-    amount: 1000,
-    price: 0
-  }
-]
 
 @Module({ dynamic: true, store, namespaced: true, name: 'lendingStore' })
 export default class LendingModule extends VuexModule implements LendingPlatform {
@@ -80,7 +63,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     }
   ] as Collateral[]
 
-  myActivity = myActivity
+  myActivity = [] as MyActivity[]
   lastUpdate = 0
   isLiquidation = false
   status = constants.STATUS_SYNCED
@@ -148,11 +131,14 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     const borrowLimitFull = await lending.getBorrowLimit(address)
     const debtInfo = await lending.getDebt(address)
 
-    const borrowBalance = utils.toDecimals(debtInfo.totalDebt, decimals).toNumber()
-    const borrowLimit = utils
-      .toDecimals(borrowLimitFull, decimals)
-      .plus(borrowBalance) // [to do]
-      .toNumber()
+    const borrowBalance = Number(
+      utils
+        .toDecimals(debtInfo.totalDebt, decimals)
+        .multipliedBy(1.003)
+        .toFixed(8)
+    )
+
+    const borrowLimit = utils.toDecimals(borrowLimitFull, decimals).toNumber()
 
     return { borrowBalance, borrowLimit }
   }

@@ -217,7 +217,6 @@ export default class TxNotifications extends Vue {
     flex: 0 0 25% !important;
     max-width: 25% !important;
     justify-content: center;
-    
   }
 
   .tx-status {
