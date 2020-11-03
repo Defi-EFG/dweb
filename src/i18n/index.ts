@@ -1,5 +1,5 @@
-import Vue from "vue"
-import VueI18n from "vue-i18n"
+import Vue from 'vue'
+import VueI18n from 'vue-i18n'
 import { Locales } from './locales'
 
 import en from '@/locales/en.json'
@@ -16,8 +16,8 @@ export const defaultLocale = Locales.EN
 
 export const i18n = new VueI18n({
   locale: 'en',
-  fallbackLocale: "zh",
-  messages: { en },
+  fallbackLocale: 'zh',
+  messages: { en }
 })
 
 export const dateTimeFormats = {

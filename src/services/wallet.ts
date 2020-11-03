@@ -131,6 +131,10 @@ const getUtxos = async (address: string) => {
   return utxos
 }
 
+const getTxInfo = async (txid: string) => {
+  return await EcocWallet.getTxInfo(txid)
+}
+
 const waitForConfirmation = (txid: string) => {
   return new Promise((resolve, reject) => {
     let txResult
@@ -156,6 +160,7 @@ export {
   getEcrc20Balance,
   getTxs,
   getUtxos,
+  getTxInfo,
   isEcrc20,
   waitForConfirmation
 }

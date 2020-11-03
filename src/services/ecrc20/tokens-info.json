@@ -1,0 +1,30 @@
+[
+  {
+    "name": "EFG",
+    "symbol": "EFG",
+    "address": "465bb1e07d460f86c1cfc0809ef97bd41f8a88b5",
+    "decimals": "8",
+    "totalSupply": "1000000"
+  },
+  {
+    "name": "GPT",
+    "symbol": "GPT",
+    "address": "01b4f96074cc86042bc9c98e4f3fbb17b82f0501",
+    "decimals": "4",
+    "totalSupply": "10000"
+  },
+  {
+    "name": "USDT",
+    "symbol": "USDT",
+    "address": "USDT_CONTRACT_ADDR",
+    "decimals": "4",
+    "totalSupply": "100000"
+  },
+  {
+    "name": "ETH",
+    "symbol": "ETH",
+    "address": "ETH_CONTRACT_ADDR",
+    "decimals": "16",
+    "totalSupply": "100000"
+  }
+]

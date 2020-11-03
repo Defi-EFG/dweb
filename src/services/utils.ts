@@ -1,4 +1,7 @@
 import BigNumber from 'bignumber.js'
+import { staking } from './staking'
+import { lending } from './lending'
+import { ECOC_MAINNET } from './ecoc/constants'
 
 export const toDecimals = (value: number | string, decimals: number | string) => {
   const expo = new BigNumber(10).pow(new BigNumber(decimals))
@@ -44,4 +47,15 @@ export const copyToClipboard = (text: string) => {
       console.error('Copy failed')
     }
   )
+}
+
+export const addressFilter = (address: string) => {
+  if (address == staking.address) return 'Lending Platform'
+  else if (address == lending.address) return 'Staking Platform'
+  else return address
+}
+
+export const getExplorerUrl = (networkStr = ECOC_MAINNET) => {
+  if (networkStr === ECOC_MAINNET) return 'https://explorer.ecoc.io'
+  return 'https://testnet.explorer.ecoc.io'
 }

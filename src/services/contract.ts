@@ -1,7 +1,7 @@
 import { Encoder, Decoder, Ecocjs } from 'ecoweb3'
 import { ecocw3 } from '@/services/ecoc/ecocw3'
 import { Contract } from '@/types/contract'
-import { Utxo } from '@/types/transaction'
+import { Utxo, TxReceipt } from '@/types/transaction'
 
 export const DEFAULT = {
   DEFAULT_AMOUNT: 0,
@@ -93,5 +93,9 @@ export class SmartContract implements Contract {
   static async send(singedTx: string) {
     const result = await ecocw3.api.sendRawTx(singedTx)
     return result
+  }
+
+  static decodeSearchLog(rawOutput: TxReceipt[], contractMetadata: any, removeHexPrefix = true) {
+    return Decoder.decodeSearchLog(rawOutput, contractMetadata, removeHexPrefix)
   }
 }

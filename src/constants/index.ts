@@ -11,9 +11,9 @@ export const TYPE_SENT = 'Sent'
 export const TYPE_ECOC = 'ECOC'
 export const TYPE_ECRC20 = 'ECRC-20'
 
-export const STATUS_SYNCED = 'synced'
-export const STATUS_PENDING = 'pending'
-export const STATUS_CONFIRMED = 'confirmed'
+export const STATUS_SYNCED = 'Synced'
+export const STATUS_PENDING = 'Pending'
+export const STATUS_CONFIRMED = 'Confirmed'
 
 export const TX_TRANSFER = 'Transfering'
 export const TX_DEPOSIT = 'Deposting'

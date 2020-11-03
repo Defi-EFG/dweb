@@ -172,7 +172,7 @@
                     ></v-textarea>
 
                     <text-reader @load="keystore = $event"></text-reader>
-                 
+
                     <div class="errorMsg" v-if="errorMsg2">
                       <span>{{ errorMsg2 }}</span>
                     </div>
