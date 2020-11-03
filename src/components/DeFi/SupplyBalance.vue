@@ -48,7 +48,6 @@ import Loading from '@/components/modals/loading.vue'
 })
 export default class SupplyBalance extends Vue {
   @Prop({ default: 0 }) readonly balance!: number
-  @Prop({ default: '' }) readonly poolAddr!: string
   @Prop({ default: false }) readonly isLiquidate!: boolean
 
   walletStore = getModule(WalletModule)
@@ -66,6 +65,10 @@ export default class SupplyBalance extends Vue {
 
   get address() {
     return this.walletStore.address
+  }
+
+  get poolAddr() {
+    return this.lendingStore.loan.poolAddr
   }
 
   // unix timestamp in second

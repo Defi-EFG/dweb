@@ -13,7 +13,7 @@ interface Collateral {
 }
 
 const lendingContract = {
-  address: '63edc8a019a1c44eea93fde23d1bc9ed3373742f',
+  address: '5744612449a6c9ebdd1992e84bc6493458333c37',
   abi: lendingAbi
 } as Contract
 
@@ -23,55 +23,51 @@ export namespace lending {
   export const address = lendingContract.address
 
   export const canSeize = async (address: string) => {
-    return false
-    // const params = {
-    //   methodArgs: [address]
-    // } as Params
+    const params = {
+      methodArgs: [address]
+    } as Params
 
-    // const result = await contract.call('canSeize', params)
-    // const executionResult = result.executionResult as ExecutionResult
-    // const res = executionResult.formattedOutput['0'] as boolean
+    const result = await contract.call('canSeize', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const res = executionResult.formattedOutput['0'] as boolean
 
-    // return res
+    return res
   }
 
   export const getBorrowLimit = async (address: string) => {
-    return 5000000000
-    // const params = {
-    //   methodArgs: [address]
-    // } as Params
+    const params = {
+      methodArgs: [address]
+    } as Params
 
-    // const result = await contract.call('getBorrowLimit', params)
-    // const executionResult = result.executionResult as ExecutionResult
-    // const res = executionResult.formattedOutput['0'].toNumber() as number
+    const result = await contract.call('getBorrowLimit', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const res = executionResult.formattedOutput['0'].toNumber() as number
 
-    // return res
+    return res
   }
 
   export const getEstimatedGPT = async (address: string) => {
-    return 15240000
-    // const params = {
-    //   methodArgs: [address]
-    // } as Params
+    const params = {
+      methodArgs: [address]
+    } as Params
 
-    // const result = await contract.call('getEstimatedGPT', params)
-    // const executionResult = result.executionResult as ExecutionResult
-    // const res = executionResult.formattedOutput['0'].toNumber() as number
+    const result = await contract.call('getEstimatedGPT', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const res = executionResult.formattedOutput['0'].toNumber() as number
 
-    // return res
+    return res
   }
 
   export const getAllAssets = async () => {
-    return ['29fa3b8bb3ec7a59d98e269b90875f944744c70c']
-    // const params = {
-    //   methodArgs: []
-    // } as Params
+    const params = {
+      methodArgs: []
+    } as Params
 
-    // const result = await contract.call('getAllAssets', params)
-    // const executionResult = result.executionResult as ExecutionResult
-    // const contractAddresses = executionResult.formattedOutput.allAcceptedAssets as string[]
+    const result = await contract.call('getAllAssets', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const contractAddresses = executionResult.formattedOutput.allAcceptedAssets as string[]
 
-    // return contractAddresses
+    return contractAddresses
   }
 
   export const getAllPools = async () => {
@@ -151,7 +147,10 @@ export namespace lending {
 
     const resultSymbols = await contract.call('getCollateralSymbols', params)
     const executionResultSymbols = resultSymbols.executionResult as ExecutionResult
-    const symbols = executionResultSymbols.formattedOutput.collateralSymbol
+    const symbolsHex = executionResultSymbols.formattedOutput.collateralSymbol as string[]
+    const symbols = symbolsHex.map(symbolHex =>
+      Web3Utils.hexToUtf8(Utils.appendHexPrefix(symbolHex))
+    )
 
     const resultAmounts = await contract.call('getCollateralAmount', params)
     const executionResultAmounts = resultAmounts.executionResult as ExecutionResult
@@ -204,7 +203,7 @@ export namespace lending {
 
     const totalDebt = res['0'].toNumber()
     if (totalDebt <= 0) {
-      return { totalDebt: 1000000000, poolAddress: 'MockupAddress' }
+      return { totalDebt: 0, poolAddress: '' }
     }
 
     const poolAddress = Decoder.toEcoAddress(res['1'])

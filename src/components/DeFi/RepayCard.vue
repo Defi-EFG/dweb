@@ -6,13 +6,13 @@
         <span>Wallet Balance</span>
         <v-spacer class="space"></v-spacer>
         <span class="balance" @click="fillAmount(walletBalance)"
-          >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
+          >{{ walletBalance.toFixed(8) }} {{ currencyName }}</span
         >
       </div>
       <div class="debt">
         <span>Debt</span>
         <v-spacer class="space"></v-spacer>
-        <span class="balance">{{ debt.toFixed(2) }} {{ currencyName }}</span>
+        <span class="balance">{{ debt.toFixed(8) }} {{ currencyName }}</span>
       </div>
     </div>
 
@@ -52,7 +52,7 @@
       <div class="text-left">Total Borrowed</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ debt }}</span>
+        <span>${{ borrowBalance }}</span>
         &rarr;
         <span class="after-calculated">${{ calculateDebt(repayAmount).toFixed(2) }}</span>
       </div>
@@ -106,12 +106,9 @@ export default class RepayCard extends Vue {
   lendingStore = getModule(LendingModule)
 
   @Prop() currency!: Currency
-  @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
   @Prop() borrowLimit!: number
   @Prop() interestRate!: number
-  @Prop() borrowPowerPercentage!: number
-  @Prop({ default: 10 }) debt!: number
 
   confirmTxModal = false
   loading = false
@@ -139,6 +136,10 @@ export default class RepayCard extends Vue {
     return this.currency.price || 0
   }
 
+  get debt() {
+    return this.lendingStore.borrowBalance
+  }
+
   get bpUsed() {
     return (this.borrowBalance / this.borrowLimit) * 100
   }
@@ -157,16 +158,12 @@ export default class RepayCard extends Vue {
   }
 
   calculateDebt(repayAmount: number) {
-    return this.debt - repayAmount
+    return (this.debt - repayAmount) * this.currencyPrice
   }
 
   calculateBPUsed(repayAmount: number) {
     const dollarsAmount = Number(repayAmount) * this.currencyPrice
-    return (
-      (this.borrowBalance /
-        ((this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage)) *
-      100
-    )
+    return ((this.borrowBalance - dollarsAmount) / this.borrowLimit) * 100
   }
 
   isRepayable(amount: number, type: string) {
@@ -203,8 +200,10 @@ export default class RepayCard extends Vue {
   onConfirm(walletParams: WalletParams) {
     this.loading = true
     const amount = Number(this.repayAmount)
+    const currency = this.currency
 
     const payload = {
+      currency,
       amount,
       walletParams
     }

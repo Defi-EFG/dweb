@@ -50,8 +50,8 @@ export const copyToClipboard = (text: string) => {
 }
 
 export const addressFilter = (address: string) => {
-  if (address == staking.address) return 'Lending Platform'
-  else if (address == lending.address) return 'Staking Platform'
+  if (address == staking.address) return 'Staking Platform'
+  else if (address == lending.address) return 'Lending Platform'
   else return address
 }
 
