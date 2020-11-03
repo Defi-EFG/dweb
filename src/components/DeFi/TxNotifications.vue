@@ -1,84 +1,95 @@
 <template>
   <div class="tx-noti">
-    <v-badge
-      color="#FFB300"
-      :content="getPendingTxNumber(txList)"
-      :value="getPendingTxNumber(txList)"
-      overlap
-    >
+    <v-badge color="#FFB300" :content="pendingTxNumber" :value="pendingTxNumber" overlap>
       <v-img
         class="noti-sign"
         src="@/assets/exchange.svg"
         @click="displayNotiList = !displayNotiList"
       ></v-img>
     </v-badge>
-    <div v-if="displayNotiList" class="noti-list-wrapper">
-      <v-row v-for="(tx, index) in txList" :key="index" class="tx-items">
-        <v-col cols="auto" class="tx-load">
-          <v-progress-circular
-            v-if="tx.status === 'pending'"
-            class="ma-auto"
-            :size="40"
-            indeterminate
-            color="white"
-          ></v-progress-circular>
-          <v-icon v-else class="completed">
-            mdi-check-circle-outline
-          </v-icon>
-        </v-col>
-        <v-col cols="auto" class="tx-status">
-          <div class="status">
-            {{ tx.status === 'pending' ? 'Transaction pending...' : 'Transaction completed!' }}
-          </div>
-          <div class="id">
-            TxID: {{ truncateAddress(tx.txid) }}
-            <v-icon class="copy" @click="copyAddress(tx.txid)">mdi-content-copy</v-icon>
-          </div>
-        </v-col>
-        <v-col cols="auto" class="tx-details">
-          <div class="type">{{ tx.type }}</div>
-          <div class="details" @click="showTxHistory">Details</div>
-        </v-col>
-      </v-row>
-    </div>
+    <transition name="fade" mode="out-in">
+      <div v-if="displayNotiList" class="noti-list-wrapper">
+        <template v-if="txPendingList.length > 0">
+          <v-row v-for="(tx, index) in txPendingList" :key="index" class="tx-items">
+            <v-col cols="2" class="tx-load">
+              <v-progress-circular
+                v-if="tx.status === txConstants.STATUS_PENDING"
+                class="ma-auto"
+                :size="40"
+                indeterminate
+                color="white"
+              ></v-progress-circular>
+              <v-icon v-else class="completed">
+                mdi-check-circle-outline
+              </v-icon>
+            </v-col>
+            <v-col cols="7" class="tx-status">
+              <div class="status">
+                {{
+                  tx.status === txConstants.STATUS_CONFIRMED
+                    ? 'Transaction completed!'
+                    : 'Transaction pending...'
+                }}
+              </div>
+              <div class="id">
+                TxID: {{ truncateAddress(tx.txid) }}
+                <v-icon class="copy" @click="copyAddress(tx.txid)">mdi-content-copy</v-icon>
+              </div>
+            </v-col>
+            <v-col cols="3" class="tx-details">
+              <div class="type">{{ tx.type }}</div>
+              <div
+                v-if="tx.status === txConstants.STATUS_CONFIRMED"
+                class="details"
+                @click="showTxHistory(tx.txid)"
+              >
+                Details
+              </div>
+            </v-col>
+          </v-row>
+        </template>
+
+        <template v-else>
+          <div class="empty">No transaction pending</div>
+        </template>
+      </div>
+    </transition>
+    <TransactionDetailModal :showDialog.sync="showTxModal" :txid="txId"></TransactionDetailModal>
   </div>
 </template>
 
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
-import { PendingTransaction } from '@/types/transaction'
 import { copyToClipboard } from '@/services/utils'
 import { getModule } from 'vuex-module-decorators'
+import TransactionDetailModal from '@/components/modals/TransactionDetailModal.vue'
 import WalletModule from '@/store/wallet'
+import * as constants from '@/constants'
 
-@Component({})
+@Component({
+  components: {
+    TransactionDetailModal
+  }
+})
 export default class TxNotifications extends Vue {
   displayNotiList = false
   walletStore = getModule(WalletModule)
-
-  txList = [
-    {
-      txid: 'a5239e0eb34e1c0bb7d51d79cc6410f4ce43ec813313b4b692af383fe63ef6d2',
-      type: 'Collateral',
-      status: 'pending'
-    } as PendingTransaction,
-    {
-      txid: '9aa6b2225c979cea2ae4064b6aa3bd3922d21595aaa8d919188e8e615aaa14c6',
-      type: 'Collateral',
-      status: 'completed'
-    } as PendingTransaction
-  ]
-
-  mounted() {
-    console.log('tx list', this.txPendingList)
-  }
+  showTxModal = false
+  txId = ''
 
   get txPendingList() {
-    return this.walletStore.pendingTransactions
+    const onPending = [...this.walletStore.pendingTransactions]
+    return onPending.reverse()
   }
 
-  getPendingTxNumber(txs: PendingTransaction[]) {
-    const onPendingTx = txs.filter(tx => tx.status === 'pending')
+  get txConstants() {
+    return constants
+  }
+
+  get pendingTxNumber() {
+    const onPendingTx = this.txPendingList.filter(
+      tx => tx.status === this.txConstants.STATUS_PENDING
+    )
     return onPendingTx.length
   }
 
@@ -86,8 +97,9 @@ export default class TxNotifications extends Vue {
     copyToClipboard(addr)
   }
 
-  showTxHistory() {
-    console.log('tx history!')
+  showTxHistory(txId: string) {
+    this.txId = txId
+    this.showTxModal = !this.showTxModal
   }
 
   truncateAddress(addr: string) {
@@ -151,6 +163,10 @@ export default class TxNotifications extends Vue {
     text-decoration: underline;
   }
 }
+
+.empty {
+  padding: 0.5rem 3rem;
+}
 </style>
 
 <style lang="scss">
@@ -197,20 +213,26 @@ export default class TxNotifications extends Vue {
 }
 
 @media (max-width: 490px) {
-  .tx-details,
+  .tx-load {
+    flex: 0 0 25% !important;
+    max-width: 25% !important;
+    justify-content: center;
+    
+  }
+
   .tx-status {
+    flex: 0 0 75% !important;
+    max-width: 75% !important;
     font-size: smaller;
   }
 
-  .tx-load {
-    .completed {
-      font-size: 25px !important;
-    }
-
-    .v-progress-circular {
-      width: 25px !important;
-      height: 25px !important;
-    }
+  .tx-details {
+    display: flex;
+    max-width: 100% !important;
+    flex: 0 0 100% !important;
+    justify-content: space-around;
+    padding-top: 0;
+    font-size: smaller;
   }
 }
 </style>
