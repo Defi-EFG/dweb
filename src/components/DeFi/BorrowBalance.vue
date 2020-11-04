@@ -1,11 +1,11 @@
 <template>
   <v-card dark class="borrow-card">
     <v-card-text>
-      <span class="borrow-label">Borrow Balance</span>
+      <span class="borrow-label">{{ $t('views.lendingpage.borrow_balance') }}</span>
       <div class="borrow">${{ balance.toFixed(2) }}</div>
       <div class="borrow-power">
         <div class="label">
-          <span class="power-label">Borrow Power</span>
+          <span class="power-label">{{ $t('views.lendingpage.borrow_po') }}</span>
           <span v-if="isLiquidate" class="liquid-label">Liquidation</span>
         </div>
         <v-progress-linear

@@ -3,24 +3,26 @@
     <v-card dark color="#2e3344" class="staked-reward">
       <v-card-text class="wrapper">
         <div class="total-reward">
-          <p class="label mb-0">Your Staked Reward</p>
+          <p class="label mb-0">{{ $t('views.stakingpage.your_sk') }}</p>
           <p class="value text-center">{{ stakedReward }} {{ currencyName }}</p>
         </div>
 
         <div class="d-amount">
-          <span>Withdraw Available</span>
+          <span>{{ $t('views.stakingpage.withdraw_avb') }}</span>
           <v-spacer></v-spacer>
           <span class="text-right">{{ withdrawAvailable.toFixed(2) }} {{ currencyName }}</span>
         </div>
 
         <v-divider></v-divider>
 
-        <p class="reward-label mb-1">Reward Withdrawal</p>
+        <p class="reward-label mb-1">{{ $t('views.stakingpage.reward_wd') }}</p>
 
         <div class="minimum-w">
-          <span class="value">Minimum Withdrawal: 1.00 GPT</span>
+          <span class="value">{{ $t('views.stakingpage.minimum_wd') }}</span>
           <v-spacer></v-spacer>
-          <span class="all" @click="fillAmount(withdrawAvailable)">Withdraw All</span>
+          <span class="all" @click="fillAmount(withdrawAvailable)">{{
+            $t('views.stakingpage.withdrawall')
+          }}</span>
         </div>
 
         <v-text-field
@@ -35,9 +37,9 @@
           hide-details="true"
         ></v-text-field>
 
-        <v-btn large block depressed class="reward-btn" @click="openConfirmTxModal"
-          >Withdraw Reward</v-btn
-        >
+        <v-btn large block depressed class="reward-btn" @click="openConfirmTxModal">{{
+          $t('views.stakingpage.withdrawreward')
+        }}</v-btn>
       </v-card-text>
     </v-card>
     <TransactionComfirmationModal

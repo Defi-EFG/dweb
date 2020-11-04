@@ -2,8 +2,8 @@
   <div class="balance-wrapper">
     <v-card dark class="balance-card">
       <v-card-text>
-        <span class="balance-label">Collateral Balance</span>
-        <div class="loaner">Loaner: {{ poolAddr }}</div>
+        <span class="balance-label">{{ $t('views.lendingpage.collateral_bl') }}</span>
+        <div class="loaner">{{ $t('views.lendingpage.loaner') }}: {{ poolAddr }}</div>
         <div class="balance" :class="isLiquidate ? 'liquidate' : ''">${{ balance.toFixed(2) }}</div>
         <div class="liquid-countdown" v-show="isLiquidate">
           <span>Counting down 5 blocks to liquidation...</span>

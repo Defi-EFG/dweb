@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p class="action-label" v-if="!isMobileDevice">Withdraw</p>
+    <p class="action-label" v-if="!isMobileDevice">{{ $t('views.lendingpage.withdraw') }}</p>
     <div class="wallet-balance mb-2">
-      <span>Max Withdrawable:</span>
+      <span>{{ $t('views.lendingpage.max_with') }}</span>
       <v-spacer class="space"></v-spacer>
       <span class="balance" @click="fillAmount(maxWithdraw)"
         >{{ maxWithdraw.toFixed(2) }} {{ currencyName }}</span
@@ -21,7 +21,7 @@
       type="number"
     ></v-text-field>
     <div class="borrow-power">
-      <span class="label">Borrow Power</span>
+      <span class="label">{{ $t('views.lendingpage.borrow_po') }}</span>
       <v-progress-linear
         :value="calculateBPUsed(withdrawValue)"
         rounded
@@ -32,7 +32,7 @@
       ></v-progress-linear>
     </div>
     <div class="borrow-used">
-      <div class="text-left">Borrow Power Used</div>
+      <div class="text-left">{{ $t('views.lendingpage.borrow_power_used') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bp-change">
         <span>{{ bpUsed.toFixed(1) }}%</span>
@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="borrow-total mt-1 mb-3">
-      <div class="text-left">Borrow Limit</div>
+      <div class="text-left">{{ $t('views.lendingpage.borrow_limit') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
         <span>${{ borrowLimit }}</span>

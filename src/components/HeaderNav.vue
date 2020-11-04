@@ -8,7 +8,9 @@
       <v-spacer></v-spacer>
       <TxNotifications v-if="isWalletUnlocked"></TxNotifications>
       <template v-if="!addr">
-        <v-btn outlined small @click="openUnlockWallet">Unlock Wallet</v-btn>
+        <v-btn outlined small @click="openUnlockWallet">{{
+          $t('views.walletpage.unlock_wallet')
+        }}</v-btn>
       </template>
       <v-menu v-model="menu" v-else offset-y left>
         <template v-slot:activator="{ on }">

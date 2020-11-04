@@ -5,7 +5,9 @@
         <canvas id="myChart" class="token-logo"></canvas>
       </div>
       <div class="token-detail">
-        <p class="mb-3">{{ currencyName }} - Available (Total: {{ total }})</p>
+        <p class="mb-3">
+          {{ $t('views.stakingpage.available') }}
+        </p>
         <div class="value">{{ available }} {{ currencyName }}</div>
       </div>
     </v-card-text>
