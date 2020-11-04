@@ -134,7 +134,7 @@ export default class Withdraw extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowLimit) * 100
+    return ((this.borrowBalance / this.borrowLimit) * 100) | 0
   }
 
   get tokenConversion() {
@@ -159,7 +159,7 @@ export default class Withdraw extends Vue {
   }
 
   calculateBPUsed(withdrawAmount: number) {
-    return (this.borrowBalance / this.calculateTotalBP(withdrawAmount)) * 100
+    return ((this.borrowBalance / this.calculateTotalBP(withdrawAmount)) * 100) | 0
   }
 
   isWithdrawable(amount: number, type: string) {

@@ -52,7 +52,7 @@
       <div class="text-left">Total Borrowed</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowBalance }}</span>
+        <span>${{ borrowBalance.toFixed(2) }}</span>
         &rarr;
         <span class="after-calculated">${{ calculateDebt(repayAmount).toFixed(2) }}</span>
       </div>
@@ -141,7 +141,7 @@ export default class RepayCard extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowLimit) * 100
+    return ((this.borrowBalance / this.borrowLimit) * 100) | 0
   }
 
   get tokenConversion() {
@@ -163,7 +163,8 @@ export default class RepayCard extends Vue {
 
   calculateBPUsed(repayAmount: number) {
     const dollarsAmount = Number(repayAmount) * this.currencyPrice
-    return ((this.borrowBalance - dollarsAmount) / this.borrowLimit) * 100
+    const newBpUsed = ((this.borrowBalance - dollarsAmount) / this.borrowLimit) * 100
+    return newBpUsed | 0
   }
 
   isRepayable(amount: number, type: string) {

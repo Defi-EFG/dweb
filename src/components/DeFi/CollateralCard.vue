@@ -126,7 +126,7 @@ export default class Collateral extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowLimit) * 100
+    return ((this.borrowBalance / this.borrowLimit) * 100) | 0
   }
 
   get tokenConversion() {
@@ -150,11 +150,11 @@ export default class Collateral extends Vue {
 
   calculateBPUsed(colAmount: number) {
     const dollarsAmount = Number(colAmount) * this.currencyPrice
-    return (
+    const newBpUsed =
       (this.borrowBalance /
         ((this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage)) *
       100
-    )
+    return newBpUsed | 0
   }
 
   isCollateralable(amount: number, type: string) {

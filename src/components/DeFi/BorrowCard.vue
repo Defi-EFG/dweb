@@ -140,7 +140,7 @@ export default class BorrowCard extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowLimit) * 100
+    return ((this.borrowBalance / this.borrowLimit) * 100) | 0
   }
 
   get tokenConversion() {
@@ -173,7 +173,7 @@ export default class BorrowCard extends Vue {
   calculateBPUsed(borrowAmount: number) {
     const dollarsAmount = Number(borrowAmount) * this.currencyPrice
     const bpPercent = ((this.borrowBalance + dollarsAmount) / this.borrowLimit) * 100
-    return bpPercent
+    return bpPercent | 0
   }
 
   bpPercentToValue(bp: number) {
