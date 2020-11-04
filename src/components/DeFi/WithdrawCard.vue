@@ -155,7 +155,8 @@ export default class Withdraw extends Vue {
   // BP = Borrow Power
   calculateTotalBP(withdrawAmount: number) {
     const dollarsAmount = Number(withdrawAmount) * this.currencyPrice
-    return (this.collateralBalance - dollarsAmount) * this.borrowPowerPercentage
+    const total = this.borrowLimit - dollarsAmount * this.borrowPowerPercentage
+    return total
   }
 
   calculateBPUsed(withdrawAmount: number) {
@@ -194,10 +195,10 @@ export default class Withdraw extends Vue {
 
   onConfirm(walletParams: WalletParams) {
     const amount = Number(this.withdrawValue)
-    const currencyName = this.currencyName
+    const currency = this.currency
 
     const payload = {
-      currencyName,
+      currency,
       amount,
       walletParams
     }

@@ -1,5 +1,5 @@
 import * as constants from '@/constants'
-import { Ecrc20 } from '@/types/currency'
+import { Ecrc20, Currency } from '@/types/currency'
 import { ECOC, ETH, USDT, EFG, GPT, EWETH, EWUSDT } from '@/store/wallet/currency'
 
 export const loanCurrency = {
@@ -15,6 +15,18 @@ export const stakingCurrency = {
 export const rewardCurrency = {
   name: constants.GPT,
   style: constants.KNOWN_CURRENCY[constants.GPT]
+}
+
+export const getCurrency = (currencyName: string) => {
+  if (currencyName === ECOC.name) return ECOC
+  if (currencyName === ETH.name) return ETH
+  if (currencyName === USDT.name) return USDT
+  if (currencyName === EFG.name) return EFG
+  if (currencyName === GPT.name) return GPT
+  if (currencyName === EWETH.name) return EWETH
+  if (currencyName === EWUSDT.name) return EWUSDT
+
+  return {} as Currency
 }
 
 export const getCurrencyDecimals = (currencyName: string) => {

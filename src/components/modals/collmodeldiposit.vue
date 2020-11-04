@@ -425,7 +425,10 @@ export default class Collmodeldiposit extends Vue {
   }
 
   onSuccess() {
+    this.step = 1
     this.loading = false
+    this.errorMsg = ''
+    this.password = ''
     this.$emit('onSuccess')
   }
 
@@ -507,10 +510,10 @@ export default class Collmodeldiposit extends Vue {
 
     const amount = Number(this.amount)
     const poolAddress = this.selectdata
-    const currencyName = this.currency.name
+    const currency = this.currency
 
     const payload = {
-      currencyName,
+      currency,
       amount,
       poolAddress,
       walletParams

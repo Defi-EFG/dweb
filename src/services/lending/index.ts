@@ -128,6 +128,18 @@ export namespace lending {
     return priceUsd
   }
 
+  export const getAssetBalance = async (currencyName: string, address: string) => {
+    const params = {
+      methodArgs: [currencyName, address]
+    } as Params
+
+    const result = await contract.call('getAssetBalance', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const res = executionResult.formattedOutput['0'].toNumber()
+
+    return res
+  }
+
   export const getEFGBalance = async (address: string) => {
     const params = {
       methodArgs: [address]
