@@ -23,7 +23,7 @@
           </v-btn>
         </div>
       </div>
-      <div class="copy-message ">
+      <div class="copy-message">
         <transition name="fade" mode="out-in">
           <div class="copied" v-if="showCopy">Copied!</div>
         </transition>

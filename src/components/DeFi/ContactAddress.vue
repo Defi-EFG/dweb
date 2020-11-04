@@ -119,7 +119,6 @@ export default class ContactAddress extends Vue {
   @Watch('isReady')
   onLoggedIn(ready: any) {
     if (ready) {
-      console.log('ready', this.walletAddr)
       this.addressStore.subscribeToFirebase(this.walletAddr)
     }
   }

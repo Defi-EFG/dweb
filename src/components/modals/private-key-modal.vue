@@ -134,7 +134,7 @@ export default class PrivateKey extends Vue {
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 .header-primarykey .v-icon.v-icon {
   font-size: 15px;
 }

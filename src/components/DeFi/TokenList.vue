@@ -88,6 +88,7 @@ export default class TokenList extends Vue {
   overflow: auto;
   min-height: 226px;
   width: inherit;
+  max-width: 1040px;
 
   &::-webkit-scrollbar-track {
     margin: 8px;

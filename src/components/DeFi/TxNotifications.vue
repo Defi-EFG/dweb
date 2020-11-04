@@ -1,12 +1,14 @@
 <template>
   <div class="tx-noti">
-    <v-badge color="#FFB300" :content="pendingTxNumber" :value="pendingTxNumber" overlap>
-      <v-img
-        class="noti-sign"
-        src="@/assets/exchange.svg"
-        @click="displayNotiList = !displayNotiList"
-      ></v-img>
-    </v-badge>
+    <v-btn class="noti-btn" icon>
+      <v-badge color="#FFB300" :content="pendingTxNumber" :value="pendingTxNumber" overlap>
+        <v-img
+          class="noti-sign"
+          src="@/assets/time-left.svg"
+          @click="displayNotiList = !displayNotiList"
+        ></v-img>
+      </v-badge>
+    </v-btn>
     <transition name="fade" mode="out-in">
       <div v-if="displayNotiList" class="noti-list-wrapper">
         <template v-if="txPendingList.length > 0">
@@ -113,6 +115,7 @@ export default class TxNotifications extends Vue {
 
 <style lang="scss" scoped>
 .noti-sign {
+  // transform: scale(0.8);
   cursor: pointer;
 }
 
@@ -171,8 +174,7 @@ export default class TxNotifications extends Vue {
 
 <style lang="scss">
 .tx-noti {
-  padding-top: 0.4rem;
-  padding-right: 2rem;
+  padding-right: 1rem;
   .v-badge__badge {
     font-weight: 700;
   }
