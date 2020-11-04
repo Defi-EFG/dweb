@@ -148,6 +148,7 @@ export default class TxNotifications extends Vue {
     color: rgb(142, 142, 142);
 
     .copy {
+      font-size: medium;
       margin-left: 4px;
     }
   }

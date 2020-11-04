@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="borrow-card-wrapper">
     <p class="action-label" v-if="!isMobileDevice">Borrow</p>
     <div class="wallet-balance">
       <span>Wallet Balance:</span>
@@ -17,7 +17,11 @@
       color="#C074F9"
       :hint="tokenConversion"
       persistent-hint
-    ></v-text-field>
+    >
+      <template v-slot:prepend-inner>
+        <v-btn class="py-4" x-small text @click="safeMaxInput">Safe max</v-btn>
+      </template>
+    </v-text-field>
     <div class="borrow-power">
       <span class="label">Borrow Power</span>
       <v-slider
@@ -30,8 +34,8 @@
         thumb-color="#E4E4E4"
         :hide-details="true"
         thumb-label
-        @end="limitValue"
-        @click="limitSlider"
+        @end="limitSlider"
+        @click.native="limitSlider"
       ></v-slider>
     </div>
     <div class="borrow-used">
@@ -47,7 +51,7 @@
       <div class="text-left">Total Borrowed</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowBalance }}</span>
+        <span>${{ borrowBalance.toFixed(2) }}</span>
         &rarr;
         <span class="after-calculated">${{ totalBorrowed.toFixed(2) }}</span>
       </div>
@@ -152,7 +156,6 @@ export default class BorrowCard extends Vue {
     return 80 // 80%
   }
 
-  // only for click event
   limitSlider() {
     if (this.bpSlider < this.bpUsed) {
       this.bpSlider = this.bpUsed
@@ -163,19 +166,6 @@ export default class BorrowCard extends Vue {
     }
 
     this.borrowValue = this.bpPercentToValue(this.bpSlider)
-    this.borrowValue = Number(this.borrowValue.toFixed(2))
-  }
-
-  limitValue(num: number) {
-    if (num < this.bpUsed) {
-      this.bpSlider = this.bpUsed
-    }
-
-    if (num >= this.safeLimit) {
-      this.bpSlider = this.safeLimit
-    }
-
-    this.borrowValue = this.bpPercentToValue(num)
     this.borrowValue = Number(this.borrowValue.toFixed(2))
   }
 
@@ -258,6 +248,12 @@ export default class BorrowCard extends Vue {
       .catch(error => {
         this.onError(error.message)
       })
+  }
+
+  safeMaxInput() {
+    this.bpSlider = this.safeLimit
+    this.borrowValue = this.bpPercentToValue(this.bpSlider)
+    this.borrowValue = Number(this.borrowValue.toFixed(2))
   }
 }
 </script>
@@ -390,6 +386,18 @@ export default class BorrowCard extends Vue {
 .borrow-slider {
   .v-slider__thumb-label {
     background-color: #c074f9 !important;
+  }
+}
+
+.borrow-card-wrapper {
+  .v-input__prepend-inner {
+    margin: auto;
+  }
+
+  .v-label {
+    position: relative !important;
+    overflow: unset;
+    margin-left: -5rem;
   }
 }
 </style>
