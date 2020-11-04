@@ -1,6 +1,6 @@
 <template>
   <div class="upload-wrapper text-end mb-3">
-    <small class="mr-2">or Upload keystore file</small>
+    <small class="mr-2">{{ $t('views.modal.or_Upload') }}</small>
     <label class="text-reader">
       <v-icon class="upload-icon" color="white">$upload</v-icon>
       <input type="file" @change="loadTextFromFile" accept="application/json" />

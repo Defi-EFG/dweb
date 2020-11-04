@@ -49,7 +49,7 @@
               <v-text-field
                 :type="showpassword ? 'text' : 'password'"
                 :rules="[rules.required, rules.min]"
-                label="KeyStore Password"
+                :label="modal.keystore_password"
                 v-model="password"
                 :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
                 dense
@@ -170,10 +170,10 @@ export default class TransactionComfirmationModal extends Vue {
   showpassword = false
   rules = {
     required: (value: any) => {
-      return !!value || 'Required.'
+      return !!value || this.$t('views.modal.requiredw')
     },
     min: (v: any) => {
-      return v.length >= 6 || 'Min 6 characters'
+      return v.length >= 6 || this.$t('views.modal.characters')
     }
   }
   fee = DEFAULT.DEFAULT_FEE
@@ -226,6 +226,10 @@ export default class TransactionComfirmationModal extends Vue {
 
   get selectedCurrencyName() {
     return this.currency.name || ''
+  }
+
+  get modal() {
+    return this.$t('views.modal')
   }
 
   addressFilter(address: string) {

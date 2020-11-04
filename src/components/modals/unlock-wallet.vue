@@ -197,7 +197,9 @@
                         class="mb-5"
                         color="primary"
                       >
-                        <h4 class="text-capitalize font-weight-light">Next</h4>
+                        <h4 class="text-capitalize font-weight-light">
+                          {{ $t('views.modal.next') }}
+                        </h4>
                       </v-btn>
                       <v-btn v-else large class="mb-5" color="primary" disabled>
                         <h4 class="text-capitalize font-weight-light">
@@ -307,10 +309,10 @@ export default class UnlockwalletModal extends Vue {
   value = 0
   rules = {
     required: (value: any) => {
-      return !!value || 'Required.'
+      return !!value || this.$t('views.modal.required')
     },
     min: (v: any) => {
-      return v.length >= 6 || 'Min 6 characters'
+      return v.length >= 6 || this.$t('views.modal.characters')
     }
   }
 

@@ -86,9 +86,9 @@ export default class AddEditContact extends Vue {
   }
 
   rules = {
-    required: (value: string) => !!value || 'This name is already exist',
+    required: (value: string) => !!value || this.$t('views.modal.required'),
     exist: (value: string) => {
-      return !this.isNameExist(value) || 'This name is already exist'
+      return !this.isNameExist(value) || this.$t('views.modal.required')
     }
   }
 
@@ -139,9 +139,9 @@ export default class AddEditContact extends Vue {
 
   getFormPlaceholder(type: string) {
     if (type === 'name') {
-      return this.addMode ? 'Name' : this.editContact?.name
+      return this.addMode ? this.$t('views.modal.name') : this.editContact?.name
     } else {
-      return this.addMode ? 'Address' : this.editContact?.address
+      return this.addMode ? this.$t('views.modal.address') : this.editContact?.address
     }
   }
 

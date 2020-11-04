@@ -224,7 +224,10 @@
             "gas_price": "Gas price:",
             "gas_limit": "Gas limit:",
             "total_transaction": "Total Transaction Fee:",
-            "save": "SAVE"
+            "save": "SAVE",
+            "required": "Required",
+            "this_name": "This name is already exist",
+            "characters": "Min 6 characters"
         }
     },
     "components": {

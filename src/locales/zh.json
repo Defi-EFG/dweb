@@ -195,7 +195,7 @@
             "download_keystore": "下载密钥库文件",
             "Already": "已经存您的密钥库文件？ ",
             "ECOC_Walle": "ECOC 钱包",
-            "disconnect": "Disconnect",
+            "disconnect": "断开",
             "private_key": "Private Key.",
             "add_contact": "添加联系方式",
             "add": "添加",
@@ -207,7 +207,7 @@
             "delete_contact": "删除联系方式",
             "delete": "删除",
             "are_you": "您确认要删除这个联系人？",
-            "transaction": "Transaction Confirm",
+            "transaction": "交易确认",
             "please_transaction": "Please confirm the transaction",
             "send_to": "发送",
             "amount": "金额",
@@ -222,7 +222,11 @@
             "gas_price": "燃料价格:",
             "gas_limit": "燃料限度:",
             "total_transaction": "Total Transaction Fee:",
-            "save": "储存"
+            "save": "储存",
+            "required": "需要",
+            "this_name": "This name is already exist",
+            "or_Upload": "or Upload keystore file",
+            "characters": "Min 6 characters"
         }
 
     },
