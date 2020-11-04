@@ -13,17 +13,19 @@
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
-            <h3><strong>Transaction Confirm</strong></h3>
-            <small>Please confirm the transaction</small>
+            <h3>
+              <strong>{{ $t('views.modal.transaction') }}</strong>
+            </h3>
+            <small>{{ $t('views.modal.please_transaction') }}</small>
             <div class="transaction-confirmation-content-detail">
               <div class="send-detail border-bottom">
-                <span class="gt">Send to</span>
+                <span class="gt">{{ $t('views.modal.send_to') }}</span>
                 <div class="d-flex justify-end">
                   <p class="address">{{ toAddr }}</p>
                 </div>
               </div>
               <div class="detail border-bottom">
-                <span class="gt">Amount</span>
+                <span class="gt">{{ $t('views.modal.amount') }}</span>
                 <div class="d-flex justify-end">
                   <p>{{ amount }}</p>
                   <p class="ml-2">{{ selectedCurrencyName }}</p>
@@ -32,14 +34,14 @@
             </div>
 
             <div class="detail border-bottom ">
-              <span class="gt">Gas Fee</span>
+              <span class="gt">{{ $t('views.modal.gas_fee') }}</span>
               <div class="text-end">
                 <div class="d-flex justify-end">
                   <p>{{ fee }}</p>
                   <p class="ml-2">ECOC</p>
                 </div>
                 <v-btn @click="gasSetting()" small text color="primary">
-                  <span class="gassetting">gas setting</span>
+                  <span class="gassetting">{{ $t('views.modal.gas_setting') }}</span>
                 </v-btn>
               </div>
             </div>
@@ -60,12 +62,12 @@
             </div>
 
             <div class="action-transaction-confirmation">
-              <v-btn outlined large color="primary" class="text-capitalize" @click="onClose"
-                >Cancel</v-btn
-              >
-              <v-btn large depressed color="primary" class="text-capitalize" @click="onConfirm"
-                >Confirm</v-btn
-              >
+              <v-btn outlined large color="primary" class="text-capitalize" @click="onClose">{{
+                $t('views.modal.cancel')
+              }}</v-btn>
+              <v-btn large depressed color="primary" class="text-capitalize" @click="onConfirm">{{
+                $t('views.modal.confirm')
+              }}</v-btn>
             </div>
           </div>
         </div>
@@ -79,25 +81,25 @@
           <v-btn icon @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
         </div>
         <div class="content-gas-setting">
-          <h3>Gas Customization</h3>
-          <small>Increase the processing time of your transaction by using higher gas fee</small>
+          <h3>{{ $t('views.modal.gas_custom') }}</h3>
+          <small>{{ $t('views.modal.Increase') }}</small>
           <div class="gas-customization">
             <v-btn-toggle tile group>
               <v-btn>
                 <div class="gas-custom-btn-group" @click="fee = feeSlow">
-                  <p>Slow</p>
+                  <p>{{ $t('views.modal.slow') }}</p>
                   <p>{{ feeSlow }} ECOC</p>
                 </div>
               </v-btn>
               <v-btn>
                 <div class="gas-custom-btn-group" @click="fee = feeAverage">
-                  <p>Average</p>
+                  <p>{{ $t('views.modal.average') }}</p>
                   <p>{{ feeAverage }} ECOC</p>
                 </div></v-btn
               >
               <v-btn>
                 <div class="gas-custom-btn-group" @click="fee = feeFast">
-                  <p>Fast</p>
+                  <p>{{ $t('views.modal.fast') }}</p>
                   <p>{{ feeFast }} ECOC</p>
                 </div></v-btn
               >
@@ -105,23 +107,25 @@
           </div>
           <div class="inputnumber d-flex justify-space-between">
             <v-col cols="6" class="pb-0">
-              <label for="Gas price:">Gas price:</label
+              <label for="Gas price:">{{ $t('views.modal.gas_price') }}</label
               ><v-text-field type="number" v-model="gasPrice"></v-text-field>
             </v-col>
             <v-col cols="6" class="pb-0">
-              <label for="Gas limit:">Gas limit:</label
+              <label for="Gas limit:">{{ $t('views.modal.gas_limit') }}</label
               ><v-text-field type="number" v-model="gasLimit"></v-text-field>
             </v-col>
           </div>
 
           <div class="d-flex justify-space-between py-2">
-            <p>Total Transaction Fee:</p>
+            <p>{{ $t('views.modal.total_transaction') }}</p>
             <div class="text-end">
               <p class="mb-0">{{ totalFee }} ECOC</p>
             </div>
           </div>
           <div class="save-button ">
-            <v-btn color="primary" depressed block @click="closeGasSetting">save</v-btn>
+            <v-btn color="primary" depressed block @click="closeGasSetting">{{
+              $t('views.modal.save')
+            }}</v-btn>
           </div>
         </div>
       </v-card>

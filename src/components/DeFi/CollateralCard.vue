@@ -10,7 +10,7 @@
     </div>
     <v-text-field
       class="amount-input"
-      label="Collateral Amount"
+      :label="lendingpage.collateralamount"
       :suffix="currencyName"
       height="43"
       color="#C074F9"
@@ -58,7 +58,9 @@
       depressed
       :disabled="!isCollateralable(collateralAmount, 'error')"
       :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
-      >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
+      >{{
+        isCollateralable(collateralAmount, 'btn') ? lendingpage.deposit : 'Not available'
+      }}</v-btn
     >
     <Collatmodel
       :visible="collateralmodel"
@@ -136,6 +138,10 @@ export default class Collateral extends Vue {
 
   get isMobileDevice() {
     return window.innerWidth < 1264
+  }
+
+  get lendingpage() {
+    return this.$t('views.lendingpage')
   }
 
   fillAmount(amount: number) {

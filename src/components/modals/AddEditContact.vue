@@ -3,7 +3,7 @@
     <v-dialog v-model="visible" max-width="400">
       <v-card>
         <v-card-title class="card-title">
-          <span>{{ addMode ? 'Add contact' : 'Edit contact' }}</span>
+          <span>{{ addMode ? modal.add_contact : modal.edit_contact }}</span>
           <v-spacer></v-spacer>
           <v-btn icon dark @click.native="onClose">
             <v-icon>mdi-close</v-icon>
@@ -31,7 +31,7 @@
             ></v-form>
             <div class="btn-wrapper">
               <v-btn class="cancel" outlined large color="primary" @click="onClose()">
-                Cancel
+                {{ $t('views.modal.cancel') }}
               </v-btn>
               <v-spacer></v-spacer>
               <v-btn
@@ -42,7 +42,7 @@
                 color="primary"
                 @click="performContactAction"
               >
-                {{ addMode ? 'Add' : 'Edit' }}
+                {{ addMode ? modal.add : modal.edit }}
               </v-btn>
             </div>
           </div>
@@ -81,8 +81,12 @@ export default class AddEditContact extends Vue {
     return this.addressStore.addressBook
   }
 
+  get modal() {
+    return this.$t('views.modal')
+  }
+
   rules = {
-    required: (value: string) => !!value || 'An Input should not empty',
+    required: (value: string) => !!value || 'This name is already exist',
     exist: (value: string) => {
       return !this.isNameExist(value) || 'This name is already exist'
     }

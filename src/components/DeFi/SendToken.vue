@@ -15,7 +15,7 @@
         <span class="text-right">{{ selectedCurrencyBalance }} {{ selectedCurrencyName }}</span>
       </div>
       <v-text-field
-        label="To Address"
+        :label="walletpage.to_Address"
         class="to-address-field"
         single-line
         solo
@@ -60,7 +60,7 @@
       <v-text-field
         class="withdraw-amount"
         placeholder="0"
-        prefix="Amount"
+        :prefix="walletpage.amount"
         v-model="amount"
         :suffix="selectedCurrencyName"
         single-line
@@ -146,6 +146,10 @@ export default class SendToken extends Vue {
 
   get selectedCurrency() {
     return this.walletStore.selectedCurrency
+  }
+
+  get walletpage() {
+    return this.$t('views.walletpage')
   }
 
   selectAddress(addr: string) {

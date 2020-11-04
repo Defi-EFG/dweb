@@ -29,7 +29,7 @@
           class="staked-amount"
           placeholder="0"
           type="number"
-          prefix="Amount"
+          :prefix="stakingpage.amount"
           :suffix="currencyName"
           v-model="withdrawAmount"
           single-line
@@ -97,6 +97,10 @@ export default class StakedReward extends Vue {
 
   get contractAddr() {
     return this.stakingStore.address
+  }
+
+  get stakingpage() {
+    return this.$t('views.stakingpage')
   }
 
   fillAmount(amount: number) {

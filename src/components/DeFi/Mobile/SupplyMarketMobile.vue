@@ -1,9 +1,9 @@
 <template>
   <div class="supply-market-mobile">
     <v-row class="market-label">
-      <v-col cols="4">Assets</v-col>
-      <v-col cols="4" class="text-center">APY</v-col>
-      <v-col cols="4" class="text-right">Wallet</v-col>
+      <v-col cols="4">{{ $t('views.lendingpage.assets') }}</v-col>
+      <v-col cols="4" class="text-center">{{ $t('views.lendingpage.APY') }}</v-col>
+      <v-col cols="4" class="text-right">{{ $t('views.lendingpage.wallet') }}</v-col>
     </v-row>
     <v-row class="market-item" v-for="(item, index) in borrowList" :key="index">
       <v-col cols="4" class="assets">

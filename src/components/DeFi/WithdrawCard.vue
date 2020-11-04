@@ -10,7 +10,7 @@
     </div>
     <v-text-field
       class="amount-input"
-      label="Withdrawal Amount"
+      :label="lendingpage.withdrawalamount"
       :suffix="currencyName"
       v-model="withdrawValue"
       height="43"
@@ -59,7 +59,7 @@
       :class="isWithdrawable(withdrawValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="openConfirmTxModal"
     >
-      {{ isWithdrawable(withdrawValue, 'btn') ? 'Withdraw' : 'Insufficient' }}</v-btn
+      {{ isWithdrawable(withdrawValue, 'btn') ? lendingpage.withdraw : 'Insufficient' }}</v-btn
     >
     <TransactionComfirmationModal
       :visible="confirmTxModal"
@@ -135,6 +135,10 @@ export default class Withdraw extends Vue {
 
   get bpUsed() {
     return (this.borrowBalance / this.borrowLimit) * 100
+  }
+
+  get lendingpage() {
+    return this.$t('views.lendingpage')
   }
 
   get tokenConversion() {

@@ -1,14 +1,14 @@
 <template>
   <div>
-    <p class="action-label" v-if="!isMobileDevice">Borrow</p>
+    <p class="action-label" v-if="!isMobileDevice">{{ $t('views.lendingpage.borrow') }}</p>
     <div class="wallet-balance">
-      <span>Wallet Balance:</span>
+      <span>{{ $t('views.lendingpage.wallet_bl') }}</span>
       <v-spacer class="space"></v-spacer>
       <span class="balance">{{ walletBalance.toFixed(2) }} {{ currencyName }}</span>
     </div>
     <v-text-field
       class="amount-input"
-      label="Borrow Amount"
+      :label="lendingpage.borrowamount"
       type="number"
       :suffix="currencyName"
       v-model="borrowValue"
@@ -19,7 +19,7 @@
       persistent-hint
     ></v-text-field>
     <div class="borrow-power">
-      <span class="label">Borrow Power</span>
+      <span class="label">{{ $t('views.lendingpage.borrow_po') }}</span>
       <v-slider
         class="borrow-slider"
         v-model="bpSlider"
@@ -35,7 +35,7 @@
       ></v-slider>
     </div>
     <div class="borrow-used">
-      <div>Borrow Power Used</div>
+      <div>{{ $t('views.lendingpage.borrow_power_used') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bp-change">
         <span>{{ bpUsed.toFixed(1) }}%</span>
@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="borrow-total mt-1 mb-3">
-      <div class="text-left">Total Borrowed</div>
+      <div class="text-left">{{ $t('views.lendingpage.total_borrowed') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
         <span>${{ borrowBalance }}</span>
@@ -54,7 +54,7 @@
     </div>
     <v-divider dark />
     <div class="borrow-apy">
-      <span class="label">Borrow APY</span>
+      <span class="label">{{ $t('views.lendingpage.borrowAPY') }}</span>
       <v-spacer></v-spacer>
       <span>{{ interestRate }} %</span>
     </div>
@@ -66,7 +66,7 @@
       :disabled="!isBorrowable(borrowValue, 'error')"
       :class="isBorrowable(borrowValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="onOpenModal"
-      >{{ isBorrowable(borrowValue, 'btn') ? 'Borrow' : 'Not available' }}</v-btn
+      >{{ isBorrowable(borrowValue, 'btn') ? lendingpage.borrow : 'Not available' }}</v-btn
     >
     <TransactionComfirmationModal
       :visible="confirmTxModal"
@@ -152,6 +152,9 @@ export default class BorrowCard extends Vue {
     return 80 // 80%
   }
 
+  get lendingpage() {
+    return this.$t('views.lendingpage')
+  }
   // only for click event
   limitSlider() {
     if (this.bpSlider < this.bpUsed) {

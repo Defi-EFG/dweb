@@ -35,7 +35,7 @@
                 type="number"
                 class="deposit-amount"
                 placeholder="0"
-                prefix="Deposit Amount"
+                :prefix="stakingpage.depositamount"
                 v-model="depositAmount"
                 :suffix="stakingCurrencyName"
                 single-line
@@ -80,7 +80,7 @@
                 class="withdrawal-amount"
                 placeholder="0"
                 type="number"
-                prefix="Withdrawal Amount"
+                :prefix="stakingpage.depositamount"
                 v-model="withdrawAmount"
                 :suffix="stakingCurrencyName"
                 single-line
@@ -164,6 +164,10 @@ export default class DepositWithdraw extends Vue {
 
   get rewardCurrencyName() {
     return 'GPT'
+  }
+
+  get stakingpage() {
+    return this.$t('views.stakingpage')
   }
 
   fillAmountDeposit(amount: number) {

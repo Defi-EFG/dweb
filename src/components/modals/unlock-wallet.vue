@@ -14,9 +14,9 @@
                 <div class="content-logo ">
                   <div class="logo"><img src="@/assets/icon/light-logo-defi.svg" alt="" /></div>
                 </div>
-                <h3 class="primary--text">Welcome to</h3>
-                <h3 class="primary--text">ECOC Finance Governance</h3>
-                <p class="lightgray--text">Please create or connect your wallet</p>
+                <h3 class="primary--text">{{ $t('views.modal.welcome_to') }}</h3>
+                <h3 class="primary--text">{{ $t('views.modal.ecoc_finance') }}</h3>
+                <p class="lightgray--text">{{ $t('views.modal.Please_create') }}</p>
               </div>
               <div class="action-wrapper more-space">
                 <v-btn @click="createStep" large class="mb-5 border" color="white" elevation="1">
@@ -24,14 +24,18 @@
                     <div class="img-btn-logo">
                       <img src="@/assets/icon/addwallate.svg" alt="crate new wallet" />
                     </div>
-                    <h4 class="text-capitalize primary--text">Create new ECOC Wallet</h4>
+                    <h4 class="text-capitalize primary--text">
+                      {{ $t('views.modal.create_new_ECOC') }}
+                    </h4>
                   </div>
                 </v-btn>
                 <v-btn large color="white" elevation="1" @click="connectStep">
                   <div class="img-btn-logo">
                     <img src="@/assets/icon/createnew.svg" alt="Connect wallet" />
                   </div>
-                  <h4 class="mr-6 text-capitalize primary--text">Connect ECOC Wallet</h4>
+                  <h4 class="mr-6 text-capitalize primary--text">
+                    {{ $t('views.modal.connect_ECOC') }}
+                  </h4>
                 </v-btn>
               </div>
             </v-card>
@@ -61,10 +65,10 @@
               <template v-else-if="this.value >= 100">
                 <div class="create-wallet-wraper bg-white rounded-lg">
                   <div class="pb-5 mb-4">
-                    <h3 class="primary--text"><b>Keystore File Generated!</b></h3>
-                    <small class="lightgray--text"
-                      >Please save your keystore file to connect your wallet.</small
-                    >
+                    <h3 class="primary--text">
+                      <b>{{ $t('views.modal.keystore_gen') }}</b>
+                    </h3>
+                    <small class="lightgray--text">{{ $t('views.modal.please_sav') }}</small>
                   </div>
                   <v-textarea
                     name="input-7-1"
@@ -75,11 +79,13 @@
                   ></v-textarea>
                   <div class="action-wrapper">
                     <v-btn large class="mb-5" color="primary" @click="downloadkeystore()">
-                      <h4 class="text-capitalize font-weight-light">Download Keystore File</h4>
+                      <h4 class="text-capitalize font-weight-light">
+                        {{ $t('views.modal.download_keystore') }}
+                      </h4>
                     </v-btn>
                     <small class="connect">
-                      Already saved your keystore file?.
-                      <v-btn text @click="connectStep">Connect</v-btn>
+                      {{ $t('views.modal.Already') }}
+                      <v-btn text @click="connectStep">{{ $t('views.modal.connect') }}</v-btn>
                     </small>
                   </div>
                 </div>
@@ -97,10 +103,10 @@
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
-                  <h3 class="primary--text"><b>Create ECOC Wallet</b></h3>
-                  <small class="lightgray--text"
-                    >Please set your password to generate a keystore file</small
-                  >
+                  <h3 class="primary--text">
+                    <b>{{ $t('views.modal.create_ecoc') }}</b>
+                  </h3>
+                  <small class="lightgray--text">{{ $t('views.modal.please_set_your') }}</small>
                 </div>
                 <template>
                   <v-text-field
@@ -109,7 +115,7 @@
                     :type="show ? 'text' : 'password'"
                     @click:append="show = !show"
                     :rules="[rules.required, rules.min]"
-                    label="Set your password"
+                    :label="modal.set_your_password"
                     color="primary"
                     filled
                     elevation-0
@@ -128,7 +134,7 @@
                     rules.min,
                     createWalletPassword === confirmPassword || 'Password must match'
                   ]"
-                  label="Repeat your password"
+                  :label="modal.repeat_your_password"
                   color="primary"
                   filled
                   elevation-0
@@ -138,11 +144,13 @@
                 ></v-text-field>
                 <div class="action-wrapper">
                   <v-btn large class="mb-5" color="primary" @click="onCreateWallet">
-                    <h4 class="text-capitalize font-weight-light">Create</h4>
+                    <h4 class="text-capitalize font-weight-light">
+                      {{ $t('views.modal.create') }}
+                    </h4>
                   </v-btn>
-                  <small class="lightgray--text mt-1 mb-4"
-                    >Needed password to unlock keystore file.</small
-                  >
+                  <small class="lightgray--text mt-1 mb-4">{{
+                    $t('views.modal.needed_password')
+                  }}</small>
                 </div>
               </div>
             </v-card>
@@ -156,14 +164,16 @@
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
-                  <h3 class="primary--text"><b>Connect ECOC Wallet</b></h3>
-                  <small class="lightgray--text">Please input your keystore text or file.</small>
+                  <h3 class="primary--text">
+                    <b>{{ $t('views.modal.connect_ECOC') }}</b>
+                  </h3>
+                  <small class="lightgray--text">{{ $t('views.modal.please_input') }}</small>
                 </div>
                 <template>
                   <div class="upload_input">
                     <v-textarea
                       filled
-                      label="Your keystore text..."
+                      :label="modal.your_keystore"
                       outlined
                       v-model="keystore"
                       required
@@ -190,7 +200,9 @@
                         <h4 class="text-capitalize font-weight-light">Next</h4>
                       </v-btn>
                       <v-btn v-else large class="mb-5" color="primary" disabled>
-                        <h4 class="text-capitalize font-weight-light">Next</h4>
+                        <h4 class="text-capitalize font-weight-light">
+                          {{ $t('views.modal.next') }}
+                        </h4>
                       </v-btn>
                     </div>
                   </div>
@@ -210,8 +222,12 @@
 
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
-                  <h3 class="primary--text"><b>Keystore password</b></h3>
-                  <small class="lightgray--text">Please input your keystore password</small>
+                  <h3 class="primary--text">
+                    <b>{{ $t('views.modal.keystore_password') }}</b>
+                  </h3>
+                  <small class="lightgray--text">{{
+                    $t('views.modal.please_input_keystore')
+                  }}</small>
                 </div>
                 <template>
                   <v-form ref="form">
@@ -221,7 +237,7 @@
                       name="input-10-1"
                       :type="show ? 'text' : 'password'"
                       @click:append="show = !show"
-                      label="Keystore Password"
+                      :label="modal.keystore_password"
                       color="primary"
                       filled
                       :rules="[rules.required, rules.min]"
@@ -238,7 +254,9 @@
 
                 <div class="action-wrapper">
                   <v-btn large class="mb-5" color="primary" @click="onUnlockWallet()">
-                    <h4 class="text-capitalize font-weight-light">Connect</h4>
+                    <h4 class="text-capitalize font-weight-light">
+                      {{ $t('views.modal.connect') }}
+                    </h4>
                   </v-btn>
                 </div>
               </div>
@@ -397,6 +415,9 @@ export default class UnlockwalletModal extends Vue {
   }
   get walletAddress() {
     return this.walletStore.address
+  }
+  get modal() {
+    return this.$t('views.modal')
   }
 }
 </script>
