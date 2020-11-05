@@ -172,6 +172,10 @@ export default class WalletModule extends VuexModule implements Wallet {
   async createNewWallet(password: string) {
     return await Ecoc.generateNewKeystore(password)
   }
+  @Action
+  async keystoreFromWiff(wif: string,password: string) {
+    return await Ecoc.keystoreFromWiff(wif,password)
+  }
 
   @Action
   async updateBalance() {
@@ -271,6 +275,7 @@ export default class WalletModule extends VuexModule implements Wallet {
 
     return await Ecoc.getTxInfo(txid)
   }
+
 
   @MutationAction
   async importWallet(payload: { keystore: string; password: string }) {
