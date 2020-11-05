@@ -148,10 +148,6 @@ export default class TransactionDetailModal extends Vue {
     return constants
   }
 
-  get show() {
-    return this.visible
-  }
-
   close() {
     this.$emit('update:showDialog', false)
   }
