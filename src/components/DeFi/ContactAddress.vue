@@ -199,6 +199,12 @@ export default class ContactAddress extends Vue {
   }
 }
 
+@media (max-width: 1264px) {
+  .address-list {
+    min-height: 128px;
+  }
+}
+
 @media (max-width: 425px) {
   .address-item {
     font-size: small;
