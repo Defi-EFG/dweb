@@ -18,7 +18,6 @@
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
               <v-btn
-                icon
                 class="tx-btn"
                 fab
                 dark
@@ -134,7 +133,8 @@ export default class TransactionDetailModal extends Vue {
 
   get tx() {
     if (this.txid) {
-      return this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
+      const txInfo = this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
+      return txInfo
     }
 
     return {} as TxHistory

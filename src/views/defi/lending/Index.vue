@@ -2,11 +2,7 @@
   <div class="lending-page">
     <v-row class="content-wrapper">
       <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-1">
-        <SupplyBalance
-          :balance="collateralBalance"
-          :poolAddr="poolAddr"
-          :isLiquidate="isLiquidation"
-        ></SupplyBalance>
+        <SupplyBalance :balance="collateralBalance" :isLiquidate="isLiquidation"></SupplyBalance>
         <div class="col-spacer"></div>
         <BorrowBalance
           :balance="borrowedBalance"
@@ -80,11 +76,9 @@
                     <v-card-text class="wrapper">
                       <Repay
                         :currency="selectedCurrency"
-                        :collateralBalance="collateralBalance"
                         :borrowBalance="borrowedBalance"
                         :borrowLimit="borrowLimit"
                         :interestRate="interestRate"
-                        :borrowPowerPercentage="selectedCollateralFactor"
                       ></Repay>
                     </v-card-text>
                   </v-card>
@@ -170,10 +164,6 @@ export default class Lending extends Vue {
 
   get isLiquidation() {
     return this.lendingStore.isLiquidation
-  }
-
-  get poolAddr() {
-    return this.lendingStore.loan.poolAddr
   }
 
   get myCollateral() {

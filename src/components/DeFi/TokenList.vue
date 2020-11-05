@@ -5,32 +5,39 @@
       v-for="(currency, index) in currencies"
       :key="index"
     >
-      <v-card
-        class="token-card"
-        :class="{ selected: index === activeItem }"
-        @click="selectCurrency(index)"
-      >
-        <img :class="`token-mark ${currency.name}`" :src="currency.style.mark" />
-        <v-card-text class="token-text">
-          <v-row>
-            <v-col cols="12">
-              <div class="token-symbol">
-                <img :src="currency.style.icon" />
-                {{ currency.name }}
-              </div>
-            </v-col>
-            <v-col cols="12" class="mt-auto">
-              <div class="token-balance text-right">
-                <div class="label">Total Balance</div>
-                <div class="value">{{ currency.balance }} {{ currency.name }}</div>
-                <div class="estimated">
-                  ≈ {{ getEstimatedValue(currency.balance, currency.price) }} USD
-                </div>
-              </div>
-            </v-col>
-          </v-row>
-        </v-card-text>
-      </v-card>
+      <v-tooltip top>
+        <template v-slot:activator="{ on, attrs }">
+          <v-card
+            class="token-card"
+            v-bind="attrs"
+            v-on="on"
+            :class="{ selected: index === activeItem }"
+            @click="selectCurrency(index)"
+          >
+            <img :class="`token-mark ${currency.name}`" :src="currency.style.mark" />
+            <v-card-text class="token-text">
+              <v-row>
+                <v-col cols="12">
+                  <div class="token-symbol">
+                    <img :src="currency.style.icon" />
+                    {{ currency.name }}
+                  </div>
+                </v-col>
+                <v-col cols="12" class="mt-auto">
+                  <div class="token-balance text-right">
+                    <div class="label">Total Balance</div>
+                    <div class="value">{{ currency.balance }} {{ currency.name }}</div>
+                    <div class="estimated">
+                      ≈ {{ getEstimatedValue(currency.balance, currency.price) }} USD
+                    </div>
+                  </div>
+                </v-col>
+              </v-row>
+            </v-card-text>
+          </v-card>
+        </template>
+        <span>{{ getInfo(currency.tokenInfo) }}</span>
+      </v-tooltip>
     </div>
   </div>
 </template>
@@ -38,9 +45,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
+import { Ecrc20 } from '@/types/currency'
 import WalletModule from '@/store/wallet'
-import { Currency } from '@/types/currency'
-import * as constants from '@/constants'
 import { getEstimatedValue } from '@/services/utils'
 
 @Component({
@@ -57,60 +63,17 @@ export default class TokenList extends Vue {
     return this.walletStore.currencies
   }
 
-  get exampleCurrency() {
-    const currency: Currency[] = [
-      {
-        name: 'ECOC',
-        type: '',
-        balance: '300',
-        style: constants.KNOWN_CURRENCY['ECOC'],
-        price: 1
-      },
-      {
-        name: 'EFG',
-        type: '',
-        balance: '2.1234223',
-        style: constants.KNOWN_CURRENCY['EFG'],
-        price: 1
-      },
-      {
-        name: 'GPT',
-        type: '',
-        balance: '1.329478',
-        style: constants.KNOWN_CURRENCY['GPT'],
-        price: 1
-      },
-      {
-        name: 'USDT',
-        type: '',
-        balance: '4000',
-        style: constants.KNOWN_CURRENCY['USDT'],
-        price: 1
-      },
-      {
-        name: 'ETH',
-        type: '',
-        balance: '23.622',
-        style: constants.KNOWN_CURRENCY['ETH'],
-        price: 1
-      },
-      {
-        name: 'DEFAULT',
-        type: '',
-        balance: '2231.3',
-        style: constants.KNOWN_CURRENCY['DEFAULT'],
-        price: 1
-      }
-    ]
-
-    return currency
-  }
-
   selectCurrency(index: number) {
     this.activeItem = index
     this.walletStore.selectCurrency(index).then(() => {
       //
     })
+  }
+
+  getInfo(tokenInfo: Ecrc20 | undefined) {
+    if (tokenInfo) {
+      return `Contract Address: ${tokenInfo.address}`
+    } else return 'Native Currency'
   }
 }
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="dw-wrapper">
     <v-card dark class="tab-container">
       <v-tabs grow background-color="#191c26" class="dw-tabs" :hide-slider="true" show-arrows>
         <v-tab>Deposit</v-tab>
@@ -29,6 +29,7 @@
               </div>
 
               <v-text-field
+                type="number"
                 class="deposit-amount"
                 placeholder="0"
                 prefix="Deposit Amount"
@@ -73,6 +74,7 @@
               <v-text-field
                 class="withdrawal-amount"
                 placeholder="0"
+                type="number"
                 prefix="Withdrawal Amount"
                 v-model="withdrawAmount"
                 :suffix="stakingCurrencyName"
@@ -216,7 +218,7 @@ export default class DepositWithdraw extends Vue {
         .then(txid => {
           setTimeout(() => {
             console.log('Txid:', txid)
-            this.walletStore.addPendingTx(txid, constants.TX_DEPOSIT)
+            this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
             this.onSuccess()
           }, 1000)
         })
@@ -230,7 +232,7 @@ export default class DepositWithdraw extends Vue {
         .then(txid => {
           setTimeout(() => {
             console.log('Txid:', txid)
-            this.walletStore.addPendingTx(txid, constants.TX_WITHDRAW)
+            this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
             this.onSuccess()
           }, 1000)
         })
@@ -243,6 +245,11 @@ export default class DepositWithdraw extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.dw-wrapper {
+  display: flex;
+  width: -webkit-fill-available;
+}
+
 .tab-container {
   width: inherit;
   text-align: left;
@@ -315,7 +322,7 @@ export default class DepositWithdraw extends Vue {
 
   .btn-w,
   .btn-d {
-    margin-top: 2.5rem;
+    margin-top: 3.5rem;
     margin-bottom: 1rem;
     border-radius: 5px;
     background: transparent linear-gradient(90deg, #8b41d6 0%, #6800fe 100%) 0% 0% no-repeat
@@ -373,6 +380,23 @@ export default class DepositWithdraw extends Vue {
 
   input {
     text-align: right;
+  }
+
+  input:-internal-autofill-selected {
+    appearance: menulist-button;
+    background-color: transparent !important;
+    background-image: none !important;
+    color: #c074f9 !important;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  input[type='number'] {
+    -moz-appearance: textfield; /* Firefox */
   }
 }
 </style>

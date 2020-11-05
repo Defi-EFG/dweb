@@ -163,7 +163,6 @@
                   <div class="upload_input">
                     <v-textarea
                       filled
-                     
                       label="Your keystore text..."
                       outlined
                       v-model="keystore"
@@ -259,7 +258,7 @@ import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import StakingModule from '@/store/staking'
 import TextReader from './text-reader.vue'
-import * as Ecoc from '@/services/wallet'
+
 @Component({
   components: {
     Loading,
@@ -366,7 +365,6 @@ export default class UnlockwalletModal extends Vue {
     try {
       const keystore = this.keystore
       const password = this.keystorePassword
-   
 
       this.walletStore.importWallet({ keystore, password }).then(() => {
         this.onClose()
@@ -441,7 +439,6 @@ export default class UnlockwalletModal extends Vue {
   padding: 4px;
   font-size: revert;
 }
-
 </style>
 <style lang="scss" scoped>
 .connect {

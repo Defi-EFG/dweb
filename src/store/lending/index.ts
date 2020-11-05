@@ -1,6 +1,14 @@
 import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '@/store'
-import { LendingPlatform, Loan, Pool, CollateralAsset, Collateral } from '@/types/lending'
+import {
+  LendingPlatform,
+  Loan,
+  Pool,
+  CollateralAsset,
+  Collateral,
+  MyActivity
+} from '@/types/lending'
+import { Currency } from '@/types/currency'
 import * as constants from '@/constants'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
@@ -14,30 +22,6 @@ import {
   getTokenInfo
 } from '@/store/common'
 import { now } from 'moment'
-
-const myActivity = [
-  {
-    activityName: 'borrow',
-    currencyName: 'EFG',
-    timestamp: 1602222563,
-    amount: 200,
-    price: 0
-  },
-  {
-    activityName: 'deposit',
-    currencyName: 'ECOC',
-    timestamp: 1602222563,
-    amount: 1000,
-    price: 0
-  },
-  {
-    activityName: 'activated',
-    currencyName: 'ECOC',
-    timestamp: 1602222563,
-    amount: 1000,
-    price: 0
-  }
-]
 
 @Module({ dynamic: true, store, namespaced: true, name: 'lendingStore' })
 export default class LendingModule extends VuexModule implements LendingPlatform {
@@ -79,7 +63,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     }
   ] as Collateral[]
 
-  myActivity = myActivity
+  myActivity = [] as MyActivity[]
   lastUpdate = 0
   isLiquidation = false
   status = constants.STATUS_SYNCED
@@ -147,16 +131,23 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     const borrowLimitFull = await lending.getBorrowLimit(address)
     const debtInfo = await lending.getDebt(address)
 
-    const borrowLimit = utils.toDecimals(borrowLimitFull, decimals).toNumber()
-    const borrowBalance = utils.toDecimals(debtInfo.totalDebt, decimals).toNumber()
+    const borrowBalance = Number(
+      utils
+        .toDecimals(debtInfo.totalDebt, decimals)
+        .multipliedBy(1.003)
+        .toFixed(8)
+    )
 
-    return { borrowLimit, borrowBalance }
+    const borrowLimit = utils.toDecimals(borrowLimitFull, decimals).toNumber()
+
+    return { borrowBalance, borrowLimit }
   }
 
   @MutationAction
   async updateLoan(address: string) {
     const loan = (this.state as any).loan
     const loanInfo = await lending.getLoanInfo(address)
+    const decimals = getCurrencyDecimals(loanCurrency.name)
 
     if (loanInfo.interestRate <= 0) {
       loanInfo.interestRate = await lending.getInterestRate()
@@ -168,7 +159,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
       loan.poolAddr = loanInfo.poolAddr
     }
 
-    loan.amount = loanInfo.amount
+    loan.amount = utils.toDecimals(loanInfo.amount, decimals).toNumber()
     loan.timestamp = loanInfo.timestamp
     loan.interestRate = loanInfo.interestRate
     loan.interest = loanInfo.interest
@@ -190,7 +181,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
         asset => asset.currency.name === collateral.currencyName
       )
 
-      if (!index) {
+      if (index < 0) {
         const newAsset = {
           currency: {
             name: collateral.currencyName,
@@ -201,12 +192,12 @@ export default class LendingModule extends VuexModule implements LendingPlatform
         }
 
         myCollateralAssets.push(newAsset)
+      } else {
+        const myAsset = myCollateralAssets[index]
+
+        myAsset.amount = utils.toDecimals(collateral.amount, decimals).toNumber()
+        myCollateralAssets.splice(index, 1, myAsset)
       }
-
-      const myAsset = myCollateralAssets[index]
-
-      myAsset.amount = utils.toDecimals(collateral.amount, decimals).toNumber()
-      myCollateralAssets.splice(index, 1, myAsset)
     })
 
     return { myCollateralAssets }
@@ -348,9 +339,14 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   }
 
   @Action({ rawError: true })
-  async borrow(payloads: { amount: number; walletParams: WalletParams }) {
-    const { amount, walletParams } = payloads
-    const decimals = getCurrencyDecimals(loanCurrency.name)
+  async borrow(payloads: { amount: number; walletParams: WalletParams; currency: Currency }) {
+    const { amount, walletParams, currency } = payloads
+
+    if (!currency.tokenInfo) {
+      return Promise.reject(new Error('Wrong Currency'))
+    }
+
+    const decimals = currency.tokenInfo.decimals
     const fullAmount = utils.fromDecimals(amount, decimals).toNumber()
 
     try {
@@ -364,11 +360,15 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   }
 
   @Action({ rawError: true })
-  async repay(payloads: { amount: number; walletParams: WalletParams }) {
-    const { amount, walletParams } = payloads
-    const tokenInfo = getTokenInfo(loanCurrency.name)
-    const token = new Ecrc20(tokenInfo)
-    const decimals = tokenInfo.decimals
+  async repay(payloads: { amount: number; walletParams: WalletParams; currency: Currency }) {
+    const { amount, walletParams, currency } = payloads
+
+    if (!currency.tokenInfo) {
+      return Promise.reject(new Error('Wrong Currency'))
+    }
+
+    const token = new Ecrc20(currency.tokenInfo)
+    const decimals = currency.tokenInfo.decimals
     const fullAmount = utils.fromDecimals(amount, decimals).toNumber()
 
     try {

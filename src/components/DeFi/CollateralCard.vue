@@ -41,7 +41,7 @@
       </div>
     </div>
     <div class="borrow-total mt-1 mb-3">
-      <div class="text-left">Total Borrow Power</div>
+      <div class="text-left">Borrow Limit</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
         <span>${{ borrowLimit }}</span>

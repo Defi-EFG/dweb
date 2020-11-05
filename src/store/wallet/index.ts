@@ -63,7 +63,7 @@ export default class WalletModule extends VuexModule implements Wallet {
     return txs.map(tx => {
       let currencyType = constants.ECOC
       let value = getBalanceChanged(this.address, tx.vin, tx.vout)
-      const type = value.lt(0) ? constants.TYPE_SENT : constants.TYPE_RECEIVED
+      let type = value.lt(0) ? constants.TYPE_SENT : constants.TYPE_RECEIVED
       const status = tx.confirmations ? constants.STATUS_CONFIRMED : constants.STATUS_PENDING
       let address = ''
       let subtype
@@ -79,6 +79,7 @@ export default class WalletModule extends VuexModule implements Wallet {
           currencyType = tokenInfo.symbol
           subtype = 'ECRC-20'
           value = utils.toDecimals(txResult[0].log[0].value.toNumber(), decimals)
+          type = txResult[0].log[0]._eventName
         } else {
           subtype = utils.addressFilter(address)
         }
@@ -299,17 +300,17 @@ export default class WalletModule extends VuexModule implements Wallet {
   }
 
   @MutationAction
-  async addPendingTx(txid: string, txType: string) {
+  async addPendingTx(payload: { txid: string; txType: string }) {
     const pendingTransactions = (this.state as any).pendingTransactions as PendingTransaction[]
 
-    const index = pendingTransactions.findIndex(tx => tx.txid === txid)
+    const index = pendingTransactions.findIndex(tx => tx.txid === payload.txid)
     if (index >= 0) {
       return {}
     }
 
     const pendingTransaction = {
-      txid: txid,
-      type: txType,
+      txid: payload.txid,
+      type: payload.txType,
       status: constants.STATUS_PENDING
     } as PendingTransaction
 
