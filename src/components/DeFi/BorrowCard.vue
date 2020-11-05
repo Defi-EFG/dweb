@@ -144,12 +144,13 @@ export default class BorrowCard extends Vue {
   }
 
   get tokenConversion() {
-    return `${this.borrowValue} ${this.currencyName} ≈ ${this.currencyPrice *
-      Number(this.borrowValue)}`
+    return `${this.borrowValue | 0} ${this.currencyName} ≈ ${(this.currencyPrice *
+      Number(this.borrowValue)) |
+      0}`
   }
 
   get totalBorrowed() {
-    return this.borrowBalance + this.borrowValue * this.currencyPrice
+    return (this.borrowBalance + this.borrowValue * this.currencyPrice) | 0
   }
 
   get safeLimit() {
