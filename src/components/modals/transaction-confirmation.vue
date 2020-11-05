@@ -9,7 +9,7 @@
         <div class="transaction-confirmation-wrapper ">
           <div class="d-flex ">
             <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
-            <div class="transaction-receiver">{{ truncateAddress(addressFilter(toAddr)) }}</div>
+            <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
@@ -52,6 +52,7 @@
                 :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
                 dense
                 filled
+                v-on:submit.prevent="onConfirm"
               ></v-text-field
             ></v-form>
 

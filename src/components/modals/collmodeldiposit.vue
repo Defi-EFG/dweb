@@ -66,6 +66,7 @@
                 <v-btn
                   large
                   depressed
+                  class="mb-7"
                   :class="Loanername != '' ? 'text-capitalize' : 'disabled'"
                   @click="connectStep()"
                   >Select</v-btn
@@ -94,7 +95,7 @@
                   <span>Loaner</span><br />
                   <input type="text" v-model="selectdata" disabled />
                 </div>
-                <v-btn large depressed class="text-capitalize" @click="nextcollat()">Next</v-btn>
+                <v-btn large depressed class="text-capitalize mb-7" @click="nextcollat()">Next</v-btn>
               </div>
             </v-card>
           </v-stepper-content>
@@ -105,13 +106,13 @@
                 <v-btn @click="leftarrow3()" icon><v-icon color="white">$leftarrow</v-icon></v-btn>
                 <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
-              <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin">
+              <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin mb-7">
                 <div class="d-flex ">
                   <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
                   <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
                   <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
                 </div>
-                <div class="transaction-confirmation-content">
+                <div class="transaction-confirmation-content ">
                   <div class="collateral_pd">
                     <h2><strong>Transaction Confirm</strong></h2>
                     <small>Please confirm the transaction</small>
