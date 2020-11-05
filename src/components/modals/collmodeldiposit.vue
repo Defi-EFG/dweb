@@ -110,8 +110,28 @@
               </v-card-title>
               <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin mb-7">
                 <div class="d-flex ">
-                  <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
-                  <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                      <div @click="copyAddress" class="transaction-sender" v-bind="attrs" v-on="on">
+                        {{ truncateAddress(addr) }}
+                      </div>
+                    </template>
+                    <span>Copied</span>
+                  </v-tooltip>
+
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                      <div
+                        @click="copyAddress"
+                        class="transaction-receiver"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        {{ addressFilter(toAddr) }}
+                      </div>
+                    </template>
+                    <span>Copied</span>
+                  </v-tooltip>
                   <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
                 </div>
                 <div class="transaction-confirmation-content ">
@@ -344,7 +364,7 @@ import { DEFAULT } from '@/services/contract'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import * as constants from '@/constants'
-
+import { copyToClipboard } from '@/services/utils'
 @Component({
   components: {}
 })
@@ -382,7 +402,9 @@ export default class Collmodeldiposit extends Vue {
     min: (v: any) => v.length >= 8 || 'Min 8 characters',
     emailMatch: () => `The email and password you entered don't match`
   }
-
+  copyAddress(addr: string) {
+    copyToClipboard(addr)
+  }
   get totalFee() {
     return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
   }

@@ -8,8 +8,23 @@
         </v-card-title>
         <div class="transaction-confirmation-wrapper ">
           <div class="d-flex ">
-            <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
-            <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
+            <v-tooltip top>
+              <template v-slot:activator="{ on, attrs }">
+                <div @click="copyAddress" class="transaction-sender" v-bind="attrs" v-on="on">
+                  {{ truncateAddress(addr) }}
+                </div>
+              </template>
+              <span>Copied</span>
+            </v-tooltip>
+
+            <v-tooltip top>
+              <template v-slot:activator="{ on, attrs }">
+                <div @click="copyAddress" class="transaction-receiver" v-bind="attrs" v-on="on">
+                  {{ addressFilter(toAddr) }}
+                </div>
+              </template>
+              <span>Copied</span>
+            </v-tooltip>
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
@@ -142,7 +157,7 @@ import StakingModule from '@/store/staking'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import { DEFAULT } from '@/services/contract'
-
+import { copyToClipboard } from '@/services/utils'
 @Component({
   components: {}
 })
@@ -160,6 +175,7 @@ export default class TransactionComfirmationModal extends Vue {
   feeAverage = 0.01
   feeFast = 0.1
 
+  copymessage = ''
   gassetting = false
   errorMsg = ''
   password = ''
@@ -181,7 +197,9 @@ export default class TransactionComfirmationModal extends Vue {
   get show() {
     return this.visible
   }
-
+  copyAddress(addr: string) {
+    copyToClipboard(addr)
+  }
   get totalFee() {
     return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
   }
@@ -238,6 +256,14 @@ export default class TransactionComfirmationModal extends Vue {
     this.$emit('onClose')
   }
 
+  Copy(val: string) {
+    copyToClipboard(val)
+    this.copymessage = 'Copied'
+
+    setTimeout(() => {
+      this.copymessage = 'Copy TxID'
+    }, 1000)
+  }
   async onConfirm() {
     try {
       const password = this.password
@@ -334,8 +360,11 @@ export default class TransactionComfirmationModal extends Vue {
 }
 .transaction-receiver {
   background-color: #370757;
+  cursor: pointer;
 }
+
 .transaction-sender {
+  cursor: pointer;
   background-color: #44096b;
   border-right: 1px solid rgba(180, 180, 180, 0.555);
 }
