@@ -19,7 +19,12 @@
 
             <v-tooltip top>
               <template v-slot:activator="{ on, attrs }">
-                <div @click="copyAddress(toAddr)" class="transaction-receiver" v-bind="attrs" v-on="on">
+                <div
+                  @click="copyAddress(toAddr)"
+                  class="transaction-receiver"
+                  v-bind="attrs"
+                  v-on="on"
+                >
                   {{ addressFilter(toAddr) }}
                 </div>
               </template>
