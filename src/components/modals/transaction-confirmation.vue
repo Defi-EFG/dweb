@@ -43,18 +43,19 @@
                 </v-btn>
               </div>
             </div>
-            <v-form class="pt-4">
+            <div class="pt-4">
               <v-text-field
                 :type="showpassword ? 'text' : 'password'"
                 :rules="[rules.required, rules.min]"
                 label="KeyStore Password"
                 v-model="password"
+                v-on:keyup.enter="onConfirm"
                 :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
                 dense
                 filled
                 v-on:submit.prevent="onConfirm"
-              ></v-text-field
-            ></v-form>
+              ></v-text-field>
+            </div>
 
             <div class="errorMsg" v-if="errorMsg">
               <span>{{ errorMsg }}</span>

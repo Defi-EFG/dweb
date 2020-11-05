@@ -95,7 +95,9 @@
                   <span>Loaner</span><br />
                   <input type="text" v-model="selectdata" disabled />
                 </div>
-                <v-btn large depressed class="text-capitalize mb-7" @click="nextcollat()">Next</v-btn>
+                <v-btn large depressed class="text-capitalize mb-7" @click="nextcollat()"
+                  >Next</v-btn
+                >
               </div>
             </v-card>
           </v-stepper-content>
@@ -114,7 +116,7 @@
                 </div>
                 <div class="transaction-confirmation-content ">
                   <div class="collateral_pd">
-                    <h2><strong>Transaction Confirm</strong></h2>
+                    <h4><strong>Transaction Confirm</strong></h4>
                     <small>Please confirm the transaction</small>
                     <div class="div_prices">
                       <div class="transaction-confirmation-content-detail">
@@ -145,17 +147,18 @@
                       </div>
                     </div>
                     <div class="border-bottom"></div>
-                    <v-form class="pt-4">
+                    <div class="pt-4">
                       <v-text-field
                         label="KeyStore Password"
                         v-model="password"
                         :rules="[rules.required, rules.min]"
                         :type="showpassword ? 'text' : 'password'"
                         :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
+                        @keyup.enter="onConfirm()"
                         dense
                         filled
-                      ></v-text-field
-                    ></v-form>
+                      ></v-text-field>
+                    </div>
                     <div v-if="errorMsg">
                       <span class="errorMsg">{{ errorMsg }}</span>
                     </div>
