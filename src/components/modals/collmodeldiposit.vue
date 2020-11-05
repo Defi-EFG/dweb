@@ -330,7 +330,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
@@ -379,12 +379,26 @@ export default class Collmodeldiposit extends Vue {
     emailMatch: () => `The email and password you entered don't match`
   }
 
+  @Watch('visible')
+  checkPoolAddress(value: boolean) {
+    if (value) {
+      if (this.poolAddress) {
+        this.step = 3
+        this.selectdata = this.poolAddress
+      }
+    }
+  }
+
   get totalFee() {
     return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
   }
 
   get Loanerlist() {
     return this.lendingStore.pools
+  }
+
+  get poolAddress() {
+    return this.lendingStore.loan.poolAddr
   }
 
   get ecoc() {
@@ -418,10 +432,6 @@ export default class Collmodeldiposit extends Vue {
     this.errorMsg = ''
     this.loading = false
     this.$emit('onClose')
-  }
-
-  onLoading() {
-    this.$emit('onLoading')
   }
 
   onSuccess() {

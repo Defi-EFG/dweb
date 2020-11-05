@@ -6,7 +6,8 @@
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
         "test:unit": "vue-cli-service test:unit",
-        "lint": "vue-cli-service lint"
+        "lint": "vue-cli-service lint",
+        "lint:fix": "eslint --fix --ext .vue,.js,.ts -- src/ tests/"
     },
     "dependencies": {
         "@chenfengyuan/vue-qrcode": "^1.0.2",

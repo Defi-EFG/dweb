@@ -110,12 +110,8 @@ export default class EcocWallet implements EWallet {
   }
 
   async sendRawTx(tx: string) {
-    const res = await EcocWallet.sendRawTx(tx)
-    setTimeout(() => {
-      //
-    }, 3000)
-
-    return res
+    const txid = await EcocWallet.sendRawTx(tx)
+    return txid
   }
 
   async callContract(address: string, encodedData: string) {

@@ -44,8 +44,6 @@ export default class App extends Vue {
 
   async updateLatestData() {
     if (this.isLoggedIn) {
-      const currenctBlock = 15210
-
       //update wallet data
       await this.walletStore.updateBalance()
       await this.walletStore.updateCurrenciesPrice()
@@ -66,7 +64,7 @@ export default class App extends Vue {
       await this.stakingStore.updateMintingInfo(this.walletStore.address)
 
       // update latest block
-      await this.walletStore.updateLastBlock(currenctBlock)
+      await this.walletStore.updateLastBlock()
 
       this.walletStore.synced()
       this.lendingStore.synced()

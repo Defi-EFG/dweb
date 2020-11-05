@@ -114,6 +114,33 @@
     "constant":false,
     "inputs":[
       {
+        "name":"_symbol",
+        "type":"bytes8"
+      },
+      {
+        "name":"_contract_addr",
+        "type":"address"
+      },
+      {
+        "name":"_collateral_rate",
+        "type":"uint256"
+      }
+    ],
+    "name":"addNewAsset",
+    "outputs":[
+      {
+        "name":"numberOfAssets",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "constant":false,
+    "inputs":[
+      {
         "name":"_EFG_amount",
         "type":"uint256"
       }
@@ -445,29 +472,6 @@
       {
         "name":"result",
         "type":"bool"
-      }
-    ],
-    "payable":false,
-    "stateMutability":"nonpayable",
-    "type":"function"
-  },
-  {
-    "constant":false,
-    "inputs":[
-      {
-        "name":"_symbol",
-        "type":"bytes8"
-      },
-      {
-        "name":"_contract_addr",
-        "type":"address"
-      }
-    ],
-    "name":"addNewAsset",
-    "outputs":[
-      {
-        "name":"numberOfAssets",
-        "type":"uint256"
       }
     ],
     "payable":false,

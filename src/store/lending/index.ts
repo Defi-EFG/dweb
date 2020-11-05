@@ -103,16 +103,20 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
   @MutationAction
   async updateSupprtedAssets() {
+    const myCollateralAssets = (this.state as any).myCollateralAssets as CollateralAsset[]
     const contractAddresses = await lending.getAllAssets()
+
     const supportedCollateralAssets = await Promise.all(
       contractAddresses.map(async address => {
         const tokenInfo = await Ecrc20.getEcrc20Info(address)
         const currencyName = tokenInfo.symbol
         const collateralFactor = await lending.getCollateralRate(currencyName)
 
+        const activated = !!myCollateralAssets.find(asset => asset.currency.name === currencyName)
+
         return {
           currencyName: currencyName,
-          activated: false,
+          activated: activated,
           collateralFactor: collateralFactor
         } as Collateral
       })
@@ -120,10 +124,12 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
     const currencyName = 'ECOC'
     const collateralFactor = await lending.getCollateralRate(currencyName)
+    const activated = !!myCollateralAssets.find(asset => asset.currency.name === currencyName)
+      ?.amount
 
     const ecocAsset = {
       currencyName: currencyName,
-      activated: false,
+      activated: activated,
       collateralFactor: collateralFactor
     } as Collateral
 
@@ -361,7 +367,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     try {
       let rawTransaction
       if (currencyName === 'ECOC') {
-        rawTransaction = await lending.withdrawECOC(fullAmount, walletParams)
+        rawTransaction = await lending.withdrawECOC(fullAmount - 1, walletParams)
       } else {
         rawTransaction = await lending.withdrawAsset(currencyName, fullAmount, walletParams)
       }

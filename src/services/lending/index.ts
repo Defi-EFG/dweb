@@ -13,7 +13,7 @@ interface Collateral {
 }
 
 const lendingContract = {
-  address: '5744612449a6c9ebdd1992e84bc6493458333c37',
+  address: '3b1e9ed879a52709be7611821809406739936b36',
   abi: lendingAbi
 } as Contract
 

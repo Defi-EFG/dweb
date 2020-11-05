@@ -2,7 +2,7 @@
   <div id="footer">
     <div class="latest-block">
       <div class="dot-circle"></div>
-      <div>Latest Block: {{ latestBlock }}</div>
+      <div>Latest Block: {{ latestBlock | numberWithCommas({ decimal: 0 }) }}</div>
     </div>
     <div class="contact">
       <a href="https://t.me/EFGtoken" target="_blank" rel="noopener noreferrer"
