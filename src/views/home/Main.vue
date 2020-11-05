@@ -369,6 +369,7 @@ body {
   text-indent: 4.5em;
   font-size: 16px;
   line-height: 1.3;
+  text-align: justify;
 }
 .sec_1 .social_icon {
   position: relative;
@@ -620,6 +621,12 @@ body {
   border-radius: 50%;
   overflow: hidden;
 }
+.sec_2 .but_div {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 5px;
+  width: 105px;
+}
 .img_footer img {
   width: 100%;
   height: 100%;
@@ -790,14 +797,31 @@ body {
     padding: 100px 14px 0 14px;
   }
   .sec_1 .text_header {
-    font-size: 25px;
+    font-size: 23px;
+    padding-left: 10px;
+    top: -10px;
   }
   .sec_1 .text_header_sub {
-    font-size: 16px;
+    font-size: 14px;
     text-indent: 2em;
   }
+  .sec_2 .row1 .margintop {
+    font-size: 10px;
+  }
+  .sec_2 .row1 .color_size {
+    font-size: 10px;
+  }
+  .sec_2 .row1 .supply {
+    font-size: 10px;
+  }
+  .head_supply3 {
+    padding-left: 20px;
+  }
+  .sec_2 .row1 .supply_price_color {
+    font-size: 20px;
+  }
   .sec_3 {
-    height: 150px;
+    height: 50px;
   }
   .text_head_footer {
     font-size: 23px;
@@ -834,6 +858,9 @@ body {
     width: 30px;
     height: 30px;
   }
+  .efg-logo {
+    width: 40px;
+  }
 }
 </style>
 
@@ -847,6 +874,19 @@ body {
 
   .v-window__next {
     margin-top: 9rem;
+  }
+}
+@media only screen and (max-width: 960px) {
+  .efg-slider {
+    .v-window__prev {
+      margin-top: 0rem;
+      left: 0 !important;
+      right: unset;
+    }
+
+    .v-window__next {
+      margin-top: 0rem;
+    }
   }
 }
 </style>
