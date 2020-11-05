@@ -374,9 +374,9 @@ export default class Collmodeldiposit extends Vue {
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
 
   rules = {
-    required: (value: any) => !!value || 'Required.',
-    min: (v: any) => v.length >= 8 || 'Min 8 characters',
-    emailMatch: () => `The email and password you entered don't match`
+    required: (value: any) => !!value || this.$t('views.modal.required'),
+    min: (v: any) => v.length >= 8 || this.$t('views.modal.characters'),
+    emailMatch: () => this.$t('views.modal.the_email')
   }
 
   get totalFee() {
@@ -401,6 +401,10 @@ export default class Collmodeldiposit extends Vue {
 
   get show() {
     return this.visible
+  }
+
+  get modaltext() {
+    return this.$t('views.modal')
   }
 
   gasSetting() {

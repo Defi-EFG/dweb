@@ -95,9 +95,9 @@
             }
 
         ],
-        "wallet": "Wallet",
-        "lending": "Lending",
-        "staking": "Staking",
+        "wallet": "钱包",
+        "lending": "借出",
+        "staking": "放样",
         "walletpage": {
             "unlock_wallet": "Unlock Wallet_zh",
             "contact_address": "联系方式地址",
@@ -226,7 +226,16 @@
             "required": "需要",
             "this_name": "This name is already exist",
             "or_Upload": "or Upload keystore file",
-            "characters": "Min 6 characters"
+            "characters": "Min 6 characters",
+            "the_email": "The email and password you entered don't match",
+            "select": "Select the Loaner",
+            "you_can_only": "You can only change the loaner once you repay all the borrowed.",
+            "use_ECOC": "Use ECOC as a collateral?",
+            "you_can_deposit": "You can deposit more once you repay all the borrowed.",
+            "loaner": "Loaner",
+            "deposit_suc": "Deposit Successful!",
+            "borrow_Power": "Borrow Power Used (New)",
+            "total_Borrow": "Total Borrow Power (New)"
         }
 
     },

@@ -11,12 +11,12 @@
     >
       <template v-slot:item="data">
         <img class="page-icon" :src="data.item.icon" />
-        <span class="page-text">{{ data.item.page }}</span>
+        <span class="page-text">{{ data.item.title }}</span>
       </template>
 
       <template v-slot:selection="data">
         <img class="page-icon" :src="data.item.icon" />
-        <span class="page-text">{{ data.item.page }}</span>
+        <span class="page-text">{{ data.item.title }}</span>
       </template>
     </v-select>
     <v-divider dark class="mt-3"></v-divider>
@@ -30,16 +30,19 @@ export default class MenuDropdown extends Vue {
   activePage = 0
   items = [
     {
+      title: this.$t('views.wallet'),
       page: 'wallet',
       icon: require('@/assets/icon/wallet-w.svg'),
       iconClicked: require('@/assets/icon/wallet.svg')
     },
     {
+      title: this.$t('views.lending'),
       page: 'lending',
       icon: require('@/assets/icon/lending-w.svg'),
       iconClicked: require('@/assets/icon/lending.svg')
     },
     {
+      title: this.$t('views.staking'),
       page: 'staking',
       icon: require('@/assets/icon/staking-w.svg'),
       iconClicked: require('@/assets/icon/staking.svg')

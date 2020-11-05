@@ -861,6 +861,9 @@ body {
   .efg-logo {
     width: 40px;
   }
+  .sibar_dc {
+    font-size: 12px;
+  }
 }
 </style>
 
