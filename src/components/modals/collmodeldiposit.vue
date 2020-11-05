@@ -112,7 +112,7 @@
                 <div class="d-flex ">
                   <v-tooltip top>
                     <template v-slot:activator="{ on, attrs }">
-                      <div @click="copyAddress" class="transaction-sender" v-bind="attrs" v-on="on">
+                      <div @click="copyAddress(addr)" class="transaction-sender" v-bind="attrs" v-on="on">
                         {{ truncateAddress(addr) }}
                       </div>
                     </template>
@@ -122,7 +122,7 @@
                   <v-tooltip top>
                     <template v-slot:activator="{ on, attrs }">
                       <div
-                        @click="copyAddress"
+                        @click="copyAddress(toAddr)"
                         class="transaction-receiver"
                         v-bind="attrs"
                         v-on="on"
