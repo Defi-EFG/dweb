@@ -99,9 +99,30 @@
                 <div class="pb-5 mb-7">
                   <h3 class="primary--text"><b>Create ECOC Wallet</b></h3>
                   <small class="lightgray--text"
-                    >Please set your password to generate a keystore file</small
-                  >
+                    >Please set your password to generate a keystore file
+                    <span class=" text-btn" @click="openPrivatekeyfield()" text
+                      >Use Privatekey</span
+                    >
+                  </small>
                 </div>
+                <transition name="fade">
+                  <template v-if="showPrivateKetTextfield">
+                    <div class="private-key-feild">
+                      <v-textarea
+                        rows="2"
+                        auto-grow
+                        label="Login with privatekey"
+                        filled
+                        class="loginwithprivatekey"
+                        elevation-0
+                        dense
+                        required
+                        v-model="privateKeyLogin"
+                      ></v-textarea>
+                    </div>
+                  </template>
+                </transition>
+
                 <template>
                   <v-text-field
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
@@ -270,8 +291,9 @@ export default class UnlockwalletModal extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
   stakingStore = getModule(StakingModule)
-
+  privateKeyLogin = ''
   upload = false
+  showPrivateKetTextfield = false
   keystore: any = ''
   keystorePassword = ''
   files = true
@@ -336,7 +358,9 @@ export default class UnlockwalletModal extends Vue {
   createStep() {
     this.step = 2
   }
-
+  openPrivatekeyfield() {
+    this.showPrivateKetTextfield = !this.showPrivateKetTextfield
+  }
   connectStep() {
     this.step = 4
   }
@@ -352,11 +376,9 @@ export default class UnlockwalletModal extends Vue {
         this.step = 5
       } else {
         this.errormsg = 'Wrong format of keystore text'
-     
       }
     } catch (error) {
       this.errorMsg2 = 'Wrong format of keystore file'
-  
     }
   }
 
@@ -400,6 +422,18 @@ export default class UnlockwalletModal extends Vue {
 </script>
 
 <style>
+.text-btn {
+  font-weight: 900;
+  color: #44096b;
+  margin: 0px 5px;
+  cursor: pointer;
+  padding: 3px;
+  border-radius: 5px;
+  transition: 0.2s;
+}
+.text-btn:hover {
+  background-color: #44096b63;
+}
 .connect .v-btn:not(.v-btn--round).v-size--default {
   color: #44096b;
   padding: 0;
