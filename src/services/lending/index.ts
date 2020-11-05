@@ -13,7 +13,7 @@ interface Collateral {
 }
 
 const lendingContract = {
-  address: '3b1e9ed879a52709be7611821809406739936b36',
+  address: '59ee79cc6312290aa1b49818c667cd249514be3a',
   abi: lendingAbi
 } as Contract
 
@@ -354,8 +354,9 @@ export namespace lending {
     amount: number,
     walletParams: WalletParams
   ) => {
+    const toAddr = walletParams.address
     const params = {
-      methodArgs: [currencyName, amount],
+      methodArgs: [currencyName, amount, toAddr],
       senderAddress: walletParams.address,
       amount: 0,
       fee: walletParams.fee,
