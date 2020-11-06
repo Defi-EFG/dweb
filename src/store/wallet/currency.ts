@@ -66,6 +66,34 @@ export const ETH = {
   }
 } as Currency
 
+export const EWUSDT = {
+  name: constants.EWUSDT,
+  type: constants.TYPE_ECRC20,
+  style: constants.KNOWN_CURRENCY.EWUSDT,
+  balance: '0',
+  tokenInfo: {
+    name: constants.EWUSDT,
+    symbol: constants.EWUSDT,
+    address: 'c701bd8a2c19d580a38c2344dd1bcd4d192f84d7',
+    decimals: '8',
+    totalSupply: '1000000000000'
+  }
+} as Currency
+
+export const EWETH = {
+  name: constants.EWETH,
+  type: constants.TYPE_ECRC20,
+  style: constants.KNOWN_CURRENCY.EWETH,
+  balance: '0',
+  tokenInfo: {
+    name: constants.EWETH,
+    symbol: constants.EWETH,
+    address: '151189fdd10a9d77efa48355c61f14513d60cf4a',
+    decimals: '8',
+    totalSupply: '100000000000'
+  }
+} as Currency
+
 export const currencyInit = () => {
-  return [ECOC, EFG, GPT, USDT, ETH] as Currency[]
+  return [ECOC, EFG, GPT] as Currency[]
 }

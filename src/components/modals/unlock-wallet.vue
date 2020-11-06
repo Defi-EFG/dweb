@@ -352,11 +352,9 @@ export default class UnlockwalletModal extends Vue {
         this.step = 5
       } else {
         this.errormsg = 'Wrong format of keystore text'
-     
       }
     } catch (error) {
       this.errorMsg2 = 'Wrong format of keystore file'
-  
     }
   }
 
