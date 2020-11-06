@@ -2,7 +2,7 @@
   <v-dialog v-model="visible" max-width="415">
     <v-card color="#8C2BCC">
       <v-card-title class="td-head">
-        <span>Transaction Details</span>
+        <span>{{ $t('views.modal.transaction_details') }}</span>
         <v-spacer></v-spacer>
         <v-btn icon dark @click.native="close">
           <v-icon>mdi-close</v-icon>
@@ -57,12 +57,12 @@
         <v-divider></v-divider>
         <div class="tx-direction">
           <div class="from">
-            <small>From:</small>
+            <small>{{ $t('views.modal.from') }}</small>
             <v-spacer />
             <small>{{ tx.type === direction.TYPE_SENT ? address : tx.address }}</small>
           </div>
           <div class="to">
-            <small>To:</small>
+            <small>{{ $t('views.modal.from') }}</small>
             <v-spacer />
             <small>{{ tx.type === direction.TYPE_RECEIVED ? address : tx.address }}</small>
           </div>
@@ -70,38 +70,38 @@
 
         <div class="tx-detail">
           <div class="date">
-            <span>Date</span>
+            <span>{{ $t('views.modal.date') }}</span>
             <v-spacer></v-spacer>
             <span class="val">{{ getTime(tx.time) }}</span>
           </div>
           <v-divider class="space"></v-divider>
           <div class="currency">
-            <span>Currency</span>
+            <span>{{ $t('views.modal.currency') }}</span>
             <v-spacer></v-spacer>
             <span class="val">{{ tx.currency }}</span>
           </div>
           <v-divider class="space"></v-divider>
           <div class="type">
-            <span>Type</span>
+            <span>{{ $t('views.modal.type') }}</span>
             <v-spacer></v-spacer>
             <span class="val">{{ tx.type }}</span>
           </div>
           <v-divider class="space"></v-divider>
           <div class="amount">
-            <span>Amount</span>
+            <span>{{ $t('views.modal.amount') }}</span>
             <v-spacer></v-spacer>
             <span class="val">{{ tx.value }}</span>
           </div>
           <v-divider class="space"></v-divider>
           <div class="confirm">
-            <span>Confirmations</span>
+            <span>{{ $t('views.modal.confirmations') }}</span>
             <v-spacer></v-spacer>
             <span class="val">{{ tx.confirmations }}</span>
           </div>
           <template v-if="tx.status">
             <v-divider class="space"></v-divider>
             <div class="status">
-              <span>Status</span>
+              <span>{{ $t('views.modal.status') }}</span>
               <v-spacer></v-spacer>
               <span class="val">{{ tx.status }}</span>
             </div>
