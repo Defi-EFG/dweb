@@ -8,7 +8,9 @@
             <v-card>
               <v-card-title class="headline modal-header">
                 <v-icon></v-icon>
-                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon @click.stop="onCloseX()">
+                  <v-icon>$close</v-icon>
+                </v-btn>
               </v-card-title>
               <div class="content-wrapper ">
                 <div class="content-logo ">
@@ -42,8 +44,12 @@
           <v-stepper-content step="3">
             <v-card>
               <v-card-title class="headline modal-header">
-                <v-btn icon disabled><v-icon></v-icon></v-btn>
-                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon disabled>
+                  <v-icon></v-icon>
+                </v-btn>
+                <v-btn icon @click.stop="onCloseX()">
+                  <v-icon>$close</v-icon>
+                </v-btn>
               </v-card-title>
               <template v-if="loading">
                 <div class="generate-keystore bg-white">
@@ -52,7 +58,6 @@
                     :size="120"
                     :width="9"
                     color="primary"
-                    :value="this.value"
                     indeterminate
                   ></v-progress-circular>
                   <p>{{ msg }}</p>
@@ -92,8 +97,12 @@
           <v-stepper-content step="2">
             <v-card>
               <v-card-title class="headline modal-header">
-                <v-btn icon @click="welcomeStep"><v-icon>$leftarrow</v-icon></v-btn>
-                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon @click="welcomeStep">
+                  <v-icon>$leftarrow</v-icon>
+                </v-btn>
+                <v-btn icon @click.stop="onCloseX()">
+                  <v-icon>$close</v-icon>
+                </v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
@@ -111,13 +120,13 @@
                       <v-textarea
                         rows="2"
                         auto-grow
-                        label="Login with privatekey"
+                        label="Create Wallet With PrivateKey"
                         filled
                         class="loginwithprivatekey"
                         elevation-0
                         dense
                         required
-                        v-model="privateKeyLogin"
+                        v-model="privatekey"
                       ></v-textarea>
                     </div>
                   </template>
@@ -174,8 +183,12 @@
           <v-stepper-content step="4">
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
-                <v-btn icon @click="welcomeStep"><v-icon>$leftarrow</v-icon></v-btn>
-                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon @click="welcomeStep">
+                  <v-icon>$leftarrow</v-icon>
+                </v-btn>
+                <v-btn icon @click.stop="onCloseX()">
+                  <v-icon>$close</v-icon>
+                </v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
@@ -227,8 +240,12 @@
           <v-stepper-content step="5">
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
-                <v-btn icon @click="connectStep"><v-icon>$leftarrow</v-icon></v-btn>
-                <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
+                <v-btn icon @click="connectStep">
+                  <v-icon>$leftarrow</v-icon>
+                </v-btn>
+                <v-btn icon @click.stop="onCloseX()">
+                  <v-icon>$close</v-icon>
+                </v-btn>
               </v-card-title>
 
               <div class="create-wallet-wraper bg-white rounded-lg">
@@ -287,11 +304,14 @@ import TextReader from './text-reader.vue'
 })
 export default class UnlockwalletModal extends Vue {
   @Prop() visible!: boolean
-  @Prop({ default: 'Generating keystore file...' }) msg!: string
+  @Prop({
+    default: 'Generating keystore file...'
+  })
+  msg!: string
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
   stakingStore = getModule(StakingModule)
-  privateKeyLogin = ''
+  privatekey = ''
   upload = false
   showPrivateKetTextfield = false
   keystore = ''
@@ -307,7 +327,7 @@ export default class UnlockwalletModal extends Vue {
   errormsg = ''
   password = ''
   loading = false
-
+  errorPrivatekey: string | Error = ''
   rules = {
     required: (value: any) => {
       return !!value || 'Required.'
@@ -316,7 +336,13 @@ export default class UnlockwalletModal extends Vue {
       return v.length >= 6 || 'Min 6 characters'
     }
   }
+  get ecoc() {
+    return this.walletStore.ecoc
+  }
 
+  get walletAddress() {
+    return this.walletStore.address
+  }
   @Watch('visible')
   checkvisible() {
     this.unlockwalletModal = this.visible
@@ -344,34 +370,10 @@ export default class UnlockwalletModal extends Vue {
     this.clearData()
     this.onClose()
   }
-
-  onCreateWallet() {
-    const password = this.createWalletPassword
-
-    if (password.length < 6) {
-      this.step = 2
-      return false
-    } else if (password != this.confirmPassword) {
-      this.step = 2
-      return false
-    } else {
-      this.step = 3
-      this.loading = true
-    }
-
-    this.walletStore.createNewWallet(password).then(keystore => {
-      setTimeout(() => {
-        this.createWalletKeystore = keystore
-        this.loading = false
-      }, 1500)
-    })
-    // console.log(this.privateKeyLogin)
-    // console.log(this.password)
-  }
-
   createStep() {
     this.step = 2
   }
+
   openPrivatekeyfield() {
     this.showPrivateKetTextfield = !this.showPrivateKetTextfield
   }
@@ -382,6 +384,53 @@ export default class UnlockwalletModal extends Vue {
   welcomeStep() {
     this.step = 1
   }
+
+  onCreateWallet() {
+    const password = this.createWalletPassword
+    const wif = this.privatekey
+
+    if (password.length < 6 && password != this.confirmPassword) {
+      this.createStep()
+
+      return false
+    } else {
+      if (wif === '') {
+        this.walletStore.createNewWallet(password).then(keystore => {
+          this.createWalletKeystore = keystore
+          this.step = 3
+          this.loading = true
+          setTimeout(() => {
+            this.createWalletKeystore = keystore
+            this.loading = false
+          }, 1500)
+        })
+      } else {
+        this.walletStore
+          .keystoreFromWiff({
+            wif,
+            password
+          })
+          .then(keystore => {
+            if (keystore instanceof Error) {
+              this.step = 2
+              this.errorPrivatekey = keystore.message
+              console.log(this.errorPrivatekey)
+            } else {
+              this.createWalletKeystore = keystore as string
+              this.step = 3
+              this.loading = true
+              setTimeout(() => {
+                this.createWalletKeystore = keystore as string
+                this.loading = false
+              }, 1500)
+            }
+          })
+      }
+    }
+  }
+  // cPiHcy2L4YoytRC9CGysiwxfacKT8cBqe6Z682uaJw4PUf18ZgdW
+  // 2FsdGVkX19lXF0CLRJMM3m+FO9tqB2tFHgH4R/ovyTs9EQJNN+FprFtZKQ5dOtNzwiwbIp9kdYPeq2bkMsloqMWYfajWjOlsa6Y7Vb5F8
+  // U2FsdGVkX185x/QCF9nZAl3kLMgsqBmL0I5x9mQpPoOLNIcyu8nsNQXRGaN7R087s3X5aIfihml2ue1w81QcDa2uHn0FyOW6/q8IWAowd
 
   async confirmKeystore() {
     try {
@@ -400,9 +449,14 @@ export default class UnlockwalletModal extends Vue {
     try {
       const keystore = this.keystore
       const password = this.keystorePassword
-      this.walletStore.importWallet({ keystore, password }).then(() => {
-        this.onCloseX()
-      })
+      this.walletStore
+        .importWallet({
+          keystore,
+          password
+        })
+        .then(() => {
+          this.onCloseX()
+        })
     } catch (error) {
       this.errorMsg = error.message
     }
@@ -420,19 +474,13 @@ export default class UnlockwalletModal extends Vue {
   }
 
   downloadkeystore() {
-    const blob = new Blob([this.createWalletKeystore], { type: 'application/json' })
+    const blob = new Blob([this.createWalletKeystore], {
+      type: 'application/json'
+    })
     const link = document.createElement('a')
     link.href = window.URL.createObjectURL(blob)
     link.download = `keystore-${this.getFormattedTime()}.json`
     link.click()
-  }
-
-  get ecoc() {
-    return this.walletStore.ecoc
-  }
-
-  get walletAddress() {
-    return this.walletStore.address
   }
 }
 </script>
@@ -447,9 +495,11 @@ export default class UnlockwalletModal extends Vue {
   border-radius: 5px;
   transition: 0.2s;
 }
+
 .text-btn:hover {
   background-color: #44096b63;
 }
+
 .connect .v-btn:not(.v-btn--round).v-size--default {
   color: #44096b;
   padding: 0;
@@ -459,22 +509,27 @@ export default class UnlockwalletModal extends Vue {
   text-transform: capitalize;
   text-decoration: underline;
 }
+
 .disable-events {
   pointer-events: none;
 }
+
 .create-wallet-wraper .v-label {
   font-size: 0.8em;
 }
+
 .upload_input .v-input__prepend-outer {
   margin-right: 0px !important;
   position: absolute;
   right: 0;
   bottom: -25px;
 }
+
 .upload_input .v-file-input .v-file-input__text {
   word-break: break-all !important;
   height: 150px !important;
 }
+
 .upload_input .v-icon.v-icon.v-icon--link::before {
   color: white;
 }
@@ -487,29 +542,34 @@ export default class UnlockwalletModal extends Vue {
   padding: 4px;
   font-size: revert;
 }
-</style>
-<style lang="scss" scoped>
+</style><style lang="scss" scoped>
 .connect {
   text-align: end;
 }
+
 .v-btn--fab.v-size--small {
   height: 30px;
   width: 30px;
 }
+
 .create-wallet-wraper {
   padding: 29px 33px 43px 36px;
 }
+
 .v-stepper__content {
   padding: 0;
 }
+
 .v-text-field {
   margin: 0;
   padding: 0;
   flex-direction: column-reverse;
 }
+
 .content-wrapper {
   text-align: center;
 }
+
 .uploadkeystorefile {
   font-size: 0.8em;
   display: flex;
@@ -518,6 +578,7 @@ export default class UnlockwalletModal extends Vue {
   padding-right: 25px;
   margin-right: 5px;
 }
+
 .action-wrapper,
 .upl .action-wrapper {
   display: flex;
@@ -529,6 +590,7 @@ export default class UnlockwalletModal extends Vue {
 .action-wrapper .elevation-1 {
   box-shadow: 0px 3px 8px #00000021 !important;
 }
+
 .more-space {
   padding: 38px 36px 56px 36px;
 }
@@ -547,12 +609,14 @@ export default class UnlockwalletModal extends Vue {
   margin-top: 48px;
   margin-bottom: 7px;
 }
+
 .logo img,
 .img-btn-logo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
+
 v-btn {
   height: auto;
 }
@@ -560,9 +624,11 @@ v-btn {
 .v-application p {
   margin-bottom: 0;
 }
+
 .v-btn.v-size--small {
   margin-left: 10px;
 }
+
 .v-input__slot:before {
   border-color: none !important;
 }
@@ -590,6 +656,7 @@ v-btn {
 .v-btn.v-size--small {
   margin-left: 10px;
 }
+
 .efg-header {
   max-width: 1088px;
   margin: 0 auto;
@@ -603,16 +670,19 @@ v-btn {
     &.router-link-exact-active {
       color: rgb(192, 116, 249);
       border-bottom: 2px solid rgb(192, 116, 249);
+
       span {
         color: rgb(192, 116, 249);
         transition: 0.3s;
       }
     }
   }
+
   span:hover {
     color: rgb(192, 116, 249);
     transition: 0.3s;
   }
+
   a:hover {
     color: rgb(192, 116, 249);
     transition: 0.3s;
@@ -623,6 +693,7 @@ v-btn {
   color: #c074f9 !important;
   transition: 0.5s;
 }
+
 .efg-logo {
   width: 28px;
   height: auto;
@@ -641,11 +712,13 @@ v-btn {
     border-radius: 50%;
     margin-right: 6px;
   }
+
   .theme--dark.v-btn:hover {
     color: #42b983;
     transition: 0.3s;
   }
 }
+
 .color_bg {
   background: #2b1534 linear-gradient(180deg, #2c1635 0%, #2b1534 100%) 0% 0% no-repeat padding-box;
   position: fixed;
@@ -653,9 +726,11 @@ v-btn {
   transition: 0.3s;
   z-index: 20;
 }
+
 .theme--dark.v-app-bar.v-toolbar.v-sheet {
   background-color: #27272700;
 }
+
 .generate-keystore {
   height: 460px;
   margin: 0 auto;
@@ -664,9 +739,11 @@ v-btn {
   justify-content: center;
   align-items: center;
 }
+
 .generate-keystore p {
   margin-top: 15px;
 }
+
 .errorMsg {
   background-color: white;
   color: red;

@@ -181,8 +181,12 @@ export default class WalletModule extends VuexModule implements Wallet {
   }
 
   @Action({ rawError: true })
-  async keystoreFromWiff(payload: { wif: string; password: string }) {    
-    return Ecoc.keystoreFromWiff(payload.wif, payload.password)
+  async keystoreFromWiff(payload: { wif: string; password: string }) {
+    try {
+      return Ecoc.keystoreFromWiff(payload.wif, payload.password)
+    } catch (error) {
+      return new Error('Wrong Private key')
+    }
   }
 
   @Action
