@@ -66,6 +66,7 @@
                 <v-btn
                   large
                   depressed
+                  class="mb-7"
                   :class="Loanername != '' ? 'text-capitalize' : 'disabled'"
                   @click="connectStep()"
                   >Select</v-btn
@@ -94,7 +95,9 @@
                   <span>Loaner</span><br />
                   <input type="text" v-model="selectdata" disabled />
                 </div>
-                <v-btn large depressed class="text-capitalize" @click="nextcollat()">Next</v-btn>
+                <v-btn large depressed class="text-capitalize mb-7" @click="nextcollat()"
+                  >Next</v-btn
+                >
               </div>
             </v-card>
           </v-stepper-content>
@@ -105,15 +108,40 @@
                 <v-btn @click="leftarrow3()" icon><v-icon color="white">$leftarrow</v-icon></v-btn>
                 <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
-              <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin">
+              <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin mb-7">
                 <div class="d-flex ">
-                  <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
-                  <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                      <div
+                        @click="copyAddress(addr)"
+                        class="transaction-sender"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        {{ truncateAddress(addr) }}
+                      </div>
+                    </template>
+                    <span>Copied</span>
+                  </v-tooltip>
+
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                      <div
+                        @click="copyAddress(toAddr)"
+                        class="transaction-receiver"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        {{ addressFilter(toAddr) }}
+                      </div>
+                    </template>
+                    <span>Copied</span>
+                  </v-tooltip>
                   <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
                 </div>
-                <div class="transaction-confirmation-content">
+                <div class="transaction-confirmation-content ">
                   <div class="collateral_pd">
-                    <h2><strong>Transaction Confirm</strong></h2>
+                    <h4><strong>Transaction Confirm</strong></h4>
                     <small>Please confirm the transaction</small>
                     <div class="div_prices">
                       <div class="transaction-confirmation-content-detail">
@@ -144,17 +172,18 @@
                       </div>
                     </div>
                     <div class="border-bottom"></div>
-                    <v-form class="pt-4">
+                    <div class="pt-4">
                       <v-text-field
                         label="KeyStore Password"
                         v-model="password"
                         :rules="[rules.required, rules.min]"
                         :type="showpassword ? 'text' : 'password'"
                         :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
+                        @keyup.enter="onConfirm()"
                         dense
                         filled
-                      ></v-text-field
-                    ></v-form>
+                      ></v-text-field>
+                    </div>
                     <div v-if="errorMsg">
                       <span class="errorMsg">{{ errorMsg }}</span>
                     </div>
@@ -340,7 +369,7 @@ import { DEFAULT } from '@/services/contract'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import * as constants from '@/constants'
-
+import { copyToClipboard } from '@/services/utils'
 @Component({
   components: {}
 })
@@ -378,7 +407,9 @@ export default class Collmodeldiposit extends Vue {
     min: (v: any) => v.length >= 8 || this.$t('views.modal.characters'),
     emailMatch: () => this.$t('views.modal.the_email')
   }
-
+  copyAddress(addr: string) {
+    copyToClipboard(addr)
+  }
   get totalFee() {
     return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
   }

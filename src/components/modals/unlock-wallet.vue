@@ -124,9 +124,9 @@
                     v-model="createWalletPassword"
                   ></v-text-field>
                 </template>
+
                 <v-text-field
                   :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                  name="input-10-2"
                   :type="show ? 'text' : 'password'"
                   @click:append="show = !show"
                   :rules="[
@@ -140,8 +140,10 @@
                   elevation-0
                   dense
                   required
+                  v-on:keyup.enter="onCreateWallet"
                   v-model="confirmPassword"
                 ></v-text-field>
+
                 <div class="action-wrapper">
                   <v-btn large class="mb-5" color="primary" @click="onCreateWallet">
                     <h4 class="text-capitalize font-weight-light">
@@ -232,35 +234,30 @@
                   }}</small>
                 </div>
                 <template>
-                  <v-form ref="form">
-                    <v-text-field
-                      v-model="keystorePassword"
-                      :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
-                      name="input-10-1"
-                      :type="show ? 'text' : 'password'"
-                      @click:append="show = !show"
-                      :label="modal.keystore_password"
-                      color="primary"
-                      filled
-                      :rules="[rules.required, rules.min]"
-                      elevation-0
-                      dense
-                      required
-                    ></v-text-field
-                  ></v-form>
+                  <v-text-field
+                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                    name="input-10-1"
+                    :type="show ? 'text' : 'password'"
+                    @click:append="show = !show"
+                    label="Keystore Password"
+                    color="primary"
+                    filled
+                    :rules="[rules.required, rules.min]"
+                    elevation-0
+                    dense
+                    v-on:keyup.enter="onUnlockWallet"
+                    required
+                    v-model="keystorePassword"
+                  ></v-text-field>
+                  <div class="errorMsg" v-if="errorMsg">
+                    <span>{{ errorMsg }}</span>
+                  </div>
+                  <div class="action-wrapper">
+                    <v-btn large class="mb-5" color="primary" @click="onUnlockWallet">
+                      <h4 class="text-capitalize font-weight-light">Connect</h4>
+                    </v-btn>
+                  </div>
                 </template>
-
-                <div class="errorMsg" v-if="errorMsg">
-                  <span>{{ errorMsg }}</span>
-                </div>
-
-                <div class="action-wrapper">
-                  <v-btn large class="mb-5" color="primary" @click="onUnlockWallet()">
-                    <h4 class="text-capitalize font-weight-light">
-                      {{ $t('views.modal.connect') }}
-                    </h4>
-                  </v-btn>
-                </div>
               </div>
             </v-card>
           </v-stepper-content>
@@ -373,11 +370,9 @@ export default class UnlockwalletModal extends Vue {
         this.step = 5
       } else {
         this.errormsg = 'Wrong format of keystore text'
-        console.log(this.errormsg)
       }
     } catch (error) {
       this.errorMsg2 = 'Wrong format of keystore file'
-      console.log(this.errorMsg2)
     }
   }
 
@@ -385,7 +380,6 @@ export default class UnlockwalletModal extends Vue {
     try {
       const keystore = this.keystore
       const password = this.keystorePassword
-
       this.walletStore.importWallet({ keystore, password }).then(() => {
         this.onClose()
       })
