@@ -331,20 +331,9 @@ export default class UnlockwalletModal extends Vue {
 
   onCreateWallet() {
     const password = this.createWalletPassword
-    this.walletStore.createNewWallet(password).then(keystore => {
-      if (this.createWalletKeystore === '') {
-        this.createWalletKeystore = keystore
-        if (this.createWalletKeystore === keystore) {
-          setInterval(() => {
-            this.value += 50
-            if (this.value === 101) {
-              clearInterval(this.value)
-              return (this.value = 0)
-            }
-          }, 1000)
-        }
-      }
-
+    const wif = this.privateKeyLogin
+    this.walletStore.keystoreFromWiff({ wif, password }).then(keystore => {
+      this.createWalletKeystore = keystore
       if (password.length < 6) {
         this.step = 2
       } else if (password != this.confirmPassword) {
@@ -353,6 +342,8 @@ export default class UnlockwalletModal extends Vue {
         this.step = 3
       }
     })
+    // console.log(this.privateKeyLogin)
+    // console.log(this.password)
   }
 
   createStep() {
