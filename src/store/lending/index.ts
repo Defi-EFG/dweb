@@ -305,7 +305,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   @Action
   async getEstimatedGPT(address: string) {
     const fullAmount = await lending.getEstimatedGPT(address)
-    const tokenInfo = getTokenInfo(extendCurrency.name)
+    const tokenInfo = getTokenInfo(extendCurrency.name) // to do
     const decimals = tokenInfo.decimals
     const amount = utils.toDecimals(fullAmount, decimals).toNumber()
 

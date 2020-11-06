@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="show" max-width="400" class="send-transaction">
+    <v-dialog v-model="show" max-width="400" class="send-transaction" persistent>
       <v-card class="blur-card" color="#FFFFFF00">
         <v-card-title class="modal-header">
           <v-icon></v-icon>
@@ -163,6 +163,7 @@ import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import { DEFAULT } from '@/services/contract'
 import { copyToClipboard } from '@/services/utils'
+
 @Component({
   components: {}
 })
@@ -187,6 +188,7 @@ export default class TransactionComfirmationModal extends Vue {
   keystore: any = ''
   keystorePassword = ''
   showpassword = false
+
   rules = {
     required: (value: any) => {
       return !!value || 'Required.'
@@ -195,6 +197,7 @@ export default class TransactionComfirmationModal extends Vue {
       return v.length >= 6 || 'Min 6 characters'
     }
   }
+
   fee = DEFAULT.DEFAULT_FEE
   gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
@@ -202,9 +205,19 @@ export default class TransactionComfirmationModal extends Vue {
   get show() {
     return this.visible
   }
+
+  get enoughBalance() {
+    if (!this.ecoc) {
+      return false
+    }
+
+    return Number(this.totalFee) <= Number(this.ecoc)
+  }
+
   copyAddress(addr: string) {
     copyToClipboard(addr)
   }
+
   get totalFee() {
     return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
   }
@@ -485,5 +498,9 @@ export default class TransactionComfirmationModal extends Vue {
 
   font-size: 10px;
   padding: 4px;
+}
+.not-enough {
+  background-color: white;
+  color: red;
 }
 </style>
