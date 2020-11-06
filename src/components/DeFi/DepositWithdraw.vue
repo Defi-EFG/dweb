@@ -1,95 +1,93 @@
 <template>
   <div class="dw-wrapper">
-    <v-card dark class="tab-container">
-      <v-tabs grow background-color="#191c26" class="dw-tabs" :hide-slider="true" show-arrows>
-        <v-tab>Deposit</v-tab>
-        <v-tab>Withdraw</v-tab>
+    <v-tabs
+      grow
+      background-color="#191c26"
+      class="dw-tabs elevation-2"
+      :hide-slider="true"
+      show-arrows
+    >
+      <v-tab>Deposit</v-tab>
+      <v-tab>Withdraw</v-tab>
 
-        <v-tab-item>
-          <v-card dark color="#2e3344" class="deposit">
-            <v-card-text class="wrapper">
-              <div class="label pl-3">
-                <img src="@/assets/efg_logo.svg" />
-                <span>{{ stakingCurrencyName }} - Flexible Staking</span>
-              </div>
-              <small class="pl-3"
-                >Deposit {{ stakingCurrencyName }} to Earn {{ rewardCurrencyName }}</small
-              >
+      <v-tab-item class="deposit-tab">
+        <div class="label pl-3">
+          <img src="@/assets/efg_logo.svg" />
+          <span>{{ stakingCurrencyName }} - Flexible Staking</span>
+        </div>
+        <small class="pl-3"
+          >Deposit {{ stakingCurrencyName }} to Earn {{ rewardCurrencyName }}</small
+        >
 
-              <div class="total-balance">
-                <span>Your Balance</span>
-                <v-spacer></v-spacer>
-                <span class="text-right">{{ balance.toFixed(2) }} {{ stakingCurrencyName }}</span>
-              </div>
+        <div class="total-balance">
+          <span>Your Balance</span>
+          <v-spacer></v-spacer>
+          <span class="text-right">{{ balance.toFixed(2) }} {{ stakingCurrencyName }}</span>
+        </div>
 
-              <div class="minimum-d">
-                <span class="value">Minimum Deposit: 1.00 EFG</span>
-                <v-spacer></v-spacer>
-                <span class="all" @click="fillAmountDeposit(balance)">Deposit All</span>
-              </div>
+        <div class="minimum-d">
+          <small class="value">Minimum Deposit: 1.00 EFG</small>
+          <v-spacer></v-spacer>
+          <small class="all" @click="fillAmountDeposit(balance)">Deposit All</small>
+        </div>
 
-              <v-text-field
-                type="number"
-                class="deposit-amount"
-                placeholder="0"
-                prefix="Deposit Amount"
-                v-model="depositAmount"
-                :suffix="stakingCurrencyName"
-                single-line
-                solo
-                hide-details="true"
-              ></v-text-field>
+        <v-text-field
+          dark
+          type="number"
+          class="deposit-amount"
+          placeholder="0"
+          prefix="Deposit Amount"
+          v-model="depositAmount"
+          :suffix="stakingCurrencyName"
+          single-line
+          solo
+          hide-details="true"
+        ></v-text-field>
 
-              <div class="note">
-                <span>Note: Reward earning will start after the deposit completed.</span>
-              </div>
+        <div class="note">
+          <small>Note: Reward earning will start after the deposit completed.</small>
+        </div>
 
-              <v-btn large block class="btn-d" @click="openConfirmTxModal(TYPE_DEPOSIT)"
-                >Deposit</v-btn
-              >
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
+        <v-btn dark large block class="btn-d" @click="openConfirmTxModal(TYPE_DEPOSIT)"
+          >Deposit</v-btn
+        >
+      </v-tab-item>
 
-        <v-tab-item>
-          <v-card dark color="#2e3344" class="withdraw">
-            <v-card-text class="wrapper">
-              <div class="label pl-3">
-                <span>Withdraw</span>
-              </div>
-              <span class="description">Please input the amount that you want to withdraw</span>
+      <v-tab-item class="withdraw-tab">
+        <div class="label pl-3">
+          <span>Withdraw</span>
+        </div>
+        <small class="description">Please input the amount that you want to withdraw</small>
 
-              <div class="d-amount">
-                <span>Your Staking amount</span>
-                <v-spacer></v-spacer>
-                <span>{{ stakingAmount.toFixed(2) }} {{ stakingCurrencyName }}</span>
-              </div>
+        <div class="d-amount">
+          <span>Your Staking amount</span>
+          <v-spacer></v-spacer>
+          <span>{{ stakingAmount.toFixed(2) }} {{ stakingCurrencyName }}</span>
+        </div>
 
-              <div class="minimum-w">
-                <span class="value">Minimum Withdrawal: 1.00 GPT</span>
-                <v-spacer></v-spacer>
-                <span class="all" @click="fillAmountWithdraw(stakingAmount)">Withdraw All</span>
-              </div>
+        <div class="minimum-w">
+          <small class="value">Minimum Withdrawal: 1.00 GPT</small>
+          <v-spacer></v-spacer>
+          <small class="all" @click="fillAmountWithdraw(stakingAmount)">Withdraw All</small>
+        </div>
 
-              <v-text-field
-                class="withdrawal-amount"
-                placeholder="0"
-                type="number"
-                prefix="Withdrawal Amount"
-                v-model="withdrawAmount"
-                :suffix="stakingCurrencyName"
-                single-line
-                solo
-                hide-details="true"
-              ></v-text-field>
-              <v-btn large block class="btn-w" @click="openConfirmTxModal(TYPE_WITHDRAW)"
-                >Withdraw</v-btn
-              >
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
-      </v-tabs>
-    </v-card>
+        <v-text-field
+          dark
+          class="withdrawal-amount"
+          placeholder="0"
+          type="number"
+          prefix="Withdrawal Amount"
+          v-model="withdrawAmount"
+          :suffix="stakingCurrencyName"
+          single-line
+          solo
+          hide-details="true"
+        ></v-text-field>
+        <v-btn dark large block class="btn-w" @click="openConfirmTxModal(TYPE_WITHDRAW)"
+          >Withdraw</v-btn
+        >
+      </v-tab-item>
+    </v-tabs>
     <TransactionComfirmationModal
       :visible="confirmTxModal"
       :toAddr="contractAddr"
@@ -247,90 +245,93 @@ export default class DepositWithdraw extends Vue {
 <style lang="scss" scoped>
 .dw-wrapper {
   display: flex;
+  background: #2e3344;
   width: -webkit-fill-available;
+  border-radius: 5px;
 }
 
-.tab-container {
-  width: inherit;
-  text-align: left;
+.deposit-tab,
+.withdraw-tab {
+  padding: 16px;
 }
 
-.withdraw,
-.deposit {
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
+.wrapper {
+  padding: 1.2rem;
+  padding-top: 2rem;
+}
 
-  .wrapper {
-    padding: 1.2rem;
-    padding-top: 2rem;
+.label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+  img {
+    width: 24px;
+    margin-right: 0.5rem;
   }
+}
 
-  .label {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: white;
-    font-weight: bold;
-    img {
-      width: 24px;
-      margin-right: 0.5rem;
-    }
-  }
+.d-amount,
+.total-balance {
+  margin-top: 2.3rem;
+  font-size: 14px;
+  display: flex;
+  padding: 10px;
+  border: 1px solid #ffffff15;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: white;
+  border-radius: 5px;
+}
 
-  .d-amount,
-  .total-balance {
-    margin-top: 1.4rem;
-    display: flex;
-    padding: 10px;
-    border: 1px solid #ffffff15;
-    text-transform: uppercase;
-    font-weight: 800;
-    color: white;
-    border-radius: 5px;
-  }
-
-  .minimum-w,
-  .minimum-d {
-    display: flex;
-    padding: 13px 10px;
-    .value {
-      text-align: left;
-      opacity: 0.7;
-    }
-
-    .all {
-      text-decoration: underline;
-      cursor: pointer;
-      color: white;
-      text-align: right;
-    }
-  }
-
-  .withdrawal-amount,
-  .deposit-amount {
-    text-align: right;
-  }
-
-  .note {
-    padding: 10px;
+.minimum-w,
+.minimum-d {
+  display: flex;
+  padding: 13px 10px;
+  .value {
+    text-align: left;
     opacity: 0.7;
   }
 
-  .description {
-    padding-left: 12px;
+  .all {
+    text-decoration: underline;
+    cursor: pointer;
+    color: white;
+    text-align: right;
   }
+}
 
-  .btn-w,
+.withdrawal-amount,
+.deposit-amount {
+  text-align: right;
+}
+
+.note {
+  padding: 10px;
+  opacity: 0.7;
+}
+
+.description {
+  padding-left: 12px;
+}
+
+.btn-w,
+.btn-d {
+  margin-top: 3.5rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  background: transparent linear-gradient(90deg, #8b41d6 0%, #6800fe 100%) 0% 0% no-repeat
+    padding-box;
+}
+
+.btn-w {
+  margin-top: 6.25rem;
+}
+
+@media (max-width: 1569px) {
   .btn-d {
-    margin-top: 3.5rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    background: transparent linear-gradient(90deg, #8b41d6 0%, #6800fe 100%) 0% 0% no-repeat
-      padding-box;
-  }
-
-  .btn-w {
-    margin-top: 5.3rem;
+    margin-top: 2.02rem;
   }
 }
 

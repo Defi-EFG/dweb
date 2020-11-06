@@ -65,6 +65,7 @@ export default class StakingList extends Vue {
 
 .sl-card {
   width: inherit;
+  min-height: 247px;
   background: #222738;
 }
 
@@ -107,6 +108,12 @@ export default class StakingList extends Vue {
 
   border: none;
   transition: 0.5s;
+}
+
+@media (max-width: 1264px) {
+  .sl-card {
+    min-height: unset;
+  }
 }
 </style>
 
