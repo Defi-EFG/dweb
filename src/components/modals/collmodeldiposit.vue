@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="show" max-width="420" class="send-transaction" id="collat">
+    <v-dialog v-model="show" max-width="420" class="send-transaction" id="collat" persistent>
       <v-stepper v-model="step" class="blur-card">
         <v-stepper-items>
           <!-- Welcome to ECOC Finance Governance -->
