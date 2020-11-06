@@ -33,7 +33,7 @@ export const GPT = {
     name: constants.GPT,
     symbol: constants.GPT,
     address: '01b4f96074cc86042bc9c98e4f3fbb17b82f0501',
-    decimals: '8',
+    decimals: '4',
     totalSupply: '100000000'
   }
 } as Currency
