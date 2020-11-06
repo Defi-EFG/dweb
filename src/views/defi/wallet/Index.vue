@@ -21,7 +21,7 @@
             </v-toolbar-title>
           </v-toolbar>
 
-          <v-row class="content-wrapper">
+          <v-row class="content-wrapper wallet-tx-menu">
             <v-col class="inner-content pr-1" cols="6">
               <receive-token></receive-token>
             </v-col>
@@ -119,6 +119,7 @@ export default class Wallet extends Vue {
 
 <style lang="scss" scoped>
 .receive-send-wrapper {
+  width: inherit;
   background: transparent linear-gradient(268deg, #646464 0%, #474747 100%) 0% 0% no-repeat
     padding-box;
 }
@@ -202,6 +203,8 @@ export default class Wallet extends Vue {
 }
 
 .tx-container {
+  display: flex;
+  flex-wrap: wrap;
   width: inherit;
   background: #222738 !important;
 
@@ -209,6 +212,10 @@ export default class Wallet extends Vue {
     margin-right: 0 !important;
     margin-left: 0 !important;
   }
+}
+
+.wallet-tx-menu {
+  width: inherit;
 }
 
 @media (max-width: 1264px) {
