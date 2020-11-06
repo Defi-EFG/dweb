@@ -36,7 +36,7 @@
         </v-list-item>
       </v-list>
     </v-card-text>
-    <div :class="`empty-${page}`" v-else>
+    <div class="empty-message" v-else>
       <div class="inner">
         <v-icon large>mdi-history</v-icon>
         <div class="message">No transaction history</div>
@@ -155,7 +155,7 @@ export default class TransactionHistory extends Vue {
 }
 
 .staking {
-  height: 217px;
+  height: 494px;
   overflow: auto;
 
   &::-webkit-scrollbar {
@@ -194,8 +194,7 @@ export default class TransactionHistory extends Vue {
   }
 }
 
-.empty-staking,
-.empty-wallet {
+.empty-message {
   display: flex;
   opacity: 0.4;
   text-align: center;
@@ -208,10 +207,6 @@ export default class TransactionHistory extends Vue {
   .message {
     font-size: medium;
   }
-}
-
-.empty-staking {
-  height: 217px;
 }
 
 @media (max-width: 1264px) {

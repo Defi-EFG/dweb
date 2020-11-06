@@ -9,7 +9,7 @@
         <div class="transaction-confirmation-wrapper ">
           <div class="d-flex ">
             <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
-            <div class="transaction-receiver">{{ truncateAddress(addressFilter(toAddr)) }}</div>
+            <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
@@ -227,7 +227,7 @@ export default class TransactionComfirmationModal extends Vue {
   addressFilter(address: string) {
     if (address == this.lendingContractAddress) return 'Lending Platform'
     else if (address == this.stakingContractAddress) return 'Staking Platform'
-    else return address
+    else return this.truncateAddress(address)
   }
 
   onClose() {
