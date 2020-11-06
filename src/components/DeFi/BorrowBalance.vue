@@ -2,7 +2,7 @@
   <v-card dark class="borrow-card">
     <v-card-text>
       <span class="borrow-label">{{ $t('views.lendingpage.borrow_balance') }}</span>
-      <div class="borrow">${{ balance.toFixed(2) }}</div>
+      <div class="borrow">${{ balance | numberWithCommas({ fixed: [0, 2] }) }}</div>
       <div class="borrow-power">
         <div class="label">
           <span class="power-label">{{ $t('views.lendingpage.borrow_po') }}</span>
@@ -18,7 +18,7 @@
         ></v-progress-linear>
         <div class="borrow-cap">
           {{ calculateBorrow(balance, borrowLimit).toFixed(1) }}% ({{
-            `${balance.toFixed(2)}/${borrowLimit.toFixed(2)}`
+            `${balance.toFixed(2)}/${borrowLimit.toFixed(2) | numberWithCommas()}`
           }})
         </div>
       </div>

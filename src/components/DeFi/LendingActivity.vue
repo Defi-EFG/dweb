@@ -19,7 +19,10 @@
               </div>
               <div class="balance">
                 <div>
-                  ${{ getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)) }}
+                  ${{
+                    Number(getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)))
+                      | numberWithCommas({ fixed: [0, 2] })
+                  }}
                 </div>
                 <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
               </div>
@@ -46,7 +49,10 @@
               </div>
               <div class="balance">
                 <div>
-                  ${{ getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)) }}
+                  ${{
+                    Number(getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)))
+                      | numberWithCommas({ fixed: [0, 2] })
+                  }}
                 </div>
                 <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
               </div>

@@ -20,7 +20,9 @@
               <div class="total-balance">
                 <span>{{ $t('views.stakingpage.yourbalance') }}</span>
                 <v-spacer></v-spacer>
-                <span class="text-right">{{ balance.toFixed(2) }} {{ stakingCurrencyName }}</span>
+                <span class="text-right"
+                  >{{ balance | numberWithCommas({ fixed: [0, 2] })}} {{ stakingCurrencyName }}</span
+                >
               </div>
 
               <div class="minimum-d">

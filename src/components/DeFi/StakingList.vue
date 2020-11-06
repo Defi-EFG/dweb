@@ -16,7 +16,9 @@
           </v-col>
           <v-col class="reward">
             <small>{{ $t('views.stakingpage.total_staking') }}</small>
-            <div class="value">{{ token.amount }} {{ token.currency.name }}</div>
+            <div class="value">
+              {{ token.amount | numberWithCommas({ fixed: [0, 8] }) }} {{ token.currency.name }}
+            </div>
           </v-col>
         </v-row>
       </v-card>

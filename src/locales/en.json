@@ -133,7 +133,7 @@
             "wallet_bl": "Wallet Balance:",
             "collateralamount": "Collateral Amount",
             "borrow_power_used": "Borrow Power Used",
-            "borrow_limit": "Borrow Limit",
+            "borrow_limit": "Borrow Power",
             "totalborrowpower": "Total Borrow Power",
             "max_with": "Max Withdrawable:",
             "withdrawalamount": "Withdrawal Amount",

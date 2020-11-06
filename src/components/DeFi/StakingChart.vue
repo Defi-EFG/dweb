@@ -8,7 +8,9 @@
         <p class="mb-3">
           {{ $t('views.stakingpage.available') }}
         </p>
-        <div class="value">{{ available }} {{ currencyName }}</div>
+        <div class="value">
+          {{ available | numberWithCommas({ fixed: [0, 8] }) }} {{ currencyName }}
+        </div>
       </div>
     </v-card-text>
   </v-card>

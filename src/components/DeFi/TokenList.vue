@@ -26,9 +26,16 @@
                 <v-col cols="12" class="mt-auto">
                   <div class="token-balance text-right">
                     <div class="label">{{ $t('views.walletpage.total_balance') }}</div>
-                    <div class="value">{{ currency.balance }} {{ currency.name }}</div>
+                    <div class="value">
+                      {{ Number(currency.balance) | numberWithCommas({ fixed: [0, 5] }) }}
+                      {{ currency.name }}
+                    </div>
                     <div class="estimated">
-                      ≈ {{ getEstimatedValue(currency.balance, currency.price) }} USD
+                      ≈ $
+                      {{
+                        Number(getEstimatedValue(currency.balance, currency.price))
+                          | numberWithCommas({ fixed: [0, 3] })
+                      }}
                     </div>
                   </div>
                 </v-col>

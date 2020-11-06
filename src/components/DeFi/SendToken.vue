@@ -12,7 +12,10 @@
           >{{ selectedCurrencyName }} {{ $t('views.walletpage.balance') }}</span
         >
         <v-spacer></v-spacer>
-        <span class="text-right">{{ selectedCurrencyBalance }} {{ selectedCurrencyName }}</span>
+        <span class="text-right"
+          >{{ Number(selectedCurrencyBalance) | numberWithCommas({ fixed: [0, 8] }) }}
+          {{ selectedCurrencyName }}</span
+        >
       </div>
       <v-text-field
         :label="walletpage.to_Address"

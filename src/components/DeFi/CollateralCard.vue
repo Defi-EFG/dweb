@@ -5,7 +5,7 @@
       <span class="text-left">{{ $t('views.lendingpage.wallet_bl') }}</span>
       <v-spacer></v-spacer>
       <span class="balance" @click="fillAmount(walletBalance)"
-        >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
+        >{{ walletBalance | numberWithCommas({ fixed: [0, 2] }) }} {{ currencyName }}</span
       >
     </div>
     <v-text-field
@@ -35,18 +35,26 @@
       <div class="text-left">{{ $t('views.lendingpage.borrow_power_used') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bp-change">
-        <span>{{ bpUsed.toFixed(1) }}%</span>
+        <span>{{ bpUsed | numberWithCommas({ fixed: [0, 2] }) }}%</span>
         &rarr;
-        <span class="after-calculated">{{ calculateBPUsed(collateralAmount).toFixed(1) }}%</span>
+        <span class="after-calculated"
+          >{{
+            Number(calculateBPUsed(collateralAmount)) | numberWithCommas({ fixed: [0, 2] })
+          }}%</span
+        >
       </div>
     </div>
     <div class="borrow-total mt-1 mb-3">
       <div class="text-left">{{ $t('views.lendingpage.borrow_limit') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowLimit }}</span>
+        <span>${{ borrowLimit | numberWithCommas({ fixed: [0, 5] }) }}</span>
         &rarr;
-        <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
+        <span class="after-calculated"
+          >${{
+            Number(calculateTotalBP(collateralAmount)) | numberWithCommas({ fixed: [0, 2] })
+          }}</span
+        >
       </div>
     </div>
     <v-divider dark />
