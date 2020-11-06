@@ -40,9 +40,7 @@
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
-              <template>
-                <LineChart id="1"></LineChart>
-              </template>
+              <LineChart id="1"></LineChart>
             </div>
           </v-col>
         </v-row>
@@ -51,19 +49,34 @@
   </div>
 </template>
 
-<script>
-import LineChart from '@/components/Home/LineChart_efg'
-import DoughnutChart from '@/components/Home/DoughnutChart_efg'
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import LineChart from '@/components/Home/LineChartefg.vue'
+import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
 
-export default {
+@Component({
   components: {
     LineChart,
     DoughnutChart
   }
-}
+})
+export default class Efg extends Vue {}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.button-small {
+  padding: 10px 35px;
+  text-align: right;
+  background: #000000 0% 0% no-repeat padding-box;
+  a {
+    padding: 0 5px;
+    color: #ffffff;
+    font-size: 14px;
+  }
+  .active {
+    border-bottom: 2px solid #c074f9;
+  }
+}
 .container {
   max-width: 1088px;
   margin: 0 auto;

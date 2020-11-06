@@ -1,21 +1,58 @@
 <template>
-  <canvas :id="efgchart"></canvas>
+  <div>
+    <v-container>
+      <v-row>
+        <v-col cols="12">
+          <div class="button-small">
+            <a @click="onClickActive('Borrow')" :class="active == 'Borrow' ? 'active' : undefined"
+              >Borrow APY</a
+            >
+            <a
+              @click="onClickActive('Collateral')"
+              :class="active == 'Collateral' ? 'active' : undefined"
+              >Collateral Factor</a
+            >
+          </div>
+          <div class="chart_view">
+            <template>
+              <canvas :id="efgchart"></canvas>
+            </template>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script lang="ts">
-import { Vue, Component, PropSync, Watch } from 'vue-property-decorator'
+import { Vue, Component, PropSync } from 'vue-property-decorator'
 import Chart from 'chart.js'
 
 @Component({})
 export default class LineChart extends Vue {
   @PropSync('id', { type: String }) readonly idNumber!: number
-  labelSet = ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct']
+
+  active = 'Borrow'
+  name = 'Borrow'
+  title = 'Borrow'
+
+  onClickActive(name: string) {
+    this.active = name
+    this.name = name
+    this.title = name
+    console.log(this.title)
+  }
+
   finul = 1
   txt = ''
-  dataSet = [1.6, 2.2, 2, 2.3, 2.1, 2]
-
   efgchart = `graph${this.idNumber}`
   myChart = null
+  labelSet = ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct']
+  dataSet = [1.6, 2.2, 2, 2.3, 2.1, 2]
+
+  get ctx() {
+    return document.getElementById(this.efgchart)
+  }
 
   mounted() {
     Chart.defaults.global.legend.display = false
@@ -29,10 +66,6 @@ export default class LineChart extends Vue {
     //   self.labelSet.push(self.txt)
     //   self.renderChart(self.ctx!, self.labelSet, self.dataSet)
     // }, 20000)
-  }
-
-  get ctx() {
-    return document.getElementById(this.efgchart)
   }
 
   renderChart(element: HTMLElement, labelSet: any[], dataSet: any[]) {
@@ -64,7 +97,8 @@ export default class LineChart extends Vue {
           xAxes: [
             {
               ticks: {
-                beginAtZero: true
+                beginAtZero: true,
+                maxTicksLimit: 10
               }
             }
           ],
@@ -89,4 +123,18 @@ export default class LineChart extends Vue {
 }
 </script>
 
-<style lang="scss" scoped></style>
+<style lang="scss" scoped>
+.button-small {
+  padding: 10px 35px;
+  text-align: right;
+  background: #000000 0% 0% no-repeat padding-box;
+  a {
+    padding: 0 5px;
+    color: #ffffff;
+    font-size: 14px;
+  }
+  .active {
+    border-bottom: 3px solid #c074f9;
+  }
+}
+</style>
