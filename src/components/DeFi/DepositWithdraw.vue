@@ -335,6 +335,12 @@ export default class DepositWithdraw extends Vue {
   }
 }
 
+@media (max-width: 1264px) {
+  .btn-w {
+    margin-top: 4.75rem;
+  }
+}
+
 @media (max-width: 425px) {
   .withdrawal-amount,
   .d-amount,

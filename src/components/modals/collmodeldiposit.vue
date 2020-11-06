@@ -146,7 +146,7 @@
                     <div class="border-bottom"></div>
                     <v-form class="pt-4">
                       <v-text-field
-                        label="KeyStore Password"
+                        label="Keystore Password"
                         v-model="password"
                         :rules="[rules.required, rules.min]"
                         :type="showpassword ? 'text' : 'password'"

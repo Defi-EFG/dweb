@@ -6,15 +6,15 @@
           <v-icon></v-icon>
           <v-btn @click="onClose" icon><v-icon color="white">$close</v-icon></v-btn>
         </v-card-title>
-        <div class="transaction-confirmation-wrapper ">
-          <div class="d-flex ">
+        <div class="transaction-confirmation-wrapper">
+          <div class="d-flex">
             <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
             <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
-            <h3><strong>Transaction Confirm</strong></h3>
-            <small>Please confirm the transaction</small>
+            <div class="tx-confirm-label"><strong>Transaction Confirm</strong></div>
+            <span class="confirm-label">Please confirm the transaction</span>
             <div class="transaction-confirmation-content-detail">
               <div class="send-detail border-bottom">
                 <span class="gt">Send to</span>
@@ -47,7 +47,7 @@
               <v-text-field
                 :type="showpassword ? 'text' : 'password'"
                 :rules="[rules.required, rules.min]"
-                label="KeyStore Password"
+                label="Keystore Password"
                 v-model="password"
                 :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
                 dense
@@ -387,6 +387,15 @@ export default class TransactionComfirmationModal extends Vue {
 .gassetting {
   letter-spacing: 0px;
   font-size: 10px;
+}
+
+.tx-confirm-label {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.confirm-label {
+  opacity: 0.5;
 }
 </style>
 <style lang="scss">

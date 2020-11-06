@@ -210,7 +210,7 @@ export default class TransactionHistory extends Vue {
 }
 
 @media (max-width: 1264px) {
-  .empty-wallet {
+  .empty-message {
     margin: 2rem 0;
     height: auto;
   }
