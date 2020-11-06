@@ -389,6 +389,7 @@ export namespace lending {
   }
 
   export const extendGracePeriod = async (amount: number, walletParams: WalletParams) => {
+    console.log('extendGracePeriod', amount)
     const params = {
       methodArgs: [amount],
       senderAddress: walletParams.address,

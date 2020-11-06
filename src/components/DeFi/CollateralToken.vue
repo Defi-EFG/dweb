@@ -23,7 +23,7 @@
           <span>{{ item.currency.name }}</span>
         </v-col>
         <v-col cols="5" class="balance">
-          <span>{{ item.currency.balance }} {{ item.currency.name }}</span>
+          <span>{{ item.currency.balance }}</span>
         </v-col>
         <v-col cols="3" class="collateral">
           <div class="collateral-status" :class="item.activated ? 'activated' : ''"></div>

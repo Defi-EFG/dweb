@@ -136,7 +136,7 @@
             </div>
           </v-col>
         </v-row>
-        <v-row v-for="(item, i) in items" :key="i" class="row1 roww2">
+        <v-row v-for="(item, i) in pools" :key="i" class="row1 roww2">
           <v-col lg="3" md="3" cols="2">
             <div class="margintop">
               <img src="@/assets/efg_01.svg" />
@@ -150,12 +150,16 @@
           </v-col>
           <v-col lg="3" md="3" cols="3" class="border_left">
             <div class="margintop color_1 textafter">
-              <span class="color_size">${{ item.totalSupply | numberWithCommas() }}</span>
+              <span class="color_size"
+                >${{ item.totalSupply | numberWithCommas({ decimal: 2 }) }}</span
+              >
             </div>
           </v-col>
           <v-col lg="3" md="3" cols="3">
             <div class="margintop color_2 textafter">
-              <span class="color_size">${{ item.totalBorrowed | numberWithCommas() }}</span>
+              <span class="color_size"
+                >${{ item.totalBorrowed | numberWithCommas({ decimal: 2 }) }}</span
+              >
             </div>
           </v-col>
           <img class="row1_img" src="@/assets/backg_01.svg" />
@@ -185,11 +189,13 @@
               <!-- </a> -->
             </div>
             <div class="supply_price">EFG</div>
-            <div class="supply_price">{{ liquidation }}%</div>
+            <div class="supply_price">{{ stakingRate }}%</div>
           </v-col>
           <v-col lg="6" md="6" cols="12" class="border_left1 Staking_dt">
             <div class="supply_name2">GPT - {{ $t('views.main.available') }}</div>
-            <div class="supply_price_color color_1">{{ GPTprice | numberWithCommas() }} GPT</div>
+            <div class="supply_price_color color_1">
+              {{ stakingAvailable | numberWithCommas({ decimal: 0 }) }} GPT
+            </div>
           </v-col>
           <img class="bg_gpt" src="@/assets/backg_02.svg" />
         </v-row>
@@ -251,24 +257,33 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import LendingModule from '@/store/lending'
+import StakingModule from '@/store/staking'
 
 @Component({})
 export default class Main extends Vue {
   lendingStore = getModule(LendingModule)
+  stakingStore = getModule(StakingModule)
+
+  active = 'EFG'
+  name = 'EFG'
+
+  stakingRate = 0.01
 
   get msg() {
     return this.$t('views.mainslider')
   }
 
-  get items() {
+  get pools() {
     return this.lendingStore.pools
   }
 
-  active = 'EFG'
-  name = 'EFG'
+  get stakingTotalReward() {
+    return this.stakingStore.totalReward
+  }
 
-  liquidation = 20.0
-  GPTprice = 10000
+  get stakingAvailable() {
+    return this.stakingStore.available
+  }
 
   onClickActive(name: string) {
     this.active = name
@@ -282,7 +297,9 @@ export default class Main extends Vue {
 
   mounted() {
     this.lendingStore.updateLoners()
+    this.stakingStore.updateMintingInfo(this.stakingStore.address)
   }
+
   truncateAddress(addr: string) {
     const separator = '...'
     const charsToShow = 12
