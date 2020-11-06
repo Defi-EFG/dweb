@@ -41,7 +41,7 @@
     "name":"getAssetBalance",
     "outputs":[
       {
-        "name":"",
+        "name":"assetBalance",
         "type":"uint256"
       }
     ],
@@ -176,25 +176,6 @@
     "type":"function"
   },
   {
-    "constant":true,
-    "inputs":[
-      {
-        "name":"_address",
-        "type":"address"
-      }
-    ],
-    "name":"getEFGBalance",
-    "outputs":[
-      {
-        "name":"availableEFG",
-        "type":"uint256"
-      }
-    ],
-    "payable":false,
-    "stateMutability":"view",
-    "type":"function"
-  },
-  {
     "constant":false,
     "inputs":[
       {
@@ -288,25 +269,6 @@
       }
     ],
     "name":"repay",
-    "outputs":[
-      {
-        "name":"result",
-        "type":"bool"
-      }
-    ],
-    "payable":false,
-    "stateMutability":"nonpayable",
-    "type":"function"
-  },
-  {
-    "constant":false,
-    "inputs":[
-      {
-        "name":"_amount",
-        "type":"uint256"
-      }
-    ],
-    "name":"withdrawEFG",
     "outputs":[
       {
         "name":"result",
@@ -564,22 +526,6 @@
     ],
     "payable":true,
     "stateMutability":"payable",
-    "type":"function"
-  },
-  {
-    "constant":true,
-    "inputs":[
-      
-    ],
-    "name":"availableGPT",
-    "outputs":[
-      {
-        "name":"available_GPT",
-        "type":"uint256"
-      }
-    ],
-    "payable":false,
-    "stateMutability":"view",
     "type":"function"
   },
   {
@@ -1006,11 +952,6 @@
   {
     "anonymous":false,
     "inputs":[
-      {
-        "indexed":false,
-        "name":"result",
-        "type":"bool"
-      },
       {
         "indexed":false,
         "name":"debtors_addr",
