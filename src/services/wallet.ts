@@ -71,7 +71,7 @@ const getEcocBalance = async (address: string) => {
     name: constants.ECOC,
     type: constants.TYPE_ECOC,
     style: constants.KNOWN_CURRENCY.ECOC,
-    balance: balance.toString(),
+    balance: balance.toFixed(8),
     price: 0
   } as Currency
 

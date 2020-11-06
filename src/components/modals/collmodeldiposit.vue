@@ -359,7 +359,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
@@ -407,15 +407,17 @@ export default class Collmodeldiposit extends Vue {
     min: (v: any) => v.length >= 8 || 'Min 8 characters',
     emailMatch: () => `The email and password you entered don't match`
   }
-  copyAddress(addr: string) {
-    copyToClipboard(addr)
-  }
+
   get totalFee() {
     return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
   }
 
   get Loanerlist() {
     return this.lendingStore.pools
+  }
+
+  get poolAddress() {
+    return this.lendingStore.loan.poolAddr
   }
 
   get ecoc() {
@@ -432,6 +434,20 @@ export default class Collmodeldiposit extends Vue {
 
   get show() {
     return this.visible
+  }
+
+  @Watch('visible')
+  checkPoolAddress(value: boolean) {
+    if (value) {
+      if (this.poolAddress) {
+        this.step = 3
+        this.selectdata = this.poolAddress
+      }
+    }
+  }
+
+  copyAddress(addr: string) {
+    copyToClipboard(addr)
   }
 
   gasSetting() {
@@ -451,12 +467,11 @@ export default class Collmodeldiposit extends Vue {
     this.$emit('onClose')
   }
 
-  onLoading() {
-    this.$emit('onLoading')
-  }
-
   onSuccess() {
+    this.step = 1
     this.loading = false
+    this.errorMsg = ''
+    this.password = ''
     this.$emit('onSuccess')
   }
 
@@ -538,10 +553,10 @@ export default class Collmodeldiposit extends Vue {
 
     const amount = Number(this.amount)
     const poolAddress = this.selectdata
-    const currencyName = this.currency.name
+    const currency = this.currency
 
     const payload = {
-      currencyName,
+      currency,
       amount,
       poolAddress,
       walletParams

@@ -64,12 +64,14 @@ export default class WalletModule extends VuexModule implements Wallet {
       let currencyType = constants.ECOC
       let value = getBalanceChanged(this.address, tx.vin, tx.vout)
       let type = value.lt(0) ? constants.TYPE_SENT : constants.TYPE_RECEIVED
-      const status = tx.confirmations ? constants.STATUS_CONFIRMED : constants.STATUS_PENDING
+      let status = tx.confirmations ? constants.STATUS_SUCCEED : constants.STATUS_PENDING
       let address = ''
       let subtype
       let txResult = []
 
       if (tx.receipt) {
+        status =
+          tx.receipt[0].excepted === 'None' ? constants.STATUS_SUCCEED : constants.STATUS_FAILED
         address = tx.receipt[0].contractAddress
         txResult = Ecrc20.decode(tx.receipt)
         const tokenInfo = Ecrc20.getKnownTokensInfo(address, this.network)
@@ -149,6 +151,11 @@ export default class WalletModule extends VuexModule implements Wallet {
     }
   }
 
+  @Mutation
+  removeCurrency(index: number) {
+    this.currencies.splice(index, 1)
+  }
+
   //for update price
   @Mutation
   updateCurrencyByIndex(payload: { currencyIndex: number; currencyData: Currency }) {
@@ -188,7 +195,17 @@ export default class WalletModule extends VuexModule implements Wallet {
       this.context.commit('updateCurrencyInfo', ecocBalanceInfo)
     }
 
-    const erc20BalanceInfo = await Ecoc.getEcrc20Balance(this.address)
+    let erc20BalanceInfo = await Ecoc.getEcrc20Balance(this.address)
+    const zeroBalanceCurrencies = this.currenciesList
+      .filter(currency => currency.name !== 'ECOC')
+      .filter(currency => !erc20BalanceInfo.find(newToken => currency.name === newToken.name))
+      .map(currency => {
+        currency.balance = '0'
+        return currency
+      })
+
+    erc20BalanceInfo = [...erc20BalanceInfo, ...zeroBalanceCurrencies]
+
     if (erc20BalanceInfo.length > 0) {
       erc20BalanceInfo.forEach(token => {
         this.context.commit('updateCurrencyInfo', token)
@@ -300,8 +317,9 @@ export default class WalletModule extends VuexModule implements Wallet {
   }
 
   @MutationAction
-  async updateLastBlock(blocknumber: number) {
-    return { lastBlock: blocknumber }
+  async updateLastBlock() {
+    const lastBlock = await utils.getBlockNumber()
+    return { lastBlock }
   }
 
   @MutationAction
