@@ -13,7 +13,7 @@ interface Collateral {
 }
 
 const lendingContract = {
-  address: '5744612449a6c9ebdd1992e84bc6493458333c37',
+  address: 'ff9aa53ec910e9849f2743bacf6dfeef8050977a',
   abi: lendingAbi
 } as Contract
 
@@ -126,6 +126,18 @@ export namespace lending {
     const priceUsd = new BigNumber(price).dividedBy(new BigNumber(1000000)).toNumber()
 
     return priceUsd
+  }
+
+  export const getAssetBalance = async (currencyName: string, address: string) => {
+    const params = {
+      methodArgs: [currencyName, address]
+    } as Params
+
+    const result = await contract.call('getAssetBalance', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const res = executionResult.formattedOutput['0'].toNumber()
+
+    return res
   }
 
   export const getEFGBalance = async (address: string) => {
@@ -342,8 +354,9 @@ export namespace lending {
     amount: number,
     walletParams: WalletParams
   ) => {
+    const toAddr = walletParams.address
     const params = {
-      methodArgs: [currencyName, amount],
+      methodArgs: [currencyName, amount, toAddr],
       senderAddress: walletParams.address,
       amount: 0,
       fee: walletParams.fee,
@@ -376,6 +389,7 @@ export namespace lending {
   }
 
   export const extendGracePeriod = async (amount: number, walletParams: WalletParams) => {
+    console.log('extendGracePeriod', amount)
     const params = {
       methodArgs: [amount],
       senderAddress: walletParams.address,

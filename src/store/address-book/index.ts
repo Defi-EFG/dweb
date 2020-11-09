@@ -1,4 +1,4 @@
-import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
+import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
 import { db } from './firebase'
 import { Contact } from '@/types/contact'
 import store from '@/store'

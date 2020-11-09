@@ -56,7 +56,10 @@ export default class LineChart extends Vue {
 
   mounted() {
     Chart.defaults.global.legend.display = false
-    this.renderChart(this.ctx!, this.labelSet, this.dataSet)
+    if (this.ctx) {
+      this.renderChart(this.ctx, this.labelSet, this.dataSet)
+    }
+
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     // const self = this
     // setInterval(function() {

@@ -39,8 +39,7 @@ export default class StakingChart extends Vue {
   }
 
   renderChart(element: any, max: number, current: number) {
-    const chart = document.getElementById('myChart')
-    //@ts-ignore
+    /* eslint-disable */
     const myChart = new Chart(element, {
       type: 'doughnut',
       data: {

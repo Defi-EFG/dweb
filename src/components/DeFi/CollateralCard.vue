@@ -159,7 +159,7 @@ export default class Collateral extends Vue {
   // BP = Borrow Power
   calculateTotalBP(colAmount: number) {
     const dollarsAmount = Number(colAmount) * this.currencyPrice
-    return (this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage
+    return this.borrowLimit + dollarsAmount * this.borrowPowerPercentage
   }
 
   calculateBPUsed(colAmount: number) {

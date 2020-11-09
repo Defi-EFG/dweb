@@ -137,7 +137,8 @@ export default class RepayCard extends Vue {
   }
 
   get debt() {
-    return this.lendingStore.borrowBalance
+    const total = this.lendingStore.borrowBalance * (1 + this.interestRate / 1440)
+    return Number(total.toFixed(8))
   }
 
   get bpUsed() {

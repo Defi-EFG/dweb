@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="show" max-width="420" class="send-transaction" id="collat">
+    <v-dialog v-model="show" max-width="420" class="send-transaction" id="collat" persistent>
       <v-stepper v-model="step" class="blur-card">
         <v-stepper-items>
           <!-- Welcome to ECOC Finance Governance -->
@@ -364,7 +364,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
@@ -412,15 +412,17 @@ export default class Collmodeldiposit extends Vue {
     min: (v: any) => v.length >= 8 || this.$t('views.modal.characters'),
     emailMatch: () => this.$t('views.modal.the_email')
   }
-  copyAddress(addr: string) {
-    copyToClipboard(addr)
-  }
+
   get totalFee() {
     return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
   }
 
   get Loanerlist() {
     return this.lendingStore.pools
+  }
+
+  get poolAddress() {
+    return this.lendingStore.loan.poolAddr
   }
 
   get ecoc() {
@@ -442,6 +444,20 @@ export default class Collmodeldiposit extends Vue {
   get modaltext() {
     return this.$t('views.modal')
   }
+  
+  @Watch('visible')
+  checkPoolAddress(value: boolean) {
+    if (value) {
+      if (this.poolAddress) {
+        this.step = 3
+        this.selectdata = this.poolAddress
+      }
+    }
+  }
+
+  copyAddress(addr: string) {
+    copyToClipboard(addr)
+  }
 
   gasSetting() {
     this.gassetting = true
@@ -460,12 +476,11 @@ export default class Collmodeldiposit extends Vue {
     this.$emit('onClose')
   }
 
-  onLoading() {
-    this.$emit('onLoading')
-  }
-
   onSuccess() {
+    this.step = 1
     this.loading = false
+    this.errorMsg = ''
+    this.password = ''
     this.$emit('onSuccess')
   }
 
@@ -547,10 +562,10 @@ export default class Collmodeldiposit extends Vue {
 
     const amount = Number(this.amount)
     const poolAddress = this.selectdata
-    const currencyName = this.currency.name
+    const currency = this.currency
 
     const payload = {
-      currencyName,
+      currency,
       amount,
       poolAddress,
       walletParams

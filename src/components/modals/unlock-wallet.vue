@@ -49,7 +49,7 @@
                 <v-btn icon disabled><v-icon></v-icon></v-btn>
                 <v-btn icon @click.stop="onCloseX()"><v-icon>$close</v-icon></v-btn>
               </v-card-title>
-              <template v-if="this.value < 100">
+              <template v-if="loading">
                 <div class="generate-keystore bg-white">
                   <v-progress-circular
                     :rotate="360"
@@ -62,7 +62,7 @@
                   <p>{{ msg }}</p>
                 </div>
               </template>
-              <template v-else-if="this.value >= 100">
+              <template v-else-if="!loading">
                 <div class="create-wallet-wraper bg-white rounded-lg">
                   <div class="pb-5 mb-4">
                     <h3 class="primary--text">
@@ -290,9 +290,8 @@ export default class UnlockwalletModal extends Vue {
   stakingStore = getModule(StakingModule)
 
   upload = false
-  keystore: any = ''
+  keystore = ''
   keystorePassword = ''
-  files = true
   createWalletKeystore = ''
   createWalletPassword = ''
   confirmPassword = ''
@@ -303,7 +302,8 @@ export default class UnlockwalletModal extends Vue {
   errorMsg2 = ''
   errormsg = ''
   password = ''
-  value = 0
+  loading = false
+
   rules = {
     required: (value: any) => {
       return !!value || this.$t('views.modal.required')
@@ -317,37 +317,49 @@ export default class UnlockwalletModal extends Vue {
   checkvisible() {
     this.unlockwalletModal = this.visible
   }
+
+  clearData() {
+    this.keystore = ''
+    this.keystorePassword = ''
+    this.createWalletKeystore = ''
+    this.createWalletPassword = ''
+    this.confirmPassword = ''
+    this.errorMsg = ''
+    this.errorMsg2 = ''
+    this.errormsg = ''
+    this.password = ''
+    this.upload = false
+  }
+
   onClose() {
     this.step = 1
     this.$emit('onClose')
   }
+
   onCloseX() {
+    this.clearData()
     this.onClose()
   }
 
   onCreateWallet() {
     const password = this.createWalletPassword
-    this.walletStore.createNewWallet(password).then(keystore => {
-      if (this.createWalletKeystore === '') {
-        this.createWalletKeystore = keystore
-        if (this.createWalletKeystore === keystore) {
-          setInterval(() => {
-            this.value += 50
-            if (this.value === 101) {
-              clearInterval(this.value)
-              return (this.value = 0)
-            }
-          }, 1000)
-        }
-      }
 
-      if (password.length < 6) {
-        this.step = 2
-      } else if (password != this.confirmPassword) {
-        this.step = 2
-      } else {
-        this.step = 3
-      }
+    if (password.length < 6) {
+      this.step = 2
+      return false
+    } else if (password != this.confirmPassword) {
+      this.step = 2
+      return false
+    } else {
+      this.step = 3
+      this.loading = true
+    }
+
+    this.walletStore.createNewWallet(password).then(keystore => {
+      setTimeout(() => {
+        this.createWalletKeystore = keystore
+        this.loading = false
+      }, 1500)
     })
   }
 
@@ -381,7 +393,7 @@ export default class UnlockwalletModal extends Vue {
       const keystore = this.keystore
       const password = this.keystorePassword
       this.walletStore.importWallet({ keystore, password }).then(() => {
-        this.onClose()
+        this.onCloseX()
       })
     } catch (error) {
       this.errorMsg = error.message
@@ -406,9 +418,11 @@ export default class UnlockwalletModal extends Vue {
     link.download = `keystore-${this.getFormattedTime()}.json`
     link.click()
   }
+
   get ecoc() {
     return this.walletStore.ecoc
   }
+
   get walletAddress() {
     return this.walletStore.address
   }
