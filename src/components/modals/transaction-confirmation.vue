@@ -80,7 +80,7 @@
             </div>
 
             <div class="errorMsg" v-if="errorMsg">
-              <span>{{ errorMsg }}</span>
+              <span>{{ $t(errorMsg) }}</span>
             </div>
 
             <div class="action-transaction-confirmation">

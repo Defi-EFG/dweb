@@ -251,5 +251,6 @@
     "components": {
 
     },
-    "dom": {}
+    "dom": {},
+    "Invalid keystore or password": "Invalid keystore or password"
 }

@@ -3,16 +3,6 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-          <div class="button-small">
-            <a @click="onClickActive('Borrow')" :class="active == 'Borrow' ? 'active' : undefined"
-              >Borrow APY</a
-            >
-            <a
-              @click="onClickActive('Collateral')"
-              :class="active == 'Collateral' ? 'active' : undefined"
-              >Collateral Factor</a
-            >
-          </div>
           <div class="chart_view">
             <template>
               <canvas :id="efgchart"></canvas>
@@ -35,13 +25,6 @@ export default class LineChart extends Vue {
   active = 'Borrow'
   name = 'Borrow'
   title = 'Borrow'
-
-  onClickActive(name: string) {
-    this.active = name
-    this.name = name
-    this.title = name
-    console.log(this.title)
-  }
 
   finul = 1
   txt = ''

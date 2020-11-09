@@ -136,34 +136,36 @@
             </div>
           </v-col>
         </v-row>
-        <v-row v-for="(item, i) in pools" :key="i" class="row1 roww2">
-          <v-col lg="3" md="3" cols="2">
-            <div class="margintop">
-              <img src="@/assets/efg_01.svg" />
-              {{ item.currency.name }}
-            </div>
-          </v-col>
-          <v-col lg="3" md="3" cols="4">
-            <div class="text-truncate margintop Loener">
-              {{ truncateAddress(item.address) }}
-            </div>
-          </v-col>
-          <v-col lg="3" md="3" cols="3" class="border_left">
-            <div class="margintop color_1 textafter">
-              <span class="color_size"
-                >${{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }}</span
-              >
-            </div>
-          </v-col>
-          <v-col lg="3" md="3" cols="3">
-            <div class="margintop color_2 textafter">
-              <span class="color_size"
-                >${{ item.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }}</span
-              >
-            </div>
-          </v-col>
-          <img class="row1_img" src="@/assets/backg_01.svg" />
-        </v-row>
+        <a v-for="(item, i) in pools" :key="i" :href="`Efg/loan-info/pool=${item.address}`">
+          <v-row class="row1 roww2" :id="`EFG_Supply_${1 + i}`">
+            <v-col lg="3" md="3" cols="2">
+              <div class="margintop">
+                <img src="@/assets/efg_01.svg" />
+                {{ item.currency.name }}
+              </div>
+            </v-col>
+            <v-col lg="3" md="3" cols="4">
+              <div class="text-truncate margintop Loener">
+                {{ truncateAddress(item.address) }}
+              </div>
+            </v-col>
+            <v-col lg="3" md="3" cols="3" class="border_left">
+              <div class="margintop color_1 textafter">
+                <span class="color_size"
+                  >${{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }}</span
+                >
+              </div>
+            </v-col>
+            <v-col lg="3" md="3" cols="3">
+              <div class="margintop color_2 textafter">
+                <span class="color_size"
+                  >${{ item.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }}</span
+                >
+              </div>
+            </v-col>
+            <img class="row1_img" src="@/assets/backg_01.svg" />
+          </v-row>
+        </a>
         <v-row style="border-top:2px solid #312D36; margin-top:20px">
           <v-col cols="12" class="supply3">
             <div class="supply supply2">
@@ -185,7 +187,9 @@
           <v-col lg="3" md="3" cols="6" class="Staking_dt">
             <div class="supply_button2">
               <!-- <a href="delay"> -->
-              <button disabled>{{ $t('views.main.detail') }}</button>
+              <a href="gpt/staking-info/"
+                ><button>{{ $t('views.main.detail') }}</button></a
+              >
               <!-- </a> -->
             </div>
             <div class="supply_price">EFG</div>
@@ -207,24 +211,22 @@
         </v-row>
         <v-row>
           <v-col cols="12" class="but_div_inline">
-            <span class="but_div"
-              ><img class="img_text_but" src="@/assets/ECOC.svg" alt="" />
-              <div class="text_but">ECOC</div></span
+            <a
+              v-for="(collateral, index) in collateral"
+              :key="index"
+              :href="`collateral-info/${collateral.currencyName}?name=${collateral.currencyName}`"
             >
+              <span class="but_div"
+                ><img :src="getCurrencyIcon(collateral.currencyName)" class="img_text_but" alt="" />
+                <div class="text_but">{{ collateral.currencyName }}</div></span
+              >
+            </a>
             <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/USDT.svg" alt="" />
-              <div class="text_but">USDT</div></span
-            >
-            <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/ETH.svg" alt="" />
-              <div class="text_but">ETH</div></span
-            >
-            <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/TRON.svg" alt="" />
+              ><img src="@/assets/TRON.svg" class="img_text_but" alt="" />
               <div class="text_but">TRON</div></span
             >
             <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/DOT.svg" alt="" />
+              ><img src="@/assets/DOT.svg" class="img_text_but" alt="" />
               <div class="text_but">DOT</div></span
             >
           </v-col>
@@ -258,6 +260,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import LendingModule from '@/store/lending'
 import StakingModule from '@/store/staking'
+import { getCurrency } from '@/store/common'
 
 @Component({})
 export default class Main extends Vue {
@@ -275,6 +278,10 @@ export default class Main extends Vue {
 
   get pools() {
     return this.lendingStore.pools
+  }
+
+  get collateral() {
+    return this.lendingStore.supportedCollateralAssets
   }
 
   get stakingTotalReward() {
@@ -295,8 +302,13 @@ export default class Main extends Vue {
     this.name = name
   }
 
+  getCurrencyIcon(currencyNname: string) {
+    return getCurrency(currencyNname).style?.icon
+  }
+
   mounted() {
     this.lendingStore.updateLoners()
+    this.lendingStore.updateSupprtedAssets()
     this.stakingStore.updateMintingInfo(this.stakingStore.address)
   }
 
@@ -615,7 +627,6 @@ body {
   transition: 0.5s;
   align-items: center;
   padding: 11px;
-  width: 134px;
   margin-bottom: 5px;
 }
 
@@ -623,7 +634,6 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: aliceblue;
 }
 .sec_2 .but_div .text_but {
   display: inline;
@@ -641,8 +651,7 @@ body {
 .sec_2 .but_div {
   margin-left: 10px;
   margin-right: 10px;
-  padding: 5px;
-  width: 105px;
+  padding: 5px 15px 5px 5px;
 }
 .img_footer img {
   width: 100%;
@@ -872,14 +881,21 @@ body {
     width: 50px;
   }
   .sec_2 .but_div .img_text_but {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
   }
   .efg-logo {
     width: 40px;
   }
   .sibar_dc {
     font-size: 12px;
+  }
+  .sec_2 .but_div {
+    width: 103.98px;
+    padding: 7px 15px 7px 5px;
+  }
+  .sec_2 .but_div .text_but {
+    margin-left: 3px;
   }
 }
 </style>
