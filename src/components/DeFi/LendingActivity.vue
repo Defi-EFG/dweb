@@ -4,7 +4,7 @@
       <v-tabs grow background-color="#252B3D" class="lending-tabs" :hide-slider="true" show-arrows>
         <v-tab>{{ $t('views.lendingpage.my_collateral') }}l</v-tab>
         <v-tab>{{ $t('views.lendingpage.my_borrowing') }}</v-tab>
-        <v-tab>{{ $t('views.lendingpage.my_assets') }}</v-tab>
+        <v-tab>{{ $t('views.lendingpage.my_activity') }}</v-tab>
 
         <v-tab-item class="my-collateral">
           <v-card dark color="#2e3344">
