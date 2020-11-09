@@ -26,7 +26,7 @@
         </div>
 
         <div class="minimum-d">
-          <small class="value">Minimum Deposit: 1.00 EFG</small>
+          <small class="value">{{ stakingCurrencyName }} Deposit</small>
           <v-spacer></v-spacer>
           <small class="all" @click="fillAmountDeposit(balance)">Deposit All</small>
         </div>
@@ -66,7 +66,7 @@
         </div>
 
         <div class="minimum-w">
-          <small class="value">Minimum Withdrawal: 1.00 GPT</small>
+          <small class="value">{{ stakingCurrencyName }} Withdrawal</small>
           <v-spacer></v-spacer>
           <small class="all" @click="fillAmountWithdraw(stakingAmount)">Withdraw All</small>
         </div>
