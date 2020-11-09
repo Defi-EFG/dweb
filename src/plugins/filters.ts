@@ -16,8 +16,8 @@ export function numberWithCommas(num: number, options?: { decimal?: number; fixe
 
   if ('fixed' in options) {
     return num.toLocaleString(undefined, {
-      minimumFractionDigits: options!.fixed![0],
-      maximumFractionDigits: options!.fixed![1]
+      minimumFractionDigits: options.fixed![0],
+      maximumFractionDigits: options.fixed![1]
     })
   }
   return num.toLocaleString()

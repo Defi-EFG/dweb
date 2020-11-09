@@ -46,7 +46,7 @@
           <template v-if="getPrivateKey() === true">
             <v-textarea filled disabled :value="privatekey" class="textarea"> </v-textarea>
             <div class=" copybtn">
-              <v-btn icon small color="primary" @click="copyAddress">
+              <v-btn icon small color="primary" @click="copyPrivateKey">
                 <v-icon light>
                   $copied
                 </v-icon></v-btn
@@ -69,6 +69,7 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import { getKeystoreContent } from '@/services/keystore'
+import { copyToClipboard } from '@/services/utils'
 
 @Component({})
 export default class PrivateKey extends Vue {
@@ -82,19 +83,6 @@ export default class PrivateKey extends Vue {
   privatekey: any = ''
   accessPrivateKey = false
 
-  @Watch('visiblemodalpk')
-  checkvisible() {
-    if (this.checkPrivatekeyDialog === false) {
-      this.checkPrivatekeyDialog = !this.checkPrivatekeyDialog
-    }
-  }
-  get addr() {
-    return this.walletStore.address
-  }
-
-  onClose() {
-    this.$emit('onClose')
-  }
   rules = {
     required: (value: any) => {
       return !!value || 'Required.'
@@ -103,6 +91,22 @@ export default class PrivateKey extends Vue {
       return v.length >= 6 || 'Min 6 characters'
     }
   }
+
+  get addr() {
+    return this.walletStore.address
+  }
+
+  @Watch('visiblemodalpk')
+  checkvisible() {
+    if (this.checkPrivatekeyDialog === false) {
+      this.checkPrivatekeyDialog = !this.checkPrivatekeyDialog
+    }
+  }
+
+  onClose() {
+    this.$emit('onClose')
+  }
+
   truncateAddress(addr: string) {
     const separator = '...'
     const charsToShow = 8
@@ -118,14 +122,10 @@ export default class PrivateKey extends Vue {
       return false
     }
   }
-  copyAddress() {
-    const el = document.createElement('textarea')
 
-    document.body.appendChild(el)
-    el.select()
-    document.execCommand('copy')
-    document.body.removeChild(el)
+  copyPrivateKey() {
     this.showCopy = true
+    copyToClipboard(this.privatekey)
 
     setTimeout(() => {
       this.showCopy = false

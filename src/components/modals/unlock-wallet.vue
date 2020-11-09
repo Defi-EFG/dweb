@@ -274,7 +274,7 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import StakingModule from '@/store/staking'
-import TextReader from './text-reader.vue'
+import TextReader from './TextReader.vue'
 
 @Component({
   components: {

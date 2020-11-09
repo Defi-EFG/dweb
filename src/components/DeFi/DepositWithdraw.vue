@@ -21,7 +21,8 @@
                 <span>{{ $t('views.stakingpage.yourbalance') }}</span>
                 <v-spacer></v-spacer>
                 <span class="text-right"
-                  >{{ balance | numberWithCommas({ fixed: [0, 2] })}} {{ stakingCurrencyName }}</span
+                  >{{ balance | numberWithCommas({ fixed: [0, 2] }) }}
+                  {{ stakingCurrencyName }}</span
                 >
               </div>
 
