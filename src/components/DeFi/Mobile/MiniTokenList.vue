@@ -11,11 +11,9 @@
     >
       <template v-slot:item="data">
         <div class="token-item-select">
-          <img
-            class="icon"
-            v-if="data.item.name !== 'DEFAULT'"
-            :src="require(`@/assets/icon/vector/${data.item.name}.svg`)"
-          />
+          <template v-if="isSymbolAvailable(data.item.name)">
+            <img class="icon" :src="require(`@/assets/icon/vector/${data.item.name}.svg`)" />
+          </template>
           <v-icon class="icon" v-else>mdi-help</v-icon>
           <span class="name">{{ data.item.name }}</span>
           <v-spacer></v-spacer>
@@ -25,11 +23,9 @@
 
       <template v-slot:selection="data">
         <div :class="`token-item ${data.item.name}`">
-          <img
-            class="icon"
-            v-if="data.item.name !== 'DEFAULT'"
-            :src="require(`@/assets/icon/vector/${data.item.name}.svg`)"
-          />
+          <template v-if="isSymbolAvailable(data.item.name)">
+            <img class="icon" :src="require(`@/assets/icon/vector/${data.item.name}.svg`)" />
+          </template>
           <v-icon class="icon" v-else>mdi-help</v-icon>
           <span class="name">{{ data.item.name }}</span>
           <v-spacer></v-spacer>
@@ -44,7 +40,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import { Currency } from '@/types/currency'
@@ -123,6 +119,21 @@ export default class MiniTokenList extends Vue {
     this.walletStore.selectCurrency(currenyIndex).then(() => {
       // do something
     })
+  }
+
+  isSymbolAvailable(name: string) {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const img = require(`@/assets/icon/vector/${name}.svg`)
+      return !!img
+    } catch (e) {
+      return false
+    }
+  }
+
+  @Watch('currencies')
+  currencyChange() {
+    this.currentToken = this.currencies[0]
   }
 }
 </script>
