@@ -18,7 +18,7 @@
         ></v-progress-linear>
         <div class="borrow-cap">
           {{ calculateBorrow(balance, borrowLimit).toFixed(1) }}% ({{
-            `${balance.toFixed(2)}/${borrowLimit.toFixed(2) | numberWithCommas()}`
+            `${balance.toFixed(2)}/${borrowLimit.toFixed(2)}`
           }})
         </div>
       </div>
