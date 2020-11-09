@@ -80,7 +80,8 @@
     </v-card>
     <TransactionComfirmationModal
       :visible="confirmTxModal"
-      :toAddr="contractAddr"
+      :fromAddr="contractAddr"
+      :toAddr="walletAddr"
       :amount="amount"
       :currency="currency"
       @onConfirm="onConfirm"
@@ -123,6 +124,10 @@ export default class LendingActivity extends Vue {
   }
 
   getEstimatedValue = getEstimatedValue
+
+  get walletAddr() {
+    return this.walletStore.address
+  }
 
   get contractAddr() {
     return this.lendingStore.address

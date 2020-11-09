@@ -19,7 +19,8 @@
     <TransactionComfirmationModal
       :txType="confirmTxType"
       :visible="confirmTxModal"
-      :toAddr="contractAddr"
+      :fromAddr="contractAddr"
+      :toAddr="address"
       :amount="estimatedGPT"
       :currency="currency"
       @onConfirm="onConfirm"

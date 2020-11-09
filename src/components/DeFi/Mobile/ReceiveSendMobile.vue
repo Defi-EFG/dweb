@@ -95,6 +95,7 @@
         }}</v-btn>
         <TransactionComfirmationModal
           :visible="confirmTxModal"
+          :fromAddr="address"
           :toAddr="toAddr"
           :amount="amount"
           :currency="selectedCurrency"

@@ -70,7 +70,8 @@
     >
     <TransactionComfirmationModal
       :visible="confirmTxModal"
-      :toAddr="contractAddr"
+      :fromAddr="contractAddr"
+      :toAddr="walletAddr"
       :amount="borrowValue"
       :currency="currency"
       @onConfirm="onConfirm"
@@ -113,6 +114,10 @@ export default class BorrowCard extends Vue {
 
   mounted() {
     this.bpSlider = this.bpUsed
+  }
+
+  get walletAddr() {
+    return this.walletStore.address
   }
 
   get contractAddr() {

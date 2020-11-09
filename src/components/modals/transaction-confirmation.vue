@@ -10,11 +10,16 @@
           <div class="d-flex ">
             <v-tooltip top>
               <template v-slot:activator="{ on, attrs }">
-                <div @click="copyAddress(addr)" class="transaction-sender" v-bind="attrs" v-on="on">
-                  {{ truncateAddress(addr) }}
+                <div
+                  @click="copyAddress(fromAddr)"
+                  class="transaction-sender"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  {{ truncateAddress(addressFilter(fromAddr)) }}
                 </div>
               </template>
-              <span>Copied</span>
+              <span> {{ copymessage }}</span>
             </v-tooltip>
 
             <v-tooltip top>
@@ -25,10 +30,10 @@
                   v-bind="attrs"
                   v-on="on"
                 >
-                  {{ addressFilter(toAddr) }}
+                  {{ truncateAddress(addressFilter(toAddr)) }}
                 </div>
               </template>
-              <span>Copied</span>
+              <span>{{ copymessage }}</span>
             </v-tooltip>
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
@@ -57,7 +62,7 @@
               <span class="gt">{{ $t('views.modal.gas_fee') }}</span>
               <div class="text-end">
                 <div class="d-flex justify-end">
-                  <p>{{ fee }}</p>
+                  <p>{{ totalFee }}</p>
                   <p class="ml-2">ECOC</p>
                 </div>
                 <v-btn @click="gasSetting()" small text color="primary">
@@ -161,12 +166,9 @@ import { getModule } from 'vuex-module-decorators'
 import { WalletParams } from '@/services/ecoc/types'
 import { Currency } from '@/types/currency'
 import WalletModule from '@/store/wallet'
-import LendingModule from '@/store/lending'
-import StakingModule from '@/store/staking'
 import * as Ecoc from '@/services/wallet'
-import * as utils from '@/services/utils'
 import { DEFAULT } from '@/services/contract'
-import { copyToClipboard } from '@/services/utils'
+import { copyToClipboard, getEcocTotalFee, addressFilter, truncate } from '@/services/utils'
 
 @Component({
   components: {}
@@ -174,18 +176,17 @@ import { copyToClipboard } from '@/services/utils'
 export default class TransactionComfirmationModal extends Vue {
   @Prop({ default: {} }) currency!: Currency
   @Prop({ default: false }) visible!: boolean
+  @Prop() fromAddr!: string
   @Prop() toAddr!: string
   @Prop() amount!: string
 
   walletStore = getModule(WalletModule)
-  lendingStore = getModule(LendingModule)
-  stakingStore = getModule(StakingModule)
 
   feeSlow = 0.004
   feeAverage = 0.01
   feeFast = 0.1
 
-  copymessage = ''
+  copymessage = 'Copy Address'
   gassetting = false
   errorMsg = ''
   password = ''
@@ -210,6 +211,10 @@ export default class TransactionComfirmationModal extends Vue {
     return this.visible
   }
 
+  get isNative() {
+    return this.selectedCurrencyName === 'ECOC'
+  }
+
   get enoughBalance() {
     if (!this.ecoc) {
       return false
@@ -218,40 +223,9 @@ export default class TransactionComfirmationModal extends Vue {
     return Number(this.totalFee) <= Number(this.ecoc)
   }
 
-  copyAddress(addr: string) {
-    copyToClipboard(addr)
-  }
-
   get totalFee() {
-    return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
-  }
-
-  get addr() {
-    return this.walletStore.address
-  }
-
-  get lendingContractAddress() {
-    return this.lendingStore.address
-  }
-
-  get stakingContractAddress() {
-    return this.stakingStore.address
-  }
-
-  gasSetting() {
-    this.gassetting = true
-  }
-
-  closeGasSetting() {
-    this.gassetting = false
-  }
-
-  truncateAddress(addr: string) {
-    const separator = '...'
-    const charsToShow = 8
-    const frontChars = Math.ceil(charsToShow / 2)
-    const backChars = Math.floor(charsToShow / 2)
-    return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
+    if (this.isNative) return this.fee
+    return getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
   }
 
   get ecoc() {
@@ -270,10 +244,29 @@ export default class TransactionComfirmationModal extends Vue {
     return this.$t('views.modal')
   }
 
+  copyAddress(addr: string) {
+    this.copymessage = 'Copied'
+    copyToClipboard(addr)
+
+    setTimeout(() => {
+      this.copymessage = 'Copy Address'
+    }, 1000)
+  }
+
+  gasSetting() {
+    this.gassetting = true
+  }
+
+  closeGasSetting() {
+    this.gassetting = false
+  }
+
+  truncateAddress(addr: string) {
+    return truncate(addr, 15)
+  }
+
   addressFilter(address: string) {
-    if (address == this.lendingContractAddress) return 'Lending Platform'
-    else if (address == this.stakingContractAddress) return 'Staking Platform'
-    else return address
+    return addressFilter(address)
   }
 
   onClose() {
@@ -282,14 +275,6 @@ export default class TransactionComfirmationModal extends Vue {
     this.$emit('onClose')
   }
 
-  Copy(val: string) {
-    copyToClipboard(val)
-    this.copymessage = 'Copied'
-
-    setTimeout(() => {
-      this.copymessage = 'Copy TxID'
-    }, 1000)
-  }
   async onConfirm() {
     try {
       const password = this.password

@@ -69,7 +69,8 @@
     >
     <TransactionComfirmationModal
       :visible="confirmTxModal"
-      :toAddr="contractAddr"
+      :fromAddr="contractAddr"
+      :toAddr="walletAddr"
       :amount="withdrawValue"
       :currency="currency"
       @onConfirm="onConfirm"
@@ -112,6 +113,10 @@ export default class Withdraw extends Vue {
 
   get myCollateral() {
     return this.lendingStore.myCollateralAssets
+  }
+
+  get walletAddr() {
+    return this.walletStore.address
   }
 
   get contractAddr() {
