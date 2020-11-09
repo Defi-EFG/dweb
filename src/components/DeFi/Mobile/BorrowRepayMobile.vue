@@ -1,7 +1,7 @@
 <template>
   <v-tabs grow :hide-slider="true" background-color="#17181C" dark class="br-tabs">
-    <v-tab>Borrow</v-tab>
-    <v-tab>Repay</v-tab>
+    <v-tab>{{ $t('views.lendingpage.borrow') }}</v-tab>
+    <v-tab>{{ $t('views.lendingpage.repay') }}</v-tab>
 
     <v-tab-item class="br-tabs-item">
       <Borrow

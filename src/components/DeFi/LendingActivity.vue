@@ -2,16 +2,16 @@
   <div class="lending-card">
     <v-card dark>
       <v-tabs grow background-color="#252B3D" class="lending-tabs" :hide-slider="true" show-arrows>
-        <v-tab>My Collateral</v-tab>
-        <v-tab>My borrowing</v-tab>
-        <v-tab>My Assets</v-tab>
+        <v-tab>{{ $t('views.lendingpage.my_collateral') }}l</v-tab>
+        <v-tab>{{ $t('views.lendingpage.my_borrowing') }}</v-tab>
+        <v-tab>{{ $t('views.lendingpage.my_activity') }}</v-tab>
 
         <v-tab-item class="my-collateral">
           <v-card dark color="#2e3344">
             <v-card-text>
               <div class="supply-header">
-                <div>Assets</div>
-                <div>Balance</div>
+                <div>{{ $t('views.lendingpage.assets') }}</div>
+                <div>{{ $t('views.lendingpage.balance') }}</div>
               </div>
               <div class="supply-item" v-for="(item, index) in myCollateral" :key="index">
                 <div class="assets">
@@ -33,9 +33,9 @@
           <v-card dark color="#2e3344">
             <v-card-text>
               <div class="borrow-header">
-                <div class="mr-3">Assets</div>
-                <div>Inrerest Rate</div>
-                <div>Balance</div>
+                <div class="mr-3">{{ $t('views.lendingpage.assets') }}</div>
+                <div>{{ $t('views.lendingpage.inrerest_rate') }}</div>
+                <div>{{ $t('views.lendingpage.balance') }}</div>
               </div>
               <div class="borrow-item" v-for="(item, index) in myBorrowing" :key="index">
                 <div class="assets">
@@ -60,8 +60,8 @@
           <v-card dark color="#2e3344">
             <v-card-text>
               <div class="supply-header">
-                <div>Assets</div>
-                <div>Balance</div>
+                <div>{{ $t('views.lendingpage.assets') }}</div>
+                <div>{{ $t('views.lendingpage.balance') }}</div>
               </div>
               <div class="supply-item" v-for="(item, index) in myAssets" :key="index">
                 <div class="assets">
@@ -80,7 +80,8 @@
     </v-card>
     <TransactionComfirmationModal
       :visible="confirmTxModal"
-      :toAddr="contractAddr"
+      :fromAddr="contractAddr"
+      :toAddr="walletAddr"
       :amount="amount"
       :currency="currency"
       @onConfirm="onConfirm"
@@ -123,6 +124,10 @@ export default class LendingActivity extends Vue {
   }
 
   getEstimatedValue = getEstimatedValue
+
+  get walletAddr() {
+    return this.walletStore.address
+  }
 
   get contractAddr() {
     return this.lendingStore.address

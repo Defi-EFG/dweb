@@ -1,16 +1,16 @@
 <template>
   <div>
-    <p class="action-label" v-if="!isMobileDevice">Repay</p>
+    <p class="action-label" v-if="!isMobileDevice">{{ $t('views.lendingpage.repay') }}</p>
     <div class="repay-summary">
       <div class="wallet-balance">
-        <span>Wallet Balance</span>
+        <span>{{ $t('views.lendingpage.wallet_bl') }}</span>
         <v-spacer class="space"></v-spacer>
         <span class="balance" @click="fillAmount(walletBalance)"
           >{{ walletBalance.toFixed(8) }} {{ currencyName }}</span
         >
       </div>
       <div class="debt">
-        <span>Debt</span>
+        <span>{{ $t('views.lendingpage.debt') }}</span>
         <v-spacer class="space"></v-spacer>
         <span class="balance">{{ debt.toFixed(8) }} {{ currencyName }}</span>
       </div>
@@ -18,7 +18,7 @@
 
     <v-text-field
       class="amount-input"
-      label="Repay Amount"
+      :label="lendingpage.repayamount"
       v-model="repayAmount"
       :suffix="currencyName"
       type="number"
@@ -29,7 +29,7 @@
       persistent-hint
     ></v-text-field>
     <div class="borrow-power">
-      <span class="label">Borrow Power</span>
+      <span class="label">{{ $t('views.lendingpage.borrow_po') }}</span>
       <v-progress-linear
         :value="calculateBPUsed(repayAmount)"
         rounded
@@ -40,7 +40,7 @@
       ></v-progress-linear>
     </div>
     <div class="borrow-used">
-      <div>Borrow Power Used</div>
+      <div>{{ $t('views.lendingpage.borrow_power_used') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bp-change">
         <span>{{ bpUsed.toFixed(1) }}%</span>
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="borrow-total mt-1 mb-3">
-      <div class="text-left">Total Borrowed</div>
+      <div class="text-left">{{ $t('views.lendingpage.total_borrowed') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
         <span>${{ borrowBalance }}</span>
@@ -59,7 +59,7 @@
     </div>
     <v-divider dark />
     <div class="borrow-apy">
-      <span class="label">Borrow APY</span>
+      <span class="label">{{ $t('views.lendingpage.borrowAPY') }}</span>
       <v-spacer></v-spacer>
       <span>{{ interestRate }} %</span>
     </div>
@@ -71,10 +71,11 @@
       :disabled="!isRepayable(repayAmount, 'error')"
       :class="isRepayable(repayAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="openConfirmTxModal"
-      >{{ isRepayable(repayAmount, 'btn') ? 'Repay' : 'Insufficient' }}</v-btn
+      >{{ isRepayable(repayAmount, 'btn') ? lendingpage.repay : 'Insufficient' }}</v-btn
     >
     <TransactionComfirmationModal
       :visible="confirmTxModal"
+      :fromAddr="walletAddr"
       :toAddr="contractAddr"
       :amount="repayAmount"
       :currency="currency"
@@ -116,6 +117,10 @@ export default class RepayCard extends Vue {
   loadingMsg = 'Currency Approving...'
   repayAmount = 0
 
+  get walletAddr() {
+    return this.walletStore.address
+  }
+
   get contractAddr() {
     return this.lendingStore.address
   }
@@ -143,6 +148,9 @@ export default class RepayCard extends Vue {
 
   get bpUsed() {
     return (this.borrowBalance / this.borrowLimit) * 100
+  }
+  get lendingpage() {
+    return this.$t('views.lendingpage')
   }
 
   get tokenConversion() {

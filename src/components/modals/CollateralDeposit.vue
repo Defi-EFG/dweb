@@ -12,9 +12,9 @@
               </v-card-title>
               <div class="transaction-confirmation-wrapper collateral_pddeful ">
                 <div class="headtitle_collat">
-                  <div class="headtitle_collat_head">Select the Loaner</div>
+                  <div class="headtitle_collat_head">{{ $t('views.modal.select_Loaner') }}</div>
                   <div class="headtitle_collat_sub">
-                    You can only change the loaner once you repay all the borrowed.
+                    {{ $t('views.modal.you_can_only') }}
                   </div>
                 </div>
                 <div class="transaction-confirmation-content collat_bg">
@@ -69,7 +69,7 @@
                   class="mb-7"
                   :class="Loanername != '' ? 'text-capitalize' : 'disabled'"
                   @click="connectStep()"
-                  >Select</v-btn
+                  >{{ $t('views.modal.select') }}</v-btn
                 >
               </div>
             </v-card>
@@ -86,18 +86,19 @@
                   <div class="content-logo ">
                     <div class="logo"><img src="@/assets/ECOC.svg" alt="" /></div>
                   </div>
-                  <h3 class="">Use ECOC as a collateral?</h3>
+                  <h3 class="">{{ $t('views.modal.use_ECOC') }}</h3>
                   <p class="lightgray--text">
-                    You can deposit more once you repay all the borrowed. (Borrow power is 0)
+                    {{ $t('views.modal.you_can_deposit') }}
                   </p>
                 </div>
                 <div class="transaction-confirmation-content outputselect">
-                  <span>Loaner</span><br />
+                  <span>{{ $t('views.main.loaner') }}</span
+                  ><br />
                   <input type="text" v-model="selectdata" disabled />
                 </div>
-                <v-btn large depressed class="text-capitalize mb-7" @click="nextcollat()"
-                  >Next</v-btn
-                >
+                <v-btn large depressed class="text-capitalize mb-7" @click="nextcollat()">{{
+                  $t('views.modal.next')
+                }}</v-btn>
               </div>
             </v-card>
           </v-stepper-content>
@@ -141,12 +142,14 @@
                 </div>
                 <div class="transaction-confirmation-content ">
                   <div class="collateral_pd">
-                    <h4><strong>Transaction Confirm</strong></h4>
-                    <small>Please confirm the transaction</small>
+                    <h4>
+                      <strong>{{ $t('views.modal.transaction') }}</strong>
+                    </h4>
+                    <small>{{ $t('views.modal.please_transaction') }}</small>
                     <div class="div_prices">
                       <div class="transaction-confirmation-content-detail">
                         <div class="detail">
-                          <span class="gt">Amount</span>
+                          <span class="gt">{{ $t('views.modal.amount') }}</span>
                           <div class="d-flex justify-end">
                             <p>{{ amount }}</p>
                             <p class="ml-2">{{ selectedCurrencyName }}</p>
@@ -154,7 +157,7 @@
                         </div>
                       </div>
                       <div class="detail">
-                        <span class="gt">Gas Fee</span>
+                        <span class="gt">{{ $t('views.modal.gas_fee') }}</span>
                         <div class="text-end">
                           <div class="d-flex justify-end">
                             <p>{{ totalFee }}</p>
@@ -167,14 +170,14 @@
                       <span class="gt"></span>
                       <div class="text-end gt">
                         <v-btn small text color="primary" @click="gasSetting()">
-                          <span class="gassetting">gas setting</span>
+                          <span class="gassetting">{{ $t('views.modal.gas_setting') }}</span>
                         </v-btn>
                       </div>
                     </div>
                     <div class="border-bottom"></div>
                     <div class="pt-4">
                       <v-text-field
-                        label="KeyStore Password"
+                        :label="modaltext.keystore_password"
                         v-model="password"
                         :rules="[rules.required, rules.min]"
                         :type="showpassword ? 'text' : 'password'"
@@ -194,7 +197,7 @@
                         color="primary"
                         class="text-capitalize1"
                         @click="leftarrow3"
-                        >Cancel</v-btn
+                        >{{ $t('views.modal.cancel') }}</v-btn
                       >
                       <v-btn
                         large
@@ -202,7 +205,7 @@
                         color="primary"
                         class="text-capitalize"
                         @click="onConfirm()"
-                        >Confirm</v-btn
+                        >{{ $t('views.modal.confirm') }}</v-btn
                       >
                     </div>
                   </div>
@@ -308,25 +311,25 @@
           <v-btn icon @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
         </div>
         <div class="content-gas-setting">
-          <h3>Gas Customization</h3>
-          <small>Increase the processing time of your transaction by using higher gas fee</small>
+          <h3>{{ $t('views.modal.gas_setting') }}</h3>
+          <small>{{ $t('views.modal.Increase') }}</small>
           <div class="gas-customization">
             <v-btn-toggle tile group>
               <v-btn>
                 <div class="gas-custom-btn-group" @click="fee = feeSlow">
-                  <p>Slow</p>
+                  <p>{{ $t('views.modal.slow') }}</p>
                   <p>{{ feeSlow }} ECOC</p>
                 </div>
               </v-btn>
               <v-btn>
                 <div class="gas-custom-btn-group" @click="fee = feeAverage">
-                  <p>Average</p>
+                  <p>{{ $t('views.modal.average') }}</p>
                   <p>{{ feeAverage }} ECOC</p>
                 </div></v-btn
               >
               <v-btn>
                 <div class="gas-custom-btn-group" @click="fee = feeFast">
-                  <p>Fast</p>
+                  <p>{{ $t('views.modal.fast') }}</p>
                   <p>{{ feeFast }} ECOC</p>
                 </div></v-btn
               >
@@ -334,23 +337,25 @@
           </div>
           <div class="inputnumber d-flex justify-space-between">
             <v-col cols="6" class="pb-0">
-              <label for="Gas price:">Gas price:</label
+              <label for="Gas price:">{{ $t('views.modal.gas_price') }}</label
               ><v-text-field type="number" v-model="gasPrice"></v-text-field>
             </v-col>
             <v-col cols="6" class="pb-0">
-              <label for="Gas limit:">Gas limit:</label
+              <label for="Gas limit:">{{ $t('views.modal.gas_limit') }}</label
               ><v-text-field type="number" v-model="gasLimit"></v-text-field>
             </v-col>
           </div>
 
           <div class="d-flex justify-space-between py-2">
-            <p>Total Transaction Fee:</p>
+            <p>{{ $t('views.modal.total_transaction') }}</p>
             <div class="text-end">
               <p class="mb-0">{{ totalFee }} ECOC</p>
             </div>
           </div>
           <div class="save-button ">
-            <v-btn color="primary" depressed block @click="closeGasSetting">save</v-btn>
+            <v-btn color="primary" depressed block @click="closeGasSetting">{{
+              $t('views.modal.save')
+            }}</v-btn>
           </div>
         </div>
       </v-card>
@@ -370,10 +375,11 @@ import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import * as constants from '@/constants'
 import { copyToClipboard } from '@/services/utils'
+
 @Component({
   components: {}
 })
-export default class Collmodeldiposit extends Vue {
+export default class CollateralDeposit extends Vue {
   @Prop() visible!: boolean
   @Prop({ default: {} }) currency!: Currency
   @Prop() amount!: number
@@ -403,9 +409,9 @@ export default class Collmodeldiposit extends Vue {
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
 
   rules = {
-    required: (value: any) => !!value || 'Required.',
-    min: (v: any) => v.length >= 8 || 'Min 8 characters',
-    emailMatch: () => `The email and password you entered don't match`
+    required: (value: any) => !!value || this.$t('views.modal.required'),
+    min: (v: any) => v.length >= 8 || this.$t('views.modal.characters'),
+    emailMatch: () => this.$t('views.modal.the_email')
   }
 
   get totalFee() {
@@ -434,6 +440,10 @@ export default class Collmodeldiposit extends Vue {
 
   get show() {
     return this.visible
+  }
+
+  get modaltext() {
+    return this.$t('views.modal')
   }
 
   @Watch('visible')

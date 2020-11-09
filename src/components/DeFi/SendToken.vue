@@ -3,17 +3,23 @@
     <v-toolbar class="send-head" flat dense>
       <v-toolbar-title>
         <v-icon class="head-icon">mdi-arrow-up-circle-outline</v-icon>
-        <span>Send</span>
+        <span>{{ $t('views.walletpage.send') }}</span>
       </v-toolbar-title>
     </v-toolbar>
     <v-card-text class="text-center send-area">
       <div class="token-balance">
-        <span class="text-left">{{ selectedCurrencyName }} Balance</span>
+        <span class="text-left"
+          >{{ selectedCurrencyName }} {{ $t('views.walletpage.balance') }}</span
+        >
         <v-spacer></v-spacer>
-        <span class="text-right">{{ selectedCurrencyBalance }} {{ selectedCurrencyName }}</span>
+        <span class="text-right"
+          >{{ Number(selectedCurrencyBalance) | numberWithCommas({ fixed: [0, 8] }) }}
+          {{ selectedCurrencyName }}</span
+        >
       </div>
       <v-text-field
-        label="To Address"
+        ref="toAddrRef"
+        :label="walletpage.to_Address"
         class="to-address-field"
         single-line
         solo
@@ -51,12 +57,15 @@
       </div>
       <div class="withdraw-rate">
         <v-spacer></v-spacer>
-        <span class="fb-btn" @click="withdrawAll(selectedCurrencyBalance)">Withdraw All</span>
+        <span class="fb-btn" @click="withdrawAll(selectedCurrencyBalance)">{{
+          $t('views.walletpage.withdraw_a')
+        }}</span>
       </div>
       <v-text-field
+        ref="amountRef"
         class="withdraw-amount"
         placeholder="0"
-        prefix="Amount"
+        :prefix="walletpage.amount"
         v-model="amount"
         :suffix="selectedCurrencyName"
         single-line
@@ -64,9 +73,12 @@
         type="number"
         hide-details="true"
       ></v-text-field>
-      <v-btn depressed block large class="send-btn" @click="onOpenModal()">Send</v-btn>
+      <v-btn depressed block large class="send-btn" @click="onOpenModal()">{{
+        $t('views.walletpage.send')
+      }}</v-btn>
       <TransactionComfirmationModal
         :visible="confirmTxModal"
+        :fromAddr="fromAddr"
         :toAddr="toAddr"
         :amount="amount"
         :currency="selectedCurrency"
@@ -118,6 +130,10 @@ export default class SendToken extends Vue {
     }
   ]
 
+  get fromAddr() {
+    return this.walletStore.address || ''
+  }
+
   get isWalletReady() {
     return this.walletStore.isWalletUnlocked
   }
@@ -142,6 +158,10 @@ export default class SendToken extends Vue {
     return this.walletStore.selectedCurrency
   }
 
+  get walletpage() {
+    return this.$t('views.walletpage')
+  }
+
   selectAddress(addr: string) {
     this.toAddr = addr
     this.displayContact = false
@@ -152,9 +172,19 @@ export default class SendToken extends Vue {
   }
 
   onOpenModal() {
-    if (this.toAddr && this.amount) {
-      this.confirmTxModal = !this.confirmTxModal
+    if (!this.toAddr) {
+      const toAddrRef: any = this.$refs.toAddrRef
+      toAddrRef.focus()
+      return false
     }
+
+    if (!this.amount) {
+      const amountRef: any = this.$refs.amountRef
+      amountRef.focus()
+      return false
+    }
+
+    this.confirmTxModal = !this.confirmTxModal
   }
 
   closeModal() {

@@ -50,9 +50,19 @@ export const copyToClipboard = (text: string) => {
   )
 }
 
+export const truncate = (msg: string, charsToShow = 20) => {
+  if (msg.length <= charsToShow) return msg
+
+  const separator = '...'
+  const frontChars = Math.ceil(charsToShow / 2)
+  const backChars = Math.floor(charsToShow / 2)
+
+  return msg.substr(0, frontChars) + separator + msg.substr(msg.length - backChars)
+}
+
 export const addressFilter = (address: string) => {
-  if (address == staking.address) return 'Staking Platform'
-  else if (address == lending.address) return 'Lending Platform'
+  if (address == staking.address) return 'Staking - Defi'
+  else if (address == lending.address) return 'Lending - Defi'
   else return address
 }
 

@@ -1,16 +1,16 @@
 <template>
   <div>
-    <p class="action-label" v-if="!isMobileDevice">Collateral</p>
+    <p class="action-label" v-if="!isMobileDevice">{{ $t('views.lendingpage.collateral') }}</p>
     <div class="wallet-balance mb-2">
-      <span class="text-left">Wallet Balance:</span>
+      <span class="text-left">{{ $t('views.lendingpage.wallet_bl') }}</span>
       <v-spacer></v-spacer>
       <span class="balance" @click="fillAmount(walletBalance)"
-        >{{ walletBalance.toFixed(2) }} {{ currencyName }}</span
+        >{{ walletBalance | numberWithCommas({ fixed: [0, 2] }) }} {{ currencyName }}</span
       >
     </div>
     <v-text-field
       class="amount-input"
-      label="Collateral Amount"
+      :label="lendingpage.collateralamount"
       :suffix="currencyName"
       height="43"
       color="#C074F9"
@@ -21,7 +21,7 @@
       persistent-hint
     ></v-text-field>
     <div class="borrow-power">
-      <span class="label">Borrow Power</span>
+      <span class="label">{{ $t('views.lendingpage.borrow_po') }}</span>
       <v-progress-linear
         :value="calculateBPUsed(collateralAmount)"
         rounded
@@ -32,21 +32,29 @@
       ></v-progress-linear>
     </div>
     <div class="borrow-used">
-      <div class="text-left">Borrow Power Used</div>
+      <div class="text-left">{{ $t('views.lendingpage.borrow_power_used') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bp-change">
-        <span>{{ bpUsed.toFixed(1) }}%</span>
+        <span>{{ bpUsed | numberWithCommas({ fixed: [0, 2] }) }}%</span>
         &rarr;
-        <span class="after-calculated">{{ calculateBPUsed(collateralAmount).toFixed(1) }}%</span>
+        <span class="after-calculated"
+          >{{
+            Number(calculateBPUsed(collateralAmount)) | numberWithCommas({ fixed: [0, 2] })
+          }}%</span
+        >
       </div>
     </div>
     <div class="borrow-total mt-1 mb-3">
-      <div class="text-left">Borrow Limit</div>
+      <div class="text-left">{{ $t('views.lendingpage.borrow_limit') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowLimit }}</span>
+        <span>${{ borrowLimit | numberWithCommas({ fixed: [0, 5] }) }}</span>
         &rarr;
-        <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
+        <span class="after-calculated"
+          >${{
+            Number(calculateTotalBP(collateralAmount)) | numberWithCommas({ fixed: [0, 2] })
+          }}</span
+        >
       </div>
     </div>
     <v-divider dark />
@@ -58,7 +66,9 @@
       depressed
       :disabled="!isCollateralable(collateralAmount, 'error')"
       :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
-      >{{ isCollateralable(collateralAmount, 'btn') ? 'Deposit' : 'Not available' }}</v-btn
+      >{{
+        isCollateralable(collateralAmount, 'btn') ? lendingpage.deposit : 'Not available'
+      }}</v-btn
     >
     <Collatmodel
       :visible="collateralmodel"
@@ -76,7 +86,7 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
-import Collatmodel from '@/components/modals/collmodeldiposit.vue'
+import Collatmodel from '@/components/modals/CollateralDeposit.vue'
 
 @Component({
   components: {
@@ -136,6 +146,10 @@ export default class Collateral extends Vue {
 
   get isMobileDevice() {
     return window.innerWidth < 1264
+  }
+
+  get lendingpage() {
+    return this.$t('views.lendingpage')
   }
 
   fillAmount(amount: number) {

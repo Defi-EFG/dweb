@@ -2,15 +2,15 @@
   <v-card class="mx-auto market-token" color="#222738" dark>
     <v-toolbar class="market-token-head" flat dense>
       <v-toolbar-title>
-        <span>Borrow</span>
+        <span>{{ $t('views.lendingpage.borrow') }}</span>
       </v-toolbar-title>
     </v-toolbar>
 
     <v-card-text class="market-content">
       <v-row class="market-label">
-        <v-col cols="4">Assets</v-col>
-        <v-col cols="4" class="text-center">APY</v-col>
-        <v-col cols="4" class="text-right">Wallet</v-col>
+        <v-col cols="4">{{ $t('views.lendingpage.assets') }}</v-col>
+        <v-col cols="4" class="text-center">{{ $t('views.lendingpage.APY') }}</v-col>
+        <v-col cols="4" class="text-right">{{ $t('views.lendingpage.wallet') }}</v-col>
       </v-row>
       <v-row
         class="market-item"
@@ -26,7 +26,7 @@
           <span>{{ item.apy }}%</span>
         </v-col>
         <v-col cols="4" class="balance">
-          <span>{{ item.currency.balance }} {{ item.currency.name }}</span>
+          <span>{{ Number(item.currency.balance) | numberWithCommas({ fixed: [0, 8] }) }}</span>
         </v-col>
       </v-row>
     </v-card-text>

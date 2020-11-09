@@ -3,7 +3,7 @@
     <v-toolbar class="reward-history-head" flat dense>
       <v-toolbar-title>
         <v-icon class="head-icon">mdi-star</v-icon>
-        <span>Reward History</span>
+        <span>{{ $t('views.stakingpage.rewardhistory') }}</span>
       </v-toolbar-title>
     </v-toolbar>
 

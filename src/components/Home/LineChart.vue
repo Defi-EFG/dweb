@@ -5,16 +5,26 @@ export default {
   extends: Line,
   data() {
     return {
-      title: ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct'],
       chartData: {
-        labels: [this.title],
+        labels: ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct'],
         datasets: [
           {
-            label: 'Line Chart',
-            data: [1.6, 3, 2, 2.3, 2.1, 2],
-            borderColor: '#ffffff',
-            backgroundColor: '#a346ff3b',
-            borderWidth: 2
+            label: 'Trinity',
+            borderColor: '#FC2525',
+            pointBackgroundColor: 'white',
+            borderWidth: 1,
+            pointBorderColor: 'white',
+            backgroundColor: '#360d6a',
+            data: [40, 39, 10, 40, 45, 80, 40]
+          },
+          {
+            label: 'Insight',
+            borderColor: '#05CBE1',
+            pointBackgroundColor: 'white',
+            pointBorderColor: 'white',
+            borderWidth: 1,
+            backgroundColor: '#360d6a',
+            data: [60, 55, 32, 10, 2, 12, 53]
           }
         ]
       },
@@ -39,7 +49,7 @@ export default {
           ]
         },
         legend: {
-          display: false
+          display: true
         },
         responsive: true,
         maintainAspectRatio: false

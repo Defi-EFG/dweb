@@ -1,7 +1,7 @@
 <template>
   <v-tabs grow :hide-slider="true" background-color="#17181C" dark class="cw-tabs">
-    <v-tab>Collateral</v-tab>
-    <v-tab>Withdraw</v-tab>
+    <v-tab>{{ $t('views.lendingpage.collateral') }}</v-tab>
+    <v-tab>{{ $t('views.lendingpage.withdraw') }}</v-tab>
 
     <v-tab-item class="cw-tabs-item">
       <Collateral

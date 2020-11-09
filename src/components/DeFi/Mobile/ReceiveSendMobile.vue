@@ -1,7 +1,13 @@
 <template>
   <v-tabs show-arrows grow background-color="#2F3446" dark class="rs-tabs">
-    <v-tab><v-icon class="mr-2">mdi-arrow-down-circle-outline</v-icon> Receive</v-tab>
-    <v-tab><v-icon class="mr-2">mdi-arrow-up-circle-outline</v-icon> Send</v-tab>
+    <v-tab
+      ><v-icon class="mr-2">mdi-arrow-down-circle-outline</v-icon
+      >{{ $t('views.walletpage.receive') }}</v-tab
+    >
+    <v-tab
+      ><v-icon class="mr-2">mdi-arrow-up-circle-outline</v-icon>
+      {{ $t('views.walletpage.send') }}</v-tab
+    >
 
     <v-tab-item class="rs-tabs-item">
       <div v-if="!address" class="empty-div"></div>
@@ -13,7 +19,7 @@
         ></VueQrcode>
       </div>
       <div class="address-area">
-        <p class="addr-label">ECOC Wallet Address:</p>
+        <p class="addr-label">ECOC {{ $t('views.walletpage.address') }}</p>
         <div class="copyable-addr">
           <div class="text-truncate addr">{{ address }}</div>
           <v-btn icon small dark class="copy" @click="copyAddress(address)">
@@ -31,13 +37,15 @@
     <v-tab-item class="rs-tabs-item">
       <div class="text-center send-area">
         <div class="token-balance">
-          <span class="text-left">{{ selectedCurrencyName }} Balance</span>
+          <span class="text-left"
+            >{{ selectedCurrencyName }} {{ $t('views.walletpage.balance') }}</span
+          >
           <v-spacer></v-spacer>
           <span class="text-right">{{ selectedCurrencyBalance }} {{ selectedCurrencyName }}</span>
         </div>
         <v-text-field
           dark
-          label="To Address"
+          :label="walletpage.to_Address"
           class="to-address-field"
           single-line
           solo
@@ -75,16 +83,19 @@
           dark
           class="withdraw-amount"
           placeholder="0"
-          prefix="Amount"
+          :prefix="walletpage.amount"
           v-model="amount"
           :suffix="selectedCurrencyName"
           single-line
           solo
           hide-details="true"
         ></v-text-field>
-        <v-btn dark depressed block large class="send-btn" @click="onOpenModal()">Send</v-btn>
+        <v-btn dark depressed block large class="send-btn" @click="onOpenModal()">{{
+          $t('views.walletpage.send')
+        }}</v-btn>
         <TransactionComfirmationModal
           :visible="confirmTxModal"
+          :fromAddr="address"
           :toAddr="toAddr"
           :amount="amount"
           :currency="selectedCurrency"
@@ -158,6 +169,10 @@ export default class ReceiveSendMobile extends Vue {
 
   get address() {
     return this.walletStore.address || ''
+  }
+
+  get walletpage() {
+    return this.$t('views.walletpage')
   }
 
   selectAddress(addr: string) {

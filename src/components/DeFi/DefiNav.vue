@@ -7,7 +7,8 @@
           @click="menuSelect(index)"
           :class="{ selected: index === activePage }"
         >
-          <img :src="index === activePage ? item.iconClicked : item.icon" /> {{ item.page }}
+          <img :src="index === activePage ? item.iconClicked : item.icon" />
+          <div class="menu_width">{{ item.title }}</div>
         </div>
       </div>
     </v-card-text>
@@ -23,16 +24,19 @@ export default class DefiNav extends Vue {
   activePage = 0
   items = [
     {
+      title: this.$t('views.wallet'),
       page: 'wallet',
       icon: require('@/assets/icon/wallet-w.svg'),
       iconClicked: require('@/assets/icon/wallet.svg')
     },
     {
+      title: this.$t('views.lending'),
       page: 'lending',
       icon: require('@/assets/icon/lending-w.svg'),
       iconClicked: require('@/assets/icon/lending.svg')
     },
     {
+      title: this.$t('views.staking'),
       page: 'staking',
       icon: require('@/assets/icon/staking-w.svg'),
       iconClicked: require('@/assets/icon/staking.svg')
@@ -74,6 +78,9 @@ export default class DefiNav extends Vue {
   }
 }
 
+.menu_width {
+  width: 57px;
+}
 .defi-menu {
   display: flex;
   padding: 0.75rem 2.4rem;

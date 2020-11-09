@@ -3,7 +3,7 @@
     <v-toolbar class="contact-address-head" flat dense>
       <v-toolbar-title>
         <v-icon class="head-icon">mdi-book-variant</v-icon>
-        <span>Contact Address</span>
+        <span>{{ $t('views.walletpage.contact_address') }}</span>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>

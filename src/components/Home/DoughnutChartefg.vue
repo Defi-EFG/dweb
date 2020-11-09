@@ -27,8 +27,8 @@ import Chart from 'chart.js'
 export default class StakingChart extends Vue {
   token = 'EFG - Total Supply'
   token2 = 'EFG - Total Borrowed'
-  max = 418940265
-  currentValue = 130561041
+  max = 4189402.65
+  currentValue = 130561.041
 
   mounted() {
     this.renderChart(this.ctx, this.max, this.currentValue)
