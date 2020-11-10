@@ -128,6 +128,7 @@
                   <template v-if="showPrivateKetTextfield">
                     <div class="private-key-feild">
                       <v-textarea
+                        ref="openprivate"
                         rows="2"
                         auto-grow
                         label="Create Wallet With PrivateKey"
@@ -193,6 +194,7 @@
               </div>
             </v-card>
           </v-stepper-content>
+
           <!-- Connect ECOC Wallet-->
           <v-stepper-content step="4">
             <v-card class="rounded-lg">
@@ -204,6 +206,7 @@
                   <v-icon>$close</v-icon>
                 </v-btn>
               </v-card-title>
+
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
                   <h3 class="primary--text">
@@ -214,6 +217,7 @@
                 <template>
                   <div class="upload_input">
                     <v-textarea
+                      ref="uploadkeystoreRef"
                       filled
                       :label="modal.your_keystore"
                       outlined
@@ -221,7 +225,6 @@
                       required
                       :rules="[rules.required]"
                     ></v-textarea>
-
                     <text-reader @load="keystore = $event"></text-reader>
 
                     <div class="errorMsg" v-if="errorMsg2">
@@ -279,6 +282,7 @@
                 </div>
                 <template>
                   <v-text-field
+                    ref="keystorePasswordRef"
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                     name="input-10-1"
                     :type="show ? 'text' : 'password'"
@@ -372,7 +376,13 @@ export default class UnlockwalletModal extends Vue {
     this.unlockwalletModal = this.visible
   }
   toStep(step: any) {
-    return (this.step = step)
+    this.step = step
+    if (this.step === 5) {
+      const keystorePassword: any = this.$refs.keystorePasswordRef
+      this.$nextTick(() => {
+        keystorePassword.focus()
+      })
+    }
   }
   clearData() {
     this.keystore = ''
@@ -388,7 +398,7 @@ export default class UnlockwalletModal extends Vue {
   }
 
   onClose() {
-    this.step = 1
+    this.toStep(1)
     this.$emit('onClose')
   }
 
@@ -429,17 +439,16 @@ export default class UnlockwalletModal extends Vue {
             password
           })
           .then(keystore => {
-            if (keystore instanceof Error) {
-              this.toStep(2)
-              this.errorPrivatekey = keystore.message
-            } else {
+            this.createWalletKeystore = keystore as string
+            this.loading = true
+            setTimeout(() => {
               this.createWalletKeystore = keystore as string
-              this.loading = true
-              setTimeout(() => {
-                this.createWalletKeystore = keystore as string
-                this.loading = false
-              }, 1500)
-            }
+              this.loading = false
+            }, 1500)
+          })
+          .catch(error => {
+            this.toStep(2)
+            this.errorPrivatekey = error.message
           })
       }
     }
@@ -453,7 +462,7 @@ export default class UnlockwalletModal extends Vue {
     try {
       const obj = JSON.parse(this.keystore)
       if ('version' in obj && 'content' in obj && 'crypto' in obj) {
-        this.step = 5
+        this.toStep(5)
       } else {
         this.errormsg = 'Wrong format of keystore text'
       }
