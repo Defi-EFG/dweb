@@ -11,6 +11,7 @@
     <v-text-field
       class="amount-input"
       label="Withdrawal Amount"
+      placeholder="0"
       :suffix="currencyName"
       v-model="withdrawValue"
       height="43"
@@ -44,7 +45,7 @@
       <div class="text-left">Borrow Limit</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowLimit }}</span>
+        <span>${{ borrowLimit.toFixed(2) }}</span>
         &rarr;
         <span class="after-calculated">${{ calculateTotalBP(withdrawValue).toFixed(2) }}</span>
       </div>
@@ -102,7 +103,7 @@ export default class Withdraw extends Vue {
 
   val = 25
   minVal = 25
-  withdrawValue = 0
+  withdrawValue: number | string = ''
 
   get myCollateral() {
     return this.lendingStore.myCollateralAssets
@@ -134,11 +135,11 @@ export default class Withdraw extends Vue {
   }
 
   get bpUsed() {
-    return ((this.borrowBalance / this.borrowLimit) * 100) | 0
+    return (this.borrowBalance / this.borrowLimit) * 100 || 0
   }
 
   get tokenConversion() {
-    return `${this.withdrawValue} ${this.currencyName} ≈ ${this.currencyPrice *
+    return `${Number(this.withdrawValue)} ${this.currencyName} ≈ $${this.currencyPrice *
       Number(this.withdrawValue)}`
   }
 

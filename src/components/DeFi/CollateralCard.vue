@@ -11,6 +11,7 @@
     <v-text-field
       class="amount-input"
       label="Collateral Amount"
+      placeholder="0"
       :suffix="currencyName"
       height="43"
       color="#C074F9"
@@ -44,7 +45,7 @@
       <div class="text-left">Borrow Limit</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowLimit }}</span>
+        <span>${{ borrowLimit.toFixed(2) }}</span>
         &rarr;
         <span class="after-calculated">${{ calculateTotalBP(collateralAmount).toFixed(2) }}</span>
       </div>
@@ -94,7 +95,7 @@ export default class Collateral extends Vue {
   @Prop() borrowPowerPercentage!: number
 
   collateralmodel = false
-  collateralAmount: number | string = 0
+  collateralAmount: number | string = ''
 
   openCollateralmodals() {
     this.collateralmodel = !this.collateralmodel
@@ -126,11 +127,11 @@ export default class Collateral extends Vue {
   }
 
   get bpUsed() {
-    return ((this.borrowBalance / this.borrowLimit) * 100) | 0
+    return (this.borrowBalance / this.borrowLimit) * 100 || 0
   }
 
   get tokenConversion() {
-    return `${this.collateralAmount} ${this.currencyName} ≈ $${this.currencyPrice *
+    return `${Number(this.collateralAmount)} ${this.currencyName} ≈ $${this.currencyPrice *
       Number(this.collateralAmount)}`
   }
 
@@ -161,11 +162,12 @@ export default class Collateral extends Vue {
     const isEnough = amount <= this.walletBalance
     const isValidAmount = amount >= 0
     const isClickable = amount > 0
+    const isNotBorrowedYet = this.borrowBalance <= 0
 
     if (type === 'error') {
-      return isEnough && isClickable
+      return isEnough && isClickable && isNotBorrowedYet
     }
-    return isEnough && isValidAmount
+    return isEnough && isValidAmount && isNotBorrowedYet
   }
 }
 </script>

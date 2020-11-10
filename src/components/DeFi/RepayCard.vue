@@ -19,6 +19,7 @@
     <v-text-field
       class="amount-input"
       label="Repay Amount"
+      placeholder="0"
       v-model="repayAmount"
       :suffix="currencyName"
       type="number"
@@ -114,7 +115,7 @@ export default class RepayCard extends Vue {
   loading = false
   errorMsg = ''
   loadingMsg = 'Currency Approving...'
-  repayAmount = 0
+  repayAmount: number | string = ''
 
   get contractAddr() {
     return this.lendingStore.address
@@ -141,11 +142,11 @@ export default class RepayCard extends Vue {
   }
 
   get bpUsed() {
-    return ((this.borrowBalance / this.borrowLimit) * 100) | 0
+    return (this.borrowBalance / this.borrowLimit) * 100 || 0
   }
 
   get tokenConversion() {
-    return `${this.repayAmount} ${this.currencyName} ≈ ${this.currencyPrice *
+    return `${Number(this.repayAmount)} ${this.currencyName} ≈ $${this.currencyPrice *
       Number(this.repayAmount)}`
   }
 

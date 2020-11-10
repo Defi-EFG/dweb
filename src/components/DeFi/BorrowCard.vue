@@ -9,6 +9,7 @@
     <v-text-field
       class="amount-input"
       label="Borrow Amount"
+      placeholder="0"
       type="number"
       :suffix="currencyName"
       v-model="borrowValue"
@@ -110,7 +111,7 @@ export default class BorrowCard extends Vue {
   @Prop() borrowPowerPercentage!: number
 
   bpSlider = 0
-  borrowValue = 0
+  borrowValue: number | string = ''
 
   errorMsg = ''
   confirmTxModal = false
@@ -140,17 +141,17 @@ export default class BorrowCard extends Vue {
   }
 
   get bpUsed() {
-    return ((this.borrowBalance / this.borrowLimit) * 100) | 0
+    return (this.borrowBalance / this.borrowLimit) * 100 || 0
   }
 
   get tokenConversion() {
-    return `${this.borrowValue | 0} ${this.currencyName} ≈ ${(this.currencyPrice *
+    return `${Number(this.borrowValue) || 0} ${this.currencyName} ≈ $${(this.currencyPrice *
       Number(this.borrowValue)) |
       0}`
   }
 
   get totalBorrowed() {
-    return (this.borrowBalance + this.borrowValue * this.currencyPrice) | 0
+    return (this.borrowBalance + Number(this.borrowValue) * this.currencyPrice) | 0
   }
 
   get safeLimit() {
