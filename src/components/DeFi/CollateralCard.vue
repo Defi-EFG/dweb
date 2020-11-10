@@ -115,7 +115,10 @@ export default class Collateral extends Vue {
   }
 
   get walletBalance() {
-    return Number(this.currency.balance)
+    const walletB = this.walletStore.currencies.find(currency => {
+      return currency.name === this.currencyName
+    })
+    return walletB?.balance
   }
 
   get currencyName() {
@@ -159,7 +162,8 @@ export default class Collateral extends Vue {
   }
 
   isCollateralable(amount: number, type: string) {
-    const isEnough = amount <= this.walletBalance
+    const balance = Number(this.walletBalance) || this.currency.balance
+    const isEnough = amount <= balance
     const isValidAmount = amount >= 0
     const isClickable = amount > 0
     const isNotBorrowedYet = this.borrowBalance <= 0

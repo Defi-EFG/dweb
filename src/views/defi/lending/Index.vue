@@ -154,6 +154,9 @@ export default class Lending extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
 
+  selectedCollateralFactor = this.collateralList[0].collateralFactor
+  selectedCurrency = this.collateralList[0].currency
+
   mode = 'collateral'
 
   get isLoggedIn(): boolean {
@@ -226,14 +229,6 @@ export default class Lending extends Vue {
       })
   }
 
-  get selectedCollateralFactor() {
-    return this.collateralList[0].collateralFactor
-  }
-
-  get selectedCurrency() {
-    return this.collateralList[0].currency
-  }
-
   getCurrencyPrice(currencyName: string): number {
     const currency = this.walletStore.currencies.find(currency => currency.name === currencyName)
     if (!currency) return 0
@@ -268,10 +263,6 @@ export default class Lending extends Vue {
 
   onActivate(data: boolean) {
     return data
-  }
-
-  mounted() {
-    //
   }
 }
 </script>
