@@ -21,7 +21,8 @@
                 <span>{{ $t('views.stakingpage.yourbalance') }}</span>
                 <v-spacer></v-spacer>
                 <span class="text-right"
-                  >{{ balance | numberWithCommas({ fixed: [0, 2] })}} {{ stakingCurrencyName }}</span
+                  >{{ balance | numberWithCommas({ fixed: [0, 2] }) }}
+                  {{ stakingCurrencyName }}</span
                 >
               </div>
 
@@ -99,7 +100,8 @@
     </v-card>
     <TransactionComfirmationModal
       :visible="confirmTxModal"
-      :toAddr="contractAddr"
+      :fromAddr="fromAddr"
+      :toAddr="toAddr"
       :amount="amount"
       :currency="currency"
       @onConfirm="onConfirm"
@@ -143,6 +145,9 @@ export default class DepositWithdraw extends Vue {
   loadingMsg = ''
   errorMsg = ''
 
+  fromAddr = ''
+  toAddr = ''
+
   depositAmount: string | number = ''
   withdrawAmount: string | number = ''
 
@@ -154,6 +159,10 @@ export default class DepositWithdraw extends Vue {
     )
 
     return stakingCurrency || {}
+  }
+
+  get walletAddr() {
+    return this.walletStore.address
   }
 
   get contractAddr() {
@@ -184,15 +193,21 @@ export default class DepositWithdraw extends Vue {
     if (type === this.TYPE_DEPOSIT) {
       this.actionType = type
       this.amount = this.depositAmount
+      this.fromAddr = this.walletAddr
+      this.toAddr = this.contractAddr
     } else if (type === this.TYPE_WITHDRAW) {
       this.actionType = type
       this.amount = this.withdrawAmount
+      this.fromAddr = this.contractAddr
+      this.toAddr = this.walletAddr
     }
 
     this.confirmTxModal = !this.confirmTxModal
   }
 
   closeConfirmTxModal() {
+    this.fromAddr = ''
+    this.toAddr = ''
     this.amount = 0
     this.depositAmount = 0
     this.withdrawAmount = 0

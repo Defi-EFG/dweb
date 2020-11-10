@@ -18,6 +18,7 @@
         >
       </div>
       <v-text-field
+        ref="toAddrRef"
         :label="walletpage.to_Address"
         class="to-address-field"
         single-line
@@ -61,6 +62,7 @@
         }}</span>
       </div>
       <v-text-field
+        ref="amountRef"
         class="withdraw-amount"
         placeholder="0"
         :prefix="walletpage.amount"
@@ -76,6 +78,7 @@
       }}</v-btn>
       <TransactionComfirmationModal
         :visible="confirmTxModal"
+        :fromAddr="fromAddr"
         :toAddr="toAddr"
         :amount="amount"
         :currency="selectedCurrency"
@@ -127,6 +130,10 @@ export default class SendToken extends Vue {
     }
   ]
 
+  get fromAddr() {
+    return this.walletStore.address || ''
+  }
+
   get isWalletReady() {
     return this.walletStore.isWalletUnlocked
   }
@@ -165,9 +172,19 @@ export default class SendToken extends Vue {
   }
 
   onOpenModal() {
-    if (this.toAddr && this.amount) {
-      this.confirmTxModal = !this.confirmTxModal
+    if (!this.toAddr) {
+      const toAddrRef: any = this.$refs.toAddrRef
+      toAddrRef.focus()
+      return false
     }
+
+    if (!this.amount) {
+      const amountRef: any = this.$refs.amountRef
+      amountRef.focus()
+      return false
+    }
+
+    this.confirmTxModal = !this.confirmTxModal
   }
 
   closeModal() {

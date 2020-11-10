@@ -23,10 +23,7 @@
           <span>{{ item.currency.name }}</span>
         </v-col>
         <v-col cols="5" class="balance">
-          <span
-            >{{ Number(item.currency.balance) | numberWithCommas({ fixed: [0, 8] }) }}
-            {{ item.currency.name }}</span
-          >
+          <span>{{ Number(item.currency.balance) | numberWithCommas({ fixed: [0, 8] }) }}</span>
         </v-col>
         <v-col cols="3" class="collateral">
           <div class="collateral-status" :class="item.activated ? 'activated' : ''"></div>

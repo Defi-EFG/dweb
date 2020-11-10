@@ -26,10 +26,7 @@
           <span>{{ item.apy }}%</span>
         </v-col>
         <v-col cols="4" class="balance">
-          <span
-            >{{ Number(item.currency.balance) | numberWithCommas({ fixed: [0, 8] }) }}
-            {{ item.currency.name }}</span
-          >
+          <span>{{ Number(item.currency.balance) | numberWithCommas({ fixed: [0, 8] }) }}</span>
         </v-col>
       </v-row>
     </v-card-text>

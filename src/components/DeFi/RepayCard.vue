@@ -75,6 +75,7 @@
     >
     <TransactionComfirmationModal
       :visible="confirmTxModal"
+      :fromAddr="walletAddr"
       :toAddr="contractAddr"
       :amount="repayAmount"
       :currency="currency"
@@ -115,6 +116,10 @@ export default class RepayCard extends Vue {
   errorMsg = ''
   loadingMsg = 'Currency Approving...'
   repayAmount = 0
+
+  get walletAddr() {
+    return this.walletStore.address
+  }
 
   get contractAddr() {
     return this.lendingStore.address

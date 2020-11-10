@@ -375,10 +375,11 @@ import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import * as constants from '@/constants'
 import { copyToClipboard } from '@/services/utils'
+
 @Component({
   components: {}
 })
-export default class Collmodeldiposit extends Vue {
+export default class CollateralDeposit extends Vue {
   @Prop() visible!: boolean
   @Prop({ default: {} }) currency!: Currency
   @Prop() amount!: number
@@ -444,7 +445,7 @@ export default class Collmodeldiposit extends Vue {
   get modaltext() {
     return this.$t('views.modal')
   }
-  
+
   @Watch('visible')
   checkPoolAddress(value: boolean) {
     if (value) {
