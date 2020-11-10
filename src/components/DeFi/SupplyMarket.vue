@@ -26,7 +26,7 @@
           <span>{{ item.apy }}%</span>
         </v-col>
         <v-col cols="4" class="balance">
-          <span>{{ item.currency.balance }} {{ item.currency.name }}</span>
+          <span>{{ item.currency.balance }}</span>
         </v-col>
       </v-row>
     </v-card-text>
