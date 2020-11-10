@@ -88,6 +88,8 @@ export default {
   color: #ffffff;
   position: relative;
   margin-bottom: 30px;
+  display: flex;
+  align-items: center;
 }
 .logo_ecoc_m {
   border-radius: 50%;
@@ -100,17 +102,15 @@ export default {
 }
 .logo_ecoc .logo_ecoc_m_text {
   position: relative;
-  display: inline;
   text-align: center;
-  font: normal normal normal 35px/58px Segoe UI;
+  font-size: 25px;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
-  top: -8px;
   margin-left: 10px;
 }
 .logo_ecoc .logo_ecoc_m_text span {
-  font: normal normal 400 30px/54px Segoe UI;
+  font-size: 23px;
   font-weight: 300;
 }
 .m_titel {

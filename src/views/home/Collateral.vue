@@ -8,21 +8,22 @@
               <v-row>
                 <v-col cols="12" style="padding:0px">
                   <div class="logo_ecoc">
-                    <img class="logo_ecoc_m" width="40" src="@/assets/efg_02.svg" alt="" />
+                    <img
+                      class="logo_ecoc_m"
+                      width="40"
+                      :src="require(`@/assets/${$route.params.name}.svg`)"
+                      alt=""
+                    />
                     <div class="logo_ecoc_m_text">
-                      {{ $route.query.name }} <span>- Market Details</span>
+                      {{ $route.params.name }} <span>- Market Details</span>
                     </div>
                   </div>
                 </v-col>
                 <v-col cols="9" class="efg_border1">
-                  <div class="m_titel">Borrow APY</div>
                   <div class="m_titel">Liquidation</div>
-                  <div class="m_titel">Number of Borrowers</div>
                   <div class="m_titel">Collateral Factor</div>
                 </v-col>
                 <v-col cols="3" class="efg_border1">
-                  <div class="m_titel m_titel_2">3.5%</div>
-                  <div class="m_titel m_titel_2">841</div>
                   <div class="m_titel m_titel_2">841</div>
                   <div class="m_titel m_titel_2">80%</div>
                 </v-col>
@@ -62,11 +63,7 @@ import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
     DoughnutChart
   }
 })
-export default class Efg extends Vue {
-  mounted() {
-    console.log(this.$route.query.name)
-  }
-}
+export default class Efg extends Vue {}
 </script>
 
 <style scoped lang="scss">
@@ -105,6 +102,8 @@ export default class Efg extends Vue {
   color: #ffffff;
   position: relative;
   margin-bottom: 30px;
+  display: flex;
+  align-items: center;
 }
 .logo_ecoc_m {
   border-radius: 50%;
@@ -117,13 +116,11 @@ export default class Efg extends Vue {
 }
 .logo_ecoc .logo_ecoc_m_text {
   position: relative;
-  display: inline;
   text-align: center;
-  font: normal normal normal 35px/58px Segoe UI;
+  font-size: 25px;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
-  top: -8px;
   margin-left: 10px;
 }
 
@@ -132,7 +129,7 @@ export default class Efg extends Vue {
   border-top: 1px solid #ffffff;
 }
 .logo_ecoc .logo_ecoc_m_text span {
-  font: normal normal 400 30px/54px Segoe UI;
+  font-size: 23px;
   font-weight: 300;
 }
 .m_titel {

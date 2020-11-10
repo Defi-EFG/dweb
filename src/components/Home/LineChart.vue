@@ -1,63 +1,123 @@
-<script>
-import { Line } from 'vue-chartjs'
+<template>
+  <div>
+    <v-container>
+      <v-row>
+        <v-col cols="12">
+          <div class="chart_view">
+            <template>
+              <canvas :id="$route.params.name"></canvas>
+            </template>
+          </div>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
+</template>
 
-export default {
-  extends: Line,
-  data() {
-    return {
-      chartData: {
-        labels: ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct'],
+<script lang="ts">
+import { Vue, Component } from 'vue-property-decorator'
+import Chart from 'chart.js'
+
+@Component({})
+export default class LineChart extends Vue {
+  active = 'Borrow'
+  name = 'Borrow'
+  title = 'Borrow'
+
+  finul = 1
+  txt = ''
+  myChart = null
+  labelSet = ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct']
+  dataSet = [1.6, 2.2, 2, 2.3, 2.1, 2]
+
+  get ctx() {
+    return document.getElementById(this.$route.params.name)
+  }
+
+  mounted() {
+    Chart.defaults.global.legend.display = false
+    if (this.ctx) {
+      this.renderChart(this.ctx, this.labelSet, this.dataSet)
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    // const self = this
+    // setInterval(function() {
+    //   self.finul++
+    //   self.txt = self.finul + ' txt'
+    //   self.dataSet.push(self.finul)
+    //   self.labelSet.push(self.txt)
+    //   self.renderChart(self.ctx!, self.labelSet, self.dataSet)
+    // }, 20000)
+  }
+
+  renderChart(element: HTMLElement, labelSet: any[], dataSet: any[]) {
+    this.myChart = new Chart(element, {
+      type: 'line',
+      data: {
+        labels: labelSet,
         datasets: [
           {
-            label: 'Trinity',
-            borderColor: '#FC2525',
-            pointBackgroundColor: 'white',
+            borderColor: '#ffffff',
+            backgroundColor: '#a346ff3b',
             borderWidth: 1,
-            pointBorderColor: 'white',
-            backgroundColor: '#360d6a',
-            data: [40, 39, 10, 40, 45, 80, 40]
-          },
-          {
-            label: 'Insight',
-            borderColor: '#05CBE1',
-            pointBackgroundColor: 'white',
-            pointBorderColor: 'white',
-            borderWidth: 1,
-            backgroundColor: '#360d6a',
-            data: [60, 55, 32, 10, 2, 12, 53]
+            lineTension: 0,
+            fill: true,
+            pointBackgroundColor: '#141721',
+            pointBorderWidth: 0.1,
+            pointHoverRadius: 5,
+            pointBorderColor: '#141721',
+            pointHoverBackgroundColor: '#141721',
+            pointHoverBorderColor: '#141721',
+            pointRadius: 0.1,
+            pointStyle: 'rect',
+            data: dataSet
           }
         ]
       },
       options: {
         scales: {
-          yAxes: [
+          xAxes: [
             {
               ticks: {
-                beginAtZero: true
-              },
-              gridLines: {
-                display: true
+                beginAtZero: true,
+                maxTicksLimit: 10
               }
             }
           ],
-          xAxes: [
+          yAxes: [
             {
-              gridLines: {
-                display: false
+              ticks: {
+                autoSkip: true,
+                maxTicksLimit: 10,
+                userCallback: function(value: any) {
+                  return value.toLocaleString()
+                }
               }
             }
           ]
         },
-        legend: {
-          display: true
-        },
-        responsive: true,
-        maintainAspectRatio: false
+        animation: {
+          easing: 'easeInOutQuint'
+        }
       }
-    }
-  },
-  mounted() {
-    this.renderChart(this.chartData, this.options)
+    })
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.button-small {
+  padding: 10px 35px;
+  text-align: right;
+  background: #000000 0% 0% no-repeat padding-box;
+  a {
+    padding: 0 5px;
+    color: #ffffff;
+    font-size: 14px;
+  }
+  .active {
+    border-bottom: 3px solid #c074f9;
+  }
+}
+</style>

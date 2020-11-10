@@ -5,7 +5,7 @@
         <v-col cols="12">
           <div class="chart_view">
             <template>
-              <canvas :id="efgchart"></canvas>
+              <canvas :id="$route.params.name"></canvas>
             </template>
           </div>
         </v-col>
@@ -15,26 +15,23 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, PropSync } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator'
 import Chart from 'chart.js'
 
 @Component({})
 export default class LineChart extends Vue {
-  @PropSync('id', { type: String }) readonly idNumber!: number
-
   active = 'Borrow'
   name = 'Borrow'
   title = 'Borrow'
 
   finul = 1
   txt = ''
-  efgchart = `graph${this.idNumber}`
   myChart = null
   labelSet = ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct']
   dataSet = [1.6, 2.2, 2, 2.3, 2.1, 2]
 
   get ctx() {
-    return document.getElementById(this.efgchart)
+    return document.getElementById(this.$route.params.name)
   }
 
   mounted() {

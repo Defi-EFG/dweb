@@ -187,7 +187,7 @@
           <v-col lg="3" md="3" cols="6" class="Staking_dt">
             <div class="supply_button2">
               <!-- <a href="delay"> -->
-              <a href="gpt/staking-info/"
+              <a :href="`gpt/staking-info/${GPT}`"
                 ><button>{{ $t('views.main.detail') }}</button></a
               >
               <!-- </a> -->
@@ -214,7 +214,7 @@
             <a
               v-for="(collateral, index) in collateral"
               :key="index"
-              :href="`collateral-info/${collateral.currencyName}?name=${collateral.currencyName}`"
+              :href="`collateral-info/${collateral.currencyName}`"
             >
               <span class="but_div"
                 ><img :src="getCurrencyIcon(collateral.currencyName)" class="img_text_but" alt="" />
@@ -267,6 +267,7 @@ export default class Main extends Vue {
   lendingStore = getModule(LendingModule)
   stakingStore = getModule(StakingModule)
 
+  GPT = 'GPT'
   active = 'EFG'
   name = 'EFG'
 

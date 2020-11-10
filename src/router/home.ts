@@ -39,7 +39,7 @@ const homeRoutes: Array<RouteConfig> = [
         }
       },
       {
-        path: 'gpt/staking-info',
+        path: 'gpt/staking-info/:name',
         name: 'home-Gpt',
         component: Gpt,
         meta: {
@@ -47,7 +47,7 @@ const homeRoutes: Array<RouteConfig> = [
         }
       },
       {
-        path: 'Efg/loan-info/:Loaner',
+        path: 'Efg/loan-info/:name',
         name: 'home-Efg',
         component: Efg,
         meta: {
