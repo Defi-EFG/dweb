@@ -405,37 +405,43 @@ export default class UnlockwalletModal extends Vue {
     const wif = this.privatekey
 
     if (wif === '') {
-      this.walletStore.createNewWallet(password).then(keystore => {
-        this.createWalletKeystore = keystore
+      if (password.length < 6 || password != this.confirmPassword) {
         this.toStep(2)
-        this.loading = true
-      })
+      } else {
+        this.walletStore.createNewWallet(password).then(keystore => {
+          this.createWalletKeystore = keystore
+          this.loading = true
+          this.toStep(3)
+          setTimeout(() => {
+            this.createWalletKeystore = keystore as string
+            this.loading = false
+          }, 1500)
+        })
+      }
     } else {
-      if (password.length < 6) {
-        this.toStep(2)
-      } else if (password != this.confirmPassword) {
+      if (password.length < 6 || password != this.confirmPassword) {
         this.toStep(2)
       } else {
         this.toStep(3)
-        this.loading = true
-      }
-      this.walletStore
-        .keystoreFromWiff({
-          wif,
-          password
-        })
-        .then(keystore => {
-          if (keystore instanceof Error) {
-            this.toStep(2)
-            this.errorPrivatekey = keystore.message
-          } else {
-            this.createWalletKeystore = keystore as string
-            setTimeout(() => {
+        this.walletStore
+          .keystoreFromWiff({
+            wif,
+            password
+          })
+          .then(keystore => {
+            if (keystore instanceof Error) {
+              this.toStep(2)
+              this.errorPrivatekey = keystore.message
+            } else {
               this.createWalletKeystore = keystore as string
-              this.loading = false
-            }, 1500)
-          }
-        })
+              this.loading = true
+              setTimeout(() => {
+                this.createWalletKeystore = keystore as string
+                this.loading = false
+              }, 1500)
+            }
+          })
+      }
     }
   }
 
