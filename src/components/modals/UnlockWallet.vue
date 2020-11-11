@@ -302,7 +302,7 @@
                     <span>{{ errorMsg }}</span>
                   </div>
                   <div class="action-wrapper">
-                    <v-btn large class="mb-5" color="primary" @click="onUnlockWallet">
+                    <v-btn large class="mb-5" color="primary" @click="onUnlockWallet()">
                       <h4 class="text-capitalize font-weight-light">Connect</h4>
                     </v-btn>
                   </div>
@@ -472,20 +472,19 @@ export default class UnlockwalletModal extends Vue {
   }
 
   async onUnlockWallet() {
-    try {
-      const keystore = this.keystore
-      const password = this.keystorePassword
-      this.walletStore
-        .importWallet({
-          keystore,
-          password
-        })
-        .then(() => {
-          this.onCloseX()
-        })
-    } catch (error) {
-      this.errorMsg = error.message
-    }
+    const keystore = this.keystore
+    const password = this.keystorePassword
+    this.walletStore
+      .importWallet({
+        keystore,
+        password
+      })
+      .then(() => {
+        this.onCloseX()
+      })
+      .catch(error => {
+        this.errorMsg = error.message
+      })
   }
 
   getFormattedTime() {
