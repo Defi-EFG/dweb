@@ -36,7 +36,7 @@ export const getEcocTotalFee = (
 
 export const getEstimatedValue = (amount: number | string, price: number | string) => {
   if (!price) return 0
-  return new BigNumber(amount).multipliedBy(new BigNumber(price)).toFixed(6)
+  return new BigNumber(amount).multipliedBy(new BigNumber(price))
 }
 
 export const copyToClipboard = (text: string) => {
