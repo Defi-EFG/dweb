@@ -6,12 +6,17 @@
         <v-tab>{{ $t('views.lendingpage.my_borrowing') }}</v-tab>
         <v-tab>{{ $t('views.lendingpage.my_activity') }}</v-tab>
 
-        <v-tab-item class="my-collateral">
-          <v-card dark color="#2e3344">
-            <v-card-text>
-              <div class="supply-header">
-                <div>{{ $t('views.lendingpage.assets') }}</div>
-                <div>{{ $t('views.lendingpage.balance') }}</div>
+      <v-tab-item class="my-collateral">
+        <v-card dark color="#2e3344">
+          <v-card-text v-if="myCollateral.length > 0">
+            <div class="supply-header">
+              <div>{{ $t('views.lendingpage.assets') }}</div>
+              <div>{{ $t('views.lendingpage.balance') }}</div>
+            </div>
+            <div class="supply-item" v-for="(item, index) in myCollateral" :key="index">
+              <div class="assets">
+                <img :src="item.currency.style.icon" />
+                <span>{{ item.currency.name }}</span>
               </div>
               <div class="supply-item" v-for="(item, index) in myCollateral" :key="index">
                 <div class="assets">
@@ -25,17 +30,26 @@
                   <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
                 </div>
               </div>
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
+            </div>
+          </v-card-text>
+          <v-card-text v-else>
+            No collateral assets
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
 
-        <v-tab-item class="my-borrowing">
-          <v-card dark color="#2e3344">
-            <v-card-text>
-              <div class="borrow-header">
-                <div class="mr-3">{{ $t('views.lendingpage.assets') }}</div>
-                <div>{{ $t('views.lendingpage.inrerest_rate') }}</div>
-                <div>{{ $t('views.lendingpage.balance') }}</div>
+      <v-tab-item class="my-borrowing">
+        <v-card dark color="#2e3344">
+          <v-card-text v-if="myBorrowing.length > 0">
+            <div class="borrow-header">
+              <div class="mr-3">{{ $t('views.lendingpage.assets') }}</div>
+              <div>{{ $t('views.lendingpage.inrerest_rate') }}/div>
+              <div>{{ $t('views.lendingpage.balance') }}</div>
+            </div>
+            <div class="borrow-item" v-for="(item, index) in myBorrowing" :key="index">
+              <div class="assets">
+                <img :src="item.currency.style.icon" />
+                <span>{{ item.currency.name }}</span>
               </div>
               <div class="borrow-item" v-for="(item, index) in myBorrowing" :key="index">
                 <div class="assets">
@@ -52,9 +66,13 @@
                   <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
                 </div>
               </div>
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
+            </div>
+          </v-card-text>
+          <v-card-text v-else>
+            No Borrowing assets
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
 
         <v-tab-item class="my-assets">
           <v-card dark color="#2e3344">

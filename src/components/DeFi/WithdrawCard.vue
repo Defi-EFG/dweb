@@ -11,6 +11,7 @@
     <v-text-field
       class="amount-input"
       :label="lendingpage.withdrawalamount"
+      placeholder="0"
       :suffix="currencyName"
       v-model="withdrawValue"
       height="43"
@@ -109,7 +110,7 @@ export default class Withdraw extends Vue {
 
   val = 25
   minVal = 25
-  withdrawValue = 0
+  withdrawValue: number | string = ''
 
   get myCollateral() {
     return this.lendingStore.myCollateralAssets
@@ -145,7 +146,7 @@ export default class Withdraw extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowLimit) * 100
+    return (this.borrowBalance / this.borrowLimit) * 100 || 0
   }
 
   get lendingpage() {
@@ -153,7 +154,7 @@ export default class Withdraw extends Vue {
   }
 
   get tokenConversion() {
-    return `${this.withdrawValue} ${this.currencyName} ≈ ${this.currencyPrice *
+    return `${Number(this.withdrawValue)} ${this.currencyName} ≈ $${this.currencyPrice *
       Number(this.withdrawValue)}`
   }
 
@@ -175,7 +176,7 @@ export default class Withdraw extends Vue {
   }
 
   calculateBPUsed(withdrawAmount: number) {
-    return (this.borrowBalance / this.calculateTotalBP(withdrawAmount)) * 100
+    return ((this.borrowBalance / this.calculateTotalBP(withdrawAmount)) * 100) | 0
   }
 
   isWithdrawable(amount: number, type: string) {

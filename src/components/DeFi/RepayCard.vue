@@ -19,6 +19,7 @@
     <v-text-field
       class="amount-input"
       :label="lendingpage.repayamount"
+      placeholder="0"
       v-model="repayAmount"
       :suffix="currencyName"
       type="number"
@@ -52,7 +53,7 @@
       <div class="text-left">{{ $t('views.lendingpage.total_borrowed') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowBalance }}</span>
+        <span>${{ borrowBalance.toFixed(2) }}</span>
         &rarr;
         <span class="after-calculated">${{ calculateDebt(repayAmount).toFixed(2) }}</span>
       </div>
@@ -115,7 +116,7 @@ export default class RepayCard extends Vue {
   loading = false
   errorMsg = ''
   loadingMsg = 'Currency Approving...'
-  repayAmount = 0
+  repayAmount: number | string = ''
 
   get walletAddr() {
     return this.walletStore.address
@@ -147,14 +148,14 @@ export default class RepayCard extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowLimit) * 100
+    return (this.borrowBalance / this.borrowLimit) * 100 || 0
   }
   get lendingpage() {
     return this.$t('views.lendingpage')
   }
 
   get tokenConversion() {
-    return `${this.repayAmount} ${this.currencyName} ≈ ${this.currencyPrice *
+    return `${Number(this.repayAmount)} ${this.currencyName} ≈ $${this.currencyPrice *
       Number(this.repayAmount)}`
   }
 
@@ -172,7 +173,8 @@ export default class RepayCard extends Vue {
 
   calculateBPUsed(repayAmount: number) {
     const dollarsAmount = Number(repayAmount) * this.currencyPrice
-    return ((this.borrowBalance - dollarsAmount) / this.borrowLimit) * 100
+    const newBpUsed = ((this.borrowBalance - dollarsAmount) / this.borrowLimit) * 100
+    return newBpUsed | 0
   }
 
   isRepayable(amount: number, type: string) {

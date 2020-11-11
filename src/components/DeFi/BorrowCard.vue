@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="borrow-card-wrapper">
     <p class="action-label" v-if="!isMobileDevice">{{ $t('views.lendingpage.borrow') }}</p>
     <div class="wallet-balance">
       <span>{{ $t('views.lendingpage.wallet_bl') }}</span>
@@ -9,6 +9,7 @@
     <v-text-field
       class="amount-input"
       :label="lendingpage.borrowamount"
+      placeholder="0"
       type="number"
       :suffix="currencyName"
       v-model="borrowValue"
@@ -17,7 +18,11 @@
       color="#C074F9"
       :hint="tokenConversion"
       persistent-hint
-    ></v-text-field>
+    >
+      <template v-slot:prepend-inner>
+        <v-btn class="py-4" x-small text @click="safeMaxInput">Safe max</v-btn>
+      </template>
+    </v-text-field>
     <div class="borrow-power">
       <span class="label">{{ $t('views.lendingpage.borrow_po') }}</span>
       <v-slider
@@ -30,8 +35,8 @@
         thumb-color="#E4E4E4"
         :hide-details="true"
         thumb-label
-        @end="limitValue"
-        @click="limitSlider"
+        @end="limitSlider"
+        @click.native="limitSlider"
       ></v-slider>
     </div>
     <div class="borrow-used">
@@ -47,7 +52,7 @@
       <div class="text-left">{{ $t('views.lendingpage.total_borrowed') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowBalance }}</span>
+        <span>${{ borrowBalance.toFixed(2) }}</span>
         &rarr;
         <span class="after-calculated">${{ totalBorrowed.toFixed(2) }}</span>
       </div>
@@ -107,7 +112,7 @@ export default class BorrowCard extends Vue {
   @Prop() borrowPowerPercentage!: number
 
   bpSlider = 0
-  borrowValue = 0
+  borrowValue: number | string = ''
 
   errorMsg = ''
   confirmTxModal = false
@@ -141,16 +146,17 @@ export default class BorrowCard extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowLimit) * 100
+    return (this.borrowBalance / this.borrowLimit) * 100 || 0
   }
 
   get tokenConversion() {
-    return `${this.borrowValue} ${this.currencyName} ≈ ${this.currencyPrice *
-      Number(this.borrowValue)}`
+    return `${Number(this.borrowValue) || 0} ${this.currencyName} ≈ $${(this.currencyPrice *
+      Number(this.borrowValue)) |
+      0}`
   }
 
   get totalBorrowed() {
-    return this.borrowBalance + this.borrowValue * this.currencyPrice
+    return (this.borrowBalance + Number(this.borrowValue) * this.currencyPrice) | 0
   }
 
   get safeLimit() {
@@ -160,7 +166,7 @@ export default class BorrowCard extends Vue {
   get lendingpage() {
     return this.$t('views.lendingpage')
   }
-  // only for click event
+
   limitSlider() {
     if (this.bpSlider < this.bpUsed) {
       this.bpSlider = this.bpUsed
@@ -174,24 +180,11 @@ export default class BorrowCard extends Vue {
     this.borrowValue = Number(this.borrowValue.toFixed(2))
   }
 
-  limitValue(num: number) {
-    if (num < this.bpUsed) {
-      this.bpSlider = this.bpUsed
-    }
-
-    if (num >= this.safeLimit) {
-      this.bpSlider = this.safeLimit
-    }
-
-    this.borrowValue = this.bpPercentToValue(num)
-    this.borrowValue = Number(this.borrowValue.toFixed(2))
-  }
-
   // BP = Borrow Power
   calculateBPUsed(borrowAmount: number) {
     const dollarsAmount = Number(borrowAmount) * this.currencyPrice
     const bpPercent = ((this.borrowBalance + dollarsAmount) / this.borrowLimit) * 100
-    return bpPercent
+    return bpPercent | 0
   }
 
   bpPercentToValue(bp: number) {
@@ -264,6 +257,12 @@ export default class BorrowCard extends Vue {
       .catch(error => {
         this.onError(error.message)
       })
+  }
+
+  safeMaxInput() {
+    this.bpSlider = this.safeLimit
+    this.borrowValue = this.bpPercentToValue(this.bpSlider)
+    this.borrowValue = Number(this.borrowValue.toFixed(2))
   }
 }
 </script>
@@ -396,6 +395,18 @@ export default class BorrowCard extends Vue {
 .borrow-slider {
   .v-slider__thumb-label {
     background-color: #c074f9 !important;
+  }
+}
+
+.borrow-card-wrapper {
+  .v-input__prepend-inner {
+    margin: auto;
+  }
+
+  .v-label {
+    position: relative !important;
+    overflow: unset;
+    margin-left: -5rem;
   }
 }
 </style>

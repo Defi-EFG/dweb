@@ -1,103 +1,100 @@
 <template>
   <div class="dw-wrapper">
-    <v-card dark class="tab-container">
-      <v-tabs grow background-color="#191c26" class="dw-tabs" :hide-slider="true" show-arrows>
+    <v-tabs
+      grow
+      background-color="#191c26"
+      class="dw-tabs elevation-2"
+      :hide-slider="true"
+      show-arrows
+    >
         <v-tab>{{ $t('views.stakingpage.deposit') }}</v-tab>
         <v-tab>{{ $t('views.stakingpage.withdraw') }}</v-tab>
 
-        <v-tab-item>
-          <v-card dark color="#2e3344" class="deposit">
-            <v-card-text class="wrapper">
-              <div class="label pl-3">
-                <img src="@/assets/efg_logo.svg" />
+      <v-tab-item class="deposit-tab">
+        <div class="label pl-3">
+          <img src="@/assets/efg_logo.svg" />
                 <span>{{ stakingCurrencyName }} - {{ $t('views.stakingpage.flexible_s') }}</span>
-              </div>
+        </div>
               <small class="pl-3">
                 {{ $t('views.stakingpage.deposit') }} {{ stakingCurrencyName }}
-                {{ $t('views.stakingpage.to_earn') }} {{ rewardCurrencyName }}</small
-              >
+                {{ $t('views.stakingpage.to_earn') }} {{ rewardCurrencyName }}
+                </small>
 
-              <div class="total-balance">
+        <div class="total-balance">
                 <span>{{ $t('views.stakingpage.yourbalance') }}</span>
-                <v-spacer></v-spacer>
+          <v-spacer></v-spacer>
                 <span class="text-right"
                   >{{ balance | numberWithCommas({ fixed: [0, 2] }) }}
                   {{ stakingCurrencyName }}</span
                 >
-              </div>
+        </div>
 
-              <div class="minimum-d">
+        <div class="minimum-d">
                 <span class="value">{{ $t('views.stakingpage.minimum') }}</span>
-                <v-spacer></v-spacer>
+          <v-spacer></v-spacer>
                 <span class="all" @click="fillAmountDeposit(balance)">{{
                   $t('views.stakingpage.depositall')
                 }}</span>
-              </div>
+        </div>
 
-              <v-text-field
-                type="number"
-                class="deposit-amount"
-                placeholder="0"
+        <v-text-field
+          dark
+          type="number"
+          class="deposit-amount"
+          placeholder="0"
                 :prefix="stakingpage.depositamount"
-                v-model="depositAmount"
-                :suffix="stakingCurrencyName"
-                single-line
-                solo
-                hide-details="true"
-              ></v-text-field>
+          v-model="depositAmount"
+          :suffix="stakingCurrencyName"
+          single-line
+          solo
+          hide-details="true"
+        ></v-text-field>
 
-              <div class="note">
+        <div class="note">
                 <span>{{ $t('views.stakingpage.note') }}</span>
-              </div>
+        </div>
 
-              <v-btn large block class="btn-d" @click="openConfirmTxModal(TYPE_DEPOSIT)">{{
+              <v-btn dark large block class="btn-d" @click="openConfirmTxModal(TYPE_DEPOSIT)">{{
                 $t('views.stakingpage.deposit')
               }}</v-btn>
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
+      </v-tab-item>
 
-        <v-tab-item>
-          <v-card dark color="#2e3344" class="withdraw">
-            <v-card-text class="wrapper">
-              <div class="label pl-3">
+      <v-tab-item class="withdraw-tab">
+        <div class="label pl-3">
                 <span>{{ $t('views.stakingpage.withdraw') }}</span>
-              </div>
+        </div>
               <span class="description">{{ $t('views.stakingpage.pleaseinput') }}</span>
 
-              <div class="d-amount">
+        <div class="d-amount">
                 <span>{{ $t('views.stakingpage.your_sk') }}</span>
-                <v-spacer></v-spacer>
-                <span>{{ stakingAmount.toFixed(2) }} {{ stakingCurrencyName }}</span>
-              </div>
+          <v-spacer></v-spacer>
+          <span>{{ stakingAmount.toFixed(2) }} {{ stakingCurrencyName }}</span>
+        </div>
 
-              <div class="minimum-w">
-                <span class="value">{{ $t('views.stakingpage.minimumwithdrawal') }}</span>
-                <v-spacer></v-spacer>
-                <span class="all" @click="fillAmountWithdraw(stakingAmount)">{{
+        <div class="minimum-w">
+                <small class="value">{{ $t('views.stakingpage.minimumwithdrawal') }}</small>
+          <v-spacer></v-spacer>
+                <small class="all" @click="fillAmountWithdraw(stakingAmount)">{{
                   $t('views.stakingpage.withdraw_All')
-                }}</span>
-              </div>
+                }}</small>
 
-              <v-text-field
-                class="withdrawal-amount"
-                placeholder="0"
-                type="number"
+        <v-text-field
+          dark
+          class="withdrawal-amount"
+          placeholder="0"
+          type="number"
                 :prefix="stakingpage.depositamount"
-                v-model="withdrawAmount"
-                :suffix="stakingCurrencyName"
-                single-line
-                solo
-                hide-details="true"
-              ></v-text-field>
-              <v-btn large block class="btn-w" @click="openConfirmTxModal(TYPE_WITHDRAW)">{{
+          v-model="withdrawAmount"
+          :suffix="stakingCurrencyName"
+          single-line
+          solo
+          hide-details="true"
+        ></v-text-field>
+              <v-btn dark large block class="btn-w" @click="openConfirmTxModal(TYPE_WITHDRAW)">{{
                 $t('views.stakingpage.withdraw')
               }}</v-btn>
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
-      </v-tabs>
-    </v-card>
+      </v-tab-item>
+    </v-tabs>
     <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="fromAddr"
@@ -270,90 +267,99 @@ export default class DepositWithdraw extends Vue {
 <style lang="scss" scoped>
 .dw-wrapper {
   display: flex;
+  background: #2e3344;
   width: -webkit-fill-available;
+  border-radius: 5px;
 }
 
-.tab-container {
-  width: inherit;
-  text-align: left;
+.deposit-tab,
+.withdraw-tab {
+  padding: 16px;
 }
 
-.withdraw,
-.deposit {
-  border-top-right-radius: 0;
-  border-top-left-radius: 0;
+.wrapper {
+  padding: 1.2rem;
+  padding-top: 2rem;
+}
 
-  .wrapper {
-    padding: 1.2rem;
-    padding-top: 2rem;
+.label {
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  color: white;
+  font-weight: bold;
+  img {
+    width: 24px;
+    margin-right: 0.5rem;
   }
+}
 
-  .label {
-    display: flex;
-    align-items: center;
-    font-size: 16px;
-    color: white;
-    font-weight: bold;
-    img {
-      width: 24px;
-      margin-right: 0.5rem;
-    }
-  }
+.d-amount,
+.total-balance {
+  margin-top: 2.3rem;
+  font-size: 14px;
+  display: flex;
+  padding: 10px;
+  border: 1px solid #ffffff15;
+  text-transform: uppercase;
+  font-weight: 800;
+  color: white;
+  border-radius: 5px;
+}
 
-  .d-amount,
-  .total-balance {
-    margin-top: 1.4rem;
-    display: flex;
-    padding: 10px;
-    border: 1px solid #ffffff15;
-    text-transform: uppercase;
-    font-weight: 800;
-    color: white;
-    border-radius: 5px;
-  }
-
-  .minimum-w,
-  .minimum-d {
-    display: flex;
-    padding: 13px 10px;
-    .value {
-      text-align: left;
-      opacity: 0.7;
-    }
-
-    .all {
-      text-decoration: underline;
-      cursor: pointer;
-      color: white;
-      text-align: right;
-    }
-  }
-
-  .withdrawal-amount,
-  .deposit-amount {
-    text-align: right;
-  }
-
-  .note {
-    padding: 10px;
+.minimum-w,
+.minimum-d {
+  display: flex;
+  padding: 13px 10px;
+  .value {
+    text-align: left;
     opacity: 0.7;
   }
 
-  .description {
-    padding-left: 12px;
+  .all {
+    text-decoration: underline;
+    cursor: pointer;
+    color: white;
+    text-align: right;
   }
+}
 
-  .btn-w,
+.withdrawal-amount,
+.deposit-amount {
+  text-align: right;
+}
+
+.note {
+  padding: 10px;
+  opacity: 0.7;
+}
+
+.description {
+  padding-left: 12px;
+}
+
+.btn-w,
+.btn-d {
+  margin-top: 3.5rem;
+  margin-bottom: 1rem;
+  border-radius: 5px;
+  background: transparent linear-gradient(90deg, #8b41d6 0%, #6800fe 100%) 0% 0% no-repeat
+    padding-box;
+}
+
+.btn-w {
+  margin-top: 6.25rem;
+}
+
+@media (max-width: 1569px) {
   .btn-d {
-    margin-top: 3.5rem;
-    margin-bottom: 1rem;
-    border-radius: 5px;
-    background: transparent linear-gradient(90deg, #8b41d6 0%, #6800fe 100%) 0% 0% no-repeat
-      padding-box;
+    margin-top: 2.02rem;
   }
+}
 
+@media (max-width: 1264px) {
   .btn-w {
-    margin-top: 5.3rem;
+    margin-top: 4.75rem;
   }
 }
 

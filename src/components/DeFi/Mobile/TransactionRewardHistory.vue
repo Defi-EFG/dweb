@@ -50,7 +50,7 @@
           </v-col> -->
           <v-col class="ma-auto value-col">
             <div class="value">{{ item.amount }} {{ rewardCurrencyName }}</div>
-            <small class="timestamp">{{ getTime(item.timestamp) }}</small>
+
           </v-col>
         </v-row>
       </div>

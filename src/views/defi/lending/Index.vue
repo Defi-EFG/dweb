@@ -155,9 +155,10 @@ export default class Lending extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
 
-  mode = 'collateral'
   selectedCollateralFactor = this.collateralList[0].collateralFactor
   selectedCurrency = this.collateralList[0].currency
+
+  mode = 'collateral'
 
   get isLoggedIn(): boolean {
     return this.walletStore.address != ''
@@ -266,10 +267,6 @@ export default class Lending extends Vue {
   onActivate(data: boolean) {
     return data
   }
-
-  mounted() {
-    //
-  }
 }
 </script>
 
@@ -284,6 +281,7 @@ export default class Lending extends Vue {
 }
 
 .supply-withdraw-wrapper {
+  width: inherit;
   background: transparent linear-gradient(270deg, #2e3344 0%, #303748 100%) 0% 0% no-repeat
     padding-box;
 }
