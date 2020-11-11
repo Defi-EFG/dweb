@@ -7,34 +7,33 @@
       :hide-slider="true"
       show-arrows
     >
-        <v-tab>{{ $t('views.stakingpage.deposit') }}</v-tab>
-        <v-tab>{{ $t('views.stakingpage.withdraw') }}</v-tab>
+      <v-tab>{{ $t('views.stakingpage.deposit') }}</v-tab>
+      <v-tab>{{ $t('views.stakingpage.withdraw') }}</v-tab>
 
       <v-tab-item class="deposit-tab">
         <div class="label pl-3">
           <img src="@/assets/efg_logo.svg" />
-                <span>{{ stakingCurrencyName }} - {{ $t('views.stakingpage.flexible_s') }}</span>
+          <span>{{ stakingCurrencyName }} - {{ $t('views.stakingpage.flexible_s') }}</span>
         </div>
-              <small class="pl-3">
-                {{ $t('views.stakingpage.deposit') }} {{ stakingCurrencyName }}
-                {{ $t('views.stakingpage.to_earn') }} {{ rewardCurrencyName }}
-                </small>
+        <small class="pl-3">
+          {{ $t('views.stakingpage.deposit') }} {{ stakingCurrencyName }}
+          {{ $t('views.stakingpage.to_earn') }} {{ rewardCurrencyName }}
+        </small>
 
         <div class="total-balance">
-                <span>{{ $t('views.stakingpage.yourbalance') }}</span>
+          <span>{{ $t('views.stakingpage.yourbalance') }}</span>
           <v-spacer></v-spacer>
-                <span class="text-right"
-                  >{{ balance | numberWithCommas({ fixed: [0, 2] }) }}
-                  {{ stakingCurrencyName }}</span
-                >
+          <span class="text-right"
+            >{{ balance | numberWithCommas({ fixed: [0, 2] }) }} {{ stakingCurrencyName }}</span
+          >
         </div>
 
         <div class="minimum-d">
-                <span class="value">{{ $t('views.stakingpage.minimum') }}</span>
+          <span class="value">{{ stakingCurrencyName }} {{ $t('views.stakingpage.deposit') }}</span>
           <v-spacer></v-spacer>
-                <span class="all" @click="fillAmountDeposit(balance)">{{
-                  $t('views.stakingpage.depositall')
-                }}</span>
+          <span class="all" @click="fillAmountDeposit(balance)">{{
+            $t('views.stakingpage.depositall')
+          }}</span>
         </div>
 
         <v-text-field
@@ -42,7 +41,7 @@
           type="number"
           class="deposit-amount"
           placeholder="0"
-                :prefix="stakingpage.depositamount"
+          :prefix="stakingpage.depositamount"
           v-model="depositAmount"
           :suffix="stakingCurrencyName"
           single-line
@@ -51,48 +50,51 @@
         ></v-text-field>
 
         <div class="note">
-                <span>{{ $t('views.stakingpage.note') }}</span>
+          <span>{{ $t('views.stakingpage.note') }}</span>
         </div>
 
-              <v-btn dark large block class="btn-d" @click="openConfirmTxModal(TYPE_DEPOSIT)">{{
-                $t('views.stakingpage.deposit')
-              }}</v-btn>
+        <v-btn dark large block class="btn-d" @click="openConfirmTxModal(TYPE_DEPOSIT)">{{
+          $t('views.stakingpage.deposit')
+        }}</v-btn>
       </v-tab-item>
 
       <v-tab-item class="withdraw-tab">
         <div class="label pl-3">
-                <span>{{ $t('views.stakingpage.withdraw') }}</span>
+          <span>{{ $t('views.stakingpage.withdraw') }}</span>
         </div>
-              <span class="description">{{ $t('views.stakingpage.pleaseinput') }}</span>
+        <span class="description">{{ $t('views.stakingpage.pleaseinput') }}</span>
 
         <div class="d-amount">
-                <span>{{ $t('views.stakingpage.your_sk') }}</span>
+          <span>{{ $t('views.stakingpage.your_skaking') }}</span>
           <v-spacer></v-spacer>
           <span>{{ stakingAmount.toFixed(2) }} {{ stakingCurrencyName }}</span>
         </div>
 
         <div class="minimum-w">
-                <small class="value">{{ $t('views.stakingpage.minimumwithdrawal') }}</small>
+          <small class="value"
+            >{{ stakingCurrencyName }} {{ $t('views.stakingpage.withdraw') }}</small
+          >
           <v-spacer></v-spacer>
-                <small class="all" @click="fillAmountWithdraw(stakingAmount)">{{
-                  $t('views.stakingpage.withdraw_All')
-                }}</small>
+          <small class="all" @click="fillAmountWithdraw(stakingAmount)">{{
+            $t('views.stakingpage.withdraw_All')
+          }}</small>
+        </div>
 
         <v-text-field
           dark
           class="withdrawal-amount"
           placeholder="0"
           type="number"
-                :prefix="stakingpage.depositamount"
+          :prefix="stakingpage.depositamount"
           v-model="withdrawAmount"
           :suffix="stakingCurrencyName"
           single-line
           solo
           hide-details="true"
         ></v-text-field>
-              <v-btn dark large block class="btn-w" @click="openConfirmTxModal(TYPE_WITHDRAW)">{{
-                $t('views.stakingpage.withdraw')
-              }}</v-btn>
+        <v-btn dark large block class="btn-w" @click="openConfirmTxModal(TYPE_WITHDRAW)">{{
+          $t('views.stakingpage.withdraw')
+        }}</v-btn>
       </v-tab-item>
     </v-tabs>
     <TransactionConfirmationModal

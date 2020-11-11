@@ -33,7 +33,8 @@ export default class LanguageSwitcher extends Vue {
     }
   ]
 
-  locale = 'en'
+  locale = this.$i18n.locale
+
   selectlangs(value: any) {
     this.locale = value.key
     this.$i18n.locale = this.locale
