@@ -124,6 +124,7 @@ import { getModule } from 'vuex-module-decorators'
 import * as constants from '@/constants'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
+import { getCurrency } from '@/store/common'
 import { Currency } from '@/types/currency'
 import SupplyBalance from '@/components/DeFi/SupplyBalance.vue'
 import BorrowBalance from '@/components/DeFi/BorrowBalance.vue'
@@ -200,18 +201,21 @@ export default class Lending extends Vue {
   }
 
   get collateralList() {
-    const supportedAssets = this.lendingStore.supportedCollateralAssets
-      .map(asset => {
-        const currency = this.walletStore.currencies.find(
-          currency => currency.name === asset.currencyName
-        )
-        return {
-          currency: currency as Currency,
-          activated: asset.activated,
-          collateralFactor: asset.collateralFactor
-        }
-      })
-      .filter(asset => !!asset.currency)
+    const supportedAssets = this.lendingStore.supportedCollateralAssets.map(asset => {
+      let currency = this.walletStore.currencies.find(
+        currency => currency.name === asset.currencyName
+      )
+
+      if (!currency) {
+        currency = getCurrency(asset.currencyName)
+      }
+
+      return {
+        currency: currency as Currency,
+        activated: asset.activated,
+        collateralFactor: asset.collateralFactor
+      }
+    })
 
     return supportedAssets
   }
@@ -240,7 +244,6 @@ export default class Lending extends Vue {
   }
 
   modeSwitch(val: string) {
-    console.log('receive emit')
     this.mode = val
   }
 

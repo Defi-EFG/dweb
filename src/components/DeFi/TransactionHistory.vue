@@ -3,7 +3,7 @@
     <v-toolbar class="tx-history-head" flat dense>
       <v-toolbar-title>
         <v-icon class="head-icon">mdi-clock</v-icon>
-        <span>Transaction History</span>
+        <span>{{ $t('views.walletpage.transaction_history') }}</span>
       </v-toolbar-title>
     </v-toolbar>
 

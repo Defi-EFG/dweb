@@ -1,7 +1,7 @@
 <template>
   <v-tabs grow background-color="#2F3446" dark class="cs-tabs">
-    <v-tab>Collateral</v-tab>
-    <v-tab>Supply Market</v-tab>
+    <v-tab>{{ $t('views.lendingpage.collateral') }}</v-tab>
+    <v-tab>{{ $t('views.lendingpage.supply_mk') }}</v-tab>
 
     <v-tab-item class="cs-tabs-item">
       <CollateralTokenMobile :collateralList="collateralList"></CollateralTokenMobile>

@@ -1,17 +1,17 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="6">
-        <div class="token-chart">
-          <canvas id="myChart" class="token-logo"></canvas>
+      <v-col cols="6" md="7">
+        <div class="dougnut-chart">
+          <canvas id="myChartGpt" class="dougnut-logo"></canvas>
         </div>
       </v-col>
-      <v-col cols="6">
-        <div class="token-detail">
-          <p>{{ token }}</p>
-          <div class="value">{{ max | numberWithCommas({ decimal: 2 }) }}</div>
-          <p>{{ token2 }}</p>
-          <div class="value2">{{ currentValue | numberWithCommas({ decimal: 2 }) }}</div>
+      <v-col cols="6" md="5">
+        <div class="dougnut-detail">
+          <p>EFG - Total Supply</p>
+          <div class="value_price1">{{ max | numberWithCommas({ fixed: [0, 2] }) }}</div>
+          <p>EFG - Total Borrowed</p>
+          <div class="value_price2">{{ currentValue | numberWithCommas({ fixed: [0, 2] }) }}</div>
         </div>
       </v-col>
     </v-row>
@@ -25,22 +25,19 @@ import Chart from 'chart.js'
 
 @Component({})
 export default class StakingChart extends Vue {
-  token = 'EFG - Total Supply'
-  token2 = 'EFG - Total Borrowed'
-  max = 418940265
-  currentValue = 130561041
+  max = 4189402.65
+  currentValue = 130561.041
 
   mounted() {
     this.renderChart(this.ctx, this.max, this.currentValue)
   }
 
   get ctx() {
-    return document.getElementById('myChart')
+    return document.getElementById('myChartGpt')
   }
 
   renderChart(element: any, max: number, current: number) {
-    const chart = document.getElementById('myChart')
-    //@ts-ignore
+    /* eslint-disable */
     const myChart = new Chart(element, {
       type: 'doughnut',
       data: {
@@ -103,36 +100,76 @@ export default class StakingChart extends Vue {
   margin: auto;
 }
 
-.token-chart {
-  margin-left: -2rem;
-  margin-right: -2rem;
+.dougnut-chart {
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 95%;
+  max-width: 400px;
 }
-
-.token-detail {
+.dougnut-detail {
   margin: auto 0;
   p {
     color: white;
     margin-top: 7%;
     margin-bottom: 3px;
   }
-  .value {
+  .value_price1 {
     font-size: 25px;
     font-weight: 400;
     color: #3fc0db;
   }
-  .value2 {
+  .value_price2 {
     font-size: 25px;
     font-weight: 400;
     color: #c074f9;
   }
 }
 
-.token-logo {
+.dougnut-logo {
   padding: 0;
   margin: 0;
   background-image: url('../../assets/efg_01.svg');
   background-repeat: no-repeat;
   background-position: 50.4% 49.5%;
   background-size: 50px;
+}
+@media only screen and (max-width: 960px) {
+  .dougnut-detail {
+    text-align: right;
+    margin-right:15px;
+ }
+  .dougnut-chart {
+    margin-left: 150px;
+    margin-right: 0px;
+    width: 95%;
+    min-width: 250px;
+  }
+}
+@media only screen and (max-width: 600px) { 
+  .dougnut-chart {
+    margin-left: -50px;
+    margin-right: 0px;
+    width: 95%;
+    min-width: 250px;
+  }
+  .dougnut-detail {
+    margin-top: 10px;
+    p {
+      color: white;
+      margin-top: 2%;
+      margin-bottom: 3px;
+      font-size: 13px;
+    }
+    .value_price1 {
+      font-size: 20px;
+      font-weight: 400;
+      color: #3fc0db;
+    }
+    .value_price2 {
+      font-size: 20px;
+      font-weight: 400;
+      color: #c074f9;
+    }
+  }
 }
 </style>

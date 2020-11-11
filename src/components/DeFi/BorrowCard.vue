@@ -1,14 +1,14 @@
 <template>
   <div class="borrow-card-wrapper">
-    <p class="action-label" v-if="!isMobileDevice">Borrow</p>
+    <p class="action-label" v-if="!isMobileDevice">{{ $t('views.lendingpage.borrow') }}</p>
     <div class="wallet-balance">
-      <span>Wallet Balance:</span>
+      <span>{{ $t('views.lendingpage.wallet_bl') }}</span>
       <v-spacer class="space"></v-spacer>
       <span class="balance">{{ walletBalance.toFixed(2) }} {{ currencyName }}</span>
     </div>
     <v-text-field
       class="amount-input"
-      label="Borrow Amount"
+      :label="lendingpage.borrowamount"
       placeholder="0"
       type="number"
       :suffix="currencyName"
@@ -24,7 +24,7 @@
       </template>
     </v-text-field>
     <div class="borrow-power">
-      <span class="label">Borrow Power</span>
+      <span class="label">{{ $t('views.lendingpage.borrow_po') }}</span>
       <v-slider
         class="borrow-slider"
         v-model="bpSlider"
@@ -40,7 +40,7 @@
       ></v-slider>
     </div>
     <div class="borrow-used">
-      <div>Borrow Power Used</div>
+      <div>{{ $t('views.lendingpage.borrow_power_used') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bp-change">
         <span>{{ bpUsed.toFixed(1) }}%</span>
@@ -49,7 +49,7 @@
       </div>
     </div>
     <div class="borrow-total mt-1 mb-3">
-      <div class="text-left">Total Borrowed</div>
+      <div class="text-left">{{ $t('views.lendingpage.total_borrowed') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
         <span>${{ borrowBalance.toFixed(2) }}</span>
@@ -59,7 +59,7 @@
     </div>
     <v-divider dark />
     <div class="borrow-apy">
-      <span class="label">Borrow APY</span>
+      <span class="label">{{ $t('views.lendingpage.borrowAPY') }}</span>
       <v-spacer></v-spacer>
       <span>{{ interestRate }} %</span>
     </div>
@@ -71,11 +71,12 @@
       :disabled="!isBorrowable(borrowValue, 'error')"
       :class="isBorrowable(borrowValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="onOpenModal"
-      >{{ isBorrowable(borrowValue, 'btn') ? 'Borrow' : 'Not available' }}</v-btn
+      >{{ isBorrowable(borrowValue, 'btn') ? lendingpage.borrow : 'Not available' }}</v-btn
     >
-    <TransactionComfirmationModal
+    <TransactionConfirmationModal
       :visible="confirmTxModal"
-      :toAddr="contractAddr"
+      :fromAddr="contractAddr"
+      :toAddr="walletAddr"
       :amount="borrowValue"
       :currency="currency"
       @onConfirm="onConfirm"
@@ -92,11 +93,11 @@ import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal
+    TransactionConfirmationModal
   }
 })
 export default class BorrowCard extends Vue {
@@ -118,6 +119,10 @@ export default class BorrowCard extends Vue {
 
   mounted() {
     this.bpSlider = this.bpUsed
+  }
+
+  get walletAddr() {
+    return this.walletStore.address
   }
 
   get contractAddr() {
@@ -156,6 +161,10 @@ export default class BorrowCard extends Vue {
 
   get safeLimit() {
     return 80 // 80%
+  }
+
+  get lendingpage() {
+    return this.$t('views.lendingpage')
   }
 
   limitSlider() {
@@ -221,7 +230,6 @@ export default class BorrowCard extends Vue {
 
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onClose() {
@@ -243,7 +251,6 @@ export default class BorrowCard extends Vue {
     this.lendingStore
       .borrow(payload)
       .then(txid => {
-        console.log('Txid:', txid)
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_BORROW })
         this.onSuccess()
       })

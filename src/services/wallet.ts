@@ -54,6 +54,18 @@ const importFromKeystore = (keystore: string | KeyStore, password: string) => {
   return importFromWif(wif)
 }
 
+const keystoreFromWiff = (wif: string, password: string) => {
+  let wallet
+  try {
+    wallet = EcocWallet.restoreFromWif(wif)
+  } catch (error) {
+    throw new WalletError('Wrong Private Key')
+  }
+
+  const keystore = createKeystore(wallet.getPrivKey(), password)
+  return keystore
+}
+
 const getEcocBalance = async (address: string) => {
   const addressInfo = await EcocWallet.getAddressInfo(address)
   const balance = addressInfo.balance + addressInfo.unconfirmedBalance
@@ -62,7 +74,7 @@ const getEcocBalance = async (address: string) => {
     name: constants.ECOC,
     type: constants.TYPE_ECOC,
     style: constants.KNOWN_CURRENCY.ECOC,
-    balance: balance.toString(),
+    balance: balance.toFixed(8),
     price: 0
   } as Currency
 
@@ -162,5 +174,6 @@ export {
   getUtxos,
   getTxInfo,
   isEcrc20,
-  waitForConfirmation
+  waitForConfirmation,
+  keystoreFromWiff
 }

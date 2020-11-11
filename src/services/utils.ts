@@ -2,6 +2,7 @@ import BigNumber from 'bignumber.js'
 import { staking } from './staking'
 import { lending } from './lending'
 import { ECOC_MAINNET } from './ecoc/constants'
+import { ecocw3 } from '@/services/ecoc/ecocw3'
 
 export const toDecimals = (value: number | string, decimals: number | string) => {
   const expo = new BigNumber(10).pow(new BigNumber(decimals))
@@ -49,13 +50,28 @@ export const copyToClipboard = (text: string) => {
   )
 }
 
+export const truncate = (msg: string, charsToShow = 20) => {
+  if (msg.length <= charsToShow) return msg
+
+  const separator = '...'
+  const frontChars = Math.ceil(charsToShow / 2)
+  const backChars = Math.floor(charsToShow / 2)
+
+  return msg.substr(0, frontChars) + separator + msg.substr(msg.length - backChars)
+}
+
 export const addressFilter = (address: string) => {
-  if (address == staking.address) return 'Staking Platform'
-  else if (address == lending.address) return 'Lending Platform'
+  if (address == staking.address) return 'Staking - Defi'
+  else if (address == lending.address) return 'Lending - Defi'
   else return address
 }
 
 export const getExplorerUrl = (networkStr = ECOC_MAINNET) => {
   if (networkStr === ECOC_MAINNET) return 'https://explorer.ecoc.io'
   return 'https://testnet.explorer.ecoc.io'
+}
+
+export const getBlockNumber = async () => {
+  const status = await ecocw3.api.getBlockStatus()
+  return status.height as number
 }

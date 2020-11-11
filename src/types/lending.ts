@@ -32,6 +32,11 @@ export interface MyActivity {
   timestamp: number
 }
 
+export interface MyAsset {
+  currency: CurrencyInfo
+  amount: number
+}
+
 export interface Loan {
   poolAddr: string
   currency: CurrencyInfo
@@ -57,6 +62,7 @@ export interface LendingPlatform {
   supportedCollateralAssets: Collateral[]
 
   myActivity: MyActivity[]
+  myAssets: MyAsset[]
 
   lastUpdate: number
   isLiquidation: boolean

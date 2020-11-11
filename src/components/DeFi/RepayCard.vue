@@ -1,16 +1,16 @@
 <template>
   <div>
-    <p class="action-label" v-if="!isMobileDevice">Repay</p>
+    <p class="action-label" v-if="!isMobileDevice">{{ $t('views.lendingpage.repay') }}</p>
     <div class="repay-summary">
       <div class="wallet-balance">
-        <span>Wallet Balance</span>
+        <span>{{ $t('views.lendingpage.wallet_bl') }}</span>
         <v-spacer class="space"></v-spacer>
         <span class="balance" @click="fillAmount(walletBalance)"
           >{{ walletBalance.toFixed(8) }} {{ currencyName }}</span
         >
       </div>
       <div class="debt">
-        <span>Debt</span>
+        <span>{{ $t('views.lendingpage.debt') }}</span>
         <v-spacer class="space"></v-spacer>
         <span class="balance">{{ debt.toFixed(8) }} {{ currencyName }}</span>
       </div>
@@ -18,7 +18,7 @@
 
     <v-text-field
       class="amount-input"
-      label="Repay Amount"
+      :label="lendingpage.repayamount"
       placeholder="0"
       v-model="repayAmount"
       :suffix="currencyName"
@@ -30,7 +30,7 @@
       persistent-hint
     ></v-text-field>
     <div class="borrow-power">
-      <span class="label">Borrow Power</span>
+      <span class="label">{{ $t('views.lendingpage.borrow_po') }}</span>
       <v-progress-linear
         :value="calculateBPUsed(repayAmount)"
         rounded
@@ -41,7 +41,7 @@
       ></v-progress-linear>
     </div>
     <div class="borrow-used">
-      <div>Borrow Power Used</div>
+      <div>{{ $t('views.lendingpage.borrow_power_used') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bp-change">
         <span>{{ bpUsed.toFixed(1) }}%</span>
@@ -50,7 +50,7 @@
       </div>
     </div>
     <div class="borrow-total mt-1 mb-3">
-      <div class="text-left">Total Borrowed</div>
+      <div class="text-left">{{ $t('views.lendingpage.total_borrowed') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
         <span>${{ borrowBalance.toFixed(2) }}</span>
@@ -60,7 +60,7 @@
     </div>
     <v-divider dark />
     <div class="borrow-apy">
-      <span class="label">Borrow APY</span>
+      <span class="label">{{ $t('views.lendingpage.borrowAPY') }}</span>
       <v-spacer></v-spacer>
       <span>{{ interestRate }} %</span>
     </div>
@@ -72,10 +72,11 @@
       :disabled="!isRepayable(repayAmount, 'error')"
       :class="isRepayable(repayAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="openConfirmTxModal"
-      >{{ isRepayable(repayAmount, 'btn') ? 'Repay' : 'Insufficient' }}</v-btn
+      >{{ isRepayable(repayAmount, 'btn') ? lendingpage.repay : 'Insufficient' }}</v-btn
     >
-    <TransactionComfirmationModal
+    <TransactionConfirmationModal
       :visible="confirmTxModal"
+      :fromAddr="walletAddr"
       :toAddr="contractAddr"
       :amount="repayAmount"
       :currency="currency"
@@ -93,12 +94,12 @@ import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import Loading from '@/components/modals/loading.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal,
+    TransactionConfirmationModal,
     Loading
   }
 })
@@ -116,6 +117,10 @@ export default class RepayCard extends Vue {
   errorMsg = ''
   loadingMsg = 'Currency Approving...'
   repayAmount: number | string = ''
+
+  get walletAddr() {
+    return this.walletStore.address
+  }
 
   get contractAddr() {
     return this.lendingStore.address
@@ -138,11 +143,15 @@ export default class RepayCard extends Vue {
   }
 
   get debt() {
-    return this.lendingStore.borrowBalance
+    const total = this.lendingStore.borrowBalance * (1 + this.interestRate / 1440)
+    return Number(total.toFixed(8))
   }
 
   get bpUsed() {
     return (this.borrowBalance / this.borrowLimit) * 100 || 0
+  }
+  get lendingpage() {
+    return this.$t('views.lendingpage')
   }
 
   get tokenConversion() {
@@ -196,7 +205,6 @@ export default class RepayCard extends Vue {
   onError(errorMsg: string) {
     this.loading = false
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -213,7 +221,6 @@ export default class RepayCard extends Vue {
     this.lendingStore
       .repay(payload)
       .then(txid => {
-        console.log('Txid:', txid)
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_REPAY })
         this.onSuccess()
       })

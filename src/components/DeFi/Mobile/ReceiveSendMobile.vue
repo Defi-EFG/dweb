@@ -1,7 +1,13 @@
 <template>
   <v-tabs show-arrows grow background-color="#2F3446" dark class="rs-tabs">
-    <v-tab><v-icon class="mr-2">mdi-arrow-down-circle-outline</v-icon> Receive</v-tab>
-    <v-tab><v-icon class="mr-2">mdi-arrow-up-circle-outline</v-icon> Send</v-tab>
+    <v-tab
+      ><v-icon class="mr-2">mdi-arrow-down-circle-outline</v-icon
+      >{{ $t('views.walletpage.receive') }}</v-tab
+    >
+    <v-tab
+      ><v-icon class="mr-2">mdi-arrow-up-circle-outline</v-icon>
+      {{ $t('views.walletpage.send') }}</v-tab
+    >
 
     <v-tab-item class="rs-tabs-item">
       <div v-if="!address" class="empty-div"></div>
@@ -13,7 +19,7 @@
         ></VueQrcode>
       </div>
       <div class="address-area">
-        <p class="addr-label">ECOC Wallet Address:</p>
+        <p class="addr-label">ECOC {{ $t('views.walletpage.address') }}</p>
         <div class="copyable-addr">
           <div class="text-truncate addr">{{ address }}</div>
           <v-btn icon small dark class="copy" @click="copyAddress(address)">
@@ -31,13 +37,15 @@
     <v-tab-item class="rs-tabs-item">
       <div class="text-center send-area">
         <div class="token-balance">
-          <span class="text-left">{{ selectedCurrencyName }} Balance</span>
+          <span class="text-left"
+            >{{ selectedCurrencyName }} {{ $t('views.walletpage.balance') }}</span
+          >
           <v-spacer></v-spacer>
           <span class="text-right">{{ selectedCurrencyBalance }} {{ selectedCurrencyName }}</span>
         </div>
         <v-text-field
           dark
-          label="To Address"
+          :label="walletpage.to_Address"
           class="to-address-field"
           single-line
           solo
@@ -75,16 +83,19 @@
           dark
           class="withdraw-amount"
           placeholder="0"
-          prefix="Amount"
+          :prefix="walletpage.amount"
           v-model="amount"
           :suffix="selectedCurrencyName"
           single-line
           solo
           hide-details="true"
         ></v-text-field>
-        <v-btn dark depressed block large class="send-btn" @click="onOpenModal()">Send</v-btn>
-        <TransactionComfirmationModal
+        <v-btn dark depressed block large class="send-btn" @click="onOpenModal()">{{
+          $t('views.walletpage.send')
+        }}</v-btn>
+        <TransactionConfirmationModal
           :visible="confirmTxModal"
+          :fromAddr="address"
           :toAddr="toAddr"
           :amount="amount"
           :currency="selectedCurrency"
@@ -103,14 +114,15 @@ import vClickOutside from 'v-click-outside'
 import { getModule } from 'vuex-module-decorators'
 import { SendPayload } from '@/types/wallet'
 import { WalletParams } from '@/services/ecoc/types'
+import * as constants from '@/constants'
 import WalletModule from '@/store/wallet'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import { copyToClipboard } from '@/services/utils'
 
 @Component({
   components: {
     VueQrcode,
-    TransactionComfirmationModal
+    TransactionConfirmationModal
   },
   directives: {
     clickOutside: vClickOutside.directive
@@ -160,14 +172,16 @@ export default class ReceiveSendMobile extends Vue {
     return this.walletStore.address || ''
   }
 
+  get walletpage() {
+    return this.$t('views.walletpage')
+  }
+
   selectAddress(addr: string) {
     this.toAddr = addr
     this.displayContact = false
   }
 
   onClickOutside() {
-    console.log('clicked outside')
-
     this.displayContact = false
   }
 
@@ -189,7 +203,6 @@ export default class ReceiveSendMobile extends Vue {
 
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -206,8 +219,8 @@ export default class ReceiveSendMobile extends Vue {
     this.walletStore
       .send(payload)
       .then(txid => {
-        console.log(txid)
         this.walletStore.updateBalance()
+        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_TRANSFER })
         this.onSuccess()
       })
       .catch(error => {

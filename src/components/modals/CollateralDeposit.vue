@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="show" max-width="420" class="send-transaction" id="collat">
+    <v-dialog v-model="show" max-width="420" class="send-transaction" id="collat" persistent>
       <v-stepper v-model="step" class="blur-card">
         <v-stepper-items>
           <!-- Welcome to ECOC Finance Governance -->
@@ -12,9 +12,9 @@
               </v-card-title>
               <div class="transaction-confirmation-wrapper collateral_pddeful ">
                 <div class="headtitle_collat">
-                  <div class="headtitle_collat_head">Select the Loaner</div>
+                  <div class="headtitle_collat_head">{{ $t('views.modal.select_Loaner') }}</div>
                   <div class="headtitle_collat_sub">
-                    You can only change the loaner once you repay all the borrowed.
+                    {{ $t('views.modal.you_can_only') }}
                   </div>
                 </div>
                 <div class="transaction-confirmation-content collat_bg">
@@ -66,9 +66,10 @@
                 <v-btn
                   large
                   depressed
+                  class="mb-7"
                   :class="Loanername != '' ? 'text-capitalize' : 'disabled'"
                   @click="connectStep()"
-                  >Select</v-btn
+                  >{{ $t('views.modal.select') }}</v-btn
                 >
               </div>
             </v-card>
@@ -85,16 +86,19 @@
                   <div class="content-logo ">
                     <div class="logo"><img src="@/assets/ECOC.svg" alt="" /></div>
                   </div>
-                  <h3 class="">Use ECOC as a collateral?</h3>
+                  <h3 class="">{{ $t('views.modal.use_ECOC') }}</h3>
                   <p class="lightgray--text">
-                    You can deposit more once you repay all the borrowed. (Borrow power is 0)
+                    {{ $t('views.modal.you_can_deposit') }}
                   </p>
                 </div>
                 <div class="transaction-confirmation-content outputselect">
-                  <span>Loaner</span><br />
+                  <span>{{ $t('views.main.loaner') }}</span
+                  ><br />
                   <input type="text" v-model="selectdata" disabled />
                 </div>
-                <v-btn large depressed class="text-capitalize" @click="nextcollat()">Next</v-btn>
+                <v-btn large depressed class="text-capitalize mb-7" @click="nextcollat()">{{
+                  $t('views.modal.next')
+                }}</v-btn>
               </div>
             </v-card>
           </v-stepper-content>
@@ -105,20 +109,47 @@
                 <v-btn @click="leftarrow3()" icon><v-icon color="white">$leftarrow</v-icon></v-btn>
                 <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
-              <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin">
+              <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin mb-7">
                 <div class="d-flex ">
-                  <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
-                  <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                      <div
+                        @click="copyAddress(addr)"
+                        class="transaction-sender"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        {{ truncateAddress(addr) }}
+                      </div>
+                    </template>
+                    <span>Copied</span>
+                  </v-tooltip>
+
+                  <v-tooltip top>
+                    <template v-slot:activator="{ on, attrs }">
+                      <div
+                        @click="copyAddress(toAddr)"
+                        class="transaction-receiver"
+                        v-bind="attrs"
+                        v-on="on"
+                      >
+                        {{ addressFilter(toAddr) }}
+                      </div>
+                    </template>
+                    <span>Copied</span>
+                  </v-tooltip>
                   <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
                 </div>
-                <div class="transaction-confirmation-content">
+                <div class="transaction-confirmation-content ">
                   <div class="collateral_pd">
-                    <h2><strong>Transaction Confirm</strong></h2>
-                    <small>Please confirm the transaction</small>
+                    <h4>
+                      <strong>{{ $t('views.modal.transaction') }}</strong>
+                    </h4>
+                    <small>{{ $t('views.modal.please_transaction') }}</small>
                     <div class="div_prices">
                       <div class="transaction-confirmation-content-detail">
                         <div class="detail">
-                          <span class="gt">Amount</span>
+                          <span class="gt">{{ $t('views.modal.amount') }}</span>
                           <div class="d-flex justify-end">
                             <p>{{ amount }}</p>
                             <p class="ml-2">{{ selectedCurrencyName }}</p>
@@ -126,7 +157,7 @@
                         </div>
                       </div>
                       <div class="detail">
-                        <span class="gt">Gas Fee</span>
+                        <span class="gt">{{ $t('views.modal.gas_fee') }}</span>
                         <div class="text-end">
                           <div class="d-flex justify-end">
                             <p>{{ totalFee }}</p>
@@ -139,24 +170,25 @@
                       <span class="gt"></span>
                       <div class="text-end gt">
                         <v-btn small text color="primary" @click="gasSetting()">
-                          <span class="gassetting">gas setting</span>
+                          <span class="gassetting">{{ $t('views.modal.gas_setting') }}</span>
                         </v-btn>
                       </div>
                     </div>
                     <div class="border-bottom"></div>
-                    <v-form class="pt-4">
+                    <div class="pt-4">
                       <v-text-field
-                        label="Keystore Password"
+                        :label="modaltext.keystore_password"
                         v-model="password"
                         :rules="[rules.required, rules.min]"
                         :type="showpassword ? 'text' : 'password'"
                         :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
+                        @keyup.enter="onConfirm()"
                         dense
                         filled
-                      ></v-text-field
-                    ></v-form>
+                      ></v-text-field>
+                    </div>
                     <div v-if="errorMsg">
-                      <span class="errorMsg">{{ errorMsg }}</span>
+                      <span class="errorMsg">{{ $t(errorMsg) }}</span>
                     </div>
                     <div class="action-transaction-confirmation">
                       <v-btn
@@ -165,7 +197,7 @@
                         color="primary"
                         class="text-capitalize1"
                         @click="leftarrow3"
-                        >Cancel</v-btn
+                        >{{ $t('views.modal.cancel') }}</v-btn
                       >
                       <v-btn
                         large
@@ -173,7 +205,7 @@
                         color="primary"
                         class="text-capitalize"
                         @click="onConfirm()"
-                        >Confirm</v-btn
+                        >{{ $t('views.modal.confirm') }}</v-btn
                       >
                     </div>
                   </div>
@@ -279,25 +311,25 @@
           <v-btn icon @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
         </div>
         <div class="content-gas-setting">
-          <h3>Gas Customization</h3>
-          <small>Increase the processing time of your transaction by using higher gas fee</small>
+          <h3>{{ $t('views.modal.gas_setting') }}</h3>
+          <small>{{ $t('views.modal.Increase') }}</small>
           <div class="gas-customization">
             <v-btn-toggle tile group>
               <v-btn>
                 <div class="gas-custom-btn-group" @click="fee = feeSlow">
-                  <p>Slow</p>
+                  <p>{{ $t('views.modal.slow') }}</p>
                   <p>{{ feeSlow }} ECOC</p>
                 </div>
               </v-btn>
               <v-btn>
                 <div class="gas-custom-btn-group" @click="fee = feeAverage">
-                  <p>Average</p>
+                  <p>{{ $t('views.modal.average') }}</p>
                   <p>{{ feeAverage }} ECOC</p>
                 </div></v-btn
               >
               <v-btn>
                 <div class="gas-custom-btn-group" @click="fee = feeFast">
-                  <p>Fast</p>
+                  <p>{{ $t('views.modal.fast') }}</p>
                   <p>{{ feeFast }} ECOC</p>
                 </div></v-btn
               >
@@ -305,23 +337,25 @@
           </div>
           <div class="inputnumber d-flex justify-space-between">
             <v-col cols="6" class="pb-0">
-              <label for="Gas price:">Gas price:</label
+              <label for="Gas price:">{{ $t('views.modal.gas_price') }}</label
               ><v-text-field type="number" v-model="gasPrice"></v-text-field>
             </v-col>
             <v-col cols="6" class="pb-0">
-              <label for="Gas limit:">Gas limit:</label
+              <label for="Gas limit:">{{ $t('views.modal.gas_limit') }}</label
               ><v-text-field type="number" v-model="gasLimit"></v-text-field>
             </v-col>
           </div>
 
           <div class="d-flex justify-space-between py-2">
-            <p>Total Transaction Fee:</p>
+            <p>{{ $t('views.modal.total_transaction') }}</p>
             <div class="text-end">
               <p class="mb-0">{{ totalFee }} ECOC</p>
             </div>
           </div>
           <div class="save-button ">
-            <v-btn color="primary" depressed block @click="closeGasSetting">save</v-btn>
+            <v-btn color="primary" depressed block @click="closeGasSetting">{{
+              $t('views.modal.save')
+            }}</v-btn>
           </div>
         </div>
       </v-card>
@@ -330,7 +364,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
@@ -340,11 +374,12 @@ import { DEFAULT } from '@/services/contract'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import * as constants from '@/constants'
+import { copyToClipboard } from '@/services/utils'
 
 @Component({
   components: {}
 })
-export default class Collmodeldiposit extends Vue {
+export default class CollateralDeposit extends Vue {
   @Prop() visible!: boolean
   @Prop({ default: {} }) currency!: Currency
   @Prop() amount!: number
@@ -374,9 +409,9 @@ export default class Collmodeldiposit extends Vue {
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
 
   rules = {
-    required: (value: any) => !!value || 'Required.',
-    min: (v: any) => v.length >= 8 || 'Min 8 characters',
-    emailMatch: () => `The email and password you entered don't match`
+    required: (value: any) => !!value || this.$t('views.modal.required'),
+    min: (v: any) => v.length >= 8 || this.$t('views.modal.characters'),
+    emailMatch: () => this.$t('views.modal.the_email')
   }
 
   get totalFee() {
@@ -385,6 +420,10 @@ export default class Collmodeldiposit extends Vue {
 
   get Loanerlist() {
     return this.lendingStore.pools
+  }
+
+  get poolAddress() {
+    return this.lendingStore.loan.poolAddr
   }
 
   get ecoc() {
@@ -401,6 +440,24 @@ export default class Collmodeldiposit extends Vue {
 
   get show() {
     return this.visible
+  }
+
+  get modaltext() {
+    return this.$t('views.modal')
+  }
+
+  @Watch('visible')
+  checkPoolAddress(value: boolean) {
+    if (value) {
+      if (this.poolAddress) {
+        this.step = 3
+        this.selectdata = this.poolAddress
+      }
+    }
+  }
+
+  copyAddress(addr: string) {
+    copyToClipboard(addr)
   }
 
   gasSetting() {
@@ -420,12 +477,11 @@ export default class Collmodeldiposit extends Vue {
     this.$emit('onClose')
   }
 
-  onLoading() {
-    this.$emit('onLoading')
-  }
-
   onSuccess() {
+    this.step = 1
     this.loading = false
+    this.errorMsg = ''
+    this.password = ''
     this.$emit('onSuccess')
   }
 
@@ -473,7 +529,6 @@ export default class Collmodeldiposit extends Vue {
     this.errorMsg = errorMsg
     this.loading = false
     this.step = 3
-    console.log(errorMsg)
   }
 
   async onConfirm() {
@@ -507,10 +562,10 @@ export default class Collmodeldiposit extends Vue {
 
     const amount = Number(this.amount)
     const poolAddress = this.selectdata
-    const currencyName = this.currency.name
+    const currency = this.currency
 
     const payload = {
-      currencyName,
+      currency,
       amount,
       poolAddress,
       walletParams
@@ -520,7 +575,6 @@ export default class Collmodeldiposit extends Vue {
       .depositCollateral(payload)
       .then(txid => {
         setTimeout(() => {
-          console.log('Txid:', txid)
           this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
           this.onSuccess()
         }, 1000)

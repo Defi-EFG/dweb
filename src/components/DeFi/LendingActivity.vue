@@ -1,27 +1,34 @@
 <template>
-  <v-card dark class="lending-card">
-    <v-tabs grow background-color="#252B3D" class="lending-tabs" :hide-slider="true" show-arrows>
-      <v-tab>My Collateral</v-tab>
-      <v-tab>My borrowing</v-tab>
-      <v-tab>My Activity</v-tab>
+  <div class="lending-card">
+    <v-card dark>
+      <v-tabs grow background-color="#252B3D" class="lending-tabs" :hide-slider="true" show-arrows>
+        <v-tab>{{ $t('views.lendingpage.my_collateral') }}l</v-tab>
+        <v-tab>{{ $t('views.lendingpage.my_borrowing') }}</v-tab>
+        <v-tab>{{ $t('views.lendingpage.my_activity') }}</v-tab>
 
       <v-tab-item class="my-collateral">
         <v-card dark color="#2e3344">
           <v-card-text v-if="myCollateral.length > 0">
             <div class="supply-header">
-              <div>Assets</div>
-              <div>Balance</div>
+              <div>{{ $t('views.lendingpage.assets') }}</div>
+              <div>{{ $t('views.lendingpage.balance') }}</div>
             </div>
             <div class="supply-item" v-for="(item, index) in myCollateral" :key="index">
               <div class="assets">
                 <img :src="item.currency.style.icon" />
                 <span>{{ item.currency.name }}</span>
               </div>
-              <div class="balance">
-                <div>
-                  ${{ getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)) }}
+              <div class="supply-item" v-for="(item, index) in myCollateral" :key="index">
+                <div class="assets">
+                  <img :src="item.currency.style.icon" />
+                  <span>{{ item.currency.name }}</span>
                 </div>
-                <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
+                <div class="balance">
+                  <div>
+                    ${{ getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)) }}
+                  </div>
+                  <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
+                </div>
               </div>
             </div>
           </v-card-text>
@@ -35,23 +42,29 @@
         <v-card dark color="#2e3344">
           <v-card-text v-if="myBorrowing.length > 0">
             <div class="borrow-header">
-              <div class="mr-3">Assets</div>
-              <div>Inrerest Rate</div>
-              <div>Balance</div>
+              <div class="mr-3">{{ $t('views.lendingpage.assets') }}</div>
+              <div>{{ $t('views.lendingpage.inrerest_rate') }}/div>
+              <div>{{ $t('views.lendingpage.balance') }}</div>
             </div>
             <div class="borrow-item" v-for="(item, index) in myBorrowing" :key="index">
               <div class="assets">
                 <img :src="item.currency.style.icon" />
                 <span>{{ item.currency.name }}</span>
               </div>
-              <div class="apy">
-                <span>{{ item.interestRate }}%</span>
-              </div>
-              <div class="balance">
-                <div>
-                  ${{ getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)) }}
+              <div class="borrow-item" v-for="(item, index) in myBorrowing" :key="index">
+                <div class="assets">
+                  <img :src="item.currency.style.icon" />
+                  <span>{{ item.currency.name }}</span>
                 </div>
-                <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
+                <div class="apy">
+                  <span>{{ item.interestRate }}%</span>
+                </div>
+                <div class="balance">
+                  <div>
+                    ${{ getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)) }}
+                  </div>
+                  <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
+                </div>
               </div>
             </div>
           </v-card-text>
@@ -61,37 +74,38 @@
         </v-card>
       </v-tab-item>
 
-      <v-tab-item class="my-activity">
-        <v-card dark color="#2e3344">
-          <v-list color="#222738" class="activity-list">
-            <v-list-item v-for="(act, index) in myActivity" :key="index" class="activity-item">
-              <v-icon class="mr-3">{{ activityIcon[act.activityName] }}</v-icon>
-
-              <v-list-item-content>
-                <v-list-item-title class="activity-type">
-                  <span v-if="act.activityName == 'activated'"
-                    >{{ act.currencyName }} Collateral Activated</span
-                  >
-                  <span v-else>{{ act.activityName }} ({{ act.currencyName }})</span>
-                  <v-spacer></v-spacer>
-                  <span v-if="act.activityName != 'activated'"
-                    >${{ getEstimatedValue(act.amount, act.price) }}</span
-                  >
-                </v-list-item-title>
-                <div class="activity-date">
-                  <small>{{ getTime(act.timestamp) }}</small>
-                  <v-spacer></v-spacer>
-                  <small v-if="act.activityName != 'activated'"
-                    >≈{{ act.amount.toFixed(2) }} {{ act.currencyName }}</small
-                  >
+        <v-tab-item class="my-assets">
+          <v-card dark color="#2e3344">
+            <v-card-text>
+              <div class="supply-header">
+                <div>{{ $t('views.lendingpage.assets') }}</div>
+                <div>{{ $t('views.lendingpage.balance') }}</div>
+              </div>
+              <div class="supply-item" v-for="(item, index) in myAssets" :key="index">
+                <div class="assets">
+                  <img :src="item.currency.style.icon" />
+                  <span>{{ item.currency.name }}</span>
                 </div>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-card>
-      </v-tab-item>
-    </v-tabs>
-  </v-card>
+                <div class="balance">
+                  <div>{{ item.amount.toFixed(2) }} {{ item.currency.name }}</div>
+                  <small @click="openConfirmTxModal(item.currency, item.amount)">Withdraw</small>
+                </div>
+              </div>
+            </v-card-text>
+          </v-card>
+        </v-tab-item>
+      </v-tabs>
+    </v-card>
+    <TransactionConfirmationModal
+      :visible="confirmTxModal"
+      :fromAddr="contractAddr"
+      :toAddr="walletAddr"
+      :amount="amount"
+      :currency="currency"
+      @onConfirm="onConfirm"
+      @onClose="closeConfirmTxModal"
+    />
+  </div>
 </template>
 
 <script lang="ts">
@@ -100,12 +114,26 @@ import { getModule } from 'vuex-module-decorators'
 import moment from 'moment'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
+import { Currency, CurrencyInfo } from '@/types/currency'
+import { WalletParams } from '@/services/ecoc/types'
 import { getEstimatedValue } from '@/services/utils'
+import * as constants from '@/constants'
+import { getCurrency } from '@/store/common'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 
-@Component({})
+@Component({
+  components: {
+    TransactionConfirmationModal
+  }
+})
 export default class LendingActivity extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
+
+  confirmTxModal = false
+  errorMsg = ''
+  amount = 0
+  currency = {} as Currency
 
   activityIcon = {
     borrow: 'mdi-transfer-up',
@@ -115,6 +143,14 @@ export default class LendingActivity extends Vue {
 
   getEstimatedValue = getEstimatedValue
 
+  get walletAddr() {
+    return this.walletStore.address
+  }
+
+  get contractAddr() {
+    return this.lendingStore.address
+  }
+
   get myCollateral() {
     return this.lendingStore.myCollateralAssets
   }
@@ -123,8 +159,8 @@ export default class LendingActivity extends Vue {
     return this.lendingStore.myBorrowing
   }
 
-  get myActivity() {
-    return this.lendingStore.myActivity
+  get myAssets() {
+    return this.lendingStore.myAssets.filter(asset => asset.amount)
   }
 
   getCurrencyPrice(currencyName: string): number {
@@ -143,6 +179,47 @@ export default class LendingActivity extends Vue {
     }
 
     return timestamp
+  }
+
+  openConfirmTxModal(currencyInfo: CurrencyInfo, amount: number) {
+    this.currency = getCurrency(currencyInfo.name)
+    this.amount = amount
+    this.confirmTxModal = !this.confirmTxModal
+  }
+
+  closeConfirmTxModal() {
+    this.amount = 0
+    this.currency = {} as Currency
+    this.confirmTxModal = false
+  }
+
+  onSuccess() {
+    this.closeConfirmTxModal()
+  }
+
+  onError(errorMsg: string) {
+    this.errorMsg = errorMsg
+  }
+
+  onConfirm(walletParams: WalletParams) {
+    const amount = Number(this.amount)
+    const currency = this.currency
+
+    const payload = {
+      currency,
+      amount,
+      walletParams
+    }
+
+    this.lendingStore
+      .withdrawCollateral(payload)
+      .then(txid => {
+        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
+        this.onSuccess()
+      })
+      .catch(error => {
+        this.onError(error.message)
+      })
   }
 }
 </script>
@@ -246,6 +323,7 @@ export default class LendingActivity extends Vue {
 @media (max-width: 768px) {
   .my-collateral,
   .my-borrowing,
+  .my-assets,
   .my-activity {
     font-size: small;
   }

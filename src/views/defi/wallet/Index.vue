@@ -167,6 +167,14 @@ export default class Wallet extends Vue {
   &ETH {
     background: linear-gradient(268deg, #bebebe 0%, #5a5a5a 100%) !important;
   }
+
+  &EWUSDT {
+    background: linear-gradient(268deg, #53ae94 0%, #00bf66 100%) !important;
+  }
+
+  &EWETH {
+    background: linear-gradient(268deg, #bebebe 0%, #5a5a5a 100%) !important;
+  }
 }
 </style>
 

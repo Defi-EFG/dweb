@@ -136,30 +136,36 @@
             </div>
           </v-col>
         </v-row>
-        <v-row v-for="(item, i) in items" :key="i" class="row1 roww2">
-          <v-col lg="3" md="3" cols="2">
-            <div class="margintop">
-              <img src="@/assets/efg_01.svg" />
-              {{ item.currency.name }}
-            </div>
-          </v-col>
-          <v-col lg="3" md="3" cols="4">
-            <div class="text-truncate margintop Loener">
-              {{ truncateAddress(item.address) }}
-            </div>
-          </v-col>
-          <v-col lg="3" md="3" cols="3" class="border_left">
-            <div class="margintop color_1 textafter">
-              <span class="color_size">${{ item.totalSupply | numberWithCommas() }}</span>
-            </div>
-          </v-col>
-          <v-col lg="3" md="3" cols="3">
-            <div class="margintop color_2 textafter">
-              <span class="color_size">${{ item.totalBorrowed | numberWithCommas() }}</span>
-            </div>
-          </v-col>
-          <img class="row1_img" src="@/assets/backg_01.svg" />
-        </v-row>
+        <a v-for="(item, i) in pools" :key="i" :href="`loan-info?pool=${item.address}`">
+          <v-row class="row1 roww2" :id="`EFG_Supply_${1 + i}`">
+            <v-col lg="3" md="3" cols="2">
+              <div class="margintop">
+                <img src="@/assets/efg_01.svg" />
+                {{ item.currency.name }}
+              </div>
+            </v-col>
+            <v-col lg="3" md="3" cols="4">
+              <div class="text-truncate margintop Loener">
+                {{ truncateAddress(item.address) }}
+              </div>
+            </v-col>
+            <v-col lg="3" md="3" cols="3" class="border_left">
+              <div class="margintop color_1 textafter">
+                <span class="color_size"
+                  >${{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }}</span
+                >
+              </div>
+            </v-col>
+            <v-col lg="3" md="3" cols="3">
+              <div class="margintop color_2 textafter">
+                <span class="color_size"
+                  >${{ item.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }}</span
+                >
+              </div>
+            </v-col>
+            <img class="row1_img" src="@/assets/backg_01.svg" />
+          </v-row>
+        </a>
         <v-row style="border-top:2px solid #312D36; margin-top:20px">
           <v-col cols="12" class="supply3">
             <div class="supply supply2">
@@ -181,15 +187,19 @@
           <v-col lg="3" md="3" cols="6" class="Staking_dt">
             <div class="supply_button2">
               <!-- <a href="delay"> -->
-              <button disabled>{{ $t('views.main.detail') }}</button>
+              <a :href="`staking-info`"
+                ><button>{{ $t('views.main.detail') }}</button></a
+              >
               <!-- </a> -->
             </div>
             <div class="supply_price">EFG</div>
-            <div class="supply_price">{{ liquidation }}%</div>
+            <div class="supply_price">{{ stakingRate }}%</div>
           </v-col>
           <v-col lg="6" md="6" cols="12" class="border_left1 Staking_dt">
             <div class="supply_name2">GPT - {{ $t('views.main.available') }}</div>
-            <div class="supply_price_color color_1">{{ GPTprice | numberWithCommas() }} GPT</div>
+            <div class="supply_price_color color_1">
+              {{ stakingAvailable | numberWithCommas() }} GPT
+            </div>
           </v-col>
           <img class="bg_gpt" src="@/assets/backg_02.svg" />
         </v-row>
@@ -201,24 +211,22 @@
         </v-row>
         <v-row>
           <v-col cols="12" class="but_div_inline">
-            <span class="but_div"
-              ><img class="img_text_but" src="@/assets/ECOC.svg" alt="" />
-              <div class="text_but">ECOC</div></span
+            <a
+              v-for="(collateral, index) in collateral"
+              :key="index"
+              :href="`collateral-info?name=${collateral.currencyName}`"
             >
+              <span class="but_div"
+                ><img :src="getCurrencyIcon(collateral.currencyName)" class="img_text_but" alt="" />
+                <div class="text_but">{{ collateral.currencyName }}</div></span
+              >
+            </a>
             <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/USDT.svg" alt="" />
-              <div class="text_but">USDT</div></span
-            >
-            <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/ETH.svg" alt="" />
-              <div class="text_but">ETH</div></span
-            >
-            <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/TRON.svg" alt="" />
+              ><img src="@/assets/TRON.svg" class="img_text_but" alt="" />
               <div class="text_but">TRON</div></span
             >
             <span class="but_div not_it"
-              ><img class="img_text_but not_it" src="@/assets/DOT.svg" alt="" />
+              ><img src="@/assets/DOT.svg" class="img_text_but" alt="" />
               <div class="text_but">DOT</div></span
             >
           </v-col>
@@ -251,24 +259,39 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import LendingModule from '@/store/lending'
+import StakingModule from '@/store/staking'
+import { getCurrency } from '@/store/common'
 
 @Component({})
 export default class Main extends Vue {
   lendingStore = getModule(LendingModule)
+  stakingStore = getModule(StakingModule)
+
+  GPT = 'GPT'
+  active = 'EFG'
+  name = 'EFG'
+
+  stakingRate = 0.01
 
   get msg() {
     return this.$t('views.mainslider')
   }
 
-  get items() {
+  get pools() {
     return this.lendingStore.pools
   }
 
-  active = 'EFG'
-  name = 'EFG'
+  get collateral() {
+    return this.lendingStore.supportedCollateralAssets
+  }
 
-  liquidation = 20.0
-  GPTprice = 10000
+  get stakingTotalReward() {
+    return this.stakingStore.totalReward
+  }
+
+  get stakingAvailable() {
+    return this.stakingStore.available
+  }
 
   onClickActive(name: string) {
     this.active = name
@@ -280,9 +303,16 @@ export default class Main extends Vue {
     this.name = name
   }
 
+  getCurrencyIcon(currencyNname: string) {
+    return getCurrency(currencyNname).style?.icon
+  }
+
   mounted() {
     this.lendingStore.updateLoners()
+    this.lendingStore.updateSupprtedAssets()
+    this.stakingStore.updateMintingInfo(this.stakingStore.address)
   }
+
   truncateAddress(addr: string) {
     const separator = '...'
     const charsToShow = 12
@@ -369,6 +399,7 @@ body {
   text-indent: 4.5em;
   font-size: 16px;
   line-height: 1.3;
+  text-align: justify;
 }
 .sec_1 .social_icon {
   position: relative;
@@ -597,7 +628,6 @@ body {
   transition: 0.5s;
   align-items: center;
   padding: 11px;
-  width: 134px;
   margin-bottom: 5px;
 }
 
@@ -605,7 +635,6 @@ body {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-  background-color: aliceblue;
 }
 .sec_2 .but_div .text_but {
   display: inline;
@@ -619,6 +648,11 @@ body {
   height: 220px;
   border-radius: 50%;
   overflow: hidden;
+}
+.sec_2 .but_div {
+  margin-left: 10px;
+  margin-right: 10px;
+  padding: 5px 15px 5px 5px;
 }
 .img_footer img {
   width: 100%;
@@ -790,14 +824,31 @@ body {
     padding: 100px 14px 0 14px;
   }
   .sec_1 .text_header {
-    font-size: 25px;
+    font-size: 23px;
+    padding-left: 10px;
+    top: -10px;
   }
   .sec_1 .text_header_sub {
-    font-size: 16px;
+    font-size: 14px;
     text-indent: 2em;
   }
+  .sec_2 .row1 .margintop {
+    font-size: 10px;
+  }
+  .sec_2 .row1 .color_size {
+    font-size: 10px;
+  }
+  .sec_2 .row1 .supply {
+    font-size: 10px;
+  }
+  .head_supply3 {
+    padding-left: 20px;
+  }
+  .sec_2 .row1 .supply_price_color {
+    font-size: 20px;
+  }
   .sec_3 {
-    height: 150px;
+    height: 50px;
   }
   .text_head_footer {
     font-size: 23px;
@@ -831,8 +882,21 @@ body {
     width: 50px;
   }
   .sec_2 .but_div .img_text_but {
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
+  }
+  .efg-logo {
+    width: 40px;
+  }
+  .sibar_dc {
+    font-size: 12px;
+  }
+  .sec_2 .but_div {
+    width: 103.98px;
+    padding: 7px 15px 7px 5px;
+  }
+  .sec_2 .but_div .text_but {
+    margin-left: 3px;
   }
 }
 </style>
@@ -847,6 +911,19 @@ body {
 
   .v-window__next {
     margin-top: 9rem;
+  }
+}
+@media only screen and (max-width: 960px) {
+  .efg-slider {
+    .v-window__prev {
+      margin-top: 0rem;
+      left: 0 !important;
+      right: unset;
+    }
+
+    .v-window__next {
+      margin-top: 0rem;
+    }
   }
 }
 </style>

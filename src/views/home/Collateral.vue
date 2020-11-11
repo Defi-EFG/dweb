@@ -1,5 +1,5 @@
 <template>
-  <div class="markets">
+  <div class="callateral">
     <section class="sec_m1">
       <v-container>
         <v-row>
@@ -8,19 +8,22 @@
               <v-row>
                 <v-col cols="12" style="padding:0px">
                   <div class="logo_ecoc">
-                    <img class="logo_ecoc_m" width="40" src="@/assets/delay_02.svg" alt="" />
-                    <div class="logo_ecoc_m_text">GPT <span>- Market Details</span></div>
+                    <img
+                      class="logo_ecoc_m"
+                      width="40"
+                      :src="require(`@/assets/${$route.query.name}.svg`)"
+                      alt=""
+                    />
+                    <div class="logo_ecoc_m_text">
+                      {{ $route.query.name }} <span>- Market Details</span>
+                    </div>
                   </div>
                 </v-col>
-                <v-col cols="9" class="chart_detail">
-                  <div class="m_titel">Borrow APY</div>
+                <v-col cols="9" class="efg_border1">
                   <div class="m_titel">Liquidation</div>
-                  <div class="m_titel">Number of Borrowers</div>
                   <div class="m_titel">Collateral Factor</div>
                 </v-col>
-                <v-col cols="3" class="chart_detail">
-                  <div class="m_titel m_titel_2">3.5%</div>
-                  <div class="m_titel m_titel_2">841</div>
+                <v-col cols="3" class="efg_border1">
                   <div class="m_titel m_titel_2">841</div>
                   <div class="m_titel m_titel_2">80%</div>
                 </v-col>
@@ -40,7 +43,7 @@
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
-              <line-chart></line-chart>
+              <LineChartCollateral></LineChartCollateral>
             </div>
           </v-col>
         </v-row>
@@ -49,19 +52,34 @@
   </div>
 </template>
 
-<script>
-import LineChart from '@/components/Home/LineChart'
-import DoughnutChart from '@/components/Home/DoughnutChart'
+<script lang="ts">
+import { Component, Vue } from 'vue-property-decorator'
+import LineChartCollateral from '@/components/Home/LineChartCollateral.vue'
+import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
 
-export default {
+@Component({
   components: {
-    LineChart,
+    LineChartCollateral,
     DoughnutChart
   }
-}
+})
+export default class Efg extends Vue {}
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.button-small {
+  padding: 10px 35px;
+  text-align: right;
+  background: #000000 0% 0% no-repeat padding-box;
+  a {
+    padding: 0 5px;
+    color: #ffffff;
+    font-size: 14px;
+  }
+  .active {
+    border-bottom: 2px solid #c074f9;
+  }
+}
 .container {
   max-width: 1088px;
   margin: 0 auto;
@@ -80,14 +98,12 @@ export default {
   max-width: 500px;
   margin: 0 auto;
 }
-.chart_detail {
-  padding: 0px;
-  border-top: 1px solid #ffffff;
-}
 .logo_ecoc {
   color: #ffffff;
   position: relative;
   margin-bottom: 30px;
+  display: flex;
+  align-items: center;
 }
 .logo_ecoc_m {
   border-radius: 50%;
@@ -100,17 +116,20 @@ export default {
 }
 .logo_ecoc .logo_ecoc_m_text {
   position: relative;
-  display: inline;
   text-align: center;
-  font: normal normal normal 35px/58px Segoe UI;
+  font-size: 25px;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
-  top: -8px;
   margin-left: 10px;
 }
+
+.efg_border1 {
+  padding: 0px;
+  border-top: 1px solid #ffffff;
+}
 .logo_ecoc .logo_ecoc_m_text span {
-  font: normal normal 400 30px/54px Segoe UI;
+  font-size: 23px;
   font-weight: 300;
 }
 .m_titel {
@@ -138,7 +157,7 @@ export default {
 }
 .M_detail .div_price {
   position: absolute;
-  top: 40%;
+  top: 30%;
 }
 .M_detail .chart {
   max-width: 350px;
@@ -151,11 +170,21 @@ export default {
   color: #ffffff;
   opacity: 1;
 }
+.M_detail .text_price_head2 {
+  margin-top: 20px;
+}
 .M_detail .text_price {
   text-align: left;
   font: normal normal 400 35px/47px Segoe UI;
   letter-spacing: 0px;
   color: #3fc0db;
+  opacity: 1;
+}
+.M_detail .text_price_2 {
+  text-align: left;
+  font: normal normal 400 35px/47px Segoe UI;
+  letter-spacing: 0px;
+  color: #c074f9;
   opacity: 1;
 }
 .chart_view {
@@ -182,6 +211,9 @@ export default {
   }
   .sec_m1 {
     padding: 100px 0 30px 0;
+  }
+  .M_detail .text_price_2 {
+    text-align: right;
   }
 }
 @media only screen and (max-width: 500px) {

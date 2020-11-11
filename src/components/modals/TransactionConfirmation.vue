@@ -1,29 +1,56 @@
 <template>
   <div>
-    <v-dialog v-model="show" max-width="400" class="send-transaction">
+    <v-dialog v-model="show" max-width="400" class="send-transaction" persistent>
       <v-card class="blur-card" color="#FFFFFF00">
         <v-card-title class="modal-header">
           <v-icon></v-icon>
           <v-btn @click="onClose" icon><v-icon color="white">$close</v-icon></v-btn>
         </v-card-title>
-        <div class="transaction-confirmation-wrapper">
-          <div class="d-flex">
-            <div class="transaction-sender">{{ truncateAddress(addr) }}</div>
-            <div class="transaction-receiver">{{ addressFilter(toAddr) }}</div>
+        <div class="transaction-confirmation-wrapper ">
+          <div class="d-flex ">
+            <v-tooltip top>
+              <template v-slot:activator="{ on, attrs }">
+                <div
+                  @click="copyAddress(fromAddr)"
+                  class="transaction-sender"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  {{ truncateAddress(addressFilter(fromAddr)) }}
+                </div>
+              </template>
+              <span> {{ copymessage }}</span>
+            </v-tooltip>
+
+            <v-tooltip top>
+              <template v-slot:activator="{ on, attrs }">
+                <div
+                  @click="copyAddress(toAddr)"
+                  class="transaction-receiver"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  {{ truncateAddress(addressFilter(toAddr)) }}
+                </div>
+              </template>
+              <span>{{ copymessage }}</span>
+            </v-tooltip>
             <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
-            <div class="tx-confirm-label"><strong>Transaction Confirm</strong></div>
-            <span class="confirm-label">Please confirm the transaction</span>
+            <h3>
+              <strong>{{ $t('views.modal.transaction') }}</strong>
+            </h3>
+            <small>{{ $t('views.modal.please_transaction') }}</small>
             <div class="transaction-confirmation-content-detail">
               <div class="send-detail border-bottom">
-                <span class="gt">Send to</span>
+                <span class="gt">{{ $t('views.modal.send_to') }}</span>
                 <div class="d-flex justify-end">
                   <p class="address">{{ toAddr }}</p>
                 </div>
               </div>
               <div class="detail border-bottom">
-                <span class="gt">Amount</span>
+                <span class="gt">{{ $t('views.modal.amount') }}</span>
                 <div class="d-flex justify-end">
                   <p>{{ amount }}</p>
                   <p class="ml-2">{{ selectedCurrencyName }}</p>
@@ -32,40 +59,42 @@
             </div>
 
             <div class="detail border-bottom ">
-              <span class="gt">Gas Fee</span>
+              <span class="gt">{{ $t('views.modal.gas_fee') }}</span>
               <div class="text-end">
                 <div class="d-flex justify-end">
-                  <p>{{ fee }}</p>
+                  <p>{{ totalFee }}</p>
                   <p class="ml-2">ECOC</p>
                 </div>
                 <v-btn @click="gasSetting()" small text color="primary">
-                  <span class="gassetting">gas setting</span>
+                  <span class="gassetting">{{ $t('views.modal.gas_setting') }}</span>
                 </v-btn>
               </div>
             </div>
-            <v-form class="pt-4">
+            <div class="pt-4">
               <v-text-field
                 :type="showpassword ? 'text' : 'password'"
                 :rules="[rules.required, rules.min]"
-                label="Keystore Password"
+                :label="modal.keystore_password"
                 v-model="password"
+                v-on:keyup.enter="onConfirm"
                 :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
                 dense
                 filled
-              ></v-text-field
-            ></v-form>
+                v-on:submit.prevent="onConfirm"
+              ></v-text-field>
+            </div>
 
             <div class="errorMsg" v-if="errorMsg">
-              <span>{{ errorMsg }}</span>
+              <span>{{ $t(errorMsg) }}</span>
             </div>
 
             <div class="action-transaction-confirmation">
-              <v-btn outlined large color="primary" class="text-capitalize" @click="onClose"
-                >Cancel</v-btn
-              >
-              <v-btn large depressed color="primary" class="text-capitalize" @click="onConfirm"
-                >Confirm</v-btn
-              >
+              <v-btn outlined large color="primary" class="text-capitalize" @click="onClose">{{
+                $t('views.modal.cancel')
+              }}</v-btn>
+              <v-btn large depressed color="primary" class="text-capitalize" @click="onConfirm">{{
+                $t('views.modal.confirm')
+              }}</v-btn>
             </div>
           </div>
         </div>
@@ -79,25 +108,25 @@
           <v-btn icon @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
         </div>
         <div class="content-gas-setting">
-          <h3>Gas Customization</h3>
-          <small>Increase the processing time of your transaction by using higher gas fee</small>
+          <h3>{{ $t('views.modal.gas_custom') }}</h3>
+          <small>{{ $t('views.modal.Increase') }}</small>
           <div class="gas-customization">
             <v-btn-toggle tile group>
               <v-btn>
                 <div class="gas-custom-btn-group" @click="fee = feeSlow">
-                  <p>Slow</p>
+                  <p>{{ $t('views.modal.slow') }}</p>
                   <p>{{ feeSlow }} ECOC</p>
                 </div>
               </v-btn>
               <v-btn>
                 <div class="gas-custom-btn-group" @click="fee = feeAverage">
-                  <p>Average</p>
+                  <p>{{ $t('views.modal.average') }}</p>
                   <p>{{ feeAverage }} ECOC</p>
                 </div></v-btn
               >
               <v-btn>
                 <div class="gas-custom-btn-group" @click="fee = feeFast">
-                  <p>Fast</p>
+                  <p>{{ $t('views.modal.fast') }}</p>
                   <p>{{ feeFast }} ECOC</p>
                 </div></v-btn
               >
@@ -105,23 +134,25 @@
           </div>
           <div class="inputnumber d-flex justify-space-between">
             <v-col cols="6" class="pb-0">
-              <label for="Gas price:">Gas price:</label
+              <label for="Gas price:">{{ $t('views.modal.gas_price') }}</label
               ><v-text-field type="number" v-model="gasPrice"></v-text-field>
             </v-col>
             <v-col cols="6" class="pb-0">
-              <label for="Gas limit:">Gas limit:</label
+              <label for="Gas limit:">{{ $t('views.modal.gas_limit') }}</label
               ><v-text-field type="number" v-model="gasLimit"></v-text-field>
             </v-col>
           </div>
 
           <div class="d-flex justify-space-between py-2">
-            <p>Total Transaction Fee:</p>
+            <p>{{ $t('views.modal.total_transaction') }}</p>
             <div class="text-end">
               <p class="mb-0">{{ totalFee }} ECOC</p>
             </div>
           </div>
           <div class="save-button ">
-            <v-btn color="primary" depressed block @click="closeGasSetting">save</v-btn>
+            <v-btn color="primary" depressed block @click="closeGasSetting">{{
+              $t('views.modal.save')
+            }}</v-btn>
           </div>
         </div>
       </v-card>
@@ -135,43 +166,43 @@ import { getModule } from 'vuex-module-decorators'
 import { WalletParams } from '@/services/ecoc/types'
 import { Currency } from '@/types/currency'
 import WalletModule from '@/store/wallet'
-import LendingModule from '@/store/lending'
-import StakingModule from '@/store/staking'
 import * as Ecoc from '@/services/wallet'
-import * as utils from '@/services/utils'
 import { DEFAULT } from '@/services/contract'
+import { copyToClipboard, getEcocTotalFee, addressFilter, truncate } from '@/services/utils'
 
 @Component({
   components: {}
 })
-export default class TransactionComfirmationModal extends Vue {
+export default class TransactionConfirmationModal extends Vue {
   @Prop({ default: {} }) currency!: Currency
   @Prop({ default: false }) visible!: boolean
+  @Prop() fromAddr!: string
   @Prop() toAddr!: string
   @Prop() amount!: string
 
   walletStore = getModule(WalletModule)
-  lendingStore = getModule(LendingModule)
-  stakingStore = getModule(StakingModule)
 
   feeSlow = 0.004
   feeAverage = 0.01
   feeFast = 0.1
 
+  copymessage = 'Copy Address'
   gassetting = false
   errorMsg = ''
   password = ''
   keystore: any = ''
   keystorePassword = ''
   showpassword = false
+
   rules = {
     required: (value: any) => {
-      return !!value || 'Required.'
+      return !!value || this.$t('views.modal.requiredw')
     },
     min: (v: any) => {
-      return v.length >= 6 || 'Min 6 characters'
+      return v.length >= 6 || this.$t('views.modal.characters')
     }
   }
+
   fee = DEFAULT.DEFAULT_FEE
   gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
@@ -180,36 +211,21 @@ export default class TransactionComfirmationModal extends Vue {
     return this.visible
   }
 
+  get isNative() {
+    return this.selectedCurrencyName === 'ECOC'
+  }
+
+  get enoughBalance() {
+    if (!this.ecoc) {
+      return false
+    }
+
+    return Number(this.totalFee) <= Number(this.ecoc)
+  }
+
   get totalFee() {
-    return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
-  }
-
-  get addr() {
-    return this.walletStore.address
-  }
-
-  get lendingContractAddress() {
-    return this.lendingStore.address
-  }
-
-  get stakingContractAddress() {
-    return this.stakingStore.address
-  }
-
-  gasSetting() {
-    this.gassetting = true
-  }
-
-  closeGasSetting() {
-    this.gassetting = false
-  }
-
-  truncateAddress(addr: string) {
-    const separator = '...'
-    const charsToShow = 8
-    const frontChars = Math.ceil(charsToShow / 2)
-    const backChars = Math.floor(charsToShow / 2)
-    return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
+    if (this.isNative) return this.fee
+    return getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
   }
 
   get ecoc() {
@@ -224,10 +240,33 @@ export default class TransactionComfirmationModal extends Vue {
     return this.currency.name || ''
   }
 
+  get modal() {
+    return this.$t('views.modal')
+  }
+
+  copyAddress(addr: string) {
+    this.copymessage = 'Copied'
+    copyToClipboard(addr)
+
+    setTimeout(() => {
+      this.copymessage = 'Copy Address'
+    }, 1000)
+  }
+
+  gasSetting() {
+    this.gassetting = true
+  }
+
+  closeGasSetting() {
+    this.gassetting = false
+  }
+
+  truncateAddress(addr: string) {
+    return truncate(addr, 15)
+  }
+
   addressFilter(address: string) {
-    if (address == this.lendingContractAddress) return 'Lending Platform'
-    else if (address == this.stakingContractAddress) return 'Staking Platform'
-    else return this.truncateAddress(address)
+    return addressFilter(address)
   }
 
   onClose() {
@@ -332,8 +371,11 @@ export default class TransactionComfirmationModal extends Vue {
 }
 .transaction-receiver {
   background-color: #370757;
+  cursor: pointer;
 }
+
 .transaction-sender {
+  cursor: pointer;
   background-color: #44096b;
   border-right: 1px solid rgba(180, 180, 180, 0.555);
 }
@@ -387,15 +429,6 @@ export default class TransactionComfirmationModal extends Vue {
 .gassetting {
   letter-spacing: 0px;
   font-size: 10px;
-}
-
-.tx-confirm-label {
-  font-size: 16px;
-  font-weight: 600;
-}
-
-.confirm-label {
-  opacity: 0.5;
 }
 </style>
 <style lang="scss">
@@ -458,5 +491,9 @@ export default class TransactionComfirmationModal extends Vue {
 
   font-size: 10px;
   padding: 4px;
+}
+.not-enough {
+  background-color: white;
+  color: red;
 }
 </style>

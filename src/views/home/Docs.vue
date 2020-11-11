@@ -161,7 +161,7 @@ export default class Docs extends Vue {
     position: fixed;
     width: 100%;
     top: 50px;
-    padding: 20px 50px;
+    padding: 20px 20px;
     height: 70px;
     background: #ffffff;
   }
@@ -170,10 +170,16 @@ export default class Docs extends Vue {
     margin-right: 10px;
   }
   .sec_doc2 {
-    padding: 150px 50px;
+    padding: 130px 20px;
   }
   .container {
     padding: 12px;
+  }
+  .sec_doc2 .head_Introduction {
+    margin-bottom: 20px;
+  }
+  .sec_doc2 .img img {
+    margin-bottom: 20px;
   }
 }
 </style>

@@ -2,14 +2,16 @@
   <div>
     <v-row>
       <v-col cols="6">
-        <div class="token-chart">
-          <canvas id="myChart" class="token-logo"></canvas>
+        <div class="dougnut-chart">
+          <canvas id="gptmyChart" class="dougnut-logo"></canvas>
         </div>
       </v-col>
       <v-col cols="6">
-        <div class="token-detail">
-          <p>{{ token }} - Available (Total: {{ max }})</p>
-          <div class="value">{{ currentValue }} {{ token }}</div>
+        <div class="dougnut-detail">
+          <p>{{ token }} - Available (Total: {{ max | numberWithCommas({ fixed: [0, 2] }) }})</p>
+          <div class="value_price1">
+            {{ stakingAvailable | numberWithCommas({ fixed: [0, 8] }) }} {{ token }}
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -20,24 +22,26 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Vue, Component } from 'vue-property-decorator'
 import Chart from 'chart.js'
+import StakingModule from '@/store/staking'
+import { getModule } from 'vuex-module-decorators'
 
 @Component({})
 export default class DoughnutChart extends Vue {
-  token = 'DELAY'
+  stakingStore = getModule(StakingModule)
+  token = 'GPT'
   max = 10000
-  currentValue = 8405.01486564
+  current = this.stakingStore.available
 
-  mounted() {
-    this.renderChart(this.ctx, this.max, this.currentValue)
+  get stakingAvailable() {
+    return this.stakingStore.available
   }
 
   get ctx() {
-    return document.getElementById('myChart')
+    return document.getElementById('gptmyChart')
   }
 
   renderChart(element: any, max: number, current: number) {
-    const chart = document.getElementById('myChart')
-    //@ts-ignore
+    /* eslint-disable */
     const myChart = new Chart(element, {
       type: 'doughnut',
       data: {
@@ -65,6 +69,13 @@ export default class DoughnutChart extends Vue {
     })
   }
 
+  mounted() {
+    console.log(this.current)
+    this.current
+    this.renderChart(this.ctx, this.max, this.stakingAvailable)
+    this.stakingStore.updateMintingInfo(this.stakingStore.address)
+  }
+
   get gradientFill() {
     //@ts-ignore
     const ctx = this.ctx.getContext('2d')
@@ -90,30 +101,76 @@ export default class DoughnutChart extends Vue {
   margin: auto;
 }
 
-.token-chart {
-  margin-left: -2rem;
-  margin-right: -2rem;
+.dougnut-chart {
+  margin-left: 20px;
+  margin-right: 20px;
+  width: 95%;
+  max-width: 400px;
 }
-
-.token-detail {
-  margin: auto 0;
+.dougnut-detail {
+  margin-top: 13%;
   p {
     color: white;
-    margin-top: 20%;
+    margin-top: 7%;
+    margin-bottom: 3px;
   }
-  .value {
+  .value_price1 {
     font-size: 25px;
     font-weight: 400;
     color: #3fc0db;
   }
+  .value_price2 {
+    font-size: 25px;
+    font-weight: 400;
+    color: #c074f9;
+  }
 }
 
-.token-logo {
+.dougnut-logo {
   padding: 0;
   margin: 0;
-  background-image: url('../../assets/gpt.svg');
+  background-image: url('../../assets/efg_01.svg');
   background-repeat: no-repeat;
   background-position: 50.4% 49.5%;
   background-size: 50px;
+}
+@media only screen and (max-width: 960px) {
+  .dougnut-detail {
+    text-align: right;
+    margin-right:15px;
+ }
+  .dougnut-chart {
+    margin-left: 100px;
+    margin-right: 0px;
+    width: 95%;
+    min-width: 250px;
+  }
+}
+@media only screen and (max-width: 600px) { 
+  .dougnut-chart {
+    margin-left: -50px;
+    margin-right: 0px;
+    width: 95%;
+    min-width: 250px;
+  }
+  .dougnut-detail {
+    margin-top: 10px;
+    p {
+      color: white;
+      margin-top: 2%;
+      margin-bottom: 3px;
+      font-size: 13px;
+    }
+    .value_price1 {
+      font-size: 20px;
+      font-weight: 400;
+      color: #3fc0db;
+    }
+    .value_price2 {
+      font-size: 20px;
+      font-weight: 400;
+      color: #c074f9;
+    }
+  }
 }
 </style>

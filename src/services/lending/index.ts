@@ -13,7 +13,7 @@ interface Collateral {
 }
 
 const lendingContract = {
-  address: '5744612449a6c9ebdd1992e84bc6493458333c37',
+  address: 'cee90608f40c4a41c4bfabe8ebaf92faf1ce78f1',
   abi: lendingAbi
 } as Contract
 
@@ -128,12 +128,12 @@ export namespace lending {
     return priceUsd
   }
 
-  export const getEFGBalance = async (address: string) => {
+  export const getAssetBalance = async (currencyName: string, address: string) => {
     const params = {
-      methodArgs: [address]
+      methodArgs: [currencyName, address]
     } as Params
 
-    const result = await contract.call('getEFGBalance', params)
+    const result = await contract.call('getAssetBalance', params)
     const executionResult = result.executionResult as ExecutionResult
     const res = executionResult.formattedOutput['0'].toNumber()
 
@@ -342,8 +342,9 @@ export namespace lending {
     amount: number,
     walletParams: WalletParams
   ) => {
+    const toAddr = walletParams.address
     const params = {
-      methodArgs: [currencyName, amount],
+      methodArgs: [currencyName, amount, toAddr],
       senderAddress: walletParams.address,
       amount: 0,
       fee: walletParams.fee,

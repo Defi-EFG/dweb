@@ -3,7 +3,7 @@
     <v-toolbar class="sl-header" flat dense>
       <v-toolbar-title>
         <v-icon class="head-icon">mdi-database</v-icon>
-        <span>Staking List</span>
+        <span>{{ $t('views.stakingpage.stakinglist') }}</span>
       </v-toolbar-title>
     </v-toolbar>
 
@@ -15,8 +15,10 @@
             <span>{{ token.currency.name }}</span>
           </v-col>
           <v-col class="reward">
-            <small>Total Staking</small>
-            <div class="value">{{ token.amount }} {{ token.currency.name }}</div>
+            <small>{{ $t('views.stakingpage.total_staking') }}</small>
+            <div class="value">
+              {{ token.amount | numberWithCommas({ fixed: [0, 8] }) }} {{ token.currency.name }}
+            </div>
           </v-col>
         </v-row>
       </v-card>

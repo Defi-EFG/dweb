@@ -328,7 +328,10 @@ ul {
 }
 @media only screen and (max-width: 670px) {
   .color_bg {
-    padding: 4px 15px;
+    padding: 12px 0px 4px 12px;
+  }
+  .lg_select .v-select > .v-input__control > .v-input__slot {
+    width: 57px !important;
   }
 }
 </style>

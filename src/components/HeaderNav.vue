@@ -8,7 +8,9 @@
       <v-spacer></v-spacer>
       <TxNotifications v-if="isWalletUnlocked"></TxNotifications>
       <template v-if="!addr">
-        <v-btn outlined small @click="openUnlockWallet">Unlock Wallet</v-btn>
+        <v-btn outlined small @click="openUnlockWallet">{{
+          $t('views.walletpage.unlock_wallet')
+        }}</v-btn>
       </template>
       <v-menu v-model="menu" v-else offset-y left>
         <template v-slot:activator="{ on }">
@@ -19,9 +21,9 @@
         </template>
         <v-card rounded-lg width="389" class="v-card-wrapper">
           <v-card-title class="cardheadertitle"
-            ><h6>ECOC Wallet</h6>
+            ><h6>{{ $t('views.modal.ECOC_Walle') }}</h6>
             <v-btn text color="primary" class="mb-2" @click="logout()"
-              ><span class="text-btn">Disconnect</span></v-btn
+              ><span class="text-btn">{{ $t('views.modal.disconnect') }}</span></v-btn
             ></v-card-title
           >
           <v-card-text>
@@ -29,7 +31,7 @@
               <span>{{ addr }}</span>
             </v-alert>
             <v-btn text color="#7900B5" class="mt-1" @click="checkPrivatekeyDialog">
-              <span class="text-btn">Private Key</span>
+              <span class="text-btn">{{ $t('views.modal.private_key') }}</span>
             </v-btn></v-card-text
           >
         </v-card>
@@ -48,8 +50,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
-import UnlockWallet from './modals/unlock-wallet.vue'
-import PrivateKey from './modals/private-key-modal.vue'
+import UnlockWallet from './modals/UnlockWallet.vue'
+import PrivateKey from './modals/PrivateKeyModal.vue'
 import TxNotifications from '@/components/DeFi/TxNotifications.vue'
 
 @Component({
@@ -76,12 +78,15 @@ export default class HeaderNav extends Vue {
   checkPrivatekeyDialog() {
     this.accessPrivateKey = !this.accessPrivateKey
   }
+
   closeUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
+
   openUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
+
   openprivatekeyDialog() {
     this.accessPrivateKey = !this.accessPrivateKey
   }
@@ -93,9 +98,7 @@ export default class HeaderNav extends Vue {
   logout() {
     this.walletStore.logout()
   }
-  onClose() {
-    console.log('onclose')
-  }
+
   gotoHome() {
     this.$router.push('/')
   }

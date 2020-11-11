@@ -5,7 +5,7 @@
         <v-col cols="12">
           <div class="chart_view">
             <template>
-              <canvas id="staking-info"></canvas>
+              <canvas :id="$route.query.pool"></canvas>
             </template>
           </div>
         </v-col>
@@ -24,14 +24,20 @@ export default class LineChart extends Vue {
   name = 'Borrow'
   title = 'Borrow'
 
+  onClickActive(name: string) {
+    this.active = name
+    this.name = name
+    this.title = name
+  }
+
   finul = 1
   txt = ''
   myChart = null
   labelSet = ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct']
   dataSet = [1.6, 2.2, 2, 2.3, 2.1, 2]
-
+  idChart: any = this.$route.query.pool
   get ctx() {
-    return document.getElementById('staking-info')
+    return document.getElementById(this.idChart)
   }
 
   mounted() {
@@ -47,7 +53,6 @@ export default class LineChart extends Vue {
     //   self.txt = self.finul + ' txt'
     //   self.dataSet.push(self.finul)
     //   self.labelSet.push(self.txt)
-    //   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     //   self.renderChart(self.ctx!, self.labelSet, self.dataSet)
     // }, 20000)
   }

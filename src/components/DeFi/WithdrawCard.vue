@@ -1,8 +1,8 @@
 <template>
   <div>
-    <p class="action-label" v-if="!isMobileDevice">Withdraw</p>
+    <p class="action-label" v-if="!isMobileDevice">{{ $t('views.lendingpage.withdraw') }}</p>
     <div class="wallet-balance mb-2">
-      <span>Max Withdrawable:</span>
+      <span>{{ $t('views.lendingpage.max_with') }}</span>
       <v-spacer class="space"></v-spacer>
       <span class="balance" @click="fillAmount(maxWithdraw)"
         >{{ maxWithdraw.toFixed(2) }} {{ currencyName }}</span
@@ -10,7 +10,7 @@
     </div>
     <v-text-field
       class="amount-input"
-      label="Withdrawal Amount"
+      :label="lendingpage.withdrawalamount"
       placeholder="0"
       :suffix="currencyName"
       v-model="withdrawValue"
@@ -22,7 +22,7 @@
       type="number"
     ></v-text-field>
     <div class="borrow-power">
-      <span class="label">Borrow Power</span>
+      <span class="label">{{ $t('views.lendingpage.borrow_po') }}</span>
       <v-progress-linear
         :value="calculateBPUsed(withdrawValue)"
         rounded
@@ -33,21 +33,27 @@
       ></v-progress-linear>
     </div>
     <div class="borrow-used">
-      <div class="text-left">Borrow Power Used</div>
+      <div class="text-left">{{ $t('views.lendingpage.borrow_power_used') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bp-change">
-        <span>{{ bpUsed.toFixed(1) }}%</span>
+        <span>{{ bpUsed | numberWithCommas({ fixed: [0, 2] }) }}%</span>
         &rarr;
-        <span class="after-calculated">{{ calculateBPUsed(withdrawValue).toFixed(1) }}%</span>
+        <span class="after-calculated"
+          >{{ Number(calculateBPUsed(withdrawValue)) | numberWithCommas({ fixed: [0, 2] }) }}%</span
+        >
       </div>
     </div>
     <div class="borrow-total mt-1 mb-3">
-      <div class="text-left">Borrow Limit</div>
+      <div class="text-left">{{ $t('views.lendingpage.borrow_limit') }}</div>
       <v-spacer class="space"></v-spacer>
       <div class="bt-change">
-        <span>${{ borrowLimit.toFixed(2) }}</span>
+        <span>${{ borrowLimit | numberWithCommas({ fixed: [0, 5] }) }}</span>
         &rarr;
-        <span class="after-calculated">${{ calculateTotalBP(withdrawValue).toFixed(2) }}</span>
+        <span class="after-calculated"
+          >${{
+            Number(calculateTotalBP(withdrawValue)) | numberWithCommas({ fixed: [0, 2] })
+          }}</span
+        >
       </div>
     </div>
     <v-divider dark />
@@ -60,11 +66,12 @@
       :class="isWithdrawable(withdrawValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="openConfirmTxModal"
     >
-      {{ isWithdrawable(withdrawValue, 'btn') ? 'Withdraw' : 'Insufficient' }}</v-btn
+      {{ isWithdrawable(withdrawValue, 'btn') ? lendingpage.withdraw : 'Insufficient' }}</v-btn
     >
-    <TransactionComfirmationModal
+    <TransactionConfirmationModal
       :visible="confirmTxModal"
-      :toAddr="contractAddr"
+      :fromAddr="contractAddr"
+      :toAddr="walletAddr"
       :amount="withdrawValue"
       :currency="currency"
       @onConfirm="onConfirm"
@@ -81,11 +88,11 @@ import LendingModule from '@/store/lending'
 import WalletModule from '@/store/wallet'
 import * as constants from '@/constants'
 import { WalletParams } from '@/services/ecoc/types'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal
+    TransactionConfirmationModal
   }
 })
 export default class Withdraw extends Vue {
@@ -107,6 +114,10 @@ export default class Withdraw extends Vue {
 
   get myCollateral() {
     return this.lendingStore.myCollateralAssets
+  }
+
+  get walletAddr() {
+    return this.walletStore.address
   }
 
   get contractAddr() {
@@ -138,6 +149,10 @@ export default class Withdraw extends Vue {
     return (this.borrowBalance / this.borrowLimit) * 100 || 0
   }
 
+  get lendingpage() {
+    return this.$t('views.lendingpage')
+  }
+
   get tokenConversion() {
     return `${Number(this.withdrawValue)} ${this.currencyName} ≈ $${this.currencyPrice *
       Number(this.withdrawValue)}`
@@ -156,7 +171,8 @@ export default class Withdraw extends Vue {
   // BP = Borrow Power
   calculateTotalBP(withdrawAmount: number) {
     const dollarsAmount = Number(withdrawAmount) * this.currencyPrice
-    return (this.collateralBalance - dollarsAmount) * this.borrowPowerPercentage
+    const total = this.borrowLimit - dollarsAmount * this.borrowPowerPercentage
+    return total
   }
 
   calculateBPUsed(withdrawAmount: number) {
@@ -190,15 +206,14 @@ export default class Withdraw extends Vue {
 
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
     const amount = Number(this.withdrawValue)
-    const currencyName = this.currencyName
+    const currency = this.currency
 
     const payload = {
-      currencyName,
+      currency,
       amount,
       walletParams
     }
@@ -206,7 +221,6 @@ export default class Withdraw extends Vue {
     this.lendingStore
       .withdrawCollateral(payload)
       .then(txid => {
-        console.log('Txid:', txid)
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
         this.onSuccess()
       })

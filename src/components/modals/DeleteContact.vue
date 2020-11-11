@@ -3,7 +3,7 @@
     <v-dialog v-model="visible" max-width="400">
       <v-card>
         <v-card-title class="card-title">
-          <span>Delete contact</span>
+          <span>{{ $t('views.modal.delete_contact') }}</span>
           <v-spacer></v-spacer>
           <v-btn icon dark @click.native="onClose">
             <v-icon>mdi-close</v-icon>
@@ -11,15 +11,15 @@
         </v-card-title>
         <div class="contact-dialog-wrapper">
           <div class="contact-dialog-content" id="soloadd">
-            <div class="headtext_m">Delete</div>
-            <div class="headtext_span">Are you sure you want to delete this contact?</div>
+            <div class="headtext_m">{{ $t('views.modal.delete') }}</div>
+            <div class="headtext_span">{{ $t('views.modal.are_you') }}</div>
             <div class="btn-wrapper">
               <v-btn class="cancel" outlined large color="primary" @click="onClose()">
-                Cancel
+                {{ $t('views.modal.cancel') }}
               </v-btn>
               <v-spacer></v-spacer>
               <v-btn class="submit" large depressed color="primary" @click="removeContact">
-                Delete
+                {{ $t('views.modal.delete') }}
               </v-btn>
             </div>
           </div>

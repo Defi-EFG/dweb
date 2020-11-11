@@ -6,7 +6,7 @@ import { Utxo, TxReceipt } from '@/types/transaction'
 export const DEFAULT = {
   DEFAULT_AMOUNT: 0,
   DEFAULT_FEE: 0.01,
-  DEFAULT_GAS_LIMIT: 250000,
+  DEFAULT_GAS_LIMIT: 300000,
   DEFAULT_GAS_PRICE: 40
 }
 
