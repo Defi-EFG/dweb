@@ -159,7 +159,7 @@
             "supply_mk": "Supply Market",
             "total_borrowed": "Total Borrowed",
             "debt": "Debt",
-            "sec_until": "sec until liquidation."
+            "sec_until": "until liquidation."
         },
         "stakingpage": {
             "stakinglist": "Staking List",
