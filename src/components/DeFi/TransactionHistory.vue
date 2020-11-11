@@ -39,7 +39,7 @@
     <div class="empty-message" v-else>
       <div class="inner">
         <v-icon large>mdi-history</v-icon>
-        <div class="message">No transaction history</div>
+        <div class="message">{{ $t('views.walletpage.no_transaction_history') }}</div>
       </div>
     </div>
     <TransactionDetailModal

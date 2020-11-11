@@ -125,7 +125,8 @@
             "address": "Wallet Address :",
             "total_balance": "Total Balance",
             "to_Address": "To Address",
-            "amount": "Amount"
+            "amount": "Amount",
+            "no_transaction_history": "No Transaction History"
         },
         "lendingpage": {
             "collateral_bl": "Collateral Balance",
