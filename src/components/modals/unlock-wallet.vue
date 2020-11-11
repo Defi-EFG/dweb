@@ -303,7 +303,9 @@
                   </div>
                   <div class="action-wrapper">
                     <v-btn large class="mb-5" color="primary" @click="onUnlockWallet">
-                      <h4 class="text-capitalize font-weight-light">Connect</h4>
+                      <h4 class="text-capitalize font-weight-light">
+                        {{ $t('views.modal.connect') }}
+                      </h4>
                     </v-btn>
                   </div>
                 </template>
