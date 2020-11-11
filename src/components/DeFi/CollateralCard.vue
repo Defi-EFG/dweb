@@ -4,13 +4,14 @@
     <div class="wallet-balance mb-2">
       <span class="text-left">{{ $t('views.lendingpage.wallet_bl') }}</span>
       <v-spacer></v-spacer>
-      <span class="balance" @click="fillAmount(walletBalance)"
-        >{{ walletBalance | numberWithCommas({ fixed: [0, 2] }) }} {{ currencyName }}</span
-      >
+      <span class="balance" @click="fillAmount(walletBalance)">
+        {{ Number(walletBalance) | numberWithCommas({ fixed: [0, 2] }) }} {{ currencyName }}
+      </span>
     </div>
     <v-text-field
       class="amount-input"
       :label="lendingpage.collateralamount"
+      placeholder="0"
       :suffix="currencyName"
       height="43"
       color="#C074F9"
@@ -104,7 +105,7 @@ export default class Collateral extends Vue {
   @Prop() borrowPowerPercentage!: number
 
   collateralmodel = false
-  collateralAmount: number | string = 0
+  collateralAmount: number | string = ''
 
   openCollateralmodals() {
     this.collateralmodel = !this.collateralmodel
@@ -124,7 +125,10 @@ export default class Collateral extends Vue {
   }
 
   get walletBalance() {
-    return Number(this.currency.balance)
+    const walletB = this.walletStore.currencies.find(currency => {
+      return currency.name === this.currencyName
+    })
+    return walletB?.balance
   }
 
   get currencyName() {
@@ -136,11 +140,11 @@ export default class Collateral extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowLimit) * 100
+    return (this.borrowBalance / this.borrowLimit) * 100 || 0
   }
 
   get tokenConversion() {
-    return `${this.collateralAmount} ${this.currencyName} ≈ $${this.currencyPrice *
+    return `${Number(this.collateralAmount)} ${this.currencyName} ≈ $${this.currencyPrice *
       Number(this.collateralAmount)}`
   }
 
@@ -164,22 +168,24 @@ export default class Collateral extends Vue {
 
   calculateBPUsed(colAmount: number) {
     const dollarsAmount = Number(colAmount) * this.currencyPrice
-    return (
+    const newBpUsed =
       (this.borrowBalance /
         ((this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage)) *
       100
-    )
+    return newBpUsed | 0
   }
 
   isCollateralable(amount: number, type: string) {
-    const isEnough = amount <= this.walletBalance
+    const balance = Number(this.walletBalance) || this.currency.balance
+    const isEnough = amount <= balance
     const isValidAmount = amount >= 0
     const isClickable = amount > 0
+    const isNotBorrowedYet = this.borrowBalance <= 0
 
     if (type === 'error') {
-      return isEnough && isClickable
+      return isEnough && isClickable && isNotBorrowedYet
     }
-    return isEnough && isValidAmount
+    return isEnough && isValidAmount && isNotBorrowedYet
   }
 }
 </script>

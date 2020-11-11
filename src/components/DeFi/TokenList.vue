@@ -61,20 +61,19 @@ import { getEstimatedValue } from '@/services/utils'
 })
 export default class TokenList extends Vue {
   walletStore = getModule(WalletModule)
-  // active on first item
-  activeItem = 0
 
   getEstimatedValue = getEstimatedValue
+
+  get activeItem() {
+    return this.walletStore.selectedCurrencyIndex
+  }
 
   get currencies() {
     return this.walletStore.currencies
   }
 
-  selectCurrency(index: number) {
-    this.activeItem = index
-    this.walletStore.selectCurrency(index).then(() => {
-      //
-    })
+  async selectCurrency(index: number) {
+    await this.walletStore.selectCurrency(index)
   }
 
   getInfo(tokenInfo: Ecrc20 | undefined) {
@@ -95,6 +94,7 @@ export default class TokenList extends Vue {
   overflow: auto;
   min-height: 226px;
   width: inherit;
+  max-width: 1040px;
 
   &::-webkit-scrollbar-track {
     margin: 8px;

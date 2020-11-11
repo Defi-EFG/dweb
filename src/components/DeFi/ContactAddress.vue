@@ -119,7 +119,6 @@ export default class ContactAddress extends Vue {
   @Watch('isReady')
   onLoggedIn(ready: any) {
     if (ready) {
-      console.log('ready', this.walletAddr)
       this.addressStore.subscribeToFirebase(this.walletAddr)
     }
   }
@@ -197,6 +196,12 @@ export default class ContactAddress extends Vue {
   .message {
     padding-top: 0.2rem;
     font-weight: 700;
+  }
+}
+
+@media (max-width: 1264px) {
+  .address-list {
+    min-height: 128px;
   }
 }
 

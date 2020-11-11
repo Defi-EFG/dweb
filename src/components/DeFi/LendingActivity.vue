@@ -8,7 +8,7 @@
 
         <v-tab-item class="my-collateral">
           <v-card dark color="#2e3344">
-            <v-card-text>
+            <v-card-text v-if="myCollateral.length > 0">
               <div class="supply-header">
                 <div>{{ $t('views.lendingpage.assets') }}</div>
                 <div>{{ $t('views.lendingpage.balance') }}</div>
@@ -26,12 +26,15 @@
                 </div>
               </div>
             </v-card-text>
+            <v-card-text v-else>
+              No collateral assets
+            </v-card-text>
           </v-card>
         </v-tab-item>
 
         <v-tab-item class="my-borrowing">
           <v-card dark color="#2e3344">
-            <v-card-text>
+            <v-card-text v-if="myBorrowing.length > 0">
               <div class="borrow-header">
                 <div class="mr-3">{{ $t('views.lendingpage.assets') }}</div>
                 <div>{{ $t('views.lendingpage.inrerest_rate') }}</div>
@@ -52,6 +55,9 @@
                   <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
                 </div>
               </div>
+            </v-card-text>
+            <v-card-text v-else>
+              No Borrowing assets
             </v-card-text>
           </v-card>
         </v-tab-item>
@@ -78,6 +84,7 @@
         </v-tab-item>
       </v-tabs>
     </v-card>
+
     <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="contractAddr"

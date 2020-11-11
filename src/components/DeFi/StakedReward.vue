@@ -18,7 +18,7 @@
         <p class="reward-label mb-1">{{ $t('views.stakingpage.reward_wd') }}</p>
 
         <div class="minimum-w">
-          <span class="value">{{ $t('views.stakingpage.minimum_wd') }}</span>
+          <span class="value">{{ currencyName }} {{ $t('views.stakingpage.withdraw') }}</span>
           <v-spacer></v-spacer>
           <span class="all" @click="fillAmount(withdrawAvailable)">{{
             $t('views.stakingpage.withdrawall')

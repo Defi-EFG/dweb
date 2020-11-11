@@ -11,17 +11,18 @@
           <v-toolbar :class="`receive-send-wrapper token-${selectedCurrencyName}`" dense flat>
             <v-toolbar-title class="token-symbol">
               <img
-                v-if="selectedCurrencyName"
+                v-if="selectedCurrencyName && isSymbolAvailable(selectedCurrencyName)"
                 :src="
                   require(`@/assets/icon/vector/${selectedCurrencyName}.svg` ||
                     `@/assets/icon/vector/default.svg`)
                 "
               />
+              <v-icon class="icon" v-else>mdi-help</v-icon>
               <span>{{ selectedCurrencyName }}</span>
             </v-toolbar-title>
           </v-toolbar>
 
-          <v-row class="content-wrapper">
+          <v-row class="content-wrapper wallet-tx-menu">
             <v-col class="inner-content pr-1" cols="6">
               <receive-token></receive-token>
             </v-col>
@@ -40,12 +41,13 @@
           <v-toolbar :class="`receive-send-wrapper token-${selectedCurrencyName}`" dense flat>
             <v-toolbar-title class="token-symbol">
               <img
-                v-if="selectedCurrencyName"
+                v-if="selectedCurrencyName && isSymbolAvailable(selectedCurrencyName)"
                 :src="
                   require(`@/assets/icon/vector/${selectedCurrencyName}.svg` ||
                     `@/assets/icon/vector/default.svg`)
                 "
               />
+              <v-icon class="icon" v-else>mdi-help</v-icon>
               <span>{{ selectedCurrencyName }}</span>
             </v-toolbar-title>
           </v-toolbar>
@@ -114,11 +116,22 @@ export default class Wallet extends Vue {
   get isMobileDevice() {
     return window.innerWidth < 600
   }
+
+  isSymbolAvailable(name: string) {
+    try {
+      // eslint-disable-next-line @typescript-eslint/no-var-requires
+      const img = require(`@/assets/icon/vector/${name}.svg`)
+      return !!img
+    } catch (e) {
+      return false
+    }
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .receive-send-wrapper {
+  width: inherit;
   background: transparent linear-gradient(268deg, #646464 0%, #474747 100%) 0% 0% no-repeat
     padding-box;
 }
@@ -210,6 +223,8 @@ export default class Wallet extends Vue {
 }
 
 .tx-container {
+  display: flex;
+  flex-wrap: wrap;
   width: inherit;
   background: #222738 !important;
 
@@ -217,6 +232,10 @@ export default class Wallet extends Vue {
     margin-right: 0 !important;
     margin-left: 0 !important;
   }
+}
+
+.wallet-tx-menu {
+  width: inherit;
 }
 
 @media (max-width: 1264px) {
