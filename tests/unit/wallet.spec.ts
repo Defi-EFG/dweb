@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { generateNewKeystore } from '@/services/wallet'
 
 describe('Wallet test', () => {
-  it('can generate new wallet to keysore', async () => {
+  it('can generate new wallet to keystore', async () => {
     const password = '123456'
     const keystore = await generateNewKeystore(password)
 
