@@ -40,10 +40,6 @@ export default class DoughnutChart extends Vue {
     return document.getElementById('gptmyChart')
   }
 
-  get staked() {
-    return this.max - this.current
-  }
-
   renderChart(element: any, max: number, current: number) {
     /* eslint-disable */
     const myChart = new Chart(element, {
@@ -75,7 +71,6 @@ export default class DoughnutChart extends Vue {
 
   mounted() {
     console.log(this.current)
-    this.staked
     this.renderChart(this.ctx, this.max, this.stakingAvailable)
     this.stakingStore.updateMintingInfo(this.stakingStore.address)
   }

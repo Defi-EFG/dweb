@@ -49,6 +49,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import LineChart from '@/components/Home/LineChartefg.vue'
 import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
+import LendingModule from '@/store/lending'
+import { getModule } from 'vuex-module-decorators'
 
 @Component({
   components: {
@@ -56,7 +58,20 @@ import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
     DoughnutChart
   }
 })
-export default class Efg extends Vue {}
+export default class Efg extends Vue {
+  lendingStore = getModule(LendingModule)
+
+  query = this.$route.query.pool
+
+  get pools() {
+    return this.lendingStore.pools
+  }
+
+  mounted() {
+    this.lendingStore.updateLoners()
+    console.log(this.pools)
+  }
+}
 </script>
 
 <style scoped lang="scss">

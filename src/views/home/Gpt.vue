@@ -19,7 +19,7 @@
                 <v-col cols="3" class="chart_detail">
                   <div class="m_titel m_titel_2">{{ stakingRate }}%</div>
                   <div class="m_titel m_titel_2">
-                    {{ stakingAvailable | numberWithCommas({ Fixed: [0, 8] }) }}
+                    {{ totleStaked | numberWithCommas({ Fixed: [0, 8] }) }}
                   </div>
                 </v-col>
               </v-row>
@@ -27,7 +27,7 @@
           </v-col>
           <v-col lg="8" md="8" cols="12">
             <div class="M_detail">
-              <doughnut-chart class="chart_dg_logo" :totalgpt="totalgpt"></doughnut-chart>
+              <doughnut-chart class="chart_dg_logo"></doughnut-chart>
             </div>
           </v-col>
         </v-row>
@@ -61,9 +61,13 @@ import { getModule } from 'vuex-module-decorators'
   }
 })
 export default class Gpt extends Vue {
-  
   stakingStore = getModule(StakingModule)
   stakingRate = 0.01
+  max = 10000
+
+  get totleStaked() {
+    return this.max - this.stakingAvailable
+  }
 
   get stakingAvailable() {
     return this.stakingStore.available

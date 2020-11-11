@@ -136,7 +136,7 @@
             </div>
           </v-col>
         </v-row>
-        <a v-for="(item, i) in pools" :key="i" :href="`loan-info?pool=${item.address}`">
+        <router-link v-for="(item, i) in pools" :key="i" :to="`loan-info?pool=${item.address}`">
           <v-row class="row1 roww2" :id="`EFG_Supply_${1 + i}`">
             <v-col lg="3" md="3" cols="2">
               <div class="margintop">
@@ -165,7 +165,7 @@
             </v-col>
             <img class="row1_img" src="@/assets/backg_01.svg" />
           </v-row>
-        </a>
+        </router-link>
         <v-row style="border-top:2px solid #312D36; margin-top:20px">
           <v-col cols="12" class="supply3">
             <div class="supply supply2">
@@ -187,8 +187,8 @@
           <v-col lg="3" md="3" cols="6" class="Staking_dt">
             <div class="supply_button2">
               <!-- <a href="delay"> -->
-              <a :href="`staking-info`"
-                ><button>{{ $t('views.main.detail') }}</button></a
+              <router-link :to="`staking-info`"
+                ><button>{{ $t('views.main.detail') }}</button></router-link
               >
               <!-- </a> -->
             </div>
@@ -211,16 +211,16 @@
         </v-row>
         <v-row>
           <v-col cols="12" class="but_div_inline">
-            <a
+            <router-link
               v-for="(collateral, index) in collateral"
               :key="index"
-              :href="`collateral-info?name=${collateral.currencyName}`"
+              :to="`collateral-info?name=${collateral.currencyName}`"
             >
               <span class="but_div"
                 ><img :src="getCurrencyIcon(collateral.currencyName)" class="img_text_but" alt="" />
                 <div class="text_but">{{ collateral.currencyName }}</div></span
               >
-            </a>
+            </router-link>
             <span class="but_div not_it"
               ><img src="@/assets/TRON.svg" class="img_text_but" alt="" />
               <div class="text_but">TRON</div></span

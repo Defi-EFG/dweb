@@ -46,7 +46,7 @@ export default class StakingChart extends Vue {
           {
             borderWidth: 0,
             borderColor: '#222738',
-            backgroundColor: [this.gradientFill, this.gradientFill2],
+            backgroundColor: [this.gradientFill, '#888888'],
             data: [current, max]
           }
         ]
@@ -72,16 +72,6 @@ export default class StakingChart extends Vue {
     gradientStroke.addColorStop(0.5, '#8B41D7')
     gradientStroke.addColorStop(0, '#8B41D7')
     gradientStroke.addColorStop(1, '#6800FE')
-
-    return gradientStroke
-  }
-  get gradientFill2() {
-    //@ts-ignore
-    const ctx = this.ctx.getContext('2d')
-    const gradientStroke = ctx.createLinearGradient(300, 20, 100, 100)
-    gradientStroke.addColorStop(0.5, '#3FC0DB')
-    gradientStroke.addColorStop(0, '#8B41D7')
-    gradientStroke.addColorStop(1, '#6600FA')
 
     return gradientStroke
   }
