@@ -78,12 +78,15 @@ export default class HeaderNav extends Vue {
   checkPrivatekeyDialog() {
     this.accessPrivateKey = !this.accessPrivateKey
   }
+
   closeUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
+
   openUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
+
   openprivatekeyDialog() {
     this.accessPrivateKey = !this.accessPrivateKey
   }
@@ -95,9 +98,7 @@ export default class HeaderNav extends Vue {
   logout() {
     this.walletStore.logout()
   }
-  onClose() {
-    console.log('onclose')
-  }
+
   gotoHome() {
     this.$router.push('/')
   }

@@ -225,7 +225,6 @@ export default class DepositWithdraw extends Vue {
     this.errorMsg = errorMsg
     this.loading = false
     this.loadingMsg = ''
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -243,7 +242,6 @@ export default class DepositWithdraw extends Vue {
         .deposit(payload)
         .then(txid => {
           setTimeout(() => {
-            console.log('Txid:', txid)
             this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
             this.onSuccess()
           }, 1000)
@@ -257,7 +255,6 @@ export default class DepositWithdraw extends Vue {
         .withdraw(payload)
         .then(txid => {
           setTimeout(() => {
-            console.log('Txid:', txid)
             this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
             this.onSuccess()
           }, 1000)

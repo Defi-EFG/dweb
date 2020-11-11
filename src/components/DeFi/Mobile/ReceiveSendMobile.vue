@@ -181,8 +181,6 @@ export default class ReceiveSendMobile extends Vue {
   }
 
   onClickOutside() {
-    console.log('clicked outside')
-
     this.displayContact = false
   }
 
@@ -204,7 +202,6 @@ export default class ReceiveSendMobile extends Vue {
 
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -221,7 +218,6 @@ export default class ReceiveSendMobile extends Vue {
     this.walletStore
       .send(payload)
       .then(txid => {
-        console.log(txid)
         this.walletStore.updateBalance()
         this.onSuccess()
       })

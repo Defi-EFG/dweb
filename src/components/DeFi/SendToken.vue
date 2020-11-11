@@ -199,7 +199,6 @@ export default class SendToken extends Vue {
 
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -216,7 +215,6 @@ export default class SendToken extends Vue {
     this.walletStore
       .send(payload)
       .then(txid => {
-        console.log(txid)
         this.walletStore.updateBalance()
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_TRANSFER })
         this.onSuccess()

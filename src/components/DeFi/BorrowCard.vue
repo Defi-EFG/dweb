@@ -237,7 +237,6 @@ export default class BorrowCard extends Vue {
 
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onClose() {
@@ -259,7 +258,6 @@ export default class BorrowCard extends Vue {
     this.lendingStore
       .borrow(payload)
       .then(txid => {
-        console.log('Txid:', txid)
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_BORROW })
         this.onSuccess()
       })

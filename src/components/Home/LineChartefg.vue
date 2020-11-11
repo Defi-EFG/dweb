@@ -40,7 +40,6 @@ export default class LineChart extends Vue {
     this.active = name
     this.name = name
     this.title = name
-    console.log(this.title)
   }
 
   finul = 1

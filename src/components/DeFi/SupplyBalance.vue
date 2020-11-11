@@ -135,7 +135,6 @@ export default class SupplyBalance extends Vue {
     this.errorMsg = errorMsg
     this.loading = false
     this.loadingMsg = ''
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -152,7 +151,6 @@ export default class SupplyBalance extends Vue {
       .extendGracePeriod(payload)
       .then(txid => {
         setTimeout(() => {
-          console.log('Txid:', txid)
           this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
           this.onSuccess()
         }, 1000)

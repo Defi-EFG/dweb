@@ -203,7 +203,6 @@ export default class RepayCard extends Vue {
   onError(errorMsg: string) {
     this.loading = false
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -220,7 +219,6 @@ export default class RepayCard extends Vue {
     this.lendingStore
       .repay(payload)
       .then(txid => {
-        console.log('Txid:', txid)
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_REPAY })
         this.onSuccess()
       })
