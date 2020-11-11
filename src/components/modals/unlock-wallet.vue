@@ -145,6 +145,7 @@
 
                 <template>
                   <v-text-field
+                    ref="passwordsetupRef"
                     :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                     name="input-10-1"
                     :type="show ? 'text' : 'password'"
@@ -381,6 +382,12 @@ export default class UnlockwalletModal extends Vue {
       const keystorePassword: any = this.$refs.keystorePasswordRef
       this.$nextTick(() => {
         keystorePassword.focus()
+      })
+    }
+    if (this.step === 2) {
+      const passwordsetup: any = this.$refs.passwordsetupRef
+      this.$nextTick(() => {
+        passwordsetup.focus()
       })
     }
   }
