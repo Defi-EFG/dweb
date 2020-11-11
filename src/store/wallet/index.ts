@@ -180,6 +180,11 @@ export default class WalletModule extends VuexModule implements Wallet {
     return await Ecoc.generateNewKeystore(password)
   }
 
+  @Action({ rawError: true })
+  async keystoreFromWiff(payload: { wif: string; password: string }) {
+    return Ecoc.keystoreFromWiff(payload.wif, payload.password)
+  }
+
   @Action
   async updateBalance() {
     if (!this.address) {
@@ -292,7 +297,6 @@ export default class WalletModule extends VuexModule implements Wallet {
   @MutationAction
   async importWallet(payload: { keystore: string; password: string }) {
     const wallet = Ecoc.importFromKeystore(payload.keystore, payload.password)
-
     return {
       address: wallet.address,
       network: wallet.networkName,
