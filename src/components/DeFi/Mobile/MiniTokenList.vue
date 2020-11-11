@@ -5,7 +5,6 @@
       :items="currencies"
       flat
       v-model="currentToken"
-      @change="selectToken"
       :hide-details="true"
       solo
     >
@@ -50,15 +49,20 @@ import { getEstimatedValue } from '@/services/utils'
 @Component({})
 export default class MiniTokenList extends Vue {
   walletStore = getModule(WalletModule)
-  // active on first item
-  activeItem = 0
 
   getEstimatedValue = getEstimatedValue
 
-  currentToken = {}
+  get currentToken() {
+    return this.walletStore.selectedCurrency
+  }
 
-  mounted() {
-    this.currentToken = this.currencies[0]
+  set currentToken(val: any) {
+    const currenyIndex = this.currencies.indexOf(val)
+    this.walletStore.selectCurrency(currenyIndex)
+  }
+
+  get isLoggedIn() {
+    return this.walletStore.isWalletUnlocked
   }
 
   get currencies() {
@@ -114,13 +118,6 @@ export default class MiniTokenList extends Vue {
     return currency
   }
 
-  selectToken(val: any) {
-    const currenyIndex = this.currencies.indexOf(val)
-    this.walletStore.selectCurrency(currenyIndex).then(() => {
-      // do something
-    })
-  }
-
   isSymbolAvailable(name: string) {
     try {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -129,11 +126,6 @@ export default class MiniTokenList extends Vue {
     } catch (e) {
       return false
     }
-  }
-
-  @Watch('currencies')
-  currencyChange() {
-    this.currentToken = this.currencies[0]
   }
 }
 </script>
