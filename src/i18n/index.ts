@@ -8,6 +8,17 @@ export const messages = {
   [Locales.ZH]: zh
 }
 
+export const supportedLanguages = [
+  {
+    key: 'en',
+    localizedName: 'EN'
+  },
+  {
+    key: 'zh',
+    localizedName: '中文'
+  }
+]
+
 export const defaultLocale = Locales.EN
 export const dateTimeFormats = {
   'en-US': {

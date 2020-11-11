@@ -12,7 +12,7 @@
           <span class="extend-btn" @click="openConfirmTxModal">Extend</span>
         </div>
         <div class="liquid-countdown" v-show="extentTimeRemaining">
-          <span>{{ extentTimeRemaining }}</span>
+          <span>{{ extentTimeRemaining }} until liquidation.</span>
         </div>
       </v-card-text>
     </v-card>
@@ -87,7 +87,7 @@ export default class SupplyBalance extends Vue {
     if (timeDiff < 0) return ''
 
     const dur = moment.duration(timeDiff * 1000)
-    return `${dur.hours()} hrs ${dur.minutes()} min ${dur.seconds()} sec until liquidation.`
+    return `${moment.utc(dur.as('milliseconds')).format('HH:mm:ss')}`
   }
 
   get contractAddr() {
