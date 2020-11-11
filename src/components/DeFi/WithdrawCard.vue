@@ -11,6 +11,7 @@
     <v-text-field
       class="amount-input"
       :label="lendingpage.withdrawalamount"
+      placeholder="0"
       :suffix="currencyName"
       v-model="withdrawValue"
       height="43"
@@ -67,7 +68,7 @@
     >
       {{ isWithdrawable(withdrawValue, 'btn') ? lendingpage.withdraw : 'Insufficient' }}</v-btn
     >
-    <TransactionComfirmationModal
+    <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="contractAddr"
       :toAddr="walletAddr"
@@ -87,11 +88,11 @@ import LendingModule from '@/store/lending'
 import WalletModule from '@/store/wallet'
 import * as constants from '@/constants'
 import { WalletParams } from '@/services/ecoc/types'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal
+    TransactionConfirmationModal
   }
 })
 export default class Withdraw extends Vue {
@@ -109,7 +110,7 @@ export default class Withdraw extends Vue {
 
   val = 25
   minVal = 25
-  withdrawValue = 0
+  withdrawValue: number | string = ''
 
   get myCollateral() {
     return this.lendingStore.myCollateralAssets
@@ -145,7 +146,7 @@ export default class Withdraw extends Vue {
   }
 
   get bpUsed() {
-    return (this.borrowBalance / this.borrowLimit) * 100
+    return (this.borrowBalance / this.borrowLimit) * 100 || 0
   }
 
   get lendingpage() {
@@ -153,7 +154,7 @@ export default class Withdraw extends Vue {
   }
 
   get tokenConversion() {
-    return `${this.withdrawValue} ${this.currencyName} ≈ ${this.currencyPrice *
+    return `${Number(this.withdrawValue)} ${this.currencyName} ≈ $${this.currencyPrice *
       Number(this.withdrawValue)}`
   }
 
@@ -175,7 +176,7 @@ export default class Withdraw extends Vue {
   }
 
   calculateBPUsed(withdrawAmount: number) {
-    return (this.borrowBalance / this.calculateTotalBP(withdrawAmount)) * 100
+    return ((this.borrowBalance / this.calculateTotalBP(withdrawAmount)) * 100) | 0
   }
 
   isWithdrawable(amount: number, type: string) {
@@ -205,7 +206,6 @@ export default class Withdraw extends Vue {
 
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -221,7 +221,6 @@ export default class Withdraw extends Vue {
     this.lendingStore
       .withdrawCollateral(payload)
       .then(txid => {
-        console.log('Txid:', txid)
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
         this.onSuccess()
       })

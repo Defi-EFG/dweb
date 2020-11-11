@@ -3,7 +3,7 @@
     <v-app-bar class="efg-header" flat dark>
       <div class="home" @click="gotoHome">
         <img src="@/assets/efg_logo.svg" class="efg-logo" />
-        <v-toolbar-title class="header-title">ECOC Finance Governance</v-toolbar-title>
+        <v-toolbar-title class="header-title">ECOC Finance Growth</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
       <TxNotifications v-if="isWalletUnlocked"></TxNotifications>
@@ -50,7 +50,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
-import UnlockWallet from './modals/unlock-wallet.vue'
+import UnlockWallet from './modals/UnlockWallet.vue'
 import PrivateKey from './modals/PrivateKeyModal.vue'
 import TxNotifications from '@/components/DeFi/TxNotifications.vue'
 
@@ -78,12 +78,15 @@ export default class HeaderNav extends Vue {
   checkPrivatekeyDialog() {
     this.accessPrivateKey = !this.accessPrivateKey
   }
+
   closeUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
+
   openUnlockWallet() {
     this.unlockWalletOpen = !this.unlockWalletOpen
   }
+
   openprivatekeyDialog() {
     this.accessPrivateKey = !this.accessPrivateKey
   }
@@ -95,9 +98,7 @@ export default class HeaderNav extends Vue {
   logout() {
     this.walletStore.logout()
   }
-  onClose() {
-    console.log('onclose')
-  }
+
   gotoHome() {
     this.$router.push('/')
   }

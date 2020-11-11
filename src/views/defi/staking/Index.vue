@@ -3,8 +3,9 @@
     <v-row class="content-wrapper">
       <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-1">
         <StakingList :stakingAmount="staking" :stakingCurrency="stakingCurrency"></StakingList>
-        <div class="col-spacer"></div>
+        <div v-if="isLargeMobileDevice" class="col-spacer"></div>
         <StakingChart
+          v-if="isLargeMobileDevice"
           :currencyName="rewardCurrency.name"
           :total="totalReward"
           :available="available"
@@ -28,7 +29,12 @@
             </v-col>
           </v-row>
         </v-card>
-        <TransactionHistory v-else :page="'staking'"></TransactionHistory>
+        <StakingChart
+          v-else
+          :currencyName="rewardCurrency.name"
+          :total="totalReward"
+          :available="available"
+        ></StakingChart>
       </v-col>
     </v-row>
     <v-row class="content-wrapper">
@@ -63,16 +69,7 @@
         </v-card>
       </v-col>
       <v-col xl="4" lg="4" md="12" sm="12" class="content-4">
-        <TransactionRewardHistory
-          v-if="isLargeMobileDevice"
-          :rewardList="rewardHistory"
-          :rewardCurrencyName="rewardCurrency.name"
-        ></TransactionRewardHistory>
-        <RewardHistory
-          v-else
-          :rewardList="rewardHistory"
-          :rewardCurrencyName="rewardCurrency.name"
-        ></RewardHistory>
+        <TransactionHistory :page="'staking'"></TransactionHistory>
       </v-col>
     </v-row>
   </div>
@@ -154,6 +151,7 @@ export default class Staking extends Vue {
 
 <style lang="scss" scoped>
 .supply-withdraw-wrapper {
+  width: inherit;
   background: transparent linear-gradient(270deg, #2e3344 0%, #303748 100%) 0% 0% no-repeat
     padding-box;
 }

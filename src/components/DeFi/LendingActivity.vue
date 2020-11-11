@@ -8,7 +8,7 @@
 
         <v-tab-item class="my-collateral">
           <v-card dark color="#2e3344">
-            <v-card-text>
+            <v-card-text v-if="myCollateral.length > 0">
               <div class="supply-header">
                 <div>{{ $t('views.lendingpage.assets') }}</div>
                 <div>{{ $t('views.lendingpage.balance') }}</div>
@@ -26,12 +26,15 @@
                 </div>
               </div>
             </v-card-text>
+            <v-card-text v-else>
+              No collateral assets
+            </v-card-text>
           </v-card>
         </v-tab-item>
 
         <v-tab-item class="my-borrowing">
           <v-card dark color="#2e3344">
-            <v-card-text>
+            <v-card-text v-if="myBorrowing.length > 0">
               <div class="borrow-header">
                 <div class="mr-3">{{ $t('views.lendingpage.assets') }}</div>
                 <div>{{ $t('views.lendingpage.inrerest') }}</div>
@@ -52,6 +55,9 @@
                   <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
                 </div>
               </div>
+            </v-card-text>
+            <v-card-text v-else>
+              No Borrowing assets
             </v-card-text>
           </v-card>
         </v-tab-item>
@@ -78,7 +84,8 @@
         </v-tab-item>
       </v-tabs>
     </v-card>
-    <TransactionComfirmationModal
+
+    <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="contractAddr"
       :toAddr="walletAddr"
@@ -101,11 +108,11 @@ import { WalletParams } from '@/services/ecoc/types'
 import { getEstimatedValue } from '@/services/utils'
 import * as constants from '@/constants'
 import { getCurrency } from '@/store/common'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal
+    TransactionConfirmationModal
   }
 })
 export default class LendingActivity extends Vue {
@@ -181,7 +188,6 @@ export default class LendingActivity extends Vue {
 
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -197,7 +203,6 @@ export default class LendingActivity extends Vue {
     this.lendingStore
       .withdrawCollateral(payload)
       .then(txid => {
-        console.log('Txid:', txid)
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
         this.onSuccess()
       })

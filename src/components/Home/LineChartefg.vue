@@ -24,6 +24,12 @@ export default class LineChart extends Vue {
   name = 'Borrow'
   title = 'Borrow'
 
+  onClickActive(name: string) {
+    this.active = name
+    this.name = name
+    this.title = name
+  }
+
   finul = 1
   txt = ''
   myChart = null

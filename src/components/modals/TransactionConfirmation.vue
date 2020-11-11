@@ -173,7 +173,7 @@ import { copyToClipboard, getEcocTotalFee, addressFilter, truncate } from '@/ser
 @Component({
   components: {}
 })
-export default class TransactionComfirmationModal extends Vue {
+export default class TransactionConfirmationModal extends Vue {
   @Prop({ default: {} }) currency!: Currency
   @Prop({ default: false }) visible!: boolean
   @Prop() fromAddr!: string

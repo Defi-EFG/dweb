@@ -359,6 +359,7 @@ export default class UnlockwalletModal extends Vue {
   password = ''
   loading = false
   errorPrivatekey: string | Error = ''
+
   rules = {
     required: (value: any) => {
       return !!value || this.$t('views.modal.required')
@@ -367,17 +368,12 @@ export default class UnlockwalletModal extends Vue {
       return v.length >= 6 || this.$t('views.modal.characters')
     }
   }
-  get ecoc() {
-    return this.walletStore.ecoc
-  }
 
-  get walletAddress() {
-    return this.walletStore.address
-  }
   @Watch('visible')
   checkvisible() {
     this.unlockwalletModal = this.visible
   }
+
   toStep(step: any) {
     this.step = step
     if (this.step === 5) {
@@ -393,6 +389,7 @@ export default class UnlockwalletModal extends Vue {
       })
     }
   }
+
   clearData() {
     this.keystore = ''
     this.keystorePassword = ''
@@ -462,10 +459,6 @@ export default class UnlockwalletModal extends Vue {
       }
     }
   }
-
-  // cPiHcy2L4YoytRC9CGysiwxfacKT8cBqe6Z682uaJw4PUf18ZgdW
-  // 2FsdGVkX19lXF0CLRJMM3m+FO9tqB2tFHgH4R/ovyTs9EQJNN+FprFtZKQ5dOtNzwiwbIp9kdYPeq2bkMsloqMWYfajWjOlsa6Y7Vb5F8
-  // U2FsdGVkX185x/QCF9nZAl3kLMgsqBmL0I5x9mQpPoOLNIcyu8nsNQXRGaN7R087s3X5aIfihml2ue1w81QcDa2uHn0FyOW6/q8IWAowd
 
   async confirmKeystore() {
     try {
