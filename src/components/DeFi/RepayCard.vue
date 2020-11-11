@@ -73,7 +73,7 @@
       @click="openConfirmTxModal"
       >{{ isRepayable(repayAmount, 'btn') ? lendingpage.repay : 'Insufficient' }}</v-btn
     >
-    <TransactionComfirmationModal
+    <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="walletAddr"
       :toAddr="contractAddr"
@@ -93,12 +93,12 @@ import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import Loading from '@/components/modals/loading.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal,
+    TransactionConfirmationModal,
     Loading
   }
 })
@@ -203,7 +203,6 @@ export default class RepayCard extends Vue {
   onError(errorMsg: string) {
     this.loading = false
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -220,7 +219,6 @@ export default class RepayCard extends Vue {
     this.lendingStore
       .repay(payload)
       .then(txid => {
-        console.log('Txid:', txid)
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_REPAY })
         this.onSuccess()
       })

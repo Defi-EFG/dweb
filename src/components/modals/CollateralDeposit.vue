@@ -188,7 +188,7 @@
                       ></v-text-field>
                     </div>
                     <div v-if="errorMsg">
-                      <span class="errorMsg">{{ errorMsg }}</span>
+                      <span class="errorMsg">{{ $t(errorMsg) }}</span>
                     </div>
                     <div class="action-transaction-confirmation">
                       <v-btn
@@ -529,7 +529,6 @@ export default class CollateralDeposit extends Vue {
     this.errorMsg = errorMsg
     this.loading = false
     this.step = 3
-    console.log(errorMsg)
   }
 
   async onConfirm() {
@@ -576,7 +575,6 @@ export default class CollateralDeposit extends Vue {
       .depositCollateral(payload)
       .then(txid => {
         setTimeout(() => {
-          console.log('Txid:', txid)
           this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
           this.onSuccess()
         }, 1000)

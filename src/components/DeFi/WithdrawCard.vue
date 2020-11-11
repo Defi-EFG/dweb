@@ -67,7 +67,7 @@
     >
       {{ isWithdrawable(withdrawValue, 'btn') ? lendingpage.withdraw : 'Insufficient' }}</v-btn
     >
-    <TransactionComfirmationModal
+    <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="contractAddr"
       :toAddr="walletAddr"
@@ -87,11 +87,11 @@ import LendingModule from '@/store/lending'
 import WalletModule from '@/store/wallet'
 import * as constants from '@/constants'
 import { WalletParams } from '@/services/ecoc/types'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal
+    TransactionConfirmationModal
   }
 })
 export default class Withdraw extends Vue {
@@ -205,7 +205,6 @@ export default class Withdraw extends Vue {
 
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -221,7 +220,6 @@ export default class Withdraw extends Vue {
     this.lendingStore
       .withdrawCollateral(payload)
       .then(txid => {
-        console.log('Txid:', txid)
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
         this.onSuccess()
       })

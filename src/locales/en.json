@@ -38,7 +38,7 @@
 
             "supply": "Supply",
             "detail": "Details",
-            "loaner": "Loaner",
+            "loaner": "Pool",
             "borrow_apy": "Borrow APY",
             "total_supply": "Total Supply",
             "total_borrowed": "Total Borrowed",
@@ -116,7 +116,7 @@
         },
         "lendingpage": {
             "collateral_bl": "Collateral Balance",
-            "loaner": "Loaner",
+            "loaner": "Pool",
             "borrow_balance": "Borrow Balance",
             "borrow_po": "Borrow Power",
             "my_collateral": "My Collateral",
@@ -227,14 +227,15 @@
             "save": "SAVE",
             "required": "Required",
             "this_name": "This name is already exist",
+            "or_Upload": "or Upload keystore file",
             "characters": "Min 6 characters",
             "the_email": "The email and password you entered don't match",
-            "select_Loaner": "Select the Loaner",
+            "select_Loaner": "Select the Pool",
             "you_can_only": "You can only change the loaner once you repay all the borrowed.",
             "select": "Select",
             "use_ECOC": "Use ECOC as a collateral?",
             "you_can_deposit": "You can deposit more once you repay all the borrowed.",
-            "loaner": "Loaner",
+            "loaner": "Pool",
             "deposit_suc": "Deposit Successful!",
             "borrow_Power": "Borrow Power Used (New)",
             "total_Borrow": "Total Borrow Power (New)",
@@ -251,5 +252,6 @@
     "components": {
 
     },
-    "dom": {}
+    "dom": {},
+    "Invalid keystore or password": "Invalid keystore or password"
 }

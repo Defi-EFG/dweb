@@ -68,7 +68,7 @@
       @click="onOpenModal"
       >{{ isBorrowable(borrowValue, 'btn') ? lendingpage.borrow : 'Not available' }}</v-btn
     >
-    <TransactionComfirmationModal
+    <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="contractAddr"
       :toAddr="walletAddr"
@@ -88,11 +88,11 @@ import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal
+    TransactionConfirmationModal
   }
 })
 export default class BorrowCard extends Vue {
@@ -237,7 +237,6 @@ export default class BorrowCard extends Vue {
 
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onClose() {
@@ -259,7 +258,6 @@ export default class BorrowCard extends Vue {
     this.lendingStore
       .borrow(payload)
       .then(txid => {
-        console.log('Txid:', txid)
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_BORROW })
         this.onSuccess()
       })

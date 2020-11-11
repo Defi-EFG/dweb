@@ -78,7 +78,7 @@
         </v-tab-item>
       </v-tabs>
     </v-card>
-    <TransactionComfirmationModal
+    <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="contractAddr"
       :toAddr="walletAddr"
@@ -101,11 +101,11 @@ import { WalletParams } from '@/services/ecoc/types'
 import { getEstimatedValue } from '@/services/utils'
 import * as constants from '@/constants'
 import { getCurrency } from '@/store/common'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal
+    TransactionConfirmationModal
   }
 })
 export default class LendingActivity extends Vue {
@@ -181,7 +181,6 @@ export default class LendingActivity extends Vue {
 
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -197,7 +196,6 @@ export default class LendingActivity extends Vue {
     this.lendingStore
       .withdrawCollateral(payload)
       .then(txid => {
-        console.log('Txid:', txid)
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
         this.onSuccess()
       })

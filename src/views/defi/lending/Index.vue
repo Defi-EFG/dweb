@@ -243,7 +243,6 @@ export default class Lending extends Vue {
   }
 
   modeSwitch(val: string) {
-    console.log('receive emit')
     this.mode = val
   }
 

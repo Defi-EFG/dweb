@@ -126,6 +126,7 @@ import * as utils from '@/services/utils'
 export default class TransactionDetailModal extends Vue {
   @PropSync('showDialog', { type: Boolean }) visible!: boolean
   @Prop({ default: '' }) txid!: string
+
   walletStore = getModule(WalletModule)
   copyMsg = 'Copy TxID'
 
