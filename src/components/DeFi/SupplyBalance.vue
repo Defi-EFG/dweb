@@ -16,7 +16,7 @@
         </div>
       </v-card-text>
     </v-card>
-    <TransactionComfirmationModal
+    <TransactionConfirmationModal
       :txType="confirmTxType"
       :visible="confirmTxModal"
       :fromAddr="address"
@@ -40,12 +40,12 @@ import * as constants from '@/constants'
 import { WalletParams } from '@/services/ecoc/types'
 import { rewardCurrency as extendCurrency } from '@/store/common'
 import * as utils from '@/services/utils'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import Loading from '@/components/modals/loading.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal,
+    TransactionConfirmationModal,
     Loading
   }
 })

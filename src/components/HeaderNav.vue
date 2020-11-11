@@ -50,7 +50,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
-import UnlockWallet from './modals/unlock-wallet.vue'
+import UnlockWallet from './modals/UnlockWallet.vue'
 import PrivateKey from './modals/PrivateKeyModal.vue'
 import TxNotifications from '@/components/DeFi/TxNotifications.vue'
 

@@ -78,7 +78,7 @@
         </v-tab-item>
       </v-tabs>
     </v-card>
-    <TransactionComfirmationModal
+    <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="contractAddr"
       :toAddr="walletAddr"
@@ -101,11 +101,11 @@ import { WalletParams } from '@/services/ecoc/types'
 import { getEstimatedValue } from '@/services/utils'
 import * as constants from '@/constants'
 import { getCurrency } from '@/store/common'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal
+    TransactionConfirmationModal
   }
 })
 export default class LendingActivity extends Vue {

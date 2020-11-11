@@ -76,7 +76,7 @@
       <v-btn depressed block large class="send-btn" @click="onOpenModal()">{{
         $t('views.walletpage.send')
       }}</v-btn>
-      <TransactionComfirmationModal
+      <TransactionConfirmationModal
         :visible="confirmTxModal"
         :fromAddr="fromAddr"
         :toAddr="toAddr"
@@ -98,11 +98,11 @@ import { SendPayload } from '@/types/wallet'
 import AddressBookModule from '@/store/address-book'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal
+    TransactionConfirmationModal
   },
   directives: {
     clickOutside: vClickOutside.directive

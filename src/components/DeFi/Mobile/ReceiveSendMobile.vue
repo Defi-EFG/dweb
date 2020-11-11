@@ -93,7 +93,7 @@
         <v-btn dark depressed block large class="send-btn" @click="onOpenModal()">{{
           $t('views.walletpage.send')
         }}</v-btn>
-        <TransactionComfirmationModal
+        <TransactionConfirmationModal
           :visible="confirmTxModal"
           :fromAddr="address"
           :toAddr="toAddr"
@@ -114,14 +114,15 @@ import vClickOutside from 'v-click-outside'
 import { getModule } from 'vuex-module-decorators'
 import { SendPayload } from '@/types/wallet'
 import { WalletParams } from '@/services/ecoc/types'
+import * as constants from '@/constants'
 import WalletModule from '@/store/wallet'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import { copyToClipboard } from '@/services/utils'
 
 @Component({
   components: {
     VueQrcode,
-    TransactionComfirmationModal
+    TransactionConfirmationModal
   },
   directives: {
     clickOutside: vClickOutside.directive
@@ -219,6 +220,7 @@ export default class ReceiveSendMobile extends Vue {
       .send(payload)
       .then(txid => {
         this.walletStore.updateBalance()
+        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_TRANSFER })
         this.onSuccess()
       })
       .catch(error => {

@@ -98,7 +98,7 @@
         </v-tab-item>
       </v-tabs>
     </v-card>
-    <TransactionComfirmationModal
+    <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="fromAddr"
       :toAddr="toAddr"
@@ -119,12 +119,12 @@ import StakingModule from '@/store/staking'
 import { WalletParams } from '@/services/ecoc/types'
 import { CurrencyInfo } from '@/types/currency'
 import * as constants from '@/constants'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import Loading from '@/components/modals/loading.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal,
+    TransactionConfirmationModal,
     Loading
   }
 })
