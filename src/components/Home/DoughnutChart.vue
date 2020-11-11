@@ -8,8 +8,10 @@
       </v-col>
       <v-col cols="6">
         <div class="dougnut-detail">
-          <p>{{ token }} - Available (Total: {{ max }})</p>
-          <div class="value_price1">{{ currentValue }} {{ token }}</div>
+          <p>{{ token }} - Available (Total: {{ max | numberWithCommas({ fixed: [0, 2] }) }})</p>
+          <div class="value_price1">
+            {{ stakingAvailable | numberWithCommas({ fixed: [0, 8] }) }} {{ token }}
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -20,15 +22,18 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Vue, Component } from 'vue-property-decorator'
 import Chart from 'chart.js'
+import StakingModule from '@/store/staking'
+import { getModule } from 'vuex-module-decorators'
 
 @Component({})
 export default class DoughnutChart extends Vue {
-  token = 'DELAY'
+  stakingStore = getModule(StakingModule)
+  token = 'GPT'
   max = 10000
-  currentValue = 8405.01486564
+  current = this.stakingStore.available
 
-  mounted() {
-    this.renderChart(this.ctx, this.max, this.currentValue)
+  get stakingAvailable() {
+    return this.stakingStore.available
   }
 
   get ctx() {
@@ -64,6 +69,13 @@ export default class DoughnutChart extends Vue {
     })
   }
 
+  mounted() {
+    console.log(this.current)
+    this.current
+    this.renderChart(this.ctx, this.max, this.stakingAvailable)
+    this.stakingStore.updateMintingInfo(this.stakingStore.address)
+  }
+
   get gradientFill() {
     //@ts-ignore
     const ctx = this.ctx.getContext('2d')
@@ -96,7 +108,7 @@ export default class DoughnutChart extends Vue {
   max-width: 400px;
 }
 .dougnut-detail {
-  margin: auto 0;
+  margin-top: 13%;
   p {
     color: white;
     margin-top: 7%;

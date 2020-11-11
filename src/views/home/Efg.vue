@@ -9,20 +9,16 @@
                 <v-col cols="12" style="padding:0px">
                   <div class="logo_ecoc">
                     <img class="logo_ecoc_m" width="40" src="@/assets/efg_02.svg" alt="" />
-                    <div class="logo_ecoc_m_text">EFG <span>- Market Details</span></div>
+                    <div class="logo_ecoc_m_text">EFG <span>- Market Details </span></div>
                   </div>
                 </v-col>
                 <v-col cols="9" class="efg_border1">
                   <div class="m_titel">Borrow APY</div>
-                  <div class="m_titel">Liquidation</div>
                   <div class="m_titel">Number of Borrowers</div>
-                  <div class="m_titel">Collateral Factor</div>
                 </v-col>
                 <v-col cols="3" class="efg_border1">
                   <div class="m_titel m_titel_2">3.5%</div>
                   <div class="m_titel m_titel_2">841</div>
-                  <div class="m_titel m_titel_2">841</div>
-                  <div class="m_titel m_titel_2">80%</div>
                 </v-col>
               </v-row>
             </div>
@@ -40,7 +36,7 @@
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
-              <LineChart id="1"></LineChart>
+              <LineChart></LineChart>
             </div>
           </v-col>
         </v-row>

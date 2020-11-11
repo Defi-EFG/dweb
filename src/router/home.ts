@@ -39,24 +39,24 @@ const homeRoutes: Array<RouteConfig> = [
         }
       },
       {
-        path: 'gpt/staking-info/:name',
-        name: 'home-Gpt',
+        path: 'staking-info',
+        name: 'home-staking',
         component: Gpt,
         meta: {
           title: 'Gpt Details - EFG'
         }
       },
       {
-        path: 'Efg/loan-info/:name',
-        name: 'home-Efg',
+        path: 'loan-info',
+        name: 'home-loan',
         component: Efg,
         meta: {
           title: 'EFG Details - EFG'
         }
       },
       {
-        path: 'Collateral-info/:name',
-        name: 'Collateral',
+        path: 'Collateral-info',
+        name: 'home-Collateral',
         component: Collateral,
         meta: {
           title: 'EFG Collateral - Collateral'

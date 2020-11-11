@@ -5,7 +5,7 @@
         <v-col cols="12">
           <div class="chart_view">
             <template>
-              <canvas :id="$route.query.pool"></canvas>
+              <canvas :id="$route.query.name"></canvas>
             </template>
           </div>
         </v-col>
@@ -29,7 +29,7 @@ export default class LineChart extends Vue {
   myChart = null
   labelSet = ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct']
   dataSet = [1.6, 2.2, 2, 2.3, 2.1, 2]
-  idChart: any = this.$route.query.pool
+  idChart: any = this.$route.query.name
   get ctx() {
     return document.getElementById(this.idChart)
   }

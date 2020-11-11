@@ -9,20 +9,18 @@
                 <v-col cols="12" style="padding:0px">
                   <div class="logo_ecoc">
                     <img class="logo_ecoc_m" width="40" src="@/assets/delay_02.svg" alt="" />
-                    <div class="logo_ecoc_m_text">GPT <span>- Market Details</span></div>
+                    <div class="logo_ecoc_m_text">GPT <span>- Details</span></div>
                   </div>
                 </v-col>
                 <v-col cols="9" class="chart_detail">
-                  <div class="m_titel">Borrow APY</div>
-                  <div class="m_titel">Liquidation</div>
-                  <div class="m_titel">Number of Borrowers</div>
-                  <div class="m_titel">Collateral Factor</div>
+                  <div class="m_titel">Daily Yield</div>
+                  <div class="m_titel">Total GPT Staked</div>
                 </v-col>
                 <v-col cols="3" class="chart_detail">
-                  <div class="m_titel m_titel_2">3.5%</div>
-                  <div class="m_titel m_titel_2">841</div>
-                  <div class="m_titel m_titel_2">841</div>
-                  <div class="m_titel m_titel_2">80%</div>
+                  <div class="m_titel m_titel_2">{{ stakingRate }}%</div>
+                  <div class="m_titel m_titel_2">
+                    {{ stakingAvailable | numberWithCommas({ Fixed: [0, 8] }) }}
+                  </div>
                 </v-col>
               </v-row>
             </div>
@@ -50,13 +48,27 @@
 </template>
 
 <script>
+import { Component, Vue } from 'vue-property-decorator'
 import LineChart from '@/components/Home/LineChart'
 import DoughnutChart from '@/components/Home/DoughnutChart'
+import StakingModule from '@/store/staking'
+import { getModule } from 'vuex-module-decorators'
 
-export default {
+@Component({
   components: {
     LineChart,
     DoughnutChart
+  }
+})
+export default class Gpt extends Vue {
+  stakingStore = getModule(StakingModule)
+  stakingRate = 0.01
+
+  get stakingAvailable() {
+    return this.stakingStore.available
+  }
+  mounted() {
+    this.stakingStore.updateMintingInfo(this.stakingStore.address)
   }
 }
 </script>

@@ -136,7 +136,7 @@
             </div>
           </v-col>
         </v-row>
-        <a v-for="(item, i) in pools" :key="i" :href="`Efg/loan-info/pool=${item.address}`">
+        <a v-for="(item, i) in pools" :key="i" :href="`loan-info?pool=${item.address}`">
           <v-row class="row1 roww2" :id="`EFG_Supply_${1 + i}`">
             <v-col lg="3" md="3" cols="2">
               <div class="margintop">
@@ -187,7 +187,7 @@
           <v-col lg="3" md="3" cols="6" class="Staking_dt">
             <div class="supply_button2">
               <!-- <a href="delay"> -->
-              <a :href="`gpt/staking-info/${GPT}`"
+              <a :href="`staking-info`"
                 ><button>{{ $t('views.main.detail') }}</button></a
               >
               <!-- </a> -->
@@ -198,7 +198,7 @@
           <v-col lg="6" md="6" cols="12" class="border_left1 Staking_dt">
             <div class="supply_name2">GPT - {{ $t('views.main.available') }}</div>
             <div class="supply_price_color color_1">
-              {{ stakingAvailable | numberWithCommas({ decimal: 0 }) }} GPT
+              {{ stakingAvailable | numberWithCommas() }} GPT
             </div>
           </v-col>
           <img class="bg_gpt" src="@/assets/backg_02.svg" />
@@ -214,7 +214,7 @@
             <a
               v-for="(collateral, index) in collateral"
               :key="index"
-              :href="`collateral-info/${collateral.currencyName}`"
+              :href="`collateral-info?name=${collateral.currencyName}`"
             >
               <span class="but_div"
                 ><img :src="getCurrencyIcon(collateral.currencyName)" class="img_text_but" alt="" />

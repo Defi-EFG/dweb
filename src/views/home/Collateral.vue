@@ -11,11 +11,11 @@
                     <img
                       class="logo_ecoc_m"
                       width="40"
-                      :src="require(`@/assets/${$route.params.name}.svg`)"
+                      :src="require(`@/assets/${$route.query.name}.svg`)"
                       alt=""
                     />
                     <div class="logo_ecoc_m_text">
-                      {{ $route.params.name }} <span>- Market Details</span>
+                      {{ $route.query.name }} <span>- Market Details</span>
                     </div>
                   </div>
                 </v-col>
@@ -43,7 +43,7 @@
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
-              <LineChart id="1"></LineChart>
+              <LineChartCollateral></LineChartCollateral>
             </div>
           </v-col>
         </v-row>
@@ -54,12 +54,12 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import LineChart from '@/components/Home/LineChartefg.vue'
+import LineChartCollateral from '@/components/Home/LineChartCollateral.vue'
 import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
 
 @Component({
   components: {
-    LineChart,
+    LineChartCollateral,
     DoughnutChart
   }
 })

@@ -5,7 +5,7 @@
         <v-col cols="12">
           <div class="chart_view">
             <template>
-              <canvas :id="$route.params.name"></canvas>
+              <canvas id="staking-info"></canvas>
             </template>
           </div>
         </v-col>
@@ -31,7 +31,7 @@ export default class LineChart extends Vue {
   dataSet = [1.6, 2.2, 2, 2.3, 2.1, 2]
 
   get ctx() {
-    return document.getElementById(this.$route.params.name)
+    return document.getElementById('staking-info')
   }
 
   mounted() {
@@ -47,6 +47,7 @@ export default class LineChart extends Vue {
     //   self.txt = self.finul + ' txt'
     //   self.dataSet.push(self.finul)
     //   self.labelSet.push(self.txt)
+    //   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     //   self.renderChart(self.ctx!, self.labelSet, self.dataSet)
     // }, 20000)
   }

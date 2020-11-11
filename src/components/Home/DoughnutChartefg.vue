@@ -3,14 +3,14 @@
     <v-row>
       <v-col cols="6" md="7">
         <div class="dougnut-chart">
-          <canvas id="myChartdougnut" class="dougnut-logo"></canvas>
+          <canvas id="myChartGpt" class="dougnut-logo"></canvas>
         </div>
       </v-col>
       <v-col cols="6" md="5">
         <div class="dougnut-detail">
-          <p>{{ token }}</p>
+          <p>EFG - Total Supply</p>
           <div class="value_price1">{{ max | numberWithCommas({ fixed: [0, 2] }) }}</div>
-          <p>{{ token2 }}</p>
+          <p>EFG - Total Borrowed</p>
           <div class="value_price2">{{ currentValue | numberWithCommas({ fixed: [0, 2] }) }}</div>
         </div>
       </v-col>
@@ -25,8 +25,6 @@ import Chart from 'chart.js'
 
 @Component({})
 export default class StakingChart extends Vue {
-  token = 'EFG - Total Supply'
-  token2 = 'EFG - Total Borrowed'
   max = 4189402.65
   currentValue = 130561.041
 
@@ -35,7 +33,7 @@ export default class StakingChart extends Vue {
   }
 
   get ctx() {
-    return document.getElementById('myChartdougnut')
+    return document.getElementById('myChartGpt')
   }
 
   renderChart(element: any, max: number, current: number) {
