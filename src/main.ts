@@ -4,7 +4,7 @@ import VueI18n from 'vue-i18n'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { messages, defaultLocale } from '@/i18n'
+import { messages, defaultLocale, dateTimeFormats } from '@/i18n'
 import vuetify from './plugins/vuetify'
 import { initFilters } from '@/plugins/filters'
 
@@ -15,6 +15,7 @@ Vue.use(VueI18n)
 
 const i18n = new VueI18n({
   messages,
+  dateTimeFormats,
   locale: defaultLocale,
   fallbackLocale: defaultLocale
 })
