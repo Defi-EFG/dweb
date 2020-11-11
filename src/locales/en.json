@@ -99,6 +99,18 @@
             }
 
         ],
+        "detail": {
+            "market_details": "Market Details",
+            "details": "Details",
+            "liquidation": "Liquidation",
+            "collateral_Factor": "Collateral Factor",
+            "daily_Yield": "Daily Yield",
+            "total_GPT": "Total GPT Staked",
+            "number_of": "Number of Borrowers",
+            "borrow_apy": "Borrow APY",
+            "total_supply": "Total Supply",
+            "total_borrowed": "Total Borrowed"
+        },
         "wallet": "Wallet",
         "lending": "Lending",
         "staking": "Staking",
@@ -145,7 +157,8 @@
             "APY": "APY",
             "supply_mk": "Supply Market",
             "total_borrowed": "Total Borrowed",
-            "debt": "Debt"
+            "debt": "Debt",
+            "sec_until": "sec until liquidation."
         },
         "stakingpage": {
             "stakinglist": "Staking List",
