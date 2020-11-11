@@ -30,7 +30,7 @@ export default class DoughnutChart extends Vue {
   stakingStore = getModule(StakingModule)
   token = 'GPT'
   max = 10000
-  current = this.stakingStore.available
+  current = this.stakingAvailable
 
   get stakingAvailable() {
     return this.stakingStore.available
@@ -38,6 +38,10 @@ export default class DoughnutChart extends Vue {
 
   get ctx() {
     return document.getElementById('gptmyChart')
+  }
+
+  get staked() {
+    return this.max - this.current
   }
 
   renderChart(element: any, max: number, current: number) {
@@ -71,7 +75,7 @@ export default class DoughnutChart extends Vue {
 
   mounted() {
     console.log(this.current)
-    this.current
+    this.staked
     this.renderChart(this.ctx, this.max, this.stakingAvailable)
     this.stakingStore.updateMintingInfo(this.stakingStore.address)
   }
