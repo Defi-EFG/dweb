@@ -34,7 +34,7 @@
             <v-card-text>
               <div class="borrow-header">
                 <div class="mr-3">{{ $t('views.lendingpage.assets') }}</div>
-                <div>{{ $t('views.lendingpage.inrerest_rate') }}</div>
+                <div>{{ $t('views.lendingpage.inrerest') }}</div>
                 <div>{{ $t('views.lendingpage.balance') }}</div>
               </div>
               <div class="borrow-item" v-for="(item, index) in myBorrowing" :key="index">

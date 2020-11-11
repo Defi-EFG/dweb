@@ -11,7 +11,8 @@
             "lending": "借贷",
             "whitepaper": "白皮书",
             "dashboard": "仪表板",
-            "yellow": "黄皮书"
+            "yellow": "黄皮书",
+            "latest_block": "Latest Block_zh"
         },
         "yellowpdf": "https://efg.finance/media/Oracles_yellow_paper_zh.pdf",
         "pdf": "https://efg.finance/media/efg-whitepaperzh.pdf",
@@ -173,6 +174,7 @@
             "to_earn": "来赚取"
         },
         "modal": {
+            "no_transactionpending": "No transaction pending_zh",
             "welcome_to": "欢迎来到",
             "ecoc_finance": "ECOC Financial Growth",
             "Please_create": "请创建或链接您的钱包",
@@ -244,7 +246,12 @@
             "currency": "货币",
             "type": "类型",
             "confirmations": "确认:",
-            "status": "状态:"
+            "status": "状态:",
+            "please_input_key": "Please input keystore password to access private key_zh",
+            "access": "ACCESS_zh",
+            "use_privatekey": "Use Privatekey_zh",
+            "password_must_match": "Password must match.zh",
+            "create_wallet_with": "Create Wallet With PrivateKey_zh"
         }
 
     },

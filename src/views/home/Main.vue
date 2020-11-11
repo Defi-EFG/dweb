@@ -171,7 +171,7 @@
             <div class="supply supply2">
               <v-row>
                 <v-col cols="6" class="head_supply3">
-                  Staking
+                  {{ $t('views.titles.staking') }}
                 </v-col>
               </v-row>
             </div>

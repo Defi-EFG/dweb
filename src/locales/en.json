@@ -11,7 +11,8 @@
             "lending": "Lending",
             "whitepaper": "White Paper",
             "dashboard": "Dashboard",
-            "yellow": "Yellow Paper"
+            "yellow": "Yellow Paper",
+            "latest_block": "Latest Block"
         },
         "yellowpdf": "https://efg.finance/media/Oracles_yellow_paper_en.pdf",
         "pdf": "https://efg.finance/media/efg-whitepaper.pdf",
@@ -175,6 +176,7 @@
             "to_earn": "to Earn"
         },
         "modal": {
+            "no_transactionpending": "No transaction pending",
             "welcome_to": "Welcome to",
             "ecoc_finance": "ECOC Finance Governance",
             "Please_create": "Please create or connect your wallet",
@@ -246,7 +248,12 @@
             "currency": "Currency:",
             "type": "Type:",
             "confirmations": "Confirmations:",
-            "status": "Status:"
+            "status": "Status:",
+            "please_input_key": "Please input keystore password to access private key",
+            "access": "ACCESS",
+            "use_privatekey": "Use Privatekey",
+            "password_must_match": "Password must match",
+            "create_wallet_with": "Create Wallet With PrivateKey"
         }
     },
     "components": {
