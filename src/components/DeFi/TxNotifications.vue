@@ -52,7 +52,7 @@
         </template>
 
         <template v-else>
-          <div class="empty">No transaction pending</div>
+          <div class="empty">{{ $t('views.modal.no_transactionpending') }}</div>
         </template>
       </div>
     </transition>
