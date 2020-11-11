@@ -8,17 +8,19 @@
               <v-row>
                 <v-col cols="12" style="padding:0px">
                   <div class="logo_ecoc">
-                    <img class="logo_ecoc_m" width="40" src="@/assets/efg_02.svg" alt="" />
-                    <div class="logo_ecoc_m_text">EFG <span>- Market Details </span></div>
+                    <img class="logo_ecoc_m" width="40" src="@/assets/delay_02.svg" alt="" />
+                    <div class="logo_ecoc_m_text">GPT <span>- Details</span></div>
                   </div>
                 </v-col>
-                <v-col cols="9" class="efg_border1">
-                  <div class="m_titel">Borrow APY</div>
-                  <div class="m_titel">Number of Borrowers</div>
+                <v-col cols="9" class="chart_detail">
+                  <div class="m_titel">Daily Yield</div>
+                  <div class="m_titel">Total GPT Staked</div>
                 </v-col>
-                <v-col cols="3" class="efg_border1">
-                  <div class="m_titel m_titel_2">3.5%</div>
-                  <div class="m_titel m_titel_2">841</div>
+                <v-col cols="3" class="chart_detail">
+                  <div class="m_titel m_titel_2">{{ stakingRate }}%</div>
+                  <div class="m_titel m_titel_2">
+                    {{ stakingAvailable | numberWithCommas({ Fixed: [0, 8] }) }}
+                  </div>
                 </v-col>
               </v-row>
             </div>
@@ -36,7 +38,7 @@
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
-              <LineChart></LineChart>
+              <line-chart></line-chart>
             </div>
           </v-col>
         </v-row>
@@ -45,10 +47,12 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from 'vue-property-decorator'
-import LineChart from '@/components/Home/LineChartefg.vue'
-import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
+import LineChart from '@/components/Home/LineChart'
+import DoughnutChart from '@/components/Home/DoughnutChart'
+import StakingModule from '@/store/staking'
+import { getModule } from 'vuex-module-decorators'
 
 @Component({
   components: {
@@ -56,23 +60,20 @@ import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
     DoughnutChart
   }
 })
-export default class Efg extends Vue {}
-</script>
+export default class Gpt extends Vue {
+  stakingStore = getModule(StakingModule)
+  stakingRate = 0.01
 
-<style scoped lang="scss">
-.button-small {
-  padding: 10px 35px;
-  text-align: right;
-  background: #000000 0% 0% no-repeat padding-box;
-  a {
-    padding: 0 5px;
-    color: #ffffff;
-    font-size: 14px;
+  get stakingAvailable() {
+    return this.stakingStore.available
   }
-  .active {
-    border-bottom: 2px solid #c074f9;
+  mounted() {
+    this.stakingStore.updateMintingInfo(this.stakingStore.address)
   }
 }
+</script>
+
+<style scoped>
 .container {
   max-width: 1088px;
   margin: 0 auto;
@@ -90,6 +91,10 @@ export default class Efg extends Vue {}
   padding: 0px 10px;
   max-width: 500px;
   margin: 0 auto;
+}
+.chart_detail {
+  padding: 0px;
+  border-top: 1px solid #ffffff;
 }
 .logo_ecoc {
   color: #ffffff;
@@ -115,11 +120,6 @@ export default class Efg extends Vue {}
   color: #ffffff;
   opacity: 1;
   margin-left: 10px;
-}
-
-.efg_border1 {
-  padding: 0px;
-  border-top: 1px solid #ffffff;
 }
 .logo_ecoc .logo_ecoc_m_text span {
   font-size: 23px;
@@ -150,7 +150,7 @@ export default class Efg extends Vue {}
 }
 .M_detail .div_price {
   position: absolute;
-  top: 30%;
+  top: 40%;
 }
 .M_detail .chart {
   max-width: 350px;
@@ -163,21 +163,11 @@ export default class Efg extends Vue {}
   color: #ffffff;
   opacity: 1;
 }
-.M_detail .text_price_head2 {
-  margin-top: 20px;
-}
 .M_detail .text_price {
   text-align: left;
   font: normal normal 400 35px/47px Segoe UI;
   letter-spacing: 0px;
   color: #3fc0db;
-  opacity: 1;
-}
-.M_detail .text_price_2 {
-  text-align: left;
-  font: normal normal 400 35px/47px Segoe UI;
-  letter-spacing: 0px;
-  color: #c074f9;
   opacity: 1;
 }
 .chart_view {
@@ -204,9 +194,6 @@ export default class Efg extends Vue {}
   }
   .sec_m1 {
     padding: 100px 0 30px 0;
-  }
-  .M_detail .text_price_2 {
-    text-align: right;
   }
 }
 @media only screen and (max-width: 500px) {

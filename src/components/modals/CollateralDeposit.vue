@@ -188,7 +188,7 @@
                       ></v-text-field>
                     </div>
                     <div v-if="errorMsg">
-                      <span class="errorMsg">{{ errorMsg }}</span>
+                      <span class="errorMsg">{{ $t(errorMsg) }}</span>
                     </div>
                     <div class="action-transaction-confirmation">
                       <v-btn

@@ -227,6 +227,7 @@
             "save": "SAVE",
             "required": "Required",
             "this_name": "This name is already exist",
+            "or_Upload": "or Upload keystore file",
             "characters": "Min 6 characters",
             "the_email": "The email and password you entered don't match",
             "select_Loaner": "Select the Pool",
@@ -251,5 +252,6 @@
     "components": {
 
     },
-    "dom": {}
+    "dom": {},
+    "Invalid keystore or password": "Invalid keystore or password"
 }
