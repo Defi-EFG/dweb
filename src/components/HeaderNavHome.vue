@@ -70,19 +70,26 @@ import LanguageSwitcher from './LanguageSwitcher.vue'
 })
 export default class HeaderNavHome extends Vue {
   dialog = false
+
   gotoHome() {
-    this.$router.push('/')
+    this.$router.push('/').catch(() => {
+      //
+    })
   }
+
   gotoDashboard() {
     this.$router.push('defi')
     //this.dialog = true
   }
+
   get msg() {
     return this.$t('views.pdf')
   }
+
   get msgpdf() {
     return this.$t('views.yellowpdf')
   }
+
   get underconstruction() {
     return this.$t('views.underconstruction')
   }

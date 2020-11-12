@@ -39,7 +39,7 @@
               </div>
             </v-col>
             <v-col cols="3" class="tx-details">
-              <div class="type">{{ tx.type }}</div>
+              <div class="type">{{ $t(tx.type) }}</div>
               <div
                 v-if="tx.status === txConstants.STATUS_CONFIRMED"
                 class="details"

@@ -100,7 +100,9 @@ export default class HeaderNav extends Vue {
   }
 
   gotoHome() {
-    this.$router.push('/')
+    this.$router.push('/').catch(() => {
+      //
+    })
   }
 
   truncateAddress(addr: string) {
