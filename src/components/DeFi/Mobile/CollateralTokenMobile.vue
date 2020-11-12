@@ -2,7 +2,7 @@
   <div class="collateral-content-mobile">
     <v-row class="collateral-label">
       <v-col cols="4">{{ $t('views.lendingpage.assets') }}</v-col>
-      <v-col cols="5" class="text-right">{{ $t('views.lendingpage.wallet') }}Wallet</v-col>
+      <v-col cols="5" class="text-right">{{ $t('views.lendingpage.wallet') }}</v-col>
       <v-col cols="3" class="text-center">{{ $t('views.lendingpage.collateral') }}</v-col>
     </v-row>
     <v-row

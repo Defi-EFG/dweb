@@ -105,8 +105,11 @@
     </v-row>
     <template v-else>
       <CollateralSupplyMobile
+        @selectTab="tabChanged"
+        @selectCollateralMobile="toCollateralMobile"
+        @selectBorrowMobile="toBorrowMobile"
         :collateralList="collateralList"
-        :currency="selectedCurrency"
+        :currency.sync="selectedCurrency"
         :collateralBalance="collateralBalance"
         :borrowBalance="borrowedBalance"
         :borrowLimit="borrowLimit"
@@ -262,6 +265,29 @@ export default class Lending extends Vue {
   toBorrowToken(currency: Currency) {
     this.mode = 'borrow'
     this.selectedCurrency = currency
+  }
+
+  toCollateralMobile(currency: Currency) {
+    this.selectedCurrency = currency
+
+    const collateral = this.collateralList.find(
+      collateral => collateral.currency.name === currency.name
+    )
+
+    if (collateral) this.selectedCollateralFactor = collateral.collateralFactor
+    else this.selectedCollateralFactor = 0
+  }
+
+  toBorrowMobile(currency: Currency) {
+    this.selectedCurrency = currency
+  }
+
+  tabChanged(index: any) {
+    if (index === 1) {
+      this.selectedCurrency = this.borrowList[0].currency
+    } else {
+      this.selectedCurrency = this.collateralList[0].currency
+    }
   }
 
   onActivate(data: boolean) {
