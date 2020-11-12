@@ -232,17 +232,21 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
     allPools.forEach(async address => {
       const poolInfo = await lending.getPoolInfo(address)
+      const members = await lending.listPoolUsers(address)
       const existingLoanerIndex = pools.findIndex(pool => pool.address === address)
       const loanDecimals = 8
+      const capital = utils.toDecimals(poolInfo.capital, loanDecimals).toNumber()
       const remainingEFG = utils.toDecimals(poolInfo.remainingEFG, loanDecimals).toNumber()
+      const totolBorrowers = members.length
 
       if (existingLoanerIndex < 0) {
         const newLoaner = {
           currency: loanCurrency,
           address: address,
-          totalSupply: 100000,
+          totalSupply: capital,
           remaining: remainingEFG,
-          totalBorrowed: 100000 - remainingEFG
+          totalBorrowed: capital - remainingEFG,
+          totolBorrowers: totolBorrowers
         } as Pool
         pools.push(newLoaner)
       } else {
@@ -250,6 +254,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
         existingLoaner.remaining = remainingEFG
         existingLoaner.totalBorrowed = existingLoaner.totalSupply - remainingEFG
+        existingLoaner.totolBorrowers = totolBorrowers
         pools.splice(existingLoanerIndex, 1, existingLoaner)
       }
     })

@@ -47,14 +47,14 @@
                         <v-col lg="4" md="4" cols="4">
                           <div class="margintop color_1 textafter">
                             <span class="color_size1">
-                              ${{ item.totalSupply | numberWithCommas({ decimal: 2 }) }}</span
+                              ${{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }}</span
                             >
                           </div>
                         </v-col>
                         <v-col lg="4" md="4" cols="4">
                           <div class="margintop color_2 textafter">
                             <span class="color_size2">
-                              ${{ item.totalBorrowed | numberWithCommas({ decimal: 2 }) }}</span
+                              ${{ item.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }}</span
                             >
                           </div>
                         </v-col>

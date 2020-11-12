@@ -106,7 +106,7 @@ export default class TxNotifications extends Vue {
 
   truncateAddress(addr: string) {
     const separator = '...'
-    const frontChars = 10
+    const frontChars = 8
     const backChars = 4
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
   }
