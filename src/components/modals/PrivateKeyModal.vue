@@ -121,7 +121,12 @@ export default class PrivateKey extends Vue {
   }
 
   getPrivateKey() {
-    if ((this.privatekey = getKeystoreContent(this.walletStore.keystore, this.keystorePassword))) {
+    if (
+      (this.privatekey = getKeystoreContent(
+        this.walletStore.keystore,
+        this.keystorePassword
+      ) as string)
+    ) {
       return true
     } else {
       return false
