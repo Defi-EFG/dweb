@@ -121,9 +121,9 @@
                   </h3>
                   <small class="lightgray--text"
                     >{{ $t('views.modal.please_set_your') }}
-                    <span class=" text-btn" @click="openPrivatekeyfield()" text
-                      >Use Privatekey</span
-                    >
+                    <span class=" text-btn" @click="openPrivatekeyfield()" text>{{
+                      $t('views.modal.use_privatekey')
+                    }}</span>
                   </small>
                 </div>
                 <transition name="fade">
@@ -133,7 +133,7 @@
                         ref="openprivate"
                         rows="2"
                         auto-grow
-                        label="Create Wallet With PrivateKey"
+                        :label="modal.create_wallet_with"
                         filled
                         class="loginwithprivatekey"
                         elevation-0
@@ -170,7 +170,7 @@
                   :rules="[
                     rules.required,
                     rules.min,
-                    createWalletPassword === confirmPassword || 'Password must match'
+                    createWalletPassword === confirmPassword || modal.password_must_match
                   ]"
                   :label="modal.repeat_your_password"
                   color="primary"
@@ -287,7 +287,7 @@
                     name="input-10-1"
                     :type="show ? 'text' : 'password'"
                     @click:append="show = !show"
-                    label="Keystore Password"
+                    :label="modal.keystore_password"
                     color="primary"
                     filled
                     :rules="[rules.required, rules.min]"
@@ -301,8 +301,10 @@
                     <span>{{ errorMsg }}</span>
                   </div>
                   <div class="action-wrapper">
-                    <v-btn large class="mb-5" color="primary" @click="onUnlockWallet()">
-                      <h4 class="text-capitalize font-weight-light">Connect</h4>
+                    <v-btn large class="mb-5" color="primary" @click="onUnlockWallet">
+                      <h4 class="text-capitalize font-weight-light">
+                        {{ $t('views.modal.connect') }}
+                      </h4>
                     </v-btn>
                   </div>
                 </template>

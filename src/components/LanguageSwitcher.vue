@@ -19,25 +19,19 @@
 <script lang="ts">
 /* eslint-disable no-unused-vars */
 import { Vue, Component } from 'vue-property-decorator'
+import moment from 'moment'
+import { supportedLanguages } from '@/i18n'
 
 @Component
 export default class LanguageSwitcher extends Vue {
-  langs = [
-    {
-      key: 'en',
-      localizedName: 'EN'
-    },
-    {
-      key: 'zh',
-      localizedName: '中文'
-    }
-  ]
-
+  langs = supportedLanguages
   locale = this.$i18n.locale
 
   selectlangs(value: any) {
     this.locale = value.key
     this.$i18n.locale = this.locale
+    if (this.locale === 'zh') moment.locale('zh-cn')
+    else moment.locale(this.locale)
   }
 }
 </script>

@@ -3,7 +3,7 @@
     <section class="sec_m1">
       <v-container>
         <v-row>
-          <v-col lg="4" md="4" cols="12">
+          <v-col lg="12" md="12" cols="12">
             <div class="h_detail">
               <v-row>
                 <v-col cols="12" style="padding:0px">
@@ -15,24 +15,19 @@
                       alt=""
                     />
                     <div class="logo_ecoc_m_text">
-                      {{ $route.query.name }} <span>- Market Details</span>
+                      {{ $route.query.name }} <span>- {{ $t('views.detail.market_details') }}</span>
                     </div>
                   </div>
                 </v-col>
                 <v-col cols="9" class="efg_border1">
-                  <div class="m_titel">Liquidation</div>
-                  <div class="m_titel">Collateral Factor</div>
+                  <div class="m_titel">{{ $t('views.detail.liquidation') }}</div>
+                  <div class="m_titel">{{ $t('views.detail.collateral_Factor') }}</div>
                 </v-col>
                 <v-col cols="3" class="efg_border1">
                   <div class="m_titel m_titel_2">841</div>
                   <div class="m_titel m_titel_2">80%</div>
                 </v-col>
               </v-row>
-            </div>
-          </v-col>
-          <v-col lg="8" md="8" cols="12">
-            <div class="M_detail">
-              <doughnut-chart class="chart_dg_logo"></doughnut-chart>
             </div>
           </v-col>
         </v-row>
@@ -95,7 +90,6 @@ export default class Efg extends Vue {}
 }
 .h_detail {
   padding: 0px 10px;
-  max-width: 500px;
   margin: 0 auto;
 }
 .logo_ecoc {

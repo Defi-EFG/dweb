@@ -14,16 +14,25 @@ const defiRoutes: Array<RouteConfig> = [
       {
         path: 'wallet',
         name: 'defi-wallet',
+        meta: {
+          title: 'Defi - Wallet'
+        },
         component: DefiWalletPage
       },
       {
         path: 'staking',
         name: 'defi-staking',
+        meta: {
+          title: 'Defi - Staking'
+        },
         component: DefiStakingPage
       },
       {
         path: 'lending',
         name: 'defi-lending',
+        meta: {
+          title: 'Defi - Lending'
+        },
         component: DefiLendingPage
       }
     ]
