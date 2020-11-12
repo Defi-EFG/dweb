@@ -19,7 +19,7 @@
                   <div class="m_titel">{{ $t('views.detail.number_of') }}</div>
                 </v-col>
                 <v-col cols="3" class="efg_border1">
-                  <div class="m_titel m_titel_2">3.5%</div>
+                  <div class="m_titel m_titel_2">3.4%</div>
                   <div class="m_titel m_titel_2">841</div>
                 </v-col>
               </v-row>
@@ -62,16 +62,14 @@ import { getModule } from 'vuex-module-decorators'
 })
 export default class Efg extends Vue {
   lendingStore = getModule(LendingModule)
-  data = 'sss'
   query = this.$route.query.pool
 
   get pools() {
-    return this.lendingStore.pools
+    return this.lendingStore.pools.find(asset => asset.address === this.query)
   }
 
   mounted() {
     this.lendingStore.updateLoners()
-    console.log(this.pools)
   }
 }
 </script>

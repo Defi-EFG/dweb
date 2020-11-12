@@ -8,10 +8,14 @@
       </v-col>
       <v-col cols="6" md="5">
         <div class="dougnut-detail">
-          <p>EFG - {{ $t('views.detail.total_supply') }}</p>
-          <div class="value_price1">{{ max | numberWithCommas({ fixed: [0, 2] }) }}</div>
-          <p>EFG - {{ $t('views.detail.total_borrowed') }}</p>
-          <div class="value_price2">{{ currentValue | numberWithCommas({ fixed: [0, 2] }) }}</div>
+          <p>{{ pools.currency.name }} - {{ $t('views.detail.total_supply') }}</p>
+          <div class="value_price1">
+            {{ pools.totalSupply | numberWithCommas({ fixed: [0, 2] }) }}
+          </div>
+          <p>{{ pools.currency.name }} - {{ $t('views.detail.total_borrowed') }}</p>
+          <div class="value_price2">
+            {{ pools.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }}
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -22,18 +26,27 @@
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
 import { Vue, Component } from 'vue-property-decorator'
 import Chart from 'chart.js'
+import LendingModule from '@/store/lending'
+import { getModule } from 'vuex-module-decorators'
 
 @Component({})
 export default class StakingChart extends Vue {
-  max = 4189402.65
-  currentValue = 130561.041
+  lendingStore = getModule(LendingModule)
+  query = this.$route.query.pool
+  max = this.pools?.totalSupply
+  currentValue = this.pools?.totalBorrowed
 
   mounted() {
-    this.renderChart(this.ctx, this.max, this.currentValue)
+    this.renderChart(this.ctx, this.max!, this.currentValue!)
+    console.log(this.pools)
   }
 
   get ctx() {
     return document.getElementById('myChartGpt')
+  }
+
+  get pools() {
+    return this.lendingStore.pools.find(asset => asset.address === this.query)
   }
 
   renderChart(element: any, max: number, current: number) {

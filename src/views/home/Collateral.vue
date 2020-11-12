@@ -53,7 +53,6 @@ import LineChartCollateral from '@/components/Home/LineChartCollateral.vue'
 import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
 import { getModule } from 'vuex-module-decorators'
 import LendingModule from '@/store/lending'
-import { getCurrency } from '@/store/common'
 
 @Component({
   components: {
