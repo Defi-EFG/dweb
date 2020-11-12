@@ -24,8 +24,8 @@
                   <div class="m_titel">{{ $t('views.detail.collateral_Factor') }}</div>
                 </v-col>
                 <v-col cols="3" class="efg_border1">
-                  <div class="m_titel m_titel_2">841</div>
-                  <div class="m_titel m_titel_2">80%</div>
+                  <div class="m_titel m_titel_2">0</div>
+                  <div class="m_titel m_titel_2">{{ collateralFactor }}%</div>
                 </v-col>
               </v-row>
             </div>
@@ -51,6 +51,9 @@
 import { Component, Vue } from 'vue-property-decorator'
 import LineChartCollateral from '@/components/Home/LineChartCollateral.vue'
 import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
+import { getModule } from 'vuex-module-decorators'
+import LendingModule from '@/store/lending'
+import { getCurrency } from '@/store/common'
 
 @Component({
   components: {
@@ -58,7 +61,21 @@ import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
     DoughnutChart
   }
 })
-export default class Efg extends Vue {}
+export default class Efg extends Vue {
+  lendingStore = getModule(LendingModule)
+
+  currencyname = this.$route.query.name
+
+  get collateral() {
+    return this.lendingStore.supportedCollateralAssets.find(
+      asset => asset.currencyName === this.currencyname
+    )
+  }
+
+  get collateralFactor() {
+    return this.collateral ? this.collateral.collateralFactor * 100 : 0
+  }
+}
 </script>
 
 <style scoped lang="scss">

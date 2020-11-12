@@ -62,7 +62,7 @@ import { getModule } from 'vuex-module-decorators'
 })
 export default class Efg extends Vue {
   lendingStore = getModule(LendingModule)
-
+  data = 'sss'
   query = this.$route.query.pool
 
   get pools() {
