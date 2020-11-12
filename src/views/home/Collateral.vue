@@ -11,7 +11,7 @@
                     <img
                       class="logo_ecoc_m"
                       width="40"
-                      :src="require(`@/assets/${$route.query.name}.svg`)"
+                      :src="require(`@/assets/${collateral.currencyName}.svg`)"
                       alt=""
                     />
                     <div class="logo_ecoc_m_text">

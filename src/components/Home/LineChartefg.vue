@@ -15,11 +15,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Chart from 'chart.js'
 
 @Component({})
 export default class LineChart extends Vue {
+  @Prop({ default: [] as string[] }) labelSet!: string[]
+  @Prop({ default: [] as number[] }) dataSet!: number[]
+
   active = 'Borrow'
   name = 'Borrow'
   title = 'Borrow'
@@ -33,11 +36,18 @@ export default class LineChart extends Vue {
   finul = 1
   txt = ''
   myChart = null
-  labelSet = ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct']
-  dataSet = [1.6, 2.2, 2, 2.3, 2.1, 2]
   idChart: any = this.$route.query.pool
   get ctx() {
     return document.getElementById(this.idChart)
+  }
+
+  @Watch('labelSet')
+  chartdata(labelSet: string[]) {
+    if (labelSet.length > 0) {
+      if (this.ctx) {
+        this.renderChart(this.ctx, this.labelSet, this.dataSet)
+      }
+    }
   }
 
   mounted() {
@@ -69,14 +79,6 @@ export default class LineChart extends Vue {
             borderWidth: 1,
             lineTension: 0,
             fill: true,
-            pointBackgroundColor: '#141721',
-            pointBorderWidth: 0.1,
-            pointHoverRadius: 5,
-            pointBorderColor: '#141721',
-            pointHoverBackgroundColor: '#141721',
-            pointHoverBorderColor: '#141721',
-            pointRadius: 0.1,
-            pointStyle: 'rect',
             data: dataSet
           }
         ]

@@ -38,7 +38,7 @@
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
-              <LineChart></LineChart>
+              <LineChart :labelSet="labelSet" :dataSet="dataSet"></LineChart>
             </div>
           </v-col>
         </v-row>
@@ -53,6 +53,7 @@ import LineChart from '@/components/Home/LineChartefg.vue'
 import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
 import LendingModule from '@/store/lending'
 import { getModule } from 'vuex-module-decorators'
+import { api } from '@/services/api'
 
 @Component({
   components: {
@@ -64,12 +65,29 @@ export default class Efg extends Vue {
   lendingStore = getModule(LendingModule)
   query = this.$route.query.pool
 
+  date = [] as string[]
+  price = [] as number[]
+
+  get labelSet() {
+    return this.date
+  }
+
+  get dataSet() {
+    return this.price
+  }
+
   get pools() {
     return this.lendingStore.pools.find(asset => asset.address === this.query)
   }
 
   mounted() {
     this.lendingStore.updateLoners()
+    api.getprice('EFG').then(data => {
+      this.date = data.date
+      this.price = data.price
+
+      console.log(data)
+    })
   }
 }
 </script>
