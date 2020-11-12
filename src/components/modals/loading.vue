@@ -13,7 +13,7 @@
             :width="9"
             indeterminate
           ></v-progress-circular>
-          <p>{{ msg }}</p>
+          <p>{{ $t(msg) }}</p>
         </div>
       </v-card>
     </v-dialog>

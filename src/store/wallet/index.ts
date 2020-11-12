@@ -244,7 +244,7 @@ export default class WalletModule extends VuexModule implements Wallet {
     try {
       if (Ecoc.isEcrc20(currency)) {
         if (utils.toNumber(currency.balance).lt(amount)) {
-          throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
+          throw new InsufficientBalance(`Insufficient Balance`)
         }
 
         const txid = await Ecoc.sendEcrc20Balance(currency, to, amount, walletParams)
@@ -252,7 +252,7 @@ export default class WalletModule extends VuexModule implements Wallet {
       }
 
       if (utils.toNumber(currency.balance).lt(amount + walletParams.fee)) {
-        throw new InsufficientBalance(`Insufficient Balance For ${currency.name}`)
+        throw new InsufficientBalance(`Insufficient Balance`)
       }
 
       const txid = await Ecoc.sendEcocBalance(to, amount, walletParams)

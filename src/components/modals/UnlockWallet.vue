@@ -64,7 +64,7 @@
                     color="primary"
                     indeterminate
                   ></v-progress-circular>
-                  <p>{{ msg }}</p>
+                  <p>{{ $t(msg) }}</p>
                 </div>
               </template>
               <template v-else-if="!loading">
@@ -230,10 +230,10 @@
                     ></v-textarea>
                     <text-reader @load="keystore = $event"></text-reader>
                     <div class="errorMsg" v-if="errorMsg2">
-                      <span>{{ errorMsg2 }}</span>
+                      <span>{{ $t(errorMsg2) }}</span>
                     </div>
                     <div class="errorMsg" v-else-if="errormsg">
-                      <span>{{ errormsg }}</span>
+                      <span>{{ $t(errormsg) }}</span>
                     </div>
                     <div class="action-wrapper">
                       <v-btn
@@ -298,7 +298,7 @@
                     v-model="keystorePassword"
                   ></v-text-field>
                   <div class="errorMsg" v-if="errorMsg">
-                    <span>{{ errorMsg }}</span>
+                    <span>{{ $t(errorMsg) }}</span>
                   </div>
                   <div class="action-wrapper">
                     <v-btn large class="mb-5" color="primary" @click="onUnlockWallet">
