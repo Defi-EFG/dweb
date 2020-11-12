@@ -23,7 +23,7 @@
 
           <v-list-item-content>
             <v-list-item-title class="tx-type">
-              {{ tx.type }} {{ tx.subtype ? `(${truncate(tx.subtype)})` : '' }}
+              {{ $t(tx.type) }} {{ tx.subtype ? `(${truncate(tx.subtype)})` : '' }}
               <v-spacer></v-spacer>
               {{ tx.value }} {{ tx.currency }}
             </v-list-item-title>

@@ -273,5 +273,26 @@
     "components": {
 
     },
-    "dom": {}
+    "dom": {},
+
+    "Received": "已收到",
+    "Sent": "已发送",
+    "Synced": "已同步",
+    "Pending": "待定",
+    "Confirmed": "已确认",
+    "Succeed": "成功",
+    "Failed": "失败的",
+    "Transfering": "转移中",
+    "Depositing": "存入",
+    "Withdrawing": "提现",
+    "Borrowing": "借用",
+    "Repaying": "还款",
+    "Could not generate new wallet": "无法生成新钱包",
+    "Could not import from WIF": "无法从导入 WIF",
+    "Wrong Private Key": "私钥错误",
+    "Wrong ECRC-20 currency": "ECRC-20货币错误",
+    "Insufficient Balance": "余额不足",
+    "Invalid keystore or password": "无效的密钥库或密码",
+    "Approval": "批准书",
+    "Transfer": "转让"
 }

@@ -225,7 +225,7 @@
                     color="white"
                     indeterminate
                   ></v-progress-circular>
-                  <p>{{ loadingMsg }}</p>
+                  <p>{{ $t(loadingMsg) }}</p>
                 </div>
               </v-card>
             </div>
@@ -244,15 +244,15 @@
                     <v-container colortextoutput>
                       <v-row class="border-bottom_1 ">
                         <v-col cols="6" class="nopadding">Collateral</v-col>
-                        <v-col cols="6" class="textright nopadding">+100.00 ECOC</v-col>
+                        <v-col cols="6" class="textright nopadding">0 ECOC</v-col>
                       </v-row>
                       <v-row class="border-bottom_1">
                         <v-col cols="6" class="nopadding">Borrow Power Used (New)</v-col>
-                        <v-col cols="6" class="textright nopadding">22.7 %</v-col>
+                        <v-col cols="6" class="textright nopadding">0 %</v-col>
                       </v-row>
                       <v-row class="border-bottom_1">
                         <v-col cols="6" class="nopadding">Total Borrow Power (New)</v-col>
-                        <v-col cols="6" class="textright nopadding">$880.00</v-col>
+                        <v-col cols="6" class="textright nopadding">$0</v-col>
                       </v-row>
                     </v-container>
                     <v-container>
@@ -261,7 +261,7 @@
                         <v-col cols="6" class="textright"
                           ><div class="nametitlecollat">
                             <div class="dot-circle"></div>
-                            Ed76...F985
+                            ...
                           </div></v-col
                         >
                       </v-row>
@@ -284,15 +284,11 @@
                         <v-col cols="6" class="nopadding showwallet_bgd"
                           >Total Sent (Collateral)</v-col
                         >
-                        <v-col cols="6" class="textright nopadding showwallet_bgd2"
-                          >-100.00 ECOC</v-col
-                        >
+                        <v-col cols="6" class="textright nopadding showwallet_bgd2">0 ECOC</v-col>
                       </v-row>
                       <v-row class="showwallet4 font-df">
                         <v-col cols="6" class="nopadding border-top-collat">Ending Balance:</v-col>
-                        <v-col cols="6" class="textright nopadding border-top-collat"
-                          >1998.00 ECOC</v-col
-                        >
+                        <v-col cols="6" class="textright nopadding border-top-collat">0 ECOC</v-col>
                       </v-row>
                     </v-container>
                   </div>

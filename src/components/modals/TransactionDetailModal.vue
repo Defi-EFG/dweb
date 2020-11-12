@@ -84,7 +84,7 @@
           <div class="type">
             <span>{{ $t('views.modal.type') }}</span>
             <v-spacer></v-spacer>
-            <span class="val">{{ tx.type }}</span>
+            <span class="val">{{ $t(tx.type) }}</span>
           </div>
           <v-divider class="space"></v-divider>
           <div class="amount">
@@ -103,7 +103,7 @@
             <div class="status">
               <span>{{ $t('views.modal.status') }}</span>
               <v-spacer></v-spacer>
-              <span class="val">{{ tx.status }}</span>
+              <span class="val">{{ $t(tx.status) }}</span>
             </div>
           </template>
         </div>

@@ -22,7 +22,7 @@ const generateNewKeystore = async (password: string) => {
   const wallet = await EcocWallet.createNewWallet('Testnet')
 
   if (!wallet) {
-    throw new WalletError('Can not generate new wallet')
+    throw new WalletError('Could not generate new wallet')
   }
 
   const keystore = createKeystore(wallet.getPrivKey(), password)
@@ -122,7 +122,7 @@ export const sendEcrc20Balance = async (
   walletParams: WalletParams
 ) => {
   if (!isEcrc20(currency)) {
-    throw new WalletError("It's not ECRC-20 currency")
+    throw new WalletError('Wrong ECRC-20 currency')
   }
 
   const tokenInfo = currency.tokenInfo as IEcrc20

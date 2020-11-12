@@ -275,5 +275,25 @@
 
     },
     "dom": {},
-    "Invalid keystore or password": "Invalid keystore or password"
+
+    "Received": "Received",
+    "Sent": "Sent",
+    "Synced": "Synced",
+    "Pending": "Pending",
+    "Confirmed": "Confirmed",
+    "Succeed": "Succeed",
+    "Failed": "Failed",
+    "Transfering": "Transferring",
+    "Depositing": "Depositing",
+    "Withdrawing": "Withdrawing",
+    "Borrowing": "Borrowing",
+    "Repaying": "Repaying",
+    "Could not generate new wallet": "Could not generate new wallet",
+    "Could not import from WIF": "Could not import from WIF",
+    "Wrong Private Key": "Wrong Private Key",
+    "Wrong ECRC-20 currency": "Wrong ECRC-20 currency",
+    "Insufficient Balance": "Insufficient Balance",
+    "Invalid keystore or password": "Invalid keystore or password",
+    "Approval": "Approval",
+    "Transfer": "Transfer"
 }
