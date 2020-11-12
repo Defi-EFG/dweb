@@ -37,9 +37,16 @@
           hide-details="true"
         ></v-text-field>
 
-        <v-btn large block depressed class="reward-btn" @click="openConfirmTxModal">{{
-          $t('views.stakingpage.withdrawreward')
-        }}</v-btn>
+        <v-btn
+          large
+          block
+          depressed
+          class="reward-btn"
+          :class="!!withdrawAmount ? '' : 'disabled'"
+          :disabled="!withdrawAmount"
+          @click="openConfirmTxModal"
+          >{{ $t('views.stakingpage.withdrawreward') }}</v-btn
+        >
       </v-card-text>
     </v-card>
     <TransactionConfirmationModal
@@ -231,6 +238,10 @@ export default class StakedReward extends Vue {
   font-size: larger;
   color: #c074f9;
   font-weight: 700;
+}
+
+.disabled {
+  background: rgba(255, 255, 255, 0.12) !important;
 }
 
 @media (max-width: 425px) {

@@ -294,7 +294,8 @@ export default class WalletModule extends VuexModule implements Wallet {
     return await Ecoc.getTxInfo(txid)
   }
 
-  @MutationAction
+  //@ts-ignore
+  @MutationAction({ rawError: true })
   async importWallet(payload: { keystore: string; password: string }) {
     const wallet = Ecoc.importFromKeystore(payload.keystore, payload.password)
     return {
