@@ -10,7 +10,7 @@
         </v-card-title>
         <v-card-title class="bg-header mt-7"
           ><div>
-            <span>ECOC Wallet</span>
+            <span>{{ $t('views.modal.ECOC_Walle') }}</span>
           </div>
           <div class="header-primarykey">
             <v-icon color="white" class="mr-2">$circle</v-icon> {{ truncateAddress(addr) }}
@@ -18,12 +18,12 @@
         </v-card-title>
         <div class="bg-white mb-5">
           <div class="d-flex">
-            <h3 class="header">Private Key</h3>
+            <h3 class="header">{{ $t('views.modal.private_key') }}</h3>
             <img src="@/assets/primarykey.svg" alt="" />
           </div>
 
           <div class="inputpassword" v-if="getPrivateKey() === false">
-            <small>Please input keystore password to access private key</small>
+            <small>{{ $t('views.modal.please_input_key') }}</small>
             <v-text-field
               class="mt-5"
               v-model="keystorePassword"
@@ -32,7 +32,7 @@
               @click:append="show = !show"
               :rules="[rules.required, rules.min]"
               name="input-10-1"
-              label="Keystore Password"
+              :label="keystore.keystore_password"
               color="primary"
               filled
               elevation-0
@@ -40,7 +40,9 @@
             >
             </v-text-field>
             <div class="action-wrapper">
-              <v-btn large color="primary" @click="getPrivateKey()">Access</v-btn>
+              <v-btn large color="primary" @click="getPrivateKey()">{{
+                $t('views.modal.access')
+              }}</v-btn>
             </div>
           </div>
           <template v-if="getPrivateKey() === true">
@@ -85,10 +87,10 @@ export default class PrivateKey extends Vue {
 
   rules = {
     required: (value: any) => {
-      return !!value || 'Required.'
+      return !!value || this.$t('views.modal.required')
     },
     min: (v: any) => {
-      return v.length >= 6 || 'Min 6 characters'
+      return v.length >= 6 || this.$t('views.modal.characters')
     }
   }
 
@@ -96,6 +98,9 @@ export default class PrivateKey extends Vue {
     return this.walletStore.address
   }
 
+  get keystore() {
+    return this.$t('views.modal')
+  }
   @Watch('visiblemodalpk')
   checkvisible() {
     if (this.checkPrivatekeyDialog === false) {

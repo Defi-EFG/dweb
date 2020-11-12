@@ -11,7 +11,8 @@
             "lending": "借贷",
             "whitepaper": "白皮书",
             "dashboard": "仪表板",
-            "yellow": "黄皮书"
+            "yellow": "黄皮书",
+            "latest_block": "最新块"
         },
         "yellowpdf": "https://efg.finance/media/Oracles_yellow_paper_zh.pdf",
         "pdf": "https://efg.finance/media/efg-whitepaperzh.pdf",
@@ -95,6 +96,18 @@
             }
 
         ],
+        "detail": {
+            "market_details": "市场详情",
+            "details": "详情",
+            "liquidation": "清算",
+            "collateral_Factor": "抵押因素",
+            "daily_Yield": "日产量",
+            "total_GPT_staked ": "总GPT质押",
+            "number_of": "借款人数量",
+            "borrow_apy": "总借贷",
+            "total_supply": "总供应量",
+            "total_borrowed": "总供应量"
+        },
         "wallet": "钱包",
         "lending": "借出",
         "staking": "放样",
@@ -109,7 +122,8 @@
             "address": "钱包地址",
             "total_balance": "总余额",
             "to_Address": "到地址",
-            "amount": "金额"
+            "amount": "金额",
+            "no_transaction_history": "没有交易历史记录"
         },
         "lendingpage": {
             "collateral_bl": "抵押品余额",
@@ -121,7 +135,7 @@
             "my_activity": "我的活动",
             "assets": "资产",
             "balance": "余额",
-            "inrerest": "Inrerest Rate_zh",
+            "inrerest": "利率",
             "collateral": "抵押品",
             "withdraw": "提现",
             "borrow": "借贷",
@@ -141,7 +155,8 @@
             "APY": "年利率",
             "supply_mk": "供应市",
             "total_borrowed": "总借贷",
-            "debt": "债务"
+            "debt": "债务",
+            "sec_until": "离清算还有 秒钟"
         },
         "stakingpage": {
             "stakinglist": "质押列表",
@@ -174,6 +189,7 @@
             "to_earn": "来赚取"
         },
         "modal": {
+            "no_transactionpending": "没有挂起的交易",
             "welcome_to": "欢迎来到",
             "ecoc_finance": "ECOC Financial Growth",
             "Please_create": "请创建或链接您的钱包",
@@ -245,12 +261,38 @@
             "currency": "货币",
             "type": "类型",
             "confirmations": "确认:",
-            "status": "状态:"
+            "status": "状态:",
+            "please_input_key": "请输入密钥库密码以访问私钥",
+            "access": "连接",
+            "use_privatekey": "使用私钥",
+            "password_must_match": "密码必须匹配",
+            "create_wallet_with": "使用私钥创建钱包"
         }
 
     },
     "components": {
 
     },
-    "dom": {}
+    "dom": {},
+
+    "Received": "已收到",
+    "Sent": "已发送",
+    "Synced": "已同步",
+    "Pending": "待定",
+    "Confirmed": "已确认",
+    "Succeed": "成功",
+    "Failed": "失败的",
+    "Transfering": "转移中",
+    "Depositing": "存入",
+    "Withdrawing": "提现",
+    "Borrowing": "借用",
+    "Repaying": "还款",
+    "Could not generate new wallet": "无法生成新钱包",
+    "Could not import from WIF": "无法从导入 WIF",
+    "Wrong Private Key": "私钥错误",
+    "Wrong ECRC-20 currency": "ECRC-20货币错误",
+    "Insufficient Balance": "余额不足",
+    "Invalid keystore or password": "无效的密钥库或密码",
+    "Approval": "批准书",
+    "Transfer": "转让"
 }

@@ -23,7 +23,7 @@
 
           <v-list-item-content>
             <v-list-item-title class="tx-type">
-              {{ tx.type }} {{ tx.subtype ? `(${truncate(tx.subtype)})` : '' }}
+              {{ $t(tx.type) }} {{ tx.subtype ? `(${truncate(tx.subtype)})` : '' }}
               <v-spacer></v-spacer>
               {{ tx.value }} {{ tx.currency }}
             </v-list-item-title>
@@ -39,7 +39,7 @@
     <div class="empty-message" v-else>
       <div class="inner">
         <v-icon large>mdi-history</v-icon>
-        <div class="message">No transaction history</div>
+        <div class="message">{{ $t('views.walletpage.no_transaction_history') }}</div>
       </div>
     </div>
     <TransactionDetailModal

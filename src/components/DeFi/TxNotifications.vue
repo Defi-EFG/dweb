@@ -35,7 +35,7 @@
               </div>
             </v-col>
             <v-col cols="3" class="tx-details pl-6">
-              <div class="type">{{ tx.type }}</div>
+              <div class="type">{{ $t(tx.type) }}</div>
               <div
                 v-if="tx.status === txConstants.STATUS_CONFIRMED"
                 class="details"
@@ -48,7 +48,7 @@
         </template>
 
         <template v-else>
-          <div class="empty">No transaction pending</div>
+          <div class="empty">{{ $t('views.modal.no_transactionpending') }}</div>
         </template>
       </div>
     </transition>

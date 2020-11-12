@@ -11,7 +11,8 @@
             "lending": "Lending",
             "whitepaper": "White Paper",
             "dashboard": "Dashboard",
-            "yellow": "Yellow Paper"
+            "yellow": "Yellow Paper",
+            "latest_block": "Latest Block"
         },
         "yellowpdf": "https://efg.finance/media/Oracles_yellow_paper_en.pdf",
         "pdf": "https://efg.finance/media/efg-whitepaper.pdf",
@@ -98,6 +99,18 @@
             }
 
         ],
+        "detail": {
+            "market_details": "Market Details",
+            "details": "Details",
+            "liquidation": "Liquidation",
+            "collateral_Factor": "Collateral Factor",
+            "daily_Yield": "Daily Yield",
+            "total_GPT": "Total GPT Staked",
+            "number_of": "Number of Borrowers",
+            "borrow_apy": "Borrow APY",
+            "total_supply": "Total Supply",
+            "total_borrowed": "Total Borrowed"
+        },
         "wallet": "Wallet",
         "lending": "Lending",
         "staking": "Staking",
@@ -112,7 +125,8 @@
             "address": "Wallet Address :",
             "total_balance": "Total Balance",
             "to_Address": "To Address",
-            "amount": "Amount"
+            "amount": "Amount",
+            "no_transaction_history": "No Transaction History"
         },
         "lendingpage": {
             "collateral_bl": "Collateral Balance",
@@ -144,7 +158,8 @@
             "APY": "APY",
             "supply_mk": "Supply Market",
             "total_borrowed": "Total Borrowed",
-            "debt": "Debt"
+            "debt": "Debt",
+            "sec_until": "until liquidation."
         },
         "stakingpage": {
             "stakinglist": "Staking List",
@@ -176,6 +191,7 @@
             "to_earn": "to Earn"
         },
         "modal": {
+            "no_transactionpending": "No transaction pending",
             "welcome_to": "Welcome to",
             "ecoc_finance": "ECOC Finance Governance",
             "Please_create": "Please create or connect your wallet",
@@ -247,12 +263,37 @@
             "currency": "Currency:",
             "type": "Type:",
             "confirmations": "Confirmations:",
-            "status": "Status:"
+            "status": "Status:",
+            "please_input_key": "Please input keystore password to access private key",
+            "access": "ACCESS",
+            "use_privatekey": "Use Privatekey",
+            "password_must_match": "Password must match",
+            "create_wallet_with": "Create Wallet With PrivateKey"
         }
     },
     "components": {
 
     },
     "dom": {},
-    "Invalid keystore or password": "Invalid keystore or password"
+
+    "Received": "Received",
+    "Sent": "Sent",
+    "Synced": "Synced",
+    "Pending": "Pending",
+    "Confirmed": "Confirmed",
+    "Succeed": "Succeed",
+    "Failed": "Failed",
+    "Transfering": "Transferring",
+    "Depositing": "Depositing",
+    "Withdrawing": "Withdrawing",
+    "Borrowing": "Borrowing",
+    "Repaying": "Repaying",
+    "Could not generate new wallet": "Could not generate new wallet",
+    "Could not import from WIF": "Could not import from WIF",
+    "Wrong Private Key": "Wrong Private Key",
+    "Wrong ECRC-20 currency": "Wrong ECRC-20 currency",
+    "Insufficient Balance": "Insufficient Balance",
+    "Invalid keystore or password": "Invalid keystore or password",
+    "Approval": "Approval",
+    "Transfer": "Transfer"
 }
