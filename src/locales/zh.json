@@ -189,6 +189,10 @@
             "to_earn": "来赚取"
         },
         "modal": {
+            "errorMsg2": "密钥库文本格式错误",
+            "errormsg": "密钥库文本格式错误",
+            "copymessage1": "复制的",
+            "copymessage": "点按即可复制",
             "no_transactionpending": "没有挂起的交易",
             "welcome_to": "欢迎来到",
             "ecoc_finance": "ECOC Financial Growth",
