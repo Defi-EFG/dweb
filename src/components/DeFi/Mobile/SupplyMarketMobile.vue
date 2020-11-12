@@ -5,7 +5,12 @@
       <v-col cols="4" class="text-center">{{ $t('views.lendingpage.APY') }}</v-col>
       <v-col cols="4" class="text-right">{{ $t('views.lendingpage.wallet') }}</v-col>
     </v-row>
-    <v-row class="market-item" v-for="(item, index) in borrowList" :key="index">
+    <v-row
+      class="market-item"
+      v-for="(item, index) in borrowList"
+      :key="index"
+      @click="switchBorrow(item.currency)"
+    >
       <v-col cols="4" class="assets">
         <img :src="item.currency.style.icon" />
         <span>{{ item.currency.name }}</span>
@@ -23,10 +28,15 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { Borrow } from '@/types/lending'
+import { Currency } from '@/types/currency'
 
 @Component({})
 export default class SupplyMarketMobile extends Vue {
   @Prop({ default: [] }) readonly borrowList!: Borrow[]
+
+  switchBorrow(currency: Currency) {
+    this.$emit('switchToBorrow', currency)
+  }
 }
 </script>
 

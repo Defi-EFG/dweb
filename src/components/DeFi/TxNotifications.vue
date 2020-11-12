@@ -1,12 +1,8 @@
 <template>
   <div class="tx-noti">
-    <v-btn class="noti-btn" icon>
+    <v-btn class="noti-btn" icon @click="displayNotiList = !displayNotiList">
       <v-badge color="#FFB300" :content="pendingTxNumber" :value="pendingTxNumber" overlap>
-        <v-img
-          class="noti-sign"
-          src="@/assets/time-left.svg"
-          @click="displayNotiList = !displayNotiList"
-        ></v-img>
+        <v-img class="noti-sign" src="@/assets/time-left.svg"></v-img>
       </v-badge>
     </v-btn>
     <transition name="fade" mode="out-in">
@@ -38,7 +34,7 @@
                 <v-icon class="copy" @click="copyAddress(tx.txid)">mdi-content-copy</v-icon>
               </div>
             </v-col>
-            <v-col cols="3" class="tx-details">
+            <v-col cols="3" class="tx-details pl-6">
               <div class="type">{{ $t(tx.type) }}</div>
               <div
                 v-if="tx.status === txConstants.STATUS_CONFIRMED"
@@ -99,6 +95,12 @@ export default class TxNotifications extends Vue {
     copyToClipboard(addr)
   }
 
+  displayNoti() {
+    console.log('before', this.displayNotiList)
+    this.displayNotiList = !this.displayNotiList
+    console.log('after', this.displayNotiList)
+  }
+
   showTxHistory(txId: string) {
     this.txId = txId
     this.showTxModal = !this.showTxModal
@@ -133,6 +135,7 @@ export default class TxNotifications extends Vue {
 }
 
 .tx-load {
+  justify-content: center;
   display: flex;
 
   .completed {
@@ -155,6 +158,9 @@ export default class TxNotifications extends Vue {
 }
 
 .tx-details {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   position: relative;
   z-index: 3;
   .type {
@@ -232,7 +238,7 @@ export default class TxNotifications extends Vue {
     display: flex;
     max-width: 100% !important;
     flex: 0 0 100% !important;
-    justify-content: space-around;
+    justify-content: space-around !important;
     padding-top: 0;
     font-size: smaller;
   }
