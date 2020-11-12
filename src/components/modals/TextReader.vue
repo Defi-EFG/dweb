@@ -17,8 +17,6 @@ export default {
       reader.onload = e => this.$emit('load', e.target.result)
       if (file != null && file.size > 0) {
         reader.readAsText(file)
-      } else {
-        console.log('please select file')
       }
     }
   }
