@@ -7,7 +7,7 @@
       </v-toolbar-title>
     </v-toolbar>
 
-    <v-card-text :class="page">
+    <v-card-text :class="page" v-if="transactionsHistory.length > 0">
       <v-list color="#222738" class="tx-list">
         <v-list-item
           v-for="(tx, index) in transactionsHistory"
@@ -36,6 +36,12 @@
         </v-list-item>
       </v-list>
     </v-card-text>
+    <div class="empty-message" v-else>
+      <div class="inner">
+        <v-icon large>mdi-history</v-icon>
+        <div class="message">{{ $t('views.walletpage.no_transaction_history') }}</div>
+      </div>
+    </div>
     <TransactionDetailModal
       :showDialog.sync="showTxModal"
       :txid="showTxId"
@@ -149,7 +155,7 @@ export default class TransactionHistory extends Vue {
 }
 
 .staking {
-  height: 217px;
+  height: 494px;
   overflow: auto;
 
   &::-webkit-scrollbar {
@@ -169,7 +175,7 @@ export default class TransactionHistory extends Vue {
 }
 
 .wallet {
-  max-height: 471px;
+  max-height: 533px;
   overflow: auto;
 
   &::-webkit-scrollbar {
@@ -185,6 +191,28 @@ export default class TransactionHistory extends Vue {
   &::-webkit-scrollbar-thumb {
     background-color: #ffffff41;
     border-radius: 6px;
+  }
+}
+
+.empty-message {
+  display: flex;
+  opacity: 0.4;
+  text-align: center;
+  height: 100%;
+
+  .inner {
+    margin: auto;
+  }
+
+  .message {
+    font-size: medium;
+  }
+}
+
+@media (max-width: 1264px) {
+  .empty-message {
+    margin: 2rem 0;
+    height: auto;
   }
 }
 

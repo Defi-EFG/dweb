@@ -7,7 +7,7 @@
       </v-toolbar-title>
     </v-toolbar>
 
-    <v-card-text class="wrapper">
+    <v-card-text class="wrapper" v-if="rewardList.length > 0">
       <div class="history-items" v-for="(item, index) in rewardList" :key="index">
         <v-row>
           <v-col class="ma-auto token-col">
@@ -26,6 +26,12 @@
             <div class="value">{{ item.amount }} {{ rewardCurrencyName }}</div>
           </v-col>
         </v-row>
+      </div>
+    </v-card-text>
+    <v-card-text class="empty-wrapper">
+      <div class="inner">
+        <v-icon large>mdi-history</v-icon>
+        <div>No Reward history</div>
       </div>
     </v-card-text>
   </v-card>
@@ -144,6 +150,17 @@ export default class RewardHistory extends Vue {
 
 .history-items:nth-last-child(1) {
   margin-bottom: 0;
+}
+
+.empty-wrapper {
+  display: flex;
+  height: 100%;
+  text-align: center;
+
+  .inner {
+    margin: auto;
+    opacity: 0.4;
+  }
 }
 
 @media (max-width: 425px) {

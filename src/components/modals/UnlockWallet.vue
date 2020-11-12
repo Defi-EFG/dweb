@@ -119,9 +119,9 @@
                   </h3>
                   <small class="lightgray--text"
                     >{{ $t('views.modal.please_set_your') }}
-                    <span class=" text-btn" @click="openPrivatekeyfield()" text
-                      >Use Privatekey</span
-                    >
+                    <span class=" text-btn" @click="openPrivatekeyfield()" text>{{
+                      $t('views.modal.use_privatekey')
+                    }}</span>
                   </small>
                 </div>
                 <transition name="fade">
@@ -131,7 +131,7 @@
                         ref="openprivate"
                         rows="2"
                         auto-grow
-                        label="Create Wallet With PrivateKey"
+                        :label="modal.create_wallet_with"
                         filled
                         class="loginwithprivatekey"
                         elevation-0
@@ -168,7 +168,7 @@
                   :rules="[
                     rules.required,
                     rules.min,
-                    createWalletPassword === confirmPassword || 'Password must match'
+                    createWalletPassword === confirmPassword || modal.password_must_match
                   ]"
                   :label="modal.repeat_your_password"
                   color="primary"
@@ -288,7 +288,7 @@
                     name="input-10-1"
                     :type="show ? 'text' : 'password'"
                     @click:append="show = !show"
-                    label="Keystore Password"
+                    :label="modal.keystore_password"
                     color="primary"
                     filled
                     :rules="[rules.required, rules.min]"
@@ -303,7 +303,9 @@
                   </div>
                   <div class="action-wrapper">
                     <v-btn large class="mb-5" color="primary" @click="onUnlockWallet">
-                      <h4 class="text-capitalize font-weight-light">Connect</h4>
+                      <h4 class="text-capitalize font-weight-light">
+                        {{ $t('views.modal.connect') }}
+                      </h4>
                     </v-btn>
                   </div>
                 </template>
@@ -357,6 +359,7 @@ export default class UnlockwalletModal extends Vue {
   password = ''
   loading = false
   errorPrivatekey: string | Error = ''
+
   rules = {
     required: (value: any) => {
       return !!value || this.$t('views.modal.required')
@@ -365,17 +368,12 @@ export default class UnlockwalletModal extends Vue {
       return v.length >= 6 || this.$t('views.modal.characters')
     }
   }
-  get ecoc() {
-    return this.walletStore.ecoc
-  }
 
-  get walletAddress() {
-    return this.walletStore.address
-  }
   @Watch('visible')
   checkvisible() {
     this.unlockwalletModal = this.visible
   }
+
   toStep(step: any) {
     this.step = step
     if (this.step === 5) {
@@ -391,6 +389,7 @@ export default class UnlockwalletModal extends Vue {
       })
     }
   }
+
   clearData() {
     this.keystore = ''
     this.keystorePassword = ''
@@ -460,10 +459,6 @@ export default class UnlockwalletModal extends Vue {
       }
     }
   }
-
-  // cPiHcy2L4YoytRC9CGysiwxfacKT8cBqe6Z682uaJw4PUf18ZgdW
-  // 2FsdGVkX19lXF0CLRJMM3m+FO9tqB2tFHgH4R/ovyTs9EQJNN+FprFtZKQ5dOtNzwiwbIp9kdYPeq2bkMsloqMWYfajWjOlsa6Y7Vb5F8
-  // U2FsdGVkX185x/QCF9nZAl3kLMgsqBmL0I5x9mQpPoOLNIcyu8nsNQXRGaN7R087s3X5aIfihml2ue1w81QcDa2uHn0FyOW6/q8IWAowd
 
   async confirmKeystore() {
     try {

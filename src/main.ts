@@ -4,7 +4,7 @@ import VueI18n from 'vue-i18n'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-import { messages, defaultLocale } from '@/i18n'
+import { messages, defaultLocale, dateTimeFormats, supportedLanguages } from '@/i18n'
 import vuetify from './plugins/vuetify'
 import { initFilters } from '@/plugins/filters'
 
@@ -13,9 +13,14 @@ initFilters()
 Vue.config.productionTip = false
 Vue.use(VueI18n)
 
+const localeFromBrowser = navigator.language.split('-')[0]
+
 const i18n = new VueI18n({
   messages,
-  locale: defaultLocale,
+  dateTimeFormats,
+  locale: supportedLanguages.find(lang => lang.key === localeFromBrowser)
+    ? localeFromBrowser
+    : defaultLocale,
   fallbackLocale: defaultLocale
 })
 

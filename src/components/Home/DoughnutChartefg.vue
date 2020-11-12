@@ -8,9 +8,9 @@
       </v-col>
       <v-col cols="6" md="5">
         <div class="dougnut-detail">
-          <p>EFG - Total Supply</p>
+          <p>EFG - {{ $t('views.detail.total_supply') }}</p>
           <div class="value_price1">{{ max | numberWithCommas({ fixed: [0, 2] }) }}</div>
-          <p>EFG - Total Borrowed</p>
+          <p>EFG - {{ $t('views.detail.total_borrowed') }}</p>
           <div class="value_price2">{{ currentValue | numberWithCommas({ fixed: [0, 2] }) }}</div>
         </div>
       </v-col>

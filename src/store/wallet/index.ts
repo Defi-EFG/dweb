@@ -354,7 +354,7 @@ export default class WalletModule extends VuexModule implements Wallet {
           pendingTransactions.splice(index, 1, tx)
         }
       } catch (error) {
-        console.log(error)
+        //
       }
     })
 

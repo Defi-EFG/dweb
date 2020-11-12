@@ -12,11 +12,11 @@
           <span class="extend-btn" @click="openConfirmTxModal">Extend</span>
         </div>
         <div class="liquid-countdown" v-show="extentTimeRemaining">
-          <span>{{ extentTimeRemaining }}</span>
+          <span>{{ extentTimeRemaining }} {{ $t('views.lendingpage.sec_until') }}</span>
         </div>
       </v-card-text>
     </v-card>
-    <TransactionComfirmationModal
+    <TransactionConfirmationModal
       :txType="confirmTxType"
       :visible="confirmTxModal"
       :fromAddr="address"
@@ -40,12 +40,12 @@ import * as constants from '@/constants'
 import { WalletParams } from '@/services/ecoc/types'
 import { rewardCurrency as extendCurrency } from '@/store/common'
 import * as utils from '@/services/utils'
-import TransactionComfirmationModal from '@/components/modals/transaction-confirmation.vue'
+import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import Loading from '@/components/modals/loading.vue'
 
 @Component({
   components: {
-    TransactionComfirmationModal,
+    TransactionConfirmationModal,
     Loading
   }
 })
@@ -87,7 +87,7 @@ export default class SupplyBalance extends Vue {
     if (timeDiff < 0) return ''
 
     const dur = moment.duration(timeDiff * 1000)
-    return `${dur.hours()} hrs ${dur.minutes()} min ${dur.seconds()} sec until liquidation.`
+    return `${moment.utc(dur.as('milliseconds')).format('HH:mm:ss')}`
   }
 
   get contractAddr() {
@@ -135,7 +135,6 @@ export default class SupplyBalance extends Vue {
     this.errorMsg = errorMsg
     this.loading = false
     this.loadingMsg = ''
-    console.log(errorMsg)
   }
 
   onConfirm(walletParams: WalletParams) {
@@ -152,7 +151,6 @@ export default class SupplyBalance extends Vue {
       .extendGracePeriod(payload)
       .then(txid => {
         setTimeout(() => {
-          console.log('Txid:', txid)
           this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
           this.onSuccess()
         }, 1000)
