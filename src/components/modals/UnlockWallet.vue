@@ -79,9 +79,11 @@
                     <div class="keystorefield" @click="copyAddress(createWalletKeystore)">
                       {{ createWalletKeystore }}
                     </div>
-                    <div v-if="copymessage === 'Copied'" class="sctext">{{ copymessage }}</div>
+                    <div v-if="copymessage === 'Copied'" class="sctext">
+                      {{ $t('views.modal.copymessage1') }}
+                    </div>
                     <div v-else class="copyaddres">
-                      {{ copymessage }}
+                      {{ $t('views.modal.copymessage') }}
                     </div>
                   </div>
                   <div class="action-wrapper">
@@ -230,10 +232,10 @@
                     ></v-textarea>
                     <text-reader @load="keystore = $event"></text-reader>
                     <div class="errorMsg" v-if="errorMsg2">
-                      <span>{{ $t(errorMsg2) }}</span>
+                      <span>{{ $t('views.modal.errorMsg2') }}</span>
                     </div>
                     <div class="errorMsg" v-else-if="errormsg">
-                      <span>{{ $t(errormsg) }}</span>
+                      <span> {{ $t('views.modal.errormsg') }}</span>
                     </div>
                     <div class="action-wrapper">
                       <v-btn
