@@ -20,10 +20,10 @@
                     {{ $t('views.detail.total') }} GPT {{ $t('views.detail.staked') }}
                   </div>
                   <div class="m_titel">
-                    Number of Staker
+                    {{ $t('views.detail.number_of_staker') }}
                   </div>
                   <div class="m_titel">
-                    Total EFG Staking
+                    {{ $t('views.detail.total_EFG_Staking') }}
                   </div>
                 </v-col>
                 <v-col cols="3" class="chart_detail">

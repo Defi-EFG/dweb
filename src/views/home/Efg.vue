@@ -17,8 +17,8 @@
                 <v-col cols="9" class="efg_border1">
                   <div class="m_titel">{{ $t('views.detail.borrow_apy') }}</div>
                   <div class="m_titel">{{ $t('views.detail.number_of') }}</div>
-                  <div class="m_titel">Total Interest</div>
-                  <div class="m_titel">Total Debt</div>
+                  <div class="m_titel">{{ $t('views.detail.total_Interest') }}</div>
+                  <div class="m_titel">{{ $t('views.detail.total_debt') }}</div>
                 </v-col>
                 <v-col cols="3" class="efg_border1">
                   <div class="m_titel m_titel_2">{{ interestRate }}%</div>
