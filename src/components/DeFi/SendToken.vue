@@ -73,9 +73,15 @@
         type="number"
         hide-details="true"
       ></v-text-field>
-      <v-btn depressed block large class="send-btn" @click="onOpenModal()">{{
-        $t('views.walletpage.send')
-      }}</v-btn>
+      <v-btn
+        depressed
+        block
+        large
+        class="send-btn"
+        :disabled="!isSendable"
+        @click="onOpenModal()"
+        >{{ $t('views.walletpage.send') }}</v-btn
+      >
       <TransactionConfirmationModal
         :visible="confirmTxModal"
         :fromAddr="fromAddr"
@@ -160,6 +166,10 @@ export default class SendToken extends Vue {
 
   get walletpage() {
     return this.$t('views.walletpage')
+  }
+
+  get isSendable() {
+    return !!this.toAddr && !!this.amount && this.walletStore.isWalletUnlocked
   }
 
   selectAddress(addr: string) {

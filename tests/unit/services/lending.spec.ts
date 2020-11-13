@@ -14,7 +14,7 @@ describe('Lending Smart Contract Test', () => {
     const poolAddress = 'eCpHawDrHpW9YpjdzDsN9b4imGbnMJbQeG'
     const res = await lending.getPoolInfo(poolAddress)
     expect(res).to.be.an('object')
-    res.should.have.keys('name', 'remainingEFG')
+    res.should.have.keys('name', 'capital', 'remainingEFG')
   })
 
   it('can call getPrice functions', async () => {

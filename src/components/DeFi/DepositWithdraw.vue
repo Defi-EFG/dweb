@@ -29,11 +29,13 @@
         </div>
 
         <div class="minimum-d">
-          <span class="value">{{ stakingCurrencyName }} {{ $t('views.stakingpage.deposit') }}</span>
+          <small class="value"
+            >{{ stakingCurrencyName }} {{ $t('views.stakingpage.deposit') }}</small
+          >
           <v-spacer></v-spacer>
-          <span class="all" @click="fillAmountDeposit(balance)">{{
+          <small class="all" @click="fillAmountDeposit(balance)">{{
             $t('views.stakingpage.depositall')
-          }}</span>
+          }}</small>
         </div>
 
         <v-text-field
@@ -50,19 +52,26 @@
         ></v-text-field>
 
         <div class="note">
-          <span>{{ $t('views.stakingpage.note') }}</span>
+          <small>{{ $t('views.stakingpage.note') }}</small>
         </div>
 
-        <v-btn dark large block class="btn-d" @click="openConfirmTxModal(TYPE_DEPOSIT)">{{
-          $t('views.stakingpage.deposit')
-        }}</v-btn>
+        <v-btn
+          dark
+          large
+          block
+          class="btn-d"
+          :class="!!depositAmount ? '' : 'disabled'"
+          :disabled="!depositAmount"
+          @click="openConfirmTxModal(TYPE_DEPOSIT)"
+          >{{ $t('views.stakingpage.deposit') }}</v-btn
+        >
       </v-tab-item>
 
       <v-tab-item class="withdraw-tab">
         <div class="label pl-3">
           <span>{{ $t('views.stakingpage.withdraw') }}</span>
         </div>
-        <span class="description">{{ $t('views.stakingpage.pleaseinput') }}</span>
+        <small class="description">{{ $t('views.stakingpage.pleaseinput') }}</small>
 
         <div class="d-amount">
           <span>{{ $t('views.stakingpage.your_skaking') }}</span>
@@ -92,9 +101,16 @@
           solo
           hide-details="true"
         ></v-text-field>
-        <v-btn dark large block class="btn-w" @click="openConfirmTxModal(TYPE_WITHDRAW)">{{
-          $t('views.stakingpage.withdraw')
-        }}</v-btn>
+        <v-btn
+          dark
+          large
+          block
+          class="btn-w"
+          :class="!!withdrawAmount ? '' : 'disabled'"
+          :disabled="!withdrawAmount"
+          @click="openConfirmTxModal(TYPE_WITHDRAW)"
+          >{{ $t('views.stakingpage.withdraw') }}</v-btn
+        >
       </v-tab-item>
     </v-tabs>
     <TransactionConfirmationModal
@@ -347,6 +363,10 @@ export default class DepositWithdraw extends Vue {
   border-radius: 5px;
   background: transparent linear-gradient(90deg, #8b41d6 0%, #6800fe 100%) 0% 0% no-repeat
     padding-box;
+}
+
+.disabled {
+  background: rgba(255, 255, 255, 0.12) !important;
 }
 
 .btn-w {

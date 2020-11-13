@@ -1,13 +1,16 @@
 <template>
-  <v-tabs grow background-color="#2F3446" dark class="cs-tabs">
+  <v-tabs grow background-color="#2F3446" dark class="cs-tabs" @change="tabChange">
     <v-tab>{{ $t('views.lendingpage.collateral') }}</v-tab>
     <v-tab>{{ $t('views.lendingpage.supply_mk') }}</v-tab>
 
     <v-tab-item class="cs-tabs-item">
-      <CollateralTokenMobile :collateralList="collateralList"></CollateralTokenMobile>
+      <CollateralTokenMobile
+        :collateralList="collateralList"
+        @switchToCollateral="toCollateralToken"
+      ></CollateralTokenMobile>
       <v-divider dark class="divider"></v-divider>
       <CollateralWithdrawMobile
-        :currency="currency"
+        :currency="tokenCurrency"
         :collateralBalance="collateralBalance"
         :borrowBalance="borrowBalance"
         :borrowLimit="borrowLimit"
@@ -16,10 +19,13 @@
     </v-tab-item>
 
     <v-tab-item class="cs-tabs-item">
-      <SupplyMarketMobile :borrowList="borrowList"></SupplyMarketMobile>
+      <SupplyMarketMobile
+        :borrowList="borrowList"
+        @switchToBorrow="toBorrowToken"
+      ></SupplyMarketMobile>
       <v-divider dark class="divider"></v-divider>
       <BorrowRepayMobile
-        :currency="currency"
+        :currency="tokenCurrency"
         :collateralBalance="collateralBalance"
         :borrowBalance="borrowBalance"
         :borrowLimit="borrowLimit"
@@ -31,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, PropSync } from 'vue-property-decorator'
 import CollateralWithdrawMobile from '@/components/DeFi/Mobile/CollateralWithdrawMobile.vue'
 import CollateralTokenMobile from '@/components/DeFi/Mobile/CollateralTokenMobile.vue'
 import BorrowRepayMobile from '@/components/DeFi/Mobile/BorrowRepayMobile.vue'
@@ -50,13 +56,27 @@ import { Currency } from '@/types/currency'
 })
 export default class CollateralSupplyMobile extends Vue {
   @Prop({ default: [] }) readonly collateralList!: Collateral[]
-  @Prop() currency!: Currency
+  @PropSync('currency', { type: Object }) tokenCurrency!: Currency
   @Prop() collateralBalance!: number
   @Prop() borrowBalance!: number
   @Prop() borrowLimit!: number
   @Prop() borrowPowerPercentage!: number
   @Prop() interestRate!: number
   @Prop({ default: [] }) readonly borrowList!: Borrow[]
+
+  toCollateralToken(currency: Currency) {
+    this.$emit('update:tokenCurrency', currency)
+    this.$emit('selectCollateralMobile', currency)
+  }
+
+  toBorrowToken(currency: Currency) {
+    this.$emit('update:tokenCurrency', currency)
+    this.$emit('selectBorrowMobile', currency)
+  }
+
+  tabChange(index: any) {
+    this.$emit('selectTab', index)
+  }
 }
 </script>
 

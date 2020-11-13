@@ -11,8 +11,8 @@
           <span>Estimated GPT needed: {{ estimatedGPT }}</span>
           <span class="extend-btn" @click="openConfirmTxModal">Extend</span>
         </div>
-        <div class="liquid-countdown" v-show="extentTimeRemaining">
-          <span>{{ extentTimeRemaining }} {{ $t('views.lendingpage.sec_until') }}</span>
+        <div class="liquid-countdown" v-show="extentTimeRemaining()">
+          <span>{{ timeRemainMessage }} until liquidation.</span>
         </div>
       </v-card-text>
     </v-card>
@@ -66,6 +66,8 @@ export default class SupplyBalance extends Vue {
   estimatedGPT: string | number = '0'
   safetyFactor = 0.01
 
+  timeRemainMessage: any = 0
+
   get address() {
     return this.walletStore.address
   }
@@ -79,15 +81,18 @@ export default class SupplyBalance extends Vue {
     return moment().unix()
   }
 
-  get extentTimeRemaining(): string {
-    const lastGracePeriod = this.lendingStore.loan.lastGracePeriod //unix timestamp in second
-    if (lastGracePeriod === 0) return ''
+  extentTimeRemaining() {
+    if (this.walletStore.isWalletUnlocked) {
+      const lastGracePeriod = this.lendingStore.loan.lastGracePeriod //unix timestamp in second
+      if (lastGracePeriod === 0) return ''
 
-    const timeDiff = lastGracePeriod - this.currentTimestamp
-    if (timeDiff < 0) return ''
+      const timeDiff = lastGracePeriod - moment().unix()
+      if (timeDiff < 0) return ''
 
-    const dur = moment.duration(timeDiff * 1000)
-    return `${moment.utc(dur.as('milliseconds')).format('HH:mm:ss')}`
+      const dur = moment.duration(timeDiff * 1000)
+      return `${moment.utc(dur.as('milliseconds')).format('HH:mm:ss')}`
+    }
+    return false
   }
 
   get contractAddr() {
@@ -104,7 +109,8 @@ export default class SupplyBalance extends Vue {
   }
 
   async getEstimatedGPT() {
-    const amount = await this.lendingStore.getEstimatedGPT(this.address)
+    let amount = await this.lendingStore.getEstimatedGPT(this.address)
+    amount /= 10 ** 4
     const estimatedGPT = utils
       .toNumber(amount)
       .multipliedBy(1 + this.safetyFactor)
@@ -175,6 +181,10 @@ export default class SupplyBalance extends Vue {
         this.estimatedGPT = amount
       })
     }
+
+    setInterval(() => {
+      this.timeRemainMessage = this.extentTimeRemaining()
+    }, 1000)
   }
 }
 </script>

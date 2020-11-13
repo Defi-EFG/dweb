@@ -64,6 +64,10 @@
         "type":"bytes32"
       },
       {
+        "name":"capital",
+        "type":"uint256"
+      },
+      {
         "name":"remainingEFG",
         "type":"uint256"
       }
