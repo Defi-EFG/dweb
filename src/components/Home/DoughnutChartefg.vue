@@ -24,7 +24,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Watch } from 'vue-property-decorator'
 import Chart from 'chart.js'
 import LendingModule from '@/store/lending'
 import { getModule } from 'vuex-module-decorators'
@@ -33,12 +33,21 @@ import { getModule } from 'vuex-module-decorators'
 export default class StakingChart extends Vue {
   lendingStore = getModule(LendingModule)
   query = this.$route.query.pool
-  max = this.pools?.totalSupply
-  currentValue = this.pools?.totalBorrowed
+  max = this.pools?.totalSupply as number
+  currentValue = this.pools?.totalBorrowed as number
 
   mounted() {
-    this.renderChart(this.ctx, this.max!, this.currentValue!)
-    console.log(this.pools)
+    this.pools
+    this.renderChart(this.ctx, this.max, this.currentValue)
+  }
+
+  @Watch('currentValue')
+  chartdata(currentValue: number[]) {
+    if (currentValue.length > 0) {
+      if (this.ctx) {
+        this.renderChart(this.ctx, this.max, this.currentValue)
+      }
+    }
   }
 
   get ctx() {

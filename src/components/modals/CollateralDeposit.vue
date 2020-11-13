@@ -122,7 +122,7 @@
                         {{ truncateAddress(addr) }}
                       </div>
                     </template>
-                    <span>Copied</span>
+                    <span>{{ $t('views.modal.copied') }}</span>
                   </v-tooltip>
 
                   <v-tooltip top>
@@ -136,7 +136,7 @@
                         {{ addressFilter(toAddr) }}
                       </div>
                     </template>
-                    <span>Copied</span>
+                    <span>{{ $t('views.modal.copied') }}</span>
                   </v-tooltip>
                   <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
                 </div>

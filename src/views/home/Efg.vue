@@ -27,7 +27,11 @@
           </v-col>
           <v-col lg="8" md="8" cols="12">
             <div class="M_detail">
-              <doughnut-chart class="chart_dg_logo"></doughnut-chart>
+              <doughnut-chart
+                class="chart_dg_logo"
+                :max="max"
+                :currentValue="currentValue"
+              ></doughnut-chart>
             </div>
           </v-col>
         </v-row>
@@ -49,7 +53,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import LineChart from '@/components/Home/LineChartefg.vue'
+import LineChart from '@/components/Home/LineChart.vue'
 import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
 import LendingModule from '@/store/lending'
 import { getModule } from 'vuex-module-decorators'
@@ -64,9 +68,10 @@ import { api } from '@/services/api'
 export default class Efg extends Vue {
   lendingStore = getModule(LendingModule)
   query = this.$route.query.pool
-
   date = [] as string[]
   price = [] as number[]
+  max = this.pools?.totalSupply as number
+  currentValue = this.pools?.totalBorrowed as number
 
   get labelSet() {
     return this.date
@@ -85,8 +90,6 @@ export default class Efg extends Vue {
     api.getprice('EFG').then(data => {
       this.date = data.date
       this.price = data.price
-
-      console.log(data)
     })
   }
 }

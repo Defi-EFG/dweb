@@ -105,11 +105,14 @@
             "liquidation": "Liquidation",
             "collateral_Factor": "Collateral Factor",
             "daily_Yield": "Daily Yield",
-            "total_GPT": "Total GPT Staked",
+            "total": "Total",
+            "staked": "Staked",
+            "Staked_total": "Total GPT Staked",
             "number_of": "Number of Borrowers",
             "borrow_apy": "Borrow APY",
             "total_supply": "Total Supply",
-            "total_borrowed": "Total Borrowed"
+            "total_borrowed": "Total Borrowed",
+            "available": "Available"
         },
         "wallet": "Wallet",
         "lending": "Lending",
@@ -268,7 +271,11 @@
             "access": "ACCESS",
             "use_privatekey": "Use Privatekey",
             "password_must_match": "Password must match",
-            "create_wallet_with": "Create Wallet With PrivateKey"
+            "create_wallet_with": "Create Wallet With PrivateKey",
+            "native": "Native Currency",
+            "contract_address": "Contract Address",
+            "copied": "Copied",
+            "copy_Address": "Copy Address"
         }
     },
     "components": {

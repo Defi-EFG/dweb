@@ -16,7 +16,9 @@
                 </v-col>
                 <v-col cols="9" class="chart_detail">
                   <div class="m_titel">{{ $t('views.detail.daily_Yield') }}</div>
-                  <div class="m_titel">{{ $t('views.detail.total_GPT') }}</div>
+                  <div class="m_titel">
+                    {{ $t('views.detail.total') }} GPT {{ $t('views.detail.staked') }}
+                  </div>
                 </v-col>
                 <v-col cols="3" class="chart_detail">
                   <div class="m_titel m_titel_2">{{ stakingRate }}%</div>
@@ -29,7 +31,11 @@
           </v-col>
           <v-col lg="8" md="8" cols="12">
             <div class="M_detail">
-              <doughnut-chart class="chart_dg_logo"></doughnut-chart>
+              <doughnut-chart
+                class="chart_dg_logo"
+                :max="max"
+                :stakingAvailable="stakingAvailable"
+              ></doughnut-chart>
             </div>
           </v-col>
         </v-row>
@@ -40,7 +46,7 @@
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
-              <line-chart></line-chart>
+              <LineChart :labelSet="labelSet" :dataSet="dataSet"></LineChart>
             </div>
           </v-col>
         </v-row>
@@ -49,17 +55,18 @@
   </div>
 </template>
 
-<script>
+<script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import LineChart from '@/components/Home/LineChart'
-import DoughnutChart from '@/components/Home/DoughnutChart'
+import DoughnutChart from '@/components/Home/DoughnutChart.vue'
+import LineChart from '@/components/Home/LineChart.vue'
 import StakingModule from '@/store/staking'
 import { getModule } from 'vuex-module-decorators'
+import { api } from '@/services/api'
 
 @Component({
   components: {
-    LineChart,
-    DoughnutChart
+    DoughnutChart,
+    LineChart
   }
 })
 export default class Gpt extends Vue {
@@ -67,12 +74,26 @@ export default class Gpt extends Vue {
   stakingRate = 0.01
   max = 10000
   totalStaked = this.max - this.stakingAvailable
+  date = [] as string[]
+  price = [] as number[]
 
   get stakingAvailable() {
     return this.stakingStore.available
   }
   mounted() {
     this.stakingStore.updateMintingInfo(this.stakingStore.address)
+    api.getprice('GPT').then(data => {
+      this.date = data.date
+      this.price = data.price
+    })
+  }
+
+  get labelSet() {
+    return this.date
+  }
+
+  get dataSet() {
+    return this.price
   }
 }
 </script>

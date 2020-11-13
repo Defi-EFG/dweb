@@ -78,8 +78,8 @@ export default class TokenList extends Vue {
 
   getInfo(tokenInfo: Ecrc20 | undefined) {
     if (tokenInfo) {
-      return `Contract Address: ${tokenInfo.address}`
-    } else return 'Native Currency'
+      return `${this.$t('views.modal.contract_address')} ${tokenInfo.address}`
+    } else return this.$t('views.modal.native')
   }
 }
 </script>
