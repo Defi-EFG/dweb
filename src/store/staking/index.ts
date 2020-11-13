@@ -61,6 +61,23 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   }
 
   @MutationAction
+  async updateStakingInfo() {
+    try {
+      const stakers = await stakingContract.getStakers()
+      const fullTotalStaking = await stakingContract.totalStaking()
+
+      const stakingDecimals = EFG.tokenInfo?.decimals as string
+
+      const numberOfStaking = stakers.length
+      const totalStaking = utils.toDecimals(fullTotalStaking, stakingDecimals).toNumber()
+
+      return { numberOfStaking, totalStaking }
+    } catch (error) {
+      return {}
+    }
+  }
+
+  @MutationAction
   async updateMintingInfo(address: string) {
     try {
       const available = await stakingContract.unclaimedGPT()
