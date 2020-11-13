@@ -310,5 +310,6 @@
     "Insufficient Balance": "Insufficient Balance",
     "Invalid keystore or password": "Invalid keystore or password",
     "Approval": "Approval",
-    "Transfer": "Transfer"
+    "Transfer": "Transfer",
+    "You do not have enough ECOC to sen": "You do not have enough ECOC to send"
 }

@@ -1,21 +1,23 @@
 <template>
   <div id="footer">
-    <a href="https://t.me/EFGtoken" target="_blank" rel="noopener noreferrer"
-      ><span>Telegram</span></a
-    >
-    <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer"
-      ><span>Github</span></a
-    >
-    <a href="https://efg-defi.medium.com/" target="_blank" rel="noopener noreferrer"
-      ><span>Medium</span></a
-    >
-    <a href="https://twitter.com/EFG_DeFi" target="_blank" rel="noopener noreferrer">
-      <span>Twitter</span></a
-    >
+    <div id="footer-list">
+      <a href="https://t.me/EFGtoken" target="_blank" rel="noopener noreferrer"
+        ><span>Telegram</span></a
+      >
+      <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer"
+        ><span>Github</span></a
+      >
+      <a href="https://efg-defi.medium.com/" target="_blank" rel="noopener noreferrer"
+        ><span>Medium</span></a
+      >
+      <a href="https://twitter.com/EFG_DeFi" target="_blank" rel="noopener noreferrer">
+        <span>Twitter</span></a
+      >
+    </div>
   </div>
 </template>
 
-<script>
+<script lagg="ts">
 export default {}
 </script>
 

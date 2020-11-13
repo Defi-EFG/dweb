@@ -44,6 +44,10 @@ export default class LanguageSwitcher extends Vue {
 }
 </style>
 <style lang="scss">
+.v-application .primary--text {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
 .lg_select {
   .v-select > .v-input__control > .v-input__slot {
     width: 50px !important;
@@ -53,6 +57,10 @@ export default class LanguageSwitcher extends Vue {
   }
   .v-select__selection--comma {
     margin: 7px 4px 7px 3px !important;
+  }
+  .v-application .primary--text {
+    color: #ffffff !important;
+    caret-color: #ffffff !important;
   }
 }
 </style>

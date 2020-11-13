@@ -40,14 +40,20 @@
           style="animation-delay: 2s;"
       /></a>
     </div>
+   <language-switcher></language-switcher>
   </div>
 </template>
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
+import LanguageSwitcher from '../LanguageSwitcher.vue'
 
-@Component({})
+@Component({
+  components: {
+    LanguageSwitcher
+  }
+})
 export default class DeFiFooter extends Vue {
   walletStore = getModule(WalletModule)
 
@@ -58,6 +64,9 @@ export default class DeFiFooter extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.lang-switcg {
+  margin-right: 20px;
+}
 #footer {
   display: flex;
   text-align: center;
