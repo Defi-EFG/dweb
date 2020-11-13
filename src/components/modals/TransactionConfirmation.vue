@@ -161,7 +161,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { WalletParams } from '@/services/ecoc/types'
 import { Currency } from '@/types/currency'
@@ -196,10 +196,14 @@ export default class TransactionConfirmationModal extends Vue {
 
   rules = {
     required: (value: any) => {
-      return !!value || this.$t('views.modal.requiredw')
+      if (this.visible) {
+        return !!value || this.$t('views.modal.requiredw')
+      }
     },
     min: (v: any) => {
-      return v.length >= 6 || this.$t('views.modal.characters')
+      if (this.visible) {
+        return v.length >= 6 || this.$t('views.modal.characters')
+      }
     }
   }
 

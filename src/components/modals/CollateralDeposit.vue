@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="show" max-width="420" class="send-transaction" id="collat" persistent>
+    <v-dialog v-model="showModal" max-width="420" class="send-transaction" id="collat" persistent>
       <v-stepper v-model="step" class="blur-card">
         <v-stepper-items>
           <!-- Welcome to ECOC Finance Governance -->
@@ -399,15 +399,35 @@ export default class CollateralDeposit extends Vue {
   Loanername = ''
   selectdata = ''
   active = ''
-
+  showModal = false
   fee = DEFAULT.DEFAULT_FEE
   gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
 
   rules = {
-    required: (value: any) => !!value || this.$t('views.modal.required'),
-    min: (v: any) => v.length >= 8 || this.$t('views.modal.characters'),
-    emailMatch: () => this.$t('views.modal.the_email')
+    required: (value: any) => {
+      if (this.visible) {
+        return !!value || this.$t('views.modal.required')
+      }
+      return true
+    },
+    min: (v: any) => {
+      if (this.visible) {
+        return v.length >= 8 || this.$t('views.modal.characters')
+      }
+      return true
+    },
+
+    emailMatch: () => {
+      if (this.visible) {
+        return this.$t('views.modal.the_email')
+      }
+      return true
+    }
+  }
+  @Watch('visible')
+  checkshowModal(val: any) {
+    this.showModal = val
   }
 
   get totalFee() {
