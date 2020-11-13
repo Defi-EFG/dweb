@@ -27,9 +27,9 @@
           </v-btn>
         </div>
       </div>
-      <div class="copy-message ">
+      <div class="copy-message">
         <transition name="fade" mode="out-in">
-          <div class="copied" v-if="showCopy">{{ $t('views.modal.copied') }}!</div>
+          <div class="copied" v-if="showCopy">Copied!</div>
         </transition>
       </div>
     </v-tab-item>
@@ -41,10 +41,14 @@
             >{{ selectedCurrencyName }} {{ $t('views.walletpage.balance') }}</span
           >
           <v-spacer></v-spacer>
-          <span class="text-right">{{ selectedCurrencyBalance }} {{ selectedCurrencyName }}</span>
+          <span class="text-right"
+            >{{ Number(selectedCurrencyBalance) | numberWithCommas({ fixed: [0, 8] }) }}
+            {{ selectedCurrencyName }}</span
+          >
         </div>
         <v-text-field
           dark
+          ref="toAddrRef"
           :label="walletpage.to_Address"
           class="to-address-field"
           single-line
@@ -53,34 +57,44 @@
           v-model="toAddr"
         >
           <template v-slot:append-outer>
-            <div class="address-book" @click="displayContact = !displayContact">
+            <div class="address-book" @click="displayContactList">
               <v-icon>mdi-book-variant</v-icon>
             </div>
           </template>
         </v-text-field>
         <div class="contact-address" v-if="displayContact" v-click-outside="onClickOutside">
-          <v-list-item-group dark color="#363a4a" class="address-list">
-            <v-list-item
-              v-for="(contact, index) in addrList"
-              :key="index"
-              class="address-item"
-              @click="selectAddress(contact.address)"
-            >
-              <v-icon class="mr-3">mdi-account-circle</v-icon>
+          <v-list-item-group color="#363a4a" class="address-list">
+            <template v-if="'created' in contactList">
+              <div class="empty-message">No contact address</div>
+            </template>
 
-              <v-list-item-content>
-                {{ contact.name }}
-                <small class="addr-value text-truncate">{{ contact.address }}</small>
-              </v-list-item-content>
-            </v-list-item>
+            <template v-else>
+              <v-list-item
+                dark
+                v-for="(contact, index) in contactList"
+                :key="index"
+                class="address-item"
+                @click="selectAddress(contact.address)"
+              >
+                <v-icon class="mr-3">mdi-account-circle</v-icon>
+
+                <v-list-item-content>
+                  {{ contact.name }}
+                  <small class="addr-value text-truncate">{{ contact.address }}</small>
+                </v-list-item-content>
+              </v-list-item>
+            </template>
           </v-list-item-group>
         </div>
         <div class="withdraw-rate">
           <v-spacer></v-spacer>
-          <span class="fb-btn" @click="withdrawAll(selectedCurrencyBalance)">Withdraw All</span>
+          <span class="fb-btn" @click="withdrawAll(selectedCurrencyBalance)">{{
+            $t('views.walletpage.withdraw_a')
+          }}</span>
         </div>
         <v-text-field
           dark
+          ref="amountRef"
           class="withdraw-amount"
           placeholder="0"
           :prefix="walletpage.amount"
@@ -88,14 +102,22 @@
           :suffix="selectedCurrencyName"
           single-line
           solo
+          type="number"
           hide-details="true"
         ></v-text-field>
-        <v-btn dark depressed block large class="send-btn" @click="onOpenModal()">{{
-          $t('views.walletpage.send')
-        }}</v-btn>
+        <v-btn
+          dark
+          depressed
+          block
+          large
+          class="send-btn"
+          :disabled="!isSendable"
+          @click="onOpenModal()"
+          >{{ $t('views.walletpage.send') }}</v-btn
+        >
         <TransactionConfirmationModal
           :visible="confirmTxModal"
-          :fromAddr="address"
+          :fromAddr="fromAddr"
           :toAddr="toAddr"
           :amount="amount"
           :currency="selectedCurrency"
@@ -115,6 +137,7 @@ import { getModule } from 'vuex-module-decorators'
 import { SendPayload } from '@/types/wallet'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
+import AddressBookModule from '@/store/address-book'
 import WalletModule from '@/store/wallet'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import { copyToClipboard } from '@/services/utils'
@@ -122,13 +145,14 @@ import { copyToClipboard } from '@/services/utils'
 @Component({
   components: {
     VueQrcode,
-    TransactionConfirmationModal
+    TransactionConfirmationModal,
   },
   directives: {
-    clickOutside: vClickOutside.directive
-  }
+    clickOutside: vClickOutside.directive,
+  },
 })
 export default class ReceiveSendMobile extends Vue {
+  addressStore = getModule(AddressBookModule)
   walletStore = getModule(WalletModule)
   showCopy = false
   showQr = false
@@ -144,13 +168,25 @@ export default class ReceiveSendMobile extends Vue {
   addrList = [
     {
       name: 'MXC',
-      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
+      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV',
     },
     {
       name: 'Bitrex',
-      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
-    }
+      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV',
+    },
   ]
+
+  get fromAddr() {
+    return this.walletStore.address || ''
+  }
+
+  get isWalletReady() {
+    return this.walletStore.isWalletUnlocked
+  }
+
+  get contactList() {
+    return this.addressStore.addressBook
+  }
 
   get ecocBalance() {
     return this.walletStore.ecoc
@@ -174,6 +210,10 @@ export default class ReceiveSendMobile extends Vue {
 
   get walletpage() {
     return this.$t('views.walletpage')
+  }
+
+  get isSendable() {
+    return !!this.toAddr && !!this.amount && this.walletStore.isWalletUnlocked
   }
 
   selectAddress(addr: string) {
@@ -210,7 +250,7 @@ export default class ReceiveSendMobile extends Vue {
       currency: this.selectedCurrency,
       to: this.toAddr,
       amount: Number(this.amount),
-      walletParams: walletParams
+      walletParams: walletParams,
     } as SendPayload
     this.currencySend(payload)
   }
@@ -218,13 +258,13 @@ export default class ReceiveSendMobile extends Vue {
   currencySend(payload: SendPayload) {
     this.walletStore
       .send(payload)
-      .then(txid => {
+      .then((txid) => {
         this.walletStore.updateBalance()
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_TRANSFER })
         this.onSuccess()
       })
-      .catch(error => {
-        this.onError(error.message)
+      .catch((error) => {
+        this.onError(`ERROR__ ${error.message}`)
       })
   }
 
@@ -243,6 +283,12 @@ export default class ReceiveSendMobile extends Vue {
     setTimeout(() => {
       this.showCopy = false
     }, 1000)
+  }
+
+  displayContactList() {
+    if (this.isWalletReady) {
+      this.displayContact = !this.displayContact
+    }
   }
 }
 </script>
