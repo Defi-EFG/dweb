@@ -112,7 +112,11 @@
             "borrow_apy": "Borrow APY",
             "total_supply": "Total Supply",
             "total_borrowed": "Total Borrowed",
-            "available": "Available"
+            "available": "Available",
+            "total_Interest": "Total Interest",
+            "total_debt": "Total Debt",
+            "number_of_staker": "Number of Staker",
+            "total_EFG_Staking": "Total EFG Staking"
         },
         "wallet": "Wallet",
         "lending": "Lending",

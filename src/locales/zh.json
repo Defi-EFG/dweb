@@ -109,7 +109,11 @@
             "borrow_apy": "总借贷",
             "total_supply": "总供应量",
             "total_borrowed": "总供应量",
-            "available": "可用"
+            "available": "可用",
+            "total_Interest": "Total Interest",
+            "total_debt": "Total Debt",
+            "number_of_staker": "Number of Staker",
+            "total_EFG_Staking": "Total EFG Staking"
         },
         "wallet": "钱包",
         "lending": "借出",

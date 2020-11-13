@@ -17,10 +17,14 @@
                 <v-col cols="9" class="efg_border1">
                   <div class="m_titel">{{ $t('views.detail.borrow_apy') }}</div>
                   <div class="m_titel">{{ $t('views.detail.number_of') }}</div>
+                  <div class="m_titel">Total Interest</div>
+                  <div class="m_titel">Total Debt</div>
                 </v-col>
                 <v-col cols="3" class="efg_border1">
-                  <div class="m_titel m_titel_2">3.4%</div>
-                  <div class="m_titel m_titel_2">841</div>
+                  <div class="m_titel m_titel_2">{{ interestRate }}%</div>
+                  <div class="m_titel m_titel_2">{{ totalBorrowers }}</div>
+                  <div class="m_titel m_titel_2">0</div>
+                  <div class="m_titel m_titel_2">0</div>
                 </v-col>
               </v-row>
             </div>
@@ -70,8 +74,16 @@ export default class Efg extends Vue {
   query = this.$route.query.pool
   date = [] as string[]
   price = [] as number[]
-  max = this.pools?.totalSupply as number
-  currentValue = this.pools?.totalBorrowed as number
+  max = this.pool?.totalSupply as number
+  currentValue = this.pool?.totalBorrowed as number
+
+  get interestRate() {
+    return this.lendingStore.loan.interestRate
+  }
+
+  get totalBorrowers() {
+    return this.pool?.totalBorrowers as number
+  }
 
   get labelSet() {
     return this.date
@@ -81,7 +93,7 @@ export default class Efg extends Vue {
     return this.price
   }
 
-  get pools() {
+  get pool() {
     return this.lendingStore.pools.find(asset => asset.address === this.query)
   }
 

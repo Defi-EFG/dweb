@@ -19,12 +19,20 @@
                   <div class="m_titel">
                     {{ $t('views.detail.total') }} GPT {{ $t('views.detail.staked') }}
                   </div>
+                  <div class="m_titel">
+                    Number of Staker
+                  </div>
+                  <div class="m_titel">
+                    Total EFG Staking
+                  </div>
                 </v-col>
                 <v-col cols="3" class="chart_detail">
                   <div class="m_titel m_titel_2">{{ stakingRate }}%</div>
                   <div class="m_titel m_titel_2">
-                    {{ totalStaked | numberWithCommas({ Fixed: [0, 8] }) }}
+                    {{ totalStaked | numberWithCommas({ Fixed: [0, 8] }) }} GPT
                   </div>
+                  <div class="m_titel m_titel_2">{{ numberOfStaking }}</div>
+                  <div class="m_titel m_titel_2">{{ totalStaking }} EFG</div>
                 </v-col>
               </v-row>
             </div>
@@ -71,7 +79,7 @@ import { api } from '@/services/api'
 })
 export default class Gpt extends Vue {
   stakingStore = getModule(StakingModule)
-  stakingRate = 0.01
+  stakingRate = 1.1
   max = 10000
   totalStaked = this.max - this.stakingAvailable
   date = [] as string[]
@@ -80,6 +88,15 @@ export default class Gpt extends Vue {
   get stakingAvailable() {
     return this.stakingStore.available
   }
+
+  get numberOfStaking() {
+    return this.stakingStore.numberOfStaking
+  }
+
+  get totalStaking() {
+    return this.stakingStore.totalStaking
+  }
+
   mounted() {
     this.stakingStore.updateMintingInfo(this.stakingStore.address)
     api.getprice('GPT').then(data => {
