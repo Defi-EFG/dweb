@@ -102,11 +102,18 @@
             "liquidation": "清算",
             "collateral_Factor": "抵押因素",
             "daily_Yield": "日产量",
-            "total_GPT_staked ": "总GPT质押",
+            "total": "总",
+            "staked": "质押",
+            "Staked_total ": "总GPT质押",
             "number_of": "借款人数量",
             "borrow_apy": "总借贷",
             "total_supply": "总供应量",
-            "total_borrowed": "总供应量"
+            "total_borrowed": "总供应量",
+            "available": "可用",
+            "total_Interest": "总利率",
+            "total_debt": "总借款",
+            "number_of_staker": "质押者数额",
+            "total_EFG_Staking": "总质押EFG"
         },
         "wallet": "钱包",
         "lending": "借出",
@@ -270,7 +277,11 @@
             "access": "连接",
             "use_privatekey": "使用私钥",
             "password_must_match": "密码必须匹配",
-            "create_wallet_with": "使用私钥创建钱包"
+            "create_wallet_with": "使用私钥创建钱包",
+            "native": "本國貨幣",
+            "contract_address": "合約地址",
+            "copied": "複製的",
+            "copy_Address": "複製地址"
         }
 
     },

@@ -36,7 +36,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     currency: loanCurrency,
     amount: 0,
     timestamp: 0,
-    interestRate: 0,
+    interestRate: 0.03,
     exchangeRate: 0,
     interest: 0,
     EFGInitialRate: 0,
