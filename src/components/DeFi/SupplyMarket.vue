@@ -19,7 +19,7 @@
         @click="switchBorrow(item.currency)"
       >
         <v-col cols="4" class="assets">
-          <img :src="item.currency.style.icon" />
+          <img :src="item.currency.style.icon" alt="" />
           <span>{{ item.currency.name }}</span>
         </v-col>
         <v-col cols="4" class="apy">

@@ -58,7 +58,7 @@
                             >
                           </div>
                         </v-col>
-                        <img class="row1_img" src="@/assets/backg_01.svg" />
+                        <img class="row1_img" src="@/assets/backg_01.svg" alt="" />
                       </v-row>
                     </div>
                   </v-container>
