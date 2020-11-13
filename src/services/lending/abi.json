@@ -722,6 +722,10 @@
       {
         "name":"_GPT_addr",
         "type":"address"
+      },
+      {
+        "name":"_ownerWallet",
+        "type":"address"
       }
     ],
     "payable":false,
