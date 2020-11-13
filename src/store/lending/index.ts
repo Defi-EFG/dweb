@@ -103,197 +103,225 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
   @MutationAction
   async updateSupprtedAssets() {
-    const myCollateralAssets = (this.state as any).myCollateralAssets as CollateralAsset[]
-    const contractAddresses = await lending.getAllAssets()
+    try {
+      const myCollateralAssets = (this.state as any).myCollateralAssets as CollateralAsset[]
+      const contractAddresses = await lending.getAllAssets()
 
-    const supportedCollateralAssets = await Promise.all(
-      contractAddresses.map(async address => {
-        const tokenInfo = await Ecrc20.getEcrc20Info(address)
-        const currencyName = tokenInfo.symbol
-        const collateralFactor = await lending.getCollateralRate(currencyName)
+      const supportedCollateralAssets = await Promise.all(
+        contractAddresses.map(async address => {
+          const tokenInfo = await Ecrc20.getEcrc20Info(address)
+          const currencyName = tokenInfo.symbol
+          const collateralFactor = await lending.getCollateralRate(currencyName)
 
-        const activated = !!myCollateralAssets.find(asset => asset.currency.name === currencyName)
+          const activated = !!myCollateralAssets.find(asset => asset.currency.name === currencyName)
 
-        return {
-          currencyName: currencyName,
-          activated: activated,
-          collateralFactor: collateralFactor
-        } as Collateral
-      })
-    )
+          return {
+            currencyName: currencyName,
+            activated: activated,
+            collateralFactor: collateralFactor
+          } as Collateral
+        })
+      )
 
-    const currencyName = 'ECOC'
-    const collateralFactor = await lending.getCollateralRate(currencyName)
-    const activated = !!myCollateralAssets.find(asset => asset.currency.name === currencyName)
-      ?.amount
+      const currencyName = 'ECOC'
+      const collateralFactor = await lending.getCollateralRate(currencyName)
+      const activated = !!myCollateralAssets.find(asset => asset.currency.name === currencyName)
+        ?.amount
 
-    const ecocAsset = {
-      currencyName: currencyName,
-      activated: activated,
-      collateralFactor: collateralFactor
-    } as Collateral
+      const ecocAsset = {
+        currencyName: currencyName,
+        activated: activated,
+        collateralFactor: collateralFactor
+      } as Collateral
 
-    supportedCollateralAssets.splice(0, 0, ecocAsset)
+      supportedCollateralAssets.splice(0, 0, ecocAsset)
 
-    return { supportedCollateralAssets }
+      return { supportedCollateralAssets }
+    } catch (error) {
+      return {}
+    }
   }
 
   @MutationAction
   async updateBalance(address: string) {
-    const decimals = getCurrencyDecimals(loanCurrency.name)
+    try {
+      const decimals = getCurrencyDecimals(loanCurrency.name)
 
-    const borrowLimitFull = await lending.getBorrowLimit(address)
-    const debtInfo = await lending.getDebt(address)
+      const borrowLimitFull = await lending.getBorrowLimit(address)
+      const debtInfo = await lending.getDebt(address)
 
-    const borrowBalance = Number(utils.toDecimals(debtInfo.totalDebt, decimals).toFixed(8))
+      const borrowBalance = Number(utils.toDecimals(debtInfo.totalDebt, decimals).toFixed(8))
 
-    const borrowLimit = utils.toDecimals(borrowLimitFull, decimals).toNumber()
+      const borrowLimit = utils.toDecimals(borrowLimitFull, decimals).toNumber()
 
-    return { borrowBalance, borrowLimit }
+      return { borrowBalance, borrowLimit }
+    } catch (error) {
+      return {}
+    }
   }
 
   @MutationAction
   async updateLoan(address: string) {
-    const loan = (this.state as any).loan
-    const loanInfo = await lending.getLoanInfo(address)
-    const decimals = getCurrencyDecimals(loanCurrency.name)
+    try {
+      const loan = (this.state as any).loan
+      const loanInfo = await lending.getLoanInfo(address)
+      const decimals = getCurrencyDecimals(loanCurrency.name)
 
-    if (loanInfo.interestRate <= 0) {
-      loanInfo.interestRate = await lending.getInterestRate()
+      if (loanInfo.interestRate <= 0) {
+        loanInfo.interestRate = await lending.getInterestRate()
+      }
+
+      if (loanInfo.poolAddr === '') {
+        loan.poolAddr = await lending.getUserPool(address)
+      } else {
+        loan.poolAddr = loanInfo.poolAddr
+      }
+
+      loan.amount = utils.toDecimals(loanInfo.amount, decimals).toNumber()
+      loan.timestamp = loanInfo.timestamp
+      loan.interestRate = loanInfo.interestRate
+      loan.interest = loanInfo.interest
+      loan.EFGInitialRate = loanInfo.EFGInitialRate
+      loan.lastGracePeriod = loanInfo.lastGracePeriod
+      loan.remainingGPT = loanInfo.remainingGPT
+
+      return { loan }
+    } catch (error) {
+      return {}
     }
-
-    if (loanInfo.poolAddr === '') {
-      loan.poolAddr = await lending.getUserPool(address)
-    } else {
-      loan.poolAddr = loanInfo.poolAddr
-    }
-
-    loan.amount = utils.toDecimals(loanInfo.amount, decimals).toNumber()
-    loan.timestamp = loanInfo.timestamp
-    loan.interestRate = loanInfo.interestRate
-    loan.interest = loanInfo.interest
-    loan.EFGInitialRate = loanInfo.EFGInitialRate
-    loan.lastGracePeriod = loanInfo.lastGracePeriod
-    loan.remainingGPT = loanInfo.remainingGPT
-
-    return { loan }
   }
 
   @MutationAction
   async updateCollateral(address: string) {
-    let myCollateralAssets = (this.state as any).myCollateralAssets as CollateralAsset[]
-    const res = await lending.getCollateralInfo(address)
+    try {
+      let myCollateralAssets = (this.state as any).myCollateralAssets as CollateralAsset[]
+      const res = await lending.getCollateralInfo(address)
 
-    if (res.length < 1) {
-      myCollateralAssets = [
-        {
-          currency: {
-            name: constants.ECOC,
-            style: constants.KNOWN_CURRENCY[constants.ECOC]
-          },
-          amount: 0,
-          collateralFactor: 0
-        }
-      ] as CollateralAsset[]
-    }
-
-    res.forEach(collateral => {
-      const decimals = getCurrencyDecimals(collateral.currencyName)
-      const index = myCollateralAssets.findIndex(
-        asset => asset.currency.name === collateral.currencyName
-      )
-
-      if (index < 0) {
-        const newAsset = {
-          currency: {
-            name: collateral.currencyName,
-            style: constants.KNOWN_CURRENCY[collateral.currencyName]
-          },
-          amount: utils.toDecimals(collateral.amount, decimals).toNumber(),
-          collateralFactor: 0
-        }
-
-        myCollateralAssets.push(newAsset)
-      } else {
-        const myAsset = myCollateralAssets[index]
-
-        myAsset.amount = utils.toDecimals(collateral.amount, decimals).toNumber()
-        myCollateralAssets.splice(index, 1, myAsset)
+      if (res.length < 1) {
+        myCollateralAssets = [
+          {
+            currency: {
+              name: constants.ECOC,
+              style: constants.KNOWN_CURRENCY[constants.ECOC]
+            },
+            amount: 0,
+            collateralFactor: 0
+          }
+        ] as CollateralAsset[]
       }
-    })
 
-    return { myCollateralAssets }
+      res.forEach(collateral => {
+        const decimals = getCurrencyDecimals(collateral.currencyName)
+        const index = myCollateralAssets.findIndex(
+          asset => asset.currency.name === collateral.currencyName
+        )
+
+        if (index < 0) {
+          const newAsset = {
+            currency: {
+              name: collateral.currencyName,
+              style: constants.KNOWN_CURRENCY[collateral.currencyName]
+            },
+            amount: utils.toDecimals(collateral.amount, decimals).toNumber(),
+            collateralFactor: 0
+          }
+
+          myCollateralAssets.push(newAsset)
+        } else {
+          const myAsset = myCollateralAssets[index]
+
+          myAsset.amount = utils.toDecimals(collateral.amount, decimals).toNumber()
+          myCollateralAssets.splice(index, 1, myAsset)
+        }
+      })
+
+      return { myCollateralAssets }
+    } catch (error) {
+      return {}
+    }
   }
 
   @MutationAction
   async updateLoners() {
-    const pools = (this.state as any).pools as Pool[]
-    const allPools = await lending.getAllPools()
+    try {
+      const pools = (this.state as any).pools as Pool[]
+      const allPools = await lending.getAllPools()
 
-    allPools.forEach(async address => {
-      const poolInfo = await lending.getPoolInfo(address)
-      const members = await lending.listPoolUsers(address)
-      const existingLoanerIndex = pools.findIndex(pool => pool.address === address)
-      const loanDecimals = 8
-      const capital = utils.toDecimals(poolInfo.capital, loanDecimals).toNumber()
-      const remainingEFG = utils.toDecimals(poolInfo.remainingEFG, loanDecimals).toNumber()
-      const totolBorrowers = members.length
+      allPools.forEach(async address => {
+        const poolInfo = await lending.getPoolInfo(address)
+        const members = await lending.listPoolUsers(address)
+        const existingLoanerIndex = pools.findIndex(pool => pool.address === address)
+        const loanDecimals = 8
+        const capital = utils.toDecimals(poolInfo.capital, loanDecimals).toNumber()
+        const remainingEFG = utils.toDecimals(poolInfo.remainingEFG, loanDecimals).toNumber()
+        const totalBorrowers = members.length
 
-      if (existingLoanerIndex < 0) {
-        const newLoaner = {
-          currency: loanCurrency,
-          address: address,
-          totalSupply: capital,
-          remaining: remainingEFG,
-          totalBorrowed: capital - remainingEFG,
-          totolBorrowers: totolBorrowers
-        } as Pool
-        pools.push(newLoaner)
-      } else {
-        const existingLoaner = pools[existingLoanerIndex]
+        if (existingLoanerIndex < 0) {
+          const newLoaner = {
+            currency: loanCurrency,
+            address: address,
+            totalSupply: capital,
+            remaining: remainingEFG,
+            totalBorrowed: capital - remainingEFG,
+            totalBorrowers: totalBorrowers
+          } as Pool
+          pools.push(newLoaner)
+        } else {
+          const existingLoaner = pools[existingLoanerIndex]
 
-        existingLoaner.remaining = remainingEFG
-        existingLoaner.totalBorrowed = existingLoaner.totalSupply - remainingEFG
-        existingLoaner.totolBorrowers = totolBorrowers
-        pools.splice(existingLoanerIndex, 1, existingLoaner)
-      }
-    })
+          existingLoaner.remaining = remainingEFG
+          existingLoaner.totalBorrowed = existingLoaner.totalSupply - remainingEFG
+          existingLoaner.totalBorrowers = totalBorrowers
+          pools.splice(existingLoanerIndex, 1, existingLoaner)
+        }
+      })
 
-    return { pools }
+      return { pools }
+    } catch (error) {
+      return {}
+    }
   }
 
   @MutationAction
   async updateLiquidation(address: string) {
-    const isLiquidation = await lending.canSeize(address)
-
-    return { isLiquidation }
+    try {
+      const isLiquidation = await lending.canSeize(address)
+      return { isLiquidation }
+    } catch (error) {
+      return {}
+    }
   }
 
   @MutationAction
   async updateMyAssets(address: string) {
-    const supportedCollateralAssets = (this.state as any).supportedCollateralAssets as Collateral[]
-    const currenciesName = supportedCollateralAssets.map(assets => {
-      return assets.currencyName
-    }) as string[]
+    try {
+      const supportedCollateralAssets = (this.state as any)
+        .supportedCollateralAssets as Collateral[]
+      const currenciesName = supportedCollateralAssets.map(assets => {
+        return assets.currencyName
+      }) as string[]
 
-    const allAssets = [...currenciesName, constants.EFG, constants.GPT]
-    const myAssets = [] as MyAsset[]
+      const allAssets = [...currenciesName, constants.EFG, constants.GPT]
+      const myAssets = [] as MyAsset[]
 
-    allAssets.forEach(async currencyName => {
-      const fullAmount = await lending.getAssetBalance(currencyName, address)
-      const decimals = getCurrencyDecimals(currencyName)
-      const amount = utils.toDecimals(fullAmount, decimals).toNumber()
+      allAssets.forEach(async currencyName => {
+        const fullAmount = await lending.getAssetBalance(currencyName, address)
+        const decimals = getCurrencyDecimals(currencyName)
+        const amount = utils.toDecimals(fullAmount, decimals).toNumber()
 
-      myAssets.push({
-        currency: {
-          name: currencyName,
-          style: constants.KNOWN_CURRENCY[currencyName]
-        },
-        amount: amount
+        myAssets.push({
+          currency: {
+            name: currencyName,
+            style: constants.KNOWN_CURRENCY[currencyName]
+          },
+          amount: amount
+        })
       })
-    })
 
-    return { myAssets }
+      return { myAssets }
+    } catch (error) {
+      return {}
+    }
   }
 
   @Action
@@ -307,7 +335,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     return constants.STATUS_SYNCED
   }
 
-  @Action
+  @Action({ rawError: true })
   async getEstimatedGPT(address: string) {
     const fullAmount = await lending.getEstimatedGPT(address)
     const tokenInfo = getTokenInfo(extendCurrency.name) // to do

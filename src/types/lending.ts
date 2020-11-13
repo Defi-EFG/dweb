@@ -4,7 +4,7 @@ export interface Pool {
   address: string
   totalSupply: number
   totalBorrowed: number
-  totolBorrowers: number
+  totalBorrowers: number
   remaining: number
 }
 

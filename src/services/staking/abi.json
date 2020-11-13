@@ -4,6 +4,22 @@
     "inputs":[
       
     ],
+    "name":"totalStaking",
+    "outputs":[
+      {
+        "name":"totalEFGdeposits",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      
+    ],
     "name":"unclaimedGPT",
     "outputs":[
       {
@@ -32,6 +48,22 @@
     ],
     "payable":false,
     "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      
+    ],
+    "name":"getStakers",
+    "outputs":[
+      {
+        "name":"stakers",
+        "type":"address[]"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
     "type":"function"
   },
   {
