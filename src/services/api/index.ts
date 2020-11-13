@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const baseURL = process.env.NODE_ENV === 'production' ? 'https://efg.finance' : 'https://dev.efg.finance'
+const baseURL = process.env.NODE_ENV === 'production' ? 'https://dev.efg.finance' : 'https://dev.efg.finance'
 
 interface PriceResult {
     date:  string []
