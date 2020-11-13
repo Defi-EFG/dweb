@@ -1,89 +1,100 @@
 <template>
   <div class="lending-card">
-    <v-card dark>
-      <v-tabs grow background-color="#252B3D" class="lending-tabs" :hide-slider="true" show-arrows>
-        <v-tab>{{ $t('views.lendingpage.my_collateral') }}l</v-tab>
-        <v-tab>{{ $t('views.lendingpage.my_borrowing') }}</v-tab>
-        <v-tab>{{ $t('views.lendingpage.my_activity') }}</v-tab>
+    <v-tabs
+      dark
+      grow
+      background-color="#252B3D"
+      class="lending-tabs"
+      :hide-slider="true"
+      show-arrows
+    >
+      <v-tab>{{ $t('views.lendingpage.my_collateral') }}</v-tab>
+      <v-tab>{{ $t('views.lendingpage.my_borrowing') }}</v-tab>
+      <v-tab>{{ $t('views.lendingpage.my_activity') }}</v-tab>
 
-        <v-tab-item class="my-collateral">
-          <v-card dark color="#2e3344">
-            <v-card-text v-if="myCollateral.length > 0">
-              <div class="supply-header">
-                <div>{{ $t('views.lendingpage.assets') }}</div>
-                <div>{{ $t('views.lendingpage.balance') }}</div>
+      <v-tab-item class="my-collateral">
+        <v-card dark class="elevation-0" color="#2e3344">
+          <v-card-text v-if="myCollateral.length > 0">
+            <div class="supply-header">
+              <div>{{ $t('views.lendingpage.assets') }}</div>
+              <div>{{ $t('views.lendingpage.balance') }}</div>
+            </div>
+            <div class="supply-item" v-for="(item, index) in myCollateral" :key="index">
+              <div class="assets">
+                <img :src="item.currency.style.icon" />
+                <span>{{ item.currency.name }}</span>
               </div>
-              <div class="supply-item" v-for="(item, index) in myCollateral" :key="index">
-                <div class="assets">
-                  <img :src="item.currency.style.icon" />
-                  <span>{{ item.currency.name }}</span>
+              <div class="balance">
+                <div>
+                  ${{
+                    getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name))
+                      | numberWithCommas({ fixed: [0, 2] })
+                  }}
                 </div>
-                <div class="balance">
-                  <div>
-                    ${{ getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)) }}
-                  </div>
-                  <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
-                </div>
+                <small
+                  >≈{{ item.amount | numberWithCommas({ fixed: [0, 5] }) }}
+                  {{ item.currency.name }}</small
+                >
               </div>
-            </v-card-text>
-            <v-card-text v-else>
-              No collateral assets
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
+            </div>
+          </v-card-text>
+          <v-card-text v-else>
+            No collateral assets
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
 
-        <v-tab-item class="my-borrowing">
-          <v-card dark color="#2e3344">
-            <v-card-text v-if="myBorrowing.length > 0">
-              <div class="borrow-header">
-                <div class="mr-3">{{ $t('views.lendingpage.assets') }}</div>
-                <div>{{ $t('views.lendingpage.inrerest') }}</div>
-                <div>{{ $t('views.lendingpage.balance') }}</div>
+      <v-tab-item class="my-borrowing">
+        <v-card class="elevation-0" dark color="#2e3344">
+          <v-card-text v-if="myBorrowing.length > 0">
+            <div class="borrow-header">
+              <div class="mr-3">{{ $t('views.lendingpage.assets') }}</div>
+              <div>{{ $t('views.lendingpage.inrerest') }}</div>
+              <div>{{ $t('views.lendingpage.balance') }}</div>
+            </div>
+            <div class="borrow-item" v-for="(item, index) in myBorrowing" :key="index">
+              <div class="assets">
+                <img :src="item.currency.style.icon" />
+                <span>{{ item.currency.name }}</span>
               </div>
-              <div class="borrow-item" v-for="(item, index) in myBorrowing" :key="index">
-                <div class="assets">
-                  <img :src="item.currency.style.icon" />
-                  <span>{{ item.currency.name }}</span>
-                </div>
-                <div class="apy">
-                  <span>{{ item.interestRate }}%</span>
-                </div>
-                <div class="balance">
-                  <div>
-                    ${{ getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)) }}
-                  </div>
-                  <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
-                </div>
+              <div class="apy">
+                <span>{{ item.interestRate }}%</span>
               </div>
-            </v-card-text>
-            <v-card-text v-else>
-              No Borrowing assets
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
+              <div class="balance">
+                <div>
+                  ${{ getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)) }}
+                </div>
+                <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
+              </div>
+            </div>
+          </v-card-text>
+          <v-card-text v-else>
+            No Borrowing assets
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
 
-        <v-tab-item class="my-assets">
-          <v-card dark color="#2e3344">
-            <v-card-text>
-              <div class="supply-header">
-                <div>{{ $t('views.lendingpage.assets') }}</div>
-                <div>{{ $t('views.lendingpage.balance') }}</div>
+      <v-tab-item class="my-assets">
+        <v-card class="elevation-0" dark color="#2e3344">
+          <v-card-text>
+            <div class="supply-header">
+              <div>{{ $t('views.lendingpage.assets') }}</div>
+              <div>{{ $t('views.lendingpage.balance') }}</div>
+            </div>
+            <div class="supply-item" v-for="(item, index) in myAssets" :key="index">
+              <div class="assets">
+                <img :src="item.currency.style.icon" />
+                <span>{{ item.currency.name }}</span>
               </div>
-              <div class="supply-item" v-for="(item, index) in myAssets" :key="index">
-                <div class="assets">
-                  <img :src="item.currency.style.icon" />
-                  <span>{{ item.currency.name }}</span>
-                </div>
-                <div class="balance">
-                  <div>{{ item.amount.toFixed(2) }} {{ item.currency.name }}</div>
-                  <small @click="openConfirmTxModal(item.currency, item.amount)">Withdraw</small>
-                </div>
+              <div class="balance">
+                <div>{{ item.amount.toFixed(2) }} {{ item.currency.name }}</div>
+                <small @click="openConfirmTxModal(item.currency, item.amount)">Withdraw</small>
               </div>
-            </v-card-text>
-          </v-card>
-        </v-tab-item>
-      </v-tabs>
-    </v-card>
+            </div>
+          </v-card-text>
+        </v-card>
+      </v-tab-item>
+    </v-tabs>
 
     <TransactionConfirmationModal
       :visible="confirmTxModal"
@@ -215,8 +226,9 @@ export default class LendingActivity extends Vue {
 
 <style lang="scss" scoped>
 .lending-card {
-  background: #252b3d;
+  background: #2e3344;
   width: inherit;
+  border-radius: 5px;
 }
 
 .borrow-header,
@@ -264,51 +276,6 @@ export default class LendingActivity extends Vue {
   margin-bottom: 0;
 }
 
-.activity-list {
-  background: #2e3344 !important;
-  height: 192px;
-  overflow: auto;
-
-  &::-webkit-scrollbar {
-    width: 6px;
-    border-radius: 6px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: transparent;
-    border-radius: 6px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background-color: #ffffff41;
-    border-radius: 6px;
-  }
-
-  .activity-item {
-    border-bottom: 1px solid rgba(255, 255, 255, 0.105);
-    margin-bottom: 8px;
-    margin-left: 10px;
-    margin-right: 10px;
-    border-radius: 5px;
-  }
-
-  .activity-item:nth-last-child(1) {
-    border-bottom: 0;
-  }
-
-  .activity-type {
-    color: white;
-    display: flex;
-    text-transform: capitalize;
-  }
-
-  .activity-date {
-    color: white;
-    display: flex;
-    opacity: 0.6;
-  }
-}
-
 @media (max-width: 768px) {
   .my-collateral,
   .my-borrowing,
@@ -348,7 +315,7 @@ export default class LendingActivity extends Vue {
 <style lang="scss">
 .lending-tabs {
   .v-card__text {
-    height: 192px;
+    max-height: 228px;
     overflow: auto;
 
     &::-webkit-scrollbar {

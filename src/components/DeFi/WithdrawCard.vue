@@ -183,12 +183,13 @@ export default class Withdraw extends Vue {
     const isEnough = amount <= this.maxWithdraw
     const isValidAmount = amount >= 0
     const isClickable = amount > 0
+    const isNotBorrowedYet = this.borrowBalance <= 0
 
     if (type === 'error') {
-      return isEnough && isClickable
+      return isEnough && isClickable && isNotBorrowedYet
     }
 
-    return isEnough && isValidAmount
+    return isEnough && isValidAmount && isNotBorrowedYet
   }
 
   openConfirmTxModal() {

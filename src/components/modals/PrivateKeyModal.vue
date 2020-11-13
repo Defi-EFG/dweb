@@ -48,7 +48,7 @@
           <template v-if="getPrivateKey() === true">
             <v-textarea filled disabled :value="privatekey" class="textarea"> </v-textarea>
             <div class=" copybtn">
-              <v-btn icon small color="primary" @click="copyPrivateKey">
+              <v-btn icon small color="primary" @click="copyPrivateKey(privatekey)">
                 <v-icon light>
                   $copied
                 </v-icon></v-btn
@@ -82,7 +82,7 @@ export default class PrivateKey extends Vue {
   keystorePassword: any = ''
   show = false
   showCopy = false
-  privatekey: any = ''
+  privatekey = ''
   accessPrivateKey = false
 
   rules = {
@@ -121,17 +121,21 @@ export default class PrivateKey extends Vue {
   }
 
   getPrivateKey() {
-    if ((this.privatekey = getKeystoreContent(this.walletStore.keystore, this.keystorePassword))) {
+    if (
+      (this.privatekey = getKeystoreContent(
+        this.walletStore.keystore,
+        this.keystorePassword
+      ) as string)
+    ) {
       return true
     } else {
       return false
     }
   }
 
-  copyPrivateKey() {
+  copyPrivateKey(privatekey: string) {
+    copyToClipboard(privatekey)
     this.showCopy = true
-    copyToClipboard(this.privatekey)
-
     setTimeout(() => {
       this.showCopy = false
     }, 1000)

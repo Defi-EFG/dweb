@@ -194,6 +194,10 @@
             "to_earn": "to Earn"
         },
         "modal": {
+            "errorMsg2": "Wrong format of keystore file",
+            "errormsg": "Wrong format of keystore text",
+            "copymessage1": "Copied",
+            "copymessage": "Tap to copy",
             "no_transactionpending": "No transaction pending",
             "welcome_to": "Welcome to",
             "ecoc_finance": "ECOC Financial Growth",

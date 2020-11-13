@@ -271,7 +271,7 @@ export default class Main extends Vue {
   active = 'EFG'
   name = 'EFG'
 
-  stakingRate = 0.01
+  stakingRate = 1.1
 
   get msg() {
     return this.$t('views.mainslider')

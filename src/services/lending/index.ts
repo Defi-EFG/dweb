@@ -13,7 +13,7 @@ interface Collateral {
 }
 
 const lendingContract = {
-  address: '62c58814c2e02f867236538b55413456c4b6a2b0',
+  address: 'f52cfba635ab16bb4dd014d3ba3dc0c751eb62bf',
   abi: lendingAbi
 } as Contract
 
@@ -98,9 +98,22 @@ export namespace lending {
     return poolAddress
   }
 
+  export const listPoolUsers = async (address: string) => {
+    const params = {
+      methodArgs: [address]
+    } as Params
+
+    const result = await contract.call('listPoolUsers', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const addresses = executionResult.formattedOutput['0'] as string[]
+    const members = addresses.map(address => Decoder.toEcoAddress(address)) as string[]
+
+    return members
+  }
+
   export const getPoolInfo = async (
     address: string
-  ): Promise<{ name: string; remainingEFG: number }> => {
+  ): Promise<{ name: string; capital: number; remainingEFG: number }> => {
     const params = {
       methodArgs: [address]
     } as Params
@@ -110,9 +123,10 @@ export namespace lending {
     const res = executionResult.formattedOutput
 
     const name = Web3Utils.hexToUtf8(Utils.appendHexPrefix(res.name))
+    const capital = res.capital
     const remainingEFG = res.remainingEFG.toNumber()
 
-    return { name, remainingEFG }
+    return { name, capital, remainingEFG }
   }
 
   export const getPrice = async (currencyName: string) => {

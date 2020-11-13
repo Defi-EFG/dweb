@@ -75,13 +75,17 @@
                     </h3>
                     <small class="lightgray--text">{{ $t('views.modal.please_sav') }}</small>
                   </div>
-                  <v-textarea
-                    name="input-7-1"
-                    filled
-                    :value="createWalletKeystore"
-                    auto-grow
-                    disabled
-                  ></v-textarea>
+                  <div class="mb-4 keystorewrapper">
+                    <div class="keystorefield" @click="copyAddress(createWalletKeystore)">
+                      {{ createWalletKeystore }}
+                    </div>
+                    <div v-if="copymessage === 'Copied'" class="sctext">
+                      {{ $t('views.modal.copymessage1') }}
+                    </div>
+                    <div v-else class="copyaddres">
+                      {{ $t('views.modal.copymessage') }}
+                    </div>
+                  </div>
                   <div class="action-wrapper">
                     <v-btn large class="mb-5" color="primary" @click="downloadkeystore()">
                       <h4 class="text-capitalize font-weight-light">
@@ -227,14 +231,12 @@
                       :rules="[rules.required]"
                     ></v-textarea>
                     <text-reader @load="keystore = $event"></text-reader>
-
                     <div class="errorMsg" v-if="errorMsg2">
-                      <span>{{ $t(errorMsg2) }}</span>
+                      <span>{{ $t('views.modal.errorMsg2') }}</span>
                     </div>
                     <div class="errorMsg" v-else-if="errormsg">
-                      <span>{{ $t(errormsg) }}</span>
+                      <span> {{ $t('views.modal.errormsg') }}</span>
                     </div>
-
                     <div class="action-wrapper">
                       <v-btn
                         large
@@ -271,7 +273,6 @@
                   <v-icon>$close</v-icon>
                 </v-btn>
               </v-card-title>
-
               <div class="create-wallet-wraper bg-white rounded-lg">
                 <div class="pb-5 mb-7">
                   <h3 class="primary--text">
@@ -326,7 +327,7 @@ import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import StakingModule from '@/store/staking'
 import TextReader from './TextReader.vue'
-
+import { copyToClipboard } from '@/services/utils'
 @Component({
   components: {
     Loading,
@@ -359,6 +360,7 @@ export default class UnlockwalletModal extends Vue {
   password = ''
   loading = false
   errorPrivatekey: string | Error = ''
+  copymessage = 'Tap to copy'
 
   rules = {
     required: (value: any) => {
@@ -414,6 +416,14 @@ export default class UnlockwalletModal extends Vue {
   }
   openPrivatekeyfield() {
     this.showPrivateKetTextfield = !this.showPrivateKetTextfield
+  }
+  copyAddress(keystorePassword: string) {
+    this.copymessage = 'Copied'
+    copyToClipboard(keystorePassword)
+
+    setTimeout(() => {
+      this.copymessage = 'Tap to copy'
+    }, 1000)
   }
 
   onCreateWallet() {
@@ -474,20 +484,19 @@ export default class UnlockwalletModal extends Vue {
   }
 
   async onUnlockWallet() {
-    try {
-      const keystore = this.keystore
-      const password = this.keystorePassword
-      this.walletStore
-        .importWallet({
-          keystore,
-          password
-        })
-        .then(() => {
-          this.onCloseX()
-        })
-    } catch (error) {
-      this.errorMsg = error.message
-    }
+    const keystore = this.keystore
+    const password = this.keystorePassword
+    this.walletStore
+      .importWallet({
+        keystore,
+        password
+      })
+      .then(() => {
+        this.onCloseX()
+      })
+      .catch(error => {
+        this.errorMsg = error.message
+      })
   }
 
   getFormattedTime() {
@@ -781,5 +790,21 @@ v-btn {
   color: red;
   font-size: 10px;
   padding: 4px;
+}
+.keystorefield {
+  cursor: pointer;
+  background-color: rgba(236, 235, 235, 0.658);
+  padding: 14px;
+  border-radius: 5px;
+}
+.copyaddres {
+  font-size: 14px;
+  color: lightgray;
+  text-align: end;
+}
+.sctext {
+  font-size: 14px;
+  text-align: end;
+  color: green;
 }
 </style>
