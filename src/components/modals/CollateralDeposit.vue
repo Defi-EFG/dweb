@@ -334,11 +334,11 @@
           <div class="inputnumber d-flex justify-space-between">
             <v-col cols="6" class="pb-0">
               <label for="Gas price:">{{ $t('views.modal.gas_price') }}</label
-              ><v-text-field type="number" v-model="gasPrice"></v-text-field>
+              ><v-text-field type="number" pattern="[0-9]*" v-model="gasPrice"></v-text-field>
             </v-col>
             <v-col cols="6" class="pb-0">
               <label for="Gas limit:">{{ $t('views.modal.gas_limit') }}</label
-              ><v-text-field type="number" v-model="gasLimit"></v-text-field>
+              ><v-text-field type="number" pattern="[0-9]*" v-model="gasLimit"></v-text-field>
             </v-col>
           </div>
 

@@ -71,6 +71,7 @@
         single-line
         solo
         type="number"
+        pattern="[0-9]*"
         hide-details="true"
       ></v-text-field>
       <v-btn

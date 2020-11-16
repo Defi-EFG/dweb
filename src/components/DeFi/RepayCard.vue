@@ -23,6 +23,7 @@
       v-model="repayAmount"
       :suffix="currencyName"
       type="number"
+      pattern="[0-9]*"
       height="43"
       dark
       color="#C074F9"

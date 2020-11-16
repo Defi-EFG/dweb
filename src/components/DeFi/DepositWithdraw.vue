@@ -41,6 +41,7 @@
         <v-text-field
           dark
           type="number"
+          pattern="[0-9]*"
           class="deposit-amount"
           placeholder="0"
           :prefix="stakingpage.depositamount"
@@ -94,6 +95,7 @@
           class="withdrawal-amount"
           placeholder="0"
           type="number"
+          pattern="[0-9]*"
           :prefix="stakingpage.depositamount"
           v-model="withdrawAmount"
           :suffix="stakingCurrencyName"

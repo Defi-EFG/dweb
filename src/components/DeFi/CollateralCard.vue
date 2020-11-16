@@ -16,6 +16,7 @@
       height="43"
       color="#C074F9"
       dark
+      pattern="[0-9]*"
       v-model="collateralAmount"
       type="number"
       :hint="tokenConversion"
@@ -317,7 +318,7 @@ export default class Collateral extends Vue {
 
   input {
     text-align: right;
-    font-size: 28px;
+    font-size: 24px;
     color: #c074f9 !important;
     margin: 8px 0;
     font-weight: 300;

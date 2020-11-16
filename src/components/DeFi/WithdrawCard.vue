@@ -20,6 +20,7 @@
       :hint="tokenConversion"
       persistent-hint
       type="number"
+      pattern="[0-9]*"
     ></v-text-field>
     <div class="borrow-power">
       <span class="label">{{ $t('views.lendingpage.borrow_po') }}</span>
