@@ -21,7 +21,7 @@
             </div>
             <div class="supply-item" v-for="(item, index) in myCollateral" :key="index">
               <div class="assets">
-                <img :src="item.currency.style.icon" />
+                <img :src="item.currency.style.icon" alt="" />
                 <span>{{ item.currency.name }}</span>
               </div>
               <div class="balance">
@@ -54,7 +54,7 @@
             </div>
             <div class="borrow-item" v-for="(item, index) in myBorrowing" :key="index">
               <div class="assets">
-                <img :src="item.currency.style.icon" />
+                <img :src="item.currency.style.icon" alt="" />
                 <span>{{ item.currency.name }}</span>
               </div>
               <div class="apy">
@@ -83,7 +83,7 @@
             </div>
             <div class="supply-item" v-for="(item, index) in myAssets" :key="index">
               <div class="assets">
-                <img :src="item.currency.style.icon" />
+                <img :src="item.currency.style.icon" alt="" />
                 <span>{{ item.currency.name }}</span>
               </div>
               <div class="balance">

@@ -12,7 +12,7 @@
 
       <v-tab-item class="deposit-tab">
         <div class="label pl-3">
-          <img src="@/assets/efg_logo.svg" />
+          <img src="@/assets/efg_logo.svg" alt="" />
           <span>{{ stakingCurrencyName }} - {{ $t('views.stakingpage.flexible_s') }}</span>
         </div>
         <small class="pl-3">

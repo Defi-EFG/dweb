@@ -2,7 +2,7 @@
   <div class="tx-noti">
     <v-btn class="noti-btn" icon @click="displayNotiList = !displayNotiList">
       <v-badge color="#FFB300" :content="pendingTxNumber" :value="pendingTxNumber" overlap>
-        <v-img class="noti-sign" src="@/assets/time-left.svg"></v-img>
+        <v-img class="noti-sign" alt="notificationsign" src="@/assets/time-left.svg"></v-img>
       </v-badge>
     </v-btn>
     <transition name="fade" mode="out-in">
