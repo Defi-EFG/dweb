@@ -83,7 +83,6 @@ export default class DeFiFooter extends Vue {
   position: relative;
   z-index: 1000;
   color: #ffffff;
-
 }
 #footer span {
   text-align: center;

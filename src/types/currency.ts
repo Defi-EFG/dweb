@@ -17,6 +17,7 @@ export interface Ecrc20 {
 
 export interface CurrencyInfo {
   name: string
+  contractAddress?: string
   style: Style
 }
 

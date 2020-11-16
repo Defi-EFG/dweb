@@ -58,6 +58,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   supportedCollateralAssets = [
     {
       currencyName: 'ECOC',
+      contractAddress: '',
       activated: false,
       collateralFactor: 0.6
     }
@@ -111,12 +112,14 @@ export default class LendingModule extends VuexModule implements LendingPlatform
         contractAddresses.map(async address => {
           const tokenInfo = await Ecrc20.getEcrc20Info(address)
           const currencyName = tokenInfo.symbol
+          const contractAddress = tokenInfo.contract_address
           const collateralFactor = await lending.getCollateralRate(currencyName)
 
           const activated = !!myCollateralAssets.find(asset => asset.currency.name === currencyName)
 
           return {
             currencyName: currencyName,
+            contractAddress: contractAddress,
             activated: activated,
             collateralFactor: collateralFactor
           } as Collateral
@@ -130,6 +133,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
 
       const ecocAsset = {
         currencyName: currencyName,
+        contractAddress: '',
         activated: activated,
         collateralFactor: collateralFactor
       } as Collateral
