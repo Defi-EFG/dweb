@@ -24,7 +24,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Chart from 'chart.js'
 
 @Component({})
@@ -47,7 +47,14 @@ export default class StakingChart extends Vue {
   }
 
   mounted() {
+    this.currentValue
     this.renderChart(this.ctx, this.totlemax, this.totalcurrentValue)
+  }
+  @Watch('currentValue')
+  onLoggedIn(ready: any) {
+    if (ready) {
+      this.renderChart(this.ctx, this.totlemax, this.totalcurrentValue)
+    }
   }
 
   renderChart(element: any, totlemax: number, totalcurrentValue: number) {

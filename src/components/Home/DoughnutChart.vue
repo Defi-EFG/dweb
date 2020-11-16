@@ -23,7 +23,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Chart from 'chart.js'
 import StakingModule from '@/store/staking'
 import { getModule } from 'vuex-module-decorators'
@@ -46,6 +46,13 @@ export default class DoughnutChart extends Vue {
   mounted() {
     this.renderChart(this.ctx, this.max, this.stakingTotal)
     this.stakingStore.updateMintingInfo(this.stakingStore.address)
+  }
+
+  @Watch('stakingTotal')
+  onLoggedIn(ready: any) {
+    if (ready) {
+      this.renderChart(this.ctx, this.max, this.stakingTotal)
+    }
   }
 
   renderChart(element: any, max: number, stakingTotal: number) {
