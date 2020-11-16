@@ -4,16 +4,18 @@ import { Decoder, Utils } from 'ecoweb3'
 import { SmartContract, Params, ExecutionResult } from '@/services/contract'
 import { Contract } from '@/types/contract'
 import { WalletParams } from '@/services/ecoc/types'
+import { defaultNetwork } from '@/services/ecoc/config'
+import { ECOC_MAINNET } from '@/services/ecoc/constants'
 import lendingAbi from './abi.json'
-import { LoanInfo } from './types'
+import { LoanInfo, Collateral } from './types'
 
-interface Collateral {
-  currencyName: string
-  amount: number
-}
+const mainnetAddress = '8457dc16e04e0b80a5ac2f90aab3c181e992ffdd'
+const testnetAddress = '8457dc16e04e0b80a5ac2f90aab3c181e992ffdd'
+
+const defaultAddress = defaultNetwork === ECOC_MAINNET ? mainnetAddress : testnetAddress
 
 const lendingContract = {
-  address: '66ec99b2d77403aa48ea757ea8f1399b21fef25d',
+  address: defaultAddress,
   abi: lendingAbi
 } as Contract
 

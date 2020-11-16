@@ -12,6 +12,9 @@ export interface StakingPlatform {
   timestamp: number
   totalStakedReward: number
 
+  numberOfStaking: number
+  totalStaking: number
+
   rewardHistory: RewardHistory[]
   lastUpdate: number
   status: string

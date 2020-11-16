@@ -25,7 +25,7 @@
           style="animation-delay: 1s;"
           alt=""
       /></a>
-      <a href="https://medium.com/@EFG_DeFi" target="_blank" rel="noopener noreferrer"
+      <a href="https://efg-defi.medium.com/" target="_blank" rel="noopener noreferrer"
         ><span class="contact-name">Medium</span
         ><img
           title="Medium"
@@ -34,7 +34,7 @@
           style="animation-delay: 1.5s;"
           alt=""
       /></a>
-      <a href="https://medium.com/@EFG_DeFi" target="_blank" rel="noopener noreferrer">
+      <a href="https://twitter.com/EFG_DeFi" target="_blank" rel="noopener noreferrer">
         <span class="contact-name">Twitter</span
         ><img
           title="Twitter"
@@ -43,6 +43,8 @@
           style="animation-delay: 2s;"
           alt=""
       /></a>
+      ><span id="sp">|</span>
+      <language-switcher class="mt-5"></language-switcher>
     </div>
   </div>
 </template>
@@ -50,8 +52,13 @@
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
+import LanguageSwitcher from '../LanguageSwitcher.vue'
 
-@Component({})
+@Component({
+  components: {
+    LanguageSwitcher
+  }
+})
 export default class DeFiFooter extends Vue {
   walletStore = getModule(WalletModule)
 
@@ -62,10 +69,21 @@ export default class DeFiFooter extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.translate_defi {
+  margin: 0 auto;
+  text-align: center;
+  display: block;
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+}
+.lang-switcg {
+  margin-right: 20px;
+}
 #footer {
   display: flex;
   text-align: center;
-  padding: 20px;
+  padding: 0px 20px 5px 20px;
   background: #090c1b 0% 0% no-repeat padding-box;
   position: relative;
   z-index: 1000;
@@ -86,6 +104,7 @@ export default class DeFiFooter extends Vue {
   left: 5rem;
   display: flex;
   align-items: center;
+  bottom: 35px;
 }
 
 .dot-circle {
@@ -98,8 +117,13 @@ export default class DeFiFooter extends Vue {
 
 .contact {
   margin: auto;
+  display: flex;
+  align-items: center;
 }
 
+.contact #sp {
+  font-size: 30px;
+}
 .contact-icon {
   display: none;
   margin: 0 12px;
@@ -116,7 +140,22 @@ export default class DeFiFooter extends Vue {
     border-bottom-right-radius: 6px;
   }
 }
-
+@media only screen and (max-width: 670px) {
+  #footer span {
+    font-size: 14px;
+    padding: 15px;
+  }
+  .translate_defi {
+    margin-right: 0px;
+  }
+  .contact {
+    margin-top: 3px;
+  }
+  .latest-block {
+    bottom: 65px;
+    font-size: small;
+  }
+}
 @media (max-width: 425px) {
   .latest-block {
     font-size: small;
@@ -129,11 +168,14 @@ export default class DeFiFooter extends Vue {
   .contact-icon {
     display: inline;
   }
-}
-@media only screen and (max-width: 670px) {
-  #footer span {
-    font-size: 14px;
-    padding: 15px;
+  .translate_defi {
+    font-size: small;
+  }
+  .contact img {
+    width: 30px;
+  }
+  .contact {
+    margin-top: 0px;
   }
 }
 </style>

@@ -50,7 +50,6 @@
           </v-col> -->
           <v-col class="ma-auto value-col">
             <div class="value">{{ item.amount }} {{ rewardCurrencyName }}</div>
-
           </v-col>
         </v-row>
       </div>

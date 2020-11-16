@@ -5,7 +5,7 @@
         <v-col cols="12">
           <div class="chart_view">
             <template>
-              <canvas id="staking-info"></canvas>
+              <canvas id="idChart"></canvas>
             </template>
           </div>
         </v-col>
@@ -15,23 +15,38 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Chart from 'chart.js'
 
 @Component({})
 export default class LineChart extends Vue {
+  @Prop({ default: [] as string[] }) labelSet!: string[]
+  @Prop({ default: [] as number[] }) dataSet!: number[]
+
   active = 'Borrow'
   name = 'Borrow'
   title = 'Borrow'
 
+  onClickActive(name: string) {
+    this.active = name
+    this.name = name
+    this.title = name
+  }
+
   finul = 1
   txt = ''
   myChart = null
-  labelSet = ['1 Aug', '16 Aug', '1 Sep', '16 Sep', '01 Oct', '16 Oct']
-  dataSet = [1.6, 2.2, 2, 2.3, 2.1, 2]
-
   get ctx() {
-    return document.getElementById('staking-info')
+    return document.getElementById('idChart')
+  }
+
+  @Watch('labelSet')
+  chartdata(labelSet: string[]) {
+    if (labelSet.length > 0) {
+      if (this.ctx) {
+        this.renderChart(this.ctx, this.labelSet, this.dataSet)
+      }
+    }
   }
 
   mounted() {
@@ -47,7 +62,6 @@ export default class LineChart extends Vue {
     //   self.txt = self.finul + ' txt'
     //   self.dataSet.push(self.finul)
     //   self.labelSet.push(self.txt)
-    //   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
     //   self.renderChart(self.ctx!, self.labelSet, self.dataSet)
     // }, 20000)
   }
@@ -64,14 +78,6 @@ export default class LineChart extends Vue {
             borderWidth: 1,
             lineTension: 0,
             fill: true,
-            pointBackgroundColor: '#141721',
-            pointBorderWidth: 0.1,
-            pointHoverRadius: 5,
-            pointBorderColor: '#141721',
-            pointHoverBackgroundColor: '#141721',
-            pointHoverBorderColor: '#141721',
-            pointRadius: 0.1,
-            pointStyle: 'rect',
             data: dataSet
           }
         ]

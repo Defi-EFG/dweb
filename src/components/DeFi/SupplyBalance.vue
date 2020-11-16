@@ -109,8 +109,7 @@ export default class SupplyBalance extends Vue {
   }
 
   async getEstimatedGPT() {
-    let amount = await this.lendingStore.getEstimatedGPT(this.address)
-    amount /= 10 ** 4
+    const amount = await this.lendingStore.getEstimatedGPT(this.address)
     const estimatedGPT = utils
       .toNumber(amount)
       .multipliedBy(1 + this.safetyFactor)

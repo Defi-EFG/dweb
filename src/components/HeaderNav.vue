@@ -179,6 +179,10 @@ export default class HeaderNav extends Vue {
     margin-right: 6px;
   }
 }
+.lang-switcg {
+  padding: 10px;
+  margin-top: 10px;
+}
 
 @media (max-width: 600px) {
   .header-title {

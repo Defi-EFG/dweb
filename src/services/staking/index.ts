@@ -1,10 +1,18 @@
+import { Decoder } from 'ecoweb3'
 import { SmartContract, Params, ExecutionResult } from '@/services/contract'
 import { Contract } from '@/types/contract'
 import { WalletParams } from '@/services/ecoc/types'
+import { defaultNetwork } from '@/services/ecoc/config'
+import { ECOC_MAINNET } from '@/services/ecoc/constants'
 import stakingAbi from './abi.json'
 
+const mainnetAddress = 'dcdb53777df51dfaaf4622150d6c668ff9cd476a'
+const testnetAddress = 'dcdb53777df51dfaaf4622150d6c668ff9cd476a'
+
+const defaultAddress = defaultNetwork === ECOC_MAINNET ? mainnetAddress : testnetAddress
+
 const stakingContract = {
-  address: '4256b4716da534dda16de01b963130c94244b845',
+  address: defaultAddress,
   abi: stakingAbi
 } as Contract
 
@@ -21,6 +29,31 @@ export namespace staking {
     const result = await contract.call('unclaimedGPT', params)
     const executionResult = result.executionResult as ExecutionResult
     const data = executionResult.formattedOutput['0'].toNumber()
+
+    return data
+  }
+
+  export const totalStaking = async () => {
+    const params = {
+      methodArgs: []
+    } as Params
+
+    const result = await contract.call('totalStaking', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const data = executionResult.formattedOutput['0'].toNumber()
+
+    return data
+  }
+
+  export const getStakers = async () => {
+    const params = {
+      methodArgs: []
+    } as Params
+
+    const result = await contract.call('getStakers', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const addresses = executionResult.formattedOutput['0'] as string[]
+    const data = addresses.map(address => Decoder.toEcoAddress(address)) as string[]
 
     return data
   }

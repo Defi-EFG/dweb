@@ -156,14 +156,14 @@
             <v-col lg="3" md="3" cols="3" class="border_left">
               <div class="margintop color_1 textafter">
                 <span class="color_size"
-                  >${{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }}</span
+                  >{{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }} EFG</span
                 >
               </div>
             </v-col>
             <v-col lg="3" md="3" cols="3">
               <div class="margintop color_2 textafter">
                 <span class="color_size"
-                  >${{ item.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }}</span
+                  >{{ item.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }} EFG</span
                 >
               </div>
             </v-col>
@@ -275,7 +275,7 @@ export default class Main extends Vue {
   active = 'EFG'
   name = 'EFG'
 
-  stakingRate = 0.01
+  stakingRate = 1.1
 
   get msg() {
     return this.$t('views.mainslider')
@@ -314,6 +314,7 @@ export default class Main extends Vue {
   mounted() {
     this.lendingStore.updateLoners()
     this.lendingStore.updateSupprtedAssets()
+    this.stakingStore.updateStakingInfo()
     this.stakingStore.updateMintingInfo(this.stakingStore.address)
   }
 
@@ -369,8 +370,7 @@ body {
   opacity: 0.6;
 }
 .sec_1 {
-  background: transparent linear-gradient(180deg, #2c1635 0%, #070c1a 100%) 0% 0% no-repeat
-    padding-box;
+  background: transparent linear-gradient(180deg, #261531, #070c1a) 0 0 no-repeat padding-box;
   padding-top: 150px;
 }
 .sec_2 {
@@ -901,6 +901,10 @@ body {
   }
   .sec_2 .but_div .text_but {
     margin-left: 3px;
+  }
+  .sec_1 {
+    background: transparent linear-gradient(180deg, #251430 0%, #070c1a 100%) 0% 0% no-repeat
+      padding-box;
   }
 }
 </style>

@@ -186,7 +186,7 @@ export default class TransactionConfirmationModal extends Vue {
   feeAverage = 0.01
   feeFast = 0.1
 
-  copymessage = 'Copy Address'
+  copymessage = this.$t('views.modal.copy_Address')
   gassetting = false
   errorMsg = ''
   password = ''
@@ -196,9 +196,7 @@ export default class TransactionConfirmationModal extends Vue {
 
   rules = {
     required: (value: any) => {
-      if (this.visible) {
-        return !!value || this.$t('views.modal.requiredw')
-      }
+      return !!value || this.$t('views.modal.required')
     },
     min: (v: any) => {
       if (this.visible) {

@@ -8,10 +8,14 @@
       </v-col>
       <v-col cols="6" md="5">
         <div class="dougnut-detail">
-          <p>EFG - {{ $t('views.detail.total_supply') }}</p>
-          <div class="value_price1">{{ max | numberWithCommas({ fixed: [0, 2] }) }}</div>
-          <p>EFG - {{ $t('views.detail.total_borrowed') }}</p>
-          <div class="value_price2">{{ currentValue | numberWithCommas({ fixed: [0, 2] }) }}</div>
+          <p>{{ currencyName }} - {{ $t('views.detail.total_supply') }}</p>
+          <div class="value_price1">
+            {{ totlemax | numberWithCommas({ fixed: [0, 2] }) }}
+          </div>
+          <p>{{ currencyName }} - {{ $t('views.detail.total_borrowed') }}</p>
+          <div class="value_price2">
+            {{ totalcurrentValue | numberWithCommas({ fixed: [0, 2] }) }}
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -20,23 +24,40 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Chart from 'chart.js'
 
 @Component({})
 export default class StakingChart extends Vue {
-  max = 4189402.65
-  currentValue = 130561.041
+  @Prop({ default: 1000 }) readonly max!: number
+  @Prop({ default: 0 }) readonly currentValue!: number
+  @Prop({ default: '###' }) readonly currencyName!: string
 
-  mounted() {
-    this.renderChart(this.ctx, this.max, this.currentValue)
+  get totlemax() {
+    return this.max
   }
-
+  get totalcurrentValue() {
+    return this.currentValue
+  }
+  get listcurrencyName() {
+    return this.currencyName
+  }
   get ctx() {
     return document.getElementById('myChartGpt')
   }
 
-  renderChart(element: any, max: number, current: number) {
+  mounted() {
+    this.currentValue
+    this.renderChart(this.ctx, this.totlemax, this.totalcurrentValue)
+  }
+  @Watch('currentValue')
+  onLoggedIn(ready: any) {
+    if (ready) {
+      this.renderChart(this.ctx, this.totlemax, this.totalcurrentValue)
+    }
+  }
+
+  renderChart(element: any, totlemax: number, totalcurrentValue: number) {
     /* eslint-disable */
     const myChart = new Chart(element, {
       type: 'doughnut',
@@ -46,8 +67,8 @@ export default class StakingChart extends Vue {
           {
             borderWidth: 0,
             borderColor: '#222738',
-            backgroundColor: [this.gradientFill, this.gradientFill2],
-            data: [current, max]
+            backgroundColor: [this.gradientFill, '#888888'],
+            data: [totalcurrentValue, totlemax]
           }
         ]
       },
@@ -75,16 +96,7 @@ export default class StakingChart extends Vue {
 
     return gradientStroke
   }
-  get gradientFill2() {
-    //@ts-ignore
-    const ctx = this.ctx.getContext('2d')
-    const gradientStroke = ctx.createLinearGradient(300, 20, 100, 100)
-    gradientStroke.addColorStop(0.5, '#3FC0DB')
-    gradientStroke.addColorStop(0, '#8B41D7')
-    gradientStroke.addColorStop(1, '#6600FA')
 
-    return gradientStroke
-  }
 }
 </script>
 

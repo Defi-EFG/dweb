@@ -33,6 +33,9 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   timestamp = 0
   totalStakedReward = 0
 
+  numberOfStaking = 0
+  totalStaking = 0
+
   rewardHistory = rewardHistory
   lastUpdate = 0
   status = constants.STATUS_SYNCED
@@ -58,19 +61,42 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   }
 
   @MutationAction
+  async updateStakingInfo() {
+    try {
+      const stakers = await stakingContract.getStakers()
+      const fullTotalStaking = await stakingContract.totalStaking()
+
+      const stakingDecimals = EFG.tokenInfo?.decimals as string
+
+      const numberOfStaking = stakers.length
+      const totalStaking = utils.toDecimals(fullTotalStaking, stakingDecimals).toNumber()
+
+      return { numberOfStaking, totalStaking }
+    } catch (error) {
+      return {}
+    }
+  }
+
+  @MutationAction
   async updateMintingInfo(address: string) {
-    const available = await stakingContract.unclaimedGPT()
-    const { stakingAmount, timestamp, unclaimedReward } = await stakingContract.mintingInfo(address)
+    try {
+      const available = await stakingContract.unclaimedGPT()
+      const { stakingAmount, timestamp, unclaimedReward } = await stakingContract.mintingInfo(
+        address
+      )
 
-    const rewardDecimals = GPT.tokenInfo?.decimals as string
-    const stakingDecimals = EFG.tokenInfo?.decimals as string
+      const rewardDecimals = GPT.tokenInfo?.decimals as string
+      const stakingDecimals = EFG.tokenInfo?.decimals as string
 
-    return {
-      staking: utils.toDecimals(stakingAmount, stakingDecimals).toNumber(),
-      timestamp: timestamp,
-      totalStakedReward: utils.toDecimals(unclaimedReward, rewardDecimals).toNumber(),
-      available: utils.toDecimals(available, rewardDecimals).toNumber(),
-      lastUpdate: new Date().getTime()
+      return {
+        staking: utils.toDecimals(stakingAmount, stakingDecimals).toNumber(),
+        timestamp: timestamp,
+        totalStakedReward: utils.toDecimals(unclaimedReward, rewardDecimals).toNumber(),
+        available: utils.toDecimals(available, rewardDecimals).toNumber(),
+        lastUpdate: new Date().getTime()
+      }
+    } catch (error) {
+      return {}
     }
   }
 

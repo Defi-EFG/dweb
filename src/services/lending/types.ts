@@ -9,3 +9,8 @@ export interface LoanInfo {
   lastGracePeriod: number
   remainingGPT: number
 }
+
+export interface Collateral {
+  currencyName: string
+  amount: number
+}

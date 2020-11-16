@@ -25,7 +25,7 @@
       </div>
       <div class="copy-message">
         <transition name="fade" mode="out-in">
-          <div class="copied" v-if="showCopy">Copied!</div>
+          <div class="copied" v-if="showCopy">{{ $t('views.modal.copied') }}!</div>
         </transition>
       </div>
     </v-card-text>

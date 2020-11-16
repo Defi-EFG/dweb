@@ -17,17 +17,26 @@
                 <v-col cols="9" class="efg_border1">
                   <div class="m_titel">{{ $t('views.detail.borrow_apy') }}</div>
                   <div class="m_titel">{{ $t('views.detail.number_of') }}</div>
+                  <div class="m_titel">{{ $t('views.detail.total_Interest') }}</div>
+                  <div class="m_titel">{{ $t('views.detail.total_debt') }}</div>
                 </v-col>
                 <v-col cols="3" class="efg_border1">
-                  <div class="m_titel m_titel_2">3.5%</div>
-                  <div class="m_titel m_titel_2">841</div>
+                  <div class="m_titel m_titel_2">{{ interestRate }}%</div>
+                  <div class="m_titel m_titel_2">{{ totalBorrowers }}</div>
+                  <div class="m_titel m_titel_2">0</div>
+                  <div class="m_titel m_titel_2">0</div>
                 </v-col>
               </v-row>
             </div>
           </v-col>
           <v-col lg="8" md="8" cols="12">
             <div class="M_detail">
-              <doughnut-chart class="chart_dg_logo"></doughnut-chart>
+              <doughnut-chart
+                class="chart_dg_logo"
+                :max="max"
+                :currentValue="totalBorrowers"
+                :currencyName="currencyName"
+              ></doughnut-chart>
             </div>
           </v-col>
         </v-row>
@@ -38,7 +47,7 @@
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
-              <LineChart></LineChart>
+              <LineChart :labelSet="labelSet" :dataSet="dataSet"></LineChart>
             </div>
           </v-col>
         </v-row>
@@ -49,8 +58,11 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import LineChart from '@/components/Home/LineChartefg.vue'
+import LineChart from '@/components/Home/LineChart.vue'
 import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
+import LendingModule from '@/store/lending'
+import { getModule } from 'vuex-module-decorators'
+import { api } from '@/services/api'
 
 @Component({
   components: {
@@ -58,7 +70,48 @@ import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
     DoughnutChart
   }
 })
-export default class Efg extends Vue {}
+export default class Efg extends Vue {
+  lendingStore = getModule(LendingModule)
+  query = this.$route.query.pool
+  date = [] as string[]
+  price = [] as number[]
+
+  get max() {
+    return this.pool?.totalSupply as number
+  }
+
+  get interestRate() {
+    return this.lendingStore.loan.interestRate
+  }
+
+  get totalBorrowers() {
+    return this.pool?.totalBorrowers as number
+  }
+
+  get currencyName() {
+    return this.pool?.currency.name as string
+  }
+
+  get labelSet() {
+    return this.date
+  }
+
+  get dataSet() {
+    return this.price
+  }
+
+  get pool() {
+    return this.lendingStore.pools.find(asset => asset.address === this.query)
+  }
+
+  mounted() {
+    this.lendingStore.updateLoners()
+    api.getprice('EFG').then(data => {
+      this.date = data.date
+      this.price = data.price
+    })
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -220,6 +273,9 @@ export default class Efg extends Vue {}
   }
   .logo_ecoc .logo_ecoc_m_text span {
     font-size: 20px;
+  }
+  .sec_m2 {
+    padding: 20px 0 30px 0;
   }
 }
 </style>

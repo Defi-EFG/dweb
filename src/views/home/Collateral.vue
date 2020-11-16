@@ -11,7 +11,7 @@
                     <img
                       class="logo_ecoc_m"
                       width="40"
-                      :src="require(`@/assets/${$route.query.name}.svg`)"
+                      :src="require(`@/assets/${collateral.currencyName}.svg`)"
                       alt=""
                     />
                     <div class="logo_ecoc_m_text">
@@ -24,8 +24,8 @@
                   <div class="m_titel">{{ $t('views.detail.collateral_Factor') }}</div>
                 </v-col>
                 <v-col cols="3" class="efg_border1">
-                  <div class="m_titel m_titel_2">841</div>
-                  <div class="m_titel m_titel_2">80%</div>
+                  <div class="m_titel m_titel_2">0</div>
+                  <div class="m_titel m_titel_2">{{ collateralFactor }}%</div>
                 </v-col>
               </v-row>
             </div>
@@ -38,7 +38,7 @@
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
-              <LineChartCollateral></LineChartCollateral>
+              <LineChart :labelSet="labelSet" :dataSet="dataSet"></LineChart>
             </div>
           </v-col>
         </v-row>
@@ -49,16 +49,49 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import LineChartCollateral from '@/components/Home/LineChartCollateral.vue'
+import LineChart from '@/components/Home/LineChart.vue'
 import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
+import { getModule } from 'vuex-module-decorators'
+import LendingModule from '@/store/lending'
+import { api } from '@/services/api'
 
 @Component({
   components: {
-    LineChartCollateral,
+    LineChart,
     DoughnutChart
   }
 })
-export default class Efg extends Vue {}
+export default class Callaterr extends Vue {
+  lendingStore = getModule(LendingModule)
+  currencyName = this.$route.query.name as string
+  date = [] as string[]
+  price = [] as number[]
+
+  mounted() {
+    api.getprice(this.currencyName).then(data => {
+      this.date = data.date
+      this.price = data.price
+    })
+  }
+
+  get labelSet() {
+    return this.date
+  }
+
+  get dataSet() {
+    return this.price
+  }
+
+  get collateral() {
+    return this.lendingStore.supportedCollateralAssets.find(
+      asset => asset.currencyName === this.currencyName
+    )
+  }
+
+  get collateralFactor() {
+    return this.collateral ? this.collateral.collateralFactor * 100 : 0
+  }
+}
 </script>
 
 <style scoped lang="scss">
@@ -219,6 +252,9 @@ export default class Efg extends Vue {}
   }
   .logo_ecoc .logo_ecoc_m_text span {
     font-size: 20px;
+  }
+  .sec_m2 {
+    padding: 20px 0 100px 0;
   }
 }
 </style>

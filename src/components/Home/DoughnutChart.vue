@@ -8,9 +8,12 @@
       </v-col>
       <v-col cols="6">
         <div class="dougnut-detail">
-          <p>{{ token }} - Available (Total: {{ max | numberWithCommas({ fixed: [0, 2] }) }})</p>
+          <p>
+            {{ token }} - {{ $t('views.detail.available') }} ({{ $t('views.detail.total') }}:
+            {{ max | numberWithCommas({ fixed: [0, 2] }) }})
+          </p>
           <div class="value_price1">
-            {{ stakingAvailable | numberWithCommas({ fixed: [0, 8] }) }} {{ token }}
+            {{ stakingTotal | numberWithCommas({ fixed: [0, 8] }) }} {{ token }}
           </div>
         </div>
       </v-col>
@@ -20,7 +23,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
-import { Vue, Component } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Chart from 'chart.js'
 import StakingModule from '@/store/staking'
 import { getModule } from 'vuex-module-decorators'
@@ -28,19 +31,31 @@ import { getModule } from 'vuex-module-decorators'
 @Component({})
 export default class DoughnutChart extends Vue {
   stakingStore = getModule(StakingModule)
+  @Prop() stakingAvailable!: number
+  @Prop() max!: number
   token = 'GPT'
-  max = 10000
-  current = this.stakingStore.available
-
-  get stakingAvailable() {
-    return this.stakingStore.available
-  }
 
   get ctx() {
     return document.getElementById('gptmyChart')
   }
 
-  renderChart(element: any, max: number, current: number) {
+  get stakingTotal() {
+    return this.stakingAvailable
+  }
+
+  mounted() {
+    this.renderChart(this.ctx, this.max, this.stakingTotal)
+    this.stakingStore.updateMintingInfo(this.stakingStore.address)
+  }
+
+  @Watch('stakingTotal')
+  onLoggedIn(ready: any) {
+    if (ready) {
+      this.renderChart(this.ctx, this.max, this.stakingTotal)
+    }
+  }
+
+  renderChart(element: any, max: number, stakingTotal: number) {
     /* eslint-disable */
     const myChart = new Chart(element, {
       type: 'doughnut',
@@ -51,7 +66,7 @@ export default class DoughnutChart extends Vue {
             borderWidth: 0,
             borderColor: '#222738',
             backgroundColor: [this.gradientFill, '#888888'],
-            data: [current, max - current]
+            data: [stakingTotal, max - stakingTotal]
           }
         ]
       },
@@ -67,13 +82,6 @@ export default class DoughnutChart extends Vue {
         cutoutPercentage: 63
       }
     })
-  }
-
-  mounted() {
-    console.log(this.current)
-    this.current
-    this.renderChart(this.ctx, this.max, this.stakingAvailable)
-    this.stakingStore.updateMintingInfo(this.stakingStore.address)
   }
 
   get gradientFill() {
