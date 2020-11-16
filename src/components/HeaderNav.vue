@@ -2,7 +2,7 @@
   <div>
     <v-app-bar class="efg-header" flat dark>
       <div class="home" @click="gotoHome">
-        <img src="@/assets/efg_logo.svg" class="efg-logo" />
+        <img src="@/assets/efg_logo.svg" class="efg-logo" alt="Logo" />
         <v-toolbar-title class="header-title">ECOC Finance Growth</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>

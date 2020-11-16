@@ -2,7 +2,7 @@
   <div class="color_bg">
     <v-app-bar class="efg-header" flat dark>
       <div class="home" @click="gotoHome">
-        <img src="@/assets/efg_logo.svg" class="efg-logo" />
+        <img src="@/assets/efg_logo.svg" alt="efgLogo" class="efg-logo" />
         <v-toolbar-title id="name_title">{{ $t('views.main.name') }}</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
