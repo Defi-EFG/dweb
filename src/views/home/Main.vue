@@ -366,8 +366,7 @@ body {
   opacity: 0.6;
 }
 .sec_1 {
-  background: transparent linear-gradient(180deg, #2c1635 0%, #070c1a 100%) 0% 0% no-repeat
-    padding-box;
+  background: transparent linear-gradient(180deg, #261531, #070c1a) 0 0 no-repeat padding-box;
   padding-top: 150px;
 }
 .sec_2 {
@@ -898,6 +897,10 @@ body {
   }
   .sec_2 .but_div .text_but {
     margin-left: 3px;
+  }
+  .sec_1 {
+    background: transparent linear-gradient(180deg, #251430 0%, #070c1a 100%) 0% 0% no-repeat
+      padding-box;
   }
 }
 </style>

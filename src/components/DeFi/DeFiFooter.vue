@@ -23,7 +23,7 @@
           src="@/assets/github.svg"
           style="animation-delay: 1s;"
       /></a>
-      <a href="https://medium.com/@EFG_DeFi" target="_blank" rel="noopener noreferrer"
+      <a href="https://efg-defi.medium.com/" target="_blank" rel="noopener noreferrer"
         ><span class="contact-name">Medium</span
         ><img
           title="Medium"
@@ -31,7 +31,7 @@
           src="@/assets/medium.svg"
           style="animation-delay: 1.5s;"
       /></a>
-      <a href="https://medium.com/@EFG_DeFi" target="_blank" rel="noopener noreferrer">
+      <a href="https://twitter.com/EFG_DeFi" target="_blank" rel="noopener noreferrer">
         <span class="contact-name">Twitter</span
         ><img
           title="Twitter"
