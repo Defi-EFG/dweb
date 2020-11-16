@@ -78,11 +78,12 @@ export default class DeFiFooter extends Vue {
 #footer {
   display: flex;
   text-align: center;
-  padding: 20px 20px 5px 20px;
+  padding: 0px 20px 5px 20px;
   background: #090c1b 0% 0% no-repeat padding-box;
   position: relative;
   z-index: 1000;
   color: #ffffff;
+
 }
 #footer span {
   text-align: center;
@@ -99,6 +100,7 @@ export default class DeFiFooter extends Vue {
   left: 5rem;
   display: flex;
   align-items: center;
+  bottom: 35px;
 }
 
 .dot-circle {
@@ -146,7 +148,7 @@ export default class DeFiFooter extends Vue {
     margin-top: 3px;
   }
   .latest-block {
-    bottom: 100px;
+    bottom: 65px;
     font-size: small;
   }
 }
