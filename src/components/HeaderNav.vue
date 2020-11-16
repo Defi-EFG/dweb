@@ -63,7 +63,7 @@ import TxNotifications from '@/components/DeFi/TxNotifications.vue'
 })
 export default class HeaderNav extends Vue {
   walletStore = getModule(WalletModule)
-  unlockWalletOpen = false
+  unlockWalletOpen = true
   accessPrivateKey = false
   menu = false
 

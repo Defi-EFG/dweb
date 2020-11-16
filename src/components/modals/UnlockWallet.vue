@@ -8,7 +8,7 @@
             <v-card>
               <v-card-title class="headline modal-header">
                 <v-icon></v-icon>
-                <v-btn icon @click.stop="onCloseX()">
+                <v-btn icon @click.stop="onCloseX()" disabled>
                   <v-icon>$close</v-icon>
                 </v-btn>
               </v-card-title>
