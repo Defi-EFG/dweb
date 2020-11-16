@@ -1,7 +1,7 @@
 <template>
   <div class="upload-wrapper text-end mb-3">
-    <small class="mr-2">{{ $t('views.modal.or_Upload') }}</small>
     <label class="text-reader">
+      <small class="mr-2" @change="loadTextFromFile">{{ $t('views.modal.or_Upload') }}</small>
       <v-icon class="upload-icon" color="white">$upload</v-icon>
       <input type="file" @change="loadTextFromFile" accept="application/json" />
     </label>
@@ -26,6 +26,13 @@ export default {
 <style>
 .upload-wrapper small {
   font-size: 0.7em;
+  text-decoration: underline;
+  text-decoration-color: lightgray;
+  position: absolute;
+  width: 130px;
+  text-align: start;
+  right: 10px;
+  padding: 6px 0px;
 }
 .text-reader {
   position: relative;
