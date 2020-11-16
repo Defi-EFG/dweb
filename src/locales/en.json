@@ -133,7 +133,8 @@
             "total_balance": "Total Balance",
             "to_Address": "To Address",
             "amount": "Amount",
-            "no_transaction_history": "No Transaction History"
+            "no_transaction_history": "No Transaction History",
+            "no_contact_address": "No contact address"
         },
         "lendingpage": {
             "collateral_bl": "Collateral Balance",

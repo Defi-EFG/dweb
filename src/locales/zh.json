@@ -130,7 +130,8 @@
             "total_balance": "总余额",
             "to_Address": "到地址",
             "amount": "金额",
-            "no_transaction_history": "没有交易历史记录"
+            "no_transaction_history": "没有交易历史记录",
+            "no_contact_address": "没有钱包地址"
         },
         "lendingpage": {
             "collateral_bl": "抵押品余额",

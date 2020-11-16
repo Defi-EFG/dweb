@@ -37,10 +37,10 @@
           title="Twitter"
           class="contact-icon"
           src="@/assets/twitter.svg"
-          style="animation-delay: 2s;"
-      /></a>
+          style="animation-delay: 2s;"/></a
+      ><span id="sp">|</span>
+      <language-switcher class="mt-5"></language-switcher>
     </div>
-   <language-switcher></language-switcher>
   </div>
 </template>
 <script lang="ts">
@@ -64,13 +64,21 @@ export default class DeFiFooter extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.translate_defi {
+  margin: 0 auto;
+  text-align: center;
+  display: block;
+  position: relative;
+  display: inline-block;
+  margin-left: 10px;
+}
 .lang-switcg {
   margin-right: 20px;
 }
 #footer {
   display: flex;
   text-align: center;
-  padding: 20px;
+  padding: 20px 20px 5px 20px;
   background: #090c1b 0% 0% no-repeat padding-box;
   position: relative;
   z-index: 1000;
@@ -103,8 +111,13 @@ export default class DeFiFooter extends Vue {
 
 .contact {
   margin: auto;
+  display: flex;
+  align-items: center;
 }
 
+.contact #sp {
+  font-size: 30px;
+}
 .contact-icon {
   display: none;
   margin: 0 12px;
@@ -121,7 +134,22 @@ export default class DeFiFooter extends Vue {
     border-bottom-right-radius: 6px;
   }
 }
-
+@media only screen and (max-width: 670px) {
+  #footer span {
+    font-size: 14px;
+    padding: 15px;
+  }
+  .translate_defi {
+    margin-right: 0px;
+  }
+  .contact {
+    margin-top: 3px;
+  }
+  .latest-block {
+    bottom: 100px;
+    font-size: small;
+  }
+}
 @media (max-width: 425px) {
   .latest-block {
     font-size: small;
@@ -134,11 +162,14 @@ export default class DeFiFooter extends Vue {
   .contact-icon {
     display: inline;
   }
-}
-@media only screen and (max-width: 670px) {
-  #footer span {
-    font-size: 14px;
-    padding: 15px;
+  .translate_defi {
+    font-size: small;
+  }
+  .contact img {
+    width: 30px;
+  }
+  .contact {
+    margin-top: 0px;
   }
 }
 </style>
