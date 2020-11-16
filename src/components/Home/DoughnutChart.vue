@@ -23,7 +23,7 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import Chart from 'chart.js'
 import StakingModule from '@/store/staking'
 import { getModule } from 'vuex-module-decorators'
@@ -41,6 +41,11 @@ export default class DoughnutChart extends Vue {
 
   get stakingTotal() {
     return this.stakingAvailable
+  }
+
+  mounted() {
+    this.renderChart(this.ctx, this.max, this.stakingTotal)
+    this.stakingStore.updateMintingInfo(this.stakingStore.address)
   }
 
   renderChart(element: any, max: number, stakingTotal: number) {
@@ -70,17 +75,6 @@ export default class DoughnutChart extends Vue {
         cutoutPercentage: 63
       }
     })
-  }
-
-  @Watch('stakingAvailable')
-  chartdata(stakingAvailable: number[]) {
-    if (stakingAvailable.length != 0) {
-     this.renderChart(this.ctx, this.max, this.stakingTotal)
-    }
-  }
-  mounted() {
-    this.renderChart(this.ctx, this.max, this.stakingTotal)
-    this.stakingStore.updateMintingInfo(this.stakingStore.address)
   }
 
   get gradientFill() {
