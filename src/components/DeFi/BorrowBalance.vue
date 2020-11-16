@@ -2,7 +2,7 @@
   <v-card dark class="borrow-card">
     <v-card-text>
       <span class="borrow-label">{{ $t('views.lendingpage.borrow_balance') }}</span>
-      <div class="borrow">${{ balance | numberWithCommas({ fixed: [0, 2] }) }}</div>
+      <div class="borrow">${{ balance | numberWithCommas({ fixed: [0, 8] }) }}</div>
       <div class="borrow-power">
         <div class="label">
           <span class="power-label">{{ $t('views.lendingpage.borrow_po') }}</span>
@@ -27,7 +27,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 
 @Component({})
 export default class BorrowBalance extends Vue {
@@ -35,9 +35,30 @@ export default class BorrowBalance extends Vue {
   @Prop({ default: 0 }) readonly borrowLimit!: number
   @Prop({ default: false }) readonly isLiquidate!: boolean
 
+  mounted() {
+    this.dynamicFontsize(this.balance.toString().length)
+  }
+
   calculateBorrow(val: number, max: number) {
     if (max === 0) return 0
     return (val / max) * 100
+  }
+
+  dynamicFontsize(textLength: any) {
+    const baseSize = 37
+    if (textLength >= baseSize) {
+      textLength = baseSize - 2
+    }
+
+    const fontSize = baseSize - textLength
+    const boxes = document.querySelector('.borrow')
+    //@ts-ignore
+    boxes.style.fontSize = `${fontSize}px`
+  }
+
+  @Watch('balance')
+  balanceChanged(val: any) {
+    this.dynamicFontsize(val.toString().length)
   }
 }
 </script>
@@ -53,7 +74,7 @@ export default class BorrowBalance extends Vue {
 }
 
 .borrow {
-  font-size: 38px;
+  font-size: 36px;
   color: #c074f9;
   text-align: right;
   padding: 2rem 0 1.2rem 0;

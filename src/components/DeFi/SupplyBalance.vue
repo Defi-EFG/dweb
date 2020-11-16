@@ -5,7 +5,7 @@
         <span class="balance-label">{{ $t('views.lendingpage.collateral_bl') }}</span>
         <div class="loaner">{{ $t('views.lendingpage.loaner') }}: {{ poolAddr }}</div>
         <div class="balance" :class="isLiquidate ? 'liquidate' : ''">
-          ${{ balance | numberWithCommas({ fixed: [0, 2] }) }}
+          ${{ balance | numberWithCommas({ fixed: [0, 8] }) }}
         </div>
         <div class="liquid-countdown" v-show="isLiquidate">
           <span>Estimated GPT needed: {{ estimatedGPT }}</span>
@@ -46,8 +46,8 @@ import Loading from '@/components/modals/loading.vue'
 @Component({
   components: {
     TransactionConfirmationModal,
-    Loading
-  }
+    Loading,
+  },
 })
 export default class SupplyBalance extends Vue {
   @Prop({ default: 0 }) readonly balance!: number
@@ -100,7 +100,7 @@ export default class SupplyBalance extends Vue {
   }
 
   get currency() {
-    return this.walletStore.currenciesList.find(currency => currency.name === extendCurrency.name)
+    return this.walletStore.currenciesList.find((currency) => currency.name === extendCurrency.name)
   }
 
   get isEnoughGPT() {
@@ -119,8 +119,20 @@ export default class SupplyBalance extends Vue {
     return estimatedGPT
   }
 
+  dynamicFontsize(textLength: any) {
+    const baseSize = 37
+    if (textLength >= baseSize) {
+      textLength = baseSize - 2
+    }
+
+    const fontSize = baseSize - textLength
+    const boxes = document.querySelector('.balance')
+    //@ts-ignore
+    boxes.style.fontSize = `${fontSize}px`
+  }
+
   openConfirmTxModal() {
-    this.getEstimatedGPT().then(amount => {
+    this.getEstimatedGPT().then((amount) => {
       this.estimatedGPT = amount
       this.confirmTxModal = true
     })
@@ -149,18 +161,18 @@ export default class SupplyBalance extends Vue {
 
     const payload = {
       amount,
-      walletParams
+      walletParams,
     }
 
     this.lendingStore
       .extendGracePeriod(payload)
-      .then(txid => {
+      .then((txid) => {
         setTimeout(() => {
           this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
           this.onSuccess()
         }, 1000)
       })
-      .catch(error => {
+      .catch((error) => {
         this.onError(error.message)
       })
   }
@@ -168,18 +180,25 @@ export default class SupplyBalance extends Vue {
   @Watch('isLiquidate')
   checkIfLiquidation(value: boolean) {
     if (value) {
-      this.getEstimatedGPT().then(amount => {
+      this.getEstimatedGPT().then((amount) => {
         this.estimatedGPT = amount
       })
     }
   }
 
+  @Watch('balance')
+  balanceChanged(val: any) {
+    this.dynamicFontsize(val.toString().length)
+  }
+
   mounted() {
     if (this.isLiquidate) {
-      this.getEstimatedGPT().then(amount => {
+      this.getEstimatedGPT().then((amount) => {
         this.estimatedGPT = amount
       })
     }
+
+    this.dynamicFontsize(this.balance.toString().length)
 
     setInterval(() => {
       this.timeRemainMessage = this.extentTimeRemaining()
