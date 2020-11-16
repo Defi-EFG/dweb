@@ -16,6 +16,7 @@
                   require(`@/assets/icon/vector/${selectedCurrencyName}.svg` ||
                     `@/assets/icon/vector/default.svg`)
                 "
+                alt=""
               />
               <v-icon class="icon" v-else>mdi-help</v-icon>
               <span>{{ selectedCurrencyName }}</span>
@@ -46,6 +47,7 @@
                   require(`@/assets/icon/vector/${selectedCurrencyName}.svg` ||
                     `@/assets/icon/vector/default.svg`)
                 "
+                alt=""
               />
               <v-icon class="icon" v-else>mdi-help</v-icon>
               <span>{{ selectedCurrencyName }}</span>

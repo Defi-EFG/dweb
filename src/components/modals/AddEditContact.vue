@@ -84,11 +84,23 @@ export default class AddEditContact extends Vue {
   get modal() {
     return this.$t('views.modal')
   }
+  @Watch('showDialog')
+  checkopen(val: any) {
+    this.visible = val
+  }
 
   rules = {
-    required: (value: string) => !!value || this.$t('views.modal.required'),
+    required: (value: string) => {
+      if (this.visible) {
+        return !!value || this.$t('views.modal.required')
+      }
+      return true
+    },
     exist: (value: string) => {
-      return !this.isNameExist(value) || this.$t('views.modal.required')
+      if (this.visible) {
+        return !this.isNameExist(value) || this.$t('views.modal.required')
+      }
+      return true
     }
   }
 

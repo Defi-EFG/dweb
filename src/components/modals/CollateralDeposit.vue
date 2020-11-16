@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="show" max-width="420" class="send-transaction" id="collat" persistent>
+    <v-dialog v-model="showModal" max-width="420" class="send-transaction" id="collat" persistent>
       <v-stepper v-model="step" class="blur-card">
         <v-stepper-items>
           <!-- Welcome to ECOC Finance Governance -->
@@ -58,7 +58,7 @@
                             >
                           </div>
                         </v-col>
-                        <img class="row1_img" src="@/assets/backg_01.svg" />
+                        <img class="row1_img" src="@/assets/backg_01.svg" alt="" />
                       </v-row>
                     </div>
                   </v-container>
@@ -78,7 +78,7 @@
           <v-stepper-content step="2">
             <v-card color="#FFFFFF00">
               <v-card-title class="modal-header">
-                <v-btn @click="leftarrow()" icon><v-icon color="white">$leftarrow</v-icon></v-btn>
+                <v-btn @click="toStep(1)" icon><v-icon color="white">$leftarrow</v-icon></v-btn>
                 <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
               <div class="transaction-confirmation-wrapper collateral_pddeful">
@@ -96,7 +96,7 @@
                   ><br />
                   <input type="text" v-model="selectdata" disabled />
                 </div>
-                <v-btn large depressed class="text-capitalize mb-7" @click="nextcollat()">{{
+                <v-btn large depressed class="text-capitalize mb-7" @click="toStep(3)">{{
                   $t('views.modal.next')
                 }}</v-btn>
               </div>
@@ -106,7 +106,7 @@
           <v-stepper-content step="3">
             <v-card color="#FFFFFF00">
               <v-card-title class="modal-header">
-                <v-btn @click="leftarrow3()" icon><v-icon color="white">$leftarrow</v-icon></v-btn>
+                <div></div>
                 <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
               <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin mb-7">
@@ -196,7 +196,7 @@
                         large
                         color="primary"
                         class="text-capitalize1"
-                        @click="leftarrow3"
+                        @click="toStep(2)"
                         >{{ $t('views.modal.cancel') }}</v-btn
                       >
                       <v-btn
@@ -399,15 +399,35 @@ export default class CollateralDeposit extends Vue {
   Loanername = ''
   selectdata = ''
   active = ''
-
+  showModal = false
   fee = DEFAULT.DEFAULT_FEE
   gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
 
   rules = {
-    required: (value: any) => !!value || this.$t('views.modal.required'),
-    min: (v: any) => v.length >= 8 || this.$t('views.modal.characters'),
-    emailMatch: () => this.$t('views.modal.the_email')
+    required: (value: any) => {
+      if (this.visible) {
+        return !!value || this.$t('views.modal.required')
+      }
+      return true
+    },
+    min: (v: any) => {
+      if (this.visible) {
+        return v.length >= 8 || this.$t('views.modal.characters')
+      }
+      return true
+    },
+
+    emailMatch: () => {
+      if (this.visible) {
+        return this.$t('views.modal.the_email')
+      }
+      return true
+    }
+  }
+  @Watch('visible')
+  checkshowModal(val: any) {
+    this.showModal = val
   }
 
   get totalFee() {
@@ -485,28 +505,30 @@ export default class CollateralDeposit extends Vue {
     this.selectdata = Loanername
     this.active = Loanername
   }
-
+  toStep(step: any) {
+    this.step = step
+  }
   connectStep() {
     if (this.selectdata != '') {
-      this.step = 2
+      this.toStep(2)
     }
   }
 
-  leftarrow() {
-    this.step = 1
-  }
+  // leftarrow() {
+  //   this.step = 1
+  // }
 
-  nextcollat() {
-    this.step = 3
-  }
+  // nextcollat() {
+  //   this.step = 3
+  // }
 
-  leftarrow3() {
-    this.step = 2
-  }
+  // leftarrow3() {
+  //   this.step = 2
+  // }
 
-  toLoading() {
-    this.step = 4
-  }
+  // toLoading() {
+  //   this.step = 4
+  // }
 
   addressFilter(address: string) {
     if (address == this.lendingStore.address) return 'Lending Platform'
@@ -554,7 +576,7 @@ export default class CollateralDeposit extends Vue {
 
   async depositCollateral(walletParams: WalletParams) {
     this.loading = true
-    this.toLoading()
+    // this.toLoading()
 
     const amount = Number(this.amount)
     const poolAddress = this.selectdata

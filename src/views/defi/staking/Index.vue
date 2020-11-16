@@ -15,7 +15,7 @@
         <v-card dark color="#222738" class="tx-container" v-if="isLargeMobileDevice">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
-              <img :src="stakingCurrency.style.icon" />
+              <img :src="stakingCurrency.style.icon" alt="" />
               <span>{{ stakingCurrency.name }}</span>
             </v-toolbar-title>
           </v-toolbar>
@@ -47,7 +47,7 @@
         <v-card v-else dark color="#222738" class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
-              <img :src="stakingCurrency.style.icon" />
+              <img :src="stakingCurrency.style.icon" alt="" />
               <span>{{ stakingCurrency.name }}</span>
             </v-toolbar-title>
           </v-toolbar>

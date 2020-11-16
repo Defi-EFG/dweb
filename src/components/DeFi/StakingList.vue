@@ -11,7 +11,7 @@
       <v-card v-for="(token, index) in tokenList" :key="index" class="staking-token selected">
         <v-row>
           <v-col cols="auto" class="token d-flex">
-            <img src="@/assets/efg_logo.svg" />
+            <img src="@/assets/efg_logo.svg" alt="" />
             <span>{{ token.currency.name }}</span>
           </v-col>
           <v-col class="reward">
