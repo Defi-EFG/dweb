@@ -24,14 +24,14 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
-import { Vue, Component, Watch, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Chart from 'chart.js'
 
 @Component({})
 export default class StakingChart extends Vue {
-  @Prop() max!: number
-  @Prop() currentValue!: number
-  @Prop() currencyName!: string
+  @Prop({ default: 1000 }) readonly max!: number
+  @Prop({ default: 0 }) readonly currentValue!: number
+  @Prop({ default: '###' }) readonly currencyName!: string
 
   get totlemax() {
     return this.max
@@ -47,15 +47,13 @@ export default class StakingChart extends Vue {
   }
 
   mounted() {
+    this.currentValue
     this.renderChart(this.ctx, this.totlemax, this.totalcurrentValue)
   }
-
-  @Watch('totalcurrentValue')
-  chartdata(totalcurrentValue: number[]) {
-    if (totalcurrentValue.length) {
-      if (this.ctx) {
-        this.renderChart(this.ctx, this.totlemax, this.totalcurrentValue)
-      }
+  @Watch('currentValue')
+  onLoggedIn(ready: any) {
+    if (ready) {
+      this.renderChart(this.ctx, this.totlemax, this.totalcurrentValue)
     }
   }
 
@@ -98,6 +96,7 @@ export default class StakingChart extends Vue {
 
     return gradientStroke
   }
+
 }
 </script>
 

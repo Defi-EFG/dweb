@@ -19,7 +19,7 @@
         <v-card dark class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
-              <img :src="selectedCurrency.style.icon" />
+              <img :src="selectedCurrency.style.icon" alt="" />
               <span> {{ selectedCurrency.name }}</span>
             </v-toolbar-title>
           </v-toolbar>
