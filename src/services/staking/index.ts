@@ -2,10 +2,17 @@ import { Decoder } from 'ecoweb3'
 import { SmartContract, Params, ExecutionResult } from '@/services/contract'
 import { Contract } from '@/types/contract'
 import { WalletParams } from '@/services/ecoc/types'
+import { defaultNetwork } from '@/services/ecoc/config'
+import { ECOC_MAINNET } from '@/services/ecoc/constants'
 import stakingAbi from './abi.json'
 
+const mainnetAddress = 'dcdb53777df51dfaaf4622150d6c668ff9cd476a'
+const testnetAddress = 'dcdb53777df51dfaaf4622150d6c668ff9cd476a'
+
+const defaultAddress = defaultNetwork === ECOC_MAINNET ? mainnetAddress : testnetAddress
+
 const stakingContract = {
-  address: 'dcdb53777df51dfaaf4622150d6c668ff9cd476a',
+  address: defaultAddress,
   abi: stakingAbi
 } as Contract
 
