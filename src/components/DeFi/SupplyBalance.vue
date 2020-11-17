@@ -42,6 +42,7 @@ import { rewardCurrency as extendCurrency } from '@/store/common'
 import * as utils from '@/services/utils'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import Loading from '@/components/modals/loading.vue'
+import { numberWithCommas } from '@/plugins/filters'
 
 @Component({
   components: {
@@ -67,6 +68,21 @@ export default class SupplyBalance extends Vue {
   safetyFactor = 0.01
 
   timeRemainMessage: any = 0
+
+  mounted() {
+    if (this.isLiquidate) {
+      this.getEstimatedGPT().then((amount: any) => {
+        this.estimatedGPT = amount
+      })
+    }
+
+    const balanceString = numberWithCommas(this.balance, { fixed: [0, 8] })
+    this.dynamicFontsize(balanceString.length)
+
+    setInterval(() => {
+      this.timeRemainMessage = this.extentTimeRemaining()
+    }, 1000)
+  }
 
   get address() {
     return this.walletStore.address
@@ -166,13 +182,13 @@ export default class SupplyBalance extends Vue {
 
     this.lendingStore
       .extendGracePeriod(payload)
-      .then((txid) => {
+      .then((txid: any) => {
         setTimeout(() => {
           this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
           this.onSuccess()
         }, 1000)
       })
-      .catch((error) => {
+      .catch((error: any) => {
         this.onError(error.message)
       })
   }
@@ -188,21 +204,8 @@ export default class SupplyBalance extends Vue {
 
   @Watch('balance')
   balanceChanged(val: any) {
-    this.dynamicFontsize(val.toString().length)
-  }
-
-  mounted() {
-    if (this.isLiquidate) {
-      this.getEstimatedGPT().then((amount) => {
-        this.estimatedGPT = amount
-      })
-    }
-
-    this.dynamicFontsize(this.balance.toString().length)
-
-    setInterval(() => {
-      this.timeRemainMessage = this.extentTimeRemaining()
-    }, 1000)
+    const balanceVal = numberWithCommas(val, { fixed: [0, 8] })
+    this.dynamicFontsize(balanceVal.length)
   }
 }
 </script>

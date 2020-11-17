@@ -28,6 +28,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { numberWithCommas } from '@/plugins/filters'
 
 @Component({})
 export default class BorrowBalance extends Vue {
@@ -36,7 +37,8 @@ export default class BorrowBalance extends Vue {
   @Prop({ default: false }) readonly isLiquidate!: boolean
 
   mounted() {
-    this.dynamicFontsize(this.balance.toString().length)
+    const balanceString = numberWithCommas(this.balance, { fixed: [0, 8] })
+    this.dynamicFontsize(balanceString.length)
   }
 
   calculateBorrow(val: number, max: number) {
@@ -58,7 +60,8 @@ export default class BorrowBalance extends Vue {
 
   @Watch('balance')
   balanceChanged(val: any) {
-    this.dynamicFontsize(val.toString().length)
+    const balanceVal = numberWithCommas(val, { fixed: [0, 8] })
+    this.dynamicFontsize(balanceVal.length)
   }
 }
 </script>
