@@ -22,26 +22,29 @@ import { Component, Vue } from 'vue-property-decorator'
 export default class DefiNav extends Vue {
   item = 0
   activePage = 0
-  items = [
-    {
-      title: this.$t('views.wallet'),
-      page: 'wallet',
-      icon: require('@/assets/icon/wallet-w.svg'),
-      iconClicked: require('@/assets/icon/wallet.svg')
-    },
-    {
-      title: this.$t('views.lending'),
-      page: 'lending',
-      icon: require('@/assets/icon/lending-w.svg'),
-      iconClicked: require('@/assets/icon/lending.svg')
-    },
-    {
-      title: this.$t('views.staking'),
-      page: 'staking',
-      icon: require('@/assets/icon/staking-w.svg'),
-      iconClicked: require('@/assets/icon/staking.svg')
-    }
-  ]
+
+  get items() {
+    return [
+      {
+        title: this.$t('views.wallet'),
+        page: 'wallet',
+        icon: require('@/assets/icon/wallet-w.svg'),
+        iconClicked: require('@/assets/icon/wallet.svg')
+      },
+      {
+        title: this.$t('views.lending'),
+        page: 'lending',
+        icon: require('@/assets/icon/lending-w.svg'),
+        iconClicked: require('@/assets/icon/lending.svg')
+      },
+      {
+        title: this.$t('views.staking'),
+        page: 'staking',
+        icon: require('@/assets/icon/staking-w.svg'),
+        iconClicked: require('@/assets/icon/staking.svg')
+      }
+    ]
+  }
 
   mounted() {
     const currentMenu = this.getCurrentPageMenu(this.pageParams)

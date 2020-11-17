@@ -43,7 +43,7 @@
           style="animation-delay: 2s;"
           alt=""
       /></a>
-      ><span id="sp">|</span>
+      <span id="sp">|</span>
       <language-switcher class="mt-5"></language-switcher>
     </div>
   </div>

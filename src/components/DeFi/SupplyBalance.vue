@@ -7,7 +7,7 @@
         <div class="balance" :class="isLiquidate ? 'liquidate' : ''">
           ${{ balance | numberWithCommas({ fixed: [0, 2] }) }}
         </div>
-        <div class="liquid-countdown" v-show="isNearLiquidate">
+        <div class="liquid-countdown" v-show="isNearLiquidate && !extentTimeRemaining()">
           <span>Estimated GPT needed: {{ estimatedGPT }}</span>
           <span class="extend-btn" @click="openConfirmTxModal">Extend</span>
         </div>

@@ -264,10 +264,12 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import LendingModule from '@/store/lending'
 import StakingModule from '@/store/staking'
+import HomeModule from '@/store/home'
 import { getCurrency } from '@/store/common'
 
 @Component({})
 export default class Main extends Vue {
+  homeStore = getModule(HomeModule)
   lendingStore = getModule(LendingModule)
   stakingStore = getModule(StakingModule)
 
@@ -316,6 +318,13 @@ export default class Main extends Vue {
     this.lendingStore.updateSupprtedAssets()
     this.stakingStore.updateStakingInfo()
     this.stakingStore.updateMintingInfo(this.stakingStore.address)
+    this.homeStore.updateSummary().then(() => {
+      console.log(
+        this.homeStore.totalLiquidated,
+        this.homeStore.totalInterest,
+        this.homeStore.totalConsumedGPT
+      )
+    })
   }
 
   truncateAddress(addr: string) {

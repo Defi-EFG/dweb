@@ -1,7 +1,5 @@
 <template>
   <div class="lg_select">
-    <!-- <a href="#" @click="selectlangs('en')">EN</a>
-    <a href="#" @click="selectlangs('zh')">中文</a> -->
     <v-select
       v-model="locale"
       :items="langs"
@@ -18,7 +16,6 @@
 </template>
 
 <script lang="ts">
-/* eslint-disable no-unused-vars */
 import { Vue, Component } from 'vue-property-decorator'
 import moment from 'moment'
 import { supportedLanguages } from '@/i18n'
