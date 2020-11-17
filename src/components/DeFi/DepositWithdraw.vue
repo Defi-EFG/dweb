@@ -169,9 +169,13 @@ export default class DepositWithdraw extends Vue {
   amount: string | number = 0
 
   get currency() {
-    const stakingCurrency = this.walletStore.currenciesList.find(
-      currency => currency.name === this.stakingCurrencyName
-    )
+    const stakingCurrency = this.walletStore.currenciesList.find(currency => {
+      if (this.stakingCurrencyAddress && currency.tokenInfo) {
+        return this.stakingCurrencyAddress === currency.tokenInfo.address
+      }
+
+      return this.stakingCurrencyName === currency.name
+    })
 
     return stakingCurrency || {}
   }
@@ -182,6 +186,10 @@ export default class DepositWithdraw extends Vue {
 
   get contractAddr() {
     return this.stakingStore.address
+  }
+
+  get stakingCurrencyAddress() {
+    return this.stakingCurrency.contractAddress || ''
   }
 
   get stakingCurrencyName() {

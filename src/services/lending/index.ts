@@ -9,8 +9,8 @@ import { ECOC_MAINNET } from '@/services/ecoc/constants'
 import lendingAbi from './abi.json'
 import { LoanInfo, Collateral } from './types'
 
-const mainnetAddress = '8457dc16e04e0b80a5ac2f90aab3c181e992ffdd'
-const testnetAddress = '8457dc16e04e0b80a5ac2f90aab3c181e992ffdd'
+const mainnetAddress = '959751a6daf7e993b9589816ef866165634a8fec'
+const testnetAddress = '959751a6daf7e993b9589816ef866165634a8fec'
 
 const defaultAddress = defaultNetwork === ECOC_MAINNET ? mainnetAddress : testnetAddress
 
@@ -255,6 +255,42 @@ export namespace lending {
     }
 
     return loanInfo
+  }
+
+  export const getTotalLiquidated = async () => {
+    const params = {
+      methodArgs: []
+    } as Params
+
+    const result = await contract.call('getTotalLiquidated', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const res = executionResult.formattedOutput.totalLiquidated.toNumber()
+
+    return res
+  }
+
+  export const getTotalInterest = async () => {
+    const params = {
+      methodArgs: []
+    } as Params
+
+    const result = await contract.call('getTotalInterest', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const res = executionResult.formattedOutput.totalInterest.toNumber()
+
+    return res
+  }
+
+  export const getTotalConsumedGPT = async () => {
+    const params = {
+      methodArgs: []
+    } as Params
+
+    const result = await contract.call('getTotalConsumedGPT', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const res = executionResult.formattedOutput.totalGPT.toNumber()
+
+    return res
   }
 
   //send to contract
