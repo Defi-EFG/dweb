@@ -39,7 +39,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import { Currency } from '@/types/currency'

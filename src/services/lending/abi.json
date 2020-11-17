@@ -98,6 +98,22 @@
   {
     "constant":true,
     "inputs":[
+      
+    ],
+    "name":"getTotalInterest",
+    "outputs":[
+      {
+        "name":"totalInterest",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
       {
         "name":"_depositors_addr",
         "type":"address"
@@ -177,29 +193,6 @@
     ],
     "payable":false,
     "stateMutability":"view",
-    "type":"function"
-  },
-  {
-    "constant":false,
-    "inputs":[
-      {
-        "name":"_beneficiar",
-        "type":"address"
-      },
-      {
-        "name":"_amount",
-        "type":"uint256"
-      }
-    ],
-    "name":"withdrawGPT",
-    "outputs":[
-      {
-        "name":"result",
-        "type":"bool"
-      }
-    ],
-    "payable":false,
-    "stateMutability":"nonpayable",
     "type":"function"
   },
   {
@@ -533,6 +526,38 @@
     "type":"function"
   },
   {
+    "constant":true,
+    "inputs":[
+      
+    ],
+    "name":"getTotalConsumedGPT",
+    "outputs":[
+      {
+        "name":"totalGPT",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      
+    ],
+    "name":"getTotalLiquidated",
+    "outputs":[
+      {
+        "name":"totalLiquidated",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
     "constant":false,
     "inputs":[
       {
@@ -650,6 +675,25 @@
     ],
     "payable":false,
     "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":false,
+    "inputs":[
+      {
+        "name":"_amount",
+        "type":"uint256"
+      }
+    ],
+    "name":"withdrawGPT",
+    "outputs":[
+      {
+        "name":"result",
+        "type":"bool"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"nonpayable",
     "type":"function"
   },
   {

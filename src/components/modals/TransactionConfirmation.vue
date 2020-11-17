@@ -161,7 +161,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { WalletParams } from '@/services/ecoc/types'
 import { Currency } from '@/types/currency'
