@@ -131,7 +131,7 @@
                     <div class="name">{{ total.name }}</div>
                     <div :class="`price ${total.color} `">
                       {{ total.usd }}
-                      {{ total.price | numberWithCommas({ fixed: [0, 2] }) }}
+                      {{ total.amount | numberWithCommas({ fixed: [0, 2] }) }}
                       {{ total.unit }}
                     </div>
                   </div>
@@ -303,43 +303,45 @@ export default class Main extends Vue {
 
   stakingRate = 1.1
 
-  totals = [
-    {
-      name: 'Total Borrowers',
-      price: 5200,
-      unit: '',
-      color: 'colorsl1',
-      usd: ''
-    },
-    {
-      name: 'Total Debt',
-      price: 5151212.15,
-      unit: '',
-      color: 'colorsl2',
-      usd: '$'
-    },
-    {
-      name: 'Total Consumed GPT',
-      price: 5231.5,
-      unit: 'GPT',
-      color: 'colorsl1',
-      usd: ''
-    },
-    {
-      name: 'Total Liquidated',
-      price: 121546.74,
-      unit: 'EFG',
-      color: 'colorsl2',
-      usd: ''
-    },
-    {
-      name: 'Total Interest',
-      price: 1364.61,
-      unit: 'EFG',
-      color: 'colorsl1',
-      usd: ''
-    }
-  ]
+  get totals() {
+    return [
+      {
+        name: 'Total Borrowers',
+        amount: this.totalBorrowers,
+        unit: '',
+        color: 'colorsl1',
+        usd: ''
+      },
+      {
+        name: 'Total Debt',
+        amount: this.homeStore.totalDebt,
+        unit: '',
+        color: 'colorsl2',
+        usd: '$'
+      },
+      {
+        name: 'Total Consumed GPT',
+        amount: this.homeStore.totalConsumedGPT,
+        unit: 'GPT',
+        color: 'colorsl1',
+        usd: ''
+      },
+      {
+        name: 'Total Liquidated',
+        amount: this.homeStore.totalLiquidated,
+        unit: 'EFG',
+        color: 'colorsl2',
+        usd: ''
+      },
+      {
+        name: 'Total Interest',
+        amount: this.homeStore.totalInterest,
+        unit: 'EFG',
+        color: 'colorsl1',
+        usd: ''
+      }
+    ]
+  }
 
   get msg() {
     return this.$t('views.mainslider')
@@ -359,6 +361,10 @@ export default class Main extends Vue {
 
   get stakingAvailable() {
     return this.stakingStore.available
+  }
+
+  get totalBorrowers() {
+    return this.pools.reduce((sum, pool) => sum + pool.totalBorrowers, 0)
   }
 
   onClickActive(name: string) {
