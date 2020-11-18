@@ -466,7 +466,7 @@ export default class CollateralDeposit extends Vue {
   checkPoolAddress(value: boolean) {
     if (value) {
       if (this.poolAddress) {
-        this.step = 3
+        this.toStep(3)
         this.selectdata = this.poolAddress
       }
     }
@@ -485,7 +485,7 @@ export default class CollateralDeposit extends Vue {
   }
 
   onClose() {
-    this.step = 1
+    this.toStep(1)
     this.selectdata = ''
     this.password = ''
     this.errorMsg = ''
@@ -494,7 +494,7 @@ export default class CollateralDeposit extends Vue {
   }
 
   onSuccess() {
-    this.step = 1
+    this.toStep(1)
     this.loading = false
     this.errorMsg = ''
     this.password = ''
@@ -532,7 +532,7 @@ export default class CollateralDeposit extends Vue {
   onError(errorMsg: string) {
     this.errorMsg = errorMsg
     this.loading = false
-    this.step = 3
+    this.toStep(3)
   }
 
   async onConfirm() {
@@ -562,7 +562,7 @@ export default class CollateralDeposit extends Vue {
 
   async depositCollateral(walletParams: WalletParams) {
     this.loading = true
-    // this.toLoading()
+    this.toStep(4)
 
     const amount = Number(this.amount)
     const poolAddress = this.selectdata
