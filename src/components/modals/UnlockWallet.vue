@@ -166,6 +166,7 @@
                 </template>
 
                 <v-text-field
+                  ref="confirmPasswordRef"
                   :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
                   :type="show ? 'text' : 'password'"
                   @click:append="show = !show"
@@ -364,16 +365,22 @@ export default class UnlockwalletModal extends Vue {
 
   rules = {
     required: (value: any) => {
-      return !!value || this.$t('views.modal.required')
+      if (this.visible) {
+        return !!value || this.$t('views.modal.required')
+      }
+      return true
     },
     min: (v: any) => {
-      return v.length >= 6 || this.$t('views.modal.characters')
+      if (this.visible) {
+        return v.length > 6 || this.$t('views.modal.characters')
+      }
+      return true
     }
   }
 
   @Watch('visible')
-  checkvisible() {
-    this.unlockwalletModal = this.visible
+  checkvisible(val: any) {
+    this.unlockwalletModal = val
   }
 
   toStep(step: any) {
@@ -412,6 +419,7 @@ export default class UnlockwalletModal extends Vue {
 
   onCloseX() {
     this.clearData()
+
     this.onClose()
   }
   openPrivatekeyfield() {

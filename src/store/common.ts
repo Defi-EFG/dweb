@@ -3,18 +3,21 @@ import { Ecrc20, Currency } from '@/types/currency'
 import { ECOC, ETH, USDT, EFG, GPT, EWETH, EWUSDT } from '@/store/wallet/currency'
 
 export const loanCurrency = {
-  name: constants.LOAN_CURRENCIES[0],
-  style: constants.KNOWN_CURRENCY[constants.LOAN_CURRENCIES[0]]
+  name: EFG.name,
+  contractAddress: EFG.tokenInfo?.address,
+  style: constants.KNOWN_CURRENCY[EFG.name]
 }
 
 export const stakingCurrency = {
-  name: constants.EFG,
-  style: constants.KNOWN_CURRENCY[constants.EFG]
+  name: EFG.name,
+  contractAddress: EFG.tokenInfo?.address,
+  style: constants.KNOWN_CURRENCY[EFG.name]
 }
 
 export const rewardCurrency = {
-  name: constants.GPT,
-  style: constants.KNOWN_CURRENCY[constants.GPT]
+  name: GPT.name,
+  contractAddress: GPT.tokenInfo?.address,
+  style: constants.KNOWN_CURRENCY[GPT.name]
 }
 
 export const getCurrency = (currencyName: string) => {

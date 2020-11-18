@@ -30,7 +30,6 @@ interface CurrencyStyle {
 }
 
 export const COLLATERAL_CURRENCIES = [ECOC]
-export const LOAN_CURRENCIES = [EFG]
 
 export const KNOWN_CURRENCY = {
   ECOC: {

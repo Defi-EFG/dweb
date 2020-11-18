@@ -1,11 +1,11 @@
 <template>
   <div class="markets">
     <section class="sec_1">
-      <img src="@/assets/efg_logo_test.svg" class="img_background" />
+      <img src="@/assets/efg_logo_test.svg" class="img_background" alt="" />
       <v-container>
         <v-row>
           <v-col cols="12 " class="hover_animation">
-            <img src="@/assets/efg_logo.svg" class="efg-logo" />
+            <img src="@/assets/efg_logo.svg" class="efg-logo" alt="" />
             <div class="text_header">{{ $t('views.main.name') }}</div>
             <div class="select_detailmain img_logo1">
               <section class="sec_doc1" name="doc">
@@ -76,6 +76,7 @@
                   class="img_logo1"
                   src="@/assets/Subtraction.svg"
                   style="animation-delay: 0.5s;"
+                  alt=""
               /></a>
               <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer">
                 <img
@@ -83,6 +84,7 @@
                   class="img_logo1"
                   src="@/assets/github.svg"
                   style="animation-delay: 1s;"
+                  alt=""
               /></a>
 
               <a href="https://efg-defi.medium.com/" target="_blank">
@@ -91,6 +93,7 @@
                   class="img_logo1"
                   src="@/assets/medium.svg"
                   style="animation-delay: 1.5s;"
+                  alt=""
                 />
               </a>
               <a href="https://twitter.com/EFG_DeFi" target="_blank">
@@ -99,6 +102,7 @@
                   class="img_logo1"
                   src="@/assets/twitter.svg"
                   style="animation-delay: 2s;"
+                  alt=""
                 />
               </a>
             </div>
@@ -164,7 +168,7 @@
           <v-row class="row1 roww2" :id="`EFG_Supply_${1 + i}`">
             <v-col lg="3" md="3" cols="2">
               <div class="margintop">
-                <img src="@/assets/efg_01.svg" />
+                <img src="@/assets/efg_01.svg" alt="" />
                 {{ item.currency.name }}
               </div>
             </v-col>
@@ -187,7 +191,7 @@
                 >
               </div>
             </v-col>
-            <img class="row1_img" src="@/assets/backg_01.svg" />
+            <img class="row1_img" src="@/assets/backg_01.svg" alt="" />
           </v-row>
         </router-link>
         <v-row style="border-top:2px solid #312D36; margin-top:20px">
@@ -203,7 +207,7 @@
         </v-row>
         <v-row class="row1 roww3">
           <v-col lg="3" md="3" cols="6" class="Staking_dt">
-            <img src="@/assets/gpt.svg" />
+            <img src="@/assets/gpt.svg" alt="" />
             <div class="supply_name">GPT</div>
             <div class="supply_text">{{ $t('views.main.deposit') }}</div>
             <div class="supply_text">{{ $t('views.main.estimated') }}</div>
@@ -225,7 +229,7 @@
               {{ stakingAvailable | numberWithCommas() }} GPT
             </div>
           </v-col>
-          <img class="bg_gpt" src="@/assets/backg_02.svg" />
+          <img class="bg_gpt" src="@/assets/backg_02.svg" alt="" />
         </v-row>
         <v-row style="border-bottom:2px solid #312D36; margin-top:20px"></v-row>
         <v-row>
@@ -284,10 +288,12 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import LendingModule from '@/store/lending'
 import StakingModule from '@/store/staking'
+import HomeModule from '@/store/home'
 import { getCurrency } from '@/store/common'
 
 @Component({})
 export default class Main extends Vue {
+  homeStore = getModule(HomeModule)
   lendingStore = getModule(LendingModule)
   stakingStore = getModule(StakingModule)
 
@@ -374,6 +380,7 @@ export default class Main extends Vue {
     this.lendingStore.updateSupprtedAssets()
     this.stakingStore.updateStakingInfo()
     this.stakingStore.updateMintingInfo(this.stakingStore.address)
+    this.homeStore.updateSummary()
   }
 
   truncateAddress(addr: string) {

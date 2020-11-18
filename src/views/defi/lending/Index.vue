@@ -19,7 +19,7 @@
         <v-card dark class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
             <v-toolbar-title class="token-symbol">
-              <img :src="selectedCurrency.style.icon" />
+              <img :src="selectedCurrency.style.icon" alt="" />
               <span> {{ selectedCurrency.name }}</span>
             </v-toolbar-title>
           </v-toolbar>
@@ -124,7 +124,6 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import * as constants from '@/constants'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import { getCurrency } from '@/store/common'
@@ -224,9 +223,14 @@ export default class Lending extends Vue {
   }
 
   get borrowList() {
+    const loanCurrency = this.lendingStore.loan.currency
     return this.walletStore.currencies
       .filter(currency => {
-        return constants.LOAN_CURRENCIES.indexOf(currency.name) >= 0
+        if (currency.tokenInfo && loanCurrency.contractAddress) {
+          return currency.tokenInfo.address === loanCurrency.contractAddress
+        }
+
+        return currency.name === loanCurrency.name
       })
       .map(currency => {
         return {

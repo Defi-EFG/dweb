@@ -10,6 +10,7 @@ export interface Pool {
 
 export interface Collateral {
   currencyName: string
+  contractAddress: string
   activated: boolean
   collateralFactor: number
 }

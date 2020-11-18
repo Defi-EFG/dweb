@@ -2,7 +2,7 @@
   <div>
     <v-app-bar class="efg-header" flat dark>
       <div class="home" @click="gotoHome">
-        <img src="@/assets/efg_logo.svg" class="efg-logo" />
+        <img src="@/assets/efg_logo.svg" class="efg-logo" alt="Logo" />
         <v-toolbar-title class="header-title">ECOC Finance Growth</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
@@ -178,10 +178,6 @@ export default class HeaderNav extends Vue {
     border-radius: 50%;
     margin-right: 6px;
   }
-}
-.lang-switcg {
-  padding: 10px;
-  margin-top: 10px;
 }
 
 @media (max-width: 600px) {

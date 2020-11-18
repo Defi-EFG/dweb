@@ -14,6 +14,7 @@
           class="contact-icon"
           src="@/assets/Subtraction.svg"
           style="animation-delay: 0.5s;"
+          alt=""
       /></a>
       <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer"
         ><span class="contact-name">Github</span>
@@ -22,6 +23,7 @@
           class="contact-icon"
           src="@/assets/github.svg"
           style="animation-delay: 1s;"
+          alt=""
       /></a>
       <a href="https://efg-defi.medium.com/" target="_blank" rel="noopener noreferrer"
         ><span class="contact-name">Medium</span
@@ -30,6 +32,7 @@
           class="contact-icon"
           src="@/assets/medium.svg"
           style="animation-delay: 1.5s;"
+          alt=""
       /></a>
       <a href="https://twitter.com/EFG_DeFi" target="_blank" rel="noopener noreferrer">
         <span class="contact-name">Twitter</span
@@ -37,8 +40,10 @@
           title="Twitter"
           class="contact-icon"
           src="@/assets/twitter.svg"
-          style="animation-delay: 2s;"/></a
-      ><span id="sp">|</span>
+          style="animation-delay: 2s;"
+          alt=""
+      /></a>
+      <span id="sp">|</span>
       <language-switcher class="mt-5"></language-switcher>
     </div>
   </div>
