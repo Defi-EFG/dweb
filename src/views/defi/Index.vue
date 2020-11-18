@@ -34,8 +34,8 @@ import DeFiFooter from '@/components/DeFi/DeFiFooter.vue'
     DefiNav,
     HeaderNav,
     MenuDropdown,
-    DeFiFooter,
-  },
+    DeFiFooter
+  }
 })
 export default class Home extends Vue {
   walletStore = getModule(WalletModule)
@@ -55,8 +55,8 @@ export default class Home extends Vue {
   background-attachment: fixed;
   min-height: 100vh;
   flex-direction: column;
-  background: transparent
-    linear-gradient(0deg, #191d2c 0%, #1a2036 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(0deg, #191d2c 0%, #1a2036 100%) 0% 0% no-repeat
+    padding-box;
 }
 .content {
   margin: 0 70px 35px;

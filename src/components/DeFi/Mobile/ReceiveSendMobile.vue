@@ -146,11 +146,11 @@ import { copyToClipboard } from '@/services/utils'
 @Component({
   components: {
     VueQrcode,
-    TransactionConfirmationModal,
+    TransactionConfirmationModal
   },
   directives: {
-    clickOutside: vClickOutside.directive,
-  },
+    clickOutside: vClickOutside.directive
+  }
 })
 export default class ReceiveSendMobile extends Vue {
   addressStore = getModule(AddressBookModule)
@@ -169,12 +169,12 @@ export default class ReceiveSendMobile extends Vue {
   addrList = [
     {
       name: 'MXC',
-      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV',
+      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
     },
     {
       name: 'Bitrex',
-      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV',
-    },
+      address: 'EJDKiMpQvUfHK5KKiKWoe3CT2Sm9CCWaVV'
+    }
   ]
 
   get fromAddr() {
@@ -251,7 +251,7 @@ export default class ReceiveSendMobile extends Vue {
       currency: this.selectedCurrency,
       to: this.toAddr,
       amount: Number(this.amount),
-      walletParams: walletParams,
+      walletParams: walletParams
     } as SendPayload
     this.currencySend(payload)
   }
@@ -259,12 +259,12 @@ export default class ReceiveSendMobile extends Vue {
   currencySend(payload: SendPayload) {
     this.walletStore
       .send(payload)
-      .then((txid) => {
+      .then(txid => {
         this.walletStore.updateBalance()
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_TRANSFER })
         this.onSuccess()
       })
-      .catch((error) => {
+      .catch(error => {
         this.onError(`ERROR__ ${error.message}`)
       })
   }
