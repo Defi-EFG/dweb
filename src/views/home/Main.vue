@@ -114,6 +114,30 @@
     </section>
     <section class="sec_2">
       <v-container>
+        <v-row class="slider_main_head">
+          <v-sheet class="mx-auto" max-width="1088" width="100%">
+            <v-slide-group active-class="titel_color_df" show-arrows>
+              <v-slide-item v-for="(total, i) in totals" :key="i" v-slot="{ active, toggle }">
+                <v-card
+                  :color="active ? undefined : 'titel_color'"
+                  class="slider_margin"
+                  @click="toggle"
+                >
+                  <div class="detail">
+                    <div class="name">{{ total.name }}</div>
+                    <div :class="`price ${total.color} `">
+                      {{ total.usd }}
+                      {{ total.price | numberWithCommas({ fixed: [0, 2] }) }}
+                      {{ total.unit }}
+                    </div>
+                  </div>
+                </v-card>
+              </v-slide-item>
+            </v-slide-group>
+          </v-sheet>
+        </v-row>
+      </v-container>
+      <v-container>
         <v-row class="row1">
           <v-col lg="3" md="3" cols="2">
             <div class="supply sub_head_supply">
@@ -273,6 +297,44 @@ export default class Main extends Vue {
 
   stakingRate = 1.1
 
+  totals = [
+    {
+      name: 'Total Borrowers',
+      price: 5200,
+      unit: '',
+      color: 'colorsl1',
+      usd: ''
+    },
+    {
+      name: 'Total Debt',
+      price: 5151212.15,
+      unit: '',
+      color: 'colorsl2',
+      usd: '$'
+    },
+    {
+      name: 'Total Consumed GPT',
+      price: 5231.5,
+      unit: 'GPT',
+      color: 'colorsl1',
+      usd: ''
+    },
+    {
+      name: 'Total Liquidated',
+      price: 121546.74,
+      unit: 'EFG',
+      color: 'colorsl2',
+      usd: ''
+    },
+    {
+      name: 'Total Interest',
+      price: 1364.61,
+      unit: 'EFG',
+      color: 'colorsl1',
+      usd: ''
+    }
+  ]
+
   get msg() {
     return this.$t('views.mainslider')
   }
@@ -325,6 +387,45 @@ export default class Main extends Vue {
 </script>
 
 <style scoped>
+.colorsl1 {
+  color: #b16de6;
+}
+.colorsl2 {
+  color: #3fbdd8;
+}
+.slider_main_head {
+  border-bottom: 2px solid rgb(49, 45, 54);
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+.slider_main_head .detail {
+  padding: 14px;
+  color: #cccccc;
+  background-color: #26262c;
+}
+.slider_main_head .slider_margin {
+  margin-top: 15px;
+  margin-bottom: 15px;
+  margin-left: 7.5px;
+  margin-right: 7.5px;
+  width: 270px;
+}
+.slider_main_head .titel_color_df {
+  background: #26262c;
+}
+.slider_main_head .titel_color {
+  background: #26262c;
+}
+.slider_main_head .detail .name {
+  font-size: 14px;
+  padding-left: 5px;
+}
+.slider_main_head .detail .price {
+  font-size: 18px;
+  text-align: right;
+  padding-top: 20px;
+}
 .readmore {
   display: none;
 }
@@ -467,8 +568,9 @@ body {
   width: 130px;
 }
 .sub_head_supply {
-  color: #cccccc;
+  color: #9b9898;
   padding-left: 20px;
+  font-size: 14px;
 }
 .head_supply3 {
   padding-left: 40px;
@@ -879,7 +981,7 @@ body {
   }
   .sec_2 .row1 .row1_img {
     opacity: 0.1;
-    width: 50px;
+    width: 35px;
   }
   .sec_2 .but_div .img_text_but {
     width: 20px;
@@ -895,12 +997,23 @@ body {
     width: 103.98px;
     padding: 7px 15px 7px 5px;
   }
+  .sec_2 .roww3 .bg_gpt {
+    width: 80px;
+  }
   .sec_2 .but_div .text_but {
     margin-left: 3px;
   }
   .sec_1 {
     background: transparent linear-gradient(180deg, #251430 0%, #070c1a 100%) 0% 0% no-repeat
       padding-box;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .slider_main_head .slider_margin {
+    width: 240px;
+  }
+  .slider_main_head .detail .price {
+    padding-top: 5px;
   }
 }
 </style>
@@ -915,6 +1028,24 @@ body {
 
   .v-window__next {
     margin-top: 9rem;
+  }
+}
+.slider_main_head {
+  .theme--light.v-icon.v-icon.v-icon--disabled {
+    background-color: #cccccc;
+    border-radius: 50%;
+  }
+  .theme--light.v-sheet {
+    background-color: #26262c57;
+    border-radius: 5px;
+  }
+  .theme--light.v-icon {
+    background-color: #cccccc;
+    border-radius: 50%;
+  }
+  .theme--light.v-icon:hover {
+    background-color: #ffffff;
+    border-radius: 50%;
   }
 }
 @media only screen and (max-width: 960px) {
