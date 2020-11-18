@@ -133,8 +133,8 @@ export const sendEcrc20Balance = async (
   return txid
 }
 
-const getTxs = async (address: string) => {
-  const txs = await EcocWallet.getTxList(address)
+const getTxs = async (address: string, pageNum = 0) => {
+  const txs = await EcocWallet.getTxList(address, pageNum)
   return txs
 }
 
