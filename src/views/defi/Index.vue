@@ -1,10 +1,8 @@
 <template>
   <div class="layout">
-    <v-container>
-      <div class="address-bar">
-        <HeaderNav />
-      </div>
-    </v-container>
+    <div class="head-wrapper">
+      <HeaderNav />
+    </div>
     <v-responsive>
       <div class="content">
         <DefiNav v-if="!isMobileDevice" />
@@ -36,8 +34,8 @@ import DeFiFooter from '@/components/DeFi/DeFiFooter.vue'
     DefiNav,
     HeaderNav,
     MenuDropdown,
-    DeFiFooter
-  }
+    DeFiFooter,
+  },
 })
 export default class Home extends Vue {
   walletStore = getModule(WalletModule)
@@ -57,8 +55,8 @@ export default class Home extends Vue {
   background-attachment: fixed;
   min-height: 100vh;
   flex-direction: column;
-  background: transparent linear-gradient(0deg, #191d2c 0%, #1a2036 100%) 0% 0% no-repeat
-    padding-box;
+  background: transparent
+    linear-gradient(0deg, #191d2c 0%, #1a2036 100%) 0% 0% no-repeat padding-box;
 }
 .content {
   margin: 0 70px 35px;
@@ -79,15 +77,19 @@ export default class Home extends Vue {
   }
 }
 
-.address-bar {
-  text-align: right;
+.head-wrapper {
   position: relative;
   z-index: 1;
+  margin: 15px 60px;
 }
 
 @media (max-width: 1440px) {
   .content {
     margin: 0 20px 20px;
+  }
+
+  .head-wrapper {
+    margin: 15px 10px;
   }
 }
 

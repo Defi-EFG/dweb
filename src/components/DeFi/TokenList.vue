@@ -68,7 +68,6 @@ export default class TokenList extends Vue {
   mounted() {
     const tokenContainer = document.querySelector('.token-container')
     smoothScroll(tokenContainer, 120, 12)
-    // this.addScrollEvent()
   }
 
   get activeItem() {
@@ -101,7 +100,6 @@ export default class TokenList extends Vue {
   overflow: auto;
   min-height: 226px;
   width: inherit;
-  max-width: 1040px;
 
   &::-webkit-scrollbar-track {
     margin: 8px;
@@ -256,6 +254,19 @@ export default class TokenList extends Vue {
     position: absolute;
     bottom: 1rem;
     left: 2rem;
+  }
+}
+
+@media (max-width: 1920px) {
+  .token-container {
+    max-width: 1040px;
+  }
+}
+
+@media (max-width: 1990px) {
+  .token-container {
+    max-width: 1110px;
+    width: inherit;
   }
 }
 </style>
