@@ -318,13 +318,7 @@ export default class Main extends Vue {
     this.lendingStore.updateSupprtedAssets()
     this.stakingStore.updateStakingInfo()
     this.stakingStore.updateMintingInfo(this.stakingStore.address)
-    this.homeStore.updateSummary().then(() => {
-      console.log(
-        this.homeStore.totalLiquidated,
-        this.homeStore.totalInterest,
-        this.homeStore.totalConsumedGPT
-      )
-    })
+    this.homeStore.updateSummary()
   }
 
   truncateAddress(addr: string) {
