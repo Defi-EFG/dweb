@@ -12,7 +12,7 @@
           <span class="extend-btn" @click="openConfirmTxModal">Extend</span>
         </div>
         <div class="liquid-countdown" v-show="extentTimeRemaining()">
-          <span>{{ timeRemainMessage }} until liquidation.</span>
+          <span>Liquidation protection time: {{ timeRemainMessage }}</span>
         </div>
       </v-card-text>
     </v-card>

@@ -88,7 +88,9 @@
               </div>
               <div class="balance">
                 <div>{{ item.amount.toFixed(2) }} {{ item.currency.name }}</div>
-                <small @click="openConfirmTxModal(item.currency, item.amount)">Withdraw</small>
+                <small @click="openConfirmTxModal(item.currency, item.amount)">{{
+                  $t('views.lendingpage.withdraw')
+                }}</small>
               </div>
             </div>
           </v-card-text>
