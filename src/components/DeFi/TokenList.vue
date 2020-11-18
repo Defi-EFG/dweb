@@ -58,7 +58,7 @@ import { getEstimatedValue } from '@/services/utils'
 import smoothScroll from '@/smoothScroll'
 
 @Component({
-  components: {},
+  components: {}
 })
 export default class TokenList extends Vue {
   walletStore = getModule(WalletModule)
@@ -191,8 +191,8 @@ export default class TokenList extends Vue {
 
 .card-grad-border {
   height: fit-content;
-  background: transparent
-    linear-gradient(183deg, #646464 0%, #474747 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(183deg, #646464 0%, #474747 100%) 0% 0% no-repeat
+    padding-box;
   padding-left: 10px;
   border-radius: 6px;
   margin-right: 5px;

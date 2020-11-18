@@ -53,7 +53,28 @@
           </v-tooltip>
         </div>
         <v-divider></v-divider>
+        <div v-if="tx.subtype === 'Staking - Defi'" class="txdetailwrapper">
+          <p>{{ tx.txResult[0].from }}</p>
+          <p>{{ tx.txResult[0].to }}</p>
+          <p>{{ tx.value }}</p>
+        </div>
+        <div v-else-if="tx.subtype === 'ECRC-20'" class="txdetailwrapper">
+          <p>{{ tx.txResult[0].from }}</p>
+          <p>{{ tx.txResult[0].to }}</p>
+          <p>{{ tx.value }}</p>
+        </div>
+        <div v-else-if="tx.subtype === undefined" class="txdetailwrapper">
+          <p>{{ tx.value }}</p>
+        </div>
+        <div v-else-if="tx.subtype === 'Lending - Defi'" class="txdetailwrapper">
+          <p>{{ tx.txResult[0].from }}</p>
+          <p>{{ tx.txResult[0].to }}</p>
+          <p>{{ tx.value }}</p>
+        </div>
 
+        <div v-else>
+          <p>{{ tx.txResult }}</p>
+        </div>
         <div class="tx-detail">
           <div class="date">
             <span>{{ $t('views.modal.date') }}</span>
@@ -117,13 +138,15 @@ export default class TransactionDetailModal extends Vue {
   copyMsg = 'Copy TxID'
 
   txInfo = {} as Transaction
-
+  start = 0
   get tx() {
     if (this.txid) {
       const txInfo = this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
+      // console.log(txInfo?.txResult)
+      console.log(txInfo)
+      console.log('testlog', txInfo?.type)
       return txInfo
     }
-
     return {} as TxHistory
   }
 
@@ -231,5 +254,8 @@ export default class TransactionDetailModal extends Vue {
     margin-top: 6px;
     margin-bottom: 6px;
   }
+}
+.txdetailwrapper {
+  border: 1px solid orange;
 }
 </style>

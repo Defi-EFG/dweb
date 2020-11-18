@@ -88,7 +88,7 @@ export interface Utxo {
   txid: string
   vout: number
   scriptPubKey: string
-  amount: number
+  amount: number       
   satoshis: number
   isStake: boolean
   height: number

@@ -42,7 +42,7 @@ const SmoothScroll = (target, speed, smooth) => {
     else moving = false
   }
 
-  const requestFrame = (function () {
+  const requestFrame = (function() {
     // requestAnimationFrame cross browser
     return (
       window.requestAnimationFrame ||
@@ -50,7 +50,7 @@ const SmoothScroll = (target, speed, smooth) => {
       window.mozRequestAnimationFrame ||
       window.oRequestAnimationFrame ||
       window.msRequestAnimationFrame ||
-      function (func) {
+      function(func) {
         window.setTimeout(func, 1000 / 50)
       }
     )

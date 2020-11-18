@@ -62,8 +62,8 @@ import TransactionDetailModal from '@/components/modals/TransactionDetailModal.v
 @Component({
   components: {
     TransactionDetailModal,
-    InfiniteLoading,
-  },
+    InfiniteLoading
+  }
 })
 export default class TransactionHistory extends Vue {
   @Prop() page!: string
@@ -99,7 +99,7 @@ export default class TransactionHistory extends Vue {
   }
 
   displayHistory(txid: string) {
-    console.log('SELECT TXID', txid)
+    // console.log('SELECT TXID', txid)
     this.showTxModal = !this.showTxModal
     this.showTxId = txid
   }
@@ -134,8 +134,8 @@ export default class TransactionHistory extends Vue {
 }
 
 .tx-history-head {
-  background: transparent
-    linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
+    padding-box;
 
   span {
     font-size: 16px;
