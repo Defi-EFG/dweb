@@ -43,7 +43,12 @@
             "deposit": "存款",
             "estimated": "估計每日產量",
             "available": "可用（总计：10,000 GPT）",
-            "collateral": "抵押品"
+            "collateral": "抵押品",
+            "total_borrowers": "总供应量",
+            "total_debt": "总供債務",
+            "total_consumedGPT": "总供消耗GPT",
+            "total_liquidated": "总供清算",
+            "total_interest": "总供利息"
         },
         "mainslider": [{
                 "src": "sliderimg01.svg",

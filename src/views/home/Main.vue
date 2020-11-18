@@ -306,35 +306,35 @@ export default class Main extends Vue {
   get totals() {
     return [
       {
-        name: 'Total Borrowers',
+        name: this.$t('views.main.total_borrowers'),
         amount: this.totalBorrowers,
         unit: '',
         color: 'colorsl1',
         usd: ''
       },
       {
-        name: 'Total Debt',
+        name: this.$t('views.main.total_debt'),
         amount: this.homeStore.totalDebt,
         unit: '',
         color: 'colorsl2',
         usd: '$'
       },
       {
-        name: 'Total Consumed GPT',
+        name: this.$t('views.main.total_consumedGPT'),
         amount: this.homeStore.totalConsumedGPT,
         unit: 'GPT',
         color: 'colorsl1',
         usd: ''
       },
       {
-        name: 'Total Liquidated',
+        name: this.$t('views.main.total_liquidated'),
         amount: this.homeStore.totalLiquidated,
         unit: 'EFG',
         color: 'colorsl2',
         usd: ''
       },
       {
-        name: 'Total Interest',
+        name: this.$t('views.main.total_interest'),
         amount: this.homeStore.totalInterest,
         unit: 'EFG',
         color: 'colorsl1',
