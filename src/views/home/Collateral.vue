@@ -253,5 +253,8 @@ export default class Callaterr extends Vue {
   .logo_ecoc .logo_ecoc_m_text span {
     font-size: 20px;
   }
+  .sec_m2 {
+    padding: 20px 0 100px 0;
+  }
 }
 </style>

@@ -98,6 +98,22 @@
   {
     "constant":true,
     "inputs":[
+      
+    ],
+    "name":"getTotalInterest",
+    "outputs":[
+      {
+        "name":"totalInterest",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
       {
         "name":"_depositors_addr",
         "type":"address"
@@ -177,29 +193,6 @@
     ],
     "payable":false,
     "stateMutability":"view",
-    "type":"function"
-  },
-  {
-    "constant":false,
-    "inputs":[
-      {
-        "name":"_beneficiar",
-        "type":"address"
-      },
-      {
-        "name":"_amount",
-        "type":"uint256"
-      }
-    ],
-    "name":"withdrawGPT",
-    "outputs":[
-      {
-        "name":"result",
-        "type":"bool"
-      }
-    ],
-    "payable":false,
-    "stateMutability":"nonpayable",
     "type":"function"
   },
   {
@@ -533,6 +526,88 @@
     "type":"function"
   },
   {
+    "constant":true,
+    "inputs":[
+      
+    ],
+    "name":"getTotalConsumedGPT",
+    "outputs":[
+      {
+        "name":"totalGPT",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_pool_addr",
+        "type":"address"
+      },
+      {
+        "name":"_start",
+        "type":"uint256"
+      },
+      {
+        "name":"_offset",
+        "type":"uint256"
+      }
+    ],
+    "name":"listLiquidable",
+    "outputs":[
+      {
+        "name":"liquidable",
+        "type":"address[]"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      
+    ],
+    "name":"getTotalLiquidated",
+    "outputs":[
+      {
+        "name":"totalLiquidated",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":false,
+    "inputs":[
+      {
+        "name":"_symbol",
+        "type":"bytes8[]"
+      },
+      {
+        "name":"_rate",
+        "type":"uint256[]"
+      }
+    ],
+    "name":"setAllUsdtRates",
+    "outputs":[
+      {
+        "name":"result",
+        "type":"bool"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
     "constant":false,
     "inputs":[
       {
@@ -653,22 +728,22 @@
     "type":"function"
   },
   {
-    "constant":true,
+    "constant":false,
     "inputs":[
       {
-        "name":"_pool_addr",
-        "type":"address"
+        "name":"_amount",
+        "type":"uint256"
       }
     ],
-    "name":"listLiquidable",
+    "name":"withdrawGPT",
     "outputs":[
       {
-        "name":"allLiquidable",
-        "type":"address[]"
+        "name":"result",
+        "type":"bool"
       }
     ],
     "payable":false,
-    "stateMutability":"view",
+    "stateMutability":"nonpayable",
     "type":"function"
   },
   {

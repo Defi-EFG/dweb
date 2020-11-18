@@ -45,7 +45,6 @@ export default class LineChart extends Vue {
     if (labelSet.length > 0) {
       if (this.ctx) {
         this.renderChart(this.ctx, this.labelSet, this.dataSet)
-        console.log(this.labelSet)
       }
     }
   }

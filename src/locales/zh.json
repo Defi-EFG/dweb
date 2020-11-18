@@ -43,7 +43,12 @@
             "deposit": "存款",
             "estimated": "估計每日產量",
             "available": "可用（总计：10,000 GPT）",
-            "collateral": "抵押品"
+            "collateral": "抵押品",
+            "total_borrowers": "总应量",
+            "total_debt": "总債務",
+            "total_consumedGPT": "总消耗GPT",
+            "total_liquidated": "总清算",
+            "total_interest": "总利息"
         },
         "mainslider": [{
                 "src": "sliderimg01.svg",
@@ -130,7 +135,8 @@
             "total_balance": "总余额",
             "to_Address": "到地址",
             "amount": "金额",
-            "no_transaction_history": "没有交易历史记录"
+            "no_transaction_history": "没有交易历史记录",
+            "no_contact_address": "没有钱包地址"
         },
         "lendingpage": {
             "collateral_bl": "抵押品余额",

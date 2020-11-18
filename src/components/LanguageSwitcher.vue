@@ -1,7 +1,5 @@
 <template>
   <div class="lg_select">
-    <!-- <a href="#" @click="selectlangs('en')">EN</a>
-    <a href="#" @click="selectlangs('zh')">中文</a> -->
     <v-select
       v-model="locale"
       :items="langs"
@@ -11,13 +9,13 @@
       persistent-hint
       return-object
       single-line
+      color="#ffffff"
       @input="selectlangs"
     ></v-select>
   </div>
 </template>
 
 <script lang="ts">
-/* eslint-disable no-unused-vars */
 import { Vue, Component } from 'vue-property-decorator'
 import moment from 'moment'
 import { supportedLanguages } from '@/i18n'
@@ -44,6 +42,13 @@ export default class LanguageSwitcher extends Vue {
 }
 </style>
 <style lang="scss">
+.theme--light.v-select .v-select__selection--comma {
+  color: rgb(255 255 255 / 87%) !important;
+}
+.v-application .primary--text {
+  color: #ffffff !important;
+  caret-color: #ffffff !important;
+}
 .lg_select {
   .v-select > .v-input__control > .v-input__slot {
     width: 50px !important;
@@ -53,6 +58,20 @@ export default class LanguageSwitcher extends Vue {
   }
   .v-select__selection--comma {
     margin: 7px 4px 7px 3px !important;
+  }
+  .v-application .primary--text {
+    color: #ffffff !important;
+    caret-color: #ffffff !important;
+  }
+  .v-input__icon i {
+    color: #ffffff !important;
+  }
+  .v-text-field.v-input--is-focused > .v-input__control > .v-input__slot:after {
+    color: #ffffff !important;
+  }
+  .v-text-field {
+    padding-top: 0px !important;
+    margin-top: 4px !important;
   }
 }
 </style>

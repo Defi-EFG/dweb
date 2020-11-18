@@ -11,7 +11,6 @@
         <v-btn outlined small @click="openUnlockWallet">{{
           $t('views.walletpage.unlock_wallet')
         }}</v-btn>
-        <div class="lang-switcg"><language-switcher></language-switcher></div>
       </template>
       <v-menu v-model="menu" v-else offset-y left>
         <template v-slot:activator="{ on }">
@@ -54,14 +53,12 @@ import WalletModule from '@/store/wallet'
 import UnlockWallet from './modals/UnlockWallet.vue'
 import PrivateKey from './modals/PrivateKeyModal.vue'
 import TxNotifications from '@/components/DeFi/TxNotifications.vue'
-import LanguageSwitcher from './LanguageSwitcher.vue'
 
 @Component({
   components: {
     UnlockWallet,
     PrivateKey,
-    TxNotifications,
-    LanguageSwitcher
+    TxNotifications
   }
 })
 export default class HeaderNav extends Vue {
@@ -181,10 +178,6 @@ export default class HeaderNav extends Vue {
     border-radius: 50%;
     margin-right: 6px;
   }
-}
-.lang-switcg {
-  padding: 10px;
-  margin-top: 10px;
 }
 
 @media (max-width: 600px) {

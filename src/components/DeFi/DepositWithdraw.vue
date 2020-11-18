@@ -12,7 +12,7 @@
 
       <v-tab-item class="deposit-tab">
         <div class="label pl-3">
-          <img src="@/assets/efg_logo.svg" />
+          <img src="@/assets/efg_logo.svg" alt="" />
           <span>{{ stakingCurrencyName }} - {{ $t('views.stakingpage.flexible_s') }}</span>
         </div>
         <small class="pl-3">
@@ -171,9 +171,13 @@ export default class DepositWithdraw extends Vue {
   amount: string | number = 0
 
   get currency() {
-    const stakingCurrency = this.walletStore.currenciesList.find(
-      currency => currency.name === this.stakingCurrencyName
-    )
+    const stakingCurrency = this.walletStore.currenciesList.find(currency => {
+      if (this.stakingCurrencyAddress && currency.tokenInfo) {
+        return this.stakingCurrencyAddress === currency.tokenInfo.address
+      }
+
+      return this.stakingCurrencyName === currency.name
+    })
 
     return stakingCurrency || {}
   }
@@ -184,6 +188,10 @@ export default class DepositWithdraw extends Vue {
 
   get contractAddr() {
     return this.stakingStore.address
+  }
+
+  get stakingCurrencyAddress() {
+    return this.stakingCurrency.contractAddress || ''
   }
 
   get stakingCurrencyName() {

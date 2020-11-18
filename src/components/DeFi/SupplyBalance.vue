@@ -7,12 +7,12 @@
         <div class="balance" :class="isLiquidate ? 'liquidate' : ''">
           ${{ balance | numberWithCommas({ fixed: [0, 8] }) }}
         </div>
-        <div class="liquid-countdown" v-show="isLiquidate">
+        <div class="liquid-countdown" v-show="isNearLiquidate && !extentTimeRemaining()">
           <span>Estimated GPT needed: {{ estimatedGPT }}</span>
           <span class="extend-btn" @click="openConfirmTxModal">Extend</span>
         </div>
         <div class="liquid-countdown" v-show="extentTimeRemaining()">
-          <span>{{ timeRemainMessage }} until liquidation.</span>
+          <span>Liquidation protection time: {{ timeRemainMessage }}</span>
         </div>
       </v-card-text>
     </v-card>
@@ -70,8 +70,8 @@ export default class SupplyBalance extends Vue {
   timeRemainMessage: any = 0
 
   mounted() {
-    if (this.isLiquidate) {
-      this.getEstimatedGPT().then((amount: any) => {
+    if (this.isNearLiquidate) {
+      this.getEstimatedGPT().then(amount => {
         this.estimatedGPT = amount
       })
     }
@@ -82,6 +82,11 @@ export default class SupplyBalance extends Vue {
     setInterval(() => {
       this.timeRemainMessage = this.extentTimeRemaining()
     }, 1000)
+  }
+  
+  get isNearLiquidate() {
+    const margin = 0.8
+    return this.lendingStore.borrowBalance / this.lendingStore.borrowLimit > margin
   }
 
   get address() {
@@ -193,7 +198,7 @@ export default class SupplyBalance extends Vue {
       })
   }
 
-  @Watch('isLiquidate')
+  @Watch('isNearLiquidate')
   checkIfLiquidation(value: boolean) {
     if (value) {
       this.getEstimatedGPT().then((amount) => {

@@ -43,6 +43,18 @@ export default class DoughnutChart extends Vue {
     return this.stakingAvailable
   }
 
+  mounted() {
+    this.renderChart(this.ctx, this.max, this.stakingTotal)
+    this.stakingStore.updateMintingInfo(this.stakingStore.address)
+  }
+
+  @Watch('stakingTotal')
+  onLoggedIn(ready: any) {
+    if (ready) {
+      this.renderChart(this.ctx, this.max, this.stakingTotal)
+    }
+  }
+
   renderChart(element: any, max: number, stakingTotal: number) {
     /* eslint-disable */
     const myChart = new Chart(element, {
@@ -70,17 +82,6 @@ export default class DoughnutChart extends Vue {
         cutoutPercentage: 63
       }
     })
-  }
-
-  @Watch('stakingAvailable')
-  chartdata(stakingAvailable: number[]) {
-    if (stakingAvailable.length != 0) {
-     this.renderChart(this.ctx, this.max, this.stakingTotal)
-    }
-  }
-  mounted() {
-    this.renderChart(this.ctx, this.max, this.stakingTotal)
-    this.stakingStore.updateMintingInfo(this.stakingStore.address)
   }
 
   get gradientFill() {

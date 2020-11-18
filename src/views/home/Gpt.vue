@@ -248,5 +248,8 @@ export default class Gpt extends Vue {
   .logo_ecoc .logo_ecoc_m_text span {
     font-size: 20px;
   }
+  .sec_m2 {
+    padding: 20px 0 30px 0;
+  }
 }
 </style>

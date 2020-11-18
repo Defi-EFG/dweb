@@ -34,7 +34,8 @@
               <doughnut-chart
                 class="chart_dg_logo"
                 :max="max"
-                :currentValue="currentValue"
+                :currentValue="totalBorrowered"
+                :currencyName="currencyName"
               ></doughnut-chart>
             </div>
           </v-col>
@@ -74,8 +75,14 @@ export default class Efg extends Vue {
   query = this.$route.query.pool
   date = [] as string[]
   price = [] as number[]
-  max = this.pool?.totalSupply as number
-  currentValue = this.pool?.totalBorrowed as number
+
+  get pool() {
+    return this.lendingStore.pools.find(asset => asset.address === this.query)
+  }
+
+  get max() {
+    return this.pool?.totalSupply as number
+  }
 
   get interestRate() {
     return this.lendingStore.loan.interestRate
@@ -85,16 +92,20 @@ export default class Efg extends Vue {
     return this.pool?.totalBorrowers as number
   }
 
+  get totalBorrowered() {
+    return this.pool?.totalBorrowed as number
+  }
+
+  get currencyName() {
+    return this.pool?.currency.name as string
+  }
+
   get labelSet() {
     return this.date
   }
 
   get dataSet() {
     return this.price
-  }
-
-  get pool() {
-    return this.lendingStore.pools.find(asset => asset.address === this.query)
   }
 
   mounted() {
@@ -266,6 +277,9 @@ export default class Efg extends Vue {
   }
   .logo_ecoc .logo_ecoc_m_text span {
     font-size: 20px;
+  }
+  .sec_m2 {
+    padding: 20px 0 30px 0;
   }
 }
 </style>

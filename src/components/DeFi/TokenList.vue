@@ -14,7 +14,7 @@
             :class="{ selected: index === activeItem }"
             @click="selectCurrency(index)"
           >
-            <img :class="`token-mark ${currency.name}`" :src="currency.style.mark" />
+            <img :class="`token-mark ${currency.name}`" :src="currency.style.mark" alt="" />
             <v-card-text class="token-text">
               <v-row>
                 <v-col cols="12">

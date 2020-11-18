@@ -164,6 +164,7 @@ export default class Docs extends Vue {
     padding: 20px 20px;
     height: 70px;
     background: #ffffff;
+    display: none;
   }
   .sibar_dc {
     display: inline;

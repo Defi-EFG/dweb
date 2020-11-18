@@ -18,7 +18,7 @@
         <template v-if="'created' in contactList">
           <div class="empty-message">
             <v-icon class="book-icon">mdi-book-open-page-variant-outline</v-icon>
-            <div class="message">No contact address</div>
+            <div class="message">{{ $t('views.walletpage.no_contact_address') }}</div>
           </div>
         </template>
 

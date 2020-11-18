@@ -8,13 +8,13 @@
       </v-col>
       <v-col cols="6" md="5">
         <div class="dougnut-detail">
-          <p>{{ pools.currency.name }} - {{ $t('views.detail.total_supply') }}</p>
+          <p>{{ currencyName }} - {{ $t('views.detail.total_supply') }}</p>
           <div class="value_price1">
-            {{ pools.totalSupply | numberWithCommas({ fixed: [0, 2] }) }}
+            {{ totlemax | numberWithCommas({ fixed: [0, 2] }) }}
           </div>
-          <p>{{ pools.currency.name }} - {{ $t('views.detail.total_borrowed') }}</p>
+          <p>{{ currencyName }} - {{ $t('views.detail.total_borrowed') }}</p>
           <div class="value_price2">
-            {{ pools.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }}
+            {{ totalcurrentValue | numberWithCommas({ fixed: [0, 2] }) }}
           </div>
         </div>
       </v-col>
@@ -24,41 +24,40 @@
 
 <script lang="ts">
 /* eslint-disable @typescript-eslint/ban-ts-ignore */
-import { Vue, Component, Watch } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import Chart from 'chart.js'
-import LendingModule from '@/store/lending'
-import { getModule } from 'vuex-module-decorators'
 
 @Component({})
 export default class StakingChart extends Vue {
-  lendingStore = getModule(LendingModule)
-  query = this.$route.query.pool
-  max = this.pools?.totalSupply as number
-  currentValue = this.pools?.totalBorrowed as number
+  @Prop({ default: 1000 }) readonly max!: number
+  @Prop({ default: 0 }) readonly currentValue!: number
+  @Prop({ default: '###' }) readonly currencyName!: string
 
-  mounted() {
-    this.pools
-    this.renderChart(this.ctx, this.max, this.currentValue)
+  get totlemax() {
+    return this.max
   }
-
-  @Watch('currentValue')
-  chartdata(currentValue: number[]) {
-    if (currentValue.length > 0) {
-      if (this.ctx) {
-        this.renderChart(this.ctx, this.max, this.currentValue)
-      }
-    }
+  get totalcurrentValue() {
+    return this.currentValue
   }
-
+  get listcurrencyName() {
+    return this.currencyName
+  }
   get ctx() {
     return document.getElementById('myChartGpt')
   }
 
-  get pools() {
-    return this.lendingStore.pools.find(asset => asset.address === this.query)
+  mounted() {
+    this.currentValue
+    this.renderChart(this.ctx, this.totlemax, this.totalcurrentValue)
+  }
+  @Watch('currentValue')
+  onLoggedIn(ready: any) {
+    if (ready) {
+      this.renderChart(this.ctx, this.totlemax, this.totalcurrentValue)
+    }
   }
 
-  renderChart(element: any, max: number, current: number) {
+  renderChart(element: any, totlemax: number, totalcurrentValue: number) {
     /* eslint-disable */
     const myChart = new Chart(element, {
       type: 'doughnut',
@@ -69,7 +68,7 @@ export default class StakingChart extends Vue {
             borderWidth: 0,
             borderColor: '#222738',
             backgroundColor: [this.gradientFill, '#888888'],
-            data: [current, max]
+            data: [totalcurrentValue, totlemax]
           }
         ]
       },
@@ -97,6 +96,7 @@ export default class StakingChart extends Vue {
 
     return gradientStroke
   }
+
 }
 </script>
 

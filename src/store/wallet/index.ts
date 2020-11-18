@@ -146,7 +146,14 @@ export default class WalletModule extends VuexModule implements Wallet {
   // update everything except price
   @Mutation
   updateCurrencyInfo(currencyData: Currency) {
-    const currencyIndex = this.currencies.findIndex(currency => currency.name === currencyData.name)
+    const currencyIndex = this.currencies.findIndex(currency => {
+      if (currency.tokenInfo && currencyData.tokenInfo) {
+        return currency.tokenInfo.address === currencyData.tokenInfo.address
+      }
+
+      return currency.name === currencyData.name
+    })
+
     if (currencyIndex < 0) {
       this.currencies.push(currencyData)
     } else {
@@ -212,7 +219,12 @@ export default class WalletModule extends VuexModule implements Wallet {
     let erc20BalanceInfo = await Ecoc.getEcrc20Balance(this.address)
     const zeroBalanceCurrencies = this.currenciesList
       .filter(currency => currency.name !== 'ECOC')
-      .filter(currency => !erc20BalanceInfo.find(newToken => currency.name === newToken.name))
+      .filter(
+        currency =>
+          !erc20BalanceInfo.find(
+            newToken => currency.tokenInfo?.address === newToken.tokenInfo?.address
+          )
+      )
       .map(currency => {
         currency.balance = '0'
         return currency

@@ -199,7 +199,9 @@ export default class TransactionConfirmationModal extends Vue {
       return !!value || this.$t('views.modal.required')
     },
     min: (v: any) => {
-      return v.length >= 6 || this.$t('views.modal.characters')
+      if (this.visible) {
+        return v.length >= 6 || this.$t('views.modal.characters')
+      }
     }
   }
 

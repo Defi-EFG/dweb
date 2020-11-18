@@ -35,7 +35,7 @@
       <div class="contact-address" v-if="displayContact" v-click-outside="onClickOutside">
         <v-list-item-group color="#363a4a" class="address-list">
           <template v-if="'created' in contactList">
-            <div class="empty-message">No contact address</div>
+            <div class="empty-message">{{ $t('views.walletpage.no_contact_address') }}</div>
           </template>
 
           <template v-else>
