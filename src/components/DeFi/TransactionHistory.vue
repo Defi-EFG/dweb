@@ -34,6 +34,7 @@
             </div>
           </v-list-item-content>
         </v-list-item>
+        <infinite-loading @infinite="infiniteHandler"></infinite-loading>
       </v-list>
     </v-card-text>
     <div class="empty-message" v-else>
@@ -55,12 +56,14 @@ import moment from 'moment'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import * as constants from '@/constants'
+import InfiniteLoading from 'vue-infinite-loading'
 import TransactionDetailModal from '@/components/modals/TransactionDetailModal.vue'
 
 @Component({
   components: {
-    TransactionDetailModal
-  }
+    TransactionDetailModal,
+    InfiniteLoading,
+  },
 })
 export default class TransactionHistory extends Vue {
   @Prop() page!: string
@@ -68,6 +71,12 @@ export default class TransactionHistory extends Vue {
   walletStore = getModule(WalletModule)
   showTxModal = false
   showTxId = ''
+  // start from 1 after first 10 tx
+  pageNum = 1
+
+  get isLoggedIn() {
+    return this.walletStore.isWalletUnlocked
+  }
 
   get address() {
     return this.walletStore.address
@@ -90,6 +99,7 @@ export default class TransactionHistory extends Vue {
   }
 
   displayHistory(txid: string) {
+    console.log('SELECT TXID', txid)
     this.showTxModal = !this.showTxModal
     this.showTxId = txid
   }
@@ -103,6 +113,18 @@ export default class TransactionHistory extends Vue {
 
     return msg.substr(0, frontChars) + separator + msg.substr(msg.length - backChars)
   }
+
+  async infiniteHandler($state: any) {
+    if (this.pageNum < this.walletStore.txList.pagesTotal) {
+      setTimeout(async () => {
+        await this.walletStore.updateTxHistoryByPage(this.pageNum)
+        $state.loaded()
+        this.pageNum++
+      }, 500)
+    } else {
+      $state.complete()
+    }
+  }
 }
 </script>
 
@@ -112,8 +134,8 @@ export default class TransactionHistory extends Vue {
 }
 
 .tx-history-head {
-  background: transparent linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
-    padding-box;
+  background: transparent
+    linear-gradient(180deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat padding-box;
 
   span {
     font-size: 16px;
