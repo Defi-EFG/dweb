@@ -55,14 +55,20 @@ import { getModule } from 'vuex-module-decorators'
 import { Ecrc20 } from '@/types/currency'
 import WalletModule from '@/store/wallet'
 import { getEstimatedValue } from '@/services/utils'
+import smoothScroll from '@/smoothScroll'
 
 @Component({
-  components: {}
+  components: {},
 })
 export default class TokenList extends Vue {
   walletStore = getModule(WalletModule)
 
   getEstimatedValue = getEstimatedValue
+
+  mounted() {
+    const tokenContainer = document.querySelector('.token-container')
+    smoothScroll(tokenContainer, 120, 12)
+  }
 
   get activeItem() {
     return this.walletStore.selectedCurrencyIndex
@@ -94,7 +100,6 @@ export default class TokenList extends Vue {
   overflow: auto;
   min-height: 226px;
   width: inherit;
-  max-width: 1040px;
 
   &::-webkit-scrollbar-track {
     margin: 8px;
@@ -186,8 +191,8 @@ export default class TokenList extends Vue {
 
 .card-grad-border {
   height: fit-content;
-  background: transparent linear-gradient(183deg, #646464 0%, #474747 100%) 0% 0% no-repeat
-    padding-box;
+  background: transparent
+    linear-gradient(183deg, #646464 0%, #474747 100%) 0% 0% no-repeat padding-box;
   padding-left: 10px;
   border-radius: 6px;
   margin-right: 5px;
@@ -249,6 +254,19 @@ export default class TokenList extends Vue {
     position: absolute;
     bottom: 1rem;
     left: 2rem;
+  }
+}
+
+@media (max-width: 1920px) {
+  .token-container {
+    max-width: 1040px;
+  }
+}
+
+@media (max-width: 1990px) {
+  .token-container {
+    max-width: 1110px;
+    width: inherit;
   }
 }
 </style>

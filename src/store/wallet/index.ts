@@ -18,7 +18,7 @@ export default class WalletModule extends VuexModule implements Wallet {
   address = ''
   network = ''
   keystore = {} as KeyStore
-  txList = {} as TxList
+  txList = { pagesTotal: 0, txs: [] } as TxList
   currencies = currencyInit()
   selectedCurrencyIndex = 0
   lastUpdate = 0 //timestamp
@@ -73,17 +73,21 @@ export default class WalletModule extends VuexModule implements Wallet {
         status =
           tx.receipt[0].excepted === 'None' ? constants.STATUS_SUCCEED : constants.STATUS_FAILED
         address = tx.receipt[0].contractAddress
-        txResult = Ecrc20.decode(tx.receipt)
-        const tokenInfo = Ecrc20.getKnownTokensInfo(address, this.network)
+        try {
+          txResult = Ecrc20.decode(tx.receipt)
+          const tokenInfo = Ecrc20.getKnownTokensInfo(address, this.network)
 
-        if (tokenInfo) {
-          const decimals = tokenInfo.decimals
-          currencyType = tokenInfo.symbol
-          subtype = 'ECRC-20'
-          value = utils.toDecimals(txResult[0].log[0].value.toNumber(), decimals)
-          type = txResult[0].log[0]._eventName
-        } else {
-          subtype = utils.addressFilter(address)
+          if (tokenInfo) {
+            const decimals = tokenInfo.decimals
+            currencyType = tokenInfo.symbol
+            subtype = 'ECRC-20'
+            value = utils.toDecimals(txResult[0].log[0].value.toNumber(), decimals)
+            type = txResult[0].log[0]._eventName
+          } else {
+            subtype = utils.addressFilter(address)
+          }
+        } catch (e) {
+          //
         }
       }
 
@@ -177,6 +181,15 @@ export default class WalletModule extends VuexModule implements Wallet {
   }
 
   @Action
+  async updateTxHistoryByPage(pageNum: number) {
+    const newTxs = await Ecoc.getTxs(this.address, pageNum)
+    const index = this.txList.txs.length
+
+    this.txList.txs.splice(index, 0, ...newTxs.txs)
+    console.log('txListupdated on', this.txList)
+  }
+
+  @Action
   synced() {
     this.context.commit('updateStatus', constants.STATUS_SYNCED)
     return constants.STATUS_SYNCED
@@ -235,8 +248,17 @@ export default class WalletModule extends VuexModule implements Wallet {
     if (!this.address) {
       return false
     }
-
-    const txs = await Ecoc.getTxs(this.address)
+    let txs: TxList = { pagesTotal: 0, txs: [] } as TxList
+    if (this.txList.txs.length > 10 && this.txList.pagesTotal > 10) {
+      const toUpdatePage = Math.ceil(this.txList.txs.length / 10)
+      for (let page = 0; page < toUpdatePage; page++) {
+        const txList = await Ecoc.getTxs(this.address, page)
+        txs.pagesTotal = txList.pagesTotal
+        txs.txs.splice(txs.txs.length, 0, ...txList.txs)
+      }
+    } else {
+      txs = await Ecoc.getTxs(this.address)
+    }
     this.context.commit('updateTransactions', txs)
     this.context.commit('updateTime')
 

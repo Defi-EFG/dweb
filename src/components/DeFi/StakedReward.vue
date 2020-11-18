@@ -29,6 +29,7 @@
           class="staked-amount"
           placeholder="0"
           type="number"
+          pattern="[0-9]*"
           :prefix="stakingpage.amount"
           :suffix="currencyName"
           v-model="withdrawAmount"

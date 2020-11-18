@@ -126,8 +126,8 @@ export default class EcocWallet implements EWallet {
     return (await ecocw3.api.getTxInfo(txid)) as Transaction
   }
 
-  static async getTxList(address: string) {
-    return (await ecocw3.api.getTxList(address)) as TxData
+  static async getTxList(address: string, pageNum = 0) {
+    return (await ecocw3.api.getTxList(address, pageNum)) as TxData
   }
 
   static async getEcrc20(address: string) {

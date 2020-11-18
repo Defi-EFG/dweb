@@ -11,6 +11,7 @@
       :label="lendingpage.borrowamount"
       placeholder="0"
       type="number"
+      pattern="[0-9]*"
       :suffix="currencyName"
       v-model="borrowValue"
       height="43"
