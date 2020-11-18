@@ -505,30 +505,16 @@ export default class CollateralDeposit extends Vue {
     this.selectdata = Loanername
     this.active = Loanername
   }
+
   toStep(step: any) {
     this.step = step
   }
+
   connectStep() {
     if (this.selectdata != '') {
       this.toStep(2)
     }
   }
-
-  // leftarrow() {
-  //   this.step = 1
-  // }
-
-  // nextcollat() {
-  //   this.step = 3
-  // }
-
-  // leftarrow3() {
-  //   this.step = 2
-  // }
-
-  // toLoading() {
-  //   this.step = 4
-  // }
 
   addressFilter(address: string) {
     if (address == this.lendingStore.address) return 'Lending Platform'
