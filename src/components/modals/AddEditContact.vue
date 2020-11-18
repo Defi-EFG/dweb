@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="visible" max-width="400">
+    <v-dialog v-model="visible" max-width="400" persistent>
       <v-card>
         <v-card-title class="card-title">
           <span>{{ addMode ? modal.add_contact : modal.edit_contact }}</span>

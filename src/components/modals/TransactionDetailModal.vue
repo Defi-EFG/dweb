@@ -11,9 +11,7 @@
 
       <v-card-text class="td-body">
         <div class="tx-type">
-          <span
-            >{{ tx.type }} <span class="text-capitalize">({{ tx.subtype }})</span></span
-          >
+          <span>{{ tx.type }}</span>
           <v-spacer></v-spacer>
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
@@ -55,18 +53,6 @@
           </v-tooltip>
         </div>
         <v-divider></v-divider>
-        <div class="tx-direction">
-          <div class="from">
-            <small>{{ $t('views.modal.from') }}</small>
-            <v-spacer />
-            <small>{{ tx.type === direction.TYPE_SENT ? address : tx.address }}</small>
-          </div>
-          <div class="to">
-            <small>{{ $t('views.modal.from') }}</small>
-            <v-spacer />
-            <small>{{ tx.type === direction.TYPE_RECEIVED ? address : tx.address }}</small>
-          </div>
-        </div>
 
         <div class="tx-detail">
           <div class="date">

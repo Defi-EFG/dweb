@@ -87,10 +87,13 @@
                 <span>{{ item.currency.name }}</span>
               </div>
               <div class="balance">
-                <div>{{ item.amount.toFixed(2) }} {{ item.currency.name }}</div>
-                <small @click="openConfirmTxModal(item.currency, item.amount)">{{
-                  $t('views.lendingpage.withdraw')
-                }}</small>
+                <div>
+                  {{ item.amount | numberWithCommas({ fixed: [0, 8] }) }}
+                  {{ item.currency.name }}
+                </div>
+                <small @click="openConfirmTxModal(item.currency, item.amount)">
+                  <span class="withdraw">{{ $t('views.lendingpage.withdraw') }}</span>
+                </small>
               </div>
             </div>
           </v-card-text>
@@ -277,7 +280,10 @@ export default class LendingActivity extends Vue {
 .supply-item:nth-last-child(1) {
   margin-bottom: 0;
 }
-
+.withdraw {
+  text-decoration: underline;
+  cursor: pointer;
+}
 @media (max-width: 768px) {
   .my-collateral,
   .my-borrowing,

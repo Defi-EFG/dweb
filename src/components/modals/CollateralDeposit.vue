@@ -78,7 +78,7 @@
           <v-stepper-content step="2">
             <v-card color="#FFFFFF00">
               <v-card-title class="modal-header">
-                <v-btn @click="leftarrow()" icon><v-icon color="white">$leftarrow</v-icon></v-btn>
+                <v-btn @click="toStep(1)" icon><v-icon color="white">$leftarrow</v-icon></v-btn>
                 <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
               <div class="transaction-confirmation-wrapper collateral_pddeful">
@@ -96,7 +96,7 @@
                   ><br />
                   <input type="text" v-model="selectdata" disabled />
                 </div>
-                <v-btn large depressed class="text-capitalize mb-7" @click="nextcollat()">{{
+                <v-btn large depressed class="text-capitalize mb-7" @click="toStep(3)">{{
                   $t('views.modal.next')
                 }}</v-btn>
               </div>
@@ -106,7 +106,7 @@
           <v-stepper-content step="3">
             <v-card color="#FFFFFF00">
               <v-card-title class="modal-header">
-                <v-btn @click="leftarrow3()" icon><v-icon color="white">$leftarrow</v-icon></v-btn>
+                <div></div>
                 <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
               <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin mb-7">
@@ -196,7 +196,7 @@
                         large
                         color="primary"
                         class="text-capitalize1"
-                        @click="leftarrow3"
+                        @click="toStep(2)"
                         >{{ $t('views.modal.cancel') }}</v-btn
                       >
                       <v-btn
@@ -506,26 +506,14 @@ export default class CollateralDeposit extends Vue {
     this.active = Loanername
   }
 
+  toStep(step: any) {
+    this.step = step
+  }
+
   connectStep() {
     if (this.selectdata != '') {
-      this.step = 2
+      this.toStep(2)
     }
-  }
-
-  leftarrow() {
-    this.step = 1
-  }
-
-  nextcollat() {
-    this.step = 3
-  }
-
-  leftarrow3() {
-    this.step = 2
-  }
-
-  toLoading() {
-    this.step = 4
   }
 
   addressFilter(address: string) {
@@ -574,7 +562,7 @@ export default class CollateralDeposit extends Vue {
 
   async depositCollateral(walletParams: WalletParams) {
     this.loading = true
-    this.toLoading()
+    // this.toLoading()
 
     const amount = Number(this.amount)
     const poolAddress = this.selectdata
@@ -701,7 +689,7 @@ export default class CollateralDeposit extends Vue {
   background-color: #4a2752;
 }
 #style-1::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   background-color: #f5f5f5;
 }
@@ -713,7 +701,7 @@ export default class CollateralDeposit extends Vue {
 
 #style-1::-webkit-scrollbar-thumb {
   border-radius: 10px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #b052ee;
 }
 
