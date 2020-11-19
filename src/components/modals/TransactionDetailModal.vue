@@ -11,7 +11,7 @@
 
       <v-card-text class="td-body">
         <div class="tx-type">
-          <span>{{ tx.type }}</span>
+          <span>{{ $t(tx.type) }}</span>
           <v-spacer></v-spacer>
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">

@@ -176,17 +176,27 @@ export default class WalletModule extends VuexModule implements Wallet {
   }
 
   @Mutation
-  updateTransactions(txs: TxList) {
-    this.txList = txs
+  updateTransactions(txList: TxList) {
+    this.txList = txList
   }
 
-  @Action
+  @Action({ rawError: true })
   async updateTxHistoryByPage(pageNum: number) {
-    const newTxs = await Ecoc.getTxs(this.address, pageNum)
-    const index = this.txList.txs.length
+    try {
+      const txList = this.txList
+      const newTxs = await Ecoc.getTxs(this.address, pageNum)
+      const index = this.txList.txs.length
 
-    this.txList.txs.splice(index, 0, ...newTxs.txs)
-    console.log('txListupdated on', this.txList)
+      txList.pagesTotal = newTxs.pagesTotal
+      txList.txs.splice(index, 0, ...newTxs.txs)
+
+      this.context.commit('updateTransactions', txList)
+      this.context.commit('updateTime')
+    } catch (error) {
+      return Promise.reject(error)
+    }
+
+    return true
   }
 
   @Action
@@ -195,7 +205,7 @@ export default class WalletModule extends VuexModule implements Wallet {
     return constants.STATUS_SYNCED
   }
 
-  @Action
+  @Action({ rawError: true })
   async createNewWallet(password: string) {
     return await Ecoc.generateNewKeystore(password)
   }
@@ -205,62 +215,72 @@ export default class WalletModule extends VuexModule implements Wallet {
     return Ecoc.keystoreFromWiff(payload.wif, payload.password)
   }
 
-  @Action
+  @Action({ rawError: true })
   async updateBalance() {
     if (!this.address) {
       return false
     }
 
-    const ecocBalanceInfo = await Ecoc.getEcocBalance(this.address)
-    if (ecocBalanceInfo) {
-      this.context.commit('updateCurrencyInfo', ecocBalanceInfo)
+    try {
+      const ecocBalanceInfo = await Ecoc.getEcocBalance(this.address)
+      if (ecocBalanceInfo) {
+        this.context.commit('updateCurrencyInfo', ecocBalanceInfo)
+      }
+
+      let erc20BalanceInfo = await Ecoc.getEcrc20Balance(this.address)
+      const zeroBalanceCurrencies = this.currenciesList
+        .filter(currency => currency.name !== 'ECOC')
+        .filter(
+          currency =>
+            !erc20BalanceInfo.find(
+              newToken => currency.tokenInfo?.address === newToken.tokenInfo?.address
+            )
+        )
+        .map(currency => {
+          currency.balance = '0'
+          return currency
+        })
+
+      erc20BalanceInfo = [...erc20BalanceInfo, ...zeroBalanceCurrencies]
+
+      if (erc20BalanceInfo.length > 0) {
+        erc20BalanceInfo.forEach(token => {
+          this.context.commit('updateCurrencyInfo', token)
+        })
+      }
+
+      this.context.commit('updateTime')
+    } catch (error) {
+      return Promise.reject(error)
     }
-
-    let erc20BalanceInfo = await Ecoc.getEcrc20Balance(this.address)
-    const zeroBalanceCurrencies = this.currenciesList
-      .filter(currency => currency.name !== 'ECOC')
-      .filter(
-        currency =>
-          !erc20BalanceInfo.find(
-            newToken => currency.tokenInfo?.address === newToken.tokenInfo?.address
-          )
-      )
-      .map(currency => {
-        currency.balance = '0'
-        return currency
-      })
-
-    erc20BalanceInfo = [...erc20BalanceInfo, ...zeroBalanceCurrencies]
-
-    if (erc20BalanceInfo.length > 0) {
-      erc20BalanceInfo.forEach(token => {
-        this.context.commit('updateCurrencyInfo', token)
-      })
-    }
-
-    this.context.commit('updateTime')
 
     return true
   }
 
-  @Action
+  @Action({ rawError: true })
   async updateTransactionsHistory() {
     if (!this.address) {
       return false
     }
+
     let txs: TxList = { pagesTotal: 0, txs: [] } as TxList
-    if (this.txList.txs.length > 10 && this.txList.pagesTotal > 10) {
-      const toUpdatePage = Math.ceil(this.txList.txs.length / 10)
-      for (let page = 0; page < toUpdatePage; page++) {
-        const txList = await Ecoc.getTxs(this.address, page)
-        txs.pagesTotal = txList.pagesTotal
-        txs.txs.splice(txs.txs.length, 0, ...txList.txs)
+    try {
+      if (this.txList.txs.length > 10 && this.txList.pagesTotal > 10) {
+        const toUpdatePage = Math.ceil(this.txList.txs.length / 10)
+        for (let page = 0; page < toUpdatePage; page++) {
+          const txList = await Ecoc.getTxs(this.address, page)
+          txs.pagesTotal = txList.pagesTotal
+          txs.txs.splice(txs.txs.length, 0, ...txList.txs)
+        }
+      } else {
+        txs = await Ecoc.getTxs(this.address)
       }
-    } else {
-      txs = await Ecoc.getTxs(this.address)
+
+      this.context.commit('updateTransactions', txs)
+      this.context.commit('updateTime')
+    } catch (error) {
+      return Promise.reject(error)
     }
-    this.context.commit('updateTransactions', txs)
-    this.context.commit('updateTime')
 
     return true
   }
@@ -296,36 +316,44 @@ export default class WalletModule extends VuexModule implements Wallet {
     }
   }
 
-  @Action
+  @Action({ rawError: true })
   async updateCurrenciesPrice() {
     const currenciesList = [...this.currenciesList]
 
-    currenciesList.forEach(async (currency, index) => {
-      const currentPrice = currency.price
-      const price = await lending.getPrice(currency.name)
+    try {
+      currenciesList.forEach(async (currency, index) => {
+        const currentPrice = currency.price
+        const price = await lending.getPrice(currency.name)
 
-      if (currentPrice !== price) {
-        currency.price = price
+        if (currentPrice !== price) {
+          currency.price = price
 
-        this.context.commit('updateCurrencyByIndex', {
-          currencyIndex: index,
-          currencyData: currency
-        })
-        this.context.commit('updateTime')
-      }
-    })
+          this.context.commit('updateCurrencyByIndex', {
+            currencyIndex: index,
+            currencyData: currency
+          })
+          this.context.commit('updateTime')
+        }
+      })
+    } catch (error) {
+      return Promise.reject(error)
+    }
 
     return true
   }
 
-  @Action
+  @Action({ rawError: true })
   async getTxInfo(txid: string) {
     const txs = this.txList.txs
 
-    const existingTx = txs.find(tx => tx.txid === txid)
-    if (existingTx) return existingTx
+    try {
+      const existingTx = txs.find(tx => tx.txid === txid)
+      if (existingTx) return existingTx
 
-    return await Ecoc.getTxInfo(txid)
+      return await Ecoc.getTxInfo(txid)
+    } catch (error) {
+      return Promise.reject(error)
+    }
   }
 
   //@ts-ignore
