@@ -102,6 +102,35 @@ export default class LendingModule extends VuexModule implements LendingPlatform
     this.status = status
   }
 
+  @Mutation
+  clear() {
+    this.loan = {
+      poolAddr: '',
+      currency: loanCurrency,
+      amount: 0,
+      timestamp: 0,
+      interestRate: 0.03,
+      exchangeRate: 0,
+      interest: 0,
+      EFGInitialRate: 0,
+      lastGracePeriod: 0,
+      remainingGPT: 0
+    } as Loan
+
+    this.myCollateralAssets = [
+      {
+        currency: {
+          name: constants.ECOC,
+          style: constants.KNOWN_CURRENCY[constants.ECOC]
+        },
+        amount: 0,
+        collateralFactor: 0
+      }
+    ] as CollateralAsset[]
+
+    this.myAssets = [] as MyAsset[]
+  }
+
   @MutationAction
   async updateSupprtedAssets() {
     try {
@@ -337,6 +366,12 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   synced() {
     this.context.commit('updateStatus', constants.STATUS_SYNCED)
     return constants.STATUS_SYNCED
+  }
+
+  @Action
+  async logout() {
+    this.context.commit('clear')
+    return true
   }
 
   @Action({ rawError: true })

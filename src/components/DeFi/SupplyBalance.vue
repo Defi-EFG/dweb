@@ -86,6 +86,10 @@ export default class SupplyBalance extends Vue {
     }, 1000)
   }
 
+  get isLoggedIn(): boolean {
+    return this.walletStore.address != ''
+  }
+
   get isNearLiquidate() {
     const margin = 0.8
     return this.lendingStore.borrowBalance / this.lendingStore.borrowLimit > margin
@@ -132,6 +136,10 @@ export default class SupplyBalance extends Vue {
   }
 
   async getEstimatedGPT() {
+    if (!this.isLoggedIn) {
+      return '0'
+    }
+
     const amount = await this.lendingStore.getEstimatedGPT(this.address)
     const estimatedGPT = utils
       .toNumber(amount)

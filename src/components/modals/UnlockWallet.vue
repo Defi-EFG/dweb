@@ -64,7 +64,7 @@
                     color="primary"
                     indeterminate
                   ></v-progress-circular>
-                  <p>{{ $t(msg) }}</p>
+                  <p>{{ $t('views.modal.generating_keystore') }}</p>
                 </div>
               </template>
               <template v-else-if="!loading">
@@ -185,7 +185,7 @@
                   v-model="confirmPassword"
                 ></v-text-field>
                 <div class="errorMsg" if="errorPrivatekey">
-                  <span>{{ errorPrivatekey }}</span>
+                  <span>{{ $t(errorPrivatekey) }}</span>
                 </div>
                 <div class="action-wrapper">
                   <v-btn large class="mb-5" color="primary" @click="onCreateWallet">
@@ -325,8 +325,6 @@ import { Component, Vue, Prop, Watch } from 'vue-property-decorator'
 import Loading from './loading.vue'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
-import LendingModule from '@/store/lending'
-import StakingModule from '@/store/staking'
 import TextReader from './TextReader.vue'
 import { copyToClipboard } from '@/services/utils'
 @Component({
@@ -337,13 +335,9 @@ import { copyToClipboard } from '@/services/utils'
 })
 export default class UnlockwalletModal extends Vue {
   @Prop() visible!: boolean
-  @Prop({
-    default: 'Generating keystore file...'
-  })
-  msg!: string
+
   walletStore = getModule(WalletModule)
-  lendingStore = getModule(LendingModule)
-  stakingStore = getModule(StakingModule)
+
   privatekey = ''
   upload = false
   showPrivateKetTextfield = false
@@ -422,9 +416,11 @@ export default class UnlockwalletModal extends Vue {
 
     this.onClose()
   }
+
   openPrivatekeyfield() {
     this.showPrivateKetTextfield = !this.showPrivateKetTextfield
   }
+
   copyAddress(keystorePassword: string) {
     this.copymessage = 'Copied'
     copyToClipboard(keystorePassword)

@@ -298,7 +298,8 @@
             "copy_txid": "Copy TxID",
             "transaction_completed": "Transaction completed!",
             "transaction_pending": "Transaction pending...",
-            "safe_max": "Safe max"
+            "safe_max": "Safe max",
+            "generating_keystore": "Generating keystore file..."
         }
     },
     "components": {
