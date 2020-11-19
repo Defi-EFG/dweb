@@ -99,7 +99,6 @@ export default class TransactionHistory extends Vue {
   }
 
   displayHistory(txid: string) {
-    console.log('SELECT TXID', txid)
     this.showTxModal = !this.showTxModal
     this.showTxId = txid
   }

@@ -21,7 +21,9 @@
       persistent-hint
     >
       <template v-slot:prepend-inner>
-        <v-btn class="py-4" x-small text @click="safeMaxInput">Safe max</v-btn>
+        <v-btn class="py-4" x-small text @click="safeMaxInput">{{
+          $t('views.modal.safe_max')
+        }}</v-btn>
       </template>
     </v-text-field>
     <div class="borrow-power">

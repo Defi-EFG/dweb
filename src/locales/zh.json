@@ -169,7 +169,11 @@
             "supply_mk": "供应市",
             "total_borrowed": "总借贷",
             "debt": "债务",
-            "sec_until": "离清算还有 秒钟"
+            "sec_until": "离清算还有 秒钟",
+            "liquidation": "清算",
+            "estimated_gpt": "估计所需的GPT：",
+            "liquidation_protection": "清算保护时间：",
+            "extend": "延伸"
         },
         "stakingpage": {
             "stakinglist": "质押列表",
@@ -287,7 +291,12 @@
             "native": "本國貨幣",
             "contract_address": "合約地址",
             "copied": "複製的",
-            "copy_Address": "複製地址"
+            "copy_Address": "複製地址",
+            "view_on_explorer": "在资源管理器上查看",
+            "copy_txid": "复制TxID",
+            "transaction_completed": "交易完成！",
+            "transaction_pending": "交易待处理...",
+            "safe_max": "安全最大值"
         }
 
     },
@@ -315,5 +324,8 @@
     "Insufficient Balance": "余额不足",
     "Invalid keystore or password": "无效的密钥库或密码",
     "Approval": "批准书",
-    "Transfer": "转让"
+    "Transfer": "转让",
+    "You do not have enough ECOC to sen": "您没有足够的ECOC来发送",
+    "Currency Approving...": "货币审批中...",
+    "Sending Transaction...": "正在发送交易..."
 }

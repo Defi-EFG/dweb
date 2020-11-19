@@ -111,11 +111,12 @@ export default class WalletModule extends VuexModule implements Wallet {
     this.address = ''
     this.network = ''
     this.keystore = {} as KeyStore
-    this.txList = {} as TxList
+    this.txList = { pagesTotal: 0, txs: [] } as TxList
     this.currencies = currencyInit()
     this.selectedCurrencyIndex = 0
     this.lastUpdate = 0
     this.lastBlock = 0
+    this.pendingTransactions = [] as PendingTransaction[]
   }
 
   @Mutation
