@@ -151,9 +151,8 @@ export default class BorrowCard extends Vue {
   }
 
   get tokenConversion() {
-    return `${Number(this.borrowValue) || 0} ${this.currencyName} ≈ $${(this.currencyPrice *
-      Number(this.borrowValue)) |
-      0}`
+    return `${Number(this.borrowValue) || 0} ${this.currencyName} ≈ $${this.currencyPrice *
+      Number(this.borrowValue) || 0}`
   }
 
   get totalBorrowed() {
@@ -185,7 +184,7 @@ export default class BorrowCard extends Vue {
   calculateBPUsed(borrowAmount: number) {
     const dollarsAmount = Number(borrowAmount) * this.currencyPrice
     const bpPercent = ((this.borrowBalance + dollarsAmount) / this.borrowLimit) * 100
-    return bpPercent | 0
+    return bpPercent || 0
   }
 
   bpPercentToValue(bp: number) {
@@ -251,11 +250,11 @@ export default class BorrowCard extends Vue {
 
     this.lendingStore
       .borrow(payload)
-      .then(txid => {
+      .then((txid: any) => {
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_BORROW })
         this.onSuccess()
       })
-      .catch(error => {
+      .catch((error: any) => {
         this.onError(error.message)
       })
   }

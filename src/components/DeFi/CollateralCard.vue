@@ -173,7 +173,7 @@ export default class Collateral extends Vue {
       (this.borrowBalance /
         ((this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage)) *
       100
-    return newBpUsed | 0
+    return newBpUsed || 0
   }
 
   isCollateralable(amount: number, type: string) {

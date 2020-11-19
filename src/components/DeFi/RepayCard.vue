@@ -175,7 +175,7 @@ export default class RepayCard extends Vue {
   calculateBPUsed(repayAmount: number) {
     const dollarsAmount = Number(repayAmount) * this.currencyPrice
     const newBpUsed = ((this.borrowBalance - dollarsAmount) / this.borrowLimit) * 100
-    return newBpUsed | 0
+    return newBpUsed || 0
   }
 
   isRepayable(amount: number, type: string) {
