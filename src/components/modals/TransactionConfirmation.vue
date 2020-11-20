@@ -6,8 +6,8 @@
           <v-icon></v-icon>
           <v-btn @click="onClose" icon><v-icon color="white">$close</v-icon></v-btn>
         </v-card-title>
-        <div class="transaction-confirmation-wrapper ">
-          <div class="d-flex ">
+        <div class="transaction-confirmation-wrapper">
+          <div class="d-flex">
             <v-tooltip top>
               <template v-slot:activator="{ on, attrs }">
                 <div
@@ -58,11 +58,11 @@
               </div>
             </div>
 
-            <div class="detail border-bottom ">
+            <div class="detail border-bottom">
               <span class="gt">{{ $t('views.modal.gas_fee') }}</span>
               <div class="text-end">
                 <div class="d-flex justify-end">
-                  <p>{{ totalFee }}</p>
+                  <p>{{ gasFee }}</p>
                   <p class="ml-2">ECOC</p>
                 </div>
                 <v-btn @click="gasSetting()" small text color="primary">
@@ -103,7 +103,7 @@
 
     <v-dialog v-model="gassetting" max-width="370" class="content-gas-setting">
       <v-card>
-        <div class="d-flex justify-lg-space-between pt-3 ">
+        <div class="d-flex justify-lg-space-between pt-3">
           <v-icon></v-icon>
           <v-btn icon @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
         </div>
@@ -111,23 +111,23 @@
           <h3>{{ $t('views.modal.gas_custom') }}</h3>
           <small>{{ $t('views.modal.Increase') }}</small>
           <div class="gas-customization">
-            <v-btn-toggle tile group>
+            <v-btn-toggle tile group mandatory v-model="feeTier">
               <v-btn>
-                <div class="gas-custom-btn-group" @click="fee = feeSlow">
+                <div class="gas-custom-btn-group">
                   <p>{{ $t('views.modal.slow') }}</p>
-                  <p>{{ feeSlow }} ECOC</p>
+                  <p>{{ feeTierList[0] }} ECOC</p>
                 </div>
               </v-btn>
               <v-btn>
-                <div class="gas-custom-btn-group" @click="fee = feeAverage">
+                <div class="gas-custom-btn-group">
                   <p>{{ $t('views.modal.average') }}</p>
-                  <p>{{ feeAverage }} ECOC</p>
+                  <p>{{ feeTierList[1] }} ECOC</p>
                 </div></v-btn
               >
               <v-btn>
-                <div class="gas-custom-btn-group" @click="fee = feeFast">
+                <div class="gas-custom-btn-group">
                   <p>{{ $t('views.modal.fast') }}</p>
-                  <p>{{ feeFast }} ECOC</p>
+                  <p>{{ feeTierList[2] }} ECOC</p>
                 </div></v-btn
               >
             </v-btn-toggle>
@@ -149,10 +149,15 @@
               <p class="mb-0">{{ totalFee }} ECOC</p>
             </div>
           </div>
-          <div class="save-button ">
-            <v-btn color="primary" depressed block @click="closeGasSetting">{{
-              $t('views.modal.save')
-            }}</v-btn>
+          <div class="save-button">
+            <v-btn
+              color="primary"
+              depressed
+              block
+              :disabled="totalFee <= 0"
+              @click="saveGasSetting"
+              >{{ $t('views.modal.save') }}</v-btn
+            >
           </div>
         </div>
       </v-card>
@@ -171,7 +176,7 @@ import { DEFAULT } from '@/services/contract'
 import { copyToClipboard, getEcocTotalFee, addressFilter, truncate } from '@/services/utils'
 
 @Component({
-  components: {}
+  components: {},
 })
 export default class TransactionConfirmationModal extends Vue {
   @Prop({ default: {} }) currency!: Currency
@@ -182,9 +187,7 @@ export default class TransactionConfirmationModal extends Vue {
 
   walletStore = getModule(WalletModule)
 
-  feeSlow = 0.004
-  feeAverage = 0.01
-  feeFast = 0.1
+  feeTierList = [0.004, 0.01, 0.1]
 
   copymessage = this.$t('views.modal.copy_Address')
   gassetting = false
@@ -194,6 +197,10 @@ export default class TransactionConfirmationModal extends Vue {
   keystorePassword = ''
   showpassword = false
 
+  gasFee = 0
+
+  feeTier = 1
+
   rules = {
     required: (value: any) => {
       return !!value || this.$t('views.modal.required')
@@ -202,12 +209,16 @@ export default class TransactionConfirmationModal extends Vue {
       if (this.visible) {
         return v.length >= 6 || this.$t('views.modal.characters')
       }
-    }
+    },
   }
 
   fee = DEFAULT.DEFAULT_FEE
   gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
+
+  mounted() {
+    this.gasFee = this.totalFee
+  }
 
   get show() {
     return this.visible
@@ -226,8 +237,8 @@ export default class TransactionConfirmationModal extends Vue {
   }
 
   get totalFee() {
-    if (this.isNative) return this.fee
-    return getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
+    if (this.isNative) return this.feeTierList[this.feeTier]
+    return getEcocTotalFee(this.feeTierList[this.feeTier], this.gasPrice, this.gasLimit)
   }
 
   get ecoc() {
@@ -263,6 +274,11 @@ export default class TransactionConfirmationModal extends Vue {
     this.gassetting = false
   }
 
+  saveGasSetting() {
+    this.gasFee = this.totalFee
+    this.gassetting = false
+  }
+
   truncateAddress(addr: string) {
     return truncate(addr, 15)
   }
@@ -289,9 +305,9 @@ export default class TransactionConfirmationModal extends Vue {
         address: address,
         keypair: wallet.keypair,
         utxoList: utxoList,
-        fee: this.fee,
+        fee: this.feeTierList[this.feeTier],
         gasLimit: this.gasLimit,
-        gasPrice: this.gasPrice
+        gasPrice: this.gasPrice,
       } as WalletParams
 
       this.password = ''
@@ -469,6 +485,13 @@ export default class TransactionConfirmationModal extends Vue {
   background-color: white;
   background: transparent linear-gradient(180deg, #d2bae2 0%, #f9ecff 100%);
 }
+
+.gas-actived {
+  background-color: transparent !important;
+  background-color: white;
+  background: transparent linear-gradient(180deg, #d2bae2 0%, #f9ecff 100%);
+}
+
 .inputnumber {
   border-bottom: 1px solid rgba(177, 169, 170, 0.466);
 }

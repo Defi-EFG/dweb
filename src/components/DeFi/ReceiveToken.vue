@@ -15,7 +15,7 @@
         :options="{ width: 200, height: 200 }"
       ></VueQrcode>
       <div class="address-area">
-        <p class="mb-1">ECOC {{ $t('views.walletpage.address') }}</p>
+        <p class="mb-1">{{ selectedCurrencyName }} {{ $t('views.walletpage.address') }}</p>
         <div class="copyable-addr">
           <div class="text-truncate">{{ address }}</div>
           <v-btn icon small class="copy" @click="copyAddress(address)">
@@ -41,13 +41,21 @@ import { copyToClipboard } from '@/services/utils'
 
 @Component({
   components: {
-    VueQrcode
-  }
+    VueQrcode,
+  },
 })
 export default class ReceiveToken extends Vue {
   walletStore = getModule(WalletModule)
   showCopy = false
   showQr = false
+
+  get selectedCurrencyName() {
+    return this.selectedCurrency?.name || ''
+  }
+
+  get selectedCurrency() {
+    return this.walletStore.selectedCurrency
+  }
 
   copyAddress(addr: string) {
     copyToClipboard(addr)
@@ -70,8 +78,8 @@ export default class ReceiveToken extends Vue {
 }
 
 .receive-head {
-  background: transparent linear-gradient(270deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
-    padding-box;
+  background: transparent
+    linear-gradient(270deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat padding-box;
 
   span {
     font-size: 16px;

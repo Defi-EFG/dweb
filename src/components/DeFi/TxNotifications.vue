@@ -27,7 +27,7 @@
             <v-col cols="7" class="tx-status">
               <div class="status">
                 <span v-if="tx.status === txConstants.STATUS_CONFIRMED">Transaction completed!</span>
-                <span v-if="tx.status === txConstants.STATUS_FAILED">Transaction failed</span>
+                <span v-else-if="tx.status === txConstants.STATUS_FAILED">Transaction failed</span>
                 <span v-else>Transaction pending...</span>
               </div>
               <div class="id">
