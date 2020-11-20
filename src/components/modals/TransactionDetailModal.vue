@@ -53,28 +53,29 @@
           </v-tooltip>
         </div>
         <v-divider></v-divider>
-        <div v-if="tx.subtype === 'Staking - Defi'" class="txdetailwrapper">
-          <p>{{ tx.txResult[0].from }}</p>
-          <p>{{ tx.txResult[0].to }}</p>
-          <p>{{ tx.value }}</p>
-        </div>
-        <div v-else-if="tx.subtype === 'ECRC-20'" class="txdetailwrapper">
-          <p>{{ tx.txResult[0].from }}</p>
-          <p>{{ tx.txResult[0].to }}</p>
-          <p>{{ tx.value }}</p>
-        </div>
-        <div v-else-if="tx.subtype === undefined" class="txdetailwrapper">
-          <p>{{ tx.value }}</p>
-        </div>
-        <div v-else-if="tx.subtype === 'Lending - Defi'" class="txdetailwrapper">
-          <p>{{ tx.txResult[0].from }}</p>
-          <p>{{ tx.txResult[0].to }}</p>
-          <p>{{ tx.value }}</p>
+
+        <div v-if="tx.type === direction.TYPE_APPROVAL" class="txdetailwrapper">
+          <div>
+            <b>Owner</b>
+            <p class="text-end mb-0">{{ tx.txResult[0].log[0].owner }}</p>
+          </div>
+          <div>
+            <b>Spender</b>
+            <p class="text-end mb-0">{{ tx.txResult[0].log[0].spender }}</p>
+          </div>
         </div>
 
-        <div v-else>
-          <p>{{ tx.txResult }}</p>
+        <div v-else-if="tx.type === direction.TYPE_TRANSFER" class="txdetailwrapper">
+          <div>
+            <b>From</b>
+            <p class="text-end mb-0">{{ tx.txResult[0].from }}</p>
+            <div>
+              <b>To</b>
+              <p class="text-end mb-0">{{ tx.txResult[0].to }}</p>
+            </div>
+          </div>
         </div>
+
         <div class="tx-detail">
           <div class="date">
             <span>{{ $t('views.modal.date') }}</span>
@@ -142,7 +143,6 @@ export default class TransactionDetailModal extends Vue {
   get tx() {
     if (this.txid) {
       const txInfo = this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
-      // console.log(txInfo?.txResult)
       console.log(txInfo)
       console.log('testlog', txInfo?.type)
       return txInfo
@@ -256,6 +256,10 @@ export default class TransactionDetailModal extends Vue {
   }
 }
 .txdetailwrapper {
-  border: 1px solid orange;
+  padding: 10px;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
 }
 </style>
