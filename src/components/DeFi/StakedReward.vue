@@ -10,7 +10,7 @@
         <div class="d-amount">
           <span>{{ $t('views.stakingpage.withdraw_avb') }}</span>
           <v-spacer></v-spacer>
-          <span class="text-right">{{ withdrawAvailable.toFixed(2) }} {{ currencyName }}</span>
+          <span class="text-right">{{ withdrawAvailable }} {{ currencyName }}</span>
         </div>
 
         <v-divider></v-divider>
@@ -19,10 +19,6 @@
 
         <div class="minimum-w">
           <span class="value">{{ currencyName }} {{ $t('views.stakingpage.withdraw') }}</span>
-          <v-spacer></v-spacer>
-          <span class="all" @click="fillAmount(withdrawAvailable)">{{
-            $t('views.stakingpage.withdrawall')
-          }}</span>
         </div>
 
         <v-text-field
@@ -30,9 +26,10 @@
           placeholder="0"
           type="number"
           pattern="[0-9]*"
+          readonly
           :prefix="stakingpage.amount"
           :suffix="currencyName"
-          v-model="withdrawAmount"
+          v-model="withdrawAvailable"
           single-line
           solo
           hide-details="true"
@@ -43,8 +40,8 @@
           block
           depressed
           class="reward-btn"
-          :class="!!withdrawAmount ? '' : 'disabled'"
-          :disabled="!withdrawAmount"
+          :class="!!withdrawAvailable ? '' : 'disabled'"
+          :disabled="!withdrawAvailable"
           @click="openConfirmTxModal"
           >{{ $t('views.stakingpage.withdrawreward') }}</v-btn
         >
@@ -54,7 +51,7 @@
       :visible="confirmTxModal"
       :fromAddr="contractAddr"
       :toAddr="walletAddr"
-      :amount="withdrawAmount"
+      :amount="withdrawAvailable"
       :currency="currency"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
@@ -235,6 +232,7 @@ export default class StakedReward extends Vue {
 }
 
 .reward-label {
+  text-align: center;
   padding: 1.5rem 10px 0;
   font-size: larger;
   color: #c074f9;

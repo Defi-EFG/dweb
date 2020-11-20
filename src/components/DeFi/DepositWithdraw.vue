@@ -23,9 +23,7 @@
         <div class="total-balance">
           <span>{{ $t('views.stakingpage.yourbalance') }}</span>
           <v-spacer></v-spacer>
-          <span class="text-right"
-            >{{ balance | numberWithCommas({ fixed: [0, 2] }) }} {{ stakingCurrencyName }}</span
-          >
+          <span class="text-right">{{ balance }} {{ stakingCurrencyName }}</span>
         </div>
 
         <div class="minimum-d">
@@ -44,7 +42,7 @@
           pattern="[0-9]*"
           class="deposit-amount"
           placeholder="0"
-          :prefix="stakingpage.depositamount"
+          :prefix="depositAmount ? '' : stakingpage.depositamount"
           v-model="depositAmount"
           :suffix="stakingCurrencyName"
           single-line
@@ -61,8 +59,8 @@
           large
           block
           class="btn-d"
-          :class="!!depositAmount ? '' : 'disabled'"
-          :disabled="!depositAmount"
+          :class="isTransferable(depositAmount, balance) ? '' : 'disabled'"
+          :disabled="!isTransferable(depositAmount, balance)"
           @click="openConfirmTxModal(TYPE_DEPOSIT)"
           >{{ $t('views.stakingpage.deposit') }}</v-btn
         >
@@ -77,7 +75,7 @@
         <div class="d-amount">
           <span>{{ $t('views.stakingpage.your_skaking') }}</span>
           <v-spacer></v-spacer>
-          <span>{{ stakingAmount.toFixed(2) }} {{ stakingCurrencyName }}</span>
+          <span>{{ stakingAmount }} {{ stakingCurrencyName }}</span>
         </div>
 
         <div class="minimum-w">
@@ -96,7 +94,7 @@
           placeholder="0"
           type="number"
           pattern="[0-9]*"
-          :prefix="stakingpage.depositamount"
+          :prefix="withdrawAmount ? '' : 'Withdraw Amount'"
           v-model="withdrawAmount"
           :suffix="stakingCurrencyName"
           single-line
@@ -108,8 +106,8 @@
           large
           block
           class="btn-w"
-          :class="!!withdrawAmount ? '' : 'disabled'"
-          :disabled="!withdrawAmount"
+          :class="isTransferable(withdrawAmount, stakingAmount) ? '' : 'disabled'"
+          :disabled="!isTransferable(withdrawAmount, stakingAmount)"
           @click="openConfirmTxModal(TYPE_WITHDRAW)"
           >{{ $t('views.stakingpage.withdraw') }}</v-btn
         >
@@ -288,6 +286,10 @@ export default class DepositWithdraw extends Vue {
           this.onError(error.message)
         })
     }
+  }
+
+  isTransferable(amount: number, balance: number) {
+    return amount > 0 && amount <= balance
   }
 }
 </script>
