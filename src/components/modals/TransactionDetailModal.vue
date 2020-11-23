@@ -11,7 +11,7 @@
 
       <v-card-text class="td-body">
         <div class="tx-type">
-          <span>{{ tx.type }}</span>
+          <span>{{ $t(tx.type) }}</span>
           <v-spacer></v-spacer>
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
@@ -30,7 +30,7 @@
                 </v-icon>
               </v-btn>
             </template>
-            <span>View on explorer</span>
+            <span>{{ $t('views.modal.view_on_explorer') }}</span>
           </v-tooltip>
           <v-tooltip top>
             <template v-slot:activator="{ on, attrs }">
@@ -136,7 +136,7 @@ export default class TransactionDetailModal extends Vue {
   @Prop({ default: '' }) txid!: string
 
   walletStore = getModule(WalletModule)
-  copyMsg = 'Copy TxID'
+  copyMsg = this.$t('views.modal.copy_txid')
 
   txInfo = {} as Transaction
   start = 0
@@ -164,10 +164,10 @@ export default class TransactionDetailModal extends Vue {
 
   doCopy(val: string) {
     copyToClipboard(val)
-    this.copyMsg = 'Copied'
+    this.copyMsg = this.$t('views.modal.copied')
 
     setTimeout(() => {
-      this.copyMsg = 'Copy TxID'
+      this.copyMsg = this.$t('views.modal.copy_txid')
     }, 1000)
   }
 

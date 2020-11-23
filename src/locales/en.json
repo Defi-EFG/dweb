@@ -172,7 +172,11 @@
             "supply_mk": "Supply Market",
             "total_borrowed": "Total Borrowed",
             "debt": "Debt",
-            "sec_until": "until liquidation."
+            "sec_until": "until liquidation.",
+            "liquidation": "Liquidation",
+            "estimated_gpt": "Estimated GPT needed:",
+            "liquidation_protection": "Liquidation protection time:",
+            "extend": "Extend"
         },
         "stakingpage": {
             "stakinglist": "Staking List",
@@ -289,7 +293,13 @@
             "native": "Native Currency",
             "contract_address": "Contract Address",
             "copied": "Copied",
-            "copy_Address": "Copy Address"
+            "copy_Address": "Copy Address",
+            "view_on_explorer": "View on explorer",
+            "copy_txid": "Copy TxID",
+            "transaction_completed": "Transaction completed!",
+            "transaction_pending": "Transaction pending...",
+            "safe_max": "Safe max",
+            "generating_keystore": "Generating keystore file..."
         }
     },
     "components": {
@@ -317,5 +327,7 @@
     "Invalid keystore or password": "Invalid keystore or password",
     "Approval": "Approval",
     "Transfer": "Transfer",
-    "You do not have enough ECOC to sen": "You do not have enough ECOC to send"
+    "You do not have enough ECOC to sen": "You do not have enough ECOC to send",
+    "Currency Approving...": "Currency Approving...",
+    "Sending Transaction...": "Sending Transaction..."
 }

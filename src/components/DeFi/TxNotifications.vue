@@ -25,8 +25,8 @@
               <div class="status">
                 {{
                   tx.status === txConstants.STATUS_CONFIRMED
-                    ? 'Transaction completed!'
-                    : 'Transaction pending...'
+                    ? $t('views.modal.transaction_completed')
+                    : $t('views.modal.transaction_pending')
                 }}
               </div>
               <div class="id">
@@ -41,7 +41,7 @@
                 class="details"
                 @click="showTxHistory(tx.txid)"
               >
-                Details
+                {{ $t('views.main.detail') }}
               </div>
             </v-col>
           </v-row>

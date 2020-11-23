@@ -8,9 +8,8 @@
               <v-row>
                 <v-col cols="12" style="padding:0px">
                   <div class="logo_ecoc">
-                    <img class="logo_ecoc_m" width="40" src="@/assets/efg_02.svg" alt="" />
                     <div class="logo_ecoc_m_text">
-                      EFG <span>- {{ $t('views.detail.market_details') }} </span>
+                      <span>{{ $t('views.detail.market_details') }} </span>
                     </div>
                   </div>
                 </v-col>
@@ -173,7 +172,6 @@ export default class Efg extends Vue {
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
-  margin-left: 10px;
 }
 
 .efg_border1 {

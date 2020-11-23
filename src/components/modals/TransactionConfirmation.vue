@@ -247,11 +247,11 @@ export default class TransactionConfirmationModal extends Vue {
   }
 
   copyAddress(addr: string) {
-    this.copymessage = 'Copied'
+    this.copymessage = this.$t('views.modal.copied')
     copyToClipboard(addr)
 
     setTimeout(() => {
-      this.copymessage = 'Copy Address'
+      this.copymessage = this.$t('views.modal.copy_Address')
     }, 1000)
   }
 

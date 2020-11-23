@@ -8,11 +8,13 @@
           ${{ balance | numberWithCommas({ fixed: [0, 8] }) }}
         </div>
         <div class="liquid-countdown" v-show="isNearLiquidate && !extentTimeRemaining()">
-          <span>Estimated GPT needed: {{ estimatedGPT }}</span>
-          <span class="extend-btn" @click="openConfirmTxModal">Extend</span>
+          <span>{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</span>
+          <span class="extend-btn" @click="openConfirmTxModal">{{
+            $t('views.lendingpage.extend')
+          }}</span>
         </div>
         <div class="liquid-countdown" v-show="extentTimeRemaining()">
-          <span>Liquidation protection time: {{ timeRemainMessage }}</span>
+          <span>{{ $t('views.lendingpage.liquidation_protection') }} {{ timeRemainMessage }}</span>
         </div>
       </v-card-text>
     </v-card>
@@ -84,6 +86,10 @@ export default class SupplyBalance extends Vue {
     }, 1000)
   }
 
+  get isLoggedIn(): boolean {
+    return this.walletStore.address != ''
+  }
+
   get isNearLiquidate() {
     const margin = 0.8
     return this.lendingStore.borrowBalance / this.lendingStore.borrowLimit > margin
@@ -130,6 +136,10 @@ export default class SupplyBalance extends Vue {
   }
 
   async getEstimatedGPT() {
+    if (!this.isLoggedIn) {
+      return '0'
+    }
+
     const amount = await this.lendingStore.getEstimatedGPT(this.address)
     const estimatedGPT = utils
       .toNumber(amount)
