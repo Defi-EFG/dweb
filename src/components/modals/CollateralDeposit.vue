@@ -109,7 +109,7 @@
                 <div></div>
                 <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
-              <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin mb-7">
+              <div class="transaction-confirmation-wrapper collat_bg2 ">
                 <div class="d-flex ">
                   <v-tooltip top>
                     <template v-slot:activator="{ on, attrs }">
@@ -142,9 +142,9 @@
                 </div>
                 <div class="transaction-confirmation-content ">
                   <div class="collateral_pd">
-                    <h4>
-                      <strong>{{ $t('views.modal.transaction') }}</strong>
-                    </h4>
+                    <h3>
+                      {{ $t('views.modal.transaction') }}
+                    </h3>
                     <small>{{ $t('views.modal.please_transaction') }}</small>
                     <div class="div_prices">
                       <div class="transaction-confirmation-content-detail">
@@ -760,6 +760,7 @@ export default class CollateralDeposit extends Vue {
   background-color: #f0f0f0;
   padding: 3px 10px;
   border-radius: 3px;
+  margin-top: 4px;
 }
 .transaction-confirmation-wrapper {
   margin: 16px 16px 0 16px;
@@ -790,7 +791,7 @@ export default class CollateralDeposit extends Vue {
 .transaction-confirmation-content h3,
 h2 {
   color: #370757;
-  font-weight: 500;
+  font-weight: 900;
 }
 .action-transaction-confirmation .v-btn {
   border: 2px solid #44096b;
