@@ -163,7 +163,7 @@ export default class BorrowCard extends Vue {
   }
 
   get safeLimit() {
-    return 80 // 80%
+    return 99 // 80%
   }
 
   get lendingpage() {

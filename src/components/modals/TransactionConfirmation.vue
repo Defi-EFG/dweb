@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="show" max-width="400" class="send-transaction" persistent>
+    <v-dialog v-model="show" max-width="420" class="send-transaction" persistent>
       <v-card class="blur-card" color="#FFFFFF00">
         <v-card-title class="modal-header">
           <v-icon></v-icon>
