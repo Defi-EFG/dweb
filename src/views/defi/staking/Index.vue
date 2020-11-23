@@ -63,6 +63,8 @@
               <StakedReward
                 :stakedReward="totalStakedReward"
                 :rewardCurrency="rewardCurrency"
+                :stakingAmount="staking"
+                :stakingCurrency="stakingCurrency"
               ></StakedReward>
             </v-col>
           </v-row>
@@ -97,8 +99,8 @@ import TransactionRewardHistory from '@/components/DeFi/Mobile/TransactionReward
     DepositWithdraw,
     StakedReward,
     RewardHistory,
-    TransactionRewardHistory
-  }
+    TransactionRewardHistory,
+  },
 })
 export default class Staking extends Vue {
   walletStore = getModule(WalletModule)
@@ -107,7 +109,7 @@ export default class Staking extends Vue {
   get stakingBalance() {
     const currencyName = this.stakingCurrency.name
     const currency = this.walletStore.currenciesList.find(
-      currency => currency.name === currencyName
+      (currency) => currency.name === currencyName
     )
     if (!currency) return 0
 
@@ -152,8 +154,8 @@ export default class Staking extends Vue {
 <style lang="scss" scoped>
 .supply-withdraw-wrapper {
   width: inherit;
-  background: transparent linear-gradient(270deg, #2e3344 0%, #303748 100%) 0% 0% no-repeat
-    padding-box;
+  background: transparent
+    linear-gradient(270deg, #2e3344 0%, #303748 100%) 0% 0% no-repeat padding-box;
 }
 
 .token-symbol {
