@@ -139,7 +139,6 @@ export default class TransactionDetailModal extends Vue {
   copyMsg = this.$t('views.modal.copy_txid')
 
   txInfo = {} as Transaction
-  start = 0
   get tx() {
     if (this.txid) {
       const txInfo = this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
