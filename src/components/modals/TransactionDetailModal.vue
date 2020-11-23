@@ -54,6 +54,28 @@
         </div>
         <v-divider></v-divider>
 
+        <div v-if="tx.type === direction.TYPE_APPROVAL" class="txdetailwrapper">
+          <div>
+            <b>Owner</b>
+            <p class="text-end mb-0">{{ tx.txResult[0].log[0].owner }}</p>
+          </div>
+          <div>
+            <b>Spender</b>
+            <p class="text-end mb-0">{{ tx.txResult[0].log[0].spender }}</p>
+          </div>
+        </div>
+
+        <div v-else-if="tx.type === direction.TYPE_TRANSFER" class="txdetailwrapper">
+          <div>
+            <b>From</b>
+            <p class="text-end mb-0">{{ tx.txResult[0].from }}</p>
+            <div>
+              <b>To</b>
+              <p class="text-end mb-0">{{ tx.txResult[0].to }}</p>
+            </div>
+          </div>
+        </div>
+
         <div class="tx-detail">
           <div class="date">
             <span>{{ $t('views.modal.date') }}</span>
@@ -117,13 +139,13 @@ export default class TransactionDetailModal extends Vue {
   copyMsg = this.$t('views.modal.copy_txid')
 
   txInfo = {} as Transaction
-
   get tx() {
     if (this.txid) {
       const txInfo = this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
+      console.log(txInfo)
+      console.log('testlog', txInfo?.type)
       return txInfo
     }
-
     return {} as TxHistory
   }
 
@@ -231,5 +253,12 @@ export default class TransactionDetailModal extends Vue {
     margin-top: 6px;
     margin-bottom: 6px;
   }
+}
+.txdetailwrapper {
+  padding: 10px;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

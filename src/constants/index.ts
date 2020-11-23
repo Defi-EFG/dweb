@@ -12,6 +12,8 @@ export const TYPE_RECEIVED = 'Received'
 export const TYPE_SENT = 'Sent'
 export const TYPE_ECOC = 'ECOC'
 export const TYPE_ECRC20 = 'ECRC-20'
+export const TYPE_APPROVAL = 'Approval'
+export const TYPE_TRANSFER = 'Transfer'
 
 export const STATUS_SYNCED = 'Synced'
 export const STATUS_PENDING = 'Pending'
