@@ -27,7 +27,6 @@ export const TX_WITHDRAW = 'Withdrawing'
 export const TX_BORROW = 'Borrowing'
 export const TX_REPAY = 'Repaying'
 
-
 interface CurrencyStyle {
   [symbol: string]: Style
 }
