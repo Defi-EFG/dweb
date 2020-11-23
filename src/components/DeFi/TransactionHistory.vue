@@ -117,9 +117,10 @@ export default class TransactionHistory extends Vue {
     if (this.pageNum < this.walletStore.txList.pagesTotal) {
       setTimeout(async () => {
         await this.walletStore.updateTxHistoryByPage(this.pageNum)
+        await this.walletStore.updateTransactionsHistory() // [To Do] refactor
         $state.loaded()
         this.pageNum++
-      }, 500)
+      }, 1000)
     } else {
       $state.complete()
     }

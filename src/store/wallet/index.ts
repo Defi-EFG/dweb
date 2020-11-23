@@ -4,7 +4,7 @@ import { InsufficientBalance } from '@/exceptions/wallet'
 import { Wallet, SendPayload } from '@/types/wallet'
 import { KeyStore } from '@/types/keystore'
 import { Currency } from '@/types/currency'
-import { TxList, PendingTransaction, TxHistory } from '@/types/transaction'
+import { TxList, Transaction, PendingTransaction, TxHistory } from '@/types/transaction'
 import * as Ecoc from '@/services/wallet'
 import * as utils from '@/services/utils'
 import { Ecrc20 } from '@/services/ecrc20'
@@ -181,17 +181,18 @@ export default class WalletModule extends VuexModule implements Wallet {
     this.txList = txList
   }
 
+  @Mutation
+  appendTransactions(txs: Transaction[]) {
+    const index = this.txList.txs.length
+    this.txList.txs.splice(index, 0, ...txs)
+  }
+
   @Action({ rawError: true })
   async updateTxHistoryByPage(pageNum: number) {
     try {
-      const txList = this.txList
       const newTxs = await Ecoc.getTxs(this.address, pageNum)
-      const index = this.txList.txs.length
 
-      txList.pagesTotal = newTxs.pagesTotal
-      txList.txs.splice(index, 0, ...newTxs.txs)
-
-      this.context.commit('updateTransactions', txList)
+      this.context.commit('appendTransactions', newTxs.txs)
       this.context.commit('updateTime')
     } catch (error) {
       return Promise.reject(error)
