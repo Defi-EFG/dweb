@@ -28,7 +28,7 @@
               {{ tx.value }} {{ tx.currency }}
             </v-list-item-title>
             <div class="tx-addr">
-              <small> TxID: {{ truncate(tx.id, 20) }} </small>
+              <small> TxID: {{ truncate(tx.id, 15) }} </small>
               <v-spacer></v-spacer>
               <small>{{ getTime(tx.time) }}</small>
             </div>

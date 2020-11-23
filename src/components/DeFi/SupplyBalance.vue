@@ -177,6 +177,7 @@ export default class SupplyBalance extends Vue {
     this.loading = false
     this.loadingMsg = ''
     this.closeConfirmTxModal()
+    window.scrollTo(0, 0)
   }
 
   onError(errorMsg: string) {

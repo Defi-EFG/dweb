@@ -278,6 +278,8 @@
             "transaction_details": "交易细节",
             "from": "从:",
             "to": "到",
+            "owner": "所有者:",
+            "spender": "花费者:",
             "date": "日期",
             "currency": "货币",
             "type": "类型",

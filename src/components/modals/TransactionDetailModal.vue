@@ -54,24 +54,24 @@
         </div>
         <v-divider></v-divider>
 
-        <div v-if="tx.type === direction.TYPE_APPROVAL" class="txdetailwrapper">
+        <div v-if="tx.type === constants.EVENT_APPROVAL" class="txdetailwrapper">
           <div>
-            <b>Owner</b>
-            <p class="text-end mb-0">{{ tx.txResult[0].log[0].owner }}</p>
+            <b>{{ $t('views.modal.owner') }}</b>
+            <p class="text-end mb-0">{{ getAddress(tx.txResult[0].log[0].owner) }}</p>
           </div>
           <div>
-            <b>Spender</b>
-            <p class="text-end mb-0">{{ tx.txResult[0].log[0].spender }}</p>
+            <b>{{ $t('views.modal.spender') }}</b>
+            <p class="text-end mb-0">{{ getAddress(tx.txResult[0].log[0].spender) }}</p>
           </div>
         </div>
 
-        <div v-else-if="tx.type === direction.TYPE_TRANSFER" class="txdetailwrapper">
+        <div v-else-if="tx.type === constants.EVENT_TRANSFER" class="txdetailwrapper">
           <div>
-            <b>From</b>
-            <p class="text-end mb-0">{{ tx.txResult[0].from }}</p>
+            <b>{{ $t('views.modal.from') }}</b>
+            <p class="text-end mb-0">{{ getAddress(tx.txResult[0].from) }}</p>
             <div>
-              <b>To</b>
-              <p class="text-end mb-0">{{ tx.txResult[0].to }}</p>
+              <b>{{ $t('views.modal.to') }}</b>
+              <p class="text-end mb-0">{{ getAddress(tx.txResult[0].to) }}</p>
             </div>
           </div>
         </div>
@@ -92,7 +92,7 @@
           <div class="type">
             <span>{{ $t('views.modal.type') }}</span>
             <v-spacer></v-spacer>
-            <span class="val">{{ $t(tx.type) }}</span>
+            <span class="val">{{ tx.subtype ? $t(tx.subtype) : $t(tx.type) }}</span>
           </div>
           <v-divider class="space"></v-divider>
           <div class="amount">
@@ -139,11 +139,10 @@ export default class TransactionDetailModal extends Vue {
   copyMsg = this.$t('views.modal.copy_txid')
 
   txInfo = {} as Transaction
+
   get tx() {
     if (this.txid) {
       const txInfo = this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
-      console.log(txInfo)
-      console.log('testlog', txInfo?.type)
       return txInfo
     }
     return {} as TxHistory
@@ -153,7 +152,7 @@ export default class TransactionDetailModal extends Vue {
     return this.walletStore.address || ''
   }
 
-  get direction() {
+  get constants() {
     return constants
   }
 
@@ -179,6 +178,15 @@ export default class TransactionDetailModal extends Vue {
       this.txInfo = tx
       console.log(this.txInfo)
     })
+  }
+
+  getAddress(addressHex: string) {
+    const address = utils.addressFilter(addressHex)
+    if (address === addressHex) {
+      return utils.toEcocAddress(addressHex)
+    }
+
+    return address
   }
 
   goToExplorer(txid: string) {

@@ -280,6 +280,8 @@
             "transaction_details": "Transaction Details",
             "from": "From:",
             "to": "To:",
+            "owner": "Owner:",
+            "spender": "Spender:",
             "date": "Date:",
             "currency": "Currency:",
             "type": "Type:",
