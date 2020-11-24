@@ -7,9 +7,13 @@
         <div class="balance" :class="isLiquidate ? 'liquidate' : ''">
           ${{ balance | numberWithCommas({ fixed: [0, 8] }) }}
         </div>
-        <div class="liquid-countdown" v-show="isNearLiquidate && !extentTimeRemaining()">
-          <span>{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</span>
-          <span class="extend-btn" @click="depositgpt">{{ $t('views.lendingpage.extend') }}</span>
+        <div class="liquid-wrapper" v-show="isNearLiquidate && !extentTimeRemaining()">
+          <span class="pl-2">{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</span>
+
+          <div class="liquid-countdown pt-0">
+            <span class="lg"> GPT Balance: {{ currency.balance }} GPT</span>
+            <span class="extend-btn" @click="depositgpt">{{ $t('views.modal.deposit') }}</span>
+          </div>
         </div>
         <div class="liquid-countdown" v-show="extentTimeRemaining()">
           <span>{{ $t('views.lendingpage.liquidation_protection') }} {{ timeRemainMessage }}</span>
@@ -29,11 +33,22 @@
           <div class="comfirmdetail mt-7">
             <div class="flex-between details">
               <span>{{ $t('views.modal.gpt_balance') }}:</span>
-              <span>200.00 {{ $t('views.modal.GPT') }}</span>
+              <span>{{ currency.balance }} {{ $t('views.modal.GPT') }}</span>
             </div>
-            <div class="flex-between details mt-2">
-              <span>{{ $t('views.modal.gpt_deposit_amount') }}</span
-              ><span class="gptamount">50.00 {{ $t('views.modal.GPT') }}</span>
+            <div class="flex-between detail2 mt-2">
+              <v-text-field
+                class="estimatedGPT-field"
+                v-model="estimatedGPT"
+                prefix="Estimated GPT needed"
+                type="number"
+                pattern="[0-9]*"
+                filled
+                min="0"
+                hide-details="true"
+                :placeholder="estimatedGPT"
+                :value="estimatedGPT"
+                >{{ $t('views.modal.GPT') }}</v-text-field
+              >
             </div>
             <div class="horiz-line mt-4"></div>
             <v-btn
@@ -323,6 +338,13 @@ export default class SupplyBalance extends Vue {
   }
 }
 
+.liquid-wrapper {
+  display: flex;
+  flex-direction: column;
+  background: #151a2b;
+  border-radius: 5px;
+  padding: 8px;
+}
 .liquid-countdown {
   background: #151a2b;
   border-radius: 5px;
@@ -336,7 +358,10 @@ export default class SupplyBalance extends Vue {
     color: #c074f9;
   }
 }
-
+.lg {
+  color: rgba(224, 224, 224, 0.425);
+  font-size: 13px;
+}
 .liquidate {
   color: #ff5656;
 }
@@ -358,6 +383,9 @@ export default class SupplyBalance extends Vue {
 </style>
 
 <style lang="scss">
+.estimatedGPT-field input {
+  text-align: right;
+}
 .balance-card {
   .v-card__text {
     padding: 2rem !important;
@@ -403,6 +431,12 @@ export default class SupplyBalance extends Vue {
   margin-top: 10px;
   color: rgb(185, 185, 185);
   font-size: 14px;
+}
+.detail2 {
+  background-color: rgba(211, 211, 211, 0.322);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 .gptamount {
   color: black;
