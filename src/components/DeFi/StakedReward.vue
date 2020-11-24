@@ -4,36 +4,36 @@
       <v-card-text class="wrapper">
         <div class="total-reward">
           <p class="label mb-0">{{ $t('views.stakingpage.your_sk') }}</p>
-          <p class="value text-center">{{ stakedReward }} {{ currencyName }}</p>
+          <p class="value text-center">{{ staked.reward }} {{ currencyName }}</p>
         </div>
 
-        <div class="d-amount" :class="isStakedStopped ? 'disabled-text' : ''">
+        <div class="d-amount" :class="staked.status ? '' : 'disabled-text'">
           <div class="d-flex">
             <span class="text-uppercase">Deposited amount</span>
             <v-spacer></v-spacer>
-            <span class="text-right">{{ stakingAmount }} {{ stakingCurrencyName }}</span>
+            <span class="text-right">{{ staked.staking }} {{ staked.currency.name }}</span>
           </div>
           <div class="d-flex">
             <span class="text-uppercase">Staked available</span>
             <v-spacer></v-spacer>
-            <span class="text-right">{{ withdrawAvailable }} {{ currencyName }}</span>
+            <span class="text-right">{{ staked.reward }} {{ currencyName }}</span>
           </div>
         </div>
 
         <v-divider></v-divider>
 
-        <p class="reward-label mb-0" v-if="isStakedStopped">You will get</p>
+        <p class="reward-label mb-0" v-if="!staked.status">You will get</p>
 
-        <div class="minimum-w" v-if="isStakedStopped">
+        <div class="minimum-w" v-if="!staked.status">
           <div class="d-flex">
             <span>Deposited amount</span>
             <v-spacer></v-spacer>
-            <span>{{ stakingAmount }} {{ stakingCurrencyName }}</span>
+            <span>{{ staked.staking }} {{ staked.currency.name }}</span>
           </div>
           <div class="d-flex">
             <span>Staked available</span>
             <v-spacer></v-spacer>
-            <span>{{ stakedReward }} {{ currencyName }}</span>
+            <span>{{ staked.reward }} {{ currencyName }}</span>
           </div>
           <div class="d-flex">
             <span>Fee</span>
@@ -43,7 +43,7 @@
         </div>
 
         <v-btn
-          v-if="isStakedStopped"
+          v-if="!staked.status"
           large
           block
           depressed
@@ -62,10 +62,9 @@
           block
           outlined
           class="stop-btn"
-          :class="isStakedStopped ? 'stopped' : ''"
+          :class="staked.status ? '' : 'stopped'"
           color="#FF4E4E"
           :disabled="!withdrawAvailable"
-          @click="isStakedStopped = true"
           >Stop staking</v-btn
         >
       </v-card-text>
@@ -92,11 +91,12 @@ import moment from 'moment'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
+import { StakingInfo } from '@/types/staking'
 
 @Component({
   components: {
-    TransactionConfirmationModal
-  }
+    TransactionConfirmationModal,
+  },
 })
 export default class StakedReward extends Vue {
   walletStore = getModule(WalletModule)
@@ -106,15 +106,17 @@ export default class StakedReward extends Vue {
   @Prop({ default: {} }) readonly rewardCurrency!: CurrencyInfo
   @Prop({ default: 0 }) readonly stakingAmount!: number
   @Prop({ default: {} }) readonly stakingCurrency!: CurrencyInfo
+  @Prop() selectedStaking!: StakingInfo
 
   confirmTxModal = false
   errorMsg = ''
-  withdrawAmount: string | number = ''
-
-  isStakedStopped = false
 
   //example
   next21days = moment().add(21, 'd')
+
+  get staked() {
+    return this.selectedStaking
+  }
 
   // when countdown is finished on 21st day
   get isStakedDue() {
@@ -122,16 +124,13 @@ export default class StakedReward extends Vue {
   }
 
   get countdownDuration() {
-    const timeDiff = this.next21days.diff(moment())
+    const dueDate = moment(this.staked.timestamp)
+    const timeDiff = dueDate.diff(moment())
     return moment.duration(timeDiff).as('milliseconds')
   }
 
   get countdownInFormat() {
     return moment.utc(this.countdownDuration).format('DD [days] HH [hour] MM [min]')
-  }
-
-  get exampleTime() {
-    return moment(1606122541471)
   }
 
   get currencyName() {
@@ -166,16 +165,11 @@ export default class StakedReward extends Vue {
     return this.$t('views.stakingpage')
   }
 
-  fillAmount(amount: number) {
-    this.withdrawAmount = amount
-  }
-
   openConfirmTxModal() {
     this.confirmTxModal = !this.confirmTxModal
   }
 
   closeConfirmTxModal() {
-    this.withdrawAmount = 0
     this.confirmTxModal = false
   }
 
@@ -188,10 +182,10 @@ export default class StakedReward extends Vue {
   }
 
   onConfirm(walletParams: WalletParams) {
-    const amount = Number(this.withdrawAmount)
+    const amount = Number(this.staked.reward)
     const payload = {
       amount,
-      walletParams
+      walletParams,
     }
 
     this.stakingStore
@@ -253,7 +247,7 @@ export default class StakedReward extends Vue {
 }
 
 .stop-btn {
-  margin-top: 8.8rem;
+  margin-top: 8.9rem;
   margin-bottom: 1rem;
   border-radius: 5px;
 }

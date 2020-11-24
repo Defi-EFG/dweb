@@ -2,7 +2,12 @@
   <div class="staking-page">
     <v-row class="content-wrapper">
       <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-1">
-        <StakingList :stakingAmount="staking" :stakingCurrency="stakingCurrency"></StakingList>
+        <StakingList
+          :stakingAmount="staking"
+          :stakingCurrency="stakingCurrency"
+          :stakingList="stakingListExample"
+          @selectStaking="onStakingSelected"
+        ></StakingList>
         <div v-if="isLargeMobileDevice" class="col-spacer"></div>
         <StakingChart
           v-if="isLargeMobileDevice"
@@ -57,6 +62,7 @@
                 :balance="stakingBalance"
                 :stakingAmount="staking"
                 :stakingCurrency="stakingCurrency"
+                :selectedStaking="selectedStaking"
               ></DepositWithdraw>
             </v-col>
             <v-col cols="6" class="inner-content pl-1">
@@ -65,6 +71,7 @@
                 :rewardCurrency="rewardCurrency"
                 :stakingAmount="staking"
                 :stakingCurrency="stakingCurrency"
+                :selectedStaking="selectedStaking"
               ></StakedReward>
             </v-col>
           </v-row>
@@ -82,6 +89,7 @@ import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import StakingModule from '@/store/staking'
+import { StakingInfo } from '@/types/staking'
 
 import TransactionHistory from '@/components/DeFi/TransactionHistory.vue'
 import StakingList from '@/components/DeFi/StakingList.vue'
@@ -106,10 +114,33 @@ export default class Staking extends Vue {
   walletStore = getModule(WalletModule)
   stakingStore = getModule(StakingModule)
 
+  stakingListExample: StakingInfo[] = [
+    {
+      staking: 100,
+      currency: this.stakingCurrency,
+      reward: 0.512,
+      status: true,
+    } as StakingInfo,
+    {
+      staking: 200,
+      currency: this.stakingCurrency,
+      reward: 1.212,
+      status: false,
+      timestamp: 1607664050000,
+    } as StakingInfo,
+  ]
+
+  selectedStaking: StakingInfo = this.activeStaking as StakingInfo
+
+  //temporal function
+  get activeStaking() {
+    return this.stakingListExample.find(staking => staking.status === true)
+  }
+
   get stakingBalance() {
     const currencyName = this.stakingCurrency.name
     const currency = this.walletStore.currenciesList.find(
-      (currency) => currency.name === currencyName
+      (currency: any) => currency.name === currencyName
     )
     if (!currency) return 0
 
@@ -148,14 +179,18 @@ export default class Staking extends Vue {
   get isLargeMobileDevice() {
     return window.innerWidth < 1264
   }
+
+  onStakingSelected(token: any) {
+    this.selectedStaking = token
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .supply-withdraw-wrapper {
   width: inherit;
-  background: transparent
-    linear-gradient(270deg, #2e3344 0%, #303748 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(270deg, #2e3344 0%, #303748 100%) 0% 0% no-repeat
+    padding-box;
 }
 
 .token-symbol {

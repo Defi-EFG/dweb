@@ -27,8 +27,8 @@ export interface RewardHistory {
 
 export interface StakingInfo {
   staking: number
-  currency?: CurrencyInfo
+  currency: CurrencyInfo
   reward: number
   status: boolean
-  timestamp: number //ms
+  timestamp?: number //ms
 }

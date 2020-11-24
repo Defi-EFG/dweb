@@ -76,6 +76,7 @@ import { CurrencyInfo } from '@/types/currency'
 import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import Loading from '@/components/modals/loading.vue'
+import { StakingInfo } from '@/types/staking'
 
 @Component({
   components: {
@@ -88,8 +89,8 @@ export default class DepositWithdraw extends Vue {
   stakingStore = getModule(StakingModule)
 
   @Prop({ default: 0 }) readonly balance!: number
-  @Prop({ default: 0 }) readonly stakingAmount!: number
   @Prop({ default: {} }) readonly stakingCurrency!: CurrencyInfo
+  @Prop() selectedStaking!: StakingInfo
 
   TYPE_DEPOSIT = 'deposit'
   TYPE_WITHDRAW = 'withdraw'
@@ -229,7 +230,12 @@ export default class DepositWithdraw extends Vue {
   }
 
   isTransferable(amount: number, balance: number) {
-    return amount > 0 && amount <= balance
+    // if active = can transfer
+    if (this.selectedStaking.status) {
+      return amount > 0 && amount <= balance
+    } else {
+      return false
+    }
   }
 }
 </script>
@@ -315,8 +321,8 @@ export default class DepositWithdraw extends Vue {
   margin-top: 3.5rem;
   margin-bottom: 1rem;
   border-radius: 5px;
-  background: transparent
-    linear-gradient(90deg, #8b41d6 0%, #6800fe 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(90deg, #8b41d6 0%, #6800fe 100%) 0% 0% no-repeat
+    padding-box;
 }
 
 .disabled {
