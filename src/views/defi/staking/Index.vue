@@ -46,8 +46,8 @@
       <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-3">
         <StakedReward
           v-if="isLargeMobileDevice"
-          :stakedReward="totalStakedReward"
           :rewardCurrency="rewardCurrency"
+          :selectedStaking="selectedStaking"
         ></StakedReward>
         <v-card v-else dark color="#222738" class="tx-container">
           <v-toolbar class="supply-withdraw-wrapper" dense flat>
@@ -60,17 +60,12 @@
             <v-col cols="6" class="inner-content pr-1">
               <DepositWithdraw
                 :balance="stakingBalance"
-                :stakingAmount="staking"
-                :stakingCurrency="stakingCurrency"
                 :selectedStaking="selectedStaking"
               ></DepositWithdraw>
             </v-col>
             <v-col cols="6" class="inner-content pl-1">
               <StakedReward
-                :stakedReward="totalStakedReward"
                 :rewardCurrency="rewardCurrency"
-                :stakingAmount="staking"
-                :stakingCurrency="stakingCurrency"
                 :selectedStaking="selectedStaking"
               ></StakedReward>
             </v-col>
@@ -107,8 +102,8 @@ import TransactionRewardHistory from '@/components/DeFi/Mobile/TransactionReward
     DepositWithdraw,
     StakedReward,
     RewardHistory,
-    TransactionRewardHistory,
-  },
+    TransactionRewardHistory
+  }
 })
 export default class Staking extends Vue {
   walletStore = getModule(WalletModule)
@@ -119,15 +114,15 @@ export default class Staking extends Vue {
       staking: 100,
       currency: this.stakingCurrency,
       reward: 0.512,
-      status: true,
+      status: true
     } as StakingInfo,
     {
       staking: 200,
       currency: this.stakingCurrency,
       reward: 1.212,
       status: false,
-      timestamp: 1607664050000,
-    } as StakingInfo,
+      timestamp: 1607664050000
+    } as StakingInfo
   ]
 
   selectedStaking: StakingInfo = this.activeStaking as StakingInfo

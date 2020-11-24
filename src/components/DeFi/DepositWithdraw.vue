@@ -3,21 +3,23 @@
     <div class="deposit-tab">
       <div class="label pl-3">
         <img src="@/assets/efg_logo.svg" alt="" />
-        <span>{{ stakingCurrencyName }} - {{ $t('views.stakingpage.flexible_s') }}</span>
+        <span>{{ staked.currency.name || '###' }} - {{ $t('views.stakingpage.flexible_s') }}</span>
       </div>
       <small class="pl-3">
-        {{ $t('views.stakingpage.deposit') }} {{ stakingCurrencyName }}
+        {{ $t('views.stakingpage.deposit') }} {{ staked.currency.name }}
         {{ $t('views.stakingpage.to_earn') }} {{ rewardCurrencyName }}
       </small>
 
       <div class="total-balance">
         <span>{{ $t('views.stakingpage.yourbalance') }}</span>
         <v-spacer></v-spacer>
-        <span class="text-right">{{ balance }} {{ stakingCurrencyName }}</span>
+        <span class="text-right">{{ balance }} {{ staked.currency.name }}</span>
       </div>
 
       <div class="minimum-d">
-        <small class="value">{{ stakingCurrencyName }} {{ $t('views.stakingpage.deposit') }}</small>
+        <small class="value"
+          >{{ staked.currency.name }} {{ $t('views.stakingpage.deposit') }}</small
+        >
         <v-spacer></v-spacer>
         <small class="all" @click="fillAmountDeposit(balance)">{{
           $t('views.stakingpage.depositall')
@@ -32,7 +34,7 @@
         placeholder="0"
         :prefix="depositAmount ? '' : stakingpage.depositamount"
         v-model="depositAmount"
-        :suffix="stakingCurrencyName"
+        :suffix="staked.currency.name"
         single-line
         solo
         hide-details="true"
@@ -72,7 +74,6 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import StakingModule from '@/store/staking'
 import { WalletParams } from '@/services/ecoc/types'
-import { CurrencyInfo } from '@/types/currency'
 import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import Loading from '@/components/modals/loading.vue'
@@ -81,15 +82,14 @@ import { StakingInfo } from '@/types/staking'
 @Component({
   components: {
     TransactionConfirmationModal,
-    Loading,
-  },
+    Loading
+  }
 })
 export default class DepositWithdraw extends Vue {
   walletStore = getModule(WalletModule)
   stakingStore = getModule(StakingModule)
 
   @Prop({ default: 0 }) readonly balance!: number
-  @Prop({ default: {} }) readonly stakingCurrency!: CurrencyInfo
   @Prop() selectedStaking!: StakingInfo
 
   TYPE_DEPOSIT = 'deposit'
@@ -110,15 +110,23 @@ export default class DepositWithdraw extends Vue {
   amount: string | number = 0
 
   get currency() {
-    const stakingCurrency = this.walletStore.currenciesList.find((currency) => {
-      if (this.stakingCurrencyAddress && currency.tokenInfo) {
-        return this.stakingCurrencyAddress === currency.tokenInfo.address
+    const stakingCurrency = this.walletStore.currenciesList.find(currency => {
+      if (this.stakedAddr && currency.tokenInfo) {
+        return this.stakedAddr === currency.tokenInfo.address
       }
 
-      return this.stakingCurrencyName === currency.name
+      return this.selectedStaking.currency.name === currency.name
     })
 
     return stakingCurrency || {}
+  }
+
+  get staked() {
+    return this.selectedStaking
+  }
+
+  get stakedAddr() {
+    return this.selectedStaking.currency.contractAddress || ''
   }
 
   get walletAddr() {
@@ -127,14 +135,6 @@ export default class DepositWithdraw extends Vue {
 
   get contractAddr() {
     return this.stakingStore.address
-  }
-
-  get stakingCurrencyAddress() {
-    return this.stakingCurrency.contractAddress || ''
-  }
-
-  get stakingCurrencyName() {
-    return this.stakingCurrency.name || '###'
   }
 
   get rewardCurrencyName() {
@@ -197,33 +197,33 @@ export default class DepositWithdraw extends Vue {
     const amount = Number(this.amount)
     const payload = {
       amount,
-      walletParams,
+      walletParams
     }
 
     if (this.actionType === this.TYPE_DEPOSIT) {
       this.loadingMsg = 'Currency Approving...'
       this.stakingStore
         .deposit(payload)
-        .then((txid) => {
+        .then(txid => {
           setTimeout(() => {
             this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
             this.onSuccess()
           }, 1000)
         })
-        .catch((error) => {
+        .catch(error => {
           this.onError(error.message)
         })
     } else if (this.actionType === this.TYPE_WITHDRAW) {
       this.loadingMsg = 'Sending Transaction...'
       this.stakingStore
         .withdraw(payload)
-        .then((txid) => {
+        .then(txid => {
           setTimeout(() => {
             this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
             this.onSuccess()
           }, 1000)
         })
-        .catch((error) => {
+        .catch(error => {
           this.onError(error.message)
         })
     }
@@ -231,7 +231,7 @@ export default class DepositWithdraw extends Vue {
 
   isTransferable(amount: number, balance: number) {
     // if active = can transfer
-    if (this.selectedStaking.status) {
+    if (this.staked.status) {
       return amount > 0 && amount <= balance
     } else {
       return false

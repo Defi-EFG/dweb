@@ -64,7 +64,7 @@
           class="stop-btn"
           :class="staked.status ? '' : 'stopped'"
           color="#FF4E4E"
-          :disabled="!withdrawAvailable"
+          :disabled="!staked.reward"
           >Stop staking</v-btn
         >
       </v-card-text>
@@ -73,7 +73,7 @@
       :visible="confirmTxModal"
       :fromAddr="contractAddr"
       :toAddr="walletAddr"
-      :amount="withdrawAvailable"
+      :amount="staked.reward"
       :currency="currency"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
@@ -95,24 +95,18 @@ import { StakingInfo } from '@/types/staking'
 
 @Component({
   components: {
-    TransactionConfirmationModal,
-  },
+    TransactionConfirmationModal
+  }
 })
 export default class StakedReward extends Vue {
   walletStore = getModule(WalletModule)
   stakingStore = getModule(StakingModule)
 
-  @Prop({ default: 0 }) readonly stakedReward!: number
   @Prop({ default: {} }) readonly rewardCurrency!: CurrencyInfo
-  @Prop({ default: 0 }) readonly stakingAmount!: number
-  @Prop({ default: {} }) readonly stakingCurrency!: CurrencyInfo
   @Prop() selectedStaking!: StakingInfo
 
   confirmTxModal = false
   errorMsg = ''
-
-  //example
-  next21days = moment().add(21, 'd')
 
   get staked() {
     return this.selectedStaking
@@ -137,20 +131,12 @@ export default class StakedReward extends Vue {
     return this.rewardCurrency.name
   }
 
-  get withdrawAvailable() {
-    return this.stakedReward
-  }
-
   get currency() {
     const stakingCurrency = this.walletStore.currenciesList.find(
       (currency: Currency) => currency.name === this.currencyName
     )
 
     return stakingCurrency || {}
-  }
-
-  get stakingCurrencyName() {
-    return this.stakingCurrency.name || '###'
   }
 
   get walletAddr() {
@@ -185,7 +171,7 @@ export default class StakedReward extends Vue {
     const amount = Number(this.staked.reward)
     const payload = {
       amount,
-      walletParams,
+      walletParams
     }
 
     this.stakingStore
