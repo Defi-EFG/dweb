@@ -1,8 +1,10 @@
 import BigNumber from 'bignumber.js'
+import { Decoder } from 'ecoweb3'
 import { staking } from './staking'
 import { lending } from './lending'
 import { ECOC_MAINNET } from './ecoc/constants'
 import { ecocw3 } from '@/services/ecoc/ecocw3'
+import * as constants from '@/constants'
 
 export const toDecimals = (value: number | string, decimals: number | string) => {
   const expo = new BigNumber(10).pow(new BigNumber(decimals))
@@ -61,8 +63,8 @@ export const truncate = (msg: string, charsToShow = 20) => {
 }
 
 export const addressFilter = (address: string) => {
-  if (address == staking.address) return 'Staking - Defi'
-  else if (address == lending.address) return 'Lending - Defi'
+  if (address == staking.address) return constants.TYPE_STAKING
+  else if (address == lending.address) return constants.TYPE_LENDING
   else return address
 }
 
@@ -74,4 +76,12 @@ export const getExplorerUrl = (networkStr = ECOC_MAINNET) => {
 export const getBlockNumber = async () => {
   const status = await ecocw3.api.getBlockStatus()
   return status.height as number
+}
+
+export const toEcocAddress = (addressHex: string) => {
+  try {
+    return Decoder.toEcoAddress(addressHex)
+  } catch (error) {
+    return addressHex
+  }
 }

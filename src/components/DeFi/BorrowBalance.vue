@@ -6,7 +6,9 @@
       <div class="borrow-power">
         <div class="label">
           <span class="power-label">{{ $t('views.lendingpage.borrow_po') }}</span>
-          <span v-if="isLiquidate" class="liquid-label">Liquidation</span>
+          <span v-if="isLiquidate" class="liquid-label">{{
+            $t('views.lendingpage.liquidation')
+          }}</span>
         </div>
         <v-progress-linear
           background-color="#1D212E"

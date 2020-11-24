@@ -62,9 +62,15 @@
               </div>
               <div class="balance">
                 <div>
-                  ${{ getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name)) }}
+                  ${{
+                    getEstimatedValue(item.amount, getCurrencyPrice(item.currency.name))
+                      | numberWithCommas({ fixed: [0, 2] })
+                  }}
                 </div>
-                <small>≈{{ item.amount.toFixed(2) }} {{ item.currency.name }}</small>
+                <small
+                  >≈{{ item.amount | numberWithCommas({ fixed: [0, 8] }) }}
+                  {{ item.currency.name }}</small
+                >
               </div>
             </div>
           </v-card-text>
@@ -116,7 +122,6 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
-import moment from 'moment'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import { Currency, CurrencyInfo } from '@/types/currency'
@@ -174,18 +179,6 @@ export default class LendingActivity extends Vue {
     return currency.price || 0
   }
 
-  getTime(timestamp: number) {
-    if (timestamp) {
-      // const timeMsg = moment(timestamp * 1000)
-      //   .startOf('minute')
-      //   .fromNow()
-
-      return `${moment(timestamp * 1000).format('YYYY-MM-DD HH:mm')}`
-    }
-
-    return timestamp
-  }
-
   openConfirmTxModal(currencyInfo: CurrencyInfo, amount: number) {
     this.currency = getCurrency(currencyInfo.name)
     this.amount = amount
@@ -200,6 +193,7 @@ export default class LendingActivity extends Vue {
 
   onSuccess() {
     this.closeConfirmTxModal()
+    window.scrollTo(0, 0)
   }
 
   onError(errorMsg: string) {

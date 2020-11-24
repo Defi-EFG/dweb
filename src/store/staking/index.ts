@@ -69,6 +69,11 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   updateStakingList(stakingList: StakingInfo[]) {
     this.stakingList = stakingList
   }
+  
+  clear() {
+    this.staking = 0
+    this.totalStakedReward = 0
+  }
 
   @MutationAction
   async updateStakingInfo() {
@@ -122,6 +127,12 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   synced() {
     this.context.commit('updateStatus', constants.STATUS_SYNCED)
     return constants.STATUS_SYNCED
+  }
+
+  @Action
+  async logout() {
+    this.context.commit('clear')
+    return true
   }
 
   @Action({ rawError: true })

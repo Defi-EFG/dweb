@@ -28,7 +28,7 @@
               {{ tx.value }} {{ tx.currency }}
             </v-list-item-title>
             <div class="tx-addr">
-              <small> TxID: {{ truncate(tx.id, 20) }} </small>
+              <small> TxID: {{ truncate(tx.id, 15) }} </small>
               <v-spacer></v-spacer>
               <small>{{ getTime(tx.time) }}</small>
             </div>
@@ -99,7 +99,6 @@ export default class TransactionHistory extends Vue {
   }
 
   displayHistory(txid: string) {
-    console.log('SELECT TXID', txid)
     this.showTxModal = !this.showTxModal
     this.showTxId = txid
   }
@@ -118,9 +117,10 @@ export default class TransactionHistory extends Vue {
     if (this.pageNum < this.walletStore.txList.pagesTotal) {
       setTimeout(async () => {
         await this.walletStore.updateTxHistoryByPage(this.pageNum)
+        await this.walletStore.updateTransactionsHistory() // [To Do] refactor
         $state.loaded()
         this.pageNum++
-      }, 500)
+      }, 1000)
     } else {
       $state.complete()
     }

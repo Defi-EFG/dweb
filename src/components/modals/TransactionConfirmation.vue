@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="show" max-width="400" class="send-transaction" persistent>
+    <v-dialog v-model="show" max-width="420" class="send-transaction" persistent>
       <v-card class="blur-card" color="#FFFFFF00">
         <v-card-title class="modal-header">
           <v-icon></v-icon>
@@ -258,11 +258,11 @@ export default class TransactionConfirmationModal extends Vue {
   }
 
   copyAddress(addr: string) {
-    this.copymessage = 'Copied'
+    this.copymessage = this.$t('views.modal.copied')
     copyToClipboard(addr)
 
     setTimeout(() => {
-      this.copymessage = 'Copy Address'
+      this.copymessage = this.$t('views.modal.copy_Address')
     }, 1000)
   }
 

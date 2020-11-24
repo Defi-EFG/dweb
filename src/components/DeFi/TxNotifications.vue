@@ -42,7 +42,7 @@
                 class="details"
                 @click="showTxHistory(tx.txid)"
               >
-                Details
+                {{ $t('views.main.detail') }}
               </div>
             </v-col>
           </v-row>

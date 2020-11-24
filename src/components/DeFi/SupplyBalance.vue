@@ -8,11 +8,13 @@
           ${{ balance | numberWithCommas({ fixed: [0, 8] }) }}
         </div>
         <div class="liquid-countdown" v-show="isNearLiquidate && !extentTimeRemaining()">
-          <span>Estimated GPT needed: {{ estimatedGPT }}</span>
-          <span class="extend-btn" @click="openConfirmTxModal">Extend</span>
+          <span>{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</span>
+          <span class="extend-btn" @click="openConfirmTxModal">{{
+            $t('views.lendingpage.extend')
+          }}</span>
         </div>
         <div class="liquid-countdown" v-show="extentTimeRemaining()">
-          <span>Liquidation protection time: {{ timeRemainMessage }}</span>
+          <span>{{ $t('views.lendingpage.liquidation_protection') }} {{ timeRemainMessage }}</span>
         </div>
       </v-card-text>
     </v-card>
@@ -38,6 +40,7 @@ import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import * as constants from '@/constants'
 import { WalletParams } from '@/services/ecoc/types'
+import { Currency } from '@/types/currency'
 import { rewardCurrency as extendCurrency } from '@/store/common'
 import * as utils from '@/services/utils'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
@@ -82,6 +85,10 @@ export default class SupplyBalance extends Vue {
     setInterval(() => {
       this.timeRemainMessage = this.extentTimeRemaining()
     }, 1000)
+  }
+
+  get isLoggedIn(): boolean {
+    return this.walletStore.address != ''
   }
 
   get isNearLiquidate() {
@@ -129,7 +136,20 @@ export default class SupplyBalance extends Vue {
     return Number(this.currency.balance) >= Number(this.estimatedGPT)
   }
 
+  get extendBalance() {
+    const currency = this.lendingStore.myAssets.find(
+      asset => asset.currency.contractAddress === extendCurrency.contractAddress
+    )
+
+    if (!currency) return 0
+    return currency.amount
+  }
+
   async getEstimatedGPT() {
+    if (!this.isLoggedIn) {
+      return '0'
+    }
+
     const amount = await this.lendingStore.getEstimatedGPT(this.address)
     const estimatedGPT = utils
       .toNumber(amount)
@@ -167,6 +187,7 @@ export default class SupplyBalance extends Vue {
     this.loading = false
     this.loadingMsg = ''
     this.closeConfirmTxModal()
+    window.scrollTo(0, 0)
   }
 
   onError(errorMsg: string) {
@@ -179,14 +200,18 @@ export default class SupplyBalance extends Vue {
     this.loading = true
     this.loadingMsg = 'Currency Approving...'
     const amount = Number(this.estimatedGPT)
+    const currency = this.currency as Currency
+    const poolAddress = this.poolAddr
 
     const payload = {
+      currency,
+      poolAddress,
       amount,
       walletParams
     }
 
     this.lendingStore
-      .extendGracePeriod(payload)
+      .depositAsset(payload)
       .then((txid: any) => {
         setTimeout(() => {
           this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })

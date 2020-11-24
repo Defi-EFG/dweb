@@ -50,6 +50,8 @@
 import { Component, Vue } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
+import LendingModule from '@/store/lending'
+import StakingModule from '@/store/staking'
 import UnlockWallet from './modals/UnlockWallet.vue'
 import PrivateKey from './modals/PrivateKeyModal.vue'
 import TxNotifications from '@/components/DeFi/TxNotifications.vue'
@@ -63,6 +65,9 @@ import TxNotifications from '@/components/DeFi/TxNotifications.vue'
 })
 export default class HeaderNav extends Vue {
   walletStore = getModule(WalletModule)
+  lendingStore = getModule(LendingModule)
+  stakingStore = getModule(StakingModule)
+
   unlockWalletOpen = false
   accessPrivateKey = false
   menu = false
@@ -97,6 +102,9 @@ export default class HeaderNav extends Vue {
 
   logout() {
     this.walletStore.logout()
+    this.lendingStore.logout()
+    this.stakingStore.logout()
+    this.menu = false
   }
 
   gotoHome() {

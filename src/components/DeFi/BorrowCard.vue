@@ -21,7 +21,9 @@
       persistent-hint
     >
       <template v-slot:prepend-inner>
-        <v-btn class="py-4" x-small text @click="safeMaxInput">Safe max</v-btn>
+        <v-btn class="py-4" x-small text @click="safeMaxInput">{{
+          $t('views.modal.safe_max')
+        }}</v-btn>
       </template>
     </v-text-field>
     <div class="borrow-power">
@@ -163,6 +165,10 @@ export default class BorrowCard extends Vue {
     return 80 // 80%
   }
 
+  get limit() {
+    return 99.9 // 99.9%
+  }
+
   get lendingpage() {
     return this.$t('views.lendingpage')
   }
@@ -172,8 +178,8 @@ export default class BorrowCard extends Vue {
       this.bpSlider = this.bpUsed
     }
 
-    if (this.bpSlider >= this.safeLimit) {
-      this.bpSlider = this.safeLimit
+    if (this.bpSlider >= this.limit) {
+      this.bpSlider = this.limit
     }
 
     this.borrowValue = this.bpPercentToValue(this.bpSlider)
@@ -226,6 +232,7 @@ export default class BorrowCard extends Vue {
   onSuccess() {
     this.borrowValue = 0
     this.closeModal()
+    window.scrollTo(0, 0)
   }
 
   onError(errorMsg: string) {

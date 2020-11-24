@@ -204,6 +204,7 @@ export default class Withdraw extends Vue {
 
   onSuccess() {
     this.closeConfirmTxModal()
+    window.scrollTo(0, 0)
   }
 
   onError(errorMsg: string) {

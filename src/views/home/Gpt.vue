@@ -8,9 +8,9 @@
               <v-row>
                 <v-col cols="12" style="padding:0px">
                   <div class="logo_ecoc">
-                    <img class="logo_ecoc_m" width="40" src="@/assets/delay_02.svg" alt="" />
                     <div class="logo_ecoc_m_text">
-                      GPT <span>- {{ $t('views.detail.details') }}</span>
+                      {{ $t('views.titles.staking') }}
+                      <span> {{ $t('views.detail.details') }}</span>
                     </div>
                   </div>
                 </v-col>
@@ -28,10 +28,10 @@
                 </v-col>
                 <v-col cols="3" class="chart_detail">
                   <div class="m_titel m_titel_2">{{ stakingRate }}%</div>
+                  <div class="m_titel m_titel_2">{{ numberOfStaking }}</div>
                   <div class="m_titel m_titel_2">
                     {{ totalStaked | numberWithCommas({ Fixed: [0, 8] }) }} GPT
                   </div>
-                  <div class="m_titel m_titel_2">{{ numberOfStaking }}</div>
                   <div class="m_titel m_titel_2">{{ totalStaking }} EFG</div>
                 </v-col>
               </v-row>
@@ -161,7 +161,6 @@ export default class Gpt extends Vue {
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
-  margin-left: 10px;
 }
 .logo_ecoc .logo_ecoc_m_text span {
   font-size: 23px;

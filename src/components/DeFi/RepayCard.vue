@@ -201,6 +201,7 @@ export default class RepayCard extends Vue {
   onSuccess() {
     this.loading = false
     this.closeConfirmTxModal()
+    window.scrollTo(0, 0)
   }
 
   onError(errorMsg: string) {

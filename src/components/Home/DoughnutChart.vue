@@ -137,7 +137,7 @@ export default class DoughnutChart extends Vue {
 .dougnut-logo {
   padding: 0;
   margin: 0;
-  background-image: url('../../assets/efg_01.svg');
+  background-image: url('../../assets/gpt.svg');
   background-repeat: no-repeat;
   background-position: 50.4% 49.5%;
   background-size: 50px;
