@@ -131,6 +131,7 @@ export default class StakedReward extends Vue {
 
   onSuccess() {
     this.closeConfirmTxModal()
+    window.scrollTo(0, 0)
   }
 
   onError(errorMsg: string) {

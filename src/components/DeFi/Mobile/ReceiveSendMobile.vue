@@ -240,6 +240,7 @@ export default class ReceiveSendMobile extends Vue {
     this.toAddr = ''
     this.amount = 0
     this.closeModal()
+    window.scrollTo(0, 0)
   }
 
   onError(errorMsg: string) {

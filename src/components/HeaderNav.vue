@@ -104,6 +104,7 @@ export default class HeaderNav extends Vue {
     this.walletStore.logout()
     this.lendingStore.logout()
     this.stakingStore.logout()
+    this.menu = false
   }
 
   gotoHome() {

@@ -172,6 +172,7 @@
             "sec_until": "离清算还有 秒钟",
             "liquidation": "清算",
             "estimated_gpt": "估计所需的GPT：",
+            "gpt_balance": "GPT平衡:",
             "liquidation_protection": "清算保护时间：",
             "extend": "延伸"
         },
@@ -278,6 +279,8 @@
             "transaction_details": "交易细节",
             "from": "从:",
             "to": "到",
+            "owner": "所有者:",
+            "spender": "花费者:",
             "date": "日期",
             "currency": "货币",
             "type": "类型",
