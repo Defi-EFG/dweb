@@ -127,6 +127,16 @@ export default class Staking extends Vue {
 
   selectedStaking: StakingInfo = this.activeStaking as StakingInfo
 
+  isLargeMobileDevice = false
+
+  mounted() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this
+    window.addEventListener('resize', function() {
+      self.isLargeMobileDevice = this.window.innerWidth < 1264
+    })
+  }
+
   //temporal function
   get activeStaking() {
     return this.stakingListExample.find(staking => staking.status === true)
@@ -169,10 +179,6 @@ export default class Staking extends Vue {
 
   get rewardCurrency() {
     return this.stakingStore.rewardCurrency
-  }
-
-  get isLargeMobileDevice() {
-    return window.innerWidth < 1264
   }
 
   onStakingSelected(token: any) {
