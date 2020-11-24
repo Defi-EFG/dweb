@@ -1,7 +1,7 @@
 import { VuexModule, Module, Mutation, Action, MutationAction } from 'vuex-module-decorators'
 import store from '@/store'
 import { WalletParams } from '@/services/ecoc/types'
-import { StakingPlatform } from '@/types/staking'
+import { StakingPlatform, StakingInfo } from '@/types/staking'
 import { staking as stakingContract } from '@/services/staking'
 import { Ecrc20 } from '@/services/ecrc20'
 import * as Ecoc from '@/services/wallet'
@@ -27,11 +27,16 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   stakingCurrency = stakingCurrency
   rewardCurrency = rewardCurrency
 
+  stakingList: StakingInfo[] = []
+
   totalReward = 10000
   available = 10000
+
+  // unused
   staking = 0
   timestamp = 0
   totalStakedReward = 0
+  //
 
   numberOfStaking = 0
   totalStaking = 0
@@ -58,6 +63,11 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   @Mutation
   updateAvailable(available: number) {
     this.available = available
+  }
+
+  @Mutation
+  updateStakingList(stakingList: StakingInfo[]) {
+    this.stakingList = stakingList
   }
 
   @MutationAction
@@ -176,6 +186,22 @@ export default class StakingModule extends VuexModule implements StakingPlatform
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid
+    } catch (error) {
+      return Promise.reject(error)
+    }
+  }
+
+  @Action({ rawError: true })
+  async getStakingInfoList() {
+    const stakingList: StakingInfo[] = []
+
+    try {
+      const pendingIdList = await stakingContract.getPendingIds('')
+      for (const id of pendingIdList) {
+        const stakingInfo = await stakingContract.getPendingInfo(id)
+        stakingList.push(stakingInfo)
+      }
+      this.updateStakingList(stakingList)
     } catch (error) {
       return Promise.reject(error)
     }
