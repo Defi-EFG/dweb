@@ -9,15 +9,45 @@
         </div>
         <div class="liquid-countdown" v-show="isNearLiquidate && !extentTimeRemaining()">
           <span>{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</span>
-          <span class="extend-btn" @click="openConfirmTxModal">{{
-            $t('views.lendingpage.extend')
-          }}</span>
+          <span class="extend-btn" @click="depositgpt">{{ $t('views.lendingpage.extend') }}</span>
         </div>
         <div class="liquid-countdown" v-show="extentTimeRemaining()">
           <span>{{ $t('views.lendingpage.liquidation_protection') }} {{ timeRemainMessage }}</span>
         </div>
       </v-card-text>
     </v-card>
+
+    <v-dialog v-model="depositgptModal" max-width="400" persistent>
+      <v-card class="blur-card" color="#FFFFFF00">
+        <v-card-title class="modal-header">
+          <v-icon></v-icon>
+          <v-btn icon @click="closedepositgptModal"><v-icon color="white">$close</v-icon></v-btn>
+        </v-card-title>
+        <div class="depositgptwrapper pt-9 ">
+          <h3>{{ $t('views.modal.make_gpt_header') }}</h3>
+          <small>{{ $t('views.modal.make_gpt_desp') }}</small>
+          <div class="comfirmdetail mt-7">
+            <div class="flex-between details">
+              <span>{{ $t('views.modal.gpt_balance') }}:</span>
+              <span>200.00 {{ $t('views.modal.GPT') }}</span>
+            </div>
+            <div class="flex-between details mt-2">
+              <span>{{ $t('views.modal.gpt_deposit_amount') }}</span
+              ><span class="gptamount">50.00 {{ $t('views.modal.GPT') }}</span>
+            </div>
+            <div class="horiz-line mt-4"></div>
+            <v-btn
+              @click="openConfirmTxModal"
+              large
+              class="depositbtn mt-8 text-capitalize"
+              color="primary"
+              >{{ $t('views.modal.deposit') }}</v-btn
+            >
+          </div>
+        </div>
+      </v-card>
+    </v-dialog>
+
     <TransactionConfirmationModal
       :txType="confirmTxType"
       :visible="confirmTxModal"
@@ -55,7 +85,9 @@ import { numberWithCommas } from '@/plugins/filters'
 export default class SupplyBalance extends Vue {
   @Prop({ default: 0 }) readonly balance!: number
   @Prop({ default: false }) readonly isLiquidate!: boolean
+  @Prop({ default: false }) visible!: boolean
 
+  depositgptModal = this.visible
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
 
@@ -70,7 +102,17 @@ export default class SupplyBalance extends Vue {
   safetyFactor = 0.01
 
   timeRemainMessage: any = 0
-
+  @Watch('visible')
+  checkvisible(val: any) {
+    this.depositgptModal = val
+  }
+  closedepositgptModal() {
+    this.depositgptModal = false
+  }
+  depositfunction() {
+    console.log('depositfunction')
+    this.depositgptModal = false
+  }
   mounted() {
     if (this.isNearLiquidate) {
       this.getEstimatedGPT().then(amount => {
@@ -121,6 +163,9 @@ export default class SupplyBalance extends Vue {
     }
     return false
   }
+  depositgpt() {
+    this.depositgptModal = !this.depositgptModal
+  }
 
   get contractAddr() {
     return this.lendingStore.address
@@ -163,6 +208,7 @@ export default class SupplyBalance extends Vue {
   }
 
   openConfirmTxModal() {
+    this.closedepositgptModal()
     this.getEstimatedGPT().then(amount => {
       this.estimatedGPT = amount
       this.confirmTxModal = true
@@ -301,5 +347,55 @@ export default class SupplyBalance extends Vue {
   .v-card__text {
     padding: 2rem !important;
   }
+}
+</style>
+
+<style lang="scss" scoped>
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+}
+.modal-header {
+  padding: 9px !important;
+  background-color: transparent;
+  border-bottom: 1px solid rgba(247, 247, 247, 0.344);
+  z-index: 999;
+  display: flex;
+  justify-content: space-between;
+}
+.depositgptwrapper {
+  background-color: white;
+  padding: 24px;
+  margin: 24px 16px;
+  border-radius: 5px;
+}
+
+.depositgptwrapper h3 {
+  color: #44096b;
+  font-weight: 900;
+  font-size: 18px;
+}
+.depositgptwrapper small {
+  color: rgb(184, 184, 184);
+}
+.depositbtn {
+  width: 100%;
+}
+.details {
+  background-color: rgba(211, 211, 211, 0.322);
+  border-radius: 5px;
+  padding: 14px 17px;
+  margin-top: 10px;
+  color: rgb(185, 185, 185);
+  font-size: 14px;
+}
+.gptamount {
+  color: black;
+}
+.v-sheet.v-card:not(.v-sheet--outlined) {
+  box-shadow: none;
+}
+.horiz-line {
+  border-bottom: 1px solid lightgray;
 }
 </style>
