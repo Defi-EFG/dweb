@@ -8,18 +8,22 @@
         </v-card-title>
 
         <div class="depositgptwrapper pt-9 ">
-          <h3>Make a Deposit (GPT)</h3>
-          <small>Please input GPT amount you want to deposit</small>
+          <h3>{{ $t('views.modal.make_gpt_header') }}</h3>
+          <small>{{ $t('views.modal.make_gpt_desp') }}</small>
           <div class="comfirmdetail mt-7">
             <div class="flex-between detail">
-              <span>GPT wallet balance:</span> <span>200.00 GPT</span>
+              <span>{{ $t('views.modal.gpt_balance') }}:</span>
+              <span>200.00 {{ $t('views.modal.GPT') }}</span>
             </div>
 
             <div class="flex-between detail mt-2">
-              <span>Depposit Amount</span><span class="gptamount">50.00 GPT</span>
+              <span>{{ $t('views.modal.gpt_deposit_amount') }}</span
+              ><span class="gptamount">50.00 {{ $t('views.modal.GPT') }}</span>
             </div>
             <div class="horiz-line mt-4"></div>
-            <v-btn large class="depositbtn mt-8 text-capitalize" color="primary">Deposit</v-btn>
+            <v-btn large class="depositbtn mt-8 text-capitalize" color="primary">{{
+              $t('views.modal.deposit')
+            }}</v-btn>
           </div>
         </div>
       </v-card>
