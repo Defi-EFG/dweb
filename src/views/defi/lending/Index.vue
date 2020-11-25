@@ -162,6 +162,16 @@ export default class Lending extends Vue {
 
   mode = 'collateral'
 
+  isLargeMobileDevice = false
+
+  mounted() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this
+    window.addEventListener('resize', function() {
+      self.isLargeMobileDevice = this.window.innerWidth < 1264
+    })
+  }
+
   get isLoggedIn(): boolean {
     return this.walletStore.address != ''
   }
@@ -244,10 +254,6 @@ export default class Lending extends Vue {
     const currency = this.walletStore.currencies.find(currency => currency.name === currencyName)
     if (!currency) return 0
     return currency.price || 0
-  }
-
-  get isLargeMobileDevice() {
-    return window.innerWidth < 1264
   }
 
   modeSwitch(val: string) {

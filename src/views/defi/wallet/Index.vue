@@ -99,6 +99,18 @@ import ReceiveSendMobile from '@/components/DeFi/Mobile/ReceiveSendMobile.vue'
 export default class Wallet extends Vue {
   walletStore = getModule(WalletModule)
 
+  isLargeMobileDevice = false
+  isMobileDevice = false
+
+  mounted() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this
+    window.addEventListener('resize', function() {
+      self.isMobileDevice = this.window.innerWidth < 600
+      self.isLargeMobileDevice = this.window.innerWidth < 1264 && this.window.innerWidth > 600
+    })
+  }
+
   get selectedIndex() {
     return this.walletStore.selectedCurrencyIndex
   }
@@ -109,14 +121,6 @@ export default class Wallet extends Vue {
 
   get selectedCurrency() {
     return this.walletStore.selectedCurrency
-  }
-
-  get isLargeMobileDevice() {
-    return window.innerWidth < 1264 && window.innerWidth > 600
-  }
-
-  get isMobileDevice() {
-    return window.innerWidth < 600
   }
 
   isSymbolAvailable(name: string) {

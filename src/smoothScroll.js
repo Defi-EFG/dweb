@@ -5,26 +5,19 @@ const SmoothScroll = (target, speed, smooth) => {
 
   let moving = false
   let pos = target.scrollLeft
-  let beforePos = target.scrollLeft
   target.addEventListener('mousewheel', scrolled, false)
-  /* target.addEventListener('DOMMouseScroll', scrolled, false) */
 
   function scrolled(e) {
     e.preventDefault() // disable default scrolling
-
-    let delta = e.delta || e.wheelDelta
+    let delta = e.deltaY
     if (delta === undefined) {
       //we are on firefox
       delta = -e.detail
     }
     delta = Math.max(-1, Math.min(1, delta)) // cap the delta to [-1,1] for cross browser consistency
-    beforePos += -delta * speed
-    if (beforePos >= 0 && beforePos <= 960) {
-      pos += -delta * speed
-      beforePos = pos
-    } else {
-      beforePos = target.scrollLeft
-    }
+
+    pos += delta * speed
+    pos = Math.max(0, pos, target.scrollLeft - target.clientWidth + smooth * 2) // limit scrolling
 
     if (!moving) update()
   }
@@ -35,9 +28,11 @@ const SmoothScroll = (target, speed, smooth) => {
 
     delta -= 1
 
-    if (pos - target.scrollLeft === smooth * 2) delta = 0
-    target.scrollLeft += delta
+    if (pos - target.scrollLeft === smooth * 2) {
+      delta = 0
+    }
 
+    target.scrollLeft += delta
     if (Math.abs(delta) > 0.5) requestFrame(update)
     else moving = false
   }

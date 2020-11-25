@@ -8,7 +8,13 @@
     </v-toolbar>
 
     <v-card-text>
-      <v-card v-for="(token, index) in tokenList" :key="index" class="staking-token selected">
+      <v-card
+        v-for="(token, index) in stakingList"
+        :key="index"
+        class="staking-token"
+        :class="token.status ? 'selected' : ''"
+        @click="selectStaking(token)"
+      >
         <v-row>
           <v-col cols="auto" class="token d-flex">
             <img src="@/assets/efg_logo.svg" alt="" />
@@ -17,7 +23,7 @@
           <v-col class="reward">
             <small>{{ $t('views.stakingpage.total_staking') }}</small>
             <div class="value">
-              {{ token.amount | numberWithCommas({ fixed: [0, 8] }) }} {{ token.currency.name }}
+              {{ token.staking | numberWithCommas({ fixed: [0, 8] }) }} {{ token.currency.name }}
             </div>
           </v-col>
         </v-row>
@@ -29,11 +35,13 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { CurrencyInfo } from '@/types/currency'
+import { StakingInfo } from '@/types/staking'
 
 @Component({})
 export default class StakingList extends Vue {
   @Prop({ default: 0 }) readonly stakingAmount!: number
   @Prop({ default: {} }) readonly stakingCurrency!: CurrencyInfo
+  @Prop() stakingList!: StakingInfo[]
 
   selected = false
 
@@ -43,9 +51,13 @@ export default class StakingList extends Vue {
     return [
       {
         currency: this.stakingCurrency,
-        amount: this.stakingAmount
-      }
+        amount: this.stakingAmount,
+      },
     ]
+  }
+
+  selectStaking(token: StakingInfo) {
+    this.$emit('selectStaking', token)
   }
 }
 </script>
@@ -73,9 +85,8 @@ export default class StakingList extends Vue {
 
 .staking-token {
   width: -webkit-fill-available;
-  background: transparent;
+  background: #2E3345;
   box-shadow: none !important;
-  border: 1px solid #ffffff12;
   cursor: pointer;
   padding: 6px;
   margin-bottom: 0.5rem;

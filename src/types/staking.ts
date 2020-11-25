@@ -24,3 +24,11 @@ export interface RewardHistory {
   amount: number
   timestamp: number
 }
+
+export interface StakingInfo {
+  staking: number
+  currency: CurrencyInfo
+  reward: number
+  status: boolean
+  timestamp?: number //ms
+}

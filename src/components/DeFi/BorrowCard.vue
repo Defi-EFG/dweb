@@ -100,8 +100,8 @@ import TransactionConfirmationModal from '@/components/modals/TransactionConfirm
 
 @Component({
   components: {
-    TransactionConfirmationModal
-  }
+    TransactionConfirmationModal,
+  },
 })
 export default class BorrowCard extends Vue {
   walletStore = getModule(WalletModule)
@@ -119,9 +119,15 @@ export default class BorrowCard extends Vue {
 
   errorMsg = ''
   confirmTxModal = false
+  isMobileDevice = false
 
   mounted() {
     this.bpSlider = this.bpUsed
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this
+    window.addEventListener('resize', function() {
+      self.isMobileDevice = this.window.innerWidth < 1264
+    })
   }
 
   get walletAddr() {
@@ -130,10 +136,6 @@ export default class BorrowCard extends Vue {
 
   get contractAddr() {
     return this.lendingStore.address
-  }
-
-  get isMobileDevice() {
-    return window.innerWidth < 1264
   }
 
   get walletBalance() {
@@ -153,9 +155,9 @@ export default class BorrowCard extends Vue {
   }
 
   get tokenConversion() {
-    return `${Number(this.borrowValue) || 0} ${this.currencyName} ≈ $${(this.currencyPrice *
-      Number(this.borrowValue)) |
-      0}`
+    return `${Number(this.borrowValue) || 0} ${this.currencyName} ≈ $${
+      this.currencyPrice * Number(this.borrowValue) || 0
+    }`
   }
 
   get totalBorrowed() {
@@ -191,7 +193,7 @@ export default class BorrowCard extends Vue {
   calculateBPUsed(borrowAmount: number) {
     const dollarsAmount = Number(borrowAmount) * this.currencyPrice
     const bpPercent = ((this.borrowBalance + dollarsAmount) / this.borrowLimit) * 100
-    return bpPercent | 0
+    return bpPercent || 0
   }
 
   bpPercentToValue(bp: number) {
@@ -253,16 +255,16 @@ export default class BorrowCard extends Vue {
       currency,
       amount,
       poolAddress,
-      walletParams
+      walletParams,
     }
 
     this.lendingStore
       .borrow(payload)
-      .then(txid => {
+      .then((txid: any) => {
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_BORROW })
         this.onSuccess()
       })
-      .catch(error => {
+      .catch((error: any) => {
         this.onError(error.message)
       })
   }

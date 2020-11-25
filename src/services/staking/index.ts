@@ -5,6 +5,7 @@ import { WalletParams } from '@/services/ecoc/types'
 import { defaultNetwork } from '@/services/ecoc/config'
 import { ECOC_MAINNET } from '@/services/ecoc/constants'
 import stakingAbi from './abi.json'
+import { StakingInfo } from '@/types/staking'
 
 const mainnetAddress = 'dcdb53777df51dfaaf4622150d6c668ff9cd476a'
 const testnetAddress = 'dcdb53777df51dfaaf4622150d6c668ff9cd476a'
@@ -128,5 +129,18 @@ export namespace staking {
 
     const rawTx = await contract.getSendToTx('claimStakedGPT', params, keypair, utxoList)
     return rawTx
+  }
+
+  export const getPendingIds = async (stakerAddr: string) => {
+    const exampleList = [1, 2, 3, 7, 9, 4, 10]
+    return exampleList
+  }
+
+  export const getPendingInfo = async (pendingId: number) => {
+    return {} as StakingInfo
+  }
+
+  export const getStakingInfo = async (stakerAddr: string) => {
+    return {} as StakingInfo
   }
 }

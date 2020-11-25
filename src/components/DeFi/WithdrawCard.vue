@@ -112,6 +112,15 @@ export default class Withdraw extends Vue {
   val = 25
   minVal = 25
   withdrawValue: number | string = ''
+  isMobileDevice = false
+
+  mounted() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this
+    window.addEventListener('resize', function() {
+      self.isMobileDevice = this.window.innerWidth < 1264
+    })
+  }
 
   get myCollateral() {
     return this.lendingStore.myCollateralAssets
@@ -123,10 +132,6 @@ export default class Withdraw extends Vue {
 
   get contractAddr() {
     return this.lendingStore.address
-  }
-
-  get isMobileDevice() {
-    return window.innerWidth < 1264
   }
 
   get maxWithdraw() {
@@ -173,11 +178,11 @@ export default class Withdraw extends Vue {
   calculateTotalBP(withdrawAmount: number) {
     const dollarsAmount = Number(withdrawAmount) * this.currencyPrice
     const total = this.borrowLimit - dollarsAmount * this.borrowPowerPercentage
-    return total
+    return total || 0
   }
 
   calculateBPUsed(withdrawAmount: number) {
-    return ((this.borrowBalance / this.calculateTotalBP(withdrawAmount)) * 100) | 0
+    return (this.borrowBalance / this.calculateTotalBP(withdrawAmount)) * 100 || 0
   }
 
   isWithdrawable(amount: number, type: string) {
@@ -223,11 +228,11 @@ export default class Withdraw extends Vue {
 
     this.lendingStore
       .withdrawCollateral(payload)
-      .then(txid => {
+      .then((txid: any) => {
         this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
         this.onSuccess()
       })
-      .catch(error => {
+      .catch((error: any) => {
         this.onError(error.message)
       })
   }
@@ -298,8 +303,7 @@ export default class Withdraw extends Vue {
   margin-bottom: 1.2rem;
   border-radius: 7px;
   font-weight: bold;
-  background: transparent linear-gradient(90deg, #3ba7c1 0%, #59289a 100%) 0% 0% no-repeat
-    padding-box;
+  background: transparent linear-gradient(90deg, #3ba7c1 0%, #59289a 100%) 0% 0% padding-box;
 }
 
 .disabled {
