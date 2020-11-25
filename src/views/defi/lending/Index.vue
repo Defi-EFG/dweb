@@ -165,6 +165,7 @@ export default class Lending extends Vue {
   isLargeMobileDevice = false
 
   mounted() {
+    this.isLargeMobileDevice = window.innerWidth < 1264
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
     window.addEventListener('resize', function() {
