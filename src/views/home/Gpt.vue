@@ -17,10 +17,10 @@
                 <v-col cols="9" class="chart_detail">
                   <div class="m_titel">{{ $t('views.detail.daily_Yield') }}</div>
                   <div class="m_titel">
-                    {{ $t('views.detail.total') }} GPT {{ $t('views.detail.staked') }}
+                    {{ $t('views.detail.number_of_staker') }}
                   </div>
                   <div class="m_titel">
-                    {{ $t('views.detail.number_of_staker') }}
+                    {{ $t('views.detail.total') }} GPT {{ $t('views.detail.staked') }}
                   </div>
                   <div class="m_titel">
                     {{ $t('views.detail.total_EFG_Staking') }}

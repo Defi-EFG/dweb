@@ -6,8 +6,8 @@ import { defaultNetwork } from '@/services/ecoc/config'
 import { ECOC_MAINNET } from '@/services/ecoc/constants'
 import stakingAbi from './abi.json'
 
-const mainnetAddress = 'dcdb53777df51dfaaf4622150d6c668ff9cd476a'
-const testnetAddress = '632e0f7080affb9ae37c56be45dbc77268964332'
+const mainnetAddress = '632e0f7080affb9ae37c56be45dbc77268964332'
+const testnetAddress = '1ae1d8baf0b493146da08de97cef19cd3d310dec'
 
 const defaultAddress = defaultNetwork === ECOC_MAINNET ? mainnetAddress : testnetAddress
 
