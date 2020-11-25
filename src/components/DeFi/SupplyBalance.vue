@@ -11,7 +11,11 @@
           <span class="pl-2">{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</span>
 
           <div class="liquid-countdown pt-0">
+<<<<<<< HEAD
+            <span class="lg"> GPT Balance: {{ extendBalance }} GPT</span>
+=======
             <span class="lg"> GPT Balance: {{ currency.balance }} GPT</span>
+>>>>>>> DepositGPTModal
             <span class="extend-btn" @click="depositgpt">{{ $t('views.modal.deposit') }}</span>
           </div>
         </div>
@@ -35,22 +39,34 @@
               <span>{{ $t('views.modal.gpt_balance') }}:</span>
               <span>{{ currency.balance }} {{ $t('views.modal.GPT') }}</span>
             </div>
+<<<<<<< HEAD
+            <div class="flex-between  mt-2">
+              <v-text-field
+                class="estimatedGPT-field"
+                v-model="estimatedGPTAmount"
+=======
             <div class="flex-between detail2 mt-2">
               <v-text-field
                 class="estimatedGPT-field"
                 v-model="estimatedGPT"
+>>>>>>> DepositGPTModal
                 prefix="Estimated GPT needed"
                 type="number"
                 pattern="[0-9]*"
                 filled
+<<<<<<< HEAD
+                :rules="[rules.required]"
+                min="0"
+=======
                 min="0"
                 hide-details="true"
+>>>>>>> DepositGPTModal
                 :placeholder="estimatedGPT"
                 :value="estimatedGPT"
                 >{{ $t('views.modal.GPT') }}</v-text-field
               >
             </div>
-            <div class="horiz-line mt-4"></div>
+            <div class="horiz-line"></div>
             <v-btn
               @click="openConfirmTxModal"
               large
@@ -68,7 +84,7 @@
       :visible="confirmTxModal"
       :fromAddr="address"
       :toAddr="contractAddr"
-      :amount="estimatedGPT"
+      :amount="estimatedGPTAmount"
       :currency="currency"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
@@ -113,7 +129,7 @@ export default class SupplyBalance extends Vue {
 
   loading = false
   loadingMsg = ''
-
+  estimatedGPTAmount: string | number = '0'
   estimatedGPT: string | number = '0'
   safetyFactor = 0.01
 
@@ -121,6 +137,11 @@ export default class SupplyBalance extends Vue {
   @Watch('visible')
   checkvisible(val: any) {
     this.depositgptModal = val
+  }
+  rules = {
+    required: (value: string) => {
+      return !!value || this.$t('views.modal.required')
+    }
   }
   closedepositgptModal() {
     this.depositgptModal = false
@@ -233,15 +254,18 @@ export default class SupplyBalance extends Vue {
   }
 
   openConfirmTxModal() {
-    this.closedepositgptModal()
-    this.getEstimatedGPT().then(amount => {
-      this.estimatedGPT = amount
-      this.confirmTxModal = true
-    })
+    if (this.estimatedGPTAmount != '' && this.estimatedGPTAmount > 0) {
+      this.closedepositgptModal()
+      this.getEstimatedGPT().then(amount => {
+        this.estimatedGPT = amount
+        this.confirmTxModal = true
+      })
+    }
   }
 
   closeConfirmTxModal() {
     this.confirmTxModal = false
+    this.estimatedGPTAmount = ''
   }
 
   onSuccess() {
