@@ -45,6 +45,18 @@
       <v-container>
         <v-row>
           <v-col cols="12">
+            <div class="button-small">
+              <a @click="daysChanged('days')" :class="active == 'days' ? 'active' : undefined"
+                >Hours</a
+              >
+              <a @click="daysChanged('hours')" :class="active == 'hours' ? 'active' : undefined"
+                >Days</a
+              >
+            </div>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
             <div class="chart_view">
               <LineChart :labelSet="labelSet" :dataSet="dataSet"></LineChart>
             </div>
@@ -74,6 +86,10 @@ export default class Efg extends Vue {
   query = this.$route.query.pool
   date = [] as string[]
   price = [] as number[]
+
+  active = 'days'
+  name = 'days'
+  title = 'days'
 
   get pool() {
     return this.lendingStore.pools.find(asset => asset.address === this.query)
@@ -107,28 +123,48 @@ export default class Efg extends Vue {
     return this.price
   }
 
-  mounted() {
+  async mounted() {
     this.lendingStore.updateLoners()
     api.getprice('EFG').then(data => {
       this.date = data.date
       this.price = data.price
     })
   }
+
+  async daysChanged(name: string) {
+    this.active = name
+    this.name = name
+    this.title = name
+    //@ts-ignore
+    api.getprice('xxx').then(data => {
+      this.date = data.date
+      this.price = data.price
+      console.log(this.price)
+    })
+  }
 }
 </script>
 
+<style lang="scss">
+.chart_view {
+  box-shadow: 0 0 10px rgba(77, 70, 95, 0.5);
+}
+</style>
 <style scoped lang="scss">
 .button-small {
-  padding: 10px 35px;
+  padding: 0;
   text-align: right;
-  background: #000000 0% 0% no-repeat padding-box;
   a {
-    padding: 0 5px;
+    padding: 0px 10px;
     color: #ffffff;
-    font-size: 14px;
+    font-size: 16px;
+    margin: 3px;
   }
   .active {
-    border-bottom: 2px solid #c074f9;
+    border-bottom: 2px solid #8b41d8;
+    color: #8b41d8;
+    font-weight: bold;
+    transition: 0.2s;
   }
 }
 .container {

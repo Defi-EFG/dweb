@@ -82,7 +82,6 @@ export default class Docs extends Vue {
 }
 .sec_doc1 {
   padding: 150px 50px 100px 50px;
-  background: #e4e4e4;
   height: 100%;
   position: fixed;
 }
