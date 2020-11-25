@@ -45,7 +45,7 @@ export default class DoughnutChart extends Vue {
 
   mounted() {
     this.renderChart(this.ctx, this.max, this.stakingTotal)
-    this.stakingStore.updateMintingInfo(this.stakingStore.address)
+    this.stakingStore.updatePlatformInfo()
   }
 
   @Watch('stakingTotal')

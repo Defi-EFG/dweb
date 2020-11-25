@@ -34,27 +34,13 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import { CurrencyInfo } from '@/types/currency'
 import { StakingInfo } from '@/types/staking'
 
 @Component({})
 export default class StakingList extends Vue {
-  @Prop({ default: 0 }) readonly stakingAmount!: number
-  @Prop({ default: {} }) readonly stakingCurrency!: CurrencyInfo
   @Prop() stakingList!: StakingInfo[]
 
   selected = false
-
-  get tokenList() {
-    if (!this.stakingCurrency.name) return []
-
-    return [
-      {
-        currency: this.stakingCurrency,
-        amount: this.stakingAmount,
-      },
-    ]
-  }
 
   selectStaking(token: StakingInfo) {
     this.$emit('selectStaking', token)
@@ -85,7 +71,7 @@ export default class StakingList extends Vue {
 
 .staking-token {
   width: -webkit-fill-available;
-  background: #2E3345;
+  background: #2e3345;
   box-shadow: none !important;
   cursor: pointer;
   padding: 6px;

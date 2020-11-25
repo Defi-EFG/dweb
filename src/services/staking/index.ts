@@ -5,10 +5,9 @@ import { WalletParams } from '@/services/ecoc/types'
 import { defaultNetwork } from '@/services/ecoc/config'
 import { ECOC_MAINNET } from '@/services/ecoc/constants'
 import stakingAbi from './abi.json'
-import { StakingInfo } from '@/types/staking'
 
 const mainnetAddress = 'dcdb53777df51dfaaf4622150d6c668ff9cd476a'
-const testnetAddress = 'dcdb53777df51dfaaf4622150d6c668ff9cd476a'
+const testnetAddress = '632e0f7080affb9ae37c56be45dbc77268964332'
 
 const defaultAddress = defaultNetwork === ECOC_MAINNET ? mainnetAddress : testnetAddress
 
@@ -34,46 +33,101 @@ export namespace staking {
     return data
   }
 
-  export const totalStaking = async () => {
+  export const availableGPT = async () => {
     const params = {
       methodArgs: []
     } as Params
 
-    const result = await contract.call('totalStaking', params)
+    const result = await contract.call('availableGPT', params)
     const executionResult = result.executionResult as ExecutionResult
     const data = executionResult.formattedOutput['0'].toNumber()
 
     return data
   }
 
-  export const getStakers = async () => {
+  export const getTotalStaking = async () => {
     const params = {
       methodArgs: []
     } as Params
 
-    const result = await contract.call('getStakers', params)
+    const result = await contract.call('getTotalStaking', params)
     const executionResult = result.executionResult as ExecutionResult
-    const addresses = executionResult.formattedOutput['0'] as string[]
-    const data = addresses.map(address => Decoder.toEcoAddress(address)) as string[]
+    const data = executionResult.formattedOutput['0'].toNumber()
 
-    return data
+    return data as number
   }
 
-  export const mintingInfo = async (address: string) => {
+  export const getTotalStakers = async () => {
+    const params = {
+      methodArgs: []
+    } as Params
+
+    const result = await contract.call('getTotalStakers', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const data = executionResult.formattedOutput['0'].toNumber()
+
+    return data as number
+  }
+
+  export const getRewardFee = async () => {
+    const params = {
+      methodArgs: []
+    } as Params
+
+    const result = await contract.call('getRewardFee', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const data = executionResult.formattedOutput['0'].toNumber()
+
+    return data as number
+  }
+
+  export const getStakingInfo = async (address: string) => {
     const params = {
       methodArgs: [address]
     } as Params
 
-    const result = await contract.call('mintingInfo', params)
+    const result = await contract.call('getStakingInfo', params)
     const executionResult = result.executionResult as ExecutionResult
-    const stakingAmount = executionResult.formattedOutput['0'].toNumber()
-    const timestamp = executionResult.formattedOutput['1'].toNumber()
-    const unclaimedReward = executionResult.formattedOutput['2'].toNumber()
+    const stakingAmount = executionResult.formattedOutput['0'].toNumber() as number
+    const rewardAmount = executionResult.formattedOutput['1'].toNumber() as number
+    const timestamp = executionResult.formattedOutput['2'].toNumber() as number
 
     return {
       stakingAmount,
-      timestamp,
-      unclaimedReward
+      rewardAmount,
+      timestamp
+    }
+  }
+
+  export const getPendingIds = async (address: string) => {
+    const params = {
+      methodArgs: [address]
+    } as Params
+
+    const result = await contract.call('getPendingIds', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const data = executionResult.formattedOutput.pendingId as any[]
+
+    return data.map(id => id.toNumber() as number)
+  }
+
+  export const getPendingInfo = async (pendingId: number) => {
+    const params = {
+      methodArgs: [pendingId]
+    } as Params
+
+    const result = await contract.call('getPendingInfo', params)
+    const executionResult = result.executionResult as ExecutionResult
+    const stakerAddress = Decoder.toEcoAddress(executionResult.formattedOutput.beneficiar) as string
+    const stakingAmount = executionResult.formattedOutput.EFGamount.toNumber() as number
+    const rewardAmount = executionResult.formattedOutput.GPTamount.toNumber() as number
+    const maturity = executionResult.formattedOutput.maturity.toNumber() as number
+
+    return {
+      stakerAddress,
+      stakingAmount,
+      rewardAmount,
+      maturity
     }
   }
 
@@ -95,10 +149,10 @@ export namespace staking {
     return rawTx
   }
 
-  export const withdrawEFG = async (amount: number, walletParams: WalletParams) => {
+  export const withdraw = async (pendingId: number, walletParams: WalletParams) => {
     const toAddr = walletParams.address
     const params = {
-      methodArgs: [toAddr, amount],
+      methodArgs: [toAddr, pendingId],
       senderAddress: walletParams.address,
       amount: 0,
       fee: walletParams.fee,
@@ -109,14 +163,13 @@ export namespace staking {
     const keypair = walletParams.keypair
     const utxoList = walletParams.utxoList
 
-    const rawTx = await contract.getSendToTx('withdrawEFG', params, keypair, utxoList)
+    const rawTx = await contract.getSendToTx('withdraw', params, keypair, utxoList)
     return rawTx
   }
 
-  export const claimStakedGPT = async (walletParams: WalletParams) => {
-    const toAddr = walletParams.address
+  export const stopStaking = async (walletParams: WalletParams) => {
     const params = {
-      methodArgs: [toAddr],
+      methodArgs: [],
       senderAddress: walletParams.address,
       amount: 0,
       fee: walletParams.fee,
@@ -127,20 +180,7 @@ export namespace staking {
     const keypair = walletParams.keypair
     const utxoList = walletParams.utxoList
 
-    const rawTx = await contract.getSendToTx('claimStakedGPT', params, keypair, utxoList)
+    const rawTx = await contract.getSendToTx('stopStaking', params, keypair, utxoList)
     return rawTx
-  }
-
-  export const getPendingIds = async (stakerAddr: string) => {
-    const exampleList = [1, 2, 3, 7, 9, 4, 10]
-    return exampleList
-  }
-
-  export const getPendingInfo = async (pendingId: number) => {
-    return {} as StakingInfo
-  }
-
-  export const getStakingInfo = async (stakerAddr: string) => {
-    return {} as StakingInfo
   }
 }

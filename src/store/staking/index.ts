@@ -27,16 +27,17 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   stakingCurrency = stakingCurrency
   rewardCurrency = rewardCurrency
 
-  stakingList: StakingInfo[] = []
+  stakingList = [
+    {
+      currency: stakingCurrency,
+      staking: 0,
+      reward: 0,
+      status: true
+    }
+  ] as StakingInfo[]
 
   totalReward = 10000
   available = 10000
-
-  // unused
-  staking = 0
-  timestamp = 0
-  totalStakedReward = 0
-  //
 
   numberOfStaking = 0
   totalStaking = 0
@@ -69,45 +70,99 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   updateStakingList(stakingList: StakingInfo[]) {
     this.stakingList = stakingList
   }
-  
+
   clear() {
-    this.staking = 0
-    this.totalStakedReward = 0
+    this.stakingList = [
+      {
+        currency: stakingCurrency,
+        staking: 0,
+        reward: 0,
+        status: true
+      }
+    ] as StakingInfo[]
   }
 
   @MutationAction
-  async updateStakingInfo() {
+  async updatePlatformInfo() {
     try {
-      const stakers = await stakingContract.getStakers()
-      const fullTotalStaking = await stakingContract.totalStaking()
+      const numberOfStaking = await stakingContract.getTotalStakers()
+      const fullTotalStaking = await stakingContract.getTotalStaking()
+      const fullAvailable = await stakingContract.availableGPT()
 
+      const rewardDecimals = GPT.tokenInfo?.decimals as string
       const stakingDecimals = EFG.tokenInfo?.decimals as string
-
-      const numberOfStaking = stakers.length
       const totalStaking = utils.toDecimals(fullTotalStaking, stakingDecimals).toNumber()
+      const available = utils.toDecimals(fullAvailable, rewardDecimals).toNumber()
 
-      return { numberOfStaking, totalStaking }
+      return { numberOfStaking, totalStaking, available }
     } catch (error) {
       return {}
     }
   }
 
   @MutationAction
-  async updateMintingInfo(address: string) {
+  async updateStakingInfo(address: string) {
     try {
-      const available = await stakingContract.unclaimedGPT()
-      const { stakingAmount, timestamp, unclaimedReward } = await stakingContract.mintingInfo(
-        address
-      )
+      const stakingList = (this.state as any).stakingList as StakingInfo[]
+      const { stakingAmount, rewardAmount } = await stakingContract.getStakingInfo(address)
 
       const rewardDecimals = GPT.tokenInfo?.decimals as string
       const stakingDecimals = EFG.tokenInfo?.decimals as string
 
-      return {
+      const staking = {
+        currency: stakingCurrency,
         staking: utils.toDecimals(stakingAmount, stakingDecimals).toNumber(),
-        timestamp: timestamp,
-        totalStakedReward: utils.toDecimals(unclaimedReward, rewardDecimals).toNumber(),
-        available: utils.toDecimals(available, rewardDecimals).toNumber(),
+        reward: utils.toDecimals(rewardAmount, rewardDecimals).toNumber(),
+        status: true
+      }
+
+      stakingList.splice(0, 1, staking)
+
+      return {
+        stakingList,
+        lastUpdate: new Date().getTime()
+      }
+    } catch (error) {
+      return {}
+    }
+  }
+
+  @MutationAction
+  async updatePendingInfo(address: string) {
+    try {
+      const stakingList = (this.state as any).stakingList as StakingInfo[]
+      const pendingIds = await stakingContract.getPendingIds(address)
+
+      console.log('pendingIds', pendingIds)
+
+      const rewardDecimals = GPT.tokenInfo?.decimals as string
+      const stakingDecimals = EFG.tokenInfo?.decimals as string
+
+      const pendingList = await Promise.all(
+        pendingIds.map(async id => {
+          const { stakingAmount, rewardAmount, maturity } = await stakingContract.getPendingInfo(id)
+
+          console.log('getPendingInfo', stakingAmount, rewardAmount, maturity)
+
+          const pending = {
+            pendingId: id,
+            currency: stakingCurrency,
+            staking: utils.toDecimals(stakingAmount, stakingDecimals).toNumber(),
+            reward: utils.toDecimals(rewardAmount, rewardDecimals).toNumber(),
+            status: false,
+            timestamp: maturity * 1000
+          }
+
+          return pending
+        })
+      )
+
+      console.log(pendingList)
+
+      stakingList.splice(1, stakingList.length, ...pendingList)
+
+      return {
+        stakingList,
         lastUpdate: new Date().getTime()
       }
     } catch (error) {
@@ -173,13 +228,11 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   }
 
   @Action({ rawError: true })
-  async withdraw(payloads: { amount: number; walletParams: WalletParams }) {
-    const { amount, walletParams } = payloads
-    const decimals = EFG.tokenInfo?.decimals as string
-    const fullAmount = utils.fromDecimals(amount, decimals).toNumber()
+  async withdraw(payloads: { pendingId: number; walletParams: WalletParams }) {
+    const { pendingId, walletParams } = payloads
 
     try {
-      const rawTransaction = await stakingContract.withdrawEFG(fullAmount, walletParams)
+      const rawTransaction = await stakingContract.withdraw(pendingId, walletParams)
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid
@@ -189,30 +242,14 @@ export default class StakingModule extends VuexModule implements StakingPlatform
   }
 
   @Action({ rawError: true })
-  async claim(payloads: { walletParams: WalletParams }) {
+  async stopStaking(payloads: { walletParams: WalletParams }) {
     const { walletParams } = payloads
 
     try {
-      const rawTransaction = await stakingContract.claimStakedGPT(walletParams)
+      const rawTransaction = await stakingContract.stopStaking(walletParams)
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid
-    } catch (error) {
-      return Promise.reject(error)
-    }
-  }
-
-  @Action({ rawError: true })
-  async getStakingInfoList() {
-    const stakingList: StakingInfo[] = []
-
-    try {
-      const pendingIdList = await stakingContract.getPendingIds('')
-      for (const id of pendingIdList) {
-        const stakingInfo = await stakingContract.getPendingInfo(id)
-        stakingList.push(stakingInfo)
-      }
-      this.updateStakingList(stakingList)
     } catch (error) {
       return Promise.reject(error)
     }
