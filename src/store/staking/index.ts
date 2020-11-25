@@ -133,16 +133,12 @@ export default class StakingModule extends VuexModule implements StakingPlatform
       const stakingList = (this.state as any).stakingList as StakingInfo[]
       const pendingIds = await stakingContract.getPendingIds(address)
 
-      console.log('pendingIds', pendingIds)
-
       const rewardDecimals = GPT.tokenInfo?.decimals as string
       const stakingDecimals = EFG.tokenInfo?.decimals as string
 
       const pendingList = await Promise.all(
         pendingIds.map(async id => {
           const { stakingAmount, rewardAmount, maturity } = await stakingContract.getPendingInfo(id)
-
-          console.log('getPendingInfo', stakingAmount, rewardAmount, maturity)
 
           const pending = {
             pendingId: id,
@@ -156,8 +152,6 @@ export default class StakingModule extends VuexModule implements StakingPlatform
           return pending
         })
       )
-
-      console.log(pendingList)
 
       stakingList.splice(1, stakingList.length, ...pendingList)
 
