@@ -176,7 +176,7 @@ import { DEFAULT } from '@/services/contract'
 import { copyToClipboard, getEcocTotalFee, addressFilter, truncate } from '@/services/utils'
 
 @Component({
-  components: {},
+  components: {}
 })
 export default class TransactionConfirmationModal extends Vue {
   @Prop({ default: {} }) currency!: Currency
@@ -209,7 +209,7 @@ export default class TransactionConfirmationModal extends Vue {
       if (this.visible) {
         return v.length >= 6 || this.$t('views.modal.characters')
       }
-    },
+    }
   }
 
   fee = DEFAULT.DEFAULT_FEE
@@ -307,7 +307,7 @@ export default class TransactionConfirmationModal extends Vue {
         utxoList: utxoList,
         fee: this.feeTierList[this.feeTier],
         gasLimit: this.gasLimit,
-        gasPrice: this.gasPrice,
+        gasPrice: this.gasPrice
       } as WalletParams
 
       this.password = ''

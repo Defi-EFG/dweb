@@ -100,8 +100,8 @@ import TransactionConfirmationModal from '@/components/modals/TransactionConfirm
 
 @Component({
   components: {
-    TransactionConfirmationModal,
-  },
+    TransactionConfirmationModal
+  }
 })
 export default class BorrowCard extends Vue {
   walletStore = getModule(WalletModule)
@@ -155,9 +155,8 @@ export default class BorrowCard extends Vue {
   }
 
   get tokenConversion() {
-    return `${Number(this.borrowValue) || 0} ${this.currencyName} ≈ $${
-      this.currencyPrice * Number(this.borrowValue) || 0
-    }`
+    return `${Number(this.borrowValue) || 0} ${this.currencyName} ≈ $${this.currencyPrice *
+      Number(this.borrowValue) || 0}`
   }
 
   get totalBorrowed() {
@@ -255,7 +254,7 @@ export default class BorrowCard extends Vue {
       currency,
       amount,
       poolAddress,
-      walletParams,
+      walletParams
     }
 
     this.lendingStore
