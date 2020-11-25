@@ -11,11 +11,7 @@
           <span class="pl-2">{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</span>
 
           <div class="liquid-countdown pt-0">
-<<<<<<< HEAD
             <span class="lg"> GPT Balance: {{ extendBalance }} GPT</span>
-=======
-            <span class="lg"> GPT Balance: {{ currency.balance }} GPT</span>
->>>>>>> DepositGPTModal
             <span class="extend-btn" @click="depositgpt">{{ $t('views.modal.deposit') }}</span>
           </div>
         </div>
@@ -39,28 +35,16 @@
               <span>{{ $t('views.modal.gpt_balance') }}:</span>
               <span>{{ currency.balance }} {{ $t('views.modal.GPT') }}</span>
             </div>
-<<<<<<< HEAD
             <div class="flex-between  mt-2">
               <v-text-field
                 class="estimatedGPT-field"
                 v-model="estimatedGPTAmount"
-=======
-            <div class="flex-between detail2 mt-2">
-              <v-text-field
-                class="estimatedGPT-field"
-                v-model="estimatedGPT"
->>>>>>> DepositGPTModal
                 prefix="Estimated GPT needed"
                 type="number"
                 pattern="[0-9]*"
                 filled
-<<<<<<< HEAD
                 :rules="[rules.required]"
                 min="0"
-=======
-                min="0"
-                hide-details="true"
->>>>>>> DepositGPTModal
                 :placeholder="estimatedGPT"
                 :value="estimatedGPT"
                 >{{ $t('views.modal.GPT') }}</v-text-field
