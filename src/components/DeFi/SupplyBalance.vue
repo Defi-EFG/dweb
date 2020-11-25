@@ -124,7 +124,7 @@ export default class SupplyBalance extends Vue {
   }
 
   get isNearLiquidate() {
-    const margin = 0.8
+    const margin = 0.5
     return this.lendingStore.borrowBalance / this.lendingStore.borrowLimit > margin
   }
 
@@ -156,7 +156,7 @@ export default class SupplyBalance extends Vue {
 
   get extendBalance() {
     const currency = this.lendingStore.myAssets.find(
-      asset => asset.currency.contractAddress === extendCurrency.contractAddress
+      asset => asset.currency.name === extendCurrency.name
     )
     if (!currency) return 0
     return currency.amount
@@ -220,7 +220,7 @@ export default class SupplyBalance extends Vue {
   onConfirm(walletParams: WalletParams) {
     this.loading = true
     this.loadingMsg = 'Currency Approving...'
-    const amount = Number(this.estimatedGPT)
+    const amount = Number(this.estimatedGPTAmount)
     const currency = this.currency as Currency
     const poolAddress = this.poolAddr
 
@@ -243,7 +243,7 @@ export default class SupplyBalance extends Vue {
         this.onError(error.message)
       })
   }
-  
+
   extentTimeRemaining() {
     if (this.walletStore.isWalletUnlocked) {
       const lastGracePeriod = this.lendingStore.loan.lastGracePeriod //unix timestamp in second

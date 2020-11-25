@@ -299,6 +299,7 @@
             "copy_txid": "复制TxID",
             "transaction_completed": "交易完成！",
             "transaction_pending": "交易待处理...",
+            "transaction_failed": "交易失败",
             "safe_max": "安全最大值",
             "generating_keystore": "正在生成密钥库文件...",
             "make_gpt_header":"进行存款 (GPT)",

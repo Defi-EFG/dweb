@@ -26,11 +26,13 @@
             </v-col>
             <v-col cols="7" class="tx-status">
               <div class="status">
-                <span v-if="tx.status === txConstants.STATUS_CONFIRMED"
-                  >Transaction completed!</span
-                >
-                <span v-else-if="tx.status === txConstants.STATUS_FAILED">Transaction failed</span>
-                <span v-else>Transaction pending...</span>
+                <span v-if="tx.status === txConstants.STATUS_CONFIRMED">{{
+                  $t('views.modal.transaction_completed')
+                }}</span>
+                <span v-else-if="tx.status === txConstants.STATUS_FAILED">{{
+                  $t('views.modal.transaction_failed')
+                }}</span>
+                <span v-else>{{ $t('views.modal.transaction_pending') }}</span>
               </div>
               <div class="id">
                 TxID: {{ truncateAddress(tx.txid) }}
