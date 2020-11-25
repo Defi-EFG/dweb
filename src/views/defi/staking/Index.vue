@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import StakingModule from '@/store/staking'
@@ -96,8 +96,8 @@ import TransactionRewardHistory from '@/components/DeFi/Mobile/TransactionReward
     DepositWithdraw,
     StakedReward,
     RewardHistory,
-    TransactionRewardHistory
-  }
+    TransactionRewardHistory,
+  },
 })
 export default class Staking extends Vue {
   walletStore = getModule(WalletModule)
@@ -106,12 +106,16 @@ export default class Staking extends Vue {
   selectedStaking: StakingInfo = this.activeStaking as StakingInfo
   isLargeMobileDevice = false
 
+  get isLoggedIn() {
+    return this.walletStore.isWalletUnlocked
+  }
+
   get stakingList() {
     return this.stakingStore.stakingList
   }
 
   get activeStaking() {
-    return this.stakingList.find(staking => staking.status === true)
+    return this.stakingList.find((staking) => staking.status === true)
   }
 
   get stakingBalance() {
@@ -152,9 +156,14 @@ export default class Staking extends Vue {
   mounted() {
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
-    window.addEventListener('resize', function() {
+    window.addEventListener('resize', function () {
       self.isLargeMobileDevice = this.window.innerWidth < 1264
     })
+  }
+
+  @Watch('stakingList')
+  stakingListChanged() {
+    this.selectedStaking = this.activeStaking as StakingInfo
   }
 }
 </script>
