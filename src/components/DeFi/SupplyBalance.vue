@@ -243,7 +243,7 @@ export default class SupplyBalance extends Vue {
         this.onError(error.message)
       })
   }
-  
+
   extentTimeRemaining() {
     if (this.walletStore.isWalletUnlocked) {
       const lastGracePeriod = this.lendingStore.loan.lastGracePeriod //unix timestamp in second
@@ -442,7 +442,7 @@ export default class SupplyBalance extends Vue {
   border-radius: 5px;
   padding: 14px 17px;
   margin-top: 10px;
-  color: rgb(185, 185, 185);
+  color: black;
   font-size: 14px;
 }
 .detail2 {
@@ -450,6 +450,7 @@ export default class SupplyBalance extends Vue {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: black;
 }
 .gptamount {
   color: black;
