@@ -7,7 +7,7 @@
       </v-toolbar-title>
     </v-toolbar>
 
-    <v-card-text>
+    <v-card-text class="sl-list-wrapper">
       <v-card
         v-for="(token, index) in stakingList"
         :key="index"
@@ -67,6 +67,25 @@ export default class StakingList extends Vue {
   width: inherit;
   min-height: 247px;
   background: #222738;
+}
+
+.sl-list-wrapper {
+  max-height: 210px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff41;
+    border-radius: 6px;
+  }
 }
 
 .staking-token {
