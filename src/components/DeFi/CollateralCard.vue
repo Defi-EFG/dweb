@@ -107,6 +107,15 @@ export default class Collateral extends Vue {
 
   collateralmodel = false
   collateralAmount: number | string = ''
+  isMobileDevice = false
+
+  mounted() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this
+    window.addEventListener('resize', function() {
+      self.isMobileDevice = this.window.innerWidth < 1264
+    })
+  }
 
   openCollateralmodals() {
     this.collateralmodel = !this.collateralmodel
@@ -149,10 +158,6 @@ export default class Collateral extends Vue {
       Number(this.collateralAmount)}`
   }
 
-  get isMobileDevice() {
-    return window.innerWidth < 1264
-  }
-
   get lendingpage() {
     return this.$t('views.lendingpage')
   }
@@ -173,7 +178,7 @@ export default class Collateral extends Vue {
       (this.borrowBalance /
         ((this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage)) *
       100
-    return newBpUsed | 0
+    return newBpUsed || 0
   }
 
   isCollateralable(amount: number, type: string) {

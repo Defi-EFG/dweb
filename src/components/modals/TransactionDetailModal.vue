@@ -54,6 +54,28 @@
         </div>
         <v-divider></v-divider>
 
+        <div v-if="tx.type === constants.EVENT_APPROVAL" class="txdetailwrapper">
+          <div>
+            <b>{{ $t('views.modal.owner') }}</b>
+            <p class="text-end mb-0">{{ getAddress(tx.txResult[0].log[0].owner) }}</p>
+          </div>
+          <div>
+            <b>{{ $t('views.modal.spender') }}</b>
+            <p class="text-end mb-0">{{ getAddress(tx.txResult[0].log[0].spender) }}</p>
+          </div>
+        </div>
+
+        <div v-else-if="tx.type === constants.EVENT_TRANSFER" class="txdetailwrapper">
+          <div>
+            <b>{{ $t('views.modal.from') }}</b>
+            <p class="text-end mb-0">{{ getAddress(tx.txResult[0].from) }}</p>
+            <div>
+              <b>{{ $t('views.modal.to') }}</b>
+              <p class="text-end mb-0">{{ getAddress(tx.txResult[0].to) }}</p>
+            </div>
+          </div>
+        </div>
+
         <div class="tx-detail">
           <div class="date">
             <span>{{ $t('views.modal.date') }}</span>
@@ -70,7 +92,7 @@
           <div class="type">
             <span>{{ $t('views.modal.type') }}</span>
             <v-spacer></v-spacer>
-            <span class="val">{{ $t(tx.type) }}</span>
+            <span class="val">{{ tx.subtype ? $t(tx.subtype) : $t(tx.type) }}</span>
           </div>
           <v-divider class="space"></v-divider>
           <div class="amount">
@@ -123,7 +145,6 @@ export default class TransactionDetailModal extends Vue {
       const txInfo = this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
       return txInfo
     }
-
     return {} as TxHistory
   }
 
@@ -131,7 +152,7 @@ export default class TransactionDetailModal extends Vue {
     return this.walletStore.address || ''
   }
 
-  get direction() {
+  get constants() {
     return constants
   }
 
@@ -157,6 +178,15 @@ export default class TransactionDetailModal extends Vue {
       this.txInfo = tx
       console.log(this.txInfo)
     })
+  }
+
+  getAddress(addressHex: string) {
+    const address = utils.addressFilter(addressHex)
+    if (address === addressHex) {
+      return utils.toEcocAddress(addressHex)
+    }
+
+    return address
   }
 
   goToExplorer(txid: string) {
@@ -231,5 +261,12 @@ export default class TransactionDetailModal extends Vue {
     margin-top: 6px;
     margin-bottom: 6px;
   }
+}
+.txdetailwrapper {
+  padding: 10px;
+}
+.flex {
+  display: flex;
+  justify-content: space-between;
 }
 </style>

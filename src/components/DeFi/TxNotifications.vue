@@ -17,17 +17,18 @@
                 indeterminate
                 color="white"
               ></v-progress-circular>
-              <v-icon v-else class="completed">
+              <v-icon v-if="tx.status === txConstants.STATUS_CONFIRMED" class="completed">
                 mdi-check-circle-outline
+              </v-icon>
+              <v-icon v-if="tx.status === txConstants.STATUS_FAILED" class="failed">
+                mdi-close-circle-outline
               </v-icon>
             </v-col>
             <v-col cols="7" class="tx-status">
               <div class="status">
-                {{
-                  tx.status === txConstants.STATUS_CONFIRMED
-                    ? $t('views.modal.transaction_completed')
-                    : $t('views.modal.transaction_pending')
-                }}
+                <span v-if="tx.status === txConstants.STATUS_CONFIRMED">Transaction completed!</span>
+                <span v-else-if="tx.status === txConstants.STATUS_FAILED">Transaction failed</span>
+                <span v-else>Transaction pending...</span>
               </div>
               <div class="id">
                 TxID: {{ truncateAddress(tx.txid) }}
@@ -37,7 +38,7 @@
             <v-col cols="3" class="tx-details pl-6">
               <div class="type">{{ $t(tx.type) }}</div>
               <div
-                v-if="tx.status === txConstants.STATUS_CONFIRMED"
+                v-if="tx.status !== txConstants.STATUS_PENDING"
                 class="details"
                 @click="showTxHistory(tx.txid)"
               >
@@ -140,6 +141,11 @@ export default class TxNotifications extends Vue {
 
   .completed {
     color: #89ee67;
+    font-size: 40px;
+  }
+
+  .failed {
+    color: #ff5656;
     font-size: 40px;
   }
 }

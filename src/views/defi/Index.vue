@@ -40,12 +40,18 @@ import DeFiFooter from '@/components/DeFi/DeFiFooter.vue'
 export default class Home extends Vue {
   walletStore = getModule(WalletModule)
 
-  get pendingTransaction() {
-    return this.walletStore.pendingTransaction
+  isMobileDevice = false
+
+  mounted() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this
+    window.addEventListener('resize', function() {
+      self.isMobileDevice = this.window.innerWidth < 1264
+    })
   }
 
-  get isMobileDevice() {
-    return window.innerWidth < 1264
+  get pendingTransaction() {
+    return this.walletStore.pendingTransaction
   }
 }
 </script>

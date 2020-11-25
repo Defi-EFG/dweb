@@ -1,120 +1,60 @@
 <template>
   <div class="dw-wrapper">
-    <v-tabs
-      grow
-      background-color="#191c26"
-      class="dw-tabs elevation-2"
-      :hide-slider="true"
-      show-arrows
-    >
-      <v-tab>{{ $t('views.stakingpage.deposit') }}</v-tab>
-      <v-tab>{{ $t('views.stakingpage.withdraw') }}</v-tab>
+    <div class="deposit-tab">
+      <div class="label pl-3">
+        <img src="@/assets/efg_logo.svg" alt="" />
+        <span>{{ staked.currency.name || '###' }} - {{ $t('views.stakingpage.flexible_s') }}</span>
+      </div>
+      <small class="pl-3">
+        {{ $t('views.stakingpage.deposit') }} {{ staked.currency.name }}
+        {{ $t('views.stakingpage.to_earn') }} {{ rewardCurrencyName }}
+      </small>
 
-      <v-tab-item class="deposit-tab">
-        <div class="label pl-3">
-          <img src="@/assets/efg_logo.svg" alt="" />
-          <span>{{ stakingCurrencyName }} - {{ $t('views.stakingpage.flexible_s') }}</span>
-        </div>
-        <small class="pl-3">
-          {{ $t('views.stakingpage.deposit') }} {{ stakingCurrencyName }}
-          {{ $t('views.stakingpage.to_earn') }} {{ rewardCurrencyName }}
-        </small>
+      <div class="total-balance">
+        <span>{{ $t('views.stakingpage.yourbalance') }}</span>
+        <v-spacer></v-spacer>
+        <span class="text-right">{{ balance }} {{ staked.currency.name }}</span>
+      </div>
 
-        <div class="total-balance">
-          <span>{{ $t('views.stakingpage.yourbalance') }}</span>
-          <v-spacer></v-spacer>
-          <span class="text-right"
-            >{{ balance | numberWithCommas({ fixed: [0, 2] }) }} {{ stakingCurrencyName }}</span
-          >
-        </div>
-
-        <div class="minimum-d">
-          <small class="value"
-            >{{ stakingCurrencyName }} {{ $t('views.stakingpage.deposit') }}</small
-          >
-          <v-spacer></v-spacer>
-          <small class="all" @click="fillAmountDeposit(balance)">{{
-            $t('views.stakingpage.depositall')
-          }}</small>
-        </div>
-
-        <v-text-field
-          dark
-          type="number"
-          pattern="[0-9]*"
-          class="deposit-amount"
-          placeholder="0"
-          :prefix="stakingpage.depositamount"
-          v-model="depositAmount"
-          :suffix="stakingCurrencyName"
-          single-line
-          solo
-          hide-details="true"
-        ></v-text-field>
-
-        <div class="note">
-          <small>{{ $t('views.stakingpage.note') }}</small>
-        </div>
-
-        <v-btn
-          dark
-          large
-          block
-          class="btn-d"
-          :class="!!depositAmount ? '' : 'disabled'"
-          :disabled="!depositAmount"
-          @click="openConfirmTxModal(TYPE_DEPOSIT)"
-          >{{ $t('views.stakingpage.deposit') }}</v-btn
+      <div class="minimum-d">
+        <small class="value"
+          >{{ staked.currency.name }} {{ $t('views.stakingpage.deposit') }}</small
         >
-      </v-tab-item>
+        <v-spacer></v-spacer>
+        <small class="all" @click="fillAmountDeposit(balance)">{{
+          $t('views.stakingpage.depositall')
+        }}</small>
+      </div>
 
-      <v-tab-item class="withdraw-tab">
-        <div class="label pl-3">
-          <span>{{ $t('views.stakingpage.withdraw') }}</span>
-        </div>
-        <small class="description">{{ $t('views.stakingpage.pleaseinput') }}</small>
+      <v-text-field
+        dark
+        type="number"
+        pattern="[0-9]*"
+        class="deposit-amount"
+        placeholder="0"
+        :prefix="depositAmount ? '' : stakingpage.depositamount"
+        v-model="depositAmount"
+        :suffix="staked.currency.name"
+        single-line
+        solo
+        hide-details="true"
+      ></v-text-field>
 
-        <div class="d-amount">
-          <span>{{ $t('views.stakingpage.your_skaking') }}</span>
-          <v-spacer></v-spacer>
-          <span>{{ stakingAmount.toFixed(2) }} {{ stakingCurrencyName }}</span>
-        </div>
+      <div class="note">
+        <small>Note: Withdrawal will be available after staking is stopped for 21 days.</small>
+      </div>
 
-        <div class="minimum-w">
-          <small class="value"
-            >{{ stakingCurrencyName }} {{ $t('views.stakingpage.withdraw') }}</small
-          >
-          <v-spacer></v-spacer>
-          <small class="all" @click="fillAmountWithdraw(stakingAmount)">{{
-            $t('views.stakingpage.withdraw_All')
-          }}</small>
-        </div>
-
-        <v-text-field
-          dark
-          class="withdrawal-amount"
-          placeholder="0"
-          type="number"
-          pattern="[0-9]*"
-          :prefix="stakingpage.depositamount"
-          v-model="withdrawAmount"
-          :suffix="stakingCurrencyName"
-          single-line
-          solo
-          hide-details="true"
-        ></v-text-field>
-        <v-btn
-          dark
-          large
-          block
-          class="btn-w"
-          :class="!!withdrawAmount ? '' : 'disabled'"
-          :disabled="!withdrawAmount"
-          @click="openConfirmTxModal(TYPE_WITHDRAW)"
-          >{{ $t('views.stakingpage.withdraw') }}</v-btn
-        >
-      </v-tab-item>
-    </v-tabs>
+      <v-btn
+        dark
+        large
+        block
+        class="btn-d"
+        :class="isTransferable(depositAmount, balance) ? '' : 'disabled'"
+        :disabled="!isTransferable(depositAmount, balance)"
+        @click="openConfirmTxModal(TYPE_DEPOSIT)"
+        >{{ $t('views.stakingpage.deposit') }}</v-btn
+      >
+    </div>
     <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="fromAddr"
@@ -134,10 +74,10 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import StakingModule from '@/store/staking'
 import { WalletParams } from '@/services/ecoc/types'
-import { CurrencyInfo } from '@/types/currency'
 import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import Loading from '@/components/modals/loading.vue'
+import { StakingInfo } from '@/types/staking'
 
 @Component({
   components: {
@@ -150,8 +90,7 @@ export default class DepositWithdraw extends Vue {
   stakingStore = getModule(StakingModule)
 
   @Prop({ default: 0 }) readonly balance!: number
-  @Prop({ default: 0 }) readonly stakingAmount!: number
-  @Prop({ default: {} }) readonly stakingCurrency!: CurrencyInfo
+  @Prop() selectedStaking!: StakingInfo
 
   TYPE_DEPOSIT = 'deposit'
   TYPE_WITHDRAW = 'withdraw'
@@ -172,14 +111,22 @@ export default class DepositWithdraw extends Vue {
 
   get currency() {
     const stakingCurrency = this.walletStore.currenciesList.find(currency => {
-      if (this.stakingCurrencyAddress && currency.tokenInfo) {
-        return this.stakingCurrencyAddress === currency.tokenInfo.address
+      if (this.stakedAddr && currency.tokenInfo) {
+        return this.stakedAddr === currency.tokenInfo.address
       }
 
-      return this.stakingCurrencyName === currency.name
+      return this.selectedStaking.currency.name === currency.name
     })
 
     return stakingCurrency || {}
+  }
+
+  get staked() {
+    return this.selectedStaking
+  }
+
+  get stakedAddr() {
+    return this.selectedStaking.currency.contractAddress || ''
   }
 
   get walletAddr() {
@@ -188,14 +135,6 @@ export default class DepositWithdraw extends Vue {
 
   get contractAddr() {
     return this.stakingStore.address
-  }
-
-  get stakingCurrencyAddress() {
-    return this.stakingCurrency.contractAddress || ''
-  }
-
-  get stakingCurrencyName() {
-    return this.stakingCurrency.name || '###'
   }
 
   get rewardCurrencyName() {
@@ -244,6 +183,7 @@ export default class DepositWithdraw extends Vue {
     this.loading = false
     this.loadingMsg = ''
     this.closeConfirmTxModal()
+    window.scrollTo(0, 0)
   }
 
   onError(errorMsg: string) {
@@ -289,6 +229,15 @@ export default class DepositWithdraw extends Vue {
         })
     }
   }
+
+  isTransferable(amount: number, balance: number) {
+    // if active = can transfer
+    if (this.staked.status) {
+      return amount > 0 && amount <= balance
+    } else {
+      return false
+    }
+  }
 }
 </script>
 
@@ -303,6 +252,7 @@ export default class DepositWithdraw extends Vue {
 .deposit-tab,
 .withdraw-tab {
   padding: 16px;
+  width: -webkit-fill-available;
 }
 
 .wrapper {
@@ -311,6 +261,7 @@ export default class DepositWithdraw extends Vue {
 }
 
 .label {
+  margin-top: 2rem;
   display: flex;
   align-items: center;
   font-size: 16px;
@@ -324,7 +275,7 @@ export default class DepositWithdraw extends Vue {
 
 .d-amount,
 .total-balance {
-  margin-top: 2.3rem;
+  margin-top: 3.4rem;
   font-size: 14px;
   display: flex;
   padding: 10px;

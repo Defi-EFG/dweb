@@ -118,6 +118,15 @@ export default class RepayCard extends Vue {
   errorMsg = ''
   loadingMsg = 'Currency Approving...'
   repayAmount: number | string = ''
+  isMobileDevice = false
+
+  mounted() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this
+    window.addEventListener('resize', function() {
+      self.isMobileDevice = this.window.innerWidth < 1264
+    })
+  }
 
   get walletAddr() {
     return this.walletStore.address
@@ -125,10 +134,6 @@ export default class RepayCard extends Vue {
 
   get contractAddr() {
     return this.lendingStore.address
-  }
-
-  get isMobileDevice() {
-    return window.innerWidth < 1264
   }
 
   get walletBalance() {
@@ -175,7 +180,7 @@ export default class RepayCard extends Vue {
   calculateBPUsed(repayAmount: number) {
     const dollarsAmount = Number(repayAmount) * this.currencyPrice
     const newBpUsed = ((this.borrowBalance - dollarsAmount) / this.borrowLimit) * 100
-    return newBpUsed | 0
+    return newBpUsed || 0
   }
 
   isRepayable(amount: number, type: string) {
@@ -201,6 +206,7 @@ export default class RepayCard extends Vue {
   onSuccess() {
     this.loading = false
     this.closeConfirmTxModal()
+    window.scrollTo(0, 0)
   }
 
   onError(errorMsg: string) {

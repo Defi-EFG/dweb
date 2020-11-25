@@ -527,9 +527,15 @@ export default class LendingModule extends VuexModule implements LendingPlatform
   }
 
   @Action({ rawError: true })
-  async extendGracePeriod(payloads: { amount: number; walletParams: WalletParams }) {
-    const { amount, walletParams } = payloads
-    const tokenInfo = getTokenInfo(extendCurrency.name)
+  async depositAsset(payloads: {
+    currency: Currency
+    poolAddress: string
+    amount: number
+    walletParams: WalletParams
+  }) {
+    const { currency, poolAddress, amount, walletParams } = payloads
+    const currencyName = currency.name
+    const tokenInfo = getTokenInfo(currencyName)
     const token = new Ecrc20(tokenInfo)
     const decimals = tokenInfo.decimals
     const fullAmount = utils.fromDecimals(amount, decimals).toNumber()
@@ -549,7 +555,12 @@ export default class LendingModule extends VuexModule implements LendingPlatform
         walletParams.utxoList = newUtxos
       }
 
-      const rawTransaction = await lending.extendGracePeriod(fullAmount, walletParams)
+      const rawTransaction = await lending.depositAsset(
+        currencyName,
+        fullAmount,
+        poolAddress,
+        walletParams
+      )
       const txid = await Ecoc.sendRawTx(rawTransaction)
       this.context.commit('updateStatus', constants.STATUS_PENDING)
       return txid

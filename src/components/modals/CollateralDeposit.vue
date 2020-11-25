@@ -10,7 +10,7 @@
                 <v-icon></v-icon>
                 <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
-              <div class="transaction-confirmation-wrapper collateral_pddeful ">
+              <div class="transaction-confirmation-wrapper collateral_pddeful">
                 <div class="headtitle_collat">
                   <div class="headtitle_collat_head">{{ $t('views.modal.select_Loaner') }}</div>
                   <div class="headtitle_collat_sub">
@@ -20,7 +20,7 @@
                 <div class="transaction-confirmation-content collat_bg">
                   <v-container>
                     <div class="texttitle_hade">
-                      <v-row class="row1 ">
+                      <v-row class="row1">
                         <v-col lg="4" md="4" cols="4">
                           {{ $t('views.main.loaner') }}
                         </v-col>
@@ -82,8 +82,8 @@
                 <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
               <div class="transaction-confirmation-wrapper collateral_pddeful">
-                <div class="content-wrapper ">
-                  <div class="content-logo ">
+                <div class="content-wrapper">
+                  <div class="content-logo">
                     <div class="logo"><img src="@/assets/ECOC.svg" alt="" /></div>
                   </div>
                   <h3 class="">{{ $t('views.modal.use_ECOC') }}</h3>
@@ -109,7 +109,7 @@
                 <div></div>
                 <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
               </v-card-title>
-              <div class="transaction-confirmation-wrapper collat_bg2 collateral_margin mb-7">
+              <div class="transaction-confirmation-wrapper collat_bg2 ">
                 <div class="d-flex ">
                   <v-tooltip top>
                     <template v-slot:activator="{ on, attrs }">
@@ -140,11 +140,11 @@
                   </v-tooltip>
                   <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
                 </div>
-                <div class="transaction-confirmation-content ">
+                <div class="transaction-confirmation-content">
                   <div class="collateral_pd">
-                    <h4>
-                      <strong>{{ $t('views.modal.transaction') }}</strong>
-                    </h4>
+                    <h3>
+                      {{ $t('views.modal.transaction') }}
+                    </h3>
                     <small>{{ $t('views.modal.please_transaction') }}</small>
                     <div class="div_prices">
                       <div class="transaction-confirmation-content-detail">
@@ -160,7 +160,7 @@
                         <span class="gt">{{ $t('views.modal.gas_fee') }}</span>
                         <div class="text-end">
                           <div class="d-flex justify-end">
-                            <p>{{ totalFee }}</p>
+                            <p>{{ gasFee }}</p>
                             <p class="ml-2">ECOC</p>
                           </div>
                         </div>
@@ -236,13 +236,13 @@
                   <v-icon></v-icon>
                   <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
                 </v-card-title>
-                <div class="transaction-confirmation-wrapper collateral_pddeful ">
+                <div class="transaction-confirmation-wrapper collateral_pddeful">
                   <div class="headtitle_collat">
                     <div class="headtitle_collat_head font-bold">
                       Deposit Successful!<img src="@/assets/icon/Check.svg" alt="" />
                     </div>
                     <v-container colortextoutput>
-                      <v-row class="border-bottom_1 ">
+                      <v-row class="border-bottom_1">
                         <v-col cols="6" class="nopadding">Collateral</v-col>
                         <v-col cols="6" class="textright nopadding">0 ECOC</v-col>
                       </v-row>
@@ -266,17 +266,13 @@
                         >
                       </v-row>
                       <v-row class="showwallet2 showwalletcc">
-                        <v-col cols="8" class="nopadding font-bold ">Transaction Confirmed!</v-col>
+                        <v-col cols="8" class="nopadding font-bold">Transaction Confirmed!</v-col>
                         <v-col cols="4" class="textright nopadding">
                           <v-btn class="icon" fab dark x-small color="primary">
-                            <v-icon dark>
-                              mdi-arrow-up
-                            </v-icon>
+                            <v-icon dark> mdi-arrow-up </v-icon>
                           </v-btn>
                           <v-btn class="icon" fab dark x-small color="primary">
-                            <v-icon dark>
-                              mdi-content-copy
-                            </v-icon>
+                            <v-icon dark> mdi-content-copy </v-icon>
                           </v-btn>
                         </v-col>
                       </v-row>
@@ -302,7 +298,7 @@
 
     <v-dialog v-model="gassetting" max-width="370" class="content-gas-setting">
       <v-card>
-        <div class="d-flex justify-lg-space-between pt-3 ">
+        <div class="d-flex justify-lg-space-between pt-3">
           <v-icon></v-icon>
           <v-btn icon @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
         </div>
@@ -310,23 +306,23 @@
           <h3>{{ $t('views.modal.gas_setting') }}</h3>
           <small>{{ $t('views.modal.Increase') }}</small>
           <div class="gas-customization">
-            <v-btn-toggle tile group>
+            <v-btn-toggle tile group mandatory v-model="feeTier">
               <v-btn>
-                <div class="gas-custom-btn-group" @click="fee = feeSlow">
+                <div class="gas-custom-btn-group">
                   <p>{{ $t('views.modal.slow') }}</p>
-                  <p>{{ feeSlow }} ECOC</p>
+                  <p>{{ feeTierList[0] }} ECOC</p>
                 </div>
               </v-btn>
               <v-btn>
-                <div class="gas-custom-btn-group" @click="fee = feeAverage">
+                <div class="gas-custom-btn-group">
                   <p>{{ $t('views.modal.average') }}</p>
-                  <p>{{ feeAverage }} ECOC</p>
+                  <p>{{ feeTierList[1] }} ECOC</p>
                 </div></v-btn
               >
               <v-btn>
-                <div class="gas-custom-btn-group" @click="fee = feeFast">
+                <div class="gas-custom-btn-group">
                   <p>{{ $t('views.modal.fast') }}</p>
-                  <p>{{ feeFast }} ECOC</p>
+                  <p>{{ feeTierList[2] }} ECOC</p>
                 </div></v-btn
               >
             </v-btn-toggle>
@@ -348,10 +344,15 @@
               <p class="mb-0">{{ totalFee }} ECOC</p>
             </div>
           </div>
-          <div class="save-button ">
-            <v-btn color="primary" depressed block @click="closeGasSetting">{{
-              $t('views.modal.save')
-            }}</v-btn>
+          <div class="save-button">
+            <v-btn
+              color="primary"
+              depressed
+              block
+              :disabled="totalFee <= 0"
+              @click="saveGasSetting"
+              >{{ $t('views.modal.save') }}</v-btn
+            >
           </div>
         </div>
       </v-card>
@@ -384,9 +385,7 @@ export default class CollateralDeposit extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
 
-  feeSlow = 0.004
-  feeAverage = 0.01
-  feeFast = 0.1
+  feeTierList = [0.004, 0.01, 0.1]
 
   gassetting = false
   loading = false
@@ -400,9 +399,12 @@ export default class CollateralDeposit extends Vue {
   selectdata = ''
   active = ''
   showModal = false
+  gasFee = 0
   fee = DEFAULT.DEFAULT_FEE
   gasLimit = DEFAULT.DEFAULT_GAS_LIMIT
   gasPrice = DEFAULT.DEFAULT_GAS_PRICE
+
+  feeTier = 1
 
   rules = {
     required: (value: any) => {
@@ -430,8 +432,12 @@ export default class CollateralDeposit extends Vue {
     this.showModal = val
   }
 
+  mounted() {
+    this.gasFee = this.totalFee
+  }
+
   get totalFee() {
-    return utils.getEcocTotalFee(this.fee, this.gasPrice, this.gasLimit)
+    return utils.getEcocTotalFee(this.feeTierList[this.feeTier], this.gasPrice, this.gasLimit)
   }
 
   get Loanerlist() {
@@ -481,6 +487,12 @@ export default class CollateralDeposit extends Vue {
   }
 
   closeGasSetting() {
+    this.gassetting = false
+  }
+
+  saveGasSetting() {
+    console.log('save gas setting')
+    this.gasFee = this.totalFee
     this.gassetting = false
   }
 
@@ -547,7 +559,7 @@ export default class CollateralDeposit extends Vue {
         address: address,
         keypair: wallet.keypair,
         utxoList: utxoList,
-        fee: this.fee,
+        fee: this.feeTierList[this.feeTier],
         gasLimit: this.gasLimit,
         gasPrice: this.gasPrice
       } as WalletParams
@@ -577,13 +589,13 @@ export default class CollateralDeposit extends Vue {
 
     this.lendingStore
       .depositCollateral(payload)
-      .then(txid => {
+      .then((txid: any) => {
         setTimeout(() => {
           this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
           this.onSuccess()
         }, 1000)
       })
-      .catch(error => {
+      .catch((error: Error) => {
         this.onError(error.message)
       })
   }
@@ -760,6 +772,7 @@ export default class CollateralDeposit extends Vue {
   background-color: #f0f0f0;
   padding: 3px 10px;
   border-radius: 3px;
+  margin-top: 4px;
 }
 .transaction-confirmation-wrapper {
   margin: 16px 16px 0 16px;
@@ -790,7 +803,7 @@ export default class CollateralDeposit extends Vue {
 .transaction-confirmation-content h3,
 h2 {
   color: #370757;
-  font-weight: 500;
+  font-weight: 900;
 }
 .action-transaction-confirmation .v-btn {
   border: 2px solid #44096b;
