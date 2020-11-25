@@ -118,6 +118,15 @@ export default class RepayCard extends Vue {
   errorMsg = ''
   loadingMsg = 'Currency Approving...'
   repayAmount: number | string = ''
+  isMobileDevice = false
+
+  mounted() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this
+    window.addEventListener('resize', function() {
+      self.isMobileDevice = this.window.innerWidth < 1264
+    })
+  }
 
   get walletAddr() {
     return this.walletStore.address
@@ -125,10 +134,6 @@ export default class RepayCard extends Vue {
 
   get contractAddr() {
     return this.lendingStore.address
-  }
-
-  get isMobileDevice() {
-    return window.innerWidth < 1264
   }
 
   get walletBalance() {
