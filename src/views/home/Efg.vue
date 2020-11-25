@@ -46,10 +46,10 @@
         <v-row>
           <v-col cols="12">
             <div class="button-small">
-              <a @click="daysChanged('days')" :class="active == 'days' ? 'active' : undefined"
+              <a @click="daysChanged('day')" :class="active == 'day' ? 'active' : undefined"
                 >Hours</a
               >
-              <a @click="daysChanged('hours')" :class="active == 'hours' ? 'active' : undefined"
+              <a @click="daysChanged('hour')" :class="active == 'hour' ? 'active' : undefined"
                 >Days</a
               >
             </div>
@@ -87,9 +87,10 @@ export default class Efg extends Vue {
   date = [] as string[]
   price = [] as number[]
 
-  active = 'days'
-  name = 'days'
-  title = 'days'
+  active = 'day'
+  name = 'day'
+  title = 'day'
+  chartlist = 'day'
 
   get pool() {
     return this.lendingStore.pools.find(asset => asset.address === this.query)
@@ -125,7 +126,7 @@ export default class Efg extends Vue {
 
   async mounted() {
     this.lendingStore.updateLoners()
-    api.getprice('EFG').then(data => {
+    api.getprice(this.currencyName, this.chartlist).then(data => {
       this.date = data.date
       this.price = data.price
     })
@@ -136,7 +137,7 @@ export default class Efg extends Vue {
     this.name = name
     this.title = name
     //@ts-ignore
-    api.getprice('xxx').then(data => {
+    api.getprice(this.currencyName, this.name).then(data => {
       this.date = data.date
       this.price = data.price
       console.log(this.price)

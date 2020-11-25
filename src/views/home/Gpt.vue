@@ -50,7 +50,19 @@
       </v-container>
     </section>
     <section class="sec_m2">
-      <v-container>
+      <v-container
+        ><v-row>
+          <v-col cols="12">
+            <div class="button-small">
+              <a @click="daysChanged('day')" :class="active == 'day' ? 'active' : undefined"
+                >Hours</a
+              >
+              <a @click="daysChanged('hour')" :class="active == 'hour' ? 'active' : undefined"
+                >Days</a
+              >
+            </div>
+          </v-col>
+        </v-row>
         <v-row>
           <v-col cols="12">
             <div class="chart_view">
@@ -84,6 +96,11 @@ export default class Gpt extends Vue {
   totalStaked = this.max - this.stakingAvailable
   date = [] as string[]
   price = [] as number[]
+  currencyName = 'GPT'
+  active = 'day'
+  name = 'day'
+  title = 'day'
+  chartlist = 'day'
 
   get stakingAvailable() {
     return this.stakingStore.available
@@ -97,14 +114,6 @@ export default class Gpt extends Vue {
     return this.stakingStore.totalStaking
   }
 
-  mounted() {
-    this.stakingStore.updateMintingInfo(this.stakingStore.address)
-    api.getprice('GPT').then(data => {
-      this.date = data.date
-      this.price = data.price
-    })
-  }
-
   get labelSet() {
     return this.date
   }
@@ -112,10 +121,46 @@ export default class Gpt extends Vue {
   get dataSet() {
     return this.price
   }
+
+  async mounted() {
+    this.stakingStore.updateMintingInfo(this.stakingStore.address)
+    api.getprice(this.currencyName, this.chartlist).then(data => {
+      this.date = data.date
+      this.price = data.price
+    })
+  }
+
+  async daysChanged(name: string) {
+    this.active = name
+    this.name = name
+    this.title = name
+    //@ts-ignore
+    api.getprice(this.currencyName, this.name).then(data => {
+      this.date = data.date
+      this.price = data.price
+      console.log(this.price)
+    })
+  }
 }
 </script>
 
-<style scoped>
+<style scoped lang="scss">
+.button-small {
+  padding: 0;
+  text-align: right;
+  a {
+    padding: 0px 10px;
+    color: #ffffff;
+    font-size: 16px;
+    margin: 3px;
+  }
+  .active {
+    border-bottom: 2px solid #8b41d8;
+    color: #8b41d8;
+    font-weight: bold;
+    transition: 0.2s;
+  }
+}
 .container {
   max-width: 1088px;
   margin: 0 auto;
