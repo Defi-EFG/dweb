@@ -118,36 +118,6 @@ export default class SupplyBalance extends Vue {
   safetyFactor = 0.01
 
   timeRemainMessage: any = 0
-  @Watch('visible')
-  checkvisible(val: any) {
-    this.depositgptModal = val
-  }
-  rules = {
-    required: (value: string) => {
-      return !!value || this.$t('views.modal.required')
-    }
-  }
-  closedepositgptModal() {
-    this.depositgptModal = false
-  }
-  depositfunction() {
-    console.log('depositfunction')
-    this.depositgptModal = false
-  }
-  mounted() {
-    if (this.isNearLiquidate) {
-      this.getEstimatedGPT().then(amount => {
-        this.estimatedGPT = amount
-      })
-    }
-
-    const balanceString = numberWithCommas(this.balance, { fixed: [0, 8] })
-    this.dynamicFontsize(balanceString.length)
-
-    setInterval(() => {
-      this.timeRemainMessage = this.extentTimeRemaining()
-    }, 1000)
-  }
 
   get isLoggedIn(): boolean {
     return this.walletStore.address != ''
@@ -171,23 +141,6 @@ export default class SupplyBalance extends Vue {
     return moment().unix()
   }
 
-  extentTimeRemaining() {
-    if (this.walletStore.isWalletUnlocked) {
-      const lastGracePeriod = this.lendingStore.loan.lastGracePeriod //unix timestamp in second
-      if (lastGracePeriod === 0) return ''
-
-      const timeDiff = lastGracePeriod - moment().unix()
-      if (timeDiff < 0) return ''
-
-      const dur = moment.duration(timeDiff * 1000)
-      return `${moment.utc(dur.as('milliseconds')).format('HH:mm:ss')}`
-    }
-    return false
-  }
-  depositgpt() {
-    this.depositgptModal = !this.depositgptModal
-  }
-
   get contractAddr() {
     return this.lendingStore.address
   }
@@ -205,7 +158,6 @@ export default class SupplyBalance extends Vue {
     const currency = this.lendingStore.myAssets.find(
       asset => asset.currency.contractAddress === extendCurrency.contractAddress
     )
-
     if (!currency) return 0
     return currency.amount
   }
@@ -291,6 +243,24 @@ export default class SupplyBalance extends Vue {
         this.onError(error.message)
       })
   }
+  
+  extentTimeRemaining() {
+    if (this.walletStore.isWalletUnlocked) {
+      const lastGracePeriod = this.lendingStore.loan.lastGracePeriod //unix timestamp in second
+      if (lastGracePeriod === 0) return ''
+
+      const timeDiff = lastGracePeriod - moment().unix()
+      if (timeDiff < 0) return ''
+
+      const dur = moment.duration(timeDiff * 1000)
+      return `${moment.utc(dur.as('milliseconds')).format('HH:mm:ss')}`
+    }
+    return false
+  }
+
+  depositgpt() {
+    this.depositgptModal = !this.depositgptModal
+  }
 
   @Watch('isNearLiquidate')
   checkIfLiquidation(value: boolean) {
@@ -305,6 +275,41 @@ export default class SupplyBalance extends Vue {
   balanceChanged(val: any) {
     const balanceVal = numberWithCommas(val, { fixed: [0, 8] })
     this.dynamicFontsize(balanceVal.length)
+  }
+
+  @Watch('visible')
+  checkvisible(val: any) {
+    this.depositgptModal = val
+  }
+
+  rules = {
+    required: (value: string) => {
+      return !!value || this.$t('views.modal.required')
+    }
+  }
+
+  closedepositgptModal() {
+    this.depositgptModal = false
+  }
+
+  depositfunction() {
+    console.log('depositfunction')
+    this.depositgptModal = false
+  }
+
+  mounted() {
+    if (this.isNearLiquidate) {
+      this.getEstimatedGPT().then(amount => {
+        this.estimatedGPT = amount
+      })
+    }
+
+    const balanceString = numberWithCommas(this.balance, { fixed: [0, 8] })
+    this.dynamicFontsize(balanceString.length)
+
+    setInterval(() => {
+      this.timeRemainMessage = this.extentTimeRemaining()
+    }, 1000)
   }
 }
 </script>
