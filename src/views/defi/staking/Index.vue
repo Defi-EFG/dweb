@@ -2,12 +2,7 @@
   <div class="staking-page">
     <v-row class="content-wrapper">
       <v-col xl="8" lg="8" md="12" sm="12" cols="12" class="content-1">
-        <StakingList
-          :stakingAmount="staking"
-          :stakingCurrency="stakingCurrency"
-          :stakingList="stakingListExample"
-          @selectStaking="onStakingSelected"
-        ></StakingList>
+        <StakingList :stakingList="stakingList" @selectStaking="onStakingSelected"></StakingList>
         <div v-if="isLargeMobileDevice" class="col-spacer"></div>
         <StakingChart
           v-if="isLargeMobileDevice"
@@ -28,8 +23,7 @@
             <v-col cols="12" class="inner-content">
               <DepositWithdraw
                 :balance="stakingBalance"
-                :stakingAmount="staking"
-                :stakingCurrency="stakingCurrency"
+                :selectedStaking="selectedStaking"
               ></DepositWithdraw>
             </v-col>
           </v-row>
@@ -109,37 +103,15 @@ export default class Staking extends Vue {
   walletStore = getModule(WalletModule)
   stakingStore = getModule(StakingModule)
 
-  stakingListExample: StakingInfo[] = [
-    {
-      staking: 100,
-      currency: this.stakingCurrency,
-      reward: 0.512,
-      status: true
-    } as StakingInfo,
-    {
-      staking: 200,
-      currency: this.stakingCurrency,
-      reward: 1.212,
-      status: false,
-      timestamp: 1607664050000
-    } as StakingInfo
-  ]
-
   selectedStaking: StakingInfo = this.activeStaking as StakingInfo
-
   isLargeMobileDevice = false
 
-  mounted() {
-    // eslint-disable-next-line @typescript-eslint/no-this-alias
-    const self = this
-    window.addEventListener('resize', function() {
-      self.isLargeMobileDevice = this.window.innerWidth < 1264
-    })
+  get stakingList() {
+    return this.stakingStore.stakingList
   }
 
-  //temporal function
   get activeStaking() {
-    return this.stakingListExample.find(staking => staking.status === true)
+    return this.stakingList.find(staking => staking.status === true)
   }
 
   get stakingBalance() {
@@ -165,14 +137,6 @@ export default class Staking extends Vue {
     return this.stakingStore.available
   }
 
-  get staking() {
-    return this.stakingStore.staking
-  }
-
-  get totalStakedReward() {
-    return this.stakingStore.totalStakedReward
-  }
-
   get stakingCurrency() {
     return this.stakingStore.stakingCurrency
   }
@@ -183,6 +147,14 @@ export default class Staking extends Vue {
 
   onStakingSelected(token: any) {
     this.selectedStaking = token
+  }
+
+  mounted() {
+    // eslint-disable-next-line @typescript-eslint/no-this-alias
+    const self = this
+    window.addEventListener('resize', function() {
+      self.isLargeMobileDevice = this.window.innerWidth < 1264
+    })
   }
 }
 </script>

@@ -39,6 +39,7 @@ export const STATUS_FAILED = 'Failed'
 export const TX_TRANSFER = 'Transfering'
 export const TX_DEPOSIT = 'Depositing'
 export const TX_WITHDRAW = 'Withdrawing'
+export const TX_STOP_STAKING = 'Stoping'
 export const TX_BORROW = 'Borrowing'
 export const TX_REPAY = 'Repaying'
 

@@ -384,8 +384,7 @@ export default class Main extends Vue {
   mounted() {
     this.lendingStore.updateLoners()
     this.lendingStore.updateSupprtedAssets()
-    this.stakingStore.updateStakingInfo()
-    this.stakingStore.updateMintingInfo(this.stakingStore.address)
+    this.stakingStore.updatePlatformInfo()
     this.homeStore.updateSummary()
   }
 

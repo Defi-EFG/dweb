@@ -1,18 +1,18 @@
 [
   {
-    "constant":true,
+    "constant":false,
     "inputs":[
       
     ],
-    "name":"totalStaking",
+    "name":"stopStaking",
     "outputs":[
       {
-        "name":"totalEFGdeposits",
-        "type":"uint256"
+        "name":"result",
+        "type":"bool"
       }
     ],
     "payable":false,
-    "stateMutability":"view",
+    "stateMutability":"nonpayable",
     "type":"function"
   },
   {
@@ -32,14 +32,100 @@
     "type":"function"
   },
   {
-    "constant":false,
+    "constant":true,
+    "inputs":[
+      
+    ],
+    "name":"getUnclaimedFees",
+    "outputs":[
+      {
+        "name":"unclaimedFee",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
     "inputs":[
       {
-        "name":"_beneficiar",
+        "name":"_stakers_addr",
         "type":"address"
       }
     ],
-    "name":"claimStakedGPT",
+    "name":"getPendingIds",
+    "outputs":[
+      {
+        "name":"pendingId",
+        "type":"uint256[]"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_pendingId",
+        "type":"uint256"
+      }
+    ],
+    "name":"getPendingInfo",
+    "outputs":[
+      {
+        "name":"claimed",
+        "type":"bool"
+      },
+      {
+        "name":"beneficiar",
+        "type":"address"
+      },
+      {
+        "name":"EFGamount",
+        "type":"uint256"
+      },
+      {
+        "name":"GPTamount",
+        "type":"uint256"
+      },
+      {
+        "name":"maturity",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      
+    ],
+    "name":"getTotalStakers",
+    "outputs":[
+      {
+        "name":"",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":false,
+    "inputs":[
+      {
+        "name":"_fee",
+        "type":"uint256"
+      }
+    ],
+    "name":"setRewardFee",
     "outputs":[
       {
         "name":"result",
@@ -55,11 +141,11 @@
     "inputs":[
       
     ],
-    "name":"getStakers",
+    "name":"getTotalStaking",
     "outputs":[
       {
-        "name":"stakers",
-        "type":"address[]"
+        "name":"",
+        "type":"uint256"
       }
     ],
     "payable":false,
@@ -67,26 +153,62 @@
     "type":"function"
   },
   {
-    "constant":false,
+    "constant":true,
     "inputs":[
+      
+    ],
+    "name":"getRewardFee",
+    "outputs":[
       {
-        "name":"_beneficiar",
-        "type":"address"
-      },
-      {
-        "name":"_amount",
+        "name":"fee",
         "type":"uint256"
       }
     ],
-    "name":"withdrawEFG",
+    "payable":false,
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      {
+        "name":"_stakers_addr",
+        "type":"address"
+      }
+    ],
+    "name":"getStakingInfo",
     "outputs":[
       {
-        "name":"result",
-        "type":"bool"
+        "name":"EFGamount",
+        "type":"uint256"
+      },
+      {
+        "name":"GPTamount",
+        "type":"uint256"
+      },
+      {
+        "name":"timestamp",
+        "type":"uint256"
       }
     ],
     "payable":false,
-    "stateMutability":"nonpayable",
+    "stateMutability":"view",
+    "type":"function"
+  },
+  {
+    "constant":true,
+    "inputs":[
+      
+    ],
+    "name":"availableGPT",
+    "outputs":[
+      {
+        "name":"available",
+        "type":"uint256"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"view",
     "type":"function"
   },
   {
@@ -109,30 +231,42 @@
     "type":"function"
   },
   {
-    "constant":true,
+    "constant":false,
     "inputs":[
-      {
-        "name":"_beneficiar",
-        "type":"address"
-      }
+      
     ],
-    "name":"mintingInfo",
+    "name":"claimFees",
     "outputs":[
       {
-        "name":"lockedEFG",
-        "type":"uint256"
-      },
-      {
-        "name":"lastTimestamp",
-        "type":"uint256"
-      },
-      {
-        "name":"unclaimedAmount",
+        "name":"claimedFee",
         "type":"uint256"
       }
     ],
     "payable":false,
-    "stateMutability":"view",
+    "stateMutability":"nonpayable",
+    "type":"function"
+  },
+  {
+    "constant":false,
+    "inputs":[
+      {
+        "name":"_beneficiar",
+        "type":"address"
+      },
+      {
+        "name":"_pendingId",
+        "type":"uint256"
+      }
+    ],
+    "name":"withdraw",
+    "outputs":[
+      {
+        "name":"result",
+        "type":"bool"
+      }
+    ],
+    "payable":false,
+    "stateMutability":"nonpayable",
     "type":"function"
   },
   {
@@ -144,33 +278,15 @@
       {
         "name":"_GPT_addr",
         "type":"address"
+      },
+      {
+        "name":"_ownersWallet",
+        "type":"address"
       }
     ],
     "payable":false,
     "stateMutability":"nonpayable",
     "type":"constructor"
-  },
-  {
-    "anonymous":false,
-    "inputs":[
-      {
-        "indexed":false,
-        "name":"result",
-        "type":"bool"
-      },
-      {
-        "indexed":false,
-        "name":"beneficiar",
-        "type":"address"
-      },
-      {
-        "indexed":false,
-        "name":"GPTAmount",
-        "type":"uint256"
-      }
-    ],
-    "name":"ClaimStakedGPT",
-    "type":"event"
   },
   {
     "anonymous":false,
@@ -199,11 +315,6 @@
     "inputs":[
       {
         "indexed":false,
-        "name":"result",
-        "type":"bool"
-      },
-      {
-        "indexed":false,
         "name":"beneficiar",
         "type":"address"
       },
@@ -211,9 +322,48 @@
         "indexed":false,
         "name":"EFGAmount",
         "type":"uint256"
+      },
+      {
+        "indexed":false,
+        "name":"GPTAmount",
+        "type":"uint256"
       }
     ],
-    "name":"WithdrawEFGEvent",
+    "name":"WithdrawEvent",
+    "type":"event"
+  },
+  {
+    "anonymous":false,
+    "inputs":[
+      {
+        "indexed":false,
+        "name":"minter",
+        "type":"address"
+      },
+      {
+        "indexed":false,
+        "name":"requestId",
+        "type":"uint256"
+      }
+    ],
+    "name":"StopStaking",
+    "type":"event"
+  },
+  {
+    "anonymous":false,
+    "inputs":[
+      {
+        "indexed":false,
+        "name":"result",
+        "type":"bool"
+      },
+      {
+        "indexed":false,
+        "name":"amount",
+        "type":"uint256"
+      }
+    ],
+    "name":"ClaimFeesEvent",
     "type":"event"
   }
 ]

@@ -8,9 +8,6 @@ export interface StakingPlatform {
 
   totalReward: number
   available: number
-  staking: number
-  timestamp: number
-  totalStakedReward: number
 
   numberOfStaking: number
   totalStaking: number
@@ -26,6 +23,7 @@ export interface RewardHistory {
 }
 
 export interface StakingInfo {
+  pendingId?: number
   staking: number
   currency: CurrencyInfo
   reward: number

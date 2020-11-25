@@ -61,7 +61,9 @@ export default class App extends Vue {
       await this.lendingStore.updateLoners()
 
       //update staking platform
-      await this.stakingStore.updateMintingInfo(this.walletStore.address)
+      await this.stakingStore.updatePlatformInfo()
+      await this.stakingStore.updateStakingInfo(this.walletStore.address)
+      await this.stakingStore.updatePendingInfo(this.walletStore.address)
 
       // update latest block
       await this.walletStore.updateLastBlock()

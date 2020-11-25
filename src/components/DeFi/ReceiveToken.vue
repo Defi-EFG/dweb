@@ -41,8 +41,8 @@ import { copyToClipboard } from '@/services/utils'
 
 @Component({
   components: {
-    VueQrcode,
-  },
+    VueQrcode
+  }
 })
 export default class ReceiveToken extends Vue {
   walletStore = getModule(WalletModule)
@@ -78,8 +78,8 @@ export default class ReceiveToken extends Vue {
 }
 
 .receive-head {
-  background: transparent
-    linear-gradient(270deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat padding-box;
+  background: transparent linear-gradient(270deg, #2b3043 0%, #333848 100%) 0% 0% no-repeat
+    padding-box;
 
   span {
     font-size: 16px;
