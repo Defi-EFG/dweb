@@ -18,7 +18,7 @@
           <section id="Introduction" class="sec_doc2">
             <div class="img">
               <div class="docs_head">{{ $t('views.Introduction') }}</div>
-              <img src="@/assets/docs01.png" alt="" />
+              <img src="@/assets/docs02.png" alt="" />
             </div>
             <div v-for="(item, i) in msg" :key="i">
               <div class="head_Introduction">
