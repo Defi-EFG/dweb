@@ -38,6 +38,7 @@ export default class StakingModule extends VuexModule implements StakingPlatform
 
   totalReward = 10000
   available = 10000
+  withdrawalFeeRate = 0
 
   numberOfStaking = 0
   totalStaking = 0
@@ -88,13 +89,14 @@ export default class StakingModule extends VuexModule implements StakingPlatform
       const numberOfStaking = await stakingContract.getTotalStakers()
       const fullTotalStaking = await stakingContract.getTotalStaking()
       const fullAvailable = await stakingContract.availableGPT()
+      const withdrawalFeeRate = await stakingContract.getRewardFee()
 
       const rewardDecimals = GPT.tokenInfo?.decimals as string
       const stakingDecimals = EFG.tokenInfo?.decimals as string
       const totalStaking = utils.toDecimals(fullTotalStaking, stakingDecimals).toNumber()
       const available = utils.toDecimals(fullAvailable, rewardDecimals).toNumber()
 
-      return { numberOfStaking, totalStaking, available }
+      return { numberOfStaking, totalStaking, available, withdrawalFeeRate }
     } catch (error) {
       return {}
     }

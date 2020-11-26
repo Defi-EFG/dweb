@@ -1,3 +1,4 @@
+import BigNumber from 'bignumber.js'
 import { Decoder } from 'ecoweb3'
 import { SmartContract, Params, ExecutionResult } from '@/services/contract'
 import { Contract } from '@/types/contract'
@@ -78,7 +79,9 @@ export namespace staking {
     const executionResult = result.executionResult as ExecutionResult
     const data = executionResult.formattedOutput['0'].toNumber()
 
-    return data as number
+    const feeRate = new BigNumber(data).dividedBy(new BigNumber(100)).toNumber()
+
+    return feeRate as number
   }
 
   export const getStakingInfo = async (address: string) => {

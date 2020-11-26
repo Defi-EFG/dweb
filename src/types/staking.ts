@@ -5,9 +5,11 @@ export interface StakingPlatform {
 
   stakingCurrency: CurrencyInfo
   rewardCurrency: CurrencyInfo
+  stakingList: StakingInfo[]
 
   totalReward: number
   available: number
+  withdrawalFeeRate: number
 
   numberOfStaking: number
   totalStaking: number

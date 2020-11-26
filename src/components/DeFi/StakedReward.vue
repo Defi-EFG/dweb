@@ -36,9 +36,9 @@
             <span>{{ staked.reward }} {{ rewardCurrencyName }}</span>
           </div>
           <div class="d-flex">
-            <span>Fee</span>
+            <span>Fee({{ withdrawalFeeRate }}%)</span>
             <v-spacer></v-spacer>
-            <span>1 {{ rewardCurrencyName }}</span>
+            <span>{{ fee }} {{ rewardCurrencyName }}</span>
           </div>
         </div>
 
@@ -118,8 +118,24 @@ export default class StakedReward extends Vue {
   toAddr = ''
   amount = 0
 
+  get walletAddr() {
+    return this.walletStore.address
+  }
+
+  get contractAddr() {
+    return this.stakingStore.address
+  }
+
+  get withdrawalFeeRate() {
+    return this.stakingStore.withdrawalFeeRate
+  }
+
   get staked() {
     return this.selectedStaking
+  }
+
+  get fee() {
+    return this.staked.reward * (this.withdrawalFeeRate / 100)
   }
 
   // when countdown is finished on 21st day
@@ -148,14 +164,6 @@ export default class StakedReward extends Vue {
     )
 
     return ECOC || {}
-  }
-
-  get walletAddr() {
-    return this.walletStore.address
-  }
-
-  get contractAddr() {
-    return this.stakingStore.address
   }
 
   get stakingpage() {
