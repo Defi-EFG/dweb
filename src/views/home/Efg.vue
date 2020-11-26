@@ -46,12 +46,12 @@
         <v-row>
           <v-col cols="12">
             <div class="button-small">
-              <a @click="daysChanged('day')" :class="active == 'day' ? 'active' : undefined"
-                >Hours</a
-              >
-              <a @click="daysChanged('hour')" :class="active == 'hour' ? 'active' : undefined"
-                >Days</a
-              >
+              <a @click="daysChanged('day')" :class="active == 'day' ? 'active' : undefined">{{
+                $t('views.detail.day')
+              }}</a>
+              <a @click="daysChanged('hour')" :class="active == 'hour' ? 'active' : undefined">{{
+                $t('views.detail.hour')
+              }}</a>
             </div>
           </v-col>
         </v-row>

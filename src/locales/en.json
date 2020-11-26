@@ -121,7 +121,9 @@
             "total_Interest": "Total Interest",
             "total_debt": "Total Debt",
             "number_of_staker": "Number of Staker",
-            "total_EFG_Staking": "Total EFG Staking"
+            "total_EFG_Staking": "Total EFG Staking",
+            "hour": "Hours",
+            "day": "Days"
         },
         "wallet": "Wallet",
         "lending": "Lending",

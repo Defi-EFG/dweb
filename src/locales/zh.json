@@ -118,7 +118,9 @@
             "total_Interest": "总利率",
             "total_debt": "总借款",
             "number_of_staker": "质押者数额",
-            "total_EFG_Staking": "总质押EFG"
+            "total_EFG_Staking": "总质押EFG",
+            "hour": "小时",
+            "day": "每日"
         },
         "wallet": "钱包",
         "lending": "借出",
