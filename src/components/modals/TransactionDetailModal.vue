@@ -25,9 +25,7 @@
                 v-on="on"
                 @click="goToExplorer(tx.id)"
               >
-                <v-icon dark>
-                  mdi-arrow-up
-                </v-icon>
+                <v-icon dark> mdi-arrow-up </v-icon>
               </v-btn>
             </template>
             <span>{{ $t('views.modal.view_on_explorer') }}</span>
@@ -44,9 +42,7 @@
                 v-on="on"
                 @click="doCopy(tx.id)"
               >
-                <v-icon dark>
-                  mdi-content-copy
-                </v-icon>
+                <v-icon dark> mdi-content-copy </v-icon>
               </v-btn>
             </template>
             <span>{{ copyMsg }}</span>
@@ -55,13 +51,15 @@
         <v-divider></v-divider>
 
         <div v-if="tx.type === constants.EVENT_APPROVAL" class="txdetailwrapper">
-          <div>
-            <b>{{ $t('views.modal.owner') }}</b>
-            <p class="text-end mb-0">{{ getAddress(tx.txResult[0].log[0].owner) }}</p>
+          <div class="d-flex">
+            <small class="detail-label">{{ $t('views.modal.owner') }}</small>
+            <v-spacer></v-spacer>
+            <small class="text-end mb-0">{{ getAddress(tx.txResult[0].log[0].owner) }}</small>
           </div>
-          <div>
-            <b>{{ $t('views.modal.spender') }}</b>
-            <p class="text-end mb-0">{{ getAddress(tx.txResult[0].log[0].spender) }}</p>
+          <div class="d-flex">
+            <small class="detail-label">{{ $t('views.modal.spender') }}</small>
+            <v-spacer></v-spacer>
+            <small class="text-end mb-0">{{ getAddress(tx.txResult[0].log[0].spender) }}</small>
           </div>
         </div>
 
@@ -142,7 +140,7 @@ export default class TransactionDetailModal extends Vue {
 
   get tx() {
     if (this.txid) {
-      const txInfo = this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
+      const txInfo = this.walletStore.transactionsHistory.find((tx) => tx.id === this.txid)
       return txInfo
     }
     return {} as TxHistory
@@ -174,7 +172,7 @@ export default class TransactionDetailModal extends Vue {
   }
 
   getTxInfo() {
-    this.walletStore.getTxInfo(this.txid).then(tx => {
+    this.walletStore.getTxInfo(this.txid).then((tx) => {
       this.txInfo = tx
       console.log(this.txInfo)
     })
@@ -268,5 +266,10 @@ export default class TransactionDetailModal extends Vue {
 .flex {
   display: flex;
   justify-content: space-between;
+}
+
+.detail-label {
+  color: black;
+  font-weight: 700;
 }
 </style>
