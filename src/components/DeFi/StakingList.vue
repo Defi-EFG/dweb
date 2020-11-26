@@ -7,15 +7,15 @@
       </v-toolbar-title>
     </v-toolbar>
 
-    <v-card-text>
+    <v-card-text class="sl-list-wrapper">
       <v-card
         v-for="(token, index) in stakingList"
         :key="index"
         class="staking-token"
         :class="token.status ? 'selected' : ''"
-        @click="selectStaking(token)"
+        @click="selectStaking(token, index)"
       >
-        <v-row>
+        <v-row :class="index === activeIndex ? 'clicked' : ''">
           <v-col cols="auto" class="token d-flex">
             <img src="@/assets/efg_logo.svg" alt="" />
             <span>{{ token.currency.name }}</span>
@@ -40,9 +40,10 @@ import { StakingInfo } from '@/types/staking'
 export default class StakingList extends Vue {
   @Prop() stakingList!: StakingInfo[]
 
-  selected = false
+  activeIndex = 0
 
-  selectStaking(token: StakingInfo) {
+  selectStaking(token: StakingInfo, index: number) {
+    this.activeIndex = index
     this.$emit('selectStaking', token)
   }
 }
@@ -67,6 +68,25 @@ export default class StakingList extends Vue {
   width: inherit;
   min-height: 247px;
   background: #222738;
+}
+
+.sl-list-wrapper {
+  max-height: 210px;
+  overflow: auto;
+
+  &::-webkit-scrollbar {
+    width: 8px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff41;
+    border-radius: 6px;
+  }
 }
 
 .staking-token {
@@ -102,11 +122,12 @@ export default class StakingList extends Vue {
 
 .selected {
   background: linear-gradient(90deg, #8a40d6 0%, #6800fe 100%);
-  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 12px 17px 2px rgba(0, 0, 0, 0.14),
-    0 5px 22px 4px rgba(0, 0, 0, 0.12) !important;
-
   border: none;
   transition: 0.5s;
+}
+
+.clicked {
+  box-shadow: 0px 6px 5px 0px #0000004d;
 }
 
 @media (max-width: 1264px) {

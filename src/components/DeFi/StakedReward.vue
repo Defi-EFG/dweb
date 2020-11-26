@@ -9,12 +9,12 @@
 
         <div class="d-amount" :class="staked.status ? '' : 'disabled-text'">
           <div class="d-flex">
-            <span class="text-uppercase">Deposited amount</span>
+            <span class="text-uppercase">{{ $t('views.stakingpage.deposit_amount') }}</span>
             <v-spacer></v-spacer>
             <span class="text-right">{{ staked.staking }} {{ staked.currency.name }}</span>
           </div>
           <div class="d-flex">
-            <span class="text-uppercase">Staked available</span>
+            <span class="text-uppercase">{{ $t('views.stakingpage.staked_available') }}</span>
             <v-spacer></v-spacer>
             <span class="text-right">{{ staked.reward }} {{ rewardCurrencyName }}</span>
           </div>
@@ -22,21 +22,21 @@
 
         <v-divider></v-divider>
 
-        <p class="reward-label mb-0" v-if="!staked.status">You will get</p>
+        <p class="reward-label mb-0" v-if="!staked.status">{{ $t('views.stakingpage.you_will_get') }}</p>
 
         <div class="minimum-w" v-if="!staked.status">
           <div class="d-flex">
-            <span>Deposited amount</span>
+            <span>{{ $t('views.stakingpage.deposit_amount') }}</span>
             <v-spacer></v-spacer>
             <span>{{ staked.staking }} {{ staked.currency.name }}</span>
           </div>
           <div class="d-flex">
-            <span>Staked available</span>
+            <span>{{ $t('views.stakingpage.staked_available') }}</span>
             <v-spacer></v-spacer>
             <span>{{ staked.reward }} {{ rewardCurrencyName }}</span>
           </div>
           <div class="d-flex">
-            <span>Fee({{ withdrawalFeeRate }}%)</span>
+            <span>{{ $t('views.stakingpage.fee') }} ({{ withdrawalFeeRate }}%)</span>
             <v-spacer></v-spacer>
             <span>{{ fee }} {{ rewardCurrencyName }}</span>
           </div>
@@ -66,7 +66,7 @@
           color="#FF4E4E"
           :disabled="!staked.staking"
           @click="stopStaking"
-          >Stop staking</v-btn
+          >{{ $t('views.stakingpage.stop_staking') }}</v-btn
         >
       </v-card-text>
     </v-card>
