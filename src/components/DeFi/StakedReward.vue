@@ -4,41 +4,57 @@
       <v-card-text class="wrapper">
         <div class="total-reward">
           <p class="label mb-0">{{ $t('views.stakingpage.your_sk') }}</p>
-          <p class="value text-center">{{ staked.reward }} {{ currencyName }}</p>
+          <p class="value text-center">
+            {{ staked.reward | numberWithCommas({ fixed: [0, 4] }) }} {{ rewardCurrencyName }}
+          </p>
         </div>
 
         <div class="d-amount" :class="staked.status ? '' : 'disabled-text'">
           <div class="d-flex">
-            <span class="text-uppercase">Deposited amount</span>
+            <span class="text-uppercase">{{ $t('views.stakingpage.deposit_amount') }}</span>
             <v-spacer></v-spacer>
-            <span class="text-right">{{ staked.staking }} {{ staked.currency.name }}</span>
+            <span class="text-right"
+              >{{ staked.staking | numberWithCommas({ fixed: [0, 8] }) }}
+              {{ staked.currency.name }}</span
+            >
           </div>
           <div class="d-flex">
-            <span class="text-uppercase">Staked available</span>
+            <span class="text-uppercase">{{ $t('views.stakingpage.staked_available') }}</span>
             <v-spacer></v-spacer>
-            <span class="text-right">{{ staked.reward }} {{ currencyName }}</span>
+            <span class="text-right"
+              >{{ staked.reward | numberWithCommas({ fixed: [0, 4] }) }}
+              {{ rewardCurrencyName }}</span
+            >
           </div>
         </div>
 
         <v-divider></v-divider>
 
-        <p class="reward-label mb-0" v-if="!staked.status">You will get</p>
+        <p class="reward-label mb-0" v-if="!staked.status">
+          {{ $t('views.stakingpage.you_will_get') }}
+        </p>
 
         <div class="minimum-w" v-if="!staked.status">
           <div class="d-flex">
-            <span>Deposited amount</span>
+            <span>{{ $t('views.stakingpage.deposit_amount') }}</span>
             <v-spacer></v-spacer>
-            <span>{{ staked.staking }} {{ staked.currency.name }}</span>
+            <span
+              >{{ staked.staking | numberWithCommas({ fixed: [0, 8] }) }}
+              {{ staked.currency.name }}</span
+            >
           </div>
           <div class="d-flex">
-            <span>Staked available</span>
+            <span>{{ $t('views.stakingpage.staked_available') }}</span>
             <v-spacer></v-spacer>
-            <span>{{ staked.reward }} {{ currencyName }}</span>
+            <span
+              >{{ staked.reward | numberWithCommas({ fixed: [0, 4] }) }}
+              {{ rewardCurrencyName }}</span
+            >
           </div>
           <div class="d-flex">
-            <span>Fee</span>
+            <span>{{ $t('views.stakingpage.fee') }} ({{ withdrawalFeeRate }}%)</span>
             <v-spacer></v-spacer>
-            <span>1 {{ currencyName }}</span>
+            <span>{{ fee | numberWithCommas({ fixed: [0, 4] }) }} {{ rewardCurrencyName }}</span>
           </div>
         </div>
 
@@ -66,7 +82,7 @@
           color="#FF4E4E"
           :disabled="!staked.staking"
           @click="stopStaking"
-          >Stop staking</v-btn
+          >{{ $t('views.stakingpage.stop_staking') }}</v-btn
         >
       </v-card-text>
     </v-card>
@@ -75,7 +91,7 @@
       :fromAddr="fromAddr"
       :toAddr="toAddr"
       :amount="amount"
-      :currency="currency"
+      :currency="currencyECOC"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
     />
@@ -118,8 +134,24 @@ export default class StakedReward extends Vue {
   toAddr = ''
   amount = 0
 
+  get walletAddr() {
+    return this.walletStore.address
+  }
+
+  get contractAddr() {
+    return this.stakingStore.address
+  }
+
+  get withdrawalFeeRate() {
+    return this.stakingStore.withdrawalFeeRate
+  }
+
   get staked() {
     return this.selectedStaking
+  }
+
+  get fee() {
+    return this.staked.reward * (this.withdrawalFeeRate / 100)
   }
 
   // when countdown is finished on 21st day
@@ -138,24 +170,16 @@ export default class StakedReward extends Vue {
     return `${remainingTime.days()} Days ${remainingTime.hours()} Hour ${remainingTime.minutes()} Min`
   }
 
-  get currencyName() {
-    return constants.ECOC
+  get rewardCurrencyName() {
+    return this.rewardCurrency.name
   }
 
-  get currency() {
-    const stakingCurrency = this.walletStore.currenciesList.find(
-      (currency: Currency) => currency.name === this.currencyName
+  get currencyECOC() {
+    const ECOC = this.walletStore.currenciesList.find(
+      (currency: Currency) => currency.name === constants.ECOC
     )
 
-    return stakingCurrency || {}
-  }
-
-  get walletAddr() {
-    return this.walletStore.address
-  }
-
-  get contractAddr() {
-    return this.stakingStore.address
+    return ECOC || {}
   }
 
   get stakingpage() {

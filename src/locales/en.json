@@ -121,7 +121,9 @@
             "total_Interest": "Total Interest",
             "total_debt": "Total Debt",
             "number_of_staker": "Number of Staker",
-            "total_EFG_Staking": "Total EFG Staking"
+            "total_EFG_Staking": "Total EFG Staking",
+            "hour": "Hours",
+            "day": "Days"
         },
         "wallet": "Wallet",
         "lending": "Lending",
@@ -189,7 +191,7 @@
             "depositEFGEarn": "Deposit EFG, Earn GPT",
             "minimum": "Minimum Deposit: 1.00 EFG",
             "depositamount": "Deposit Amount",
-            "note": "Note: Reward earning will start after the deposit completed.",
+            "note": "Note: Withdrawal will be available after staking is stopped for 21 days.",
             "reward_wd": "Reward Withdrawal",
             "minimumwithdrawal": "Minimum Withdrawal: 0.001 GPT",
             "minimum_wd": "Minimum Withdrawal: 1.00 GPT",
@@ -206,7 +208,12 @@
             "yourbalance": "Your Balance",
             "withdraw_avb": "Withdraw Available",
             "flexible_s": "Flexible Staking",
-            "to_earn": "to Earn"
+            "to_earn": "to Earn",
+            "deposit_amount": "Deposited amount",
+            "staked_available": "Staked available",
+            "stop_staking": "Stop staking",
+            "you_will_get": "You will get",
+            "fee": "Fee"
         },
         "modal": {
             "errorMsg2": "Wrong format of keystore file",
@@ -301,6 +308,7 @@
             "copy_txid": "Copy TxID",
             "transaction_completed": "Transaction completed!",
             "transaction_pending": "Transaction pending...",
+            "transaction_failed": "Transaction failed",
             "safe_max": "Safe max",
             "generating_keystore": "Generating keystore file...",
             "make_gpt_header": "Make A Deposit (GPT)",
@@ -309,14 +317,10 @@
             "gpt_deposit_amount": "Deposit Amount",
             "deposit": "Deposit",
             "GPT": "GPT"
-
         }
     },
-    "components": {
-
-    },
+    "components": {},
     "dom": {},
-
     "Received": "Received",
     "Sent": "Sent",
     "Synced": "Synced",
@@ -329,6 +333,7 @@
     "Withdrawing": "Withdrawing",
     "Borrowing": "Borrowing",
     "Repaying": "Repaying",
+    "Stopping": "Stopping",
     "Could not generate new wallet": "Could not generate new wallet",
     "Could not import from WIF": "Could not import from WIF",
     "Wrong Private Key": "Wrong Private Key",

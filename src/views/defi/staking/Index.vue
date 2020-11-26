@@ -74,7 +74,7 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import StakingModule from '@/store/staking'
@@ -105,6 +105,10 @@ export default class Staking extends Vue {
 
   selectedStaking: StakingInfo = this.activeStaking as StakingInfo
   isLargeMobileDevice = false
+
+  get isLoggedIn() {
+    return this.walletStore.isWalletUnlocked
+  }
 
   get stakingList() {
     return this.stakingStore.stakingList
@@ -150,11 +154,17 @@ export default class Staking extends Vue {
   }
 
   mounted() {
+    this.isLargeMobileDevice = window.innerWidth < 1264
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
     window.addEventListener('resize', function() {
       self.isLargeMobileDevice = this.window.innerWidth < 1264
     })
+  }
+
+  @Watch('stakingList')
+  stakingListChanged() {
+    this.selectedStaking = this.activeStaking as StakingInfo
   }
 }
 </script>

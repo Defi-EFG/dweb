@@ -118,7 +118,9 @@
             "total_Interest": "总利率",
             "total_debt": "总借款",
             "number_of_staker": "质押者数额",
-            "total_EFG_Staking": "总质押EFG"
+            "total_EFG_Staking": "总质押EFG",
+            "hour": "小时",
+            "day": "每日"
         },
         "wallet": "钱包",
         "lending": "借出",
@@ -186,7 +188,7 @@
             "depositEFGEarn": "充值 EFG，转区GPT",
             "minimum": "最少充值：1.00EFG",
             "depositamount": "充值金额",
-            "note": "注：存款完成后将开始奖励收入。",
+            "note": "注：停止质押21天后，方可提现.",
             "reward_wd": "奖励提现：",
             "minimumwithdrawal": "最低提现额度: 0.001 GPT",
             "minimum_wd": "最低提现额度: 1.00 GPT",
@@ -204,7 +206,12 @@
             "yourbalance": "您的余额",
             "withdraw_avb": "提现可用",
             "flexible_s": "灵活质押",
-            "to_earn": "来赚取"
+            "to_earn": "来赚取",
+            "deposit_amount": "存款金额",
+            "staked_available": "可抵押",
+            "stop_staking": "别再赌了",
+            "you_will_get": "你会得到",
+            "fee": "费用"
         },
         "modal": {
             "errorMsg2": "密钥库文本格式错误",
@@ -299,14 +306,15 @@
             "copy_txid": "复制TxID",
             "transaction_completed": "交易完成！",
             "transaction_pending": "交易待处理...",
+            "transaction_failed": "交易失败",
             "safe_max": "安全最大值",
             "generating_keystore": "正在生成密钥库文件...",
-            "make_gpt_header":"进行存款 (GPT)",
-            "make_gpt_desp":"请输入您要存入的GPT金额",
-            "gpt_balance":"GPT 钱包余额",
-            "gpt_deposit_amount":"存款金额",
-            "deposit":"存款",
-            "GPT":"GPT"
+            "make_gpt_header": "进行存款 (GPT)",
+            "make_gpt_desp": "请输入您要存入的GPT金额",
+            "gpt_balance": "GPT 钱包余额",
+            "gpt_deposit_amount": "存款金额",
+            "deposit": "存款",
+            "GPT": "GPT"
         }
     },
     "components": {
@@ -326,6 +334,7 @@
     "Withdrawing": "提现",
     "Borrowing": "借用",
     "Repaying": "还款",
+    "Stopping": "正在停止",
     "Could not generate new wallet": "无法生成新钱包",
     "Could not import from WIF": "无法从导入 WIF",
     "Wrong Private Key": "私钥错误",

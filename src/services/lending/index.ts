@@ -10,7 +10,7 @@ import lendingAbi from './abi.json'
 import { LoanInfo, Collateral } from './types'
 
 const mainnetAddress = '37b0157d1f92cc9bf48e288567338d220b24962e'
-const testnetAddress = '37b0157d1f92cc9bf48e288567338d220b24962e'
+const testnetAddress = '02eec34c4641e0f5d877a9729d3eac9d0168b6f9'
 
 const defaultAddress = defaultNetwork === ECOC_MAINNET ? mainnetAddress : testnetAddress
 
@@ -425,23 +425,6 @@ export namespace lending {
     const utxoList = walletParams.utxoList
 
     const rawTx = await contract.getSendToTx('repay', params, keypair, utxoList)
-    return rawTx
-  }
-
-  export const extendGracePeriod = async (amount: number, walletParams: WalletParams) => {
-    const params = {
-      methodArgs: [amount],
-      senderAddress: walletParams.address,
-      amount: 0,
-      fee: walletParams.fee,
-      gasLimit: walletParams.gasLimit,
-      gasPrice: walletParams.gasPrice
-    } as Params
-
-    const keypair = walletParams.keypair
-    const utxoList = walletParams.utxoList
-
-    const rawTx = await contract.getSendToTx('extendGracePeriod', params, keypair, utxoList)
     return rawTx
   }
 }

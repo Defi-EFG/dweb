@@ -103,6 +103,8 @@ export default class Wallet extends Vue {
   isMobileDevice = false
 
   mounted() {
+    this.isMobileDevice = window.innerWidth < 600
+    this.isLargeMobileDevice = window.innerWidth < 1264 && window.innerWidth > 600
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
     window.addEventListener('resize', function() {

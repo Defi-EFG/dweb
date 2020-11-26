@@ -3,11 +3,9 @@
     <v-container>
       <v-row>
         <v-col cols="12">
-          <div class="chart_view">
-            <template>
-              <canvas id="idChart"></canvas>
-            </template>
-          </div>
+          <template>
+            <canvas id="idChart"></canvas>
+          </template>
         </v-col>
       </v-row>
     </v-container>
@@ -22,16 +20,6 @@ import Chart from 'chart.js'
 export default class LineChart extends Vue {
   @Prop({ default: [] as string[] }) labelSet!: string[]
   @Prop({ default: [] as number[] }) dataSet!: number[]
-
-  active = 'Borrow'
-  name = 'Borrow'
-  title = 'Borrow'
-
-  onClickActive(name: string) {
-    this.active = name
-    this.name = name
-    this.title = name
-  }
 
   finul = 1
   txt = ''
@@ -113,18 +101,4 @@ export default class LineChart extends Vue {
 }
 </script>
 
-<style lang="scss" scoped>
-.button-small {
-  padding: 10px 35px;
-  text-align: right;
-  background: #000000 0% 0% no-repeat padding-box;
-  a {
-    padding: 0 5px;
-    color: #ffffff;
-    font-size: 14px;
-  }
-  .active {
-    border-bottom: 3px solid #c074f9;
-  }
-}
-</style>
+<style lang="scss" scoped></style>

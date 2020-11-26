@@ -55,7 +55,6 @@ import { getModule } from 'vuex-module-decorators'
 import { Ecrc20 } from '@/types/currency'
 import WalletModule from '@/store/wallet'
 import { getEstimatedValue } from '@/services/utils'
-import smoothScroll from '@/smoothScroll'
 
 @Component({
   components: {}
@@ -67,7 +66,12 @@ export default class TokenList extends Vue {
 
   mounted() {
     const tokenContainer = document.querySelector('.token-container')
-    smoothScroll(tokenContainer, 120, 12)
+    tokenContainer?.addEventListener('wheel', function(e) {
+      e.preventDefault()
+      //@ts-ignore
+      tokenContainer.scrollLeft += e.deltaY * 0.4
+    })
+    // smoothScroll(tokenContainer, 120, 12)
   }
 
   get activeItem() {

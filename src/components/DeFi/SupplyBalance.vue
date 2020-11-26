@@ -11,7 +11,9 @@
           <span class="pl-2">{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</span>
 
           <div class="liquid-countdown pt-0">
-            <span class="lg"> GPT Balance: {{ extendBalance }} GPT</span>
+            <span class="lg">
+              GPT {{ $t('views.lendingpage.balance') }}: {{ extendBalance }} GPT</span
+            >
             <span class="extend-btn" @click="depositgpt">{{ $t('views.modal.deposit') }}</span>
           </div>
         </div>
@@ -39,7 +41,7 @@
               <v-text-field
                 class="estimatedGPT-field"
                 v-model="estimatedGPTAmount"
-                prefix="Estimated GPT needed"
+                :prefix="text.estimated_gpt"
                 type="number"
                 pattern="[0-9]*"
                 filled
@@ -124,7 +126,7 @@ export default class SupplyBalance extends Vue {
   }
 
   get isNearLiquidate() {
-    const margin = 0.8
+    const margin = 0.5
     return this.lendingStore.borrowBalance / this.lendingStore.borrowLimit > margin
   }
 
@@ -134,6 +136,10 @@ export default class SupplyBalance extends Vue {
 
   get poolAddr() {
     return this.lendingStore.loan.poolAddr
+  }
+
+  get text() {
+    return this.$t('views.lendingpage')
   }
 
   // unix timestamp in second
@@ -156,7 +162,7 @@ export default class SupplyBalance extends Vue {
 
   get extendBalance() {
     const currency = this.lendingStore.myAssets.find(
-      asset => asset.currency.contractAddress === extendCurrency.contractAddress
+      asset => asset.currency.name === extendCurrency.name
     )
     if (!currency) return 0
     return currency.amount
@@ -220,7 +226,7 @@ export default class SupplyBalance extends Vue {
   onConfirm(walletParams: WalletParams) {
     this.loading = true
     this.loadingMsg = 'Currency Approving...'
-    const amount = Number(this.estimatedGPT)
+    const amount = Number(this.estimatedGPTAmount)
     const currency = this.currency as Currency
     const poolAddress = this.poolAddr
 
@@ -259,6 +265,7 @@ export default class SupplyBalance extends Vue {
   }
 
   depositgpt() {
+    this.estimatedGPTAmount = this.estimatedGPT
     this.depositgptModal = !this.depositgptModal
   }
 
@@ -269,6 +276,13 @@ export default class SupplyBalance extends Vue {
         this.estimatedGPT = amount
       })
     }
+  }
+
+  @Watch('extendBalance')
+  checkIfExtendBalanceChanged() {
+    this.getEstimatedGPT().then(amount => {
+      this.estimatedGPT = amount
+    })
   }
 
   @Watch('balance')

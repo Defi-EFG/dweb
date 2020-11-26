@@ -43,6 +43,7 @@ export default class Home extends Vue {
   isMobileDevice = false
 
   mounted() {
+    this.isMobileDevice = window.innerWidth < 1264
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
     window.addEventListener('resize', function() {
