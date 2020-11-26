@@ -211,7 +211,10 @@
             "staked_available": "Staked available",
             "stop_staking": "Stop staking",
             "you_will_get": "You will get",
-            "fee": "Fee"
+            "fee": "Fee",
+            "day": "Days",
+            "hour": "Hour",
+            "min": "Min"
         },
         "modal": {
             "errorMsg2": "Wrong format of keystore file",

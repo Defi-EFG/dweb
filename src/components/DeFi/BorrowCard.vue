@@ -131,6 +131,10 @@ export default class BorrowCard extends Vue {
     })
   }
 
+  get isLoggedIn() {
+    return this.walletStore.isWalletUnlocked
+  }
+
   get walletAddr() {
     return this.walletStore.address
   }
@@ -205,6 +209,10 @@ export default class BorrowCard extends Vue {
     const isEnough = amount * this.currencyPrice <= this.borrowLimit - this.borrowBalance
     const isValidAmount = amount >= 0
     const isClickable = amount > 0
+
+    if (!this.isLoggedIn) {
+      return false
+    }
 
     if (type === 'error') {
       return isEnough && isClickable

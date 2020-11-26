@@ -209,7 +209,10 @@
             "staked_available": "可抵押",
             "stop_staking": "别再赌了",
             "you_will_get": "你会得到",
-            "fee": "费用"
+            "fee": "费用",
+            "day": "天",
+            "hour": "时",
+            "min": "分"
         },
         "modal": {
             "errorMsg2": "密钥库文本格式错误",

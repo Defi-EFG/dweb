@@ -129,6 +129,10 @@ export default class RepayCard extends Vue {
     })
   }
 
+  get isLoggedIn() {
+    return this.walletStore.isWalletUnlocked
+  }
+
   get walletAddr() {
     return this.walletStore.address
   }
@@ -188,6 +192,10 @@ export default class RepayCard extends Vue {
     const isInRange = amount <= this.walletBalance && amount <= this.debt
     const isValidAmount = amount >= 0
     const isClickable = amount > 0
+
+    if (!this.isLoggedIn) {
+      return false
+    }
 
     if (type === 'error') {
       return isInRange && isClickable

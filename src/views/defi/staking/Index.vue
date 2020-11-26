@@ -106,6 +106,8 @@ export default class Staking extends Vue {
   selectedStaking: StakingInfo = this.activeStaking as StakingInfo
   isLargeMobileDevice = false
 
+  alreadySelected = false
+
   get isLoggedIn() {
     return this.walletStore.isWalletUnlocked
   }
@@ -151,6 +153,7 @@ export default class Staking extends Vue {
 
   onStakingSelected(token: any) {
     this.selectedStaking = token
+    this.alreadySelected = true
   }
 
   mounted() {
@@ -164,7 +167,9 @@ export default class Staking extends Vue {
 
   @Watch('stakingList')
   stakingListChanged() {
-    this.selectedStaking = this.activeStaking as StakingInfo
+    if (!this.alreadySelected) {
+      this.selectedStaking = this.activeStaking as StakingInfo
+    }
   }
 }
 </script>
