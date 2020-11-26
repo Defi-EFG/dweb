@@ -28,16 +28,12 @@ export default {
   font-size: 0.7em;
   text-decoration: underline;
   text-decoration-color: lightgray;
-  position: absolute;
-  width: 130px;
   text-align: start;
-  right: 10px;
   padding: 6px 0px;
 }
 .text-reader {
   position: relative;
   overflow: hidden;
-  background-color: #44096b;
   cursor: pointer;
   padding: 2px 5px;
 
@@ -56,6 +52,9 @@ export default {
   width: 35px;
 }
 .upload-icon {
+  background-color: #44096b;
+  border-radius: 50%;
+  padding: 4px;
   font-size: 16px !important;
 }
 </style>
