@@ -123,7 +123,7 @@ export default class Gpt extends Vue {
   }
 
   async mounted() {
-    this.stakingStore.updateMintingInfo(this.stakingStore.address)
+    this.stakingStore.updatePlatformInfo()
     api.getprice(this.currencyName, this.chartlist).then(data => {
       this.date = data.date
       this.price = data.price

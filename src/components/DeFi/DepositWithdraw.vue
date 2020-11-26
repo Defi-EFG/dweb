@@ -51,7 +51,7 @@
         class="btn-d"
         :class="isTransferable(depositAmount, balance) ? '' : 'disabled'"
         :disabled="!isTransferable(depositAmount, balance)"
-        @click="openConfirmTxModal(TYPE_DEPOSIT)"
+        @click="deposit"
         >{{ $t('views.stakingpage.deposit') }}</v-btn
       >
     </div>
@@ -153,19 +153,7 @@ export default class DepositWithdraw extends Vue {
     this.withdrawAmount = amount
   }
 
-  openConfirmTxModal(type: string) {
-    if (type === this.TYPE_DEPOSIT) {
-      this.actionType = type
-      this.amount = this.depositAmount
-      this.fromAddr = this.walletAddr
-      this.toAddr = this.contractAddr
-    } else if (type === this.TYPE_WITHDRAW) {
-      this.actionType = type
-      this.amount = this.withdrawAmount
-      this.fromAddr = this.contractAddr
-      this.toAddr = this.walletAddr
-    }
-
+  openConfirmTxModal() {
     this.confirmTxModal = !this.confirmTxModal
   }
 
@@ -177,6 +165,14 @@ export default class DepositWithdraw extends Vue {
     this.withdrawAmount = 0
     this.actionType = ''
     this.confirmTxModal = false
+  }
+
+  deposit() {
+    this.actionType = this.TYPE_DEPOSIT
+    this.amount = this.depositAmount
+    this.fromAddr = this.walletAddr
+    this.toAddr = this.contractAddr
+    this.openConfirmTxModal()
   }
 
   onSuccess() {
@@ -208,19 +204,6 @@ export default class DepositWithdraw extends Vue {
         .then(txid => {
           setTimeout(() => {
             this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
-            this.onSuccess()
-          }, 1000)
-        })
-        .catch(error => {
-          this.onError(error.message)
-        })
-    } else if (this.actionType === this.TYPE_WITHDRAW) {
-      this.loadingMsg = 'Sending Transaction...'
-      this.stakingStore
-        .withdraw(payload)
-        .then(txid => {
-          setTimeout(() => {
-            this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
             this.onSuccess()
           }, 1000)
         })

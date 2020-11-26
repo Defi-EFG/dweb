@@ -50,7 +50,7 @@
           class="reward-btn"
           :class="!!isStakedDue ? '' : 'disabled'"
           :disabled="!isStakedDue"
-          @click="openConfirmTxModal"
+          @click="withdraw"
         >
           <template v-if="isStakedDue">{{ $t('views.stakingpage.withdrawreward') }}</template>
           <template v-else><v-icon left>mdi-timer-sand</v-icon>{{ countdownInFormat }}</template>
@@ -64,16 +64,17 @@
           class="stop-btn"
           :class="staked.status ? '' : 'stopped'"
           color="#FF4E4E"
-          :disabled="!staked.reward"
+          :disabled="!staked.staking"
+          @click="stopStaking"
           >Stop staking</v-btn
         >
       </v-card-text>
     </v-card>
     <TransactionConfirmationModal
       :visible="confirmTxModal"
-      :fromAddr="contractAddr"
-      :toAddr="walletAddr"
-      :amount="staked.reward"
+      :fromAddr="fromAddr"
+      :toAddr="toAddr"
+      :amount="amount"
       :currency="currency"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
@@ -93,6 +94,11 @@ import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import { StakingInfo } from '@/types/staking'
 
+enum ActionType {
+  TYPE_STOP,
+  TYPE_WITHDRAW
+}
+
 @Component({
   components: {
     TransactionConfirmationModal
@@ -106,7 +112,11 @@ export default class StakedReward extends Vue {
   @Prop() selectedStaking!: StakingInfo
 
   confirmTxModal = false
+  actionType = ActionType.TYPE_STOP as ActionType
   errorMsg = ''
+  fromAddr = ''
+  toAddr = ''
+  amount = 0
 
   get staked() {
     return this.selectedStaking
@@ -118,17 +128,18 @@ export default class StakedReward extends Vue {
   }
 
   get countdownDuration() {
-    const dueDate = moment(this.staked.timestamp)
-    const timeDiff = dueDate.diff(moment())
-    return moment.duration(timeDiff).as('milliseconds')
+    const dueDate = moment.utc(this.staked.timestamp)
+    const timeDiff = dueDate.diff(moment().utc())
+    return timeDiff
   }
 
   get countdownInFormat() {
-    return moment.utc(this.countdownDuration).format('DD [days] HH [hour] MM [min]')
+    const remainingTime = moment.duration(this.countdownDuration)
+    return `${remainingTime.days()} Days ${remainingTime.hours()} Hour ${remainingTime.minutes()} Min`
   }
 
   get currencyName() {
-    return this.rewardCurrency.name
+    return constants.ECOC
   }
 
   get currency() {
@@ -151,12 +162,28 @@ export default class StakedReward extends Vue {
     return this.$t('views.stakingpage')
   }
 
+  stopStaking() {
+    this.actionType = ActionType.TYPE_STOP
+    this.fromAddr = this.walletAddr
+    this.toAddr = this.contractAddr
+    this.openConfirmTxModal()
+  }
+
+  withdraw() {
+    this.actionType = ActionType.TYPE_WITHDRAW
+    this.fromAddr = this.contractAddr
+    this.toAddr = this.walletAddr
+    this.openConfirmTxModal()
+  }
+
   openConfirmTxModal() {
     this.confirmTxModal = !this.confirmTxModal
   }
 
   closeConfirmTxModal() {
     this.confirmTxModal = false
+    this.fromAddr = ''
+    this.toAddr = ''
   }
 
   onSuccess() {
@@ -169,21 +196,37 @@ export default class StakedReward extends Vue {
   }
 
   onConfirm(walletParams: WalletParams) {
-    const amount = Number(this.staked.reward)
-    const payload = {
-      amount,
-      walletParams
-    }
+    if (this.actionType === ActionType.TYPE_WITHDRAW) {
+      const pendingId = this.staked.pendingId as number
+      const payload = {
+        pendingId,
+        walletParams
+      }
 
-    this.stakingStore
-      .claim(payload)
-      .then((txid: any) => {
-        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
-        this.onSuccess()
-      })
-      .catch((error: Error) => {
-        this.onError(error.message)
-      })
+      this.stakingStore
+        .withdraw(payload)
+        .then((txid: any) => {
+          this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
+          this.onSuccess()
+        })
+        .catch((error: Error) => {
+          this.onError(error.message)
+        })
+    } else if (this.actionType === ActionType.TYPE_STOP) {
+      const payload = {
+        walletParams
+      }
+
+      this.stakingStore
+        .stopStaking(payload)
+        .then((txid: any) => {
+          this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_STOP_STAKING })
+          this.onSuccess()
+        })
+        .catch((error: Error) => {
+          this.onError(error.message)
+        })
+    }
   }
 }
 </script>
