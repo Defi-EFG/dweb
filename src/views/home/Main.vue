@@ -131,7 +131,7 @@
                     <div class="name">{{ total.name }}</div>
                     <div :class="`price ${total.color} `">
                       {{ total.usd }}
-                      {{ total.amount | numberWithCommas({ fixed: [0, 2] }) }}
+                      {{ total.amount | numberWithCommas({ fixed: [0, 8] }) }}
                       {{ total.unit }}
                     </div>
                   </div>
@@ -226,7 +226,7 @@
           <v-col lg="6" md="6" cols="12" class="border_left1 Staking_dt">
             <div class="supply_name2">GPT - {{ $t('views.main.available') }}</div>
             <div class="supply_price_color color_1">
-              {{ stakingAvailable | numberWithCommas() }} GPT
+              {{ stakingAvailable | numberWithCommas({ fixed: [0, 4] }) }} GPT
             </div>
           </v-col>
           <img class="bg_gpt" src="@/assets/backg_02.svg" alt="" />
