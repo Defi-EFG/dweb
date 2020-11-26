@@ -122,6 +122,7 @@ export default class BorrowCard extends Vue {
   isMobileDevice = false
 
   mounted() {
+    this.isMobileDevice = window.innerWidth < 1264
     this.bpSlider = this.bpUsed
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this

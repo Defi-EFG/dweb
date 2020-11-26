@@ -186,7 +186,7 @@
             "depositEFGEarn": "充值 EFG，转区GPT",
             "minimum": "最少充值：1.00EFG",
             "depositamount": "充值金额",
-            "note": "注：存款完成后将开始奖励收入。",
+            "note": "注：停止质押21天后，方可提现.",
             "reward_wd": "奖励提现：",
             "minimumwithdrawal": "最低提现额度: 0.001 GPT",
             "minimum_wd": "最低提现额度: 1.00 GPT",
@@ -204,7 +204,12 @@
             "yourbalance": "您的余额",
             "withdraw_avb": "提现可用",
             "flexible_s": "灵活质押",
-            "to_earn": "来赚取"
+            "to_earn": "来赚取",
+            "deposit_amount": "存款金额",
+            "staked_available": "可抵押",
+            "stop_staking": "别再赌了",
+            "you_will_get": "你会得到",
+            "fee": "费用"
         },
         "modal": {
             "errorMsg2": "密钥库文本格式错误",

@@ -189,7 +189,7 @@
             "depositEFGEarn": "Deposit EFG, Earn GPT",
             "minimum": "Minimum Deposit: 1.00 EFG",
             "depositamount": "Deposit Amount",
-            "note": "Note: Reward earning will start after the deposit completed.",
+            "note": "Note: Withdrawal will be available after staking is stopped for 21 days.",
             "reward_wd": "Reward Withdrawal",
             "minimumwithdrawal": "Minimum Withdrawal: 0.001 GPT",
             "minimum_wd": "Minimum Withdrawal: 1.00 GPT",
@@ -206,7 +206,12 @@
             "yourbalance": "Your Balance",
             "withdraw_avb": "Withdraw Available",
             "flexible_s": "Flexible Staking",
-            "to_earn": "to Earn"
+            "to_earn": "to Earn",
+            "deposit_amount": "Deposited amount",
+            "staked_available": "Staked available",
+            "stop_staking": "Stop staking",
+            "you_will_get": "You will get",
+            "fee": "Fee"
         },
         "modal": {
             "errorMsg2": "Wrong format of keystore file",
