@@ -72,6 +72,7 @@ export default class StakingModule extends VuexModule implements StakingPlatform
     this.stakingList = stakingList
   }
 
+  @Mutation
   clear() {
     this.stakingList = [
       {

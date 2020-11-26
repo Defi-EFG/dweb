@@ -22,7 +22,9 @@
 
         <v-divider></v-divider>
 
-        <p class="reward-label mb-0" v-if="!staked.status">{{ $t('views.stakingpage.you_will_get') }}</p>
+        <p class="reward-label mb-0" v-if="!staked.status">
+          {{ $t('views.stakingpage.you_will_get') }}
+        </p>
 
         <div class="minimum-w" v-if="!staked.status">
           <div class="d-flex">
