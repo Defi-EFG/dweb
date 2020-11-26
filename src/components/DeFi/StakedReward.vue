@@ -54,17 +54,7 @@
           <div class="d-flex">
             <span>{{ $t('views.stakingpage.fee') }} ({{ withdrawalFeeRate }}%)</span>
             <v-spacer></v-spacer>
-            <template v-if="fee < 0.0001">
-              <v-tooltip top>
-                <template v-slot:activator="{ on, attrs }">
-                  <span v-bind="attrs" v-on="on">&lt; 0.0001 {{ rewardCurrencyName }}</span>
-                </template>
-                <span>{{ fee }} {{ rewardCurrencyName }}</span>
-              </v-tooltip>
-            </template>
-            <span v-else
-              >{{ fee | numberWithCommas({ fixed: [0, 4] }) }} {{ rewardCurrencyName }}</span
-            >
+            <span>{{ fee | numberWithCommas({ fixed: [0, 4] }) }} {{ rewardCurrencyName }}</span>
           </div>
         </div>
 
