@@ -41,7 +41,7 @@
               <v-text-field
                 class="estimatedGPT-field"
                 v-model="estimatedGPTAmount"
-                prefix="Estimated GPT needed"
+                :prefix="text.estimated_gpt"
                 type="number"
                 pattern="[0-9]*"
                 filled
@@ -136,6 +136,10 @@ export default class SupplyBalance extends Vue {
 
   get poolAddr() {
     return this.lendingStore.loan.poolAddr
+  }
+
+  get text() {
+    return this.$t('views.lendingpage')
   }
 
   // unix timestamp in second
