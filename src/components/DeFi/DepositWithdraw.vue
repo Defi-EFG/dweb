@@ -1,60 +1,56 @@
 <template>
-  <div class="dw-wrapper">
-    <div class="deposit-tab">
-      <div class="label pl-3">
-        <img src="@/assets/efg_logo.svg" alt="" />
-        <span>{{ staked.currency.name || '###' }} - {{ $t('views.stakingpage.flexible_s') }}</span>
-      </div>
-      <small class="pl-3">
-        {{ $t('views.stakingpage.deposit') }} {{ staked.currency.name }}
-        {{ $t('views.stakingpage.to_earn') }} {{ rewardCurrencyName }}
-      </small>
-
-      <div class="total-balance">
-        <span>{{ $t('views.stakingpage.yourbalance') }}</span>
-        <v-spacer></v-spacer>
-        <span class="text-right">{{ balance }} {{ staked.currency.name }}</span>
-      </div>
-
-      <div class="minimum-d">
-        <small class="value"
-          >{{ staked.currency.name }} {{ $t('views.stakingpage.deposit') }}</small
-        >
-        <v-spacer></v-spacer>
-        <small class="all" @click="fillAmountDeposit(balance)">{{
-          $t('views.stakingpage.depositall')
-        }}</small>
-      </div>
-
-      <v-text-field
-        dark
-        type="number"
-        pattern="[0-9]*"
-        class="deposit-amount"
-        placeholder="0"
-        :prefix="depositAmount ? '' : stakingpage.depositamount"
-        v-model="depositAmount"
-        :suffix="staked.currency.name"
-        single-line
-        solo
-        hide-details="true"
-      ></v-text-field>
-
-      <div class="note">
-        <small>{{ $t('views.stakingpage.note') }}</small>
-      </div>
-
-      <v-btn
-        dark
-        large
-        block
-        class="btn-d"
-        :class="isTransferable(depositAmount, balance) ? '' : 'disabled'"
-        :disabled="!isTransferable(depositAmount, balance)"
-        @click="deposit"
-        >{{ $t('views.stakingpage.deposit') }}</v-btn
-      >
+  <div class="deposit-tab elevation-2">
+    <div class="label pl-3">
+      <img src="@/assets/efg_logo.svg" alt="" />
+      <span>{{ staked.currency.name || '###' }} - {{ $t('views.stakingpage.flexible_s') }}</span>
     </div>
+    <small class="pl-3">
+      {{ $t('views.stakingpage.deposit') }} {{ staked.currency.name }}
+      {{ $t('views.stakingpage.to_earn') }} {{ rewardCurrencyName }}
+    </small>
+
+    <div class="total-balance">
+      <span>{{ $t('views.stakingpage.yourbalance') }}</span>
+      <v-spacer></v-spacer>
+      <span class="text-right">{{ balance }} {{ staked.currency.name }}</span>
+    </div>
+
+    <div class="minimum-d">
+      <small class="value">{{ staked.currency.name }} {{ $t('views.stakingpage.deposit') }}</small>
+      <v-spacer></v-spacer>
+      <small class="all" @click="fillAmountDeposit(balance)">{{
+        $t('views.stakingpage.depositall')
+      }}</small>
+    </div>
+
+    <v-text-field
+      dark
+      type="number"
+      pattern="[0-9]*"
+      class="deposit-amount"
+      placeholder="0"
+      :prefix="depositAmount ? '' : stakingpage.depositamount"
+      v-model="depositAmount"
+      :suffix="staked.currency.name"
+      single-line
+      solo
+      hide-details="true"
+    ></v-text-field>
+
+    <div class="note">
+      <small>{{ $t('views.stakingpage.note') }}</small>
+    </div>
+
+    <v-btn
+      dark
+      large
+      block
+      class="btn-d"
+      :class="isTransferable(depositAmount, balance) ? '' : 'disabled'"
+      :disabled="!isTransferable(depositAmount, balance)"
+      @click="deposit"
+      >{{ $t('views.stakingpage.deposit') }}</v-btn
+    >
     <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="fromAddr"
@@ -225,26 +221,18 @@ export default class DepositWithdraw extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.dw-wrapper {
+.deposit-tab {
   display: flex;
-  background: #2e3344;
-  width: -webkit-fill-available;
+  flex-wrap: wrap;
   border-radius: 5px;
-}
-
-.deposit-tab,
-.withdraw-tab {
+  background: #2e3344;
   padding: 16px;
   width: -webkit-fill-available;
 }
 
-.wrapper {
-  padding: 1.2rem;
-  padding-top: 2rem;
-}
-
 .label {
-  margin-top: 2rem;
+  flex-basis: 100%;
+  margin-top: 1rem;
   display: flex;
   align-items: center;
   font-size: 16px;
@@ -258,7 +246,9 @@ export default class DepositWithdraw extends Vue {
 
 .d-amount,
 .total-balance {
-  margin-top: 3.4rem;
+  width: -webkit-fill-available;
+  height: fit-content;
+  margin-top: 0.6rem;
   font-size: 14px;
   display: flex;
   padding: 10px;
@@ -271,8 +261,11 @@ export default class DepositWithdraw extends Vue {
 
 .minimum-w,
 .minimum-d {
+  height: fit-content;
+  width: -webkit-fill-available;
   display: flex;
-  padding: 13px 10px;
+  margin: auto;
+  padding: 0 10px;
   .value {
     text-align: left;
     opacity: 0.7;
@@ -288,11 +281,12 @@ export default class DepositWithdraw extends Vue {
 
 .withdrawal-amount,
 .deposit-amount {
+  width: -webkit-fill-available;
   text-align: right;
 }
 
 .note {
-  padding: 10px;
+  padding: 0 10px;
   opacity: 0.7;
 }
 
@@ -302,7 +296,7 @@ export default class DepositWithdraw extends Vue {
 
 .btn-w,
 .btn-d {
-  margin-top: 3.5rem;
+  margin-top: auto;
   margin-bottom: 1rem;
   border-radius: 5px;
   background: transparent linear-gradient(90deg, #8b41d6 0%, #6800fe 100%) 0% 0% no-repeat
@@ -313,19 +307,17 @@ export default class DepositWithdraw extends Vue {
   background: rgba(255, 255, 255, 0.12) !important;
 }
 
-.btn-w {
-  margin-top: 6.25rem;
-}
-
-@media (max-width: 1761px) {
-  .btn-d {
-    margin-top: 2.02rem;
-  }
-}
-
 @media (max-width: 1264px) {
-  .btn-w {
-    margin-top: 4.75rem;
+  .total-balance {
+    margin-top: 2rem;
+  }
+
+  .minimum-d {
+    padding: 2rem 10px 0.5rem;
+  }
+
+  .note {
+    padding: 10px 10px 4rem;
   }
 }
 

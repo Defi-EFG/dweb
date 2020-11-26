@@ -186,7 +186,7 @@
             "depositEFGEarn": "充值 EFG，转区GPT",
             "minimum": "最少充值：1.00EFG",
             "depositamount": "充值金额",
-            "note": "注意：放样停止21天后即可提款。",
+            "note": "注：停止质押21天后，方可提现.",
             "reward_wd": "奖励提现：",
             "minimumwithdrawal": "最低提现额度: 0.001 GPT",
             "minimum_wd": "最低提现额度: 1.00 GPT",
