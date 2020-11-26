@@ -95,8 +95,8 @@ import { numberWithCommas } from '@/plugins/filters'
 @Component({
   components: {
     TransactionConfirmationModal,
-    Loading,
-  },
+    Loading
+  }
 })
 export default class SupplyBalance extends Vue {
   @Prop({ default: 0 }) readonly balance!: number
@@ -150,7 +150,7 @@ export default class SupplyBalance extends Vue {
   }
 
   get currency() {
-    return this.walletStore.currenciesList.find((currency) => currency.name === extendCurrency.name)
+    return this.walletStore.currenciesList.find(currency => currency.name === extendCurrency.name)
   }
 
   get isEnoughGPT() {
@@ -160,7 +160,7 @@ export default class SupplyBalance extends Vue {
 
   get extendBalance() {
     const currency = this.lendingStore.myAssets.find(
-      (asset) => asset.currency.name === extendCurrency.name
+      asset => asset.currency.name === extendCurrency.name
     )
     if (!currency) return 0
     return currency.amount
@@ -196,7 +196,7 @@ export default class SupplyBalance extends Vue {
   openConfirmTxModal() {
     if (this.estimatedGPTAmount != '' && this.estimatedGPTAmount > 0) {
       this.closedepositgptModal()
-      this.getEstimatedGPT().then((amount) => {
+      this.getEstimatedGPT().then(amount => {
         this.estimatedGPT = amount
         this.confirmTxModal = true
       })
@@ -232,7 +232,7 @@ export default class SupplyBalance extends Vue {
       currency,
       poolAddress,
       amount,
-      walletParams,
+      walletParams
     }
 
     this.lendingStore
@@ -270,7 +270,7 @@ export default class SupplyBalance extends Vue {
   @Watch('isNearLiquidate')
   checkIfLiquidation(value: boolean) {
     if (value) {
-      this.getEstimatedGPT().then((amount) => {
+      this.getEstimatedGPT().then(amount => {
         this.estimatedGPT = amount
       })
     }
@@ -297,7 +297,7 @@ export default class SupplyBalance extends Vue {
   rules = {
     required: (value: string) => {
       return !!value || this.$t('views.modal.required')
-    },
+    }
   }
 
   closedepositgptModal() {
@@ -311,7 +311,7 @@ export default class SupplyBalance extends Vue {
 
   mounted() {
     if (this.isNearLiquidate) {
-      this.getEstimatedGPT().then((amount) => {
+      this.getEstimatedGPT().then(amount => {
         this.estimatedGPT = amount
       })
     }

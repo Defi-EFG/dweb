@@ -140,7 +140,7 @@ export default class TransactionDetailModal extends Vue {
 
   get tx() {
     if (this.txid) {
-      const txInfo = this.walletStore.transactionsHistory.find((tx) => tx.id === this.txid)
+      const txInfo = this.walletStore.transactionsHistory.find(tx => tx.id === this.txid)
       return txInfo
     }
     return {} as TxHistory
@@ -172,7 +172,7 @@ export default class TransactionDetailModal extends Vue {
   }
 
   getTxInfo() {
-    this.walletStore.getTxInfo(this.txid).then((tx) => {
+    this.walletStore.getTxInfo(this.txid).then(tx => {
       this.txInfo = tx
       console.log(this.txInfo)
     })

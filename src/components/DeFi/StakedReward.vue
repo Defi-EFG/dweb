@@ -62,7 +62,9 @@
                 <span>{{ fee }} {{ rewardCurrencyName }}</span>
               </v-tooltip>
             </template>
-            <span v-else>{{ fee | numberWithCommas({ fixed: [0, 4] }) }} {{ rewardCurrencyName }}</span>
+            <span v-else
+              >{{ fee | numberWithCommas({ fixed: [0, 4] }) }} {{ rewardCurrencyName }}</span
+            >
           </div>
         </div>
 
