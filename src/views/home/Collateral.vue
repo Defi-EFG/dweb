@@ -37,6 +37,18 @@
       <v-container>
         <v-row>
           <v-col cols="12">
+            <div class="button-small">
+              <a @click="daysChanged('hour')" :class="active == 'hour' ? 'active' : undefined">{{
+                $t('views.detail.hour')
+              }}</a>
+              <a @click="daysChanged('day')" :class="active == 'day' ? 'active' : undefined">{{
+                $t('views.detail.day')
+              }}</a>
+            </div>
+          </v-col>
+        </v-row>
+        <v-row>
+          <v-col cols="12">
             <div class="chart_view">
               <LineChart :labelSet="labelSet" :dataSet="dataSet"></LineChart>
             </div>
@@ -66,13 +78,10 @@ export default class Callaterr extends Vue {
   currencyName = this.$route.query.name as string
   date = [] as string[]
   price = [] as number[]
-
-  mounted() {
-    api.getprice(this.currencyName).then(data => {
-      this.date = data.date
-      this.price = data.price
-    })
-  }
+  active = 'hour'
+  name = 'hour'
+  title = 'hour'
+  chartlist = 'hour'
 
   get labelSet() {
     return this.date
@@ -91,21 +100,41 @@ export default class Callaterr extends Vue {
   get collateralFactor() {
     return this.collateral ? this.collateral.collateralFactor * 100 : 0
   }
+
+  async mounted() {
+    api.getprice(this.currencyName, this.chartlist).then(data => {
+      this.date = data.date
+      this.price = data.price
+    })
+  }
+  async daysChanged(name: string) {
+    this.active = name
+    this.name = name
+    this.title = name
+    //@ts-ignore
+    api.getprice(this.currencyName, this.name).then(data => {
+      this.date = data.date
+      this.price = data.price
+    })
+  }
 }
 </script>
 
 <style scoped lang="scss">
 .button-small {
-  padding: 10px 35px;
+  padding: 0;
   text-align: right;
-  background: #000000 0% 0% no-repeat padding-box;
   a {
-    padding: 0 5px;
+    padding: 0px 10px;
     color: #ffffff;
-    font-size: 14px;
+    font-size: 16px;
+    margin: 3px;
   }
   .active {
-    border-bottom: 2px solid #c074f9;
+    border-bottom: 2px solid #8b41d8;
+    color: #8b41d8;
+    font-weight: bold;
+    transition: 0.2s;
   }
 }
 .container {

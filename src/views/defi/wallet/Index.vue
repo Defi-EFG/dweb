@@ -93,8 +93,8 @@ import ReceiveSendMobile from '@/components/DeFi/Mobile/ReceiveSendMobile.vue'
     TransactionHistory,
     MenuDropdown,
     MiniTokenList,
-    ReceiveSendMobile,
-  },
+    ReceiveSendMobile
+  }
 })
 export default class Wallet extends Vue {
   walletStore = getModule(WalletModule)
@@ -107,7 +107,7 @@ export default class Wallet extends Vue {
     this.isLargeMobileDevice = window.innerWidth < 1264 && window.innerWidth > 600
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
-    window.addEventListener('resize', function () {
+    window.addEventListener('resize', function() {
       self.isMobileDevice = this.window.innerWidth < 600
       self.isLargeMobileDevice = this.window.innerWidth < 1264 && this.window.innerWidth > 600
     })

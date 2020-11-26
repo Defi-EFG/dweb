@@ -39,7 +39,7 @@
               <v-text-field
                 class="estimatedGPT-field"
                 v-model="estimatedGPTAmount"
-                prefix="Estimated GPT needed"
+                :prefix="text.estimated_gpt"
                 type="number"
                 pattern="[0-9]*"
                 filled
@@ -134,6 +134,10 @@ export default class SupplyBalance extends Vue {
 
   get poolAddr() {
     return this.lendingStore.loan.poolAddr
+  }
+
+  get text() {
+    return this.$t('views.lendingpage')
   }
 
   // unix timestamp in second
@@ -259,6 +263,7 @@ export default class SupplyBalance extends Vue {
   }
 
   depositgpt() {
+    this.estimatedGPTAmount = this.estimatedGPT
     this.depositgptModal = !this.depositgptModal
   }
 
@@ -269,6 +274,13 @@ export default class SupplyBalance extends Vue {
         this.estimatedGPT = amount
       })
     }
+  }
+
+  @Watch('extendBalance')
+  checkIfExtendBalanceChanged() {
+    this.getEstimatedGPT().then(amount => {
+      this.estimatedGPT = amount
+    })
   }
 
   @Watch('balance')
@@ -442,7 +454,7 @@ export default class SupplyBalance extends Vue {
   border-radius: 5px;
   padding: 14px 17px;
   margin-top: 10px;
-  color: rgb(185, 185, 185);
+  color: black;
   font-size: 14px;
 }
 .detail2 {
@@ -450,6 +462,7 @@ export default class SupplyBalance extends Vue {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  color: black;
 }
 .gptamount {
   color: black;

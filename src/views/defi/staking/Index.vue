@@ -96,8 +96,8 @@ import TransactionRewardHistory from '@/components/DeFi/Mobile/TransactionReward
     DepositWithdraw,
     StakedReward,
     RewardHistory,
-    TransactionRewardHistory,
-  },
+    TransactionRewardHistory
+  }
 })
 export default class Staking extends Vue {
   walletStore = getModule(WalletModule)
@@ -117,7 +117,7 @@ export default class Staking extends Vue {
   }
 
   get activeStaking() {
-    return this.stakingList.find((staking) => staking.status === true)
+    return this.stakingList.find(staking => staking.status === true)
   }
 
   get stakingBalance() {
@@ -160,7 +160,7 @@ export default class Staking extends Vue {
     this.isLargeMobileDevice = window.innerWidth < 1264
     // eslint-disable-next-line @typescript-eslint/no-this-alias
     const self = this
-    window.addEventListener('resize', function () {
+    window.addEventListener('resize', function() {
       self.isLargeMobileDevice = this.window.innerWidth < 1264
     })
   }

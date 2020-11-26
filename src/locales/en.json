@@ -121,7 +121,9 @@
             "total_Interest": "Total Interest",
             "total_debt": "Total Debt",
             "number_of_staker": "Number of Staker",
-            "total_EFG_Staking": "Total EFG Staking"
+            "total_EFG_Staking": "Total EFG Staking",
+            "hour": "Hours",
+            "day": "Days"
         },
         "wallet": "Wallet",
         "lending": "Lending",
@@ -322,8 +324,7 @@
             "GPT": "GPT"
         }
     },
-    "components": {
-    },
+    "components": {},
     "dom": {},
     "Received": "Received",
     "Sent": "Sent",
@@ -337,6 +338,7 @@
     "Withdrawing": "Withdrawing",
     "Borrowing": "Borrowing",
     "Repaying": "Repaying",
+    "Stopping": "Stopping",
     "Could not generate new wallet": "Could not generate new wallet",
     "Could not import from WIF": "Could not import from WIF",
     "Wrong Private Key": "Wrong Private Key",

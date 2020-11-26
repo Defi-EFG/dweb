@@ -78,8 +78,8 @@ import { StakingInfo } from '@/types/staking'
 @Component({
   components: {
     TransactionConfirmationModal,
-    Loading,
-  },
+    Loading
+  }
 })
 export default class DepositWithdraw extends Vue {
   walletStore = getModule(WalletModule)
@@ -106,7 +106,7 @@ export default class DepositWithdraw extends Vue {
   amount: string | number = 0
 
   get currency() {
-    const stakingCurrency = this.walletStore.currenciesList.find((currency) => {
+    const stakingCurrency = this.walletStore.currenciesList.find(currency => {
       if (this.stakedAddr && currency.tokenInfo) {
         return this.stakedAddr === currency.tokenInfo.address
       }
@@ -190,20 +190,20 @@ export default class DepositWithdraw extends Vue {
     const amount = Number(this.amount)
     const payload = {
       amount,
-      walletParams,
+      walletParams
     }
 
     if (this.actionType === this.TYPE_DEPOSIT) {
       this.loadingMsg = 'Currency Approving...'
       this.stakingStore
         .deposit(payload)
-        .then((txid) => {
+        .then(txid => {
           setTimeout(() => {
             this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
             this.onSuccess()
           }, 1000)
         })
-        .catch((error) => {
+        .catch(error => {
           this.onError(error.message)
         })
     }

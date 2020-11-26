@@ -118,7 +118,9 @@
             "total_Interest": "总利率",
             "total_debt": "总借款",
             "number_of_staker": "质押者数额",
-            "total_EFG_Staking": "总质押EFG"
+            "total_EFG_Staking": "总质押EFG",
+            "hour": "小时",
+            "day": "每日"
         },
         "wallet": "钱包",
         "lending": "借出",
@@ -312,12 +314,12 @@
             "transaction_failed": "交易失败",
             "safe_max": "安全最大值",
             "generating_keystore": "正在生成密钥库文件...",
-            "make_gpt_header":"进行存款 (GPT)",
-            "make_gpt_desp":"请输入您要存入的GPT金额",
-            "gpt_balance":"GPT 钱包余额",
-            "gpt_deposit_amount":"存款金额",
-            "deposit":"存款",
-            "GPT":"GPT"
+            "make_gpt_header": "进行存款 (GPT)",
+            "make_gpt_desp": "请输入您要存入的GPT金额",
+            "gpt_balance": "GPT 钱包余额",
+            "gpt_deposit_amount": "存款金额",
+            "deposit": "存款",
+            "GPT": "GPT"
         }
     },
     "components": {
@@ -337,6 +339,7 @@
     "Withdrawing": "提现",
     "Borrowing": "借用",
     "Repaying": "还款",
+    "Stopping": "正在停止",
     "Could not generate new wallet": "无法生成新钱包",
     "Could not import from WIF": "无法从导入 WIF",
     "Wrong Private Key": "私钥错误",

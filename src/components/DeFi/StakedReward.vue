@@ -4,19 +4,27 @@
       <v-card-text class="wrapper">
         <div class="total-reward">
           <p class="label mb-0">{{ $t('views.stakingpage.your_sk') }}</p>
-          <p class="value text-center">{{ staked.reward }} {{ rewardCurrencyName }}</p>
+          <p class="value text-center">
+            {{ staked.reward | numberWithCommas({ fixed: [0, 4] }) }} {{ rewardCurrencyName }}
+          </p>
         </div>
 
         <div class="d-amount" :class="staked.status ? '' : 'disabled-text'">
           <div class="d-flex">
             <span class="text-uppercase">{{ $t('views.stakingpage.deposit_amount') }}</span>
             <v-spacer></v-spacer>
-            <span class="text-right">{{ staked.staking }} {{ staked.currency.name }}</span>
+            <span class="text-right"
+              >{{ staked.staking | numberWithCommas({ fixed: [0, 8] }) }}
+              {{ staked.currency.name }}</span
+            >
           </div>
           <div class="d-flex">
             <span class="text-uppercase">{{ $t('views.stakingpage.staked_available') }}</span>
             <v-spacer></v-spacer>
-            <span class="text-right">{{ staked.reward }} {{ rewardCurrencyName }}</span>
+            <span class="text-right"
+              >{{ staked.reward | numberWithCommas({ fixed: [0, 4] }) }}
+              {{ rewardCurrencyName }}</span
+            >
           </div>
         </div>
 
@@ -30,12 +38,18 @@
           <div class="d-flex">
             <span>{{ $t('views.stakingpage.deposit_amount') }}</span>
             <v-spacer></v-spacer>
-            <span>{{ staked.staking }} {{ staked.currency.name }}</span>
+            <span
+              >{{ staked.staking | numberWithCommas({ fixed: [0, 8] }) }}
+              {{ staked.currency.name }}</span
+            >
           </div>
           <div class="d-flex">
             <span>{{ $t('views.stakingpage.staked_available') }}</span>
             <v-spacer></v-spacer>
-            <span>{{ staked.reward }} {{ rewardCurrencyName }}</span>
+            <span
+              >{{ staked.reward | numberWithCommas({ fixed: [0, 4] }) }}
+              {{ rewardCurrencyName }}</span
+            >
           </div>
           <div class="d-flex">
             <span>{{ $t('views.stakingpage.fee') }} ({{ withdrawalFeeRate }}%)</span>
@@ -48,7 +62,7 @@
                 <span>{{ fee }} {{ rewardCurrencyName }}</span>
               </v-tooltip>
             </template>
-            <span v-else>{{ fee }} {{ rewardCurrencyName }}</span>
+            <span v-else>{{ fee | numberWithCommas({ fixed: [0, 4] }) }} {{ rewardCurrencyName }}</span>
           </div>
         </div>
 
