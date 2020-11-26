@@ -54,7 +54,15 @@
           <div class="d-flex">
             <span>{{ $t('views.stakingpage.fee') }} ({{ withdrawalFeeRate }}%)</span>
             <v-spacer></v-spacer>
-            <span>{{ fee | numberWithCommas({ fixed: [0, 4] }) }} {{ rewardCurrencyName }}</span>
+            <template v-if="fee < 0.0001">
+              <v-tooltip top>
+                <template v-slot:activator="{ on, attrs }">
+                  <span v-bind="attrs" v-on="on">&lt; 0.0001 {{ rewardCurrencyName }}</span>
+                </template>
+                <span>{{ fee }} {{ rewardCurrencyName }}</span>
+              </v-tooltip>
+            </template>
+            <span v-else>{{ fee | numberWithCommas({ fixed: [0, 4] }) }} {{ rewardCurrencyName }}</span>
           </div>
         </div>
 
@@ -167,7 +175,11 @@ export default class StakedReward extends Vue {
 
   get countdownInFormat() {
     const remainingTime = moment.duration(this.countdownDuration)
-    return `${remainingTime.days()} Days ${remainingTime.hours()} Hour ${remainingTime.minutes()} Min`
+    return `${remainingTime.days()} ${this.$t(
+      'views.stakingpage.day'
+    )} ${remainingTime.hours()} ${this.$t(
+      'views.stakingpage.hour'
+    )} ${remainingTime.minutes()} ${this.$t('views.stakingpage.min')}`
   }
 
   get rewardCurrencyName() {

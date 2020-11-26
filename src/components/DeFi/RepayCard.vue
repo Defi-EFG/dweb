@@ -73,7 +73,9 @@
       :disabled="!isRepayable(repayAmount, 'error')"
       :class="isRepayable(repayAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="openConfirmTxModal"
-      >{{ isRepayable(repayAmount, 'btn') ? lendingpage.repay : 'Insufficient' }}</v-btn
+      >{{
+        isRepayable(repayAmount, 'btn') ? lendingpage.repay : $t('views.lendingpage.insufficient')
+      }}</v-btn
     >
     <TransactionConfirmationModal
       :visible="confirmTxModal"
@@ -127,6 +129,10 @@ export default class RepayCard extends Vue {
     window.addEventListener('resize', function() {
       self.isMobileDevice = this.window.innerWidth < 1264
     })
+  }
+
+  get isLoggedIn() {
+    return this.walletStore.isWalletUnlocked
   }
 
   get walletAddr() {
@@ -188,6 +194,10 @@ export default class RepayCard extends Vue {
     const isInRange = amount <= this.walletBalance && amount <= this.debt
     const isValidAmount = amount >= 0
     const isClickable = amount > 0
+
+    if (!this.isLoggedIn) {
+      return false
+    }
 
     if (type === 'error') {
       return isInRange && isClickable

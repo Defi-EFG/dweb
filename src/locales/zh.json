@@ -176,7 +176,9 @@
             "estimated_gpt": "估计所需的GPT：",
             "gpt_balance": "GPT平衡:",
             "liquidation_protection": "清算保护时间：",
-            "extend": "延伸"
+            "extend": "延伸",
+            "not_available": "无法使用",
+            "insufficient": "不足"
         },
         "stakingpage": {
             "stakinglist": "质押列表",
@@ -211,7 +213,10 @@
             "staked_available": "可抵押",
             "stop_staking": "别再赌了",
             "you_will_get": "你会得到",
-            "fee": "费用"
+            "fee": "费用",
+            "day": "天",
+            "hour": "时",
+            "min": "分"
         },
         "modal": {
             "errorMsg2": "密钥库文本格式错误",
@@ -286,8 +291,8 @@
             "transaction_details": "交易细节",
             "from": "从:",
             "to": "到",
-            "owner": "所有者:",
-            "spender": "花费者:",
+            "owner": "所有者",
+            "spender": "花费者",
             "date": "日期",
             "currency": "货币",
             "type": "类型",

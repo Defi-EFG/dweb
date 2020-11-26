@@ -179,7 +179,9 @@
             "estimated_gpt": "Estimated GPT needed:",
             "gpt_balance": "GPT Balance:",
             "liquidation_protection": "Liquidation protection time:",
-            "extend": "Extend"
+            "extend": "Extend",
+            "not_available": "Not available",
+            "insufficient": "Insufficeint"
         },
         "stakingpage": {
             "stakinglist": "Staking List",
@@ -213,7 +215,10 @@
             "staked_available": "Staked available",
             "stop_staking": "Stop staking",
             "you_will_get": "You will get",
-            "fee": "Fee"
+            "fee": "Fee",
+            "day": "Days",
+            "hour": "Hour",
+            "min": "Min"
         },
         "modal": {
             "errorMsg2": "Wrong format of keystore file",
@@ -288,8 +293,8 @@
             "transaction_details": "Transaction Details",
             "from": "From:",
             "to": "To:",
-            "owner": "Owner:",
-            "spender": "Spender:",
+            "owner": "Owner",
+            "spender": "Spender",
             "date": "Date:",
             "currency": "Currency:",
             "type": "Type:",

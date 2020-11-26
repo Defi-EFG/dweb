@@ -74,7 +74,11 @@
       :disabled="!isBorrowable(borrowValue, 'error')"
       :class="isBorrowable(borrowValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="onOpenModal"
-      >{{ isBorrowable(borrowValue, 'btn') ? lendingpage.borrow : 'Not available' }}</v-btn
+      >{{
+        isBorrowable(borrowValue, 'btn')
+          ? lendingpage.borrow
+          : $t('views.lendingpage.not_available')
+      }}</v-btn
     >
     <TransactionConfirmationModal
       :visible="confirmTxModal"
@@ -129,6 +133,10 @@ export default class BorrowCard extends Vue {
     window.addEventListener('resize', function() {
       self.isMobileDevice = this.window.innerWidth < 1264
     })
+  }
+
+  get isLoggedIn() {
+    return this.walletStore.isWalletUnlocked
   }
 
   get walletAddr() {
@@ -205,6 +213,10 @@ export default class BorrowCard extends Vue {
     const isEnough = amount * this.currencyPrice <= this.borrowLimit - this.borrowBalance
     const isValidAmount = amount >= 0
     const isClickable = amount > 0
+
+    if (!this.isLoggedIn) {
+      return false
+    }
 
     if (type === 'error') {
       return isEnough && isClickable

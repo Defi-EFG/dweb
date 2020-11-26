@@ -94,7 +94,7 @@ export default class TransactionHistory extends Vue {
     if (timestamp) {
       return `${moment(timestamp * 1000)
         .startOf('minute')
-        .fromNow()} (${moment(timestamp * 1000).format('YYYY-MM-DD HH:mm')})`
+        .fromNow()}`
     }
   }
 

@@ -8,14 +8,12 @@
           ${{ balance | numberWithCommas({ fixed: [0, 8] }) }}
         </div>
         <div class="liquid-wrapper" v-show="isNearLiquidate && !extentTimeRemaining()">
-          <span class="pl-2">{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</span>
-
-          <div class="liquid-countdown pt-0">
-            <span class="lg">
-              GPT {{ $t('views.lendingpage.balance') }}: {{ extendBalance }} GPT</span
-            >
-            <span class="extend-btn" @click="depositgpt">{{ $t('views.modal.deposit') }}</span>
+          <div>
+            <div>{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</div>
+            <div class="lg">GPT Balance: {{ extendBalance }} GPT</div>
           </div>
+          <v-spacer></v-spacer>
+          <span class="extend-btn" @click="depositgpt">{{ $t('views.modal.deposit') }}</span>
         </div>
         <div class="liquid-countdown" v-show="extentTimeRemaining()">
           <span>{{ $t('views.lendingpage.liquidation_protection') }} {{ timeRemainMessage }}</span>
@@ -29,7 +27,7 @@
           <v-icon></v-icon>
           <v-btn icon @click="closedepositgptModal"><v-icon color="white">$close</v-icon></v-btn>
         </v-card-title>
-        <div class="depositgptwrapper pt-9 ">
+        <div class="depositgptwrapper pt-9">
           <h3>{{ $t('views.modal.make_gpt_header') }}</h3>
           <small>{{ $t('views.modal.make_gpt_desp') }}</small>
           <div class="comfirmdetail mt-7">
@@ -37,7 +35,7 @@
               <span>{{ $t('views.modal.gpt_balance') }}:</span>
               <span>{{ currency.balance }} {{ $t('views.modal.GPT') }}</span>
             </div>
-            <div class="flex-between  mt-2">
+            <div class="flex-between mt-2">
               <v-text-field
                 class="estimatedGPT-field"
                 v-model="estimatedGPTAmount"
@@ -97,8 +95,8 @@ import { numberWithCommas } from '@/plugins/filters'
 @Component({
   components: {
     TransactionConfirmationModal,
-    Loading
-  }
+    Loading,
+  },
 })
 export default class SupplyBalance extends Vue {
   @Prop({ default: 0 }) readonly balance!: number
@@ -152,7 +150,7 @@ export default class SupplyBalance extends Vue {
   }
 
   get currency() {
-    return this.walletStore.currenciesList.find(currency => currency.name === extendCurrency.name)
+    return this.walletStore.currenciesList.find((currency) => currency.name === extendCurrency.name)
   }
 
   get isEnoughGPT() {
@@ -162,7 +160,7 @@ export default class SupplyBalance extends Vue {
 
   get extendBalance() {
     const currency = this.lendingStore.myAssets.find(
-      asset => asset.currency.name === extendCurrency.name
+      (asset) => asset.currency.name === extendCurrency.name
     )
     if (!currency) return 0
     return currency.amount
@@ -198,7 +196,7 @@ export default class SupplyBalance extends Vue {
   openConfirmTxModal() {
     if (this.estimatedGPTAmount != '' && this.estimatedGPTAmount > 0) {
       this.closedepositgptModal()
-      this.getEstimatedGPT().then(amount => {
+      this.getEstimatedGPT().then((amount) => {
         this.estimatedGPT = amount
         this.confirmTxModal = true
       })
@@ -234,7 +232,7 @@ export default class SupplyBalance extends Vue {
       currency,
       poolAddress,
       amount,
-      walletParams
+      walletParams,
     }
 
     this.lendingStore
@@ -272,7 +270,7 @@ export default class SupplyBalance extends Vue {
   @Watch('isNearLiquidate')
   checkIfLiquidation(value: boolean) {
     if (value) {
-      this.getEstimatedGPT().then(amount => {
+      this.getEstimatedGPT().then((amount) => {
         this.estimatedGPT = amount
       })
     }
@@ -299,7 +297,7 @@ export default class SupplyBalance extends Vue {
   rules = {
     required: (value: string) => {
       return !!value || this.$t('views.modal.required')
-    }
+    },
   }
 
   closedepositgptModal() {
@@ -313,7 +311,7 @@ export default class SupplyBalance extends Vue {
 
   mounted() {
     if (this.isNearLiquidate) {
-      this.getEstimatedGPT().then(amount => {
+      this.getEstimatedGPT().then((amount) => {
         this.estimatedGPT = amount
       })
     }
@@ -367,7 +365,6 @@ export default class SupplyBalance extends Vue {
 
 .liquid-wrapper {
   display: flex;
-  flex-direction: column;
   background: #151a2b;
   border-radius: 5px;
   padding: 8px;
@@ -378,12 +375,13 @@ export default class SupplyBalance extends Vue {
   padding: 8px;
   display: flex;
   justify-content: space-between;
+}
 
-  .extend-btn {
-    cursor: pointer;
-    text-decoration: underline;
-    color: #c074f9;
-  }
+.extend-btn {
+  margin: auto;
+  cursor: pointer;
+  text-decoration: underline;
+  color: #c074f9;
 }
 .lg {
   color: rgba(224, 224, 224, 0.425);
