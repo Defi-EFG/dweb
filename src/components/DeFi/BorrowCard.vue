@@ -74,7 +74,11 @@
       :disabled="!isBorrowable(borrowValue, 'error')"
       :class="isBorrowable(borrowValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="onOpenModal"
-      >{{ isBorrowable(borrowValue, 'btn') ? lendingpage.borrow : 'Not available' }}</v-btn
+      >{{
+        isBorrowable(borrowValue, 'btn')
+          ? lendingpage.borrow
+          : $t('views.lendingpage.not_available')
+      }}</v-btn
     >
     <TransactionConfirmationModal
       :visible="confirmTxModal"

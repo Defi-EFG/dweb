@@ -177,7 +177,9 @@
             "estimated_gpt": "Estimated GPT needed:",
             "gpt_balance": "GPT Balance:",
             "liquidation_protection": "Liquidation protection time:",
-            "extend": "Extend"
+            "extend": "Extend",
+            "not_available": "Not available",
+            "insufficient": "Insufficeint"
         },
         "stakingpage": {
             "stakinglist": "Staking List",

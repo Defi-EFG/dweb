@@ -174,7 +174,9 @@
             "estimated_gpt": "估计所需的GPT：",
             "gpt_balance": "GPT平衡:",
             "liquidation_protection": "清算保护时间：",
-            "extend": "延伸"
+            "extend": "延伸",
+            "not_available": "无法使用",
+            "insufficient": "不足"
         },
         "stakingpage": {
             "stakinglist": "质押列表",

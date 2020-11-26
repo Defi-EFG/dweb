@@ -69,7 +69,9 @@
       :disabled="!isCollateralable(collateralAmount, 'error')"
       :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       >{{
-        isCollateralable(collateralAmount, 'btn') ? lendingpage.deposit : 'Not available'
+        isCollateralable(collateralAmount, 'btn')
+          ? lendingpage.deposit
+          : $t('views.lendingpage.not_available')
       }}</v-btn
     >
     <Collatmodel
@@ -176,9 +178,7 @@ export default class Collateral extends Vue {
   calculateBPUsed(colAmount: number) {
     const dollarsAmount = Number(colAmount) * this.currencyPrice
     const newBpUsed =
-      (this.borrowBalance /
-        ((this.collateralBalance + dollarsAmount) * this.borrowPowerPercentage)) *
-      100
+      (this.borrowBalance / (dollarsAmount * this.borrowPowerPercentage + this.borrowLimit)) * 100
     return newBpUsed || 0
   }
 

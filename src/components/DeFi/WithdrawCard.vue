@@ -67,7 +67,11 @@
       :class="isWithdrawable(withdrawValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="openConfirmTxModal"
     >
-      {{ isWithdrawable(withdrawValue, 'btn') ? lendingpage.withdraw : 'Insufficient' }}</v-btn
+      {{
+        isWithdrawable(withdrawValue, 'btn')
+          ? lendingpage.withdraw
+          : $t('views.lendingpage.insufficient')
+      }}</v-btn
     >
     <TransactionConfirmationModal
       :visible="confirmTxModal"

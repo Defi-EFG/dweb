@@ -73,7 +73,9 @@
       :disabled="!isRepayable(repayAmount, 'error')"
       :class="isRepayable(repayAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="openConfirmTxModal"
-      >{{ isRepayable(repayAmount, 'btn') ? lendingpage.repay : 'Insufficient' }}</v-btn
+      >{{
+        isRepayable(repayAmount, 'btn') ? lendingpage.repay : $t('views.lendingpage.insufficient')
+      }}</v-btn
     >
     <TransactionConfirmationModal
       :visible="confirmTxModal"

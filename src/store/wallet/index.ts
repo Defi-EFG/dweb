@@ -414,7 +414,6 @@ export default class WalletModule extends VuexModule implements Wallet {
     pendingTransactions.forEach(async (tx, index) => {
       try {
         const txResult = await Ecoc.getTxInfo(tx.txid)
-        console.log('update pending', txResult)
         if (txResult.receipt) {
           tx.status =
             txResult.receipt[0].excepted === 'None'
