@@ -4,7 +4,7 @@
       <v-card-text class="wrapper">
         <div class="total-reward">
           <p class="label mb-0">{{ $t('views.stakingpage.your_sk') }}</p>
-          <p class="value text-center">{{ staked.reward }} {{ currencyName }}</p>
+          <p class="value text-center">{{ staked.reward }} {{ rewardCurrencyName }}</p>
         </div>
 
         <div class="d-amount" :class="staked.status ? '' : 'disabled-text'">
@@ -16,7 +16,7 @@
           <div class="d-flex">
             <span class="text-uppercase">Staked available</span>
             <v-spacer></v-spacer>
-            <span class="text-right">{{ staked.reward }} {{ currencyName }}</span>
+            <span class="text-right">{{ staked.reward }} {{ rewardCurrencyName }}</span>
           </div>
         </div>
 
@@ -33,12 +33,12 @@
           <div class="d-flex">
             <span>Staked available</span>
             <v-spacer></v-spacer>
-            <span>{{ staked.reward }} {{ currencyName }}</span>
+            <span>{{ staked.reward }} {{ rewardCurrencyName }}</span>
           </div>
           <div class="d-flex">
             <span>Fee</span>
             <v-spacer></v-spacer>
-            <span>1 {{ currencyName }}</span>
+            <span>1 {{ rewardCurrencyName }}</span>
           </div>
         </div>
 
@@ -75,7 +75,7 @@
       :fromAddr="fromAddr"
       :toAddr="toAddr"
       :amount="amount"
-      :currency="currency"
+      :currency="currencyECOC"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
     />
@@ -138,16 +138,16 @@ export default class StakedReward extends Vue {
     return `${remainingTime.days()} Days ${remainingTime.hours()} Hour ${remainingTime.minutes()} Min`
   }
 
-  get currencyName() {
-    return constants.ECOC
+  get rewardCurrencyName() {
+    return this.rewardCurrency.name
   }
 
-  get currency() {
-    const stakingCurrency = this.walletStore.currenciesList.find(
-      (currency: Currency) => currency.name === this.currencyName
+  get currencyECOC() {
+    const ECOC = this.walletStore.currenciesList.find(
+      (currency: Currency) => currency.name === constants.ECOC
     )
 
-    return stakingCurrency || {}
+    return ECOC || {}
   }
 
   get walletAddr() {
