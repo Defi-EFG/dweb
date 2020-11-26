@@ -312,8 +312,7 @@
             "GPT": "GPT"
         }
     },
-    "components": {
-    },
+    "components": {},
     "dom": {},
     "Received": "Received",
     "Sent": "Sent",

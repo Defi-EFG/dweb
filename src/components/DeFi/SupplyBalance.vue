@@ -11,7 +11,9 @@
           <span class="pl-2">{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</span>
 
           <div class="liquid-countdown pt-0">
-            <span class="lg"> GPT Balance: {{ extendBalance }} GPT</span>
+            <span class="lg">
+              GPT {{ $t('views.lendingpage.balance') }}: {{ extendBalance }} GPT</span
+            >
             <span class="extend-btn" @click="depositgpt">{{ $t('views.modal.deposit') }}</span>
           </div>
         </div>
@@ -39,7 +41,7 @@
               <v-text-field
                 class="estimatedGPT-field"
                 v-model="estimatedGPTAmount"
-                prefix="Estimated GPT needed"
+                :prefix="text.estimated_gpt"
                 type="number"
                 pattern="[0-9]*"
                 filled
@@ -134,6 +136,10 @@ export default class SupplyBalance extends Vue {
 
   get poolAddr() {
     return this.lendingStore.loan.poolAddr
+  }
+
+  get text() {
+    return this.$t('views.lendingpage')
   }
 
   // unix timestamp in second

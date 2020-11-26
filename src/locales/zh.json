@@ -302,12 +302,12 @@
             "transaction_failed": "交易失败",
             "safe_max": "安全最大值",
             "generating_keystore": "正在生成密钥库文件...",
-            "make_gpt_header":"进行存款 (GPT)",
-            "make_gpt_desp":"请输入您要存入的GPT金额",
-            "gpt_balance":"GPT 钱包余额",
-            "gpt_deposit_amount":"存款金额",
-            "deposit":"存款",
-            "GPT":"GPT"
+            "make_gpt_header": "进行存款 (GPT)",
+            "make_gpt_desp": "请输入您要存入的GPT金额",
+            "gpt_balance": "GPT 钱包余额",
+            "gpt_deposit_amount": "存款金额",
+            "deposit": "存款",
+            "GPT": "GPT"
         }
     },
     "components": {
