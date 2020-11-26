@@ -332,6 +332,7 @@
     "Withdrawing": "Withdrawing",
     "Borrowing": "Borrowing",
     "Repaying": "Repaying",
+    "Stopping": "Stopping",
     "Could not generate new wallet": "Could not generate new wallet",
     "Could not import from WIF": "Could not import from WIF",
     "Wrong Private Key": "Wrong Private Key",

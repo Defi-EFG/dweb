@@ -11,7 +11,9 @@
           <span class="pl-2">{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</span>
 
           <div class="liquid-countdown pt-0">
-            <span class="lg"> GPT Balance: {{ extendBalance }} GPT</span>
+            <span class="lg">
+              GPT {{ $t('views.lendingpage.balance') }}: {{ extendBalance }} GPT</span
+            >
             <span class="extend-btn" @click="depositgpt">{{ $t('views.modal.deposit') }}</span>
           </div>
         </div>
@@ -259,6 +261,7 @@ export default class SupplyBalance extends Vue {
   }
 
   depositgpt() {
+    this.estimatedGPTAmount = this.estimatedGPT
     this.depositgptModal = !this.depositgptModal
   }
 
@@ -269,6 +272,13 @@ export default class SupplyBalance extends Vue {
         this.estimatedGPT = amount
       })
     }
+  }
+
+  @Watch('extendBalance')
+  checkIfExtendBalanceChanged() {
+    this.getEstimatedGPT().then(amount => {
+      this.estimatedGPT = amount
+    })
   }
 
   @Watch('balance')

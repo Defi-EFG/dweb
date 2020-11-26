@@ -332,6 +332,7 @@
     "Withdrawing": "提现",
     "Borrowing": "借用",
     "Repaying": "还款",
+    "Stopping": "正在停止",
     "Could not generate new wallet": "无法生成新钱包",
     "Could not import from WIF": "无法从导入 WIF",
     "Wrong Private Key": "私钥错误",
