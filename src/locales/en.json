@@ -306,15 +306,20 @@
             "copy_txid": "Copy TxID",
             "transaction_completed": "Transaction completed!",
             "transaction_pending": "Transaction pending...",
+            "transaction_failed": "Transaction failed",
             "safe_max": "Safe max",
-            "generating_keystore": "Generating keystore file..."
+            "generating_keystore": "Generating keystore file...",
+            "make_gpt_header": "Make A Deposit (GPT)",
+            "make_gpt_desp": "Please input GPT amount you wanto to deposit",
+            "gpt_balance": "GPT wallet balance",
+            "gpt_deposit_amount": "Deposit Amount",
+            "deposit": "Deposit",
+            "GPT": "GPT"
         }
     },
     "components": {
-
     },
     "dom": {},
-
     "Received": "Received",
     "Sent": "Sent",
     "Synced": "Synced",

@@ -77,25 +77,6 @@
     "type":"function"
   },
   {
-    "constant":false,
-    "inputs":[
-      {
-        "name":"_gpt_amount",
-        "type":"uint256"
-      }
-    ],
-    "name":"extendGracePeriod",
-    "outputs":[
-      {
-        "name":"result",
-        "type":"bool"
-      }
-    ],
-    "payable":false,
-    "stateMutability":"nonpayable",
-    "type":"function"
-  },
-  {
     "constant":true,
     "inputs":[
       
@@ -717,6 +698,10 @@
       {
         "name":"remainingGPT",
         "type":"uint256"
+      },
+      {
+        "name":"gracePeriodUsed",
+        "type":"bool"
       },
       {
         "name":"poolAddr",
