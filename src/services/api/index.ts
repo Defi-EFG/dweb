@@ -9,9 +9,9 @@ interface PriceResult {
 }
 
 export namespace api {
-  export const getprice = async (currency: string , chartlist:string): Promise<PriceResult> => {
+  export const getprice = async (currency: string, chartlist: string): Promise<PriceResult> => {
     const headers = {} // {"Access-Control-Allow-Origin": "*"}
-    const fullURL = baseURL + '/api/getPrice/'+chartlist + '/' + currency
+    const fullURL = baseURL + '/api/getPrice/' + chartlist + '/' + currency
     const result = await axios.get(fullURL, { headers })
 
     return result.data
