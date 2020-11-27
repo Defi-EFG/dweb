@@ -75,6 +75,7 @@
                 :type="showpassword ? 'text' : 'password'"
                 :rules="[rules.required, rules.min]"
                 :label="modal.keystore_password"
+                @click:append="showpassword = !showpassword"
                 v-model="password"
                 v-on:keyup.enter="onConfirm"
                 :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
@@ -358,6 +359,9 @@ export default class TransactionConfirmationModal extends Vue {
 .gt,
 .transaction-confirmation-content small {
   color: rgb(155, 155, 155);
+}
+.transaction-confirmation-content small {
+  font-size: 12.5px;
 }
 .v-sheet.v-card:not(.v-sheet--outlined) {
   box-shadow: none;

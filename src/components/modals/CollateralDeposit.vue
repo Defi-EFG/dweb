@@ -182,6 +182,8 @@
                         :rules="[rules.required, rules.min]"
                         :type="showpassword ? 'text' : 'password'"
                         :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
+                                         @click:append="showpassword = !showpassword"
+
                         @keyup.enter="onConfirm()"
                         dense
                         filled
@@ -415,7 +417,7 @@ export default class CollateralDeposit extends Vue {
     },
     min: (v: any) => {
       if (this.visible) {
-        return v.length >= 8 || this.$t('views.modal.characters')
+        return v.length >= 6 || this.$t('views.modal.characters')
       }
       return true
     },
