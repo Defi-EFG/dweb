@@ -330,6 +330,7 @@ export default class SupplyBalance extends Vue {
 .balance-wrapper {
   display: flex;
   width: -webkit-fill-available;
+  width: -moz-available;
 }
 
 .balance-card {
@@ -338,6 +339,7 @@ export default class SupplyBalance extends Vue {
   padding-top: 0.5rem;
   padding-right: 0.5rem;
   width: -webkit-fill-available;
+  width: -moz-available;
   text-align: left;
 }
 
