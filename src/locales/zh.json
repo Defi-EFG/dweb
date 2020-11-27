@@ -348,7 +348,7 @@
     "Invalid keystore or password": "无效的密钥库或密码",
     "Approval": "批准书",
     "Transfer": "转让",
-    "You do not have enough ECOC to sen": "您没有足够的ECOC来发送",
+    "You do not have enough ECOC to send": "您没有足够的ECOC来发送",
     "Currency Approving...": "货币审批中...",
     "Sending Transaction...": "正在发送交易..."
 }
