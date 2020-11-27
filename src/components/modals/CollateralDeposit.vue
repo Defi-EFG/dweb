@@ -182,8 +182,7 @@
                         :rules="[rules.required, rules.min]"
                         :type="showpassword ? 'text' : 'password'"
                         :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
-                                         @click:append="showpassword = !showpassword"
-
+                        @click:append="showpassword = !showpassword"
                         @keyup.enter="onConfirm()"
                         dense
                         filled
