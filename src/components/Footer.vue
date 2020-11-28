@@ -17,7 +17,7 @@
   </div>
 </template>
 
-<script lagg="ts">
+<script lang="ts">
 export default {}
 </script>
 
