@@ -347,7 +347,7 @@
     "Invalid keystore or password": "Invalid keystore or password",
     "Approval": "Approval",
     "Transfer": "Transfer",
-    "You do not have enough ECOC to sen": "You do not have enough ECOC to send",
+    "You do not have enough ECOC to send": "You do not have enough ECOC to send",
     "Currency Approving...": "Currency Approving...",
     "Sending Transaction...": "Sending Transaction..."
 }
