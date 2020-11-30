@@ -387,7 +387,7 @@ export default class WalletModule extends VuexModule implements Wallet {
   }
 
   @MutationAction
-  async addPendingTx(payload: { txid: string; txType: string }) {
+  async addPendingTx(payload: { txid: string; txType: string; actionType?: string }) {
     const pendingTransactions = (this.state as any).pendingTransactions as PendingTransaction[]
 
     const index = pendingTransactions.findIndex(tx => tx.txid === payload.txid)
@@ -398,6 +398,7 @@ export default class WalletModule extends VuexModule implements Wallet {
     const pendingTransaction = {
       txid: payload.txid,
       type: payload.txType,
+      actionType: payload.actionType || '',
       status: constants.STATUS_PENDING
     } as PendingTransaction
 

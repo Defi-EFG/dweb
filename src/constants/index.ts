@@ -43,6 +43,13 @@ export const TX_STOP_STAKING = 'Stopping'
 export const TX_BORROW = 'Borrowing'
 export const TX_REPAY = 'Repaying'
 
+export const ACTION_COLLATERAL = 'Collatertal'
+export const ACTION_WITHDRAW = 'Withdraw'
+export const ACTION_BORROW = 'Borrow'
+export const ACTION_REPAY = 'Repay'
+export const ACTION_DEPOSIT = 'Deposit'
+export const ACTION_STOP = 'Stop'
+export const ACTION_REWARD = 'Reward'
 interface CurrencyStyle {
   [symbol: string]: Style
 }
