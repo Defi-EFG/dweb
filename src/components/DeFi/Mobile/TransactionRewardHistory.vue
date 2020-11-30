@@ -12,9 +12,7 @@
           @click="displayHistory(tx.id)"
         >
           <v-icon dark class="tx-icon">
-            {{
-              isReceived(tx.type) ? 'mdi-arrow-down-circle-outline' : 'mdi-arrow-up-circle-outline'
-            }}
+            {{ isReceived(tx.type) ? 'arrow_circle_down' : 'arrow_circle_up' }}
           </v-icon>
 
           <v-list-item-content>

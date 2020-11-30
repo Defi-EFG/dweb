@@ -9,7 +9,7 @@
               <v-card-title class="headline modal-header">
                 <v-icon></v-icon>
                 <v-btn icon @click.stop="onCloseX()">
-                  <v-icon>$close</v-icon>
+                  <v-icon>close</v-icon>
                 </v-btn>
               </v-card-title>
               <div class="content-wrapper ">
@@ -52,7 +52,7 @@
                   <v-icon></v-icon>
                 </v-btn>
                 <v-btn icon @click.stop="onCloseX()">
-                  <v-icon>$close</v-icon>
+                  <v-icon>close</v-icon>
                 </v-btn>
               </v-card-title>
               <template v-if="loading">
@@ -107,11 +107,11 @@
           <v-stepper-content step="2">
             <v-card>
               <v-card-title class="headline modal-header">
-                <v-btn icon @click="toStep(1)">
-                  <v-icon>$leftarrow</v-icon>
+                <v-btn color="primary" icon @click="toStep(1)">
+                  <v-icon>arrow_back</v-icon>
                 </v-btn>
                 <v-btn icon @click.stop="onCloseX()">
-                  <v-icon>$close</v-icon>
+                  <v-icon>close</v-icon>
                 </v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
@@ -150,7 +150,7 @@
                 <template>
                   <v-text-field
                     ref="passwordsetupRef"
-                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                    :append-icon="show ? 'visibility' : 'visibility_off'"
                     name="input-10-1"
                     :type="show ? 'text' : 'password'"
                     @click:append="show = !show"
@@ -167,7 +167,7 @@
 
                 <v-text-field
                   ref="confirmPasswordRef"
-                  :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                  :append-icon="show ? 'visibility' : 'visibility_off'"
                   :type="show ? 'text' : 'password'"
                   @click:append="show = !show"
                   :rules="[
@@ -206,10 +206,10 @@
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
                 <v-btn icon @click="toStep(1)">
-                  <v-icon>$leftarrow</v-icon>
+                  <v-icon>arrow_back</v-icon>
                 </v-btn>
                 <v-btn icon @click.stop="onCloseX()">
-                  <v-icon>$close</v-icon>
+                  <v-icon>close</v-icon>
                 </v-btn>
               </v-card-title>
 
@@ -268,10 +268,10 @@
             <v-card class="rounded-lg">
               <v-card-title class="headline modal-header">
                 <v-btn icon @click="toStep(4)">
-                  <v-icon>$leftarrow</v-icon>
+                  <v-icon color="primary">arrow_back</v-icon>
                 </v-btn>
                 <v-btn icon @click.stop="onCloseX()">
-                  <v-icon>$close</v-icon>
+                  <v-icon>close</v-icon>
                 </v-btn>
               </v-card-title>
               <div class="create-wallet-wraper bg-white rounded-lg">
@@ -286,7 +286,7 @@
                 <template>
                   <v-text-field
                     ref="keystorePasswordRef"
-                    :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+                    :append-icon="show ? 'visibility' : 'visibility_off'"
                     name="input-10-1"
                     :type="show ? 'text' : 'password'"
                     @click:append="show = !show"

@@ -13,7 +13,7 @@
           <template v-if="isSymbolAvailable(data.item.name)">
             <img class="icon" alt="" :src="require(`@/assets/icon/vector/${data.item.name}.svg`)" />
           </template>
-          <v-icon class="icon" v-else>mdi-help</v-icon>
+          <v-icon class="icon" v-else>help</v-icon>
           <span class="name">{{ data.item.name }}</span>
           <v-spacer></v-spacer>
           <span class="value">{{ data.item.balance }} {{ data.item.name }}</span>
@@ -25,7 +25,7 @@
           <template v-if="isSymbolAvailable(data.item.name)">
             <img alt="" class="icon" :src="require(`@/assets/icon/vector/${data.item.name}.svg`)" />
           </template>
-          <v-icon class="icon" v-else>mdi-help</v-icon>
+          <v-icon class="icon" v-else>help</v-icon>
           <span class="name">{{ data.item.name }}</span>
           <v-spacer></v-spacer>
           <div class="balance">

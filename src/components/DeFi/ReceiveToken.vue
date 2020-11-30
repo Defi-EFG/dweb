@@ -2,7 +2,7 @@
   <v-card class="receive-token-card" dark color="#1D212E">
     <v-toolbar class="receive-head" flat dense>
       <v-toolbar-title>
-        <v-icon class="head-icon">mdi-arrow-down-circle-outline</v-icon>
+        <v-icon class="head-icon">arrow_circle_down</v-icon>
         <span>{{ $t('views.walletpage.receive') }}</span>
       </v-toolbar-title>
     </v-toolbar>
@@ -19,7 +19,7 @@
         <div class="copyable-addr">
           <div class="text-truncate">{{ address }}</div>
           <v-btn icon small class="copy" @click="copyAddress(address)">
-            <v-icon small>mdi-content-copy</v-icon>
+            <v-icon small>content_copy</v-icon>
           </v-btn>
         </div>
       </div>

@@ -18,7 +18,7 @@
                 "
                 alt=""
               />
-              <v-icon class="icon" v-else>mdi-help</v-icon>
+              <v-icon class="icon" v-else>help</v-icon>
               <span>{{ selectedCurrencyName }}</span>
             </v-toolbar-title>
           </v-toolbar>
@@ -49,7 +49,7 @@
                 "
                 alt=""
               />
-              <v-icon class="icon" v-else>mdi-help</v-icon>
+              <v-icon class="icon" v-else>help</v-icon>
               <span>{{ selectedCurrencyName }}</span>
             </v-toolbar-title>
           </v-toolbar>

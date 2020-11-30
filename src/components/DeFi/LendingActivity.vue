@@ -146,9 +146,9 @@ export default class LendingActivity extends Vue {
   currency = {} as Currency
 
   activityIcon = {
-    borrow: 'mdi-transfer-up',
-    deposit: 'mdi-transfer-down',
-    activated: 'mdi-circle-slice-8'
+    borrow: 'arrow_upward',
+    deposit: 'arrow_downward',
+    activated: 'radio_button_checked'
   }
 
   getEstimatedValue = getEstimatedValue

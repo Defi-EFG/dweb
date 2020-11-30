@@ -5,7 +5,7 @@
         <v-card-title class="modal-header d-flex justify-space-between">
           <v-icon></v-icon>
           <v-btn icon @click="checkPrivatekeyDialog = false" text
-            ><v-icon color="white">$close</v-icon></v-btn
+            ><v-icon color="white">close</v-icon></v-btn
           >
         </v-card-title>
         <v-card-title class="bg-header mt-7"
@@ -13,7 +13,8 @@
             <span>{{ $t('views.modal.ECOC_Walle') }}</span>
           </div>
           <div class="header-primarykey">
-            <v-icon color="white" class="mr-2">$circle</v-icon> {{ truncateAddress(addr) }}
+            <v-icon color="white" class="mr-2">fiber_manual_record</v-icon>
+            {{ truncateAddress(addr) }}
           </div>
         </v-card-title>
         <div class="bg-white mb-5">
@@ -27,7 +28,7 @@
             <v-text-field
               class="mt-5"
               v-model="keystorePassword"
-              :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
+              :append-icon="show ? 'visibility' : 'visibility_off'"
               :type="show ? 'text' : 'password'"
               @click:append="show = !show"
               :rules="[rules.required, rules.min]"
@@ -50,7 +51,7 @@
             <div class=" copybtn">
               <v-btn icon small color="primary" @click="copyPrivateKey(privatekey)">
                 <v-icon light>
-                  $copied
+                  content_copy
                 </v-icon></v-btn
               >
             </div>
@@ -199,7 +200,7 @@ export default class PrivateKey extends Vue {
   bottom: 64px;
   right: 64px;
 }
-.mdi-content-copy::before {
+.content_copy::before {
   font-size: 18px;
 }
 

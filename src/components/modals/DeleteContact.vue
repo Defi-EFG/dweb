@@ -6,7 +6,7 @@
           <span>{{ $t('views.modal.delete_contact') }}</span>
           <v-spacer></v-spacer>
           <v-btn icon dark @click.native="onClose">
-            <v-icon>mdi-close</v-icon>
+            <v-icon>close</v-icon>
           </v-btn>
         </v-card-title>
         <div class="contact-dialog-wrapper">

@@ -8,7 +8,7 @@
             <v-card color="#FFFFFF00">
               <v-card-title class="modal-header">
                 <v-icon></v-icon>
-                <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
+                <v-btn @click="onClose()" icon><v-icon color="white">close</v-icon></v-btn>
               </v-card-title>
               <div class="transaction-confirmation-wrapper collateral_pddeful">
                 <div class="headtitle_collat">
@@ -78,8 +78,8 @@
           <v-stepper-content step="2">
             <v-card color="#FFFFFF00">
               <v-card-title class="modal-header">
-                <v-btn @click="toStep(1)" icon><v-icon color="white">$leftarrow</v-icon></v-btn>
-                <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
+                <v-btn @click="toStep(1)" icon><v-icon color="white">arrow_back</v-icon></v-btn>
+                <v-btn @click="onClose()" icon><v-icon color="white">close</v-icon></v-btn>
               </v-card-title>
               <div class="transaction-confirmation-wrapper collateral_pddeful">
                 <div class="content-wrapper">
@@ -107,7 +107,7 @@
             <v-card color="#FFFFFF00">
               <v-card-title class="modal-header">
                 <div></div>
-                <v-btn @click="onClose()" icon><v-icon color="white">$close</v-icon></v-btn>
+                <v-btn @click="onClose()" icon><v-icon color="white">close</v-icon></v-btn>
               </v-card-title>
               <div class="transaction-confirmation-wrapper collat_bg2 ">
                 <div class="d-flex ">
@@ -138,7 +138,7 @@
                     </template>
                     <span>{{ $t('views.modal.copied') }}</span>
                   </v-tooltip>
-                  <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
+                  <div class="icon-send"><v-icon small color="white">arrow_forward</v-icon></div>
                 </div>
                 <div class="transaction-confirmation-content">
                   <div class="collateral_pd">
@@ -181,7 +181,7 @@
                         v-model="password"
                         :rules="[rules.required, rules.min]"
                         :type="showpassword ? 'text' : 'password'"
-                        :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
+                        :append-icon="showpassword ? 'visibility' : 'visibility_off'"
                         @click:append="showpassword = !showpassword"
                         @keyup.enter="onConfirm()"
                         dense
@@ -235,7 +235,7 @@
               <v-card color="#FFFFFF00">
                 <v-card-title class="modal-header">
                   <v-icon></v-icon>
-                  <v-btn @click="onClose()" text><v-icon color="white">$close</v-icon></v-btn>
+                  <v-btn @click="onClose()" text><v-icon color="white">close</v-icon></v-btn>
                 </v-card-title>
                 <div class="transaction-confirmation-wrapper collateral_pddeful">
                   <div class="headtitle_collat">
@@ -270,10 +270,10 @@
                         <v-col cols="8" class="nopadding font-bold">Transaction Confirmed!</v-col>
                         <v-col cols="4" class="textright nopadding">
                           <v-btn class="icon" fab dark x-small color="primary">
-                            <v-icon dark> mdi-arrow-up </v-icon>
+                            <v-icon dark> arrow_upward </v-icon>
                           </v-btn>
                           <v-btn class="icon" fab dark x-small color="primary">
-                            <v-icon dark> mdi-content-copy </v-icon>
+                            <v-icon dark> content_copy </v-icon>
                           </v-btn>
                         </v-col>
                       </v-row>
