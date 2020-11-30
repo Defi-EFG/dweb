@@ -60,20 +60,26 @@
       </div>
     </div>
     <v-divider dark />
+
     <v-btn
       @click="openCollateralmodals()"
       dark
       large
       block
       depressed
+      :loading="onPendingTx"
       :disabled="!isCollateralable(collateralAmount, 'error')"
       :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       >{{
         isCollateralable(collateralAmount, 'btn')
           ? lendingpage.deposit
           : $t('views.lendingpage.not_available')
-      }}</v-btn
-    >
+      }}
+      <template v-slot:loader>
+        <v-progress-circular indeterminate :size="24" class="spinner"></v-progress-circular>
+        <span class="ml-2" v-if="!isCollateralPendingType">Waiting...</span>
+      </template>
+    </v-btn>
     <Collatmodel
       :visible="collateralmodel"
       :toAddr="contractAddr"
@@ -88,6 +94,7 @@
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
+import * as constants from '@/constants'
 import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
 import Collatmodel from '@/components/modals/CollateralDeposit.vue'
@@ -131,6 +138,24 @@ export default class Collateral extends Vue {
   onSuccess() {
     this.collateralAmount = 0
     this.closeCollateralmodals()
+  }
+
+  get onPendingTx() {
+    const pendingList = [
+      constants.ACTION_COLLATERAL,
+      constants.ACTION_WITHDRAW,
+      constants.ACTION_BORROW,
+      constants.ACTION_REPAY
+    ]
+    return this.walletStore.pendingTransactions.find(tx => {
+      return pendingList.includes(tx.actionType || '') && tx.status === constants.STATUS_PENDING
+    })
+  }
+
+  get isCollateralPendingType() {
+    return this.walletStore.pendingTransactions.find(tx => {
+      return tx.actionType === constants.ACTION_COLLATERAL && tx.status === constants.STATUS_PENDING
+    })
   }
 
   get contractAddr() {

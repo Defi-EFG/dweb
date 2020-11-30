@@ -71,6 +71,7 @@
       large
       block
       depressed
+      :loading="!!onPendingTx"
       :disabled="!isBorrowable(borrowValue, 'error')"
       :class="isBorrowable(borrowValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="onOpenModal"
@@ -78,8 +79,12 @@
         isBorrowable(borrowValue, 'btn')
           ? lendingpage.borrow
           : $t('views.lendingpage.not_available')
-      }}</v-btn
-    >
+      }}
+      <template v-slot:loader>
+        <v-progress-circular indeterminate :size="24" class="spinner"></v-progress-circular>
+        <span class="ml-2" v-if="!isBorrowPendingType">Waiting...</span>
+      </template>
+    </v-btn>
     <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="contractAddr"
@@ -184,6 +189,24 @@ export default class BorrowCard extends Vue {
     return this.$t('views.lendingpage')
   }
 
+  get onPendingTx() {
+    const pendingList = [
+      constants.ACTION_COLLATERAL,
+      constants.ACTION_WITHDRAW,
+      constants.ACTION_BORROW,
+      constants.ACTION_REPAY
+    ]
+    return this.walletStore.pendingTransactions.find(tx => {
+      return pendingList.includes(tx.actionType || '') && tx.status === constants.STATUS_PENDING
+    })
+  }
+
+  get isBorrowPendingType() {
+    return this.walletStore.pendingTransactions.find(tx => {
+      return tx.actionType === constants.ACTION_BORROW && tx.status === constants.STATUS_PENDING
+    })
+  }
+
   limitSlider() {
     if (this.bpSlider < this.bpUsed) {
       this.bpSlider = this.bpUsed
@@ -273,7 +296,11 @@ export default class BorrowCard extends Vue {
     this.lendingStore
       .borrow(payload)
       .then((txid: any) => {
-        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_BORROW })
+        this.walletStore.addPendingTx({
+          txid: txid,
+          txType: constants.TX_BORROW,
+          actionType: constants.ACTION_BORROW
+        })
         this.onSuccess()
       })
       .catch((error: any) => {
