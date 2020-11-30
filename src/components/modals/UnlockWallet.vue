@@ -741,7 +741,7 @@ v-btn {
 
 .efg-logo {
   width: 28px;
-  height: auto;
+  height: 28px;
   margin-right: 0px;
 }
 
