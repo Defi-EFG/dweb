@@ -2,7 +2,7 @@
   <v-card class="mx-auto tx-history" dark color="#222738">
     <v-toolbar class="tx-history-head" flat dense>
       <v-toolbar-title>
-        <v-icon class="head-icon">mdi-clock</v-icon>
+        <v-icon class="head-icon">query_builder</v-icon>
         <span>{{ $t('views.walletpage.transaction_history') }}</span>
       </v-toolbar-title>
     </v-toolbar>
@@ -16,9 +16,7 @@
           @click="displayHistory(tx.id)"
         >
           <v-icon class="tx-icon">
-            {{
-              isReceived(tx.type) ? 'mdi-arrow-down-circle-outline' : 'mdi-arrow-up-circle-outline'
-            }}
+            {{ isReceived(tx.type) ? 'arrow_circle_down' : 'arrow_circle_up' }}
           </v-icon>
 
           <v-list-item-content>
@@ -39,7 +37,7 @@
     </v-card-text>
     <div class="empty-message" v-else>
       <div class="inner">
-        <v-icon large>mdi-history</v-icon>
+        <v-icon large>history</v-icon>
         <div class="message">{{ $t('views.walletpage.no_transaction_history') }}</div>
       </div>
     </div>

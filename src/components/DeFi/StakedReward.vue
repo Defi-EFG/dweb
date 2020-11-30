@@ -69,7 +69,7 @@
           @click="withdraw"
         >
           <template v-if="isStakedDue">{{ $t('views.stakingpage.withdrawreward') }}</template>
-          <template v-else><v-icon left>mdi-timer-sand</v-icon>{{ countdownInFormat }}</template>
+          <template v-else><v-icon left>hourglass_top</v-icon>{{ countdownInFormat }}</template>
         </v-btn>
 
         <v-btn

@@ -169,7 +169,7 @@ export default class HeaderNav extends Vue {
 }
 .efg-logo {
   width: 28px;
-  height: auto;
+  height: 28px;
   margin-right: 1rem;
 }
 

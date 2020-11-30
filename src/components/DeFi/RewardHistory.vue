@@ -2,7 +2,7 @@
   <v-card class="mx-auto history-container" dark color="#222738">
     <v-toolbar class="reward-history-head" flat dense>
       <v-toolbar-title>
-        <v-icon class="head-icon">mdi-star</v-icon>
+        <v-icon class="head-icon">grade</v-icon>
         <span>{{ $t('views.stakingpage.rewardhistory') }}</span>
       </v-toolbar-title>
     </v-toolbar>
@@ -30,7 +30,7 @@
     </v-card-text>
     <v-card-text class="empty-wrapper">
       <div class="inner">
-        <v-icon large>mdi-history</v-icon>
+        <v-icon large>history</v-icon>
         <div>No Reward history</div>
       </div>
     </v-card-text>

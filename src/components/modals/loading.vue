@@ -4,7 +4,7 @@
       <v-card class="blur-card">
         <v-card-title class="modal-header">
           <v-icon></v-icon>
-          <v-btn @click="onClose" text><v-icon color="black">$close</v-icon></v-btn>
+          <v-btn @click="onClose" text><v-icon color="black">close</v-icon></v-btn>
         </v-card-title>
         <div class="generate-keydtore bg-white">
           <v-progress-circular

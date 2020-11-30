@@ -25,7 +25,7 @@
       <v-card class="blur-card" color="#FFFFFF00">
         <v-card-title class="modal-header">
           <v-icon></v-icon>
-          <v-btn icon @click="closedepositgptModal"><v-icon color="white">$close</v-icon></v-btn>
+          <v-btn icon @click="closedepositgptModal"><v-icon color="white">close</v-icon></v-btn>
         </v-card-title>
         <div class="depositgptwrapper pt-9">
           <h3>{{ $t('views.modal.make_gpt_header') }}</h3>

@@ -2,7 +2,7 @@
   <div class="upload-wrapper text-end mb-3">
     <label class="text-reader">
       <small class="mr-2" @change="loadTextFromFile">{{ $t('views.modal.or_Upload') }}</small>
-      <v-icon class="upload-icon" color="white">$upload</v-icon>
+      <v-icon class="upload-icon" color="white">publish</v-icon>
       <input type="file" @change="loadTextFromFile" accept="application/json" />
     </label>
   </div>

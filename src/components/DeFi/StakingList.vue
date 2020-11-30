@@ -2,7 +2,7 @@
   <v-card class="mx-auto sl-card" dark>
     <v-toolbar class="sl-header" flat dense>
       <v-toolbar-title>
-        <v-icon class="head-icon">mdi-database</v-icon>
+        <v-icon class="head-icon"></v-icon>
         <span>{{ $t('views.stakingpage.stakinglist') }}</span>
       </v-toolbar-title>
     </v-toolbar>

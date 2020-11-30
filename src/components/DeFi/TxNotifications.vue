@@ -18,10 +18,10 @@
                 color="white"
               ></v-progress-circular>
               <v-icon v-if="tx.status === txConstants.STATUS_CONFIRMED" class="completed">
-                mdi-check-circle-outline
+                check_circle
               </v-icon>
               <v-icon v-if="tx.status === txConstants.STATUS_FAILED" class="failed">
-                mdi-close-circle-outline
+                check_circle
               </v-icon>
             </v-col>
             <v-col cols="7" class="tx-status">
@@ -36,7 +36,7 @@
               </div>
               <div class="id">
                 TxID: {{ truncateAddress(tx.txid) }}
-                <v-icon class="copy" @click="copyAddress(tx.txid)">mdi-content-copy</v-icon>
+                <v-icon class="copy" @click="copyAddress(tx.txid)">content_copy</v-icon>
               </div>
             </v-col>
             <v-col cols="3" class="tx-details pl-6">
