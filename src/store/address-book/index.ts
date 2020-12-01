@@ -23,6 +23,13 @@ export default class AddressBookModule extends VuexModule {
         this.createNewRef(userAddr)
       }
     })
+    this.firebaseData.off
+  }
+
+  @Action
+  unsubscribeFromFirebase() {
+    this.firebaseData.off()
+    this.setContactList([])
   }
 
   @Action
