@@ -18,7 +18,7 @@
             <v-menu class="bg-bu">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn dark icon v-bind="attrs" v-on="on">
-                  <v-app-bar-nav-icon></v-app-bar-nav-icon>
+                  <v-app-bar-nav-icon><v-icon>menu</v-icon></v-app-bar-nav-icon>
                 </v-btn>
               </template>
               <v-list color="menu">
