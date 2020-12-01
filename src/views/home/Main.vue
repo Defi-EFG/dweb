@@ -120,7 +120,12 @@
       <v-container>
         <v-row class="slider_main_head">
           <v-sheet class="mx-auto" max-width="1088" width="100%">
-            <v-slide-group active-class="titel_color_df" show-arrows>
+            <v-slide-group
+              active-class="titel_color_df"
+              show-arrows
+              next-icon="keyboard_arrow_right"
+              prev-icon="keyboard_arrow_left"
+            >
               <v-slide-item v-for="(total, i) in totals" :key="i" v-slot="{ active, toggle }">
                 <v-card
                   :color="active ? undefined : 'titel_color'"
@@ -261,7 +266,12 @@
         </v-row>
         <v-row>
           <v-col cols="12">
-            <v-carousel hide-delimiters class="efg-slider">
+            <v-carousel
+              hide-delimiters
+              class="efg-slider"
+              next-icon="keyboard_arrow_right"
+              prev-icon="keyboard_arrow_left"
+            >
               <v-carousel-item v-for="(item, i) in msg" :key="i">
                 <v-row class="fill-height" align="center" justify="center">
                   <v-col lg="3" md="3" cols="12">
