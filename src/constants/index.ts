@@ -50,6 +50,8 @@ export const ACTION_REPAY = 'Repay'
 export const ACTION_DEPOSIT = 'Deposit'
 export const ACTION_STOP = 'Stop'
 export const ACTION_REWARD = 'Reward'
+export const ACTION_LIQUID_DEPOSIT = 'Liquid Deposit'
+export const ACTION_ASSETS_WITHDRAW = 'Assets Withdraw'
 interface CurrencyStyle {
   [symbol: string]: Style
 }

@@ -182,7 +182,9 @@ export default class RepayCard extends Vue {
       constants.ACTION_COLLATERAL,
       constants.ACTION_WITHDRAW,
       constants.ACTION_BORROW,
-      constants.ACTION_REPAY
+      constants.ACTION_REPAY,
+      constants.ACTION_LIQUID_DEPOSIT,
+      constants.ACTION_ASSETS_WITHDRAW
     ]
     return this.walletStore.pendingTransactions.find(tx => {
       return pendingList.includes(tx.actionType || '') && tx.status === constants.STATUS_PENDING
