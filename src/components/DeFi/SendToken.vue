@@ -2,7 +2,7 @@
   <v-card class="send-token" dark color="#1D212E">
     <v-toolbar class="send-head" flat dense>
       <v-toolbar-title>
-        <v-icon class="head-icon">mdi-arrow-up-circle-outline</v-icon>
+        <v-icon class="head-icon">arrow_circle_up</v-icon>
         <span>{{ $t('views.walletpage.send') }}</span>
       </v-toolbar-title>
     </v-toolbar>
@@ -28,7 +28,7 @@
       >
         <template v-slot:append-outer>
           <div class="address-book" @click="displayContactList">
-            <v-icon>mdi-book-variant</v-icon>
+            <v-icon>book</v-icon>
           </div>
         </template>
       </v-text-field>
@@ -45,7 +45,7 @@
               class="address-item"
               @click="selectAddress(contact.address)"
             >
-              <v-icon class="mr-3">mdi-account-circle</v-icon>
+              <v-icon class="mr-3">account_circle</v-icon>
 
               <v-list-item-content>
                 {{ contact.name }}

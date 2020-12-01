@@ -75,6 +75,7 @@ export default class BorrowBalance extends Vue {
   padding-top: 0.5rem;
   padding-right: 0.5rem;
   width: -webkit-fill-available;
+  width: -moz-available;
   text-align: left;
 }
 

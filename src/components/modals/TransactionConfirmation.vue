@@ -4,7 +4,7 @@
       <v-card class="blur-card" color="#FFFFFF00">
         <v-card-title class="modal-header">
           <v-icon></v-icon>
-          <v-btn @click="onClose" icon><v-icon color="white">$close</v-icon></v-btn>
+          <v-btn @click="onClose" icon><v-icon color="white">close</v-icon></v-btn>
         </v-card-title>
         <div class="transaction-confirmation-wrapper">
           <div class="d-flex">
@@ -35,7 +35,7 @@
               </template>
               <span>{{ copymessage }}</span>
             </v-tooltip>
-            <div class="icon-send"><v-icon small color="white">$rightarrow</v-icon></div>
+            <div class="icon-send"><v-icon small color="white">arrow_back</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
             <h3>
@@ -75,9 +75,10 @@
                 :type="showpassword ? 'text' : 'password'"
                 :rules="[rules.required, rules.min]"
                 :label="modal.keystore_password"
+                @click:append="showpassword = !showpassword"
                 v-model="password"
                 v-on:keyup.enter="onConfirm"
-                :append-icon="showpassword ? 'mdi-eye' : 'mdi-eye-off'"
+                :append-icon="showpassword ? 'visibility' : 'visibility_off'"
                 dense
                 filled
                 v-on:submit.prevent="onConfirm"
@@ -105,7 +106,7 @@
       <v-card>
         <div class="d-flex justify-lg-space-between pt-3">
           <v-icon></v-icon>
-          <v-btn icon @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
+          <v-btn icon @click="closeGasSetting"><v-icon>close</v-icon></v-btn>
         </div>
         <div class="content-gas-setting">
           <h3>{{ $t('views.modal.gas_custom') }}</h3>
@@ -358,6 +359,9 @@ export default class TransactionConfirmationModal extends Vue {
 .gt,
 .transaction-confirmation-content small {
   color: rgb(155, 155, 155);
+}
+.transaction-confirmation-content small {
+  font-size: 12.5px;
 }
 .v-sheet.v-card:not(.v-sheet--outlined) {
   box-shadow: none;

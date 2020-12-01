@@ -46,6 +46,7 @@
       large
       block
       class="btn-d"
+      :loading="!!onPendingDeposit"
       :class="isTransferable(depositAmount, balance) ? '' : 'disabled'"
       :disabled="!isTransferable(depositAmount, balance)"
       @click="deposit"
@@ -104,6 +105,12 @@ export default class DepositWithdraw extends Vue {
   withdrawAmount: string | number = ''
 
   amount: string | number = 0
+
+  get onPendingDeposit() {
+    return this.walletStore.pendingTransactions.find(tx => {
+      return tx.actionType === constants.ACTION_DEPOSIT && tx.status === constants.STATUS_PENDING
+    })
+  }
 
   get currency() {
     const stakingCurrency = this.walletStore.currenciesList.find(currency => {
@@ -199,7 +206,11 @@ export default class DepositWithdraw extends Vue {
         .deposit(payload)
         .then(txid => {
           setTimeout(() => {
-            this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
+            this.walletStore.addPendingTx({
+              txid: txid,
+              txType: constants.TX_DEPOSIT,
+              actionType: constants.ACTION_DEPOSIT
+            })
             this.onSuccess()
           }, 1000)
         })

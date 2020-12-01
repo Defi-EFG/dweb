@@ -78,6 +78,7 @@ export default class Home extends Vue {
 
 .main-container {
   width: -webkit-fill-available;
+  width: -moz-available;
   .inner-container {
     position: relative;
     height: 100%;

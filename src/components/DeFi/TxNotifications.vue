@@ -18,10 +18,10 @@
                 color="white"
               ></v-progress-circular>
               <v-icon v-if="tx.status === txConstants.STATUS_CONFIRMED" class="completed">
-                mdi-check-circle-outline
+                check_circle
               </v-icon>
               <v-icon v-if="tx.status === txConstants.STATUS_FAILED" class="failed">
-                mdi-close-circle-outline
+                check_circle
               </v-icon>
             </v-col>
             <v-col cols="7" class="tx-status">
@@ -36,7 +36,7 @@
               </div>
               <div class="id">
                 TxID: {{ truncateAddress(tx.txid) }}
-                <v-icon class="copy" @click="copyAddress(tx.txid)">mdi-content-copy</v-icon>
+                <v-icon class="copy" @click="copyAddress(tx.txid)">content_copy</v-icon>
               </div>
             </v-col>
             <v-col cols="3" class="tx-details pl-6">
@@ -101,9 +101,7 @@ export default class TxNotifications extends Vue {
   }
 
   displayNoti() {
-    console.log('before', this.displayNotiList)
     this.displayNotiList = !this.displayNotiList
-    console.log('after', this.displayNotiList)
   }
 
   showTxHistory(txId: string) {
@@ -205,7 +203,7 @@ export default class TxNotifications extends Vue {
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  box-shadow: inset 0 0 2000px rgba(169, 169, 169, 0.2) !important;
+  // box-shadow: inset 0 0 2000px rgba(169, 169, 169, 0.2) !important;
   background: inherit !important;
 }
 
@@ -218,10 +216,27 @@ export default class TxNotifications extends Vue {
   margin-top: 1.5rem;
   -webkit-backdrop-filter: blur(20px); /* Safari 9+ */
   backdrop-filter: blur(20px);
+  max-height: 315px;
+  overflow: auto;
 
   .row {
     margin-right: 0;
     margin-left: 0;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff41;
+    border-radius: 6px;
   }
 }
 

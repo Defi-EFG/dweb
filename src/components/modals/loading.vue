@@ -4,12 +4,14 @@
       <v-card class="blur-card">
         <v-card-title class="modal-header">
           <v-icon></v-icon>
-          <v-btn @click="onClose" text><v-icon color="black">$close</v-icon></v-btn>
+          <v-btn @click="onClose" text><v-icon color="black">close</v-icon></v-btn>
         </v-card-title>
         <div class="generate-keydtore bg-white">
           <v-progress-circular
+            class="mb-5"
             :rotate="360"
             :size="120"
+            color="primary"
             :width="9"
             indeterminate
           ></v-progress-circular>
@@ -40,7 +42,7 @@ export default class Loading extends Vue {
 
 <style scoped>
 .generate-keydtore {
-  height: 506px;
+  height: 400px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

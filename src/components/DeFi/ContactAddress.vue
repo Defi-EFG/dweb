@@ -2,14 +2,14 @@
   <v-card class="contact-address-container" color="#222738" dark>
     <v-toolbar class="contact-address-head" flat dense>
       <v-toolbar-title>
-        <v-icon class="head-icon">mdi-book-variant</v-icon>
+        <v-icon class="head-icon">book</v-icon>
         <span>{{ $t('views.walletpage.contact_address') }}</span>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-btn icon :disabled="!isReady" @click="openAddcontact()">
-        <v-icon>mdi-plus-circle-outline</v-icon>
+        <v-icon>add_circle</v-icon>
       </v-btn>
     </v-toolbar>
 
@@ -17,13 +17,13 @@
       <v-list-item v-for="(contact, index) in contactList" :key="index" class="address-item">
         <template v-if="'created' in contactList">
           <div class="empty-message">
-            <v-icon class="book-icon">mdi-book-open-page-variant-outline</v-icon>
+            <v-icon class="book-icon">class</v-icon>
             <div class="message">{{ $t('views.walletpage.no_contact_address') }}</div>
           </div>
         </template>
 
         <template v-else>
-          <v-icon class="mr-3">mdi-account-circle</v-icon>
+          <v-icon class="mr-3">account_circle</v-icon>
 
           <v-list-item-content>
             <v-list-item-title class="addr-name">{{ contact.name }}</v-list-item-title>
@@ -32,10 +32,10 @@
 
           <v-list-item-icon>
             <v-btn fab icon x-small class="contact-btn" @click="openEditcontact(contact)">
-              <v-icon>mdi-pencil</v-icon>
+              <v-icon>edit</v-icon>
             </v-btn>
             <v-btn fab icon x-small class="contact-btn" @click="openDeletecontact(contact)">
-              <v-icon>mdi-delete</v-icon>
+              <v-icon>delete</v-icon>
             </v-btn>
           </v-list-item-icon>
         </template>

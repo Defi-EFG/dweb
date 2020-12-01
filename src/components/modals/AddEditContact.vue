@@ -6,30 +6,30 @@
           <span>{{ addMode ? modal.add_contact : modal.edit_contact }}</span>
           <v-spacer></v-spacer>
           <v-btn icon dark @click.native="onClose">
-            <v-icon>mdi-close</v-icon>
+            <v-icon>close</v-icon>
           </v-btn>
         </v-card-title>
         <div class="contact-dialog-wrapper">
-          <div class="contact-dialog-content" id="soloadd">
-            <v-form class="pt-4">
+          <div class="contact-dialog-content" >
+            <v-form class="wrapper-form">
               <v-text-field
-                class="pb-2"
+                class="nameinput"
                 :placeholder="getFormPlaceholder('name')"
-                dense
-                solo
+                hide-details="true"
                 v-model="contact.name"
+                filled
                 :rules="[rules.required, rules.exist]"
               ></v-text-field>
               <v-text-field
-                class="pb-2"
+                filled
+                class="nameiput mt-4"
+                hide-details="true"
                 :placeholder="getFormPlaceholder('address')"
-                dense
-                solo
                 v-model="contact.address"
                 :rules="[rules.required]"
               ></v-text-field
             ></v-form>
-            <div class="btn-wrapper">
+            <div class="btn-wrapper mt-4">
               <v-btn class="cancel" outlined large color="primary" @click="onClose()">
                 {{ $t('views.modal.cancel') }}
               </v-btn>
@@ -169,31 +169,19 @@ export default class AddEditContact extends Vue {
 </script>
 
 <style lang="scss">
-#soloadd {
-  .v-text-field.v-text-field--solo:not(.v-text-field--solo-flat)
-    > .v-input__control
-    > .v-input__slot {
-    box-shadow: unset;
-    border-radius: 3px;
-    background: rgba(0, 0, 0, 0.06);
-    font-size: 20px;
-  }
-  .v-text-field.v-input--dense:not(.v-text-field--outlined) input {
-    padding: 25px 0;
-  }
-  .v-text-field.v-text-field--enclosed .v-text-field__details {
-    margin-bottom: 0px;
-  }
-  .blur-card:before {
-    bottom: 0px !important;
-  }
-}
-.v-dialog {
-  overflow-y: unset;
+.wrapper-form > .theme--light.v-text-field > .v-input__control > .v-input__slot:before {
+  border-color: transparent;
 }
 </style>
 
 <style lang="scss" scoped>
+.nameinput input {
+  padding: 0px;
+}
+.nameinput {
+  margin-top: 10px;
+}
+
 .v-dialog {
   background-color: transparent;
   position: relative;

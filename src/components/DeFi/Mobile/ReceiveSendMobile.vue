@@ -1,13 +1,9 @@
 <template>
   <v-tabs show-arrows grow background-color="#2F3446" dark class="rs-tabs">
     <v-tab
-      ><v-icon class="mr-2">mdi-arrow-down-circle-outline</v-icon
-      >{{ $t('views.walletpage.receive') }}</v-tab
+      ><v-icon class="mr-2">arrow_circle_down</v-icon>{{ $t('views.walletpage.receive') }}</v-tab
     >
-    <v-tab
-      ><v-icon class="mr-2">mdi-arrow-up-circle-outline</v-icon>
-      {{ $t('views.walletpage.send') }}</v-tab
-    >
+    <v-tab><v-icon class="mr-2">arrow_circle_up</v-icon> {{ $t('views.walletpage.send') }}</v-tab>
 
     <v-tab-item class="rs-tabs-item">
       <div v-if="!address" class="empty-div"></div>
@@ -23,7 +19,7 @@
         <div class="copyable-addr">
           <div class="text-truncate addr">{{ address }}</div>
           <v-btn icon small dark class="copy" @click="copyAddress(address)">
-            <v-icon small>mdi-content-copy</v-icon>
+            <v-icon small>content_copy</v-icon>
           </v-btn>
         </div>
       </div>
@@ -58,7 +54,7 @@
         >
           <template v-slot:append-outer>
             <div class="address-book" @click="displayContactList">
-              <v-icon>mdi-book-variant</v-icon>
+              <v-icon>book</v-icon>
             </div>
           </template>
         </v-text-field>
@@ -76,7 +72,7 @@
                 class="address-item"
                 @click="selectAddress(contact.address)"
               >
-                <v-icon class="mr-3">mdi-account-circle</v-icon>
+                <v-icon class="mr-3">account_circle</v-icon>
 
                 <v-list-item-content>
                   {{ contact.name }}

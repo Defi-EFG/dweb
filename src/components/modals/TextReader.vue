@@ -1,10 +1,18 @@
 <template>
   <div class="upload-wrapper text-end mb-3">
-    <label class="text-reader">
-      <small class="mr-2" @change="loadTextFromFile">{{ $t('views.modal.or_Upload') }}</small>
-      <v-icon class="upload-icon" color="white">$upload</v-icon>
-      <input type="file" @change="loadTextFromFile" accept="application/json" />
-    </label>
+    <form>
+      <label class="text-reader">
+        <small class="mr-2" @change="loadTextFromFile">{{ $t('views.modal.or_Upload') }}</small>
+        <v-icon class="upload-icon" color="white">publish</v-icon>
+        <input
+          ref="fileInput"
+          type="file"
+          @change="loadTextFromFile"
+          accept="application/json"
+          multiple
+        />
+      </label>
+    </form>
   </div>
 </template>
 
@@ -14,6 +22,9 @@ export default {
     loadTextFromFile(e) {
       const file = e.target.files[0]
       const reader = new FileReader()
+      const input = this.$refs.fileInput
+      input.type = 'text'
+      input.type = 'file'
       reader.onload = e => this.$emit('load', e.target.result)
       if (file != null && file.size > 0) {
         reader.readAsText(file)

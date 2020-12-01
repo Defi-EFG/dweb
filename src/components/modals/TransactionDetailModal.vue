@@ -5,7 +5,7 @@
         <span>{{ $t('views.modal.transaction_details') }}</span>
         <v-spacer></v-spacer>
         <v-btn icon dark @click.native="close">
-          <v-icon>mdi-close</v-icon>
+          <v-icon>close</v-icon>
         </v-btn>
       </v-card-title>
 
@@ -25,7 +25,7 @@
                 v-on="on"
                 @click="goToExplorer(tx.id)"
               >
-                <v-icon dark> mdi-arrow-up </v-icon>
+                <v-icon dark> arrow_upward </v-icon>
               </v-btn>
             </template>
             <span>{{ $t('views.modal.view_on_explorer') }}</span>
@@ -42,7 +42,7 @@
                 v-on="on"
                 @click="doCopy(tx.id)"
               >
-                <v-icon dark> mdi-content-copy </v-icon>
+                <v-icon dark> content_copy </v-icon>
               </v-btn>
             </template>
             <span>{{ copyMsg }}</span>
@@ -174,7 +174,6 @@ export default class TransactionDetailModal extends Vue {
   getTxInfo() {
     this.walletStore.getTxInfo(this.txid).then(tx => {
       this.txInfo = tx
-      console.log(this.txInfo)
     })
   }
 

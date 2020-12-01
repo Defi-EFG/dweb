@@ -1,18 +1,8 @@
 import Vue from 'vue'
-import Vuetify from 'vuetify'
+import Vuetify from 'vuetify/lib'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
 
-const MY_ICONS = {
-  close: 'mdi-close',
-  leftarrow: 'mdi-arrow-left',
-  rightarrow: 'mdi-arrow-right',
-  upload: 'mdi-upload',
-  circle: 'mdi-circle',
-  copied: 'mdi-content-copy'
-}
-
 Vue.use(Vuetify)
-
 export default new Vuetify({
   rtl: false,
   theme: {
@@ -42,9 +32,5 @@ export default new Vuetify({
         transparent: '#FFFFFF00'
       }
     }
-  },
-  icons: {
-    iconfont: 'mdi',
-    values: MY_ICONS
   }
 })

@@ -235,7 +235,7 @@ ul {
 }
 .efg-logo {
   width: 28px;
-  height: auto;
+  height: 28px;
   margin-right: 10px;
 }
 .v-btn--outlined .v-btn__content .v-icon,
