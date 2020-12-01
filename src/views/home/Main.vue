@@ -5,9 +5,9 @@
       <v-container>
         <v-row>
           <v-col cols="12 " class="hover_animation">
-            <img src="@/assets/efg_logo.svg" class="efg-logo" alt="" />
+            <img src="@/assets/efg_logo.svg" class="efg-logo" alt="" width="60" height="60" />
             <div class="text_header">{{ $t('views.main.name') }}</div>
-            <div class="select_detailmain img_logo1">
+            <div class="select_detailmain header_fp">
               <section class="sec_doc1" name="doc">
                 <div class="sibar_dc">
                   <a
@@ -77,6 +77,8 @@
                   src="@/assets/Subtraction.svg"
                   style="animation-delay: 0.5s;"
                   alt=""
+                  width="45"
+                  height="45"
               /></a>
               <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer">
                 <img
@@ -85,6 +87,8 @@
                   src="@/assets/github.svg"
                   style="animation-delay: 1s;"
                   alt=""
+                  width="45"
+                  height="45"
               /></a>
 
               <a href="https://efg-defi.medium.com/" target="_blank">
@@ -94,6 +98,8 @@
                   src="@/assets/medium.svg"
                   style="animation-delay: 1.5s;"
                   alt=""
+                  width="45"
+                  height="45"
                 />
               </a>
               <a href="https://twitter.com/EFG_DeFi" target="_blank">
@@ -103,6 +109,8 @@
                   src="@/assets/twitter.svg"
                   style="animation-delay: 2s;"
                   alt=""
+                  width="45"
+                  height="45"
                 />
               </a>
             </div>
@@ -250,16 +258,22 @@
               :to="`collateral-info?name=${collateral.currencyName}`"
             >
               <span class="but_div"
-                ><img :src="getCurrencyIcon(collateral.currencyName)" class="img_text_but" alt="" />
+                ><img
+                  width="45"
+                  height="45"
+                  :src="getCurrencyIcon(collateral.currencyName)"
+                  class="img_text_but"
+                  alt=""
+                />
                 <div class="text_but">{{ collateral.currencyName }}</div></span
               >
             </router-link>
             <span class="but_div not_it"
-              ><img src="@/assets/TRON.svg" class="img_text_but" alt="" />
+              ><img width="45" height="45" src="@/assets/TRON.svg" class="img_text_but" alt="" />
               <div class="text_but">TRON</div></span
             >
             <span class="but_div not_it"
-              ><img src="@/assets/DOT.svg" class="img_text_but" alt="" />
+              ><img width="45" height="45" src="@/assets/DOT.svg" class="img_text_but" alt="" />
               <div class="text_but">DOT</div></span
             >
           </v-col>
@@ -276,7 +290,7 @@
                 <v-row class="fill-height" align="center" justify="center">
                   <v-col lg="3" md="3" cols="12">
                     <div class="img_footer">
-                      <img :src="require(`@/assets/${item.src}`)" alt="" />
+                      <img width="250" height="250" :src="require(`@/assets/${item.src}`)" alt="" />
                     </div>
                   </v-col>
                   <v-col lg="9" md="9" cols="12">
@@ -643,6 +657,7 @@ body {
 }
 .sec_2 .row1 .margintop img {
   width: 30px;
+  height: 30px;
   margin-right: 6px;
 }
 .sec_2 .row1 .row1_img {
@@ -816,11 +831,14 @@ body {
   animation-name: icon_div;
   animation-duration: 1s;
   width: 60px;
+  height: 60px;
 }
 .img_logo1 {
-  animation: img_logo1 1s forwards;
+  animation: header_fp 1s forwards;
   position: relative;
   opacity: 0;
+  width: 40px;
+  height: 40px;
 }
 .sec_1 .social_icon img:hover {
   transform: scale(1.5);
@@ -841,7 +859,7 @@ body {
   color: #c074f9;
   border-bottom: 2px solid #c074f9;
 }
-@keyframes img_logo1 {
+@keyframes header_fp {
   0% {
     opacity: 0;
     top: 100px;
@@ -1010,6 +1028,7 @@ body {
     height: 20px;
   }
   .efg-logo {
+    width: 40px;
     width: 40px;
   }
   .sibar_dc {
