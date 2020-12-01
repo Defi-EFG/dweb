@@ -71,8 +71,8 @@ import * as constants from '@/constants'
 
 @Component({
   components: {
-    TransactionDetailModal,
-  },
+    TransactionDetailModal
+  }
 })
 export default class TxNotifications extends Vue {
   displayNotiList = false
@@ -91,7 +91,7 @@ export default class TxNotifications extends Vue {
 
   get pendingTxNumber() {
     const onPendingTx = this.txPendingList.filter(
-      (tx) => tx.status === this.txConstants.STATUS_PENDING
+      tx => tx.status === this.txConstants.STATUS_PENDING
     )
     return onPendingTx.length
   }
@@ -101,9 +101,7 @@ export default class TxNotifications extends Vue {
   }
 
   displayNoti() {
-    console.log('before', this.displayNotiList)
     this.displayNotiList = !this.displayNotiList
-    console.log('after', this.displayNotiList)
   }
 
   showTxHistory(txId: string) {

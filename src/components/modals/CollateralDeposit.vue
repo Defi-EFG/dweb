@@ -492,7 +492,6 @@ export default class CollateralDeposit extends Vue {
   }
 
   saveGasSetting() {
-    console.log('save gas setting')
     this.gasFee = this.totalFee
     this.gassetting = false
   }

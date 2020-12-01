@@ -330,7 +330,6 @@ export default class SupplyBalance extends Vue {
   }
 
   depositfunction() {
-    console.log('depositfunction')
     this.depositgptModal = false
   }
 

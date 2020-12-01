@@ -418,9 +418,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
           const approveTx = await token.approve(lending.address, amount, walletParams)
           const approveTxid = await Ecoc.sendRawTx(approveTx)
 
-          console.log('Waiting for confirmation')
           await Ecoc.waitForConfirmation(approveTxid)
-          console.log('Confirmed')
 
           const newUtxos = await Ecoc.getUtxos(walletParams.address)
           walletParams.utxoList = newUtxos
@@ -509,9 +507,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
         const approveTx = await token.approve(lending.address, amount, walletParams)
         const approveTxid = await Ecoc.sendRawTx(approveTx)
 
-        console.log('Waiting for confirmation')
         await Ecoc.waitForConfirmation(approveTxid)
-        console.log('Confirmed')
 
         const newUtxos = await Ecoc.getUtxos(walletParams.address)
         walletParams.utxoList = newUtxos
@@ -547,9 +543,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
         const approveTx = await token.approve(lending.address, amount, walletParams)
         const approveTxid = await Ecoc.sendRawTx(approveTx)
 
-        console.log('Waiting for confirmation')
         await Ecoc.waitForConfirmation(approveTxid)
-        console.log('Confirmed')
 
         const newUtxos = await Ecoc.getUtxos(walletParams.address)
         walletParams.utxoList = newUtxos

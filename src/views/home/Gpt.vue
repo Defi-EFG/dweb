@@ -138,7 +138,6 @@ export default class Gpt extends Vue {
     api.getprice(this.currencyName, this.name).then(data => {
       this.date = data.date
       this.price = data.price
-      console.log(this.price)
     })
   }
 }
