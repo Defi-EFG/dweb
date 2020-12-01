@@ -174,7 +174,6 @@ export default class TransactionDetailModal extends Vue {
   getTxInfo() {
     this.walletStore.getTxInfo(this.txid).then(tx => {
       this.txInfo = tx
-      console.log(this.txInfo)
     })
   }
 

@@ -63,6 +63,7 @@
       large
       block
       depressed
+      :loading="!!onPendingTx"
       :disabled="!isWithdrawable(withdrawValue, 'error')"
       :class="isWithdrawable(withdrawValue, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="openConfirmTxModal"
@@ -71,8 +72,12 @@
         isWithdrawable(withdrawValue, 'btn')
           ? lendingpage.withdraw
           : $t('views.lendingpage.insufficient')
-      }}</v-btn
-    >
+      }}
+      <template v-slot:loader>
+        <v-progress-circular indeterminate :size="24" class="spinner"></v-progress-circular>
+        <span class="ml-2" v-if="!isWithdrawPendingType">Waiting...</span>
+      </template>
+    </v-btn>
     <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="contractAddr"
@@ -169,6 +174,26 @@ export default class Withdraw extends Vue {
       Number(this.withdrawValue)}`
   }
 
+  get onPendingTx() {
+    const pendingList = [
+      constants.ACTION_COLLATERAL,
+      constants.ACTION_WITHDRAW,
+      constants.ACTION_BORROW,
+      constants.ACTION_REPAY,
+      constants.ACTION_LIQUID_DEPOSIT,
+      constants.ACTION_ASSETS_WITHDRAW
+    ]
+    return this.walletStore.pendingTransactions.find(tx => {
+      return pendingList.includes(tx.actionType || '') && tx.status === constants.STATUS_PENDING
+    })
+  }
+
+  get isWithdrawPendingType() {
+    return this.walletStore.pendingTransactions.find(tx => {
+      return tx.actionType === constants.ACTION_WITHDRAW && tx.status === constants.STATUS_PENDING
+    })
+  }
+
   limitValue(num: number) {
     if (this.val < num) {
       this.val = num
@@ -234,7 +259,11 @@ export default class Withdraw extends Vue {
     this.lendingStore
       .withdrawCollateral(payload)
       .then((txid: any) => {
-        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
+        this.walletStore.addPendingTx({
+          txid: txid,
+          txType: constants.TX_WITHDRAW,
+          actionType: constants.ACTION_WITHDRAW
+        })
         this.onSuccess()
       })
       .catch((error: any) => {

@@ -207,9 +207,7 @@ export default class StakingModule extends VuexModule implements StakingPlatform
         const approveTx = await efg.approve(stakingContract.address, amount, walletParams)
         const approveTxid = await Ecoc.sendRawTx(approveTx)
 
-        console.log('Waiting for confirmation')
         await Ecoc.waitForConfirmation(approveTxid)
-        console.log('Confirmed')
 
         const newUtxos = await Ecoc.getUtxos(walletParams.address)
         walletParams.utxoList = newUtxos

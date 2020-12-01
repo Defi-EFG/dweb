@@ -492,7 +492,6 @@ export default class CollateralDeposit extends Vue {
   }
 
   saveGasSetting() {
-    console.log('save gas setting')
     this.gasFee = this.totalFee
     this.gassetting = false
   }
@@ -592,7 +591,11 @@ export default class CollateralDeposit extends Vue {
       .depositCollateral(payload)
       .then((txid: any) => {
         setTimeout(() => {
-          this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
+          this.walletStore.addPendingTx({
+            txid: txid,
+            txType: constants.TX_DEPOSIT,
+            actionType: constants.ACTION_COLLATERAL
+          })
           this.onSuccess()
         }, 1000)
       })

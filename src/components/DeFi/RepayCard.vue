@@ -70,13 +70,18 @@
       large
       block
       depressed
+      :loading="!!onPendingTx"
       :disabled="!isRepayable(repayAmount, 'error')"
       :class="isRepayable(repayAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="openConfirmTxModal"
       >{{
         isRepayable(repayAmount, 'btn') ? lendingpage.repay : $t('views.lendingpage.insufficient')
-      }}</v-btn
-    >
+      }}
+      <template v-slot:loader>
+        <v-progress-circular indeterminate :size="24" class="spinner"></v-progress-circular>
+        <span class="ml-2" v-if="!isRepayPendingType">Waiting...</span>
+      </template>
+    </v-btn>
     <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="walletAddr"
@@ -172,6 +177,26 @@ export default class RepayCard extends Vue {
       Number(this.repayAmount)}`
   }
 
+  get onPendingTx() {
+    const pendingList = [
+      constants.ACTION_COLLATERAL,
+      constants.ACTION_WITHDRAW,
+      constants.ACTION_BORROW,
+      constants.ACTION_REPAY,
+      constants.ACTION_LIQUID_DEPOSIT,
+      constants.ACTION_ASSETS_WITHDRAW
+    ]
+    return this.walletStore.pendingTransactions.find(tx => {
+      return pendingList.includes(tx.actionType || '') && tx.status === constants.STATUS_PENDING
+    })
+  }
+
+  get isRepayPendingType() {
+    return this.walletStore.pendingTransactions.find(tx => {
+      return tx.actionType === constants.ACTION_REPAY && tx.status === constants.STATUS_PENDING
+    })
+  }
+
   fillAmount(amount: number) {
     if (amount >= this.debt) {
       this.repayAmount = this.debt
@@ -239,7 +264,11 @@ export default class RepayCard extends Vue {
     this.lendingStore
       .repay(payload)
       .then(txid => {
-        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_REPAY })
+        this.walletStore.addPendingTx({
+          txid: txid,
+          txType: constants.TX_REPAY,
+          actionType: constants.ACTION_REPAY
+        })
         this.onSuccess()
       })
       .catch(error => {
