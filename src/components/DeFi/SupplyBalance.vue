@@ -13,7 +13,14 @@
             <div class="lg">GPT Balance: {{ extendBalance }} GPT</div>
           </div>
           <v-spacer></v-spacer>
-          <span class="extend-btn" @click="depositgpt">{{ $t('views.modal.deposit') }}</span>
+          <v-progress-circular
+            v-if="!!onPendingTx"
+            class="my-auto mx-4"
+            indeterminate
+            :width="2"
+            :size="22"
+          ></v-progress-circular>
+          <span v-else class="extend-btn" @click="depositgpt">{{ $t('views.modal.deposit') }}</span>
         </div>
         <div class="liquid-countdown" v-show="extentTimeRemaining()">
           <span>{{ $t('views.lendingpage.liquidation_protection') }} {{ timeRemainMessage }}</span>
@@ -166,6 +173,20 @@ export default class SupplyBalance extends Vue {
     return currency.amount
   }
 
+  get onPendingTx() {
+    const pendingList = [
+      constants.ACTION_COLLATERAL,
+      constants.ACTION_WITHDRAW,
+      constants.ACTION_BORROW,
+      constants.ACTION_REPAY,
+      constants.ACTION_LIQUID_DEPOSIT,
+      constants.ACTION_ASSETS_WITHDRAW
+    ]
+    return this.walletStore.pendingTransactions.find(tx => {
+      return pendingList.includes(tx.actionType || '') && tx.status === constants.STATUS_PENDING
+    })
+  }
+
   async getEstimatedGPT() {
     if (!this.isLoggedIn) {
       return '0'
@@ -239,7 +260,11 @@ export default class SupplyBalance extends Vue {
       .depositAsset(payload)
       .then((txid: any) => {
         setTimeout(() => {
-          this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_DEPOSIT })
+          this.walletStore.addPendingTx({
+            txid: txid,
+            txType: constants.TX_DEPOSIT,
+            actionType: constants.ACTION_LIQUID_DEPOSIT
+          })
           this.onSuccess()
         }, 1000)
       })
