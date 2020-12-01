@@ -7,8 +7,8 @@ interface Config {
 
 const mainnetConfig = {
   networkStr: ECOC_MAINNET,
-  apiProvider: 'https://explorer.ecoc.io/api',
-  socketURL: 'https://explorer.ecoc.io/'
+  apiProvider: 'https://chainapi.ecoc.io/api',
+  socketURL: 'https://chainapi.ecoc.io/'
 } as Config
 
 const testnetConfig = {
