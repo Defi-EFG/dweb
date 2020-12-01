@@ -82,7 +82,7 @@
           :loading="!!onPendingStop"
           :class="staked.status ? '' : 'stopped'"
           color="#FF4E4E"
-          :disabled="!staked.staking"
+          :disabled="!staked.staking || !!onPendingDeposit"
           @click="stopStaking"
           >{{ $t('views.stakingpage.stop_staking') }}</v-btn
         >
@@ -114,13 +114,13 @@ import { StakingInfo } from '@/types/staking'
 
 enum ActionType {
   TYPE_STOP,
-  TYPE_WITHDRAW
+  TYPE_WITHDRAW,
 }
 
 @Component({
   components: {
-    TransactionConfirmationModal
-  }
+    TransactionConfirmationModal,
+  },
 })
 export default class StakedReward extends Vue {
   walletStore = getModule(WalletModule)
@@ -192,14 +192,20 @@ export default class StakedReward extends Vue {
     return this.$t('views.stakingpage')
   }
 
+  get onPendingDeposit() {
+    return this.walletStore.pendingTransactions.find((tx) => {
+      return tx.actionType === constants.ACTION_DEPOSIT && tx.status === constants.STATUS_PENDING
+    })
+  }
+
   get onPendingStop() {
-    return this.walletStore.pendingTransactions.find(tx => {
+    return this.walletStore.pendingTransactions.find((tx) => {
       return tx.actionType === constants.ACTION_STOP && tx.status === constants.STATUS_PENDING
     })
   }
 
   onPendingRewardWithdraw(stakeId: any) {
-    return this.walletStore.pendingTransactions.find(tx => {
+    return this.walletStore.pendingTransactions.find((tx) => {
       return (
         tx.actionType === constants.ACTION_REWARD &&
         tx.status === constants.STATUS_PENDING &&
@@ -246,7 +252,7 @@ export default class StakedReward extends Vue {
       const pendingId = this.staked.pendingId as number
       const payload = {
         pendingId,
-        walletParams
+        walletParams,
       }
 
       this.stakingStore
@@ -256,7 +262,7 @@ export default class StakedReward extends Vue {
             txid: txid,
             txType: constants.TX_WITHDRAW,
             actionType: constants.ACTION_REWARD,
-            stakingId: pendingId
+            stakingId: pendingId,
           })
           this.onSuccess()
         })
@@ -265,7 +271,7 @@ export default class StakedReward extends Vue {
         })
     } else if (this.actionType === ActionType.TYPE_STOP) {
       const payload = {
-        walletParams
+        walletParams,
       }
 
       this.stakingStore
@@ -274,7 +280,7 @@ export default class StakedReward extends Vue {
           this.walletStore.addPendingTx({
             txid: txid,
             txType: constants.TX_STOP_STAKING,
-            actionType: constants.ACTION_STOP
+            actionType: constants.ACTION_STOP,
           })
           this.onSuccess()
         })

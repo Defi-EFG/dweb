@@ -2,7 +2,7 @@
   <v-card class="mx-auto sl-card" dark>
     <v-toolbar class="sl-header" flat dense>
       <v-toolbar-title>
-        <v-icon class="head-icon"></v-icon>
+        <v-icon class="head-icon">table_rows</v-icon>
         <span>{{ $t('views.stakingpage.stakinglist') }}</span>
       </v-toolbar-title>
     </v-toolbar>
@@ -21,10 +21,27 @@
             <span>{{ token.currency.name }}</span>
           </v-col>
           <v-col class="reward">
-            <small>{{ $t('views.stakingpage.total_staking') }}</small>
-            <div class="value">
-              {{ token.staking | numberWithCommas({ fixed: [0, 8] }) }} {{ token.currency.name }}
-            </div>
+            <template v-if="isPendingTx(token.pendingId)">
+              <div class="pending-status">
+                <v-progress-circular
+                  color="white"
+                  :width="2"
+                  :size="18"
+                  indeterminate
+                ></v-progress-circular>
+                <div class="d-inline type ml-2">
+                  <span v-if="!!onPendingRewardWithdraw(token.pendingId)">Withdrawing</span>
+                  <span v-else-if="!!onPendingStop">Stopping</span>
+                  <span v-else-if="!!onPendingDeposit">Depositing</span>
+                </div>
+              </div>
+            </template>
+            <template v-else>
+              <small>{{ $t('views.stakingpage.total_staking') }}</small>
+              <div class="value">
+                {{ token.staking | numberWithCommas({ fixed: [0, 8] }) }} {{ token.currency.name }}
+              </div>
+            </template>
           </v-col>
         </v-row>
       </v-card>
@@ -35,12 +52,47 @@
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
 import { StakingInfo } from '@/types/staking'
+import { getModule } from 'vuex-module-decorators'
+import * as constants from '@/constants'
+import WalletModule from '@/store/wallet'
 
 @Component({})
 export default class StakingList extends Vue {
   @Prop() stakingList!: StakingInfo[]
 
+  walletStore = getModule(WalletModule)
+
   activeIndex = 0
+
+  isPendingTx(id: any) {
+    if (id) {
+      console.log('given id', id)
+      return !!this.onPendingRewardWithdraw(id)
+    }
+    return !!this.onPendingDeposit || !!this.onPendingStop
+  }
+
+  get onPendingDeposit() {
+    return this.walletStore.pendingTransactions.find((tx) => {
+      return tx.actionType === constants.ACTION_DEPOSIT && tx.status === constants.STATUS_PENDING
+    })
+  }
+
+  get onPendingStop() {
+    return this.walletStore.pendingTransactions.find((tx) => {
+      return tx.actionType === constants.ACTION_STOP && tx.status === constants.STATUS_PENDING
+    })
+  }
+
+  onPendingRewardWithdraw(stakeId: any) {
+    return this.walletStore.pendingTransactions.find((tx) => {
+      return (
+        tx.actionType === constants.ACTION_REWARD &&
+        tx.status === constants.STATUS_PENDING &&
+        tx.stakingId == stakeId
+      )
+    })
+  }
 
   selectStaking(token: StakingInfo, index: number) {
     this.activeIndex = index
@@ -128,6 +180,18 @@ export default class StakingList extends Vue {
 
 .clicked {
   box-shadow: 0px 6px 5px 0px #0000004d;
+}
+
+.pending-status {
+  width: fit-content;
+  margin-left: auto;
+  border: 1px solid white;
+  padding: 11px;
+  border-radius: 6px;
+
+  .type {
+    color: white;
+  }
 }
 
 @media (max-width: 1264px) {
