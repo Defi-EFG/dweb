@@ -67,7 +67,7 @@
       large
       block
       depressed
-      :loading="onPendingTx"
+      :loading="!!onPendingTx"
       :disabled="!isCollateralable(collateralAmount, 'error')"
       :class="isCollateralable(collateralAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       >{{

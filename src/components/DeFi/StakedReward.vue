@@ -64,6 +64,7 @@
           block
           depressed
           class="reward-btn"
+          :loading="!!onPendingRewardWithdraw(staked.pendingId)"
           :class="!!isStakedDue ? '' : 'disabled'"
           :disabled="!isStakedDue"
           @click="withdraw"
@@ -78,6 +79,7 @@
           block
           outlined
           class="stop-btn"
+          :loading="!!onPendingStop"
           :class="staked.status ? '' : 'stopped'"
           color="#FF4E4E"
           :disabled="!staked.staking"
@@ -190,6 +192,22 @@ export default class StakedReward extends Vue {
     return this.$t('views.stakingpage')
   }
 
+  get onPendingStop() {
+    return this.walletStore.pendingTransactions.find(tx => {
+      return tx.actionType === constants.ACTION_STOP && tx.status === constants.STATUS_PENDING
+    })
+  }
+
+  onPendingRewardWithdraw(stakeId: any) {
+    return this.walletStore.pendingTransactions.find(tx => {
+      return (
+        tx.actionType === constants.ACTION_REWARD &&
+        tx.status === constants.STATUS_PENDING &&
+        tx.stakingId == stakeId
+      )
+    })
+  }
+
   stopStaking() {
     this.actionType = ActionType.TYPE_STOP
     this.fromAddr = this.walletAddr
@@ -234,7 +252,12 @@ export default class StakedReward extends Vue {
       this.stakingStore
         .withdraw(payload)
         .then((txid: any) => {
-          this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
+          this.walletStore.addPendingTx({
+            txid: txid,
+            txType: constants.TX_WITHDRAW,
+            actionType: constants.ACTION_REWARD,
+            stakingId: pendingId
+          })
           this.onSuccess()
         })
         .catch((error: Error) => {
@@ -248,7 +271,11 @@ export default class StakedReward extends Vue {
       this.stakingStore
         .stopStaking(payload)
         .then((txid: any) => {
-          this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_STOP_STAKING })
+          this.walletStore.addPendingTx({
+            txid: txid,
+            txType: constants.TX_STOP_STAKING,
+            actionType: constants.ACTION_STOP
+          })
           this.onSuccess()
         })
         .catch((error: Error) => {

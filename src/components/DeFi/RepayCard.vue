@@ -70,7 +70,7 @@
       large
       block
       depressed
-      :loading="onPendingTx"
+      :loading="!!onPendingTx"
       :disabled="!isRepayable(repayAmount, 'error')"
       :class="isRepayable(repayAmount, 'error') ? 'submit-btn' : 'submit-btn disabled'"
       @click="openConfirmTxModal"
