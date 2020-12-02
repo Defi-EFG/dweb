@@ -85,7 +85,7 @@
 </template>
 
 <script lang="ts">
-import moment from 'moment'
+import moment from 'moment/src/moment'
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'

@@ -61,7 +61,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import moment from 'moment'
+import moment from 'moment/src/moment'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import { RewardHistory as Rewardlist } from '@/types/staking'
