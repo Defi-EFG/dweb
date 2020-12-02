@@ -197,7 +197,7 @@
                         large
                         color="primary"
                         class="text-capitalize"
-                        @click="toStep(2)"
+                        @click="onClose()"
                         >{{ $t('views.modal.cancel') }}</v-btn
                       >
                       <v-btn
