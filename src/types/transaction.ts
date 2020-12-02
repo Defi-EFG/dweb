@@ -112,4 +112,6 @@ export interface PendingTransaction {
   type: string
   txid: string
   status: string
+  actionType?: string
+  stakingId?: any
 }

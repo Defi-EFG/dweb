@@ -36,7 +36,7 @@
         <v-row>
           <v-col class="ma-auto token-col">
             <div class="token">
-              <img src="@/assets/gpt.svg" />
+              <img src="@/assets/gpt.svg" alt="" />
               <span>{{ rewardCurrencyName }}</span>
             </div>
           </v-col>

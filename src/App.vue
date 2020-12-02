@@ -32,12 +32,10 @@ export default class App extends Vue {
   @Watch('isLoggedIn')
   startstartPooling(value: boolean) {
     if (value === true) {
-      console.log('Start Pooling')
       this.stakingStore.init()
       this.lendingStore.init()
       this.startPooling()
     } else {
-      console.log('Stop Pooling')
       this.stopPooling()
     }
   }

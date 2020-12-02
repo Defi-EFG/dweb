@@ -101,9 +101,7 @@ export default class TxNotifications extends Vue {
   }
 
   displayNoti() {
-    console.log('before', this.displayNotiList)
     this.displayNotiList = !this.displayNotiList
-    console.log('after', this.displayNotiList)
   }
 
   showTxHistory(txId: string) {
@@ -205,7 +203,7 @@ export default class TxNotifications extends Vue {
   left: 0 !important;
   right: 0 !important;
   bottom: 0 !important;
-  box-shadow: inset 0 0 2000px rgba(169, 169, 169, 0.2) !important;
+  // box-shadow: inset 0 0 2000px rgba(169, 169, 169, 0.2) !important;
   background: inherit !important;
 }
 
@@ -218,10 +216,27 @@ export default class TxNotifications extends Vue {
   margin-top: 1.5rem;
   -webkit-backdrop-filter: blur(20px); /* Safari 9+ */
   backdrop-filter: blur(20px);
+  max-height: 315px;
+  overflow: auto;
 
   .row {
     margin-right: 0;
     margin-left: 0;
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: #ffffff41;
+    border-radius: 6px;
   }
 }
 

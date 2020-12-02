@@ -38,9 +38,7 @@
               </div>
             </div>
           </v-card-text>
-          <v-card-text v-else>
-            No collateral assets
-          </v-card-text>
+          <v-card-text v-else> No collateral assets </v-card-text>
         </v-card>
       </v-tab-item>
 
@@ -74,9 +72,7 @@
               </div>
             </div>
           </v-card-text>
-          <v-card-text v-else>
-            No Borrowing assets
-          </v-card-text>
+          <v-card-text v-else> No Borrowing assets </v-card-text>
         </v-card>
       </v-tab-item>
 
@@ -98,7 +94,11 @@
                   {{ item.currency.name }}
                 </div>
                 <small @click="openConfirmTxModal(item.currency, item.amount)">
-                  <span class="withdraw">{{ $t('views.lendingpage.withdraw') }}</span>
+                  <template v-if="!!onPendingTx">
+                    <v-progress-circular indeterminate :size="14"></v-progress-circular>
+                    <span class="ml-1" v-if="!isWithdrawAssetsPendingType">Waiting...</span>
+                  </template>
+                  <span class="withdraw" v-else>{{ $t('views.lendingpage.withdraw') }}</span>
                 </small>
               </div>
             </div>
@@ -173,6 +173,28 @@ export default class LendingActivity extends Vue {
     return this.lendingStore.myAssets.filter(asset => asset.amount)
   }
 
+  get onPendingTx() {
+    const pendingList = [
+      constants.ACTION_COLLATERAL,
+      constants.ACTION_WITHDRAW,
+      constants.ACTION_BORROW,
+      constants.ACTION_REPAY,
+      constants.ACTION_LIQUID_DEPOSIT,
+      constants.ACTION_ASSETS_WITHDRAW
+    ]
+    return this.walletStore.pendingTransactions.find(tx => {
+      return pendingList.includes(tx.actionType || '') && tx.status === constants.STATUS_PENDING
+    })
+  }
+
+  get isWithdrawAssetsPendingType() {
+    return this.walletStore.pendingTransactions.find(tx => {
+      return (
+        tx.actionType === constants.ACTION_ASSETS_WITHDRAW && tx.status === constants.STATUS_PENDING
+      )
+    })
+  }
+
   getCurrencyPrice(currencyName: string): number {
     const currency = this.walletStore.currencies.find(currency => currency.name === currencyName)
     if (!currency) return 0
@@ -213,7 +235,11 @@ export default class LendingActivity extends Vue {
     this.lendingStore
       .withdrawCollateral(payload)
       .then(txid => {
-        this.walletStore.addPendingTx({ txid: txid, txType: constants.TX_WITHDRAW })
+        this.walletStore.addPendingTx({
+          txid: txid,
+          txType: constants.TX_WITHDRAW,
+          actionType: constants.ACTION_ASSETS_WITHDRAW
+        })
         this.onSuccess()
       })
       .catch(error => {

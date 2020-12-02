@@ -19,7 +19,7 @@
               <v-row>
                 <v-col cols="12">
                   <div class="token-symbol">
-                    <img :src="currency.style.icon" />
+                    <img :src="currency.style.icon" alt="" />
                     {{ currency.name }}
                   </div>
                 </v-col>

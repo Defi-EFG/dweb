@@ -10,6 +10,7 @@
       return-object
       single-line
       color="#ffffff"
+      append-icon="keyboard_arrow_down"
       @input="selectlangs"
     ></v-select>
   </div>
