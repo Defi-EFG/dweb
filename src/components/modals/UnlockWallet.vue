@@ -371,7 +371,9 @@ export default class UnlockwalletModal extends Vue {
       return true
     }
   }
-
+  get modal() {
+    return this.$t('views.modal')
+  }
   @Watch('visible')
   checkvisible(val: any) {
     this.unlockwalletModal = val
@@ -413,7 +415,6 @@ export default class UnlockwalletModal extends Vue {
 
   onCloseX() {
     this.clearData()
-
     this.onClose()
   }
 
@@ -522,9 +523,6 @@ export default class UnlockwalletModal extends Vue {
     link.href = window.URL.createObjectURL(blob)
     link.download = `keystore-${this.getFormattedTime()}.json`
     link.click()
-  }
-  get modal() {
-    return this.$t('views.modal')
   }
 }
 </script>
