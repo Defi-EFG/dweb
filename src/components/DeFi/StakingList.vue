@@ -73,19 +73,19 @@ export default class StakingList extends Vue {
   }
 
   get onPendingDeposit() {
-    return this.walletStore.pendingTransactions.find((tx) => {
+    return this.walletStore.pendingTransactions.find(tx => {
       return tx.actionType === constants.ACTION_DEPOSIT && tx.status === constants.STATUS_PENDING
     })
   }
 
   get onPendingStop() {
-    return this.walletStore.pendingTransactions.find((tx) => {
+    return this.walletStore.pendingTransactions.find(tx => {
       return tx.actionType === constants.ACTION_STOP && tx.status === constants.STATUS_PENDING
     })
   }
 
   onPendingRewardWithdraw(stakeId: any) {
-    return this.walletStore.pendingTransactions.find((tx) => {
+    return this.walletStore.pendingTransactions.find(tx => {
       return (
         tx.actionType === constants.ACTION_REWARD &&
         tx.status === constants.STATUS_PENDING &&
