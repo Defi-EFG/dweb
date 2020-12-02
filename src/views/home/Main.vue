@@ -416,9 +416,9 @@ export default class Main extends Vue {
 
   truncateAddress(addr: string) {
     const separator = '...'
-    const charsToShow = 12
-    const frontChars = Math.ceil(charsToShow / 2)
-    const backChars = Math.floor(charsToShow / 2)
+    const charsToShow = 22
+    const frontChars = Math.ceil(charsToShow / 3)
+    const backChars = Math.floor(charsToShow / 3)
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
   }
 }
@@ -984,6 +984,9 @@ body {
   .v-card__text {
     text-align: center;
   }
+  .img_background {
+    width: 100%;
+  }
   .sec_1 {
     padding-top: unset;
     padding: 100px 14px 0 14px;
@@ -991,7 +994,7 @@ body {
   .sec_1 .text_header {
     font-size: 23px;
     padding-left: 10px;
-    top: -10px;
+    top: -20px;
   }
   .sec_1 .text_header_sub {
     font-size: 14px;
