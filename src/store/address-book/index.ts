@@ -1,4 +1,5 @@
 import { VuexModule, Module, Mutation, Action } from 'vuex-module-decorators'
+import { Reference } from '@firebase/database-types'
 import { db } from './firebase'
 import { Contact } from '@/types/contact'
 import store from '@/store'
@@ -6,7 +7,7 @@ import store from '@/store'
 @Module({ dynamic: true, store, namespaced: true, name: 'addressBookStore' })
 export default class AddressBookModule extends VuexModule {
   contactList: Contact[] = []
-  firebaseData: firebase.database.Reference = {} as firebase.database.Reference
+  firebaseData: Reference = {} as Reference
   address = ''
 
   get addressBook() {
@@ -23,6 +24,13 @@ export default class AddressBookModule extends VuexModule {
         this.createNewRef(userAddr)
       }
     })
+    this.firebaseData.off
+  }
+
+  @Action
+  unsubscribeFromFirebase() {
+    this.firebaseData.off()
+    this.setContactList([])
   }
 
   @Action

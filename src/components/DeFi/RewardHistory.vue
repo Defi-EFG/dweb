@@ -39,7 +39,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import moment from 'moment'
+import moment from 'moment/src/moment'
 import { RewardHistory as Rewardlist } from '@/types/staking'
 
 @Component({})

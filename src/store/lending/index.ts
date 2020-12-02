@@ -128,7 +128,19 @@ export default class LendingModule extends VuexModule implements LendingPlatform
       }
     ] as CollateralAsset[]
 
+    this.supportedCollateralAssets = [
+      {
+        currencyName: 'ECOC',
+        contractAddress: '',
+        activated: false,
+        collateralFactor: 0.6
+      }
+    ] as Collateral[]
+
     this.myAssets = [] as MyAsset[]
+    this.isLiquidation = false
+    this.borrowLimit = 0
+    this.borrowBalance = 0
   }
 
   @MutationAction

@@ -26,7 +26,13 @@
         }}</v-btn>
       </template>
     </v-text-field>
-    <div class="borrow-power">
+    <div
+      class="borrow-power"
+      @keyup.up="limitSlider"
+      @keyup.down="limitSlider"
+      @keyup.left="limitSlider"
+      @keyup.right="limitSlider"
+    >
       <span class="label">{{ $t('views.lendingpage.borrow_po') }}</span>
       <v-slider
         class="borrow-slider"
@@ -257,6 +263,11 @@ export default class BorrowCard extends Vue {
     }
 
     this.bpSlider = this.calculateBPUsed(val)
+  }
+
+  @Watch('bpSlider')
+  onSliderUpdated(val: any) {
+    console.log('slider changed', val)
   }
 
   onOpenModal() {
