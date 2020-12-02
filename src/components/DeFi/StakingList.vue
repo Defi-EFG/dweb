@@ -66,7 +66,6 @@ export default class StakingList extends Vue {
 
   isPendingTx(id: any) {
     if (id) {
-      console.log('given id', id)
       return !!this.onPendingRewardWithdraw(id)
     }
     return !!this.onPendingDeposit || !!this.onPendingStop

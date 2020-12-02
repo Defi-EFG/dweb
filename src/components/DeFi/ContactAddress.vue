@@ -203,6 +203,11 @@ export default class ContactAddress extends Vue {
   .address-list {
     min-height: 128px;
   }
+
+  .empty-message {
+    margin: 2rem auto;
+    padding-top: 0;
+  }
 }
 
 @media (max-width: 425px) {
