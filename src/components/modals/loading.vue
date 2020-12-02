@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div class="loading">
     <v-dialog v-model="show" width="400" persistent>
-      <v-card class="blur-card">
+      <v-card>
         <v-card-title class="modal-header">
           <v-icon></v-icon>
           <v-btn @click="onClose" text><v-icon color="black">close</v-icon></v-btn>
@@ -69,25 +69,8 @@ export default class Loading extends Vue {
 .v-card {
   position: relative;
 }
-</style>
 
-<style>
-.blur-card {
-  background-color: transparent;
-  position: relative;
-  color: white;
-}
-.blur-card:before {
-  background-color: transparent;
-  content: '';
-  max-width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: -16px;
-  box-shadow: inset 0 0 2000px rgba(116, 116, 116, 0.356) !important;
-  backdrop-filter: blur(20px);
-  z-index: -1;
+.loading {
+  overflow: hidden;
 }
 </style>
