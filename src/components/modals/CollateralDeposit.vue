@@ -67,7 +67,7 @@
                   large
                   depressed
                   class="mb-7"
-                  :class="Loanername != '' ? 'text-capitalize' : 'disabled'"
+                  :class="Loanername != '' ? 'select-but' : 'disabled'"
                   @click="connectStep()"
                   >{{ $t('views.modal.select') }}</v-btn
                 >
@@ -96,7 +96,7 @@
                   ><br />
                   <input type="text" v-model="selectdata" disabled />
                 </div>
-                <v-btn large depressed class="text-capitalize mb-7" @click="toStep(3)">{{
+                <v-btn large depressed class="text-capitalize select-but mb-7" @click="toStep(3)">{{
                   $t('views.modal.next')
                 }}</v-btn>
               </div>
@@ -196,7 +196,7 @@
                         outlined
                         large
                         color="primary"
-                        class="text-capitalize1"
+                        class="text-capitalize"
                         @click="toStep(2)"
                         >{{ $t('views.modal.cancel') }}</v-btn
                       >
@@ -727,19 +727,14 @@ export default class CollateralDeposit extends Vue {
 .roww2 .color_size2 {
   color: #c074f9;
 }
-.text-capitalize {
+.select-but {
   width: 100%;
   background-color: #b052ee !important;
   color: #ffffff;
   transition: 0.5s;
   margin-top: 20px;
 }
-.text-capitalize1 {
-  margin-top: 20px;
-  width: 100%;
-  color: #ffffff;
-  text-transform: capitalize;
-}
+
 .headtitle_collat {
   padding: 20px 0 0 0;
 }
