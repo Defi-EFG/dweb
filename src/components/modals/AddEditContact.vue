@@ -10,7 +10,7 @@
           </v-btn>
         </v-card-title>
         <div class="contact-dialog-wrapper">
-          <div class="contact-dialog-content" >
+          <div class="contact-dialog-content">
             <v-form class="wrapper-form">
               <v-text-field
                 class="nameinput"
