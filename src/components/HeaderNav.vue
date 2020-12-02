@@ -52,6 +52,7 @@ import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import LendingModule from '@/store/lending'
 import StakingModule from '@/store/staking'
+import AddressBookModule from '@/store/address-book'
 import UnlockWallet from './modals/UnlockWallet.vue'
 import PrivateKey from './modals/PrivateKeyModal.vue'
 import TxNotifications from '@/components/DeFi/TxNotifications.vue'
@@ -67,6 +68,7 @@ export default class HeaderNav extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
   stakingStore = getModule(StakingModule)
+  addressStore = getModule(AddressBookModule)
 
   unlockWalletOpen = false
   accessPrivateKey = false
@@ -104,6 +106,7 @@ export default class HeaderNav extends Vue {
     this.walletStore.logout()
     this.lendingStore.logout()
     this.stakingStore.logout()
+    this.addressStore.unsubscribeFromFirebase()
     this.menu = false
   }
 

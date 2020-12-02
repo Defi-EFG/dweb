@@ -46,7 +46,7 @@
       large
       block
       class="btn-d"
-      :loading="!!onPendingDeposit"
+      :loading="!!onPendingDeposit || !!onPendingStop"
       :class="isTransferable(depositAmount, balance) ? '' : 'disabled'"
       :disabled="!isTransferable(depositAmount, balance)"
       @click="deposit"
@@ -146,6 +146,12 @@ export default class DepositWithdraw extends Vue {
 
   get stakingpage() {
     return this.$t('views.stakingpage')
+  }
+
+  get onPendingStop() {
+    return this.walletStore.pendingTransactions.find(tx => {
+      return tx.actionType === constants.ACTION_STOP && tx.status === constants.STATUS_PENDING
+    })
   }
 
   fillAmountDeposit(amount: number) {

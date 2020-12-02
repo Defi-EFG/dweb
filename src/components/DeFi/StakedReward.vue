@@ -82,7 +82,7 @@
           :loading="!!onPendingStop"
           :class="staked.status ? '' : 'stopped'"
           color="#FF4E4E"
-          :disabled="!staked.staking"
+          :disabled="!staked.staking || !!onPendingDeposit"
           @click="stopStaking"
           >{{ $t('views.stakingpage.stop_staking') }}</v-btn
         >
@@ -106,7 +106,7 @@ import { getModule } from 'vuex-module-decorators'
 import { Currency, CurrencyInfo } from '@/types/currency'
 import WalletModule from '@/store/wallet'
 import StakingModule from '@/store/staking'
-import moment from 'moment'
+import moment from 'moment/src/moment'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
@@ -190,6 +190,12 @@ export default class StakedReward extends Vue {
 
   get stakingpage() {
     return this.$t('views.stakingpage')
+  }
+
+  get onPendingDeposit() {
+    return this.walletStore.pendingTransactions.find(tx => {
+      return tx.actionType === constants.ACTION_DEPOSIT && tx.status === constants.STATUS_PENDING
+    })
   }
 
   get onPendingStop() {
