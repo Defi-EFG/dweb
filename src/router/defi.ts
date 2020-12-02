@@ -1,8 +1,12 @@
 import { RouteConfig } from 'vue-router'
-import DefiIndex from '@/views/defi/Index.vue'
-import DefiWalletPage from '@/views/defi/wallet/Index.vue'
-import DefiStakingPage from '@/views/defi/staking/Index.vue'
-import DefiLendingPage from '@/views/defi/lending/Index.vue'
+
+const DefiIndex = () => import(/* webpackChunkName: "group-defi" */ '@/views/defi/Index.vue')
+const DefiWalletPage = () =>
+  import(/* webpackChunkName: "group-defi" */ '@/views/defi/wallet/Index.vue')
+const DefiStakingPage = () =>
+  import(/* webpackChunkName: "group-defi" */ '@/views/defi/staking/Index.vue')
+const DefiLendingPage = () =>
+  import(/* webpackChunkName: "group-defi" */ '@/views/defi/lending/Index.vue')
 
 const defiRoutes: Array<RouteConfig> = [
   {
