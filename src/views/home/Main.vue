@@ -156,22 +156,22 @@
       </v-container>
       <v-container>
         <v-row class="row1">
-          <v-col lg="3" md="3" cols="2">
+          <v-col lg="3" md="3" cols="6">
             <div class="supply sub_head_supply">
               {{ $t('views.main.supply') }}
             </div>
           </v-col>
-          <v-col lg="3" md="3" cols="4">
+          <v-col lg="3" md="3" cols="6">
             <div class="supply sub_head_supply">
               {{ $t('views.main.loaner') }}
             </div>
           </v-col>
-          <v-col lg="3" md="3" cols="3">
+          <v-col lg="3" md="3" cols="6" class="efg_mobile">
             <div class="supply sub_head_supply">
               {{ $t('views.main.total_supply') }}
             </div>
           </v-col>
-          <v-col lg="3" md="3" cols="3">
+          <v-col lg="3" md="3" cols="6" class="efg_mobile">
             <div class="supply sub_head_supply">
               {{ $t('views.main.total_borrowed') }}
             </div>
@@ -179,28 +179,30 @@
         </v-row>
         <router-link v-for="(item, i) in pools" :key="i" :to="`loan-info?pool=${item.address}`">
           <v-row class="row1 roww2" :id="`EFG_Supply_${1 + i}`">
-            <v-col lg="3" md="3" cols="2">
+            <v-col lg="3" md="3" cols="6">
               <div class="margintop">
                 <img src="@/assets/efg_01.svg" alt="" />
                 {{ item.currency.name }}
               </div>
             </v-col>
-            <v-col lg="3" md="3" cols="4">
+            <v-col lg="3" md="3" cols="6">
               <div class="text-truncate margintop Loener">
                 {{ truncateAddress(item.address) }}
               </div>
             </v-col>
-            <v-col lg="3" md="3" cols="3" class="border_left">
-              <div class="margintop color_1 textafter">
+            <v-col lg="3" md="3" cols="6" class="border_left">
+              <div class="margintop color_1 ">
                 <span class="color_size"
-                  >{{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }} EFG</span
+                  >{{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }} EFG
+                  <span class="text_mobile ">{{ $t('views.main.total_supply') }}</span></span
                 >
               </div>
             </v-col>
-            <v-col lg="3" md="3" cols="3">
+            <v-col lg="3" md="3" cols="6">
               <div class="margintop color_2 textafter">
                 <span class="color_size"
-                  >{{ item.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }} EFG</span
+                  >{{ item.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }} EFG
+                  <span class="text_mobile ">{{ $t('views.main.total_borrowed') }}</span></span
                 >
               </div>
             </v-col>
@@ -606,7 +608,7 @@ body {
 .sub_head_supply {
   color: #9b9898;
   padding-left: 20px;
-  font-size: 14px;
+  font-size: 16px;
 }
 .head_supply3 {
   padding-left: 40px;
@@ -859,6 +861,9 @@ body {
   color: #c074f9;
   border-bottom: 2px solid #c074f9;
 }
+.text_mobile {
+  display: none;
+}
 @keyframes header_fp {
   0% {
     opacity: 0;
@@ -952,6 +957,24 @@ body {
   .sec_2 .row1 .supply {
     padding: 0;
   }
+  .efg_mobile {
+    display: none;
+  }
+  .sec_2 .row1 .border_left {
+    border-left: 0px;
+  }
+  .text_mobile {
+    display: inline-block;
+    color: #cccccc;
+    font-size: 12px;
+  }
+  .sec_2 .roww2 .col-6 {
+    padding: 5px 12px;
+  }
+  .textafter {
+    text-align: right;
+    float: right;
+  }
 }
 
 @media only screen and (max-width: 670px) {
@@ -975,13 +998,13 @@ body {
     text-indent: 2em;
   }
   .sec_2 .row1 .margintop {
-    font-size: 10px;
+    font-size: 15px;
   }
   .sec_2 .row1 .color_size {
-    font-size: 10px;
+    font-size: 14px;
   }
   .sec_2 .row1 .supply {
-    font-size: 10px;
+    font-size: 15px;
   }
   .head_supply3 {
     padding-left: 20px;
@@ -1016,9 +1039,7 @@ body {
     opacity: 0.25;
     transition: 0.5s;
   }
-  .sec_2 .row1 .margintop img {
-    display: none;
-  }
+
   .sec_2 .row1 .row1_img {
     opacity: 0.1;
     width: 35px;
@@ -1048,6 +1069,12 @@ body {
     background: transparent linear-gradient(180deg, #251430 0%, #070c1a 100%) 0% 0% no-repeat
       padding-box;
   }
+  .sec_2 .roww2 .col-6 {
+    padding: 2px 12px;
+  }
+  .sec_2 .row1 {
+    padding: 10px 2px;
+  }
 }
 @media only screen and (max-width: 500px) {
   .slider_main_head .slider_margin {
@@ -1055,6 +1082,12 @@ body {
   }
   .slider_main_head .detail .price {
     padding-top: 5px;
+  }
+  .text_mobile {
+    font-size: 10px;
+  }
+  .sec_2 .row1 .color_size {
+    font-size: 12px;
   }
 }
 </style>

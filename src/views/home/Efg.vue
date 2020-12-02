@@ -220,7 +220,7 @@ export default class Efg extends Vue {
 }
 .m_titel {
   text-align: left;
-  font: normal normal normal 16px/21px Segoe UI;
+  font-size: 16px;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
@@ -231,7 +231,7 @@ export default class Efg extends Vue {
 }
 .m_price {
   text-align: left;
-  font: normal normal normal 30px/40px Segoe UI;
+  font-size: 30px;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
@@ -251,7 +251,7 @@ export default class Efg extends Vue {
 }
 .M_detail .text_price_head {
   text-align: left;
-  font: normal normal normal 16px/21px Segoe UI;
+  font-size: 16px;
   letter-spacing: 0px;
   color: #ffffff;
   opacity: 1;
@@ -261,14 +261,14 @@ export default class Efg extends Vue {
 }
 .M_detail .text_price {
   text-align: left;
-  font: normal normal 400 35px/47px Segoe UI;
+  font-size: 30px;
   letter-spacing: 0px;
   color: #3fc0db;
   opacity: 1;
 }
 .M_detail .text_price_2 {
   text-align: left;
-  font: normal normal 400 35px/47px Segoe UI;
+  font-size: 30px;
   letter-spacing: 0px;
   color: #c074f9;
   opacity: 1;
