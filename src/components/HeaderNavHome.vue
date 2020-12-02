@@ -276,7 +276,8 @@ ul {
   border-radius: 5px;
   background-color: transparent;
 }
-@media only screen and (max-width: 760px) {
+
+@media only screen and (max-width: 840px) {
   .desktop_menu {
     display: none;
   }
