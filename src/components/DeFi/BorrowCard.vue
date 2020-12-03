@@ -266,8 +266,8 @@ export default class BorrowCard extends Vue {
   }
 
   @Watch('bpSlider')
-  onSliderUpdated(val: any) {
-    console.log('slider changed', val)
+  onSliderUpdated() {
+    // console.log('slider changed', val)
   }
 
   onOpenModal() {
