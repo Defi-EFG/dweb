@@ -1,5 +1,5 @@
 import Vue from 'vue'
-import moment from 'moment/src/moment'
+import moment from 'moment'
 
 export function timeFromNow(now: string | number) {
   return moment(now).fromNow()

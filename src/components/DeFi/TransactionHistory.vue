@@ -50,7 +50,7 @@
 
 <script lang="ts">
 import { Vue, Component, Prop } from 'vue-property-decorator'
-import moment from 'moment/src/moment'
+import moment from 'moment'
 import { getModule } from 'vuex-module-decorators'
 import WalletModule from '@/store/wallet'
 import * as constants from '@/constants'
