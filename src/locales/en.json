@@ -302,7 +302,7 @@
             "status": "Status:",
             "please_input_key": "Please input keystore password to access private key",
             "access": "ACCESS",
-            "use_privatekey": "Use Privatekey",
+            "use_privatekey": "Use Private key",
             "password_must_match": "Password must match",
             "create_wallet_with": "Create Wallet With PrivateKey",
             "native": "Native Currency",

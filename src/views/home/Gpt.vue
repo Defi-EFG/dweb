@@ -221,39 +221,8 @@ export default class Gpt extends Vue {
 .m_titel_2 {
   text-align: right;
 }
-.m_price {
-  text-align: left;
-  font-size: 16px;
-  letter-spacing: 0px;
-  color: #ffffff;
-  opacity: 1;
-  margin-bottom: 20px;
-  margin-top: 10px;
-}
 .M_detail {
   position: relative;
-}
-.M_detail .div_price {
-  position: absolute;
-  top: 40%;
-}
-.M_detail .chart {
-  max-width: 350px;
-  margin: 0 auto;
-}
-.M_detail .text_price_head {
-  text-align: left;
-  font-size: 16px;
-  letter-spacing: 0px;
-  color: #ffffff;
-  opacity: 1;
-}
-.M_detail .text_price {
-  text-align: left;
-  font-size: 30px;
-  letter-spacing: 0px;
-  color: #3fc0db;
-  opacity: 1;
 }
 .chart_view {
   background-color: #000000;
@@ -265,26 +234,11 @@ export default class Gpt extends Vue {
   .h_detail {
     max-width: 95%;
   }
-  .M_detail .div_price {
-    position: relative;
-    top: 0;
-    max-width: 95%;
-    margin: 0 auto;
-  }
-  .M_detail .text_price_head {
-    text-align: right;
-  }
-  .M_detail .text_price {
-    text-align: right;
-  }
   .sec_m1 {
     padding: 100px 0 30px 0;
   }
 }
 @media only screen and (max-width: 500px) {
-  .M_detail .text_price {
-    font-size: 28px;
-  }
   .logo_ecoc .logo_ecoc_m_text {
     font-size: 30px;
   }
