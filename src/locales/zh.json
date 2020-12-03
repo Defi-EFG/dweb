@@ -178,7 +178,8 @@
             "liquidation_protection": "清算保护时间：",
             "extend": "延伸",
             "not_available": "无法使用",
-            "insufficient": "不足"
+            "insufficient": "不足",
+            "waiting": "等候..."
         },
         "stakingpage": {
             "stakinglist": "质押列表",
@@ -216,7 +217,10 @@
             "fee": "费用",
             "day": "天",
             "hour": "时",
-            "min": "分"
+            "min": "分",
+            "withdrawing": "提款",
+            "stopping": "正在停止",
+            "depositing": "存款"
         },
         "modal": {
             "errorMsg2": "密钥库文本格式错误",

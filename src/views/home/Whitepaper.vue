@@ -1,6 +1,6 @@
 <template>
   <div>
-    <div style="margin-top200px">
+    <div style="margin-top: 200px">
       <h1>Purple Haze</h1>
     </div>
   </div>

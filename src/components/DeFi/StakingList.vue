@@ -30,9 +30,11 @@
                   indeterminate
                 ></v-progress-circular>
                 <div class="d-inline type ml-2">
-                  <span v-if="!!onPendingRewardWithdraw(token.pendingId)">Withdrawing</span>
-                  <span v-else-if="!!onPendingStop">Stopping</span>
-                  <span v-else-if="!!onPendingDeposit">Depositing</span>
+                  <span v-if="!!onPendingRewardWithdraw(token.pendingId)">{{
+                    $t('views.stakingpage.withdrawing')
+                  }}</span>
+                  <span v-else-if="!!onPendingStop">{{ $t('views.stakingpage.stopping') }}</span>
+                  <span v-else-if="!!onPendingDeposit">{{ $t('views.stakingpage.deposit') }}</span>
                 </div>
               </div>
             </template>
