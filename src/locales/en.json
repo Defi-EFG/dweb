@@ -321,7 +321,9 @@
             "gpt_balance": "GPT wallet balance",
             "gpt_deposit_amount": "Deposit Amount",
             "deposit": "Deposit",
-            "GPT": "GPT"
+            "GPT": "GPT",
+            "downloadkeystore": "Note: Keep the keystore file in a safe and secure place. If you lose your keystore file or forgot password, it may cause losing your funds and will not be able to recover."
+
         }
     },
     "components": {},
@@ -350,4 +352,5 @@
     "You do not have enough ECOC to send": "You do not have enough ECOC to send",
     "Currency Approving...": "Currency Approving...",
     "Sending Transaction...": "Sending Transaction..."
+
 }

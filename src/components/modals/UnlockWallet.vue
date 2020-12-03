@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-dialog v-model="unlockwalletModal" max-width="394" persistent>
+    <v-dialog v-model="unlockwalletModal" max-width="420" persistent>
       <v-stepper v-model="step">
         <v-stepper-items>
           <!-- Welcome to ECOC Finance Governance -->
@@ -69,11 +69,18 @@
               </template>
               <template v-else-if="!loading">
                 <div class="create-wallet-wraper bg-white rounded-lg">
-                  <div class="pb-5 mb-4">
+                  <div class="mb-4">
                     <h3 class="primary--text">
                       <b>{{ $t('views.modal.keystore_gen') }}</b>
                     </h3>
                     <small class="lightgray--text">{{ $t('views.modal.please_sav') }}</small>
+                  </div>
+                  <div class="warning-style">
+                    <v-alert outlined color="warning" class="warning-al-wr">
+                      <div class="warning-alert">
+                        {{ $t('views.modal.downloadkeystore') }}
+                      </div>
+                    </v-alert>
                   </div>
                   <div class="mb-4 keystorewrapper">
                     <div class="keystorefield" @click="copyAddress(createWalletKeystore)">
@@ -808,5 +815,11 @@ v-btn {
   font-size: 14px;
   text-align: end;
   color: green;
+}
+.warning-alert {
+  font-size: 13px;
+}
+.warning-style {
+  background-color: #fffce9;
 }
 </style>

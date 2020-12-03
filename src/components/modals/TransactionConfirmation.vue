@@ -35,7 +35,7 @@
               </template>
               <span>{{ copymessage }}</span>
             </v-tooltip>
-            <div class="icon-send"><v-icon small color="white">arrow_back</v-icon></div>
+            <div class="icon-send"><v-icon small color="white">arrow_forward</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
             <h3>
