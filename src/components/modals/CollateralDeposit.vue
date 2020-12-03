@@ -301,7 +301,7 @@
       <v-card>
         <div class="d-flex justify-lg-space-between pt-3">
           <v-icon></v-icon>
-          <v-btn icon @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
+          <v-btn icon @click="closeGasSetting"><v-icon>close</v-icon></v-btn>
         </div>
         <div class="content-gas-setting">
           <h3>{{ $t('views.modal.gas_setting') }}</h3>
