@@ -774,7 +774,7 @@ export default class CollateralDeposit extends Vue {
   margin-top: 4px;
 }
 .transaction-confirmation-wrapper {
-  margin: 16px 16px 0 16px;
+  margin: 16px 16px 16px 16px;
   border-radius: 3px;
   overflow: hidden;
   position: relative;
