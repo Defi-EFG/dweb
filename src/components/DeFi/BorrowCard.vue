@@ -118,8 +118,6 @@ import { Currency } from '@/types/currency'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
-import { log } from '@firebase/database/dist/src/core/util/util'
-
 @Component({
   components: {
     TransactionConfirmationModal
