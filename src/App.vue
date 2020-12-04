@@ -89,6 +89,7 @@ export default class App extends Vue {
 @font-face {
   font-family: 'Nunito Sans';
   src: url('assets/fonts/NunitoSans-Regular.ttf') format('truetype');
+  font-display: swap
 }
 
 html,
