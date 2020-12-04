@@ -39,11 +39,11 @@
         v-model="bpSlider"
         min="0"
         max="100"
-        color="#c074f9"
         track-color="#E4E4E4"
-        thumb-color="#E4E4E4"
-        :hide-details="true"
         thumb-label
+        :color="bpSlider >= safeLimit ? '#F49D44' : '#C074F9'"
+        :thumb-color="bpSlider >= safeLimit ? '#F49D44' : '#C074F9'"
+        :hide-details="true"
         @end="limitSlider"
         @click.native="limitSlider"
       ></v-slider>
@@ -72,6 +72,11 @@
       <v-spacer></v-spacer>
       <span>{{ interestRate }} %</span>
     </div>
+    <div class="fixedhight">
+      <div v-show="bpSlider > safeLimit" class="warning-borrow text-center">
+        {{ $t('views.lendingpage.warning') }}
+      </div>
+    </div>
     <v-btn
       dark
       large
@@ -91,6 +96,7 @@
         <span class="ml-2" v-if="!isBorrowPendingType">{{ $t('views.lendingpage.waiting') }}</span>
       </template>
     </v-btn>
+
     <TransactionConfirmationModal
       :visible="confirmTxModal"
       :fromAddr="contractAddr"
@@ -112,6 +118,7 @@ import { Currency } from '@/types/currency'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
+import { log } from '@firebase/database/dist/src/core/util/util'
 
 @Component({
   components: {
@@ -330,6 +337,17 @@ export default class BorrowCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
+.fixedhight {
+  height: 23px;
+  margin-bottom: 20px;
+  margin-top: 14px;
+}
+.warning-borrow {
+  height: 23px;
+  font-size: 11px;
+
+  color: #f49d44;
+}
 .borrow-card {
   width: inherit;
 }
@@ -393,14 +411,8 @@ export default class BorrowCard extends Vue {
     color: #c074f9;
   }
 }
-
-// .borrow-used {
-//   margin-top: 1rem;
-//   margin-bottom: 1.25rem;
-// }
-
 .submit-btn {
-  margin-top: 3.6rem;
+  margin-top: 1rem;
   border-radius: 7px;
   font-weight: bold;
   background: transparent linear-gradient(90deg, #9c26df 0%, #661b91 100%) 0% 0% no-repeat
@@ -454,12 +466,6 @@ export default class BorrowCard extends Vue {
 </style>
 
 <style lang="scss">
-.borrow-slider {
-  .v-slider__thumb-label {
-    background-color: #c074f9 !important;
-  }
-}
-
 .borrow-card-wrapper {
   .v-input__prepend-inner {
     margin: auto;

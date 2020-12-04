@@ -182,6 +182,7 @@
             "extend": "Extend",
             "not_available": "Not available",
             "insufficient": "Insufficeint",
+            "warning": "The more borrow amount, the more chance to be liquidated"
             "waiting": "Waiting..."
         },
         "stakingpage": {
