@@ -184,8 +184,8 @@ export default class HeaderNav extends Vue {
   background-color: #2a3047 !important;
 
   .dot-circle {
-    height: 12px;
-    width: 12px;
+    height: 8px;
+    width: 8px;
     background-color: #c074f9;
     border-radius: 50%;
     margin-right: 6px;
