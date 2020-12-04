@@ -85,8 +85,6 @@ import StakingList from '@/components/DeFi/StakingList.vue'
 import StakingChart from '@/components/DeFi/StakingChart.vue'
 import DepositWithdraw from '@/components/DeFi/DepositWithdraw.vue'
 import StakedReward from '@/components/DeFi/StakedReward.vue'
-import RewardHistory from '@/components/DeFi/RewardHistory.vue'
-import TransactionRewardHistory from '@/components/DeFi/Mobile/TransactionRewardHistory.vue'
 
 @Component({
   components: {
@@ -94,9 +92,7 @@ import TransactionRewardHistory from '@/components/DeFi/Mobile/TransactionReward
     StakingList,
     StakingChart,
     DepositWithdraw,
-    StakedReward,
-    RewardHistory,
-    TransactionRewardHistory
+    StakedReward
   }
 })
 export default class Staking extends Vue {

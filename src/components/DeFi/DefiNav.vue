@@ -7,7 +7,12 @@
           @click="menuSelect(index)"
           :class="{ selected: index === activePage }"
         >
-          <img :src="index === activePage ? item.iconClicked : item.icon" alt="" />
+          <img
+            width="29"
+            height="29"
+            :src="index === activePage ? item.iconClicked : item.icon"
+            alt=""
+          />
           <div class="menu_width">{{ item.title }}</div>
         </div>
       </div>

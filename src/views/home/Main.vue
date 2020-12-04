@@ -181,7 +181,7 @@
           <v-row class="row1 roww2" :id="`EFG_Supply_${1 + i}`">
             <v-col lg="3" md="3" cols="6">
               <div class="margintop">
-                <img src="@/assets/efg_01.svg" alt="" />
+                <img width="42" height="42" src="@/assets/efg_01.svg" alt="" />
                 {{ item.currency.name }}
               </div>
             </v-col>
@@ -222,7 +222,7 @@
         </v-row>
         <v-row class="row1 roww3">
           <v-col lg="3" md="3" cols="6" class="Staking_dt">
-            <img src="@/assets/gpt.svg" alt="" />
+            <img width="42" height="42" src="@/assets/gpt.svg" alt="" />
             <div class="supply_name">GPT</div>
             <div class="supply_text">{{ $t('views.main.deposit') }}</div>
             <div class="supply_text">{{ $t('views.main.estimated') }}</div>

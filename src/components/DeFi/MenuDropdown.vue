@@ -10,12 +10,12 @@
       solo
     >
       <template v-slot:item="data">
-        <img class="page-icon" :src="data.item.icon" alt="" />
+        <img width="29" height="29" class="page-icon" :src="data.item.icon" alt="" />
         <span class="page-text">{{ data.item.title }}</span>
       </template>
 
       <template v-slot:selection="data">
-        <img class="page-icon" :src="data.item.icon" alt="" />
+        <img width="29" height="29" class="page-icon" :src="data.item.icon" alt="" />
         <span class="page-text">{{ data.item.title }}</span>
       </template>
     </v-select>
