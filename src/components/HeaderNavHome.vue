@@ -105,9 +105,7 @@ export default class HeaderNavHome extends Vue {
 .v-card__text {
   text-align: center;
 }
-.v-btn.v-size--small {
-  margin-left: 10px;
-}
+
 #menu_s {
   display: none;
 }

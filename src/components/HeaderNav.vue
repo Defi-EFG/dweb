@@ -125,7 +125,6 @@ export default class HeaderNav extends Vue {
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .v-btn:not(.v-btn--round).v-size--default {
   height: auto;
@@ -135,6 +134,7 @@ export default class HeaderNav extends Vue {
 .primary-address {
   font-size: 0.9em;
   padding: 14px 10px;
+  word-break: break-all;
 }
 .home {
   display: flex;
@@ -149,6 +149,7 @@ export default class HeaderNav extends Vue {
   border-radius: 8px;
   margin-top: 10px;
 }
+
 .text-btn {
   text-decoration: underline;
   text-transform: capitalize;
