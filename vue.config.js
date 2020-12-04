@@ -1,21 +1,15 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+const PreloadWebpackPlugin = require('preload-webpack-plugin')
+// const HtmlWebpackPlugin = require('html-webpack-plugin')
+
 module.exports = {
+  chainWebpack: config => {
+    config.plugins.delete('prefetch')
+    config.plugin('preload').use(new PreloadWebpackPlugin())
+  },
   configureWebpack: {
     optimization: {
-      runtimeChunk: 'single',
-      splitChunks: {
-        chunks: 'all',
-        maxInitialRequests: Infinity,
-        minSize: 0,
-        cacheGroups: {
-          vendor: {
-            test: /[\\/]node_modules[\\/]/,
-            name(module) {
-              const packageName = module.context.match(/[\\/]node_modules[\\/](.*?)([\\/]|$)/)[1]
-              return `npm.${packageName.replace('@', '')}`
-            }
-          }
-        }
-      }
+      runtimeChunk: 'single'
     }
   }
 }

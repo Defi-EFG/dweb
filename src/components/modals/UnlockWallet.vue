@@ -744,12 +744,6 @@ v-btn {
   transition: 0.5s;
 }
 
-.efg-logo {
-  width: 28px;
-  height: 28px;
-  margin-right: 0px;
-}
-
 .user-status {
   width: auto;
   height: auto;
