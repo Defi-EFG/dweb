@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-dialog v-model="unlockwalletModal" max-width="420" persistent>
+  <div class="unlockwalletModalWrapper">
+    <v-dialog v-model="unlockwalletModal" max-width="400" persistent>
       <v-stepper v-model="step">
         <v-stepper-items>
           <!-- Welcome to ECOC Finance Governance -->
@@ -128,11 +128,12 @@
                       <b>{{ $t('views.modal.create_ecoc') }}</b></b
                     >
                   </h3>
+
                   <small class="lightgray--text"
                     >{{ $t('views.modal.please_set_your') }}
-                    <span class=" text-btn" @click="openPrivatekeyfield()" text>{{
-                      $t('views.modal.use_privatekey')
-                    }}</span>
+                    <p @click="openPrivatekeyfield()" text>
+                      <strong class=" text-btn"> {{ $t('views.modal.use_privatekey') }}</strong>
+                    </p>
                   </small>
                 </div>
                 <transition name="fade">
@@ -582,7 +583,9 @@ export default class UnlockwalletModal extends Vue {
 .upload_input .v-icon.v-icon.v-icon--link::before {
   color: white;
 }
-
+.v-dialog {
+  overflow: hidden;
+}
 .upload_input .v-icon.v-icon.v-icon--link {
   border: 1px solid;
   border-radius: 50%;
@@ -590,6 +593,15 @@ export default class UnlockwalletModal extends Vue {
   color: white;
   padding: 4px;
   font-size: revert;
+}
+
+@media only screen and (max-width: 400px) {
+  .v-dialog {
+    margin: 1px !important;
+  }
+  .create-wallet-wraper {
+    padding: 22px 14px !important;
+  }
 }
 </style>
 <style lang="scss" scoped>
@@ -645,6 +657,11 @@ export default class UnlockwalletModal extends Vue {
   padding: 38px 36px 56px 36px;
 }
 
+@media (max-width: 400px) {
+  .more-space {
+    padding: 25px;
+  }
+}
 .topspace {
   padding: 30px 0px;
 }
@@ -750,8 +767,8 @@ v-btn {
   background-color: #2a3047 !important;
 
   .dot-circle {
-    height: 12px;
-    width: 12px;
+    height: 8px;
+    width: 8px;
     background-color: #c074f9;
     border-radius: 50%;
     margin-right: 6px;

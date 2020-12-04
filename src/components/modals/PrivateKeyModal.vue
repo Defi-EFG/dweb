@@ -186,7 +186,16 @@ export default class PrivateKey extends Vue {
 .bg-header span {
   font-size: 15px;
 }
-
+@media (max-width: 400px) {
+  .bg-header {
+    margin: 10px 13px 0px;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+  .bg-white {
+    margin: 0px 15px;
+  }
+}
 .header {
   color: #44096b;
   margin-right: 4px;

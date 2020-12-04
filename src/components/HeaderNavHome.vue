@@ -105,9 +105,7 @@ export default class HeaderNavHome extends Vue {
 .v-card__text {
   text-align: center;
 }
-.v-btn.v-size--small {
-  margin-left: 10px;
-}
+
 #menu_s {
   display: none;
 }
@@ -247,8 +245,8 @@ ul {
   height: auto;
   background-color: #2a3047 !important;
   .dot-circle {
-    height: 12px;
-    width: 12px;
+    height: 8px;
+    width: 8px;
     background-color: #c074f9;
     border-radius: 50%;
     margin-right: 6px;

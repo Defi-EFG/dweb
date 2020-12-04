@@ -335,7 +335,7 @@ export default class TransactionConfirmationModal extends Vue {
   top: 0;
   left: 0;
   right: 0;
-  bottom: -16px;
+  bottom: -20px;
   box-shadow: inset 0 0 2000px rgba(116, 116, 116, 0.356) !important;
   backdrop-filter: blur(20px);
   z-index: -1;

@@ -8,6 +8,7 @@
       @change="menuSelect"
       :hide-details="true"
       solo
+      append-icon="keyboard_arrow_down"
     >
       <template v-slot:item="data">
         <img width="29" height="29" class="page-icon" :src="data.item.icon" alt="" />
