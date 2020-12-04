@@ -10,7 +10,7 @@
         <div class="liquid-wrapper" v-show="isNearLiquidate && !extentTimeRemaining()">
           <div>
             <div>{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</div>
-            <div class="lg">GPT Balance: {{ extendBalance }} GPT</div>
+            <div class="lg">GPT {{ $t('views.lendingpage.balance') }}: {{ extendBalance }} GPT</div>
           </div>
           <v-spacer></v-spacer>
           <v-progress-circular

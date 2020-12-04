@@ -96,7 +96,9 @@
                 <small @click="openConfirmTxModal(item.currency, item.amount)">
                   <template v-if="!!onPendingTx">
                     <v-progress-circular indeterminate :size="14"></v-progress-circular>
-                    <span class="ml-1" v-if="!isWithdrawAssetsPendingType">{{ $t('views.lendingpage.wating') }}</span>
+                    <span class="ml-1" v-if="!isWithdrawAssetsPendingType">{{
+                      $t('views.lendingpage.wating')
+                    }}</span>
                   </template>
                   <span class="withdraw" v-else>{{ $t('views.lendingpage.withdraw') }}</span>
                 </small>
