@@ -464,6 +464,15 @@ export default class Main extends Vue {
   text-align: right;
   padding-top: 20px;
 }
+.readmore {
+  display: none;
+}
+#readmor_01 {
+  display: none;
+}
+#readmor_01_active {
+  display: block;
+}
 .open {
   display: none;
   min-height: 230px;
@@ -538,6 +547,11 @@ body {
   margin-right: 0;
   text-align: right;
 }
+.img_background {
+  width: 500px;
+  position: absolute;
+  right: 200px;
+}
 .sec_1 .social_icon img {
   padding: 0 5px;
   margin-right: 0;
@@ -601,6 +615,12 @@ body {
   color: #cccccc;
   padding-top: 50px;
 }
+.head_supply2 {
+  padding-left: 40px;
+}
+.head_supply {
+  color: #cccccc;
+}
 .sec_2 .row1 .supply2 {
   border-right: 2px solid rgb(75 69 83);
 }
@@ -621,6 +641,12 @@ body {
   position: relative;
   top: -10px;
   margin-left: 5px;
+}
+.sec_2 .row1 .margintopimg {
+  padding-top: 16px;
+  display: flex;
+  color: #ffffff;
+  align-items: center;
 }
 .sec_2 .row1 .margintop {
   color: #ffffff;
@@ -660,6 +686,27 @@ body {
   opacity: 0.5;
   margin-top: 10px;
 }
+.sec_2 .row1 .supply_button1 {
+  text-align: right;
+  color: #ffffff;
+}
+.sec_2 .row1 .supply_button11 {
+  text-align: right;
+  color: #ffffff;
+}
+.sec_2 .row1 .supply_button11 button {
+  background: transparent linear-gradient(270deg, #522d6a 0%, #743f96 100%) 0% 0% no-repeat
+    padding-box;
+  border-radius: 17px;
+  opacity: 1;
+  padding: 5px 10px;
+  color: #ffffff;
+  transition: 0.5s;
+}
+.sec_2 .row1 .supply_button11 button:hover {
+  background: transparent linear-gradient(270deg, #8d48ba 0%, #a38bb3 100%) 0% 0% no-repeat;
+  color: #000000;
+}
 .sec_2 .row1 .supply_button2 {
   text-align: right;
   color: #ffffff;
@@ -696,6 +743,12 @@ body {
 }
 .sec_2 .row1 .color_1 {
   color: rgb(63, 192, 219);
+}
+.padding_012 {
+  padding: 14px 12px 10px 12px;
+}
+.padding_0123 {
+  padding: 10px 12px 10px 12px;
 }
 .sec_2 .row1 .color_size {
   font-size: 18px;
@@ -877,6 +930,9 @@ body {
   }
   .sec_2 .row1 .color_2 {
     float: left;
+  }
+  .sec_2 .row1 .supply_button1 {
+    text-align: left;
   }
   .sec_2 .row1 .supply_button11 button {
     padding: 5px 20px;
