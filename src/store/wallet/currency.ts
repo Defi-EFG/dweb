@@ -18,7 +18,7 @@ export const EFG = {
   tokenInfo: {
     name: constants.EFG,
     symbol: constants.EFG,
-    address: '465bb1e07d460f86c1cfc0809ef97bd41f8a88b5',
+    address: 'b97f87f4510f6d71a3532cddf2d06ffad163b371',
     decimals: '8',
     totalSupply: '100000000000000'
   }
@@ -32,7 +32,7 @@ export const GPT = {
   tokenInfo: {
     name: constants.GPT,
     symbol: constants.GPT,
-    address: '01b4f96074cc86042bc9c98e4f3fbb17b82f0501',
+    address: '7d2da43956d3939ac978c7df934450adb0ae1f30',
     decimals: '4',
     totalSupply: '100000000'
   }
@@ -46,7 +46,7 @@ export const USDT = {
   tokenInfo: {
     name: constants.USDT,
     symbol: constants.USDT,
-    address: 'c701bd8a2c19d580a38c2344dd1bcd4d192f84d7',
+    address: '332eb9bb2280cde537c4546e8dab79d3ea122617',
     decimals: '8',
     totalSupply: '1000000000000'
   }
@@ -60,7 +60,7 @@ export const ETH = {
   tokenInfo: {
     name: constants.ETH,
     symbol: constants.ETH,
-    address: '151189fdd10a9d77efa48355c61f14513d60cf4a',
+    address: '008dc0186474400f49748951b6f21cade8a3a4cd',
     decimals: '8',
     totalSupply: '100000000000'
   }
@@ -74,7 +74,7 @@ export const EWUSDT = {
   tokenInfo: {
     name: constants.EWUSDT,
     symbol: constants.EWUSDT,
-    address: 'c701bd8a2c19d580a38c2344dd1bcd4d192f84d7',
+    address: '332eb9bb2280cde537c4546e8dab79d3ea122617',
     decimals: '8',
     totalSupply: '1000000000000'
   }
@@ -88,7 +88,7 @@ export const EWETH = {
   tokenInfo: {
     name: constants.EWETH,
     symbol: constants.EWETH,
-    address: '151189fdd10a9d77efa48355c61f14513d60cf4a',
+    address: '008dc0186474400f49748951b6f21cade8a3a4cd',
     decimals: '8',
     totalSupply: '100000000000'
   }

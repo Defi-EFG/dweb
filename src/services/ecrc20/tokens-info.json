@@ -2,28 +2,28 @@
   {
     "name": "EFG",
     "symbol": "EFG",
-    "address": "465bb1e07d460f86c1cfc0809ef97bd41f8a88b5",
+    "address": "b97f87f4510f6d71a3532cddf2d06ffad163b371",
     "decimals": "8",
-    "totalSupply": "1000000"
+    "totalSupply": "100000000000000"
   },
   {
     "name": "GPT",
     "symbol": "GPT",
-    "address": "01b4f96074cc86042bc9c98e4f3fbb17b82f0501",
+    "address": "7d2da43956d3939ac978c7df934450adb0ae1f30",
     "decimals": "4",
-    "totalSupply": "10000"
+    "totalSupply": "100000000"
   },
   {
-    "name": "USDT",
-    "symbol": "USDT",
-    "address": "c701bd8a2c19d580a38c2344dd1bcd4d192f84d7",
+    "name": "wrapped USDT for ecochain",
+    "symbol": "EWUSDT",
+    "address": "332eb9bb2280cde537c4546e8dab79d3ea122617",
     "decimals": "8",
     "totalSupply": "1000000000000"
   },
   {
-    "name": "ETH",
-    "symbol": "ETH",
-    "address": "151189fdd10a9d77efa48355c61f14513d60cf4a",
+    "name": "wrapped ETH for ecochain",
+    "symbol": "EWETH",
+    "address": "008dc0186474400f49748951b6f21cade8a3a4cd",
     "decimals": "8",
     "totalSupply": "100000000000"
   }

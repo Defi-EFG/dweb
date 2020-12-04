@@ -45,7 +45,7 @@
             "total_borrowed": "Total Borrowed",
             "deposit": "Deposit",
             "estimated": "Estimated daily yield",
-            "available": "Available (Total: 10,000 GPT)",
+            "available": "Available (Total: 9,000 GPT)",
             "collateral": "Collateral",
             "total_borrowers": "Total Borrowers",
             "total_debt": "Total Debt",
@@ -188,7 +188,7 @@
         "stakingpage": {
             "stakinglist": "Staking List",
             "total_staking": "Total Staking",
-            "available": "GPT - Available (Total: 10,000)",
+            "available": "GPT - Available (Total: 9,000)",
             "Total": "Total",
             "transactionhistory": "Transaction History",
             "deposit": "Deposit",

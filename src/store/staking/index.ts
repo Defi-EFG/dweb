@@ -36,8 +36,8 @@ export default class StakingModule extends VuexModule implements StakingPlatform
     }
   ] as StakingInfo[]
 
-  totalReward = 10000
-  available = 10000
+  totalReward = 9000
+  available = 9000
   withdrawalFeeRate = 0
 
   numberOfStaking = 0
@@ -169,7 +169,7 @@ export default class StakingModule extends VuexModule implements StakingPlatform
 
   @Action
   init() {
-    const totalReward = 1000
+    const totalReward = 9000
     this.context.commit('updateTotalReward', totalReward)
     this.context.commit('updateAvailable', totalReward)
     this.context.commit('updateTime')
