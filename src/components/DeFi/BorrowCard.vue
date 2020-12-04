@@ -41,8 +41,8 @@
         max="100"
         track-color="#E4E4E4"
         thumb-label
-        :color="bpSlider >= safeLimit ? '#F49D44' : '#C074F9'"
-        :thumb-color="bpSlider >= safeLimit ? '#F49D44' : '#C074F9'"
+        :color="bpSlider > safeLimit ? '#F49D44' : '#C074F9'"
+        :thumb-color="bpSlider > safeLimit ? '#F49D44' : '#C074F9'"
         :hide-details="true"
         @end="limitSlider"
         @click.native="limitSlider"
