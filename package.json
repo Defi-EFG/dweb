@@ -5,10 +5,10 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build --modern",
-    "build-report": "vue-cli-service build --report",
-    "build-modern": "vue-cli-service build --modern",
     "test:unit": "vue-cli-service test:unit",
     "lint": "vue-cli-service lint",
+    "build-modern": "vue-cli-service build --modern",
+    "build-report": "vue-cli-service build --report",
     "lint:fix": "eslint --fix --ext .vue,.js,.ts -- src/ tests/"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "ecoweb3": "^1.2.2",
     "material-design-icons-iconfont": "^6.1.0",
     "moment": "^2.29.1",
+    "register-service-worker": "^1.7.1",
     "v-click-outside": "^3.1.2",
     "vue": "^2.6.11",
     "vue-i18n": "^8.22.2",
@@ -45,6 +46,7 @@
     "@typescript-eslint/parser": "^2.33.0",
     "@vue/cli-plugin-babel": "^4.5.9",
     "@vue/cli-plugin-eslint": "^4.5.9",
+    "@vue/cli-plugin-pwa": "^4.5.9",
     "@vue/cli-plugin-router": "^4.5.9",
     "@vue/cli-plugin-typescript": "^4.5.9",
     "@vue/cli-plugin-unit-mocha": "^4.5.9",
