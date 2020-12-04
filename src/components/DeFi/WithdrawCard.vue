@@ -75,7 +75,7 @@
       }}
       <template v-slot:loader>
         <v-progress-circular indeterminate :size="24" class="spinner"></v-progress-circular>
-        <span class="ml-2" v-if="!isWithdrawPendingType">Waiting...</span>
+        <span class="ml-2" v-if="!isWithdrawPendingType">{{ $t('views.lendingpage.wating') }}</span>
       </template>
     </v-btn>
     <TransactionConfirmationModal

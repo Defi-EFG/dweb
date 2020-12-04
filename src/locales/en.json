@@ -181,7 +181,8 @@
             "liquidation_protection": "Liquidation protection time:",
             "extend": "Extend",
             "not_available": "Not available",
-            "insufficient": "Insufficeint"
+            "insufficient": "Insufficeint",
+            "waiting": "Waiting..."
         },
         "stakingpage": {
             "stakinglist": "Staking List",
@@ -218,7 +219,10 @@
             "fee": "Fee",
             "day": "Days",
             "hour": "Hour",
-            "min": "Min"
+            "min": "Min",
+            "withdrawing": "Withdrawing",
+            "stopping": "Stopping",
+            "depositing": "Depositing"
         },
         "modal": {
             "errorMsg2": "Wrong format of keystore file",
@@ -302,7 +306,7 @@
             "status": "Status:",
             "please_input_key": "Please input keystore password to access private key",
             "access": "ACCESS",
-            "use_privatekey": "Use Privatekey",
+            "use_privatekey": "Use Private key",
             "password_must_match": "Password must match",
             "create_wallet_with": "Create Wallet With PrivateKey",
             "native": "Native Currency",

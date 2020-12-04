@@ -86,25 +86,6 @@ export default class Docs extends Vue {
   height: 100%;
   position: fixed;
 }
-.sec_doc1 .list_head {
-  font: normal normal bold 18px/24px Segoe UI;
-  letter-spacing: 0px;
-  color: #000000;
-  opacity: 1;
-  margin-bottom: 15px;
-}
-.sec_doc1 .list_head:hover {
-  color: #c074f9;
-  transition: 0.5s;
-}
-.sec_doc1 .list_head:hover {
-  color: #c074f9;
-  transition: 0.5s;
-}
-.sec_doc1 .list_head .active {
-  color: #c074f9;
-  transition: 0.5s;
-}
 .sec_doc2 {
   background: #ededed;
   padding: 150px 30px 400px 82px;
@@ -141,20 +122,9 @@ export default class Docs extends Vue {
   opacity: 1;
   margin-bottom: 5px;
 }
-.sec_doc2 .sun_Introduction {
-  font-size: 20px;
-  letter-spacing: 0px;
-  color: #434141;
-  opacity: 1;
-  margin-bottom: 80px;
-  line-height: 1.5;
-}
 .container {
   max-width: 100%;
   padding: 0;
-}
-.efg-header {
-  background-color: #000000 !important;
 }
 @media only screen and (max-width: 960px) {
   .sec_doc1 {
