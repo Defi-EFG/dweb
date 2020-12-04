@@ -179,7 +179,7 @@
             "extend": "延伸",
             "not_available": "无法使用",
             "insufficient": "不足",
-            "waiting": "等候..."
+            "waiting": "等候...",
             "warning": "借贷的越多，爆仓的几率越大"
         },
         "stakingpage": {
