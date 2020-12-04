@@ -11,5 +11,11 @@ module.exports = {
     optimization: {
       runtimeChunk: 'single'
     }
+  },
+  pwa: {
+    manifestOptions: {
+      // eslint-disable-next-line @typescript-eslint/camelcase
+      start_url: '/'
+    }
   }
 }
