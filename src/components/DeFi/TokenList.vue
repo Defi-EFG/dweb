@@ -261,16 +261,15 @@ export default class TokenList extends Vue {
   }
 }
 
-@media (max-width: 1920px) {
-  .token-container {
-    max-width: 1040px;
-  }
-}
-
 @media (max-width: 1990px) {
   .token-container {
-    max-width: 1110px;
+    max-width: 1200px;
     width: inherit;
+  }
+}
+@media (min-width: 1264px) {
+  .token-container {
+    max-width: 1040px;
   }
 }
 </style>
