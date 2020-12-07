@@ -7,6 +7,7 @@
       v-model="currentToken"
       :hide-details="true"
       solo
+      append-icon="keyboard_arrow_down"
     >
       <template v-slot:item="data">
         <div class="token-item-select">
@@ -194,8 +195,8 @@ export default class MiniTokenList extends Vue {
 .icon {
   width: 23px;
   margin-right: 0.5rem;
-
   color: white !important;
+  margin-top: 6px;
 }
 
 .name {
