@@ -77,6 +77,7 @@
       :toAddr="contractAddr"
       :amount="estimatedGPTAmount"
       :currency="currency"
+      :txError="errorMsg"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
     />
@@ -243,6 +244,7 @@ export default class SupplyBalance extends Vue {
   }
 
   onConfirm(walletParams: WalletParams) {
+    this.errorMsg = ''
     this.loading = true
     this.loadingMsg = 'Currency Approving...'
     const amount = Number(this.estimatedGPTAmount)

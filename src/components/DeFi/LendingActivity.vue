@@ -115,6 +115,7 @@
       :toAddr="walletAddr"
       :amount="amount"
       :currency="currency"
+      :txError="errorMsg"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
     />
@@ -225,6 +226,7 @@ export default class LendingActivity extends Vue {
   }
 
   onConfirm(walletParams: WalletParams) {
+    this.errorMsg = ''
     const amount = Number(this.amount)
     const currency = this.currency
 

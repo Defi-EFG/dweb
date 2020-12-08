@@ -103,6 +103,7 @@
       :toAddr="walletAddr"
       :amount="borrowValue"
       :currency="currency"
+      :txError="errorMsg"
       @onConfirm="onConfirm"
       @onClose="onClose"
     />
@@ -270,11 +271,6 @@ export default class BorrowCard extends Vue {
     this.bpSlider = this.calculateBPUsed(val)
   }
 
-  @Watch('bpSlider')
-  onSliderUpdated() {
-    // console.log('slider changed', val)
-  }
-
   onOpenModal() {
     if (this.borrowValue) {
       this.confirmTxModal = !this.confirmTxModal
@@ -300,6 +296,7 @@ export default class BorrowCard extends Vue {
   }
 
   onConfirm(walletParams: WalletParams) {
+    this.errorMsg = ''
     const amount = Number(this.borrowValue)
     const poolAddress = this.lendingStore.loan.poolAddr
     const currency = this.currency

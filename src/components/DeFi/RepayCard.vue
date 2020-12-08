@@ -88,6 +88,7 @@
       :toAddr="contractAddr"
       :amount="repayAmount"
       :currency="currency"
+      :txError="errorMsg"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
     />
@@ -252,6 +253,7 @@ export default class RepayCard extends Vue {
 
   onConfirm(walletParams: WalletParams) {
     this.loading = true
+    this.errorMsg = ''
     const amount = Number(this.repayAmount)
     const currency = this.currency
 
