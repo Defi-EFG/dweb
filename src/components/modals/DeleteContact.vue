@@ -30,7 +30,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, PropSync, Prop } from 'vue-property-decorator'
-import AddressBookModule from '@/store/address-book/index2'
+import AddressBookModule from '@/store/address-book'
 import { getModule } from 'vuex-module-decorators'
 import { Contact } from '@/types/contact'
 @Component({

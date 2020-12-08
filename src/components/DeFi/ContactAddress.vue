@@ -55,7 +55,7 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import AddEditContact from '@/components/modals/AddEditContact.vue'
 import DeleteContact from '@/components/modals/DeleteContact.vue'
-import AddressBookModule from '@/store/address-book/index2'
+import AddressBookModule from '@/store/address-book'
 import WalletModule from '@/store/wallet'
 import { getModule } from 'vuex-module-decorators'
 import { Contact } from '@/types/contact'

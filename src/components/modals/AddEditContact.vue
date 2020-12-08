@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import { Vue, Component, PropSync, Prop, Watch } from 'vue-property-decorator'
-import AddressBookModule from '@/store/address-book/index2'
+import AddressBookModule from '@/store/address-book'
 import { Contact } from '@/types/contact'
 import WalletModule from '@/store/wallet'
 import { getModule } from 'vuex-module-decorators'
