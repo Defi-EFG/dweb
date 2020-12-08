@@ -6,6 +6,8 @@
       background-color="#252B3D"
       class="lending-tabs"
       :hide-slider="true"
+      next-icon="keyboard_arrow_right"
+      prev-icon="keyboard_arrow_left"
       show-arrows
     >
       <v-tab>{{ $t('views.lendingpage.my_collateral') }}</v-tab>
