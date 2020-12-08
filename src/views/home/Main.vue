@@ -70,49 +70,18 @@
               </div>
             </div>
             <div class="social_icon">
-              <a href="https://t.me/EFGtoken" target="_blank">
-                <img
-                  title="Telegram"
-                  class="img_logo1"
-                  src="@/assets/Subtraction.svg"
-                  style="animation-delay: 0.5s;"
-                  alt=""
-                  width="45"
-                  height="45"
-              /></a>
-              <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer">
-                <img
-                  title="Github"
-                  class="img_logo1"
-                  src="@/assets/github.svg"
-                  style="animation-delay: 1s;"
-                  alt=""
-                  width="45"
-                  height="45"
-              /></a>
-
-              <a href="https://efg-defi.medium.com/" target="_blank">
-                <img
-                  title="Medium"
-                  class="img_logo1"
-                  src="@/assets/medium.svg"
-                  style="animation-delay: 1.5s;"
-                  alt=""
-                  width="45"
-                  height="45"
-                />
-              </a>
-              <a href="https://twitter.com/EFG_DeFi" target="_blank">
-                <img
-                  title="Twitter"
-                  class="img_logo1"
-                  src="@/assets/twitter.svg"
-                  style="animation-delay: 2s;"
-                  alt=""
-                  width="45"
-                  height="45"
-                />
-              </a>
+              <v-item v-for="(social, i) in socials" :key="i">
+                <a :href="social.href" target="_blank">
+                  <img
+                    :title="social.title"
+                    class="img_logo1"
+                    :src="require(`@/assets/${social.src}`)"
+                    :style="social.style"
+                    alt=""
+                    width="45"
+                    height="45"
+                /></a>
+              </v-item>
             </div>
           </v-col>
         </v-row>
@@ -328,7 +297,46 @@ export default class Main extends Vue {
   name = 'EFG'
 
   stakingRate = 1.1
-
+  get socials() {
+    return [
+      {
+        href: 'https://t.me/EFGtoken',
+        title: 'Telegram',
+        src: 'Subtraction.svg',
+        style: 'animation-delay: 0.3s;'
+      },
+      {
+        href: 'https://github.com/Defi-EFG',
+        title: 'Github',
+        src: 'github.svg',
+        style: 'animation-delay: 0.6s;'
+      },
+      {
+        href: 'https://efg-defi.medium.com/',
+        title: 'Medium',
+        src: 'medium.svg',
+        style: 'animation-delay: 0.9s;'
+      },
+      {
+        href: 'https://twitter.com/EFG_DeFi',
+        title: 'Twitter',
+        src: 'twitter.svg',
+        style: 'animation-delay: 1.2s;'
+      },
+      {
+        href: 'https://coinmarketcap.com/currencies/ecoc-financial-growth/',
+        title: 'Coin-Maretcap',
+        src: 'Marketcap.svg',
+        style: 'animation-delay: 1.5s;'
+      },
+      {
+        href: 'https://www.coingecko.com/en/coins/ecoc-financial-growth/usd#panel',
+        title: 'Coin-Gecko',
+        src: 'Gecko.svg',
+        style: 'animation-delay: 1.8s;'
+      }
+    ]
+  }
   get totals() {
     return [
       {
