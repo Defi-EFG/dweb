@@ -15,7 +15,7 @@
 
     <v-list color="#222738" class="address-list">
       <v-list-item v-for="(contact, index) in contactList" :key="index" class="address-item">
-        <template v-if="'created' in contactList">
+        <template v-if="contactList.length < 1">
           <div class="empty-message">
             <v-icon class="book-icon">class</v-icon>
             <div class="message">{{ $t('views.walletpage.no_contact_address') }}</div>
@@ -112,14 +112,16 @@ export default class ContactAddress extends Vue {
 
   mounted() {
     if (this.walletStore.isWalletUnlocked) {
-      this.addressStore.subscribeToFirebase(this.walletAddr)
+      this.addressStore.setContactListKey(this.walletAddr)
+      this.addressStore.initContactList()
     }
   }
 
   @Watch('isReady')
   onLoggedIn(ready: any) {
     if (ready) {
-      this.addressStore.subscribeToFirebase(this.walletAddr)
+      this.addressStore.setContactListKey(this.walletAddr)
+      this.addressStore.initContactList()
     }
   }
 }
