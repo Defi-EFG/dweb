@@ -1086,6 +1086,9 @@ body {
   .sec_2 .row1 {
     padding: 10px 2px;
   }
+  .sec_1 .social_icon {
+    text-align: center;
+  }
 }
 @media only screen and (max-width: 500px) {
   .slider_main_head .slider_margin {

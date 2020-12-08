@@ -357,6 +357,8 @@
     "Transfer": "Transfer",
     "You do not have enough ECOC to send": "You do not have enough ECOC to send",
     "Currency Approving...": "Currency Approving...",
-    "Sending Transaction...": "Sending Transaction..."
+    "Sending Transaction...": "Sending Transaction...",
+    "No results": "No results",
+    "No more data": "No more data"
 
 }
