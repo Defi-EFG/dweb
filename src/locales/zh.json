@@ -357,6 +357,8 @@
     "Transfer": "转让",
     "You do not have enough ECOC to send": "您没有足够的ECOC来发送",
     "Currency Approving...": "货币审批中...",
-    "Sending Transaction...": "正在发送交易..."
+    "Sending Transaction...": "正在发送交易...",
+    "No results": "沒結果",
+    "No more data": "沒有更多數據"
 
 }

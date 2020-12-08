@@ -32,7 +32,10 @@
             </div>
           </v-list-item-content>
         </v-list-item>
-        <infinite-loading @infinite="infiniteHandler"></infinite-loading>
+        <infinite-loading @infinite="infiniteHandler">
+          <div slot="no-more">{{ $t('No more data') }}</div>
+          <div slot="no-results">{{ $t('No results') }}</div>
+        </infinite-loading>
       </v-list>
     </v-card-text>
     <div class="empty-message" v-else>
