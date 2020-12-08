@@ -9,6 +9,12 @@
             <v-icon>close</v-icon>
           </v-btn>
         </v-card-title>
+
+        <v-alert outlined color="warning" class="warning-msg">
+          <small>
+            {{ $t('views.modal.warning-address') }}
+          </small>
+        </v-alert>
         <div class="contact-dialog-wrapper">
           <div class="contact-dialog-content">
             <v-form class="wrapper-form">
@@ -116,10 +122,6 @@ export default class AddEditContact extends Vue {
     return existIndex >= 0
   }
 
-  getKeyByValue(object: any, value: any) {
-    return Object.keys(object).find(key => JSON.stringify(object[key]) === JSON.stringify(value))
-  }
-
   onClose() {
     this.$emit('update:toAdd', false)
     this.$emit('update:toEdit', false)
@@ -181,6 +183,12 @@ export default class AddEditContact extends Vue {
 </style>
 
 <style lang="scss" scoped>
+.warning-msg {
+  background: #fffce9 !important;
+  margin: 1rem 1.6rem;
+  margin-bottom: 0rem;
+}
+
 .nameinput input {
   padding: 0px;
 }

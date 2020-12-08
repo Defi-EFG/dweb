@@ -57,10 +57,6 @@ export default class Deletecontact extends Vue {
     this.addressStore.removeContact(index)
     this.onClose()
   }
-
-  getKeyByValue(object: any, value: any) {
-    return Object.keys(object).find(key => JSON.stringify(object[key]) === JSON.stringify(value))
-  }
 }
 </script>
 <style lang="scss" scoped>

@@ -325,7 +325,9 @@
             "gpt_deposit_amount": "存款金额",
             "deposit": "存款",
             "GPT": "GPT",
-            "downloadkeystore": "注意：请保管好您的 keystore 文件。为了在丢失或者忘记密码的情况下避免丢失或无法赎回资产"
+            "downloadkeystore": "注意：请保管好您的 keystore 文件。为了在丢失或者忘记密码的情况下避免丢失或无法赎回资产",
+            "warning-address": "警告：联系人信息仅临时保存在此设备上！清除浏览器或设备存储后，这些信息将丢失。"
+
 
         }
     },

@@ -124,7 +124,6 @@ export default class ContactAddress extends Vue {
       this.addressStore.initContactList()
     }
   }
-
 }
 </script>
 
