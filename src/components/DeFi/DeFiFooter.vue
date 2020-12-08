@@ -12,6 +12,8 @@
         <img
           title="Telegram"
           class="contact-icon"
+          width="33"
+          height="32"
           src="@/assets/Subtraction.svg"
           style="animation-delay: 0.5s;"
           alt=""
@@ -21,6 +23,8 @@
         <img
           title="Github"
           class="contact-icon"
+          width="33"
+          height="32"
           src="@/assets/github.svg"
           style="animation-delay: 1s;"
           alt=""
@@ -30,6 +34,8 @@
         ><img
           title="Medium"
           class="contact-icon"
+          width="33"
+          height="32"
           src="@/assets/medium.svg"
           style="animation-delay: 1.5s;"
           alt=""
@@ -39,6 +45,8 @@
         ><img
           title="Twitter"
           class="contact-icon"
+          width="33"
+          height="32"
           src="@/assets/twitter.svg"
           style="animation-delay: 2s;"
           alt=""

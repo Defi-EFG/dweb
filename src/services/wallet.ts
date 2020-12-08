@@ -1,5 +1,6 @@
 import * as constants from '@/constants'
 import EcocWallet from '@/services/ecoc/ecoc-wallet'
+import { defaultNetwork } from '@/services/ecoc/config'
 import { Ecrc20 } from '@/services/ecrc20'
 import { Currency, Ecrc20 as IEcrc20 } from '@/types/currency'
 import { KeyStore } from '@/types/keystore'
@@ -19,7 +20,7 @@ const sendRawTx = async (rawTransaction: string) => {
 
 const generateNewKeystore = async (password: string) => {
   // create new wallet default is testnet
-  const wallet = await EcocWallet.createNewWallet('Testnet')
+  const wallet = await EcocWallet.createNewWallet(defaultNetwork)
 
   if (!wallet) {
     throw new WalletError('Could not generate new wallet')

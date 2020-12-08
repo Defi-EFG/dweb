@@ -19,6 +19,7 @@
 <script lang="ts">
 import { Vue, Component } from 'vue-property-decorator'
 import moment from 'moment'
+import 'moment/locale/zh-cn'
 import { supportedLanguages } from '@/i18n'
 
 @Component

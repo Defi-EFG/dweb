@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <v-dialog v-model="unlockwalletModal" max-width="394" persistent>
+  <div class="unlockwalletModalWrapper">
+    <v-dialog v-model="unlockwalletModal" max-width="400" persistent>
       <v-stepper v-model="step">
         <v-stepper-items>
           <!-- Welcome to ECOC Finance Governance -->
@@ -69,11 +69,18 @@
               </template>
               <template v-else-if="!loading">
                 <div class="create-wallet-wraper bg-white rounded-lg">
-                  <div class="pb-5 mb-4">
+                  <div class="mb-4">
                     <h3 class="primary--text">
                       <b>{{ $t('views.modal.keystore_gen') }}</b>
                     </h3>
                     <small class="lightgray--text">{{ $t('views.modal.please_sav') }}</small>
+                  </div>
+                  <div class="warning-style">
+                    <v-alert outlined color="warning" class="warning-al-wr">
+                      <div class="warning-alert">
+                        {{ $t('views.modal.downloadkeystore') }}
+                      </div>
+                    </v-alert>
                   </div>
                   <div class="mb-4 keystorewrapper">
                     <div class="keystorefield" @click="copyAddress(createWalletKeystore)">
@@ -121,11 +128,12 @@
                       <b>{{ $t('views.modal.create_ecoc') }}</b></b
                     >
                   </h3>
+
                   <small class="lightgray--text"
                     >{{ $t('views.modal.please_set_your') }}
-                    <span class=" text-btn" @click="openPrivatekeyfield()" text>{{
-                      $t('views.modal.use_privatekey')
-                    }}</span>
+                    <p @click="openPrivatekeyfield()" text>
+                      <strong class=" text-btn"> {{ $t('views.modal.use_privatekey') }}</strong>
+                    </p>
                   </small>
                 </div>
                 <transition name="fade">
@@ -371,7 +379,9 @@ export default class UnlockwalletModal extends Vue {
       return true
     }
   }
-
+  get modal() {
+    return this.$t('views.modal')
+  }
   @Watch('visible')
   checkvisible(val: any) {
     this.unlockwalletModal = val
@@ -413,7 +423,6 @@ export default class UnlockwalletModal extends Vue {
 
   onCloseX() {
     this.clearData()
-
     this.onClose()
   }
 
@@ -523,9 +532,6 @@ export default class UnlockwalletModal extends Vue {
     link.download = `keystore-${this.getFormattedTime()}.json`
     link.click()
   }
-  get modal() {
-    return this.$t('views.modal')
-  }
 }
 </script>
 
@@ -577,7 +583,9 @@ export default class UnlockwalletModal extends Vue {
 .upload_input .v-icon.v-icon.v-icon--link::before {
   color: white;
 }
-
+.v-dialog {
+  overflow: hidden;
+}
 .upload_input .v-icon.v-icon.v-icon--link {
   border: 1px solid;
   border-radius: 50%;
@@ -585,6 +593,15 @@ export default class UnlockwalletModal extends Vue {
   color: white;
   padding: 4px;
   font-size: revert;
+}
+
+@media only screen and (max-width: 400px) {
+  .v-dialog {
+    margin: 1px !important;
+  }
+  .create-wallet-wraper {
+    padding: 22px 14px !important;
+  }
 }
 </style>
 <style lang="scss" scoped>
@@ -640,6 +657,11 @@ export default class UnlockwalletModal extends Vue {
   padding: 38px 36px 56px 36px;
 }
 
+@media (max-width: 400px) {
+  .more-space {
+    padding: 25px;
+  }
+}
 .topspace {
   padding: 30px 0px;
 }
@@ -739,20 +761,14 @@ v-btn {
   transition: 0.5s;
 }
 
-.efg-logo {
-  width: 28px;
-  height: 28px;
-  margin-right: 0px;
-}
-
 .user-status {
   width: auto;
   height: auto;
   background-color: #2a3047 !important;
 
   .dot-circle {
-    height: 12px;
-    width: 12px;
+    height: 8px;
+    width: 8px;
     background-color: #c074f9;
     border-radius: 50%;
     margin-right: 6px;
@@ -810,5 +826,11 @@ v-btn {
   font-size: 14px;
   text-align: end;
   color: green;
+}
+.warning-alert {
+  font-size: 13px;
+}
+.warning-style {
+  background-color: #fffce9;
 }
 </style>

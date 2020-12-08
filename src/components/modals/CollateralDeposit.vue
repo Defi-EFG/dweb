@@ -67,7 +67,7 @@
                   large
                   depressed
                   class="mb-7"
-                  :class="Loanername != '' ? 'text-capitalize' : 'disabled'"
+                  :class="Loanername != '' ? 'select-but' : 'disabled'"
                   @click="connectStep()"
                   >{{ $t('views.modal.select') }}</v-btn
                 >
@@ -96,7 +96,7 @@
                   ><br />
                   <input type="text" v-model="selectdata" disabled />
                 </div>
-                <v-btn large depressed class="text-capitalize mb-7" @click="toStep(3)">{{
+                <v-btn large depressed class="text-capitalize select-but mb-7" @click="toStep(3)">{{
                   $t('views.modal.next')
                 }}</v-btn>
               </div>
@@ -196,8 +196,8 @@
                         outlined
                         large
                         color="primary"
-                        class="text-capitalize1"
-                        @click="toStep(2)"
+                        class="text-capitalize"
+                        @click="onClose()"
                         >{{ $t('views.modal.cancel') }}</v-btn
                       >
                       <v-btn
@@ -301,7 +301,7 @@
       <v-card>
         <div class="d-flex justify-lg-space-between pt-3">
           <v-icon></v-icon>
-          <v-btn icon @click="closeGasSetting"><v-icon>$close</v-icon></v-btn>
+          <v-btn icon @click="closeGasSetting"><v-icon>close</v-icon></v-btn>
         </div>
         <div class="content-gas-setting">
           <h3>{{ $t('views.modal.gas_setting') }}</h3>
@@ -643,7 +643,7 @@ export default class CollateralDeposit extends Vue {
   top: 0;
   left: 0;
   right: 0;
-  bottom: -16px;
+  bottom: -20px;
   box-shadow: inset 0 0 2000px rgba(116, 116, 116, 0.356) !important;
   backdrop-filter: blur(20px);
   z-index: -1;
@@ -727,19 +727,14 @@ export default class CollateralDeposit extends Vue {
 .roww2 .color_size2 {
   color: #c074f9;
 }
-.text-capitalize {
+.select-but {
   width: 100%;
   background-color: #b052ee !important;
   color: #ffffff;
   transition: 0.5s;
   margin-top: 20px;
 }
-.text-capitalize1 {
-  margin-top: 20px;
-  width: 100%;
-  color: #ffffff;
-  text-transform: capitalize;
-}
+
 .headtitle_collat {
   padding: 20px 0 0 0;
 }
@@ -779,7 +774,7 @@ export default class CollateralDeposit extends Vue {
   margin-top: 4px;
 }
 .transaction-confirmation-wrapper {
-  margin: 16px 16px 0 16px;
+  margin: 16px 16px 16px 16px;
   border-radius: 3px;
   overflow: hidden;
   position: relative;

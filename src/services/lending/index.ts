@@ -9,8 +9,8 @@ import { ECOC_MAINNET } from '@/services/ecoc/constants'
 import lendingAbi from './abi.json'
 import { LoanInfo, Collateral } from './types'
 
-const mainnetAddress = '37b0157d1f92cc9bf48e288567338d220b24962e'
-const testnetAddress = '02eec34c4641e0f5d877a9729d3eac9d0168b6f9'
+const mainnetAddress = '9a0abbb55f6ff5f16ed78e45d706a91d67868820'
+const testnetAddress = 'bf879840a4e5b432f7fb94cb2e28b3250285a4b4'
 
 const defaultAddress = defaultNetwork === ECOC_MAINNET ? mainnetAddress : testnetAddress
 

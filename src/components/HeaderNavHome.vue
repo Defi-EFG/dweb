@@ -2,7 +2,7 @@
   <div class="color_bg">
     <v-app-bar class="efg-header" flat dark>
       <div class="home" @click="gotoHome">
-        <img src="@/assets/efg_logo.svg" alt="efgLogo" class="efg-logo" />
+        <img width="28" height="28" src="@/assets/efg_logo.svg" alt="efgLogo" class="efg-logo" />
         <v-toolbar-title id="name_title">{{ $t('views.main.name') }}</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
@@ -18,7 +18,7 @@
             <v-menu class="bg-bu">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn dark icon v-bind="attrs" v-on="on">
-                  <v-app-bar-nav-icon></v-app-bar-nav-icon>
+                  <v-app-bar-nav-icon><v-icon>menu</v-icon></v-app-bar-nav-icon>
                 </v-btn>
               </template>
               <v-list color="menu">
@@ -105,9 +105,7 @@ export default class HeaderNavHome extends Vue {
 .v-card__text {
   text-align: center;
 }
-.v-btn.v-size--small {
-  margin-left: 10px;
-}
+
 #menu_s {
   display: none;
 }
@@ -247,8 +245,8 @@ ul {
   height: auto;
   background-color: #2a3047 !important;
   .dot-circle {
-    height: 12px;
-    width: 12px;
+    height: 8px;
+    width: 8px;
     background-color: #c074f9;
     border-radius: 50%;
     margin-right: 6px;
@@ -276,7 +274,8 @@ ul {
   border-radius: 5px;
   background-color: transparent;
 }
-@media only screen and (max-width: 760px) {
+
+@media only screen and (max-width: 840px) {
   .desktop_menu {
     display: none;
   }

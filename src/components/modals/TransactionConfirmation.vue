@@ -35,7 +35,7 @@
               </template>
               <span>{{ copymessage }}</span>
             </v-tooltip>
-            <div class="icon-send"><v-icon small color="white">arrow_back</v-icon></div>
+            <div class="icon-send"><v-icon small color="white">arrow_forward</v-icon></div>
           </div>
           <div class="transaction-confirmation-content">
             <h3>
@@ -335,7 +335,7 @@ export default class TransactionConfirmationModal extends Vue {
   top: 0;
   left: 0;
   right: 0;
-  bottom: -16px;
+  bottom: -20px;
   box-shadow: inset 0 0 2000px rgba(116, 116, 116, 0.356) !important;
   backdrop-filter: blur(20px);
   z-index: -1;

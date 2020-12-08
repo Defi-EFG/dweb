@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
+import moment from 'moment'
 
 import App from './App.vue'
 import router from './router'
@@ -7,6 +8,8 @@ import store from './store'
 import { messages, defaultLocale, dateTimeFormats, supportedLanguages } from '@/i18n'
 import vuetify from './plugins/vuetify'
 import { initFilters } from '@/plugins/filters'
+
+import 'moment/locale/zh-cn'
 
 initFilters()
 
@@ -23,6 +26,8 @@ const i18n = new VueI18n({
     : defaultLocale,
   fallbackLocale: defaultLocale
 })
+
+moment.locale(i18n.locale)
 
 router.beforeEach((to, from, next) => {
   document.title = to.meta.title

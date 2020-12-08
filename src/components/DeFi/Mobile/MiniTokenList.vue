@@ -7,11 +7,18 @@
       v-model="currentToken"
       :hide-details="true"
       solo
+      append-icon="keyboard_arrow_down"
     >
       <template v-slot:item="data">
         <div class="token-item-select">
           <template v-if="isSymbolAvailable(data.item.name)">
-            <img class="icon" alt="" :src="require(`@/assets/icon/vector/${data.item.name}.svg`)" />
+            <img
+              class="icon"
+              width="23"
+              height="23"
+              alt=""
+              :src="require(`@/assets/icon/vector/${data.item.name}.svg`)"
+            />
           </template>
           <v-icon class="icon" v-else>help</v-icon>
           <span class="name">{{ data.item.name }}</span>
@@ -23,7 +30,13 @@
       <template v-slot:selection="data">
         <div :class="`token-item ${data.item.name}`">
           <template v-if="isSymbolAvailable(data.item.name)">
-            <img alt="" class="icon" :src="require(`@/assets/icon/vector/${data.item.name}.svg`)" />
+            <img
+              alt=""
+              class="icon"
+              width="23"
+              height="23"
+              :src="require(`@/assets/icon/vector/${data.item.name}.svg`)"
+            />
           </template>
           <v-icon class="icon" v-else>help</v-icon>
           <span class="name">{{ data.item.name }}</span>
@@ -182,8 +195,8 @@ export default class MiniTokenList extends Vue {
 .icon {
   width: 23px;
   margin-right: 0.5rem;
-
   color: white !important;
+  margin-top: 6px;
 }
 
 .name {

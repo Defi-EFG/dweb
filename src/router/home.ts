@@ -1,11 +1,12 @@
 import { RouteConfig } from 'vue-router'
 import HomeIndex from '@/views/home/Index.vue'
-import MainPage from '@/views/home/Main.vue'
-import Gpt from '@/views/home/Gpt.vue'
-import Efg from '@/views/home/Efg.vue'
-import Collateral from '@/views/home/Collateral.vue'
-import DocsPage from '@/views/home/Docs.vue'
-import WhitePaper from '@/views/home/Whitepaper.vue'
+
+const MainPage = () => import(/* webpackChunkName: "group-home-main" */ '@/views/home/Main.vue')
+const Gpt = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Gpt.vue')
+const Efg = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Efg.vue')
+const Collateral = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Collateral.vue')
+const DocsPage = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Docs.vue')
+const WhitePaper = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Whitepaper.vue')
 
 const homeRoutes: Array<RouteConfig> = [
   {

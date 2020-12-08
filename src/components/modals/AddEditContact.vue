@@ -9,8 +9,14 @@
             <v-icon>close</v-icon>
           </v-btn>
         </v-card-title>
+
+        <v-alert outlined color="warning" class="warning-msg">
+          <small>
+            {{ $t('views.modal.warning-address') }}
+          </small>
+        </v-alert>
         <div class="contact-dialog-wrapper">
-          <div class="contact-dialog-content" >
+          <div class="contact-dialog-content">
             <v-form class="wrapper-form">
               <v-text-field
                 class="nameinput"
@@ -116,10 +122,6 @@ export default class AddEditContact extends Vue {
     return existIndex >= 0
   }
 
-  getKeyByValue(object: any, value: any) {
-    return Object.keys(object).find(key => JSON.stringify(object[key]) === JSON.stringify(value))
-  }
-
   onClose() {
     this.$emit('update:toAdd', false)
     this.$emit('update:toEdit', false)
@@ -136,17 +138,23 @@ export default class AddEditContact extends Vue {
 
   addNewAddress() {
     if (this.walletStore.isWalletUnlocked) {
-      this.addressStore.addNewContact(this.contact)
+      this.addressStore.addContact(this.contact)
+      this.contact = {} as Contact
       this.onClose()
     }
   }
 
   updateAddress() {
     if (this.walletStore.isWalletUnlocked) {
-      const contactKey = this.getKeyByValue(this.contactList, this.editContact)
-      this.addressStore.updateContact({ uid: contactKey!, contact: this.contact })
-      this.onClose()
+      const index = this.contactList.findIndex(
+        contact =>
+          contact.name === this.editContact!.name && contact.address === this.editContact!.address
+      )
+      if (index) {
+        this.addressStore.updateContact({ index, contact: this.contact })
+      }
     }
+    this.onClose()
   }
 
   getFormPlaceholder(type: string) {
@@ -175,6 +183,12 @@ export default class AddEditContact extends Vue {
 </style>
 
 <style lang="scss" scoped>
+.warning-msg {
+  background: #fffce9 !important;
+  margin: 1rem 1.6rem;
+  margin-bottom: 0rem;
+}
+
 .nameinput input {
   padding: 0px;
 }

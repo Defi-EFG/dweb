@@ -77,7 +77,9 @@
       }}
       <template v-slot:loader>
         <v-progress-circular indeterminate :size="24" class="spinner"></v-progress-circular>
-        <span class="ml-2" v-if="!isCollateralPendingType">Waiting...</span>
+        <span class="ml-2" v-if="!isCollateralPendingType">{{
+          $t('views.lendingpage.waiting')
+        }}</span>
       </template>
     </v-btn>
     <Collatmodel

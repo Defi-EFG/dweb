@@ -70,49 +70,18 @@
               </div>
             </div>
             <div class="social_icon">
-              <a href="https://t.me/EFGtoken" target="_blank">
-                <img
-                  title="Telegram"
-                  class="img_logo1"
-                  src="@/assets/Subtraction.svg"
-                  style="animation-delay: 0.5s;"
-                  alt=""
-                  width="45"
-                  height="45"
-              /></a>
-              <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer">
-                <img
-                  title="Github"
-                  class="img_logo1"
-                  src="@/assets/github.svg"
-                  style="animation-delay: 1s;"
-                  alt=""
-                  width="45"
-                  height="45"
-              /></a>
-
-              <a href="https://efg-defi.medium.com/" target="_blank">
-                <img
-                  title="Medium"
-                  class="img_logo1"
-                  src="@/assets/medium.svg"
-                  style="animation-delay: 1.5s;"
-                  alt=""
-                  width="45"
-                  height="45"
-                />
-              </a>
-              <a href="https://twitter.com/EFG_DeFi" target="_blank">
-                <img
-                  title="Twitter"
-                  class="img_logo1"
-                  src="@/assets/twitter.svg"
-                  style="animation-delay: 2s;"
-                  alt=""
-                  width="45"
-                  height="45"
-                />
-              </a>
+              <v-item v-for="(social, i) in socials" :key="i">
+                <a :href="social.href" target="_blank">
+                  <img
+                    :title="social.title"
+                    class="img_logo1"
+                    :src="require(`@/assets/${social.src}`)"
+                    :style="social.style"
+                    alt=""
+                    width="45"
+                    height="45"
+                /></a>
+              </v-item>
             </div>
           </v-col>
         </v-row>
@@ -156,22 +125,22 @@
       </v-container>
       <v-container>
         <v-row class="row1">
-          <v-col lg="3" md="3" cols="2">
+          <v-col lg="3" md="3" cols="6">
             <div class="supply sub_head_supply">
               {{ $t('views.main.supply') }}
             </div>
           </v-col>
-          <v-col lg="3" md="3" cols="4">
+          <v-col lg="3" md="3" cols="6">
             <div class="supply sub_head_supply">
               {{ $t('views.main.loaner') }}
             </div>
           </v-col>
-          <v-col lg="3" md="3" cols="3">
+          <v-col lg="3" md="3" cols="6" class="efg_mobile">
             <div class="supply sub_head_supply">
               {{ $t('views.main.total_supply') }}
             </div>
           </v-col>
-          <v-col lg="3" md="3" cols="3">
+          <v-col lg="3" md="3" cols="6" class="efg_mobile">
             <div class="supply sub_head_supply">
               {{ $t('views.main.total_borrowed') }}
             </div>
@@ -179,28 +148,30 @@
         </v-row>
         <router-link v-for="(item, i) in pools" :key="i" :to="`loan-info?pool=${item.address}`">
           <v-row class="row1 roww2" :id="`EFG_Supply_${1 + i}`">
-            <v-col lg="3" md="3" cols="2">
+            <v-col lg="3" md="3" cols="6">
               <div class="margintop">
-                <img src="@/assets/efg_01.svg" alt="" />
+                <img width="42" height="42" src="@/assets/efg_01.svg" alt="" />
                 {{ item.currency.name }}
               </div>
             </v-col>
-            <v-col lg="3" md="3" cols="4">
+            <v-col lg="3" md="3" cols="6">
               <div class="text-truncate margintop Loener">
                 {{ truncateAddress(item.address) }}
               </div>
             </v-col>
-            <v-col lg="3" md="3" cols="3" class="border_left">
-              <div class="margintop color_1 textafter">
+            <v-col lg="3" md="3" cols="6" class="border_left">
+              <div class="margintop color_1 ">
                 <span class="color_size"
-                  >{{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }} EFG</span
+                  >{{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }} EFG
+                  <span class="text_mobile ">{{ $t('views.main.total_supply') }}</span></span
                 >
               </div>
             </v-col>
-            <v-col lg="3" md="3" cols="3">
+            <v-col lg="3" md="3" cols="6">
               <div class="margintop color_2 textafter">
                 <span class="color_size"
-                  >{{ item.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }} EFG</span
+                  >{{ item.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }} EFG
+                  <span class="text_mobile ">{{ $t('views.main.total_borrowed') }}</span></span
                 >
               </div>
             </v-col>
@@ -220,7 +191,7 @@
         </v-row>
         <v-row class="row1 roww3">
           <v-col lg="3" md="3" cols="6" class="Staking_dt">
-            <img src="@/assets/gpt.svg" alt="" />
+            <img width="42" height="42" src="@/assets/gpt.svg" alt="" />
             <div class="supply_name">GPT</div>
             <div class="supply_text">{{ $t('views.main.deposit') }}</div>
             <div class="supply_text">{{ $t('views.main.estimated') }}</div>
@@ -326,7 +297,46 @@ export default class Main extends Vue {
   name = 'EFG'
 
   stakingRate = 1.1
-
+  get socials() {
+    return [
+      {
+        href: 'https://t.me/EFGtoken',
+        title: 'Telegram',
+        src: 'Subtraction.svg',
+        style: 'animation-delay: 0.3s;'
+      },
+      {
+        href: 'https://github.com/Defi-EFG',
+        title: 'Github',
+        src: 'github.svg',
+        style: 'animation-delay: 0.6s;'
+      },
+      {
+        href: 'https://efg-defi.medium.com/',
+        title: 'Medium',
+        src: 'medium.svg',
+        style: 'animation-delay: 0.9s;'
+      },
+      {
+        href: 'https://twitter.com/EFG_DeFi',
+        title: 'Twitter',
+        src: 'twitter.svg',
+        style: 'animation-delay: 1.2s;'
+      },
+      {
+        href: 'https://coinmarketcap.com/currencies/ecoc-financial-growth/',
+        title: 'Coin-Maretcap',
+        src: 'Marketcap.svg',
+        style: 'animation-delay: 1.5s;'
+      },
+      {
+        href: 'https://www.coingecko.com/en/coins/ecoc-financial-growth/usd#panel',
+        title: 'Coin-Gecko',
+        src: 'Gecko.svg',
+        style: 'animation-delay: 1.8s;'
+      }
+    ]
+  }
   get totals() {
     return [
       {
@@ -414,9 +424,9 @@ export default class Main extends Vue {
 
   truncateAddress(addr: string) {
     const separator = '...'
-    const charsToShow = 12
-    const frontChars = Math.ceil(charsToShow / 2)
-    const backChars = Math.floor(charsToShow / 2)
+    const charsToShow = 22
+    const frontChars = Math.ceil(charsToShow / 3)
+    const backChars = Math.floor(charsToShow / 3)
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
   }
 }
@@ -606,7 +616,7 @@ body {
 .sub_head_supply {
   color: #9b9898;
   padding-left: 20px;
-  font-size: 14px;
+  font-size: 16px;
 }
 .head_supply3 {
   padding-left: 40px;
@@ -859,6 +869,9 @@ body {
   color: #c074f9;
   border-bottom: 2px solid #c074f9;
 }
+.text_mobile {
+  display: none;
+}
 @keyframes header_fp {
   0% {
     opacity: 0;
@@ -952,6 +965,24 @@ body {
   .sec_2 .row1 .supply {
     padding: 0;
   }
+  .efg_mobile {
+    display: none;
+  }
+  .sec_2 .row1 .border_left {
+    border-left: 0px;
+  }
+  .text_mobile {
+    display: inline-block;
+    color: #cccccc;
+    font-size: 12px;
+  }
+  .sec_2 .roww2 .col-6 {
+    padding: 5px 12px;
+  }
+  .textafter {
+    text-align: right;
+    float: right;
+  }
 }
 
 @media only screen and (max-width: 670px) {
@@ -961,6 +992,9 @@ body {
   .v-card__text {
     text-align: center;
   }
+  .img_background {
+    width: 100%;
+  }
   .sec_1 {
     padding-top: unset;
     padding: 100px 14px 0 14px;
@@ -968,20 +1002,20 @@ body {
   .sec_1 .text_header {
     font-size: 23px;
     padding-left: 10px;
-    top: -10px;
+    top: -20px;
   }
   .sec_1 .text_header_sub {
     font-size: 14px;
     text-indent: 2em;
   }
   .sec_2 .row1 .margintop {
-    font-size: 10px;
+    font-size: 15px;
   }
   .sec_2 .row1 .color_size {
-    font-size: 10px;
+    font-size: 14px;
   }
   .sec_2 .row1 .supply {
-    font-size: 10px;
+    font-size: 15px;
   }
   .head_supply3 {
     padding-left: 20px;
@@ -1016,9 +1050,7 @@ body {
     opacity: 0.25;
     transition: 0.5s;
   }
-  .sec_2 .row1 .margintop img {
-    display: none;
-  }
+
   .sec_2 .row1 .row1_img {
     opacity: 0.1;
     width: 35px;
@@ -1048,6 +1080,12 @@ body {
     background: transparent linear-gradient(180deg, #251430 0%, #070c1a 100%) 0% 0% no-repeat
       padding-box;
   }
+  .sec_2 .roww2 .col-6 {
+    padding: 2px 12px;
+  }
+  .sec_2 .row1 {
+    padding: 10px 2px;
+  }
 }
 @media only screen and (max-width: 500px) {
   .slider_main_head .slider_margin {
@@ -1055,6 +1093,12 @@ body {
   }
   .slider_main_head .detail .price {
     padding-top: 5px;
+  }
+  .text_mobile {
+    font-size: 10px;
+  }
+  .sec_2 .row1 .color_size {
+    font-size: 12px;
   }
 }
 </style>

@@ -2,7 +2,7 @@
   <div>
     <v-app-bar class="efg-header" flat dark>
       <div class="home" @click="gotoHome">
-        <img src="@/assets/efg_logo.svg" class="efg-logo" />
+        <img width="28" height="28" src="@/assets/efg_logo.svg" class="efg-logo" alt="" />
         <v-toolbar-title class="header-title">ECOC Financial Growth</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
@@ -122,7 +122,6 @@ export default class HeaderNav extends Vue {
   }
 }
 </script>
-
 <style lang="scss" scoped>
 .v-btn:not(.v-btn--round).v-size--default {
   height: auto;
@@ -132,6 +131,7 @@ export default class HeaderNav extends Vue {
 .primary-address {
   font-size: 0.9em;
   padding: 14px 10px;
+  word-break: break-all;
 }
 .home {
   display: flex;
@@ -146,6 +146,7 @@ export default class HeaderNav extends Vue {
   border-radius: 8px;
   margin-top: 10px;
 }
+
 .text-btn {
   text-decoration: underline;
   text-transform: capitalize;
@@ -180,8 +181,8 @@ export default class HeaderNav extends Vue {
   background-color: #2a3047 !important;
 
   .dot-circle {
-    height: 12px;
-    width: 12px;
+    height: 8px;
+    width: 8px;
     background-color: #c074f9;
     border-radius: 50%;
     margin-right: 6px;

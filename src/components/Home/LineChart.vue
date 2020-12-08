@@ -66,7 +66,8 @@ export default class LineChart extends Vue {
             borderWidth: 1,
             lineTension: 0,
             fill: true,
-            data: dataSet
+            data: dataSet,
+            bezierCurve: false
           }
         ]
       },
@@ -84,10 +85,7 @@ export default class LineChart extends Vue {
             {
               ticks: {
                 autoSkip: true,
-                maxTicksLimit: 10,
-                userCallback: function(value: any) {
-                  return value.toLocaleString()
-                }
+                maxTicksLimit: 10
               }
             }
           ]

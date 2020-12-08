@@ -47,7 +47,7 @@ export const copyToClipboard = (text: string) => {
       /* clipboard successfully set */
     },
     function() {
-      console.error('Copy failed')
+      // console.error('Copy failed')
     }
   )
 }
