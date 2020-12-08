@@ -51,14 +51,11 @@ export default class Deletecontact extends Vue {
   }
 
   removeContact() {
-    const contactUid = this.getKeyByValue(this.contactList, this.contact)
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.addressStore.removeContact(contactUid!)
+    const index = this.contactList.findIndex(
+      contact => contact.name === this.contact.name && contact.address === this.contact.address
+    )
+    this.addressStore.removeContact(index)
     this.onClose()
-  }
-
-  getKeyByValue(object: any, value: any) {
-    return Object.keys(object).find(key => JSON.stringify(object[key]) === JSON.stringify(value))
   }
 }
 </script>

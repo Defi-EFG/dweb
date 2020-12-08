@@ -327,7 +327,8 @@
             "gpt_deposit_amount": "Deposit Amount",
             "deposit": "Deposit",
             "GPT": "GPT",
-            "downloadkeystore": "Note: Keep the keystore file in a safe and secure place. If you lose your keystore file or forgot password, it may cause losing your funds and will not be able to recover."
+            "downloadkeystore": "Note: Keep the keystore file in a safe and secure place. If you lose your keystore file or forgot password, it may cause losing your funds and will not be able to recover.",
+            "warning-address": "Warning: Contact info are temporary saved on this device only! These information are going to be lost after clearing browser or device storage."
 
         }
     },
