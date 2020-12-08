@@ -17,7 +17,7 @@ const testnetConfig = {
   socketURL: 'https://testnet.explorer.ecoc.io/'
 } as Config
 
-let defaultNetwork = ECOC_TESTNET
+let defaultNetwork = ECOC_MAINNET
 
 const getConfig = (networkStr: string) => {
   if (networkStr === ECOC_TESTNET) {
