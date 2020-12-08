@@ -72,9 +72,9 @@
       <v-spacer></v-spacer>
       <span>{{ interestRate }} %</span>
     </div>
-    <div class="fixedhight">
+    <div class="fixed-height">
       <div v-show="bpSlider > safeLimit" class="warning-borrow text-center">
-        {{ $t('views.lendingpage.warning') }}
+        <p class="mb-0">{{ $t('views.lendingpage.warning') }}</p>
       </div>
     </div>
     <v-btn
@@ -335,16 +335,17 @@ export default class BorrowCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.fixedhight {
-  height: 23px;
+.fixed-height {
   margin-bottom: 20px;
-  margin-top: 14px;
+  height: 34px;
+  margin-top: 5px;
 }
 .warning-borrow {
-  height: 23px;
   font-size: 11px;
-
+  border: 1px solid #fb8c00;
   color: #f49d44;
+
+  max-height: auto;
 }
 .borrow-card {
   width: inherit;
