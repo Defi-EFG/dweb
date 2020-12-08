@@ -30,7 +30,7 @@
 </template>
 <script lang="ts">
 import { Vue, Component, PropSync, Prop } from 'vue-property-decorator'
-import AddressBookModule from '@/store/address-book'
+import AddressBookModule from '@/store/address-book/index2'
 import { getModule } from 'vuex-module-decorators'
 import { Contact } from '@/types/contact'
 @Component({
@@ -51,9 +51,10 @@ export default class Deletecontact extends Vue {
   }
 
   removeContact() {
-    const contactUid = this.getKeyByValue(this.contactList, this.contact)
-    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-    this.addressStore.removeContact(contactUid!)
+    const index = this.contactList.findIndex(
+      contact => contact.name === this.contact.name && contact.address === this.contact.address
+    )
+    this.addressStore.removeContact(index)
     this.onClose()
   }
 

@@ -4,7 +4,7 @@ import { db } from './firebase'
 import { Contact } from '@/types/contact'
 import store from '@/store'
 
-@Module({ dynamic: true, store, namespaced: true, name: 'addressBookStore' })
+@Module({ dynamic: true, store, namespaced: true, name: 'addressBookStore22' })
 export default class AddressBookModule extends VuexModule {
   contactList: Contact[] = []
   firebaseData: Reference = {} as Reference

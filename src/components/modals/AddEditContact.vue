@@ -54,7 +54,7 @@
 
 <script lang="ts">
 import { Vue, Component, PropSync, Prop, Watch } from 'vue-property-decorator'
-import AddressBookModule from '@/store/address-book'
+import AddressBookModule from '@/store/address-book/index2'
 import { Contact } from '@/types/contact'
 import WalletModule from '@/store/wallet'
 import { getModule } from 'vuex-module-decorators'
@@ -136,17 +136,23 @@ export default class AddEditContact extends Vue {
 
   addNewAddress() {
     if (this.walletStore.isWalletUnlocked) {
-      this.addressStore.addNewContact(this.contact)
+      this.addressStore.addContact(this.contact)
+      this.contact = {} as Contact
       this.onClose()
     }
   }
 
   updateAddress() {
     if (this.walletStore.isWalletUnlocked) {
-      const contactKey = this.getKeyByValue(this.contactList, this.editContact)
-      this.addressStore.updateContact({ uid: contactKey!, contact: this.contact })
-      this.onClose()
+      const index = this.contactList.findIndex(
+        contact =>
+          contact.name === this.editContact!.name && contact.address === this.editContact!.address
+      )
+      if (index) {
+        this.addressStore.updateContact({ index, contact: this.contact })
+      }
     }
+    this.onClose()
   }
 
   getFormPlaceholder(type: string) {

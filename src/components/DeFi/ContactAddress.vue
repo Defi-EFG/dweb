@@ -15,7 +15,7 @@
 
     <v-list color="#222738" class="address-list">
       <v-list-item v-for="(contact, index) in contactList" :key="index" class="address-item">
-        <template v-if="'created' in contactList">
+        <template v-if="contactList.length < 1">
           <div class="empty-message">
             <v-icon class="book-icon">class</v-icon>
             <div class="message">{{ $t('views.walletpage.no_contact_address') }}</div>
@@ -55,7 +55,7 @@
 import { Vue, Component, Watch } from 'vue-property-decorator'
 import AddEditContact from '@/components/modals/AddEditContact.vue'
 import DeleteContact from '@/components/modals/DeleteContact.vue'
-import AddressBookModule from '@/store/address-book'
+import AddressBookModule from '@/store/address-book/index2'
 import WalletModule from '@/store/wallet'
 import { getModule } from 'vuex-module-decorators'
 import { Contact } from '@/types/contact'
@@ -112,16 +112,19 @@ export default class ContactAddress extends Vue {
 
   mounted() {
     if (this.walletStore.isWalletUnlocked) {
-      this.addressStore.subscribeToFirebase(this.walletAddr)
+      this.addressStore.setContactListKey(this.walletAddr)
+      this.addressStore.initContactList()
     }
   }
 
   @Watch('isReady')
   onLoggedIn(ready: any) {
     if (ready) {
-      this.addressStore.subscribeToFirebase(this.walletAddr)
+      this.addressStore.setContactListKey(this.walletAddr)
+      this.addressStore.initContactList()
     }
   }
+
 }
 </script>
 
