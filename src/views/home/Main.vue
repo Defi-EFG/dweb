@@ -296,7 +296,7 @@ export default class Main extends Vue {
   active = 'EFG'
   name = 'EFG'
 
-  stakingRate = 1.1
+  stakingRate = 0.011
   get socials() {
     return [
       {

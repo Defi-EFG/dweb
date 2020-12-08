@@ -91,7 +91,7 @@ import { api } from '@/services/api'
 })
 export default class Gpt extends Vue {
   stakingStore = getModule(StakingModule)
-  stakingRate = 1.1
+  stakingRate = 0.011
   max = this.totalReward
   totalStaked = this.max - this.stakingAvailable
   date = [] as string[]
