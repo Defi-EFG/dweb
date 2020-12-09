@@ -10,7 +10,9 @@
         <div class="liquid-wrapper" v-show="isNearLiquidate && !extentTimeRemaining()">
           <div>
             <div>{{ $t('views.lendingpage.estimated_gpt') }} {{ estimatedGPT }}</div>
-            <div class="lg">GPT {{ $t('views.lendingpage.balance') }}: {{ extendBalance }} GPT</div>
+            <div class="lg">
+              GPT {{ $t('views.lendingpage.balance') }}: {{ currency.balance }} GPT
+            </div>
           </div>
           <v-spacer></v-spacer>
           <v-progress-circular
@@ -61,7 +63,7 @@
             <v-btn
               @click="openConfirmTxModal"
               large
-              :disabled="isDepositable(currency.balance, estimatedGPTAmount)"
+              :disabled="isDepositable(currency.balance, estimatedGPT)"
               class="depositbtn mt-8 text-capitalize"
               color="primary"
               >{{ $t('views.modal.deposit') }}
@@ -199,7 +201,6 @@ export default class SupplyBalance extends Vue {
       .multipliedBy(1 + this.safetyFactor)
       .toNumber()
       .toFixed(4)
-
     return estimatedGPT
   }
 
@@ -216,7 +217,7 @@ export default class SupplyBalance extends Vue {
   }
 
   isDepositable(balance: number, GPTNeed: number) {
-    if (balance <= 0 && balance > GPTNeed && GPTNeed <= 0) {
+    if (balance >= 0 && balance > GPTNeed) {
       return false
     } else {
       return true
