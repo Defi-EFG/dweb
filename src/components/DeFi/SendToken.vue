@@ -89,6 +89,7 @@
         :toAddr="toAddr"
         :amount="amount"
         :currency="selectedCurrency"
+        :txError="errorMsg"
         @onConfirm="onConfirm"
         @onClose="onClose"
       />
@@ -224,6 +225,7 @@ export default class SendToken extends Vue {
   }
 
   currencySend(payload: SendPayload) {
+    this.errorMsg = ''
     this.walletStore
       .send(payload)
       .then(txid => {
@@ -232,7 +234,7 @@ export default class SendToken extends Vue {
         this.onSuccess()
       })
       .catch(error => {
-        this.onError(`ERROR__ ${error.message}`)
+        this.onError(error.message)
       })
   }
 

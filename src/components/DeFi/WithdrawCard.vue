@@ -86,6 +86,7 @@
       :toAddr="walletAddr"
       :amount="withdrawValue"
       :currency="currency"
+      :txError="errorMsg"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
     />
@@ -249,6 +250,7 @@ export default class Withdraw extends Vue {
   }
 
   onConfirm(walletParams: WalletParams) {
+    this.errorMsg = ''
     const amount = Number(this.withdrawValue)
     const currency = this.currency
 

@@ -52,7 +52,7 @@
               <div class="detail border-bottom">
                 <span class="gt">{{ $t('views.modal.amount') }}</span>
                 <div class="d-flex justify-end">
-                  <p>{{ amount }}</p>
+                  <p>{{ Number(amount) }}</p>
                   <p class="ml-2">{{ selectedCurrencyName }}</p>
                 </div>
               </div>
@@ -93,9 +93,15 @@
               <v-btn outlined large color="primary" class="text-capitalize" @click="onClose">{{
                 $t('views.modal.cancel')
               }}</v-btn>
-              <v-btn large depressed color="primary" class="text-capitalize" @click="onConfirm">{{
-                $t('views.modal.confirm')
-              }}</v-btn>
+              <v-btn
+                large
+                depressed
+                color="primary"
+                class="text-capitalize"
+                :loading="isLoading"
+                @click="onConfirm"
+                >{{ $t('views.modal.confirm') }}</v-btn
+              >
             </div>
           </div>
         </div>
@@ -167,7 +173,7 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component, Prop } from 'vue-property-decorator'
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator'
 import { getModule } from 'vuex-module-decorators'
 import { WalletParams } from '@/services/ecoc/types'
 import { Currency } from '@/types/currency'
@@ -185,6 +191,7 @@ export default class TransactionConfirmationModal extends Vue {
   @Prop() fromAddr!: string
   @Prop() toAddr!: string
   @Prop() amount!: string
+  @Prop() txError?: string
 
   walletStore = getModule(WalletModule)
 
@@ -197,6 +204,7 @@ export default class TransactionConfirmationModal extends Vue {
   keystore: any = ''
   keystorePassword = ''
   showpassword = false
+  isLoading = false
 
   gasFee = 0
 
@@ -295,6 +303,7 @@ export default class TransactionConfirmationModal extends Vue {
   }
 
   async onConfirm() {
+    this.isLoading = true
     try {
       const password = this.password
       const address = this.walletStore.address
@@ -317,6 +326,23 @@ export default class TransactionConfirmationModal extends Vue {
     } catch (error) {
       this.errorMsg = error.message
     }
+  }
+
+  @Watch('txError')
+  onTxError(msg: string) {
+    this.isLoading = false
+    if (msg.includes('has no matching Script')) {
+      this.errorMsg = 'Invalid address format'
+    } else if (msg.includes('400')) {
+      this.errorMsg = 'UTXO currently unavailable, Please try again'
+    } else {
+      this.errorMsg = msg
+    }
+  }
+
+  @Watch('visible')
+  onModalClose() {
+    this.isLoading = false
   }
 }
 </script>
@@ -515,11 +541,13 @@ export default class TransactionConfirmationModal extends Vue {
   padding: 15px 3px;
 }
 .errorMsg {
-  background-color: white;
-  color: red;
-
+  margin-bottom: 6px;
+  background-color: #ff7878;
+  color: white;
   font-size: 10px;
-  padding: 4px;
+  padding: 6px;
+  border-radius: 4px;
+  font-weight: 600;
 }
 .not-enough {
   background-color: white;

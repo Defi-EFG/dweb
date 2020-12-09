@@ -188,8 +188,8 @@
                         filled
                       ></v-text-field>
                     </div>
-                    <div v-if="errorMsg">
-                      <span class="errorMsg">{{ $t(errorMsg) }}</span>
+                    <div class="errorMsg" v-if="errorMsg">
+                      <span>{{ $t(errorMsg) }}</span>
                     </div>
                     <div class="action-transaction-confirmation">
                       <v-btn
@@ -568,7 +568,7 @@ export default class CollateralDeposit extends Vue {
       this.errorMsg = ''
       this.depositCollateral(walletParams)
     } catch (error) {
-      this.errorMsg = error.message
+      this.onError(error.message)
     }
   }
 
@@ -600,6 +600,7 @@ export default class CollateralDeposit extends Vue {
         }, 1000)
       })
       .catch((error: Error) => {
+        console.log('error on deposite collateral')
         this.onError(error.message)
       })
   }

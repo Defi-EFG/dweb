@@ -21,7 +21,7 @@
                 check_circle
               </v-icon>
               <v-icon v-if="tx.status === txConstants.STATUS_FAILED" class="failed">
-                check_circle
+                close
               </v-icon>
             </v-col>
             <v-col cols="7" class="tx-status">

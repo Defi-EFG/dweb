@@ -94,6 +94,7 @@
       :toAddr="toAddr"
       :amount="amount"
       :currency="currencyECOC"
+      :txError="errorMsg"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
     />
@@ -248,6 +249,7 @@ export default class StakedReward extends Vue {
   }
 
   onConfirm(walletParams: WalletParams) {
+    this.errorMsg = ''
     if (this.actionType === ActionType.TYPE_WITHDRAW) {
       const pendingId = this.staked.pendingId as number
       const payload = {
