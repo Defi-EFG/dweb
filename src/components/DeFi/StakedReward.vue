@@ -296,10 +296,12 @@ export default class StakedReward extends Vue {
 .stake-wrapper {
   display: flex;
   width: -webkit-fill-available;
+  width: -moz-available;
 }
 
 .staked-reward {
   width: -webkit-fill-available;
+  width: -moz-available;
 }
 
 .wrapper {
