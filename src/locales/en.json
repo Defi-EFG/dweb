@@ -71,7 +71,7 @@
                 "subtitle": "We believe that size, visibility, and time are the true test for the security of smart contracts and make the determination of security and suitability for users. ECOC Financial Growth (EFG) Token's developers never stop to develop the best financial channel."
             }
         ],
-        "Introduction": "Guide",
+        "Introduction": "Introduction",
         "docs": [{
                 "head": "Collateral ",
                 "headsub": "In order to borrow the EFG Token from dApp, users need to firstly supply ECOC coins as collateral. Meanwhile, users cannot redeem or transfer collateral while it is locked."
@@ -390,6 +390,7 @@
     "Currency Approving...": "Currency Approving...",
     "Sending Transaction...": "Sending Transaction...",
     "No results": "No results",
-    "No more data": "No more data"
-
+    "No more data": "No more data",
+    "Invalid address format": "Invalid address format",
+    "UTXO currently unavailable, Please try again": "UTXO currently unavailable, Please try again"
 }

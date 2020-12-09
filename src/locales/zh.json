@@ -103,7 +103,7 @@
             }
 
         ],
-        "tutorial": "Tutorial",
+        "tutorial": "讲解",
         "financial ": "Financial Growth ",
         "step_1": "创建ECOC钱包",
         "step_2": "链接ECOC钱包",
@@ -392,6 +392,7 @@
     "Currency Approving...": "货币审批中...",
     "Sending Transaction...": "正在发送交易...",
     "No results": "沒結果",
-    "No more data": "沒有更多數據"
-
+    "No more data": "沒有更多數據",
+    "Invalid address format": "地址格式无效",
+    "UTXO currently unavailable, Please try again": "目前无法使用UTXO，请重试"
 }

@@ -9,7 +9,7 @@
                 href="#Introduction"
                 @click="onClickActive('Introduction')"
                 :class="active == 'Introduction' ? 'active' : undefined"
-                >Introduction</a
+                >{{ $t('views.Introduction') }}</a
               >
             </div>
             <div class="sibar_dc">
@@ -17,7 +17,7 @@
                 href="#tutorialhead"
                 @click="onClickActive('Tutorial ')"
                 :class="active == 'Tutorial ' ? 'active' : undefined"
-                >Tutorial
+                >{{ $t('views.tutorial') }}
               </a>
             </div>
           </section>

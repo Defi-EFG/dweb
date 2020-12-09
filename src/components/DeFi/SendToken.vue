@@ -119,7 +119,6 @@ import { restrictNumberDecimals } from '@/services/utils'
   }
 })
 export default class SendToken extends Vue {
-
   restrictNumberDecimals = restrictNumberDecimals
 
   confirmTxModal = false

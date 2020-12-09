@@ -156,7 +156,7 @@ export default class ReceiveSendMobile extends Vue {
   walletStore = getModule(WalletModule)
 
   restrictNumberDecimals = restrictNumberDecimals
-  
+
   showCopy = false
   showQr = false
 

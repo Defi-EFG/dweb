@@ -486,7 +486,7 @@ export default class UnlockwalletModal extends Vue {
   async confirmKeystore() {
     try {
       const obj = JSON.parse(this.keystore)
-      if ('version' in obj && 'content' in obj ) {
+      if ('version' in obj && 'content' in obj) {
         this.toStep(5)
       } else {
         this.errormsg = 'Wrong format of keystore text'
