@@ -20,6 +20,7 @@
       v-model="collateralAmount"
       type="number"
       :hint="tokenConversion"
+      @keypress="restrictNumberDecimals($event, collateralAmount, 8)"
       persistent-hint
     ></v-text-field>
     <div class="borrow-power">
@@ -100,6 +101,7 @@ import * as constants from '@/constants'
 import LendingModule from '@/store/lending'
 import { Currency } from '@/types/currency'
 import Collatmodel from '@/components/modals/CollateralDeposit.vue'
+import { restrictNumberDecimals } from '@/services/utils'
 
 @Component({
   components: {
@@ -109,6 +111,8 @@ import Collatmodel from '@/components/modals/CollateralDeposit.vue'
 export default class Collateral extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
+
+  restrictNumberDecimals = restrictNumberDecimals
 
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number

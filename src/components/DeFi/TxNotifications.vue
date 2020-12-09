@@ -208,6 +208,7 @@ export default class TxNotifications extends Vue {
 }
 
 .noti-list-wrapper {
+  box-shadow: 0px 6px 20px 0px #0000006b;
   border-radius: 6px;
   padding: 1rem;
   right: 20px;
