@@ -217,7 +217,7 @@ export default class SupplyBalance extends Vue {
   }
 
   isDepositable(balance: number, GPTNeed: number) {
-    if (balance >= 0 && balance > GPTNeed) {
+    if (balance >= 0 && balance > Number(GPTNeed) && Number(GPTNeed) > 0) {
       return false
     } else {
       return true
