@@ -12,8 +12,8 @@
                   <v-icon>close</v-icon>
                 </v-btn>
               </v-card-title>
-              <div class="content-wrapper ">
-                <div class="content-logo ">
+              <div class="content-wrapper">
+                <div class="content-logo">
                   <div class="logo"><img src="@/assets/icon/light-logo-defi.svg" alt="" /></div>
                 </div>
                 <h3 class="primary--text">{{ $t('views.modal.welcome_to') }}</h3>
@@ -132,7 +132,7 @@
                   <small class="lightgray--text"
                     >{{ $t('views.modal.please_set_your') }}
                     <p @click="openPrivatekeyfield()" text>
-                      <strong class=" text-btn"> {{ $t('views.modal.use_privatekey') }}</strong>
+                      <strong class="text-btn"> {{ $t('views.modal.use_privatekey') }}</strong>
                     </p>
                   </small>
                 </div>
@@ -486,7 +486,7 @@ export default class UnlockwalletModal extends Vue {
   async confirmKeystore() {
     try {
       const obj = JSON.parse(this.keystore)
-      if ('version' in obj && 'content' in obj && 'crypto' in obj) {
+      if ('version' in obj && 'content' in obj) {
         this.toStep(5)
       } else {
         this.errormsg = 'Wrong format of keystore text'
@@ -806,10 +806,13 @@ v-btn {
 }
 
 .errorMsg {
-  background-color: white;
-  color: red;
+  margin-bottom: 6px;
+  background-color: #ff7878;
+  color: white;
   font-size: 10px;
-  padding: 4px;
+  padding: 6px;
+  border-radius: 4px;
+  font-weight: 600;
 }
 .keystorefield {
   cursor: pointer;

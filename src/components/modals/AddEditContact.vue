@@ -150,7 +150,7 @@ export default class AddEditContact extends Vue {
         contact =>
           contact.name === this.editContact!.name && contact.address === this.editContact!.address
       )
-      if (index) {
+      if (index >= 0) {
         this.addressStore.updateContact({ index, contact: this.contact })
       }
     }

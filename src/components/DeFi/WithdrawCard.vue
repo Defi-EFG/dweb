@@ -18,6 +18,7 @@
       color="#C074F9"
       dark
       :hint="tokenConversion"
+      @keypress="restrictNumberDecimals($event, withdrawValue, 8)"
       persistent-hint
       type="number"
       pattern="[0-9]*"
@@ -86,6 +87,7 @@
       :toAddr="walletAddr"
       :amount="withdrawValue"
       :currency="currency"
+      :txError="errorMsg"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
     />
@@ -101,6 +103,7 @@ import WalletModule from '@/store/wallet'
 import * as constants from '@/constants'
 import { WalletParams } from '@/services/ecoc/types'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
+import { restrictNumberDecimals } from '@/services/utils'
 
 @Component({
   components: {
@@ -110,6 +113,8 @@ import TransactionConfirmationModal from '@/components/modals/TransactionConfirm
 export default class Withdraw extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
+
+  restrictNumberDecimals = restrictNumberDecimals
 
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
@@ -249,6 +254,7 @@ export default class Withdraw extends Vue {
   }
 
   onConfirm(walletParams: WalletParams) {
+    this.errorMsg = ''
     const amount = Number(this.withdrawValue)
     const currency = this.currency
 

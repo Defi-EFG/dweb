@@ -27,6 +27,7 @@
       height="43"
       dark
       color="#C074F9"
+      @keypress="restrictNumberDecimals($event, repayAmount, 8)"
       :hint="tokenConversion"
       persistent-hint
     ></v-text-field>
@@ -88,6 +89,7 @@
       :toAddr="contractAddr"
       :amount="repayAmount"
       :currency="currency"
+      :txError="errorMsg"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
     />
@@ -104,6 +106,7 @@ import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import Loading from '@/components/modals/loading.vue'
+import { restrictNumberDecimals } from '@/services/utils'
 
 @Component({
   components: {
@@ -114,6 +117,8 @@ import Loading from '@/components/modals/loading.vue'
 export default class RepayCard extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
+
+  restrictNumberDecimals = restrictNumberDecimals
 
   @Prop() currency!: Currency
   @Prop() borrowBalance!: number
@@ -252,6 +257,7 @@ export default class RepayCard extends Vue {
 
   onConfirm(walletParams: WalletParams) {
     this.loading = true
+    this.errorMsg = ''
     const amount = Number(this.repayAmount)
     const currency = this.currency
 

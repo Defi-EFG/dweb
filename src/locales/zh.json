@@ -12,8 +12,10 @@
             "whitepaper": "白皮书",
             "dashboard": "仪表板",
             "yellow": "黄皮书",
-            "latest_block": "最新块"
+            "latest_block": "最新块",
+            "security": "Security_zh"
         },
+        "securitypdf": "https://efg.finance/media/securitypdf_zh.pdf",
         "yellowpdf": "https://efg.finance/media/Oracles_yellow_paper_zh.pdf",
         "pdf": "https://efg.finance/media/efg-whitepaperzh.pdf",
         "underconstruction": "underconstructionzh.svg",
@@ -101,6 +103,35 @@
             }
 
         ],
+        "tutorial": "讲解",
+        "financial ": "Financial Growth ",
+        "step_1": "创建ECOC钱包",
+        "step_2": "链接ECOC钱包",
+        "How_to_Deposit": "如何存入 EFG?",
+        "How_to_Staking": "如何质押EFG? ",
+        "step1": {
+            "step1_1": "点击“新建 ECOC 钱包”",
+            "step1_2": "设置密码",
+            "step1_3": "点击“创建”按钮",
+            "step1_4": "点击“下载 Key store 文件”按钮."
+        },
+        "step2": {
+            "step2_1": "点击“链接 ECOC 钱包”",
+            "step2_2": "点击 Keystore 文件",
+            "step2_3": "点击“继续”按钮",
+            "step2_4": "输入密码",
+            "step2_5": "点击“链接钱包”按钮"
+        },
+        "step3": {
+            "step3_1": "用户可以通过扫描二维码或者复制粘贴 ECOC 钱包地址进行存款",
+            "step3_2": "输入钱包地址为了存款到钱包",
+            "step3_3": "输入您所需要转的金额",
+            "step3_4": "点击“发送”按钮，启动转款。"
+        },
+        "step4": {
+            "step4_1": "输入需要质押的金额",
+            "step4_2": "点击“存入”按钮开始质押"
+        },
         "detail": {
             "market_details": "市场详情",
             "details": "详情",
@@ -123,8 +154,8 @@
             "day": "每日"
         },
         "wallet": "钱包",
-        "lending": "借出",
-        "staking": "放样",
+        "lending": "借贷",
+        "staking": "质押",
         "walletpage": {
             "unlock_wallet": "解锁钱包",
             "contact_address": "联系方式地址",
@@ -167,7 +198,7 @@
             "borrowamount": "借贷金额",
             "repayamount": "偿还金额",
             "borrowAPY": "借贷年利率",
-            "APY": "年利率",
+            "APY": "日利率",
             "supply_mk": "供应市",
             "total_borrowed": "总借贷",
             "debt": "债务",
@@ -213,7 +244,7 @@
             "to_earn": "来赚取",
             "deposit_amount": "存款金额",
             "staked_available": "可抵押",
-            "stop_staking": "别再赌了",
+            "stop_staking": "停止质押",
             "you_will_get": "你会得到",
             "fee": "费用",
             "day": "天",
@@ -359,6 +390,9 @@
     "Transfer": "转让",
     "You do not have enough ECOC to send": "您没有足够的ECOC来发送",
     "Currency Approving...": "货币审批中...",
-    "Sending Transaction...": "正在发送交易..."
-
+    "Sending Transaction...": "正在发送交易...",
+    "No results": "沒結果",
+    "No more data": "沒有更多數據",
+    "Invalid address format": "地址格式无效",
+    "UTXO currently unavailable, Please try again": "目前无法使用UTXO，请重试"
 }

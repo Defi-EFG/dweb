@@ -26,7 +26,6 @@
     <v-text-field
       dark
       type="number"
-      pattern="[0-9]*"
       class="deposit-amount"
       placeholder="0"
       :prefix="depositAmount ? '' : stakingpage.depositamount"
@@ -34,6 +33,7 @@
       :suffix="staked.currency.name"
       single-line
       solo
+      @keypress="restrictNumberDecimals($event, depositAmount, 8)"
       hide-details="true"
     ></v-text-field>
 
@@ -58,6 +58,7 @@
       :toAddr="toAddr"
       :amount="amount"
       :currency="currency"
+      :txError="errorMsg"
       @onConfirm="onConfirm"
       @onClose="closeConfirmTxModal"
     />
@@ -75,6 +76,7 @@ import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import Loading from '@/components/modals/loading.vue'
 import { StakingInfo } from '@/types/staking'
+import { restrictNumberDecimals } from '@/services/utils'
 
 @Component({
   components: {
@@ -85,6 +87,8 @@ import { StakingInfo } from '@/types/staking'
 export default class DepositWithdraw extends Vue {
   walletStore = getModule(WalletModule)
   stakingStore = getModule(StakingModule)
+
+  restrictNumberDecimals = restrictNumberDecimals
 
   @Prop({ default: 0 }) readonly balance!: number
   @Prop() selectedStaking!: StakingInfo
@@ -199,6 +203,7 @@ export default class DepositWithdraw extends Vue {
 
   onConfirm(walletParams: WalletParams) {
     this.loading = true
+    this.errorMsg = ''
 
     const amount = Number(this.amount)
     const payload = {

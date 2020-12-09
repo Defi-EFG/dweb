@@ -12,8 +12,10 @@
             "whitepaper": "White Paper",
             "dashboard": "Dashboard",
             "yellow": "Yellow Paper",
-            "latest_block": "Latest Block"
+            "latest_block": "Latest Block",
+            "security": "Security"
         },
+        "securitypdf": "https://efg.finance/media/securitypdf.pdf",
         "yellowpdf": "https://efg.finance/media/Oracles_yellow_paper_en.pdf",
         "pdf": "https://efg.finance/media/efg-whitepaper.pdf",
         "underconstruction": "underconstruction.svg",
@@ -69,7 +71,7 @@
                 "subtitle": "We believe that size, visibility, and time are the true test for the security of smart contracts and make the determination of security and suitability for users. ECOC Financial Growth (EFG) Token's developers never stop to develop the best financial channel."
             }
         ],
-        "Introduction": "Guide",
+        "Introduction": "Introduction",
         "docs": [{
                 "head": "Collateral ",
                 "headsub": "In order to borrow the EFG Token from dApp, users need to firstly supply ECOC coins as collateral. Meanwhile, users cannot redeem or transfer collateral while it is locked."
@@ -104,6 +106,35 @@
             }
 
         ],
+        "tutorial": "Tutorial",
+        "financial ": "Financial Growth ",
+        "step_1": "1st Step",
+        "step_2": "2nd Step",
+        "How_to_Deposit": "How to Deposit EFG?",
+        "How_to_Staking": "How to Staking EFG?",
+        "step1": {
+            "step1_1": "Click the “Create New ECOC Wallet”",
+            "step1_2": "Setting the password.",
+            "step1_3": "Click 'Create Button'",
+            "step1_4": "Click 'Download Key store' File Button."
+        },
+        "step2": {
+            "step2_1": "Click the “Connect ECOC Wallet”",
+            "step2_2": "Press the Key store file text.",
+            "step2_3": "Click 'Next' button",
+            "step2_4": "Input the password..",
+            "step2_5": "Click “Connect” button"
+        },
+        "step3": {
+            "step3_1": "Users can do the deposit via the scan QR code or copy text ECOC wallet address.",
+            "step3_2": "Input the wallet address for the deposit to transfer the token to the wallet.",
+            "step3_3": "Specify the amount, of tokens users need to transfer.",
+            "step3_4": "Press the ' SEND ' button to confirm your transaction."
+        },
+        "step4": {
+            "step4_1": "Specify the amount as you need to staking.",
+            "step4_2": "Press the ' DEPOSIT ' button to confirm the transaction of staking."
+        },
         "detail": {
             "market_details": "Market Details",
             "details": "Details",
@@ -357,6 +388,9 @@
     "Transfer": "Transfer",
     "You do not have enough ECOC to send": "You do not have enough ECOC to send",
     "Currency Approving...": "Currency Approving...",
-    "Sending Transaction...": "Sending Transaction..."
-
+    "Sending Transaction...": "Sending Transaction...",
+    "No results": "No results",
+    "No more data": "No more data",
+    "Invalid address format": "Invalid address format",
+    "UTXO currently unavailable, Please try again": "UTXO currently unavailable, Please try again"
 }

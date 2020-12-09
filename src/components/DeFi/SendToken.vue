@@ -72,6 +72,7 @@
         solo
         type="number"
         pattern="[0-9]*"
+        @keypress="restrictNumberDecimals($event, amount, 8)"
         hide-details="true"
       ></v-text-field>
       <v-btn
@@ -89,6 +90,7 @@
         :toAddr="toAddr"
         :amount="amount"
         :currency="selectedCurrency"
+        :txError="errorMsg"
         @onConfirm="onConfirm"
         @onClose="onClose"
       />
@@ -106,6 +108,7 @@ import AddressBookModule from '@/store/address-book'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
+import { restrictNumberDecimals } from '@/services/utils'
 
 @Component({
   components: {
@@ -116,6 +119,8 @@ import TransactionConfirmationModal from '@/components/modals/TransactionConfirm
   }
 })
 export default class SendToken extends Vue {
+  restrictNumberDecimals = restrictNumberDecimals
+
   confirmTxModal = false
 
   addressStore = getModule(AddressBookModule)
@@ -224,6 +229,7 @@ export default class SendToken extends Vue {
   }
 
   currencySend(payload: SendPayload) {
+    this.errorMsg = ''
     this.walletStore
       .send(payload)
       .then(txid => {
@@ -232,7 +238,7 @@ export default class SendToken extends Vue {
         this.onSuccess()
       })
       .catch(error => {
-        this.onError(`ERROR__ ${error.message}`)
+        this.onError(error.message)
       })
   }
 

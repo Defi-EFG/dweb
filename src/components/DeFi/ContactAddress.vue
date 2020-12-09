@@ -13,32 +13,29 @@
       </v-btn>
     </v-toolbar>
 
-    <v-list color="#222738" class="address-list">
+    <v-list color="#222738" class="address-list" v-if="isReady">
+      <template v-if="contactList.length < 1">
+        <div class="empty-message">
+          <v-icon class="book-icon">class</v-icon>
+          <div class="message">{{ $t('views.walletpage.no_contact_address') }}</div>
+        </div>
+      </template>
       <v-list-item v-for="(contact, index) in contactList" :key="index" class="address-item">
-        <template v-if="contactList.length < 1">
-          <div class="empty-message">
-            <v-icon class="book-icon">class</v-icon>
-            <div class="message">{{ $t('views.walletpage.no_contact_address') }}</div>
-          </div>
-        </template>
+        <v-icon class="mr-3">account_circle</v-icon>
 
-        <template v-else>
-          <v-icon class="mr-3">account_circle</v-icon>
+        <v-list-item-content>
+          <v-list-item-title class="addr-name">{{ contact.name }}</v-list-item-title>
+          <small class="addr-value text-truncate">{{ contact.address }}</small>
+        </v-list-item-content>
 
-          <v-list-item-content>
-            <v-list-item-title class="addr-name">{{ contact.name }}</v-list-item-title>
-            <small class="addr-value text-truncate">{{ contact.address }}</small>
-          </v-list-item-content>
-
-          <v-list-item-icon>
-            <v-btn fab icon x-small class="contact-btn" @click="openEditcontact(contact)">
-              <v-icon>edit</v-icon>
-            </v-btn>
-            <v-btn fab icon x-small class="contact-btn" @click="openDeletecontact(contact)">
-              <v-icon>delete</v-icon>
-            </v-btn>
-          </v-list-item-icon>
-        </template>
+        <v-list-item-icon>
+          <v-btn fab icon x-small class="contact-btn" @click="openEditcontact(contact)">
+            <v-icon>edit</v-icon>
+          </v-btn>
+          <v-btn fab icon x-small class="contact-btn" @click="openDeletecontact(contact)">
+            <v-icon>delete</v-icon>
+          </v-btn>
+        </v-list-item-icon>
       </v-list-item>
     </v-list>
     <AddEditContact

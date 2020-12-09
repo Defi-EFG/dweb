@@ -17,6 +17,7 @@
       height="43"
       dark
       color="#C074F9"
+      @keypress="restrictNumberDecimals($event, borrowValue, 8)"
       :hint="tokenConversion"
       persistent-hint
     >
@@ -72,9 +73,9 @@
       <v-spacer></v-spacer>
       <span>{{ interestRate }} %</span>
     </div>
-    <div class="fixedhight">
+    <div class="fixed-height">
       <div v-show="bpSlider > safeLimit" class="warning-borrow text-center">
-        {{ $t('views.lendingpage.warning') }}
+        <p class="mb-0">{{ $t('views.lendingpage.warning') }}</p>
       </div>
     </div>
     <v-btn
@@ -103,6 +104,7 @@
       :toAddr="walletAddr"
       :amount="borrowValue"
       :currency="currency"
+      :txError="errorMsg"
       @onConfirm="onConfirm"
       @onClose="onClose"
     />
@@ -118,6 +120,8 @@ import { Currency } from '@/types/currency'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
+import { restrictNumberDecimals } from '@/services/utils'
+
 @Component({
   components: {
     TransactionConfirmationModal
@@ -126,6 +130,8 @@ import TransactionConfirmationModal from '@/components/modals/TransactionConfirm
 export default class BorrowCard extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
+
+  restrictNumberDecimals = restrictNumberDecimals
 
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
@@ -270,11 +276,6 @@ export default class BorrowCard extends Vue {
     this.bpSlider = this.calculateBPUsed(val)
   }
 
-  @Watch('bpSlider')
-  onSliderUpdated() {
-    // console.log('slider changed', val)
-  }
-
   onOpenModal() {
     if (this.borrowValue) {
       this.confirmTxModal = !this.confirmTxModal
@@ -300,6 +301,7 @@ export default class BorrowCard extends Vue {
   }
 
   onConfirm(walletParams: WalletParams) {
+    this.errorMsg = ''
     const amount = Number(this.borrowValue)
     const poolAddress = this.lendingStore.loan.poolAddr
     const currency = this.currency
@@ -335,16 +337,17 @@ export default class BorrowCard extends Vue {
 </script>
 
 <style lang="scss" scoped>
-.fixedhight {
-  height: 23px;
+.fixed-height {
   margin-bottom: 20px;
-  margin-top: 14px;
+  height: 34px;
+  margin-top: 5px;
 }
 .warning-borrow {
-  height: 23px;
   font-size: 11px;
-
+  border: 1px solid #fb8c00;
   color: #f49d44;
+
+  max-height: auto;
 }
 .borrow-card {
   width: inherit;

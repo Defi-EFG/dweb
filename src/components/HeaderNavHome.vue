@@ -89,6 +89,9 @@ export default class HeaderNavHome extends Vue {
   get msgpdf() {
     return this.$t('views.yellowpdf')
   }
+  get securitypdf() {
+    return this.$t('views.securitypdf')
+  }
 
   get underconstruction() {
     return this.$t('views.underconstruction')

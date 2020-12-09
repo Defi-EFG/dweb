@@ -14,7 +14,7 @@
                     </div>
                   </div>
                 </v-col>
-                <v-col cols="9" class="chart_detail">
+                <v-col cols="7" class="chart_detail">
                   <div class="m_titel">{{ $t('views.detail.daily_Yield') }}</div>
                   <div class="m_titel">
                     {{ $t('views.detail.number_of_staker') }}
@@ -26,11 +26,11 @@
                     {{ $t('views.detail.total_EFG_Staking') }}
                   </div>
                 </v-col>
-                <v-col cols="3" class="chart_detail">
+                <v-col cols="5" class="chart_detail">
                   <div class="m_titel m_titel_2">{{ stakingRate }}%</div>
                   <div class="m_titel m_titel_2">{{ numberOfStaking }}</div>
                   <div class="m_titel m_titel_2">
-                    {{ totalStaked | numberWithCommas({ Fixed: [0, 8] }) }} GPT
+                    {{ totalStaked | numberWithCommas({ Fixed: [0, 3] }) }} GPT
                   </div>
                   <div class="m_titel m_titel_2">{{ totalStaking }} EFG</div>
                 </v-col>
@@ -91,7 +91,7 @@ import { api } from '@/services/api'
 })
 export default class Gpt extends Vue {
   stakingStore = getModule(StakingModule)
-  stakingRate = 1.1
+  stakingRate = 0.011
   max = this.totalReward
   totalStaked = this.max - this.stakingAvailable
   date = [] as string[]

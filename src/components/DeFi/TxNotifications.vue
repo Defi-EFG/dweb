@@ -21,7 +21,7 @@
                 check_circle
               </v-icon>
               <v-icon v-if="tx.status === txConstants.STATUS_FAILED" class="failed">
-                check_circle
+                close
               </v-icon>
             </v-col>
             <v-col cols="7" class="tx-status">
@@ -208,6 +208,7 @@ export default class TxNotifications extends Vue {
 }
 
 .noti-list-wrapper {
+  box-shadow: 0px 6px 20px 0px #0000006b;
   border-radius: 6px;
   padding: 1rem;
   right: 20px;
