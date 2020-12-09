@@ -6,11 +6,19 @@
           <section class="sec_doc1" name="doc">
             <div class="sibar_dc">
               <a
-                @click="onClickActive(active == 'Introduction')"
-                :class="active == 'Introduction' ? 'active' : ''"
                 href="#Introduction"
-                >{{ $t('views.Introduction') }}</a
+                @click="onClickActive('Introduction')"
+                :class="active == 'Introduction' ? 'active' : undefined"
+                >Introduction</a
               >
+            </div>
+            <div class="sibar_dc">
+              <a
+                href="#tutorialhead"
+                @click="onClickActive('Tutorial ')"
+                :class="active == 'Tutorial ' ? 'active' : undefined"
+                >Tutorial
+              </a>
             </div>
           </section>
         </v-col>
@@ -26,7 +34,44 @@
                 ><br />
               </div>
             </div>
-            <div>...</div>
+            <div id="tutorialhead"></div>
+            <div id="tutorial">
+              <div class="docs_head">EFG Tutorial</div>
+              <div class="head_Introduction">ECOC Financial Growth</div>
+              <div class="head_list">1st {{ $t('views.step') }}</div>
+              <img src="@/assets/Artboard_2.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step1.step1_1') }}</li>
+                <li>{{ $t('views.step1.step1_2') }}</li>
+                <li>{{ $t('views.step1.step1_3') }}</li>
+                <li>{{ $t('views.step1.step1_4') }}</li>
+              </ol>
+              <div class="head_list">2nd {{ $t('views.step') }}</div>
+              <img src="@/assets/Artboard_3.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step2.step2_1') }}</li>
+                <li>{{ $t('views.step2.step2_2') }}.</li>
+                <li>{{ $t('views.step2.step2_3') }}</li>
+                <li>{{ $t('views.step2.step2_4') }}</li>
+                <li>{{ $t('views.step2.step2_5') }}</li>
+              </ol>
+              <div class="head_list">
+                <li>{{ $t('views.How_to_Deposit') }}</li>
+              </div>
+              <img src="@/assets/Artboard_4.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step3.step3_1') }}</li>
+                <li>{{ $t('views.step3.step3_2') }}</li>
+                <li>{{ $t('views.step3.step3_3') }}</li>
+                <li>{{ $t('views.step3.step3_4') }}</li>
+              </ol>
+              <div class="head_list">{{ $t('views.How_to_Staking') }}</div>
+              <img src="@/assets/Artboard_5.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step4.step4_1') }}</li>
+                <li>{{ $t('views.step4.step4_2') }}</li>
+              </ol>
+            </div>
           </section>
         </v-col>
       </v-row>
@@ -41,14 +86,9 @@ export default class Docs extends Vue {
   active = 'Introduction'
   name = ''
 
-  onClickActive() {
-    this.active = 'Introduction'
-    this.name = 'home-docs'
-  }
-
-  onClickActive2() {
-    this.active = 'Guides'
-    this.name = 'home-docs'
+  onClickActive(name: string) {
+    this.active = name
+    this.name = name
   }
 
   get msg() {
@@ -97,6 +137,7 @@ export default class Docs extends Vue {
   box-shadow: 0px 0px 20px 1px #cccccc;
   border-radius: 5px;
 }
+
 .sec_doc2 .img .docs_head {
   width: 100%;
   margin-bottom: 20px;
@@ -104,7 +145,6 @@ export default class Docs extends Vue {
   text-transform: uppercase;
   font-weight: bold;
 }
-
 .sec_doc2 .head_Introduction {
   font-size: 16px;
   letter-spacing: 0px;
@@ -126,22 +166,52 @@ export default class Docs extends Vue {
   max-width: 100%;
   padding: 0;
 }
+#tutorial {
+  margin-top: 100px;
+}
+#tutorial img {
+  width: 100%;
+}
+.sec_doc2 .docs_head {
+  width: 100%;
+  font-size: 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+#tutorial ol {
+  margin-top: 20px;
+}
+#tutorial .head_list {
+  font-size: 16px;
+  letter-spacing: 0px;
+  color: #010101;
+  opacity: 1;
+  margin-bottom: 20px;
+  margin-top: 50px;
+  font-weight: bold;
+  line-height: 1.2;
+  text-align: justify;
+}
+#tutorialhead {
+  margin-bottom: 150px;
+  border-top: 1px solid #cccccc;
+}
 @media only screen and (max-width: 960px) {
   .sec_doc1 {
     position: fixed;
     width: 100%;
     top: 50px;
-    padding: 20px 20px;
+    padding: 40px 20px;
     height: 70px;
     background: #ffffff;
-    display: none;
   }
   .sibar_dc {
     display: inline;
     margin-right: 10px;
   }
   .sec_doc2 {
-    padding: 130px 20px;
+    padding: 140px 20px;
   }
   .container {
     padding: 12px;

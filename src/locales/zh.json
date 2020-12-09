@@ -12,8 +12,10 @@
             "whitepaper": "白皮书",
             "dashboard": "仪表板",
             "yellow": "黄皮书",
-            "latest_block": "最新块"
+            "latest_block": "最新块",
+            "security": "Security_zh"
         },
+        "securitypdf": "https://efg.finance/media/securitypdf_zh.pdf",
         "yellowpdf": "https://efg.finance/media/Oracles_yellow_paper_zh.pdf",
         "pdf": "https://efg.finance/media/efg-whitepaperzh.pdf",
         "underconstruction": "underconstructionzh.svg",
@@ -101,6 +103,34 @@
             }
 
         ],
+        "tutorial": "Tutorial",
+        "financial ": "Financial Growth ",
+        "step": "Step",
+        "How_to_Deposit": "如何存入 ERF?",
+        "How_to_Staking": "如何质押EFG? ",
+        "step1": {
+            "step1_1": "点击“新建 ECOC 钱包”",
+            "step1_2": "设置密码",
+            "step1_3": "点击“创建”按钮",
+            "step1_4": "点击“下载 Key store 文件”按钮."
+        },
+        "step2": {
+            "step2_1": "点击“链接 ECOC 钱包”",
+            "step2_2": "点击 Keystore 文件",
+            "step2_3": "点击“继续”按钮",
+            "step2_4": "输入密码",
+            "step2_5": "点击“链接钱包”按钮"
+        },
+        "step3": {
+            "step3_1": "用户可以通过扫描二维码或者复制粘贴 ECOC 钱包地址进行存款",
+            "step3_2": "输入钱包地址为了存款到钱包",
+            "step3_3": "输入您所需要转的金额",
+            "step3_4": "点击“发送”按钮，启动转款。"
+        },
+        "step4": {
+            "step4_1": "输入需要质押的金额",
+            "step4_2": "点击“存入”按钮开始质押"
+        },
         "detail": {
             "market_details": "市场详情",
             "details": "详情",
