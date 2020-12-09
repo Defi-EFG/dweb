@@ -123,8 +123,8 @@
             "day": "每日"
         },
         "wallet": "钱包",
-        "lending": "借出",
-        "staking": "放样",
+        "lending": "借贷",
+        "staking": "质押",
         "walletpage": {
             "unlock_wallet": "解锁钱包",
             "contact_address": "联系方式地址",
@@ -167,7 +167,7 @@
             "borrowamount": "借贷金额",
             "repayamount": "偿还金额",
             "borrowAPY": "借贷年利率",
-            "APY": "年利率",
+            "APY": "日利率",
             "supply_mk": "供应市",
             "total_borrowed": "总借贷",
             "debt": "债务",
@@ -213,7 +213,7 @@
             "to_earn": "来赚取",
             "deposit_amount": "存款金额",
             "staked_available": "可抵押",
-            "stop_staking": "别再赌了",
+            "stop_staking": "停止质押",
             "you_will_get": "你会得到",
             "fee": "费用",
             "day": "天",
