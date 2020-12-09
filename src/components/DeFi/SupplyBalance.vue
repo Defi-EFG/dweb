@@ -61,10 +61,11 @@
             <v-btn
               @click="openConfirmTxModal"
               large
+              :disabled="isDepositable(currency.balance, estimatedGPTAmount)"
               class="depositbtn mt-8 text-capitalize"
               color="primary"
-              >{{ $t('views.modal.deposit') }}</v-btn
-            >
+              >{{ $t('views.modal.deposit') }}
+            </v-btn>
           </div>
         </div>
       </v-card>
@@ -212,6 +213,14 @@ export default class SupplyBalance extends Vue {
     const boxes = document.querySelector('.balance')
     //@ts-ignore
     boxes.style.fontSize = `${fontSize}px`
+  }
+
+  isDepositable(balance: number, GPTNeed: number) {
+    if (balance <= 0 && balance > GPTNeed && GPTNeed <= 0) {
+      return false
+    } else {
+      return true
+    }
   }
 
   openConfirmTxModal() {

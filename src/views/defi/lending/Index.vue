@@ -304,9 +304,7 @@ export default class Lending extends Vue {
   onActivate(data: boolean) {
     return data
   }
-  // isDepositable(){
 
-  // }
 }
 </script>
 
