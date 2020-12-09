@@ -111,7 +111,7 @@ export default class SupplyBalance extends Vue {
   @Prop({ default: false }) readonly isLiquidate!: boolean
   @Prop({ default: false }) visible!: boolean
 
-  depositgptModal = true
+  depositgptModal = this.visible
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
 
