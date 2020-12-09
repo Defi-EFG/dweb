@@ -105,8 +105,9 @@
         ],
         "tutorial": "Tutorial",
         "financial ": "Financial Growth ",
-        "step": "Step",
-        "How_to_Deposit": "如何存入 ERF?",
+        "step_1": "创建ECOC钱包",
+        "step_2": "链接ECOC钱包",
+        "How_to_Deposit": "如何存入 EFG?",
         "How_to_Staking": "如何质押EFG? ",
         "step1": {
             "step1_1": "点击“新建 ECOC 钱包”",

@@ -38,7 +38,7 @@
             <div id="tutorial">
               <div class="docs_head">EFG Tutorial</div>
               <div class="head_Introduction">ECOC Financial Growth</div>
-              <div class="head_list">1st {{ $t('views.step') }}</div>
+              <div class="head_list">{{ $t('views.step_1') }}</div>
               <img src="@/assets/Artboard_2.png" alt="" />
               <ol>
                 <li>{{ $t('views.step1.step1_1') }}</li>
@@ -46,7 +46,7 @@
                 <li>{{ $t('views.step1.step1_3') }}</li>
                 <li>{{ $t('views.step1.step1_4') }}</li>
               </ol>
-              <div class="head_list">2nd {{ $t('views.step') }}</div>
+              <div class="head_list">2nd {{ $t('views.step_2') }}</div>
               <img src="@/assets/Artboard_3.png" alt="" />
               <ol>
                 <li>{{ $t('views.step2.step2_1') }}</li>
