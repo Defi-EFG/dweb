@@ -54,6 +54,7 @@
                 filled
                 :rules="[rules.required]"
                 min="0"
+                @keypress="restrictNumberDecimals($event, amount, 4)"
                 :placeholder="estimatedGPT"
                 :value="estimatedGPT"
                 >{{ $t('views.modal.GPT') }}</v-text-field
@@ -102,6 +103,7 @@ import * as utils from '@/services/utils'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import Loading from '@/components/modals/loading.vue'
 import { numberWithCommas } from '@/plugins/filters'
+import { restrictNumberDecimals } from '@/services/utils'
 
 @Component({
   components: {
@@ -113,6 +115,8 @@ export default class SupplyBalance extends Vue {
   @Prop({ default: 0 }) readonly balance!: number
   @Prop({ default: false }) readonly isLiquidate!: boolean
   @Prop({ default: false }) visible!: boolean
+
+  restrictNumberDecimals = restrictNumberDecimals
 
   depositgptModal = this.visible
   walletStore = getModule(WalletModule)

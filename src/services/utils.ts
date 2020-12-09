@@ -85,3 +85,19 @@ export const toEcocAddress = (addressHex: string) => {
     return addressHex
   }
 }
+
+export const restrictNumberDecimals = ($event: any, input: any, decimals: number) => {
+  const keyCode = $event.keyCode ? $event.keyCode : $event.which
+
+  input = input.toString()
+
+  // only allow number and one dot
+  if ((keyCode < 48 || keyCode > 57) && (keyCode !== 46 || input.indexOf('.') != -1)) {
+    // 46 is dot
+    $event.preventDefault()
+  }
+  // restrict to 2 decimal places
+  if (input != null && input.indexOf('.') > -1 && input.split('.')[1].length > decimals - 1) {
+    $event.preventDefault()
+  }
+}

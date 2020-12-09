@@ -100,6 +100,7 @@
           solo
           type="number"
           pattern="[0-9]*"
+          @keypress="restrictNumberDecimals($event, amount, 8)"
           hide-details="true"
         ></v-text-field>
         <v-btn
@@ -139,6 +140,7 @@ import AddressBookModule from '@/store/address-book'
 import WalletModule from '@/store/wallet'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
 import { copyToClipboard } from '@/services/utils'
+import { restrictNumberDecimals } from '@/services/utils'
 
 @Component({
   components: {
@@ -152,6 +154,9 @@ import { copyToClipboard } from '@/services/utils'
 export default class ReceiveSendMobile extends Vue {
   addressStore = getModule(AddressBookModule)
   walletStore = getModule(WalletModule)
+
+  restrictNumberDecimals = restrictNumberDecimals
+  
   showCopy = false
   showQr = false
 

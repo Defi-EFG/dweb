@@ -17,6 +17,7 @@
       height="43"
       dark
       color="#C074F9"
+      @keypress="restrictNumberDecimals($event, borrowValue, 8)"
       :hint="tokenConversion"
       persistent-hint
     >
@@ -119,6 +120,8 @@ import { Currency } from '@/types/currency'
 import { WalletParams } from '@/services/ecoc/types'
 import * as constants from '@/constants'
 import TransactionConfirmationModal from '@/components/modals/TransactionConfirmation.vue'
+import { restrictNumberDecimals } from '@/services/utils'
+
 @Component({
   components: {
     TransactionConfirmationModal
@@ -127,6 +130,8 @@ import TransactionConfirmationModal from '@/components/modals/TransactionConfirm
 export default class BorrowCard extends Vue {
   walletStore = getModule(WalletModule)
   lendingStore = getModule(LendingModule)
+
+  restrictNumberDecimals = restrictNumberDecimals
 
   @Prop() currency!: Currency
   @Prop() collateralBalance!: number
