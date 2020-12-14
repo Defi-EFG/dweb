@@ -7,20 +7,34 @@
       </div>
       <v-spacer></v-spacer>
       <div class="navbar">
-        <a href="#home">Home</a>
-        <a href="#news">News</a>
+        <a href="#home">Introduction</a>
         <div class="dropdown">
           <button class="dropbtn">
-            Dropdown
+            Tutorial
             <i class="fa fa-caret-down"></i>
           </button>
           <div class="dropdown-content">
-            <a href="#">Link 1</a>
-            <a href="#">Link 2</a>
-            <a href="#">Link 3</a>
+            <a href="#">White Paper</a>
+            <a href="#">Yellow Paper</a>
+            <a href="#">EFG Audit</a>
+            <a href="#">GPT Audit</a>
           </div>
         </div>
-        <a href="#home" class="Dashboard">Dashboard</a>
+        <div class="dropdown">
+          <button class="dropbtn">
+            Documents
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="#">White Paper</a>
+            <a href="#">Yellow Paper</a>
+            <a href="#">EFG Audit</a>
+            <a href="#">GPT Audit</a>
+          </div>
+        </div>
+        <a href="#home" class="Dashboard">
+          <v-btn outlined small @click="gotoDashboard">{{ $t('views.titles.dashboard') }}</v-btn></a
+        >
       </div>
       <v-row id="menu_s">
         <v-col>
@@ -115,10 +129,6 @@ export default class HeaderNavHome extends Vue {
 }
 </style>
 <style lang="scss" scoped>
-.Dashboard {
-  border: 1px solid #ffffff;
-  border-radius: 5px;
-}
 .navbar {
   overflow: hidden;
 }
