@@ -7,7 +7,7 @@
       </div>
       <v-spacer></v-spacer>
       <div class="navbar">
-        <a href="#home">Introduction</a>
+        <router-link :to="{ name: 'home-docs' }">{{ $t('views.titles.docs') }}</router-link>
         <div class="dropdown">
           <button class="dropbtn">
             Tutorial
