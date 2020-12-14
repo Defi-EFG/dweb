@@ -181,6 +181,10 @@ export default class HeaderNavHome extends Vue {
   text-align: left;
 }
 
+.efg-header {
+  max-width: 1100px;
+  margin: 0 auto;
+}
 .dropdown-content a:hover {
   background-color: #ddd;
 }
