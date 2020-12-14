@@ -138,6 +138,10 @@
             "step4_1": "Specify the amount as you need to staking.",
             "step4_2": "Press the ' DEPOSIT ' button to confirm the transaction of staking."
         },
+        "Withdraw_howto": "How to Withdraw GPT ?",
+        "Users_haveto": "Users have to press the ' STOP STAKING ' button to withdraw the GPT rewards.",
+        "Note_the": "Note: the EFG dApp will lock your assets for 21 days after stop staking",
+        "After_21": "After 21 days, users can click the “WITHDRAW REWARD” to receive the GPT rewards.",
         "detail": {
             "market_details": "Market Details",
             "details": "Details",

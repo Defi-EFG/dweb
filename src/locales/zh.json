@@ -135,6 +135,10 @@
             "step4_1": "输入需要质押的金额",
             "step4_2": "点击“存入”按钮开始质押"
         },
+        "Withdraw_howto": "如何提取GPT ? ",
+        "Users_haveto": "用户点击“停止质押”按钮为了提取GPT 奖励",
+        "Note_the": "备注: 停止质押后EFG dApp 需要就绪锁定您的资产 21 日",
+        "After_21": "21 日后，用户可点击“提取奖励”按钮为了提取 GPT",
         "detail": {
             "market_details": "市场详情",
             "details": "详情",

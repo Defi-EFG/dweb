@@ -134,45 +134,26 @@
               </ol>
             </div>
             <div
-              id="Withdrawal"
-              :class="
-                `tutorial divmargin open ${active == 'Withdrawal' ? 'open_active' : undefined}`
-              "
+              id="Withdraw"
+              :class="`tutorial divmargin open ${active == 'Withdraw' ? 'open_active' : undefined}`"
             >
-              <div class="docs_head" data-aos="Withdrawal">EFG Withdrawal</div>
-              <div class="head_Introduction">ECOC Financial Growth</div>
-              <div class="head_list">{{ $t('views.step_1') }}</div>
-              <img src="@/assets/Artboard_2.png" alt="" />
+              <div class="docs_head">{{ $t('views.Withdraw_howto') }}</div>
+              <img src="@/assets/artboard_6.png" alt="" />
               <ol>
-                <li>{{ $t('views.step1.step1_1') }}</li>
-                <li>{{ $t('views.step1.step1_2') }}</li>
-                <li>{{ $t('views.step1.step1_3') }}</li>
-                <li>{{ $t('views.step1.step1_4') }}</li>
+                <li>
+                  {{ $t('views.Users_haveto') }}
+                </li>
               </ol>
-              <div class="head_list">{{ $t('views.step_2') }}</div>
-              <img src="@/assets/Artboard_3.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step2.step2_1') }}</li>
-                <li>{{ $t('views.step2.step2_2') }}.</li>
-                <li>{{ $t('views.step2.step2_3') }}</li>
-                <li>{{ $t('views.step2.step2_4') }}</li>
-                <li>{{ $t('views.step2.step2_5') }}</li>
-              </ol>
-              <div class="head_list">
-                <li>{{ $t('views.How_to_Deposit') }}</li>
+              <div class="Withdrawal_commect">
+                ***
+                <span> {{ $t('views.Note_the') }}</span>
+                ***
               </div>
-              <img src="@/assets/Artboard_4.png" alt="" />
+              <img src="@/assets/artboard_7.png" alt="" />
               <ol>
-                <li>{{ $t('views.step3.step3_1') }}</li>
-                <li>{{ $t('views.step3.step3_2') }}</li>
-                <li>{{ $t('views.step3.step3_3') }}</li>
-                <li>{{ $t('views.step3.step3_4') }}</li>
-              </ol>
-              <div class="head_list">{{ $t('views.How_to_Staking') }}</div>
-              <img src="@/assets/Artboard_5.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step4.step4_1') }}</li>
-                <li>{{ $t('views.step4.step4_2') }}</li>
+                <li>
+                  {{ $t('views.After_21') }}
+                </li>
               </ol>
             </div>
             <div
@@ -285,7 +266,7 @@ export default class Tutorial extends Vue {
         name: 'Wallet'
       },
       {
-        name: 'Withdrawal'
+        name: 'Withdraw'
       },
       {
         name: 'Staking'
@@ -388,6 +369,7 @@ export default class Tutorial extends Vue {
 }
 .tutorial img {
   width: 100%;
+  margin-top: 50px;
 }
 .sec_doc2 .docs_head {
   width: 100%;
@@ -409,6 +391,12 @@ export default class Tutorial extends Vue {
   font-weight: bold;
   line-height: 1.2;
   text-align: justify;
+}
+#Withdrawal .Withdrawal_commect {
+  color: red;
+}
+#Withdrawal .Withdrawal_commect span {
+  color: #000000;
 }
 @media only screen and (max-width: 960px) {
   .sec_doc1 {

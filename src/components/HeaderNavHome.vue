@@ -14,7 +14,7 @@
         <div class="dropdown">
           <button class="dropbtn">
             {{ $t('views.titles.docs') }}
-            <v-icon>mdi-chevron-right</v-icon>
+            <v-icon></v-icon>
           </button>
           <div class="dropdown-content">
             <a :href="whitepaper" target="_blank">{{ $t('views.titles.whitepaper') }}</a>
@@ -161,7 +161,7 @@ export default class HeaderNavHome extends Vue {
 .dropdown {
   float: left;
   overflow: hidden;
-  margin-top: 9px;
+  margin-top: 7px;
   padding: 2px 5px;
 }
 
@@ -244,7 +244,7 @@ export default class HeaderNavHome extends Vue {
   a {
     font-weight: bold;
     color: #ffffff;
-    padding: 11px 0px 0px 0px;
+    padding: 10px 0px 0px 0px;
     text-decoration: unset;
     &.router-link-exact-active {
       color: rgb(192, 116, 249);
