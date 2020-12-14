@@ -49,7 +49,6 @@
           class="to-address-field"
           single-line
           solo
-          hide-details="true"
           v-model="toAddr"
         >
           <template v-slot:append-outer>
@@ -512,6 +511,16 @@ export default class ReceiveSendMobile extends Vue {
 }
 v-dialog {
   border: 1pc solid red;
+}
+
+.to-address-field {
+  .v-input__slot {
+    margin-bottom: 0 !important;
+  }
+
+  .v-text-field__details {
+    display: none !important;
+  }
 }
 </style>
 

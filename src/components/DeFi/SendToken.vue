@@ -23,7 +23,6 @@
         class="to-address-field"
         single-line
         solo
-        hide-details="true"
         v-model="toAddr"
       >
         <template v-slot:append-outer>
@@ -435,6 +434,16 @@ v-dialog {
 
   input[type='number'] {
     -moz-appearance: textfield; /* Firefox */
+  }
+}
+
+.to-address-field {
+  .v-input__slot {
+    margin-bottom: 0 !important;
+  }
+
+  .v-text-field__details {
+    display: none !important;
   }
 }
 </style>
