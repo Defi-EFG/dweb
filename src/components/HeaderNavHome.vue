@@ -7,18 +7,24 @@
       </div>
       <v-spacer></v-spacer>
       <div class="navbar">
-        <router-link :to="{ name: 'home-Introduction' }">Introduction</router-link>
-        <router-link :to="{ name: 'home-Tutorial' }">Tutorial</router-link>
+        <router-link :to="{ name: 'home-Introduction' }">{{
+          $t('views.titles.Introduction')
+        }}</router-link>
+        <router-link :to="{ name: 'home-Tutorial' }">{{ $t('views.titles.Tutorial') }}</router-link>
         <div class="dropdown">
           <button class="dropbtn">
-            Documents
-            <i class="fa fa-caret-down"></i>
+            {{ $t('views.titles.docs') }}
+            <v-icon>mdi-chevron-right</v-icon>
           </button>
           <div class="dropdown-content">
-            <a href="#">White Paper</a>
-            <a href="#">Yellow Paper</a>
-            <a href="#">EFG Audit</a>
-            <a href="#">GPT Audit</a>
+            <a :href="whitepaper" target="_blank">{{ $t('views.titles.whitepaper') }}</a>
+            <a :href="yellowpdf" target="_blank">{{ $t('views.titles.yellow') }}</a>
+            <a href="https://efg.finance/media/Report_for_EFG.pdf" target="_blank">{{
+              $t('views.titles.EFG_Audit')
+            }}</a>
+            <a href="https://efg.finance/media/Report_for_GPT.pdf" target="_blank">{{
+              $t('views.titles.GPT_Audit')
+            }}</a>
           </div>
         </div>
         <a href="#home" class="Dashboard">
@@ -39,15 +45,27 @@
                   <div class="menu_bu">
                     <ul>
                       <li>
-                        <router-link :to="{ name: 'home-docs' }">{{
-                          $t('views.titles.docs')
+                        <router-link :to="{ name: 'home-Introduction' }">{{
+                          $t('views.titles.Introduction')
                         }}</router-link>
                       </li>
                       <li>
-                        <a :href="msg" target="_blank">{{ $t('views.titles.whitepaper') }}</a>
+                        <router-link :to="{ name: 'home-Tutorial' }">{{
+                          $t('views.titles.Tutorial')
+                        }}</router-link>
                       </li>
                       <li>
-                        <a :href="msgpdf" target="_blank">{{ $t('views.titles.yellow') }}</a>
+                        {{ $t('views.titles.docs') }}
+                        <a :href="whitepaper" target="_blank">{{
+                          $t('views.titles.whitepaper')
+                        }}</a>
+                        <a :href="yellowpdf" target="_blank">{{ $t('views.titles.yellow') }}</a>
+                        <a href="https://efg.finance/media/Report_for_EFG.pdf" target="_blank">{{
+                          $t('views.titles.EFG_Audit')
+                        }}</a>
+                        <a href="https://efg.finance/media/Report_for_GPT.pdf" target="_blank">{{
+                          $t('views.titles.GPT_Audit')
+                        }}</a>
                       </li>
                       <li class="li_noberder">
                         <v-btn outlined small @click="gotoDashboard">{{
@@ -95,11 +113,11 @@ export default class HeaderNavHome extends Vue {
     //this.dialog = true
   }
 
-  get msg() {
+  get whitepaper() {
     return this.$t('views.pdf')
   }
 
-  get msgpdf() {
+  get yellowpdf() {
     return this.$t('views.yellowpdf')
   }
   get securitypdf() {
@@ -165,6 +183,7 @@ export default class HeaderNavHome extends Vue {
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
   border-radius: 5px;
+  padding: 0px 5px 10px 5px;
 }
 
 .dropdown-content a {
@@ -293,6 +312,9 @@ export default class HeaderNavHome extends Vue {
     list-style-type: none;
     padding: 10px 10px;
     position: relative;
+    color: #ffffff;
+    font-weight: 700;
+    width: 100%;
   }
   li {
     padding: 10px 0;
@@ -312,19 +334,10 @@ export default class HeaderNavHome extends Vue {
     color: #000000;
   }
 
-  ul {
-    color: #000000;
-    font-weight: 700;
-    width: 100%;
-  }
-  li:hover {
-    color: #c074f9;
-    font-weight: 700;
-    width: 100%;
-    cursor: pointer;
-  }
   ul li a {
     color: #ffffff;
+    display: block;
+    padding: 2px 0;
   }
   ul li a:hover {
     color: #c074f9;

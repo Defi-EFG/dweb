@@ -6,6 +6,7 @@
           <section class="sec_doc1" name="doc">
             <div class="sibar_dc">
               <a
+                style="display:none"
                 href="#Introduction"
                 @click="onClickActive('Introduction')"
                 :class="active == 'Introduction' ? 'active' : undefined"

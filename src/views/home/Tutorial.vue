@@ -6,6 +6,7 @@
           <section class="sec_doc1" name="doc">
             <div class="sibar_dc">
               <a
+                style="display:none"
                 href="#tutorialhead"
                 @click="onClickActive('Tutorial ')"
                 :class="active == 'Tutorial ' ? 'active' : undefined"
@@ -27,7 +28,7 @@
                 <li>{{ $t('views.step1.step1_3') }}</li>
                 <li>{{ $t('views.step1.step1_4') }}</li>
               </ol>
-              <div class="head_list">2nd {{ $t('views.step_2') }}</div>
+              <div class="head_list">{{ $t('views.step_2') }}</div>
               <img src="@/assets/Artboard_3.png" alt="" />
               <ol>
                 <li>{{ $t('views.step2.step2_1') }}</li>

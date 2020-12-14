@@ -13,7 +13,10 @@
             "dashboard": "仪表板",
             "yellow": "黄皮书",
             "latest_block": "最新块",
-            "security": "Security_zh"
+            "Introduction": "指南",
+            "Tutorial": "讲解 ",
+            "EFG_Audit": "EFG 審計",
+            "GPT_Audit": "GPT 審計"
         },
         "securitypdf": "https://efg.finance/media/securitypdf_zh.pdf",
         "yellowpdf": "https://efg.finance/media/Oracles_yellow_paper_zh.pdf",
