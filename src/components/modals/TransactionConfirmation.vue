@@ -325,6 +325,7 @@ export default class TransactionConfirmationModal extends Vue {
       this.$emit('onConfirm', walletParams)
     } catch (error) {
       this.errorMsg = error.message
+      this.isLoading = false
     }
   }
 

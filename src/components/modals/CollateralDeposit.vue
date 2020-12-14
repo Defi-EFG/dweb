@@ -600,7 +600,6 @@ export default class CollateralDeposit extends Vue {
         }, 1000)
       })
       .catch((error: Error) => {
-        console.log('error on deposite collateral')
         this.onError(error.message)
       })
   }
