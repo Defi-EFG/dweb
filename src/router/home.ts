@@ -5,7 +5,8 @@ const MainPage = () => import(/* webpackChunkName: "group-home-main" */ '@/views
 const Gpt = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Gpt.vue')
 const Efg = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Efg.vue')
 const Collateral = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Collateral.vue')
-const DocsPage = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Docs.vue')
+const Introduction = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Introduction.vue')
+const Tutorial = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Tutorial.vue')
 const WhitePaper = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Whitepaper.vue')
 
 const homeRoutes: Array<RouteConfig> = [
@@ -25,10 +26,18 @@ const homeRoutes: Array<RouteConfig> = [
       },
       {
         path: 'docs',
-        name: 'home-docs',
-        component: DocsPage,
+        name: 'home-Introduction',
+        component: Introduction,
         meta: {
-          title: 'Documents - EFG'
+          title: 'Introduction - EFG'
+        }
+      },
+      {
+        path: 'Tutorial',
+        name: 'home-Tutorial',
+        component: Tutorial,
+        meta: {
+          title: 'Tutorial - EFG'
         }
       },
       {

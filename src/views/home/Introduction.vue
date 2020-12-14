@@ -12,14 +12,6 @@
                 >{{ $t('views.Introduction') }}</a
               >
             </div>
-            <div class="sibar_dc">
-              <a
-                href="#tutorialhead"
-                @click="onClickActive('Tutorial ')"
-                :class="active == 'Tutorial ' ? 'active' : undefined"
-                >{{ $t('views.tutorial') }}
-              </a>
-            </div>
           </section>
         </v-col>
         <v-col lg="9" md="9" cols="12" style="padding:0px;">
@@ -34,44 +26,6 @@
                 ><br />
               </div>
             </div>
-            <div id="tutorialhead"></div>
-            <div id="tutorial">
-              <div class="docs_head">EFG Tutorial</div>
-              <div class="head_Introduction">ECOC Financial Growth</div>
-              <div class="head_list">{{ $t('views.step_1') }}</div>
-              <img src="@/assets/Artboard_2.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step1.step1_1') }}</li>
-                <li>{{ $t('views.step1.step1_2') }}</li>
-                <li>{{ $t('views.step1.step1_3') }}</li>
-                <li>{{ $t('views.step1.step1_4') }}</li>
-              </ol>
-              <div class="head_list">2nd {{ $t('views.step_2') }}</div>
-              <img src="@/assets/Artboard_3.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step2.step2_1') }}</li>
-                <li>{{ $t('views.step2.step2_2') }}.</li>
-                <li>{{ $t('views.step2.step2_3') }}</li>
-                <li>{{ $t('views.step2.step2_4') }}</li>
-                <li>{{ $t('views.step2.step2_5') }}</li>
-              </ol>
-              <div class="head_list">
-                <li>{{ $t('views.How_to_Deposit') }}</li>
-              </div>
-              <img src="@/assets/Artboard_4.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step3.step3_1') }}</li>
-                <li>{{ $t('views.step3.step3_2') }}</li>
-                <li>{{ $t('views.step3.step3_3') }}</li>
-                <li>{{ $t('views.step3.step3_4') }}</li>
-              </ol>
-              <div class="head_list">{{ $t('views.How_to_Staking') }}</div>
-              <img src="@/assets/Artboard_5.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step4.step4_1') }}</li>
-                <li>{{ $t('views.step4.step4_2') }}</li>
-              </ol>
-            </div>
           </section>
         </v-col>
       </v-row>
@@ -82,7 +36,7 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
 @Component({})
-export default class Docs extends Vue {
+export default class Introduction extends Vue {
   active = 'Introduction'
   name = ''
 

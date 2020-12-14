@@ -7,19 +7,8 @@
       </div>
       <v-spacer></v-spacer>
       <div class="navbar">
-        <router-link :to="{ name: 'home-docs' }">{{ $t('views.titles.docs') }}</router-link>
-        <div class="dropdown">
-          <button class="dropbtn">
-            Tutorial
-            <i class="fa fa-caret-down"></i>
-          </button>
-          <div class="dropdown-content">
-            <a href="#">White Paper</a>
-            <a href="#">Yellow Paper</a>
-            <a href="#">EFG Audit</a>
-            <a href="#">GPT Audit</a>
-          </div>
-        </div>
+        <router-link :to="{ name: 'home-Introduction' }">Introduction</router-link>
+        <router-link :to="{ name: 'home-Tutorial' }">Tutorial</router-link>
         <div class="dropdown">
           <button class="dropbtn">
             Documents
@@ -132,7 +121,9 @@ export default class HeaderNavHome extends Vue {
 .navbar {
   overflow: hidden;
 }
-
+.efg-logo {
+  margin-right: 5px;
+}
 .navbar a {
   float: left;
   font-size: 16px;
@@ -147,6 +138,8 @@ export default class HeaderNavHome extends Vue {
 .dropdown {
   float: left;
   overflow: hidden;
+  margin-top: 9px;
+  padding: 2px 5px;
 }
 
 .dropdown .dropbtn {
@@ -158,6 +151,7 @@ export default class HeaderNavHome extends Vue {
   background-color: inherit;
   font-family: inherit;
   margin: 0;
+  font-weight: bold;
 }
 .dropdown:hover .dropbtn {
   color: #c074f9;
@@ -166,27 +160,21 @@ export default class HeaderNavHome extends Vue {
 .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #f9f9f9;
-  min-width: 160px;
+  background-color: #513464;
+  min-width: 110px;
   box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 1;
+  border-radius: 5px;
 }
 
 .dropdown-content a {
+  font-weight: bold;
   float: none;
   color: black;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
   text-align: left;
-}
-
-.efg-header {
-  max-width: 1100px;
-  margin: 0 auto;
-}
-.dropdown-content a:hover {
-  background-color: #ddd;
 }
 
 .dropdown:hover .dropdown-content {
@@ -224,6 +212,32 @@ export default class HeaderNavHome extends Vue {
   box-shadow: inset 0 0 2000px rgba(255, 255, 255, 0.233);
   -webkit-backdrop-filter: blur(20px);
   backdrop-filter: blur(20px);
+}
+.efg-header {
+  max-width: 1088px;
+  margin: 0 auto;
+  a {
+    font-weight: bold;
+    color: #ffffff;
+    padding: 11px 0px 0px 0px;
+    text-decoration: unset;
+    &.router-link-exact-active {
+      color: rgb(192, 116, 249);
+      border-bottom: 2px solid rgb(192, 116, 249);
+      span {
+        color: rgb(192, 116, 249);
+        transition: 0.3s;
+      }
+    }
+  }
+  span:hover {
+    color: rgb(192, 116, 249);
+    transition: 0.3s;
+  }
+  a:hover {
+    color: rgb(192, 116, 249);
+    transition: 0.3s;
+  }
 }
 .v-list-item {
   margin-top: 0px;
@@ -285,7 +299,7 @@ export default class HeaderNavHome extends Vue {
     text-align: center;
     border-bottom: 1px solid #cccccc;
   }
-  .desktop_menu {
+  .navbar {
     display: none;
   }
   .sub_menu_div {
