@@ -6,11 +6,21 @@
         <v-toolbar-title id="name_title">{{ $t('views.main.name') }}</v-toolbar-title>
       </div>
       <v-spacer></v-spacer>
-      <div class="desktop_menu">
-        <router-link :to="{ name: 'home-docs' }">{{ $t('views.titles.docs') }}</router-link>
-        <a :href="msg" target="_blank">{{ $t('views.titles.whitepaper') }}</a>
-        <a :href="msgpdf" target="_blank">{{ $t('views.titles.yellow') }}</a>
-        <v-btn outlined small @click="gotoDashboard">{{ $t('views.titles.dashboard') }}</v-btn>
+      <div class="navbar">
+        <a href="#home">Home</a>
+        <a href="#news">News</a>
+        <div class="dropdown">
+          <button class="dropbtn">
+            Dropdown
+            <i class="fa fa-caret-down"></i>
+          </button>
+          <div class="dropdown-content">
+            <a href="#">Link 1</a>
+            <a href="#">Link 2</a>
+            <a href="#">Link 3</a>
+          </div>
+        </div>
+        <a href="#home" class="Dashboard">Dashboard</a>
       </div>
       <v-row id="menu_s">
         <v-col>
@@ -105,10 +115,69 @@ export default class HeaderNavHome extends Vue {
 }
 </style>
 <style lang="scss" scoped>
-.v-card__text {
-  text-align: center;
+.Dashboard {
+  border: 1px solid #ffffff;
+  border-radius: 5px;
+}
+.navbar {
+  overflow: hidden;
 }
 
+.navbar a {
+  float: left;
+  font-size: 16px;
+  color: white;
+  text-align: center;
+  padding: 2px 7px;
+  text-decoration: none;
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;
+  border: none;
+  outline: none;
+  color: white;
+  padding: 2px 5px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+.dropdown:hover .dropbtn {
+  color: #c074f9;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
 #menu_s {
   display: none;
 }
@@ -161,11 +230,6 @@ export default class HeaderNavHome extends Vue {
 .v-navigation-drawer--is-mobile:not {
   box-shadow: unset;
 }
-li {
-  padding: 10px 0;
-  text-align: center;
-  border-bottom: 1px solid #cccccc;
-}
 .li_noberder {
   border-bottom: 0px solid #cccccc;
 }
@@ -179,86 +243,12 @@ li {
 .v-list-item {
   padding: 0;
 }
-ul {
-  list-style-type: none;
-  padding: 10px 10px;
-  position: relative;
-}
+
 .home {
   display: flex;
   cursor: pointer;
 }
-.submenu_detail {
-  position: absolute;
-  width: 50%;
-  height: 500px;
-}
-.desktop_menu {
-  width: 100%;
-  text-align: right;
-  margin-right: 20px;
-}
-.lg_div {
-  top: 50px !important;
-}
-.sub_menu_div {
-  display: none;
-}
-.efg-header {
-  max-width: 1088px;
-  margin: 0 auto;
-  a {
-    font-weight: bold;
-    color: #ffffff;
-    padding: 0 10px;
-    text-decoration: unset;
-    &.router-link-exact-active {
-      color: rgb(192, 116, 249);
-      border-bottom: 2px solid rgb(192, 116, 249);
-      span {
-        color: rgb(192, 116, 249);
-        transition: 0.3s;
-      }
-    }
-  }
-  span:hover {
-    color: rgb(192, 116, 249);
-    transition: 0.3s;
-  }
-  a:hover {
-    color: rgb(192, 116, 249);
-    transition: 0.3s;
-  }
-}
-.active {
-  color: #c074f9 !important;
-  transition: 0.5s;
-}
-.efg-logo {
-  width: 28px;
-  height: 28px;
-  margin-right: 10px;
-}
-.v-btn--outlined .v-btn__content .v-icon,
-.v-btn--round .v-btn__content .v-icon {
-  color: #ffffff;
-}
-.user-status {
-  width: auto;
-  height: auto;
-  background-color: #2a3047 !important;
-  .dot-circle {
-    height: 8px;
-    width: 8px;
-    background-color: #c074f9;
-    border-radius: 50%;
-    margin-right: 6px;
-  }
-  .theme--dark.v-btn:hover {
-    color: #42b983;
-    transition: 0.3s;
-  }
-}
+
 .color_bg {
   background: #24142f linear-gradient(180deg, #251430 0%, #251430 100%) 0% 0% no-repeat padding-box;
   position: fixed;
@@ -270,15 +260,17 @@ ul {
   background-color: #27272700;
 }
 
-.v-menu__content {
-  box-shadow: unset;
-}
-ul {
-  border-radius: 5px;
-  background-color: transparent;
-}
-
 @media only screen and (max-width: 840px) {
+  ul {
+    list-style-type: none;
+    padding: 10px 10px;
+    position: relative;
+  }
+  li {
+    padding: 10px 0;
+    text-align: center;
+    border-bottom: 1px solid #cccccc;
+  }
   .desktop_menu {
     display: none;
   }
