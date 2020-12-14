@@ -34,7 +34,7 @@
       <v-row id="menu_s">
         <v-col>
           <v-card-title>
-            <v-menu class="bg-bu">
+            <v-menu class="bg-bu" style="left: 177px">
               <template v-slot:activator="{ on, attrs }">
                 <v-btn dark icon v-bind="attrs" v-on="on">
                   <v-app-bar-nav-icon><v-icon>menu</v-icon></v-app-bar-nav-icon>
@@ -101,7 +101,8 @@ import LanguageSwitcher from './LanguageSwitcher.vue'
 })
 export default class HeaderNavHome extends Vue {
   dialog = false
-
+  active = ''
+  name = ''
   gotoHome() {
     this.$router.push('/').catch(() => {
       //
@@ -112,7 +113,11 @@ export default class HeaderNavHome extends Vue {
     this.$router.push('defi')
     //this.dialog = true
   }
-
+  onClickActive(name: string) {
+    alert(this.name)
+    this.active = name
+    this.name = name
+  }
   get whitepaper() {
     return this.$t('views.pdf')
   }
@@ -201,6 +206,7 @@ export default class HeaderNavHome extends Vue {
 }
 #menu_s {
   display: none;
+  min-width: 100px;
 }
 .v-card__title {
   float: right;
@@ -266,9 +272,9 @@ export default class HeaderNavHome extends Vue {
   margin-top: 15px;
 }
 .v-menu__content {
-  top: 56px !important;
+  top: 70px !important;
   backdrop-filter: blur(20px);
-  width: 40%;
+  width: 50%;
   max-width: 100% !important;
 }
 .theme--dark.v-navigation-drawer {
@@ -310,19 +316,44 @@ export default class HeaderNavHome extends Vue {
 @media only screen and (max-width: 840px) {
   ul {
     list-style-type: none;
-    padding: 10px 10px;
+    padding: 0 10px 10px 10px;
     position: relative;
     color: #ffffff;
     font-weight: 700;
     width: 100%;
   }
   li {
-    padding: 10px 0;
+    padding: 5px 0;
     text-align: center;
     border-bottom: 1px solid #cccccc;
   }
   .navbar {
     display: none;
+  }
+  .menu_bu {
+    max-width: 1088px;
+    margin: 0 auto;
+    a {
+      font-weight: bold;
+      color: #ffffff;
+      padding: 5px 0px 0px 0px;
+      text-decoration: unset;
+      &.router-link-exact-active {
+        color: rgb(192, 116, 249);
+        span {
+          color: rgb(192, 116, 249);
+          transition: 0.3s;
+        }
+      }
+    }
+    span:hover {
+      color: rgb(192, 116, 249);
+      transition: 0.3s;
+    }
+    a:hover {
+      color: rgb(192, 116, 249);
+      transition: 0.3s;
+    }
   }
   .sub_menu_div {
     display: flex;

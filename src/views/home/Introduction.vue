@@ -4,7 +4,7 @@
       <v-row>
         <v-col lg="3" md="3" cols="12" style="padding:0px;">
           <section class="sec_doc1" name="doc">
-            <div class="sibar_dc">
+            <div class="sidebar_dc">
               <a
                 style="display:none"
                 href="#Introduction"
@@ -61,10 +61,10 @@ export default class Introduction extends Vue {
   color: #c074f9 !important;
   transition: 0.5s;
 }
-.sibar_dc {
+.sidebar_dc {
   margin-bottom: 10px;
 }
-.sibar_dc a {
+.sidebar_dc a {
   color: #000000;
   text-align: left;
   font: normal normal bold 18px/24px Segoe UI;
@@ -72,7 +72,7 @@ export default class Introduction extends Vue {
   color: #000000;
   opacity: 1;
 }
-.sibar_dc a:hover {
+.sidebar_dc a:hover {
   color: #c074f9;
   transition: 0.5s;
 }
@@ -121,37 +121,6 @@ export default class Introduction extends Vue {
   max-width: 100%;
   padding: 0;
 }
-#tutorial {
-  margin-top: 100px;
-}
-#tutorial img {
-  width: 100%;
-}
-.sec_doc2 .docs_head {
-  width: 100%;
-  font-size: 20px;
-  text-transform: uppercase;
-  font-weight: bold;
-  margin-bottom: 5px;
-}
-#tutorial ol {
-  margin-top: 20px;
-}
-#tutorial .head_list {
-  font-size: 16px;
-  letter-spacing: 0px;
-  color: #010101;
-  opacity: 1;
-  margin-bottom: 20px;
-  margin-top: 50px;
-  font-weight: bold;
-  line-height: 1.2;
-  text-align: justify;
-}
-#tutorialhead {
-  margin-bottom: 150px;
-  border-top: 1px solid #cccccc;
-}
 @media only screen and (max-width: 960px) {
   .sec_doc1 {
     position: fixed;
@@ -160,8 +129,9 @@ export default class Introduction extends Vue {
     padding: 40px 20px;
     height: 70px;
     background: #ffffff;
+    display: none;
   }
-  .sibar_dc {
+  .sidebar_dc {
     display: inline;
     margin-right: 10px;
   }
@@ -170,9 +140,6 @@ export default class Introduction extends Vue {
   }
   .container {
     padding: 12px;
-  }
-  .sec_doc2 .head_Introduction {
-    margin-bottom: 20px;
   }
   .sec_doc2 .img img {
     margin-bottom: 20px;

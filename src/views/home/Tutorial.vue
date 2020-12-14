@@ -4,21 +4,222 @@
       <v-row>
         <v-col lg="3" md="3" cols="12" style="padding:0px;">
           <section class="sec_doc1" name="doc">
-            <div class="sibar_dc">
+            <div v-for="(listmenu, index) in listmenus" :key="index" class="sidebar_dc">
               <a
-                style="display:none"
-                href="#tutorialhead"
-                @click="onClickActive('Tutorial ')"
-                :class="active == 'Tutorial ' ? 'active' : undefined"
-                >{{ $t('views.tutorial') }}
+                :href="`#${listmenu.name}`"
+                @click="onClickActive(`${listmenu.name}`)"
+                :class="active == listmenu.name ? 'active' : undefined"
+                >{{ listmenu.name }}
               </a>
             </div>
           </section>
         </v-col>
         <v-col lg="9" md="9" cols="12" style="padding:0px;">
-          <section id="Introduction" class="sec_doc2">
-            <div id="tutorial">
+          <section class="sec_doc2" id="Tutorial">
+            <div :class="`tutorial open ${active == 'Tutorial' ? 'open_active' : undefined}`">
               <div class="docs_head">EFG Tutorial</div>
+              <div class="head_Introduction">ECOC Financial Growth</div>
+              <div class="head_list">{{ $t('views.step_1') }}</div>
+              <img src="@/assets/Artboard_2.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step1.step1_1') }}</li>
+                <li>{{ $t('views.step1.step1_2') }}</li>
+                <li>{{ $t('views.step1.step1_3') }}</li>
+                <li>{{ $t('views.step1.step1_4') }}</li>
+              </ol>
+              <div class="head_list">{{ $t('views.step_2') }}</div>
+              <img src="@/assets/Artboard_3.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step2.step2_1') }}</li>
+                <li>{{ $t('views.step2.step2_2') }}.</li>
+                <li>{{ $t('views.step2.step2_3') }}</li>
+                <li>{{ $t('views.step2.step2_4') }}</li>
+                <li>{{ $t('views.step2.step2_5') }}</li>
+              </ol>
+              <div class="head_list">
+                <li>{{ $t('views.How_to_Deposit') }}</li>
+              </div>
+              <img src="@/assets/Artboard_4.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step3.step3_1') }}</li>
+                <li>{{ $t('views.step3.step3_2') }}</li>
+                <li>{{ $t('views.step3.step3_3') }}</li>
+                <li>{{ $t('views.step3.step3_4') }}</li>
+              </ol>
+              <div class="head_list">{{ $t('views.How_to_Staking') }}</div>
+              <img src="@/assets/Artboard_5.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step4.step4_1') }}</li>
+                <li>{{ $t('views.step4.step4_2') }}</li>
+              </ol>
+            </div>
+            <div
+              id="Deposit"
+              :class="`tutorial divmargin open ${active == 'Deposit' ? 'open_active' : undefined}`"
+            >
+              <div class="docs_head">EFG Deposit</div>
+              <div class="head_Introduction">ECOC Financial Growth</div>
+              <div class="head_list">{{ $t('views.step_1') }}</div>
+              <img src="@/assets/Artboard_2.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step1.step1_1') }}</li>
+                <li>{{ $t('views.step1.step1_2') }}</li>
+                <li>{{ $t('views.step1.step1_3') }}</li>
+                <li>{{ $t('views.step1.step1_4') }}</li>
+              </ol>
+              <div class="head_list">{{ $t('views.step_2') }}</div>
+              <img src="@/assets/Artboard_3.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step2.step2_1') }}</li>
+                <li>{{ $t('views.step2.step2_2') }}.</li>
+                <li>{{ $t('views.step2.step2_3') }}</li>
+                <li>{{ $t('views.step2.step2_4') }}</li>
+                <li>{{ $t('views.step2.step2_5') }}</li>
+              </ol>
+              <div class="head_list">
+                <li>{{ $t('views.How_to_Deposit') }}</li>
+              </div>
+              <img src="@/assets/Artboard_4.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step3.step3_1') }}</li>
+                <li>{{ $t('views.step3.step3_2') }}</li>
+                <li>{{ $t('views.step3.step3_3') }}</li>
+                <li>{{ $t('views.step3.step3_4') }}</li>
+              </ol>
+              <div class="head_list">{{ $t('views.How_to_Staking') }}</div>
+              <img src="@/assets/Artboard_5.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step4.step4_1') }}</li>
+                <li>{{ $t('views.step4.step4_2') }}</li>
+              </ol>
+            </div>
+            <div
+              id="Wallet"
+              :class="`tutorial divmargin open ${active == 'Wallet' ? 'open_active' : undefined}`"
+            >
+              <div class="docs_head">EFG Wallet</div>
+              <div class="head_Introduction">ECOC Financial Growth</div>
+              <div class="head_list">{{ $t('views.step_1') }}</div>
+              <img src="@/assets/Artboard_2.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step1.step1_1') }}</li>
+                <li>{{ $t('views.step1.step1_2') }}</li>
+                <li>{{ $t('views.step1.step1_3') }}</li>
+                <li>{{ $t('views.step1.step1_4') }}</li>
+              </ol>
+              <div class="head_list">{{ $t('views.step_2') }}</div>
+              <img src="@/assets/Artboard_3.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step2.step2_1') }}</li>
+                <li>{{ $t('views.step2.step2_2') }}.</li>
+                <li>{{ $t('views.step2.step2_3') }}</li>
+                <li>{{ $t('views.step2.step2_4') }}</li>
+                <li>{{ $t('views.step2.step2_5') }}</li>
+              </ol>
+              <div class="head_list">
+                <li>{{ $t('views.How_to_Deposit') }}</li>
+              </div>
+              <img src="@/assets/Artboard_4.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step3.step3_1') }}</li>
+                <li>{{ $t('views.step3.step3_2') }}</li>
+                <li>{{ $t('views.step3.step3_3') }}</li>
+                <li>{{ $t('views.step3.step3_4') }}</li>
+              </ol>
+              <div class="head_list">{{ $t('views.How_to_Staking') }}</div>
+              <img src="@/assets/Artboard_5.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step4.step4_1') }}</li>
+                <li>{{ $t('views.step4.step4_2') }}</li>
+              </ol>
+            </div>
+            <div
+              id="Withdrawal"
+              :class="
+                `tutorial divmargin open ${active == 'Withdrawal' ? 'open_active' : undefined}`
+              "
+            >
+              <div class="docs_head" data-aos="Withdrawal">EFG Withdrawal</div>
+              <div class="head_Introduction">ECOC Financial Growth</div>
+              <div class="head_list">{{ $t('views.step_1') }}</div>
+              <img src="@/assets/Artboard_2.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step1.step1_1') }}</li>
+                <li>{{ $t('views.step1.step1_2') }}</li>
+                <li>{{ $t('views.step1.step1_3') }}</li>
+                <li>{{ $t('views.step1.step1_4') }}</li>
+              </ol>
+              <div class="head_list">{{ $t('views.step_2') }}</div>
+              <img src="@/assets/Artboard_3.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step2.step2_1') }}</li>
+                <li>{{ $t('views.step2.step2_2') }}.</li>
+                <li>{{ $t('views.step2.step2_3') }}</li>
+                <li>{{ $t('views.step2.step2_4') }}</li>
+                <li>{{ $t('views.step2.step2_5') }}</li>
+              </ol>
+              <div class="head_list">
+                <li>{{ $t('views.How_to_Deposit') }}</li>
+              </div>
+              <img src="@/assets/Artboard_4.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step3.step3_1') }}</li>
+                <li>{{ $t('views.step3.step3_2') }}</li>
+                <li>{{ $t('views.step3.step3_3') }}</li>
+                <li>{{ $t('views.step3.step3_4') }}</li>
+              </ol>
+              <div class="head_list">{{ $t('views.How_to_Staking') }}</div>
+              <img src="@/assets/Artboard_5.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step4.step4_1') }}</li>
+                <li>{{ $t('views.step4.step4_2') }}</li>
+              </ol>
+            </div>
+            <div
+              id="Staking"
+              :class="`tutorial divmargin open ${active == 'Staking' ? 'open_active' : undefined}`"
+            >
+              <div class="docs_head">EFG Staking</div>
+              <div class="head_Introduction">ECOC Financial Growth</div>
+              <div class="head_list">{{ $t('views.step_1') }}</div>
+              <img src="@/assets/Artboard_2.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step1.step1_1') }}</li>
+                <li>{{ $t('views.step1.step1_2') }}</li>
+                <li>{{ $t('views.step1.step1_3') }}</li>
+                <li>{{ $t('views.step1.step1_4') }}</li>
+              </ol>
+              <div class="head_list">{{ $t('views.step_2') }}</div>
+              <img src="@/assets/Artboard_3.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step2.step2_1') }}</li>
+                <li>{{ $t('views.step2.step2_2') }}.</li>
+                <li>{{ $t('views.step2.step2_3') }}</li>
+                <li>{{ $t('views.step2.step2_4') }}</li>
+                <li>{{ $t('views.step2.step2_5') }}</li>
+              </ol>
+              <div class="head_list">
+                <li>{{ $t('views.How_to_Deposit') }}</li>
+              </div>
+              <img src="@/assets/Artboard_4.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step3.step3_1') }}</li>
+                <li>{{ $t('views.step3.step3_2') }}</li>
+                <li>{{ $t('views.step3.step3_3') }}</li>
+                <li>{{ $t('views.step3.step3_4') }}</li>
+              </ol>
+              <div class="head_list">{{ $t('views.How_to_Staking') }}</div>
+              <img src="@/assets/Artboard_5.png" alt="" />
+              <ol>
+                <li>{{ $t('views.step4.step4_1') }}</li>
+                <li>{{ $t('views.step4.step4_2') }}</li>
+              </ol>
+            </div>
+            <div
+              id="Lending"
+              :class="`tutorial divmargin open ${active == 'Lending' ? 'open_active' : undefined}`"
+            >
+              <div class="docs_head">EFG Lending</div>
               <div class="head_Introduction">ECOC Financial Growth</div>
               <div class="head_list">{{ $t('views.step_1') }}</div>
               <img src="@/assets/Artboard_2.png" alt="" />
@@ -72,34 +273,68 @@ export default class Tutorial extends Vue {
     this.active = name
     this.name = name
   }
-
+  get listmenus() {
+    return [
+      {
+        name: 'Tutorial'
+      },
+      {
+        name: 'Deposit'
+      },
+      {
+        name: 'Wallet'
+      },
+      {
+        name: 'Withdrawal'
+      },
+      {
+        name: 'Staking'
+      },
+      {
+        name: 'Lending'
+      }
+    ]
+  }
   get msg() {
     return this.$t('views.docs')
   }
 }
 </script>
 
-<style scoped>
-.docs {
-  background: rgb(228, 228, 228);
-  background: linear-gradient(90deg, rgba(228, 228, 228, 1) 45%, rgba(237, 237, 237, 1) 45%);
+<style lang="scss">
+.v-card__subtitle,
+.v-card__text,
+.v-card__title {
+  padding: 0px !important;
+}
+</style>
+<style scoped lang="scss">
+.open {
+  display: none;
+}
+.open_active {
+  display: block !important;
 }
 .active {
   color: #c074f9 !important;
   transition: 0.5s;
 }
-.sibar_dc {
+.docs {
+  background: rgb(228, 228, 228);
+  background: linear-gradient(90deg, rgba(228, 228, 228, 1) 45%, rgba(237, 237, 237, 1) 45%);
+}
+.sidebar_dc {
   margin-bottom: 10px;
 }
-.sibar_dc a {
+.sidebar_dc a {
   color: #000000;
   text-align: left;
-  font: normal normal bold 18px/24px Segoe UI;
+  font: 18px/24px;
   letter-spacing: 0px;
   color: #000000;
   opacity: 1;
 }
-.sibar_dc a:hover {
+.sidebar_dc a:hover {
   color: #c074f9;
   transition: 0.5s;
 }
@@ -110,12 +345,12 @@ export default class Tutorial extends Vue {
 }
 .sec_doc2 {
   background: #ededed;
-  padding: 150px 30px 400px 82px;
+  padding: 0px 30px 400px 82px;
   height: 100%;
+  position: block;
 }
-.sec_doc2 .img img {
+.sec_doc2 img {
   width: 100%;
-  margin-bottom: 40px;
   box-shadow: 0px 0px 20px 1px #cccccc;
   border-radius: 5px;
 }
@@ -148,7 +383,10 @@ export default class Tutorial extends Vue {
   max-width: 100%;
   padding: 0;
 }
-#tutorial img {
+.tutorial {
+  padding-top: 150px;
+}
+.tutorial img {
   width: 100%;
 }
 .sec_doc2 .docs_head {
@@ -158,10 +396,10 @@ export default class Tutorial extends Vue {
   font-weight: bold;
   margin-bottom: 5px;
 }
-#tutorial ol {
+.tutorial ol {
   margin-top: 20px;
 }
-#tutorial .head_list {
+.tutorial .head_list {
   font-size: 16px;
   letter-spacing: 0px;
   color: #010101;
@@ -172,10 +410,6 @@ export default class Tutorial extends Vue {
   line-height: 1.2;
   text-align: justify;
 }
-#tutorialhead {
-  margin-bottom: 150px;
-  border-top: 1px solid #cccccc;
-}
 @media only screen and (max-width: 960px) {
   .sec_doc1 {
     position: fixed;
@@ -185,12 +419,15 @@ export default class Tutorial extends Vue {
     height: 70px;
     background: #ffffff;
   }
-  .sibar_dc {
+  .tutorial {
+    padding-top: 180px;
+  }
+  .sidebar_dc {
     display: inline;
     margin-right: 10px;
   }
   .sec_doc2 {
-    padding: 140px 20px;
+    padding: 0 20px 50px 20px;
   }
   .container {
     padding: 12px;
@@ -200,6 +437,19 @@ export default class Tutorial extends Vue {
   }
   .sec_doc2 .img img {
     margin-bottom: 20px;
+  }
+}
+@media only screen and (max-width: 500px) {
+  .docs {
+    background: #ededed;
+  }
+  .sec_doc1 {
+    position: fixed;
+    width: 100%;
+    top: 50px;
+    padding: 40px 20px;
+    height: 102px;
+    background: #ffffff;
   }
 }
 </style>
