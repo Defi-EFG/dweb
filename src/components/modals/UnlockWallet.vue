@@ -192,7 +192,7 @@
                   v-on:keyup.enter="onCreateWallet"
                   v-model="confirmPassword"
                 ></v-text-field>
-                <div class="errorMsg" if="errorPrivatekey">
+                <div class="errorMsg" v-if="errorPrivatekey">
                   <span>{{ $t(errorPrivatekey) }}</span>
                 </div>
                 <div class="action-wrapper">
