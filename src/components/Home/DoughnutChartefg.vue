@@ -62,13 +62,13 @@ export default class StakingChart extends Vue {
     const myChart = new Chart(element, {
       type: 'doughnut',
       data: {
-        labels: ['Available', 'Staked'],
+        labels: ['Available', 'Total Borrow'],
         datasets: [
           {
             borderWidth: 0,
             borderColor: '#222738',
             backgroundColor: [this.gradientFill, '#888888'],
-            data: [totalcurrentValue, totlemax]
+            data: [totlemax-totalcurrentValue, totalcurrentValue]
           }
         ]
       },
