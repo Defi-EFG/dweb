@@ -54,17 +54,17 @@
               </ol>
             </div>
             <div
-              id="Deposit"
-              :class="`tutorial divmargin open ${active == 'Deposit' ? 'open_active' : undefined}`"
-            >
-              <div class="docs_head">EFG Deposit</div>
-              <div class="head_Introduction">ECOC Financial Growth</div>
-            </div>
-            <div
               id="Wallet"
               :class="`tutorial divmargin open ${active == 'Wallet' ? 'open_active' : undefined}`"
             >
               <div class="docs_head">EFG Wallet</div>
+              <div class="head_Introduction">ECOC Financial Growth</div>
+            </div>
+            <div
+              id="Deposit"
+              :class="`tutorial divmargin open ${active == 'Deposit' ? 'open_active' : undefined}`"
+            >
+              <div class="docs_head">EFG Deposit</div>
               <div class="head_Introduction">ECOC Financial Growth</div>
             </div>
             <div
@@ -129,10 +129,10 @@ export default class Tutorial extends Vue {
         name: 'Tutorial'
       },
       {
-        name: 'Deposit'
+        name: 'Wallet'
       },
       {
-        name: 'Wallet'
+        name: 'Deposit'
       },
       {
         name: 'Withdraw'
