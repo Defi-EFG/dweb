@@ -145,6 +145,7 @@
                         auto-grow
                         :label="modal.create_wallet_with"
                         filled
+                        id="loginwithprivatekey"
                         class="loginwithprivatekey"
                         elevation-0
                         dense
@@ -364,7 +365,7 @@ export default class UnlockwalletModal extends Vue {
   loading = false
   errorPrivatekey: string | Error = ''
   copymessage = 'Tap to copy'
-
+  openprivate = ''
   rules = {
     required: (value: any) => {
       if (this.visible) {
@@ -386,7 +387,6 @@ export default class UnlockwalletModal extends Vue {
   checkvisible(val: any) {
     this.unlockwalletModal = val
   }
-
   toStep(step: any) {
     this.step = step
     if (this.step === 5) {
@@ -400,6 +400,9 @@ export default class UnlockwalletModal extends Vue {
       this.$nextTick(() => {
         passwordsetup.focus()
       })
+    }
+    if (this.step === 1) {
+      this.showPrivateKetTextfield = false
     }
   }
 
@@ -428,6 +431,15 @@ export default class UnlockwalletModal extends Vue {
 
   openPrivatekeyfield() {
     this.showPrivateKetTextfield = !this.showPrivateKetTextfield
+    const passwordsetup: any = this.$refs.passwordsetupRef
+    window.setTimeout(() => {
+      if (this.showPrivateKetTextfield === true) {
+        const getfprivatekey = document.getElementById('loginwithprivatekey')
+        getfprivatekey!.focus()
+      } else if (this.showPrivateKetTextfield === false) {
+        passwordsetup.focus()
+      }
+    }, 100)
   }
 
   copyAddress(keystorePassword: string) {
