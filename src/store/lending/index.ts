@@ -304,6 +304,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
         if (existingLoanerIndex < 0) {
           const newLoaner = {
             currency: loanCurrency,
+            name: poolInfo.name,
             address: address,
             totalSupply: capital,
             remaining: remainingEFG,
@@ -314,6 +315,7 @@ export default class LendingModule extends VuexModule implements LendingPlatform
         } else {
           const existingLoaner = pools[existingLoanerIndex]
 
+          existingLoaner.name = poolInfo.name
           existingLoaner.remaining = remainingEFG
           existingLoaner.totalBorrowed = existingLoaner.totalSupply - remainingEFG
           existingLoaner.totalBorrowers = totalBorrowers

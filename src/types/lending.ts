@@ -2,6 +2,7 @@ import { Currency, CurrencyInfo } from './currency'
 export interface Pool {
   currency: CurrencyInfo
   address: string
+  name: string
   totalSupply: number
   totalBorrowed: number
   totalBorrowers: number
