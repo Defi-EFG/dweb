@@ -155,7 +155,10 @@
               </div>
             </v-col>
             <v-col lg="3" md="3" cols="6">
-              <div class="text-truncate margintop Loener">
+              <div class="truncate-name margintop Loener">
+                {{ item.name }}
+              </div>
+              <div class="truncate-address margintop Loener">
                 {{ truncateAddress(item.address) }}
               </div>
             </v-col>
@@ -424,7 +427,7 @@ export default class Main extends Vue {
 
   truncateAddress(addr: string) {
     const separator = '...'
-    const charsToShow = 22
+    const charsToShow = 26
     const frontChars = Math.ceil(charsToShow / 3)
     const backChars = Math.floor(charsToShow / 3)
     return addr.substr(0, frontChars) + separator + addr.substr(addr.length - backChars)
@@ -872,6 +875,13 @@ body {
 .text_mobile {
   display: none;
 }
+.sec_2 .row1 .truncate-name {
+  font-size: 16px;
+}
+.sec_2 .row1 .truncate-address {
+  font-size: 15px;
+  color: #ccc;
+}
 @keyframes header_fp {
   0% {
     opacity: 0;
@@ -1088,6 +1098,9 @@ body {
   }
   .sec_1 .social_icon {
     text-align: center;
+  }
+  .sec_2 .row1 .truncate-address {
+    font-size: 11px;
   }
 }
 @media only screen and (max-width: 500px) {
