@@ -11,6 +11,7 @@ const mainnetAddress = 'f33fe584c28a42c82998d126ff522a872841b672'
 const testnetAddress = '1a5572d31c9992b2e2e9ce0abb4c213bf230c747'
 
 const defaultAddress = defaultNetwork === ECOC_MAINNET ? mainnetAddress : testnetAddress
+const isMainnet = defaultNetwork === ECOC_MAINNET
 
 const stakingContract = {
   address: defaultAddress,
@@ -121,7 +122,10 @@ export namespace staking {
 
     const result = await contract.call('getPendingInfo', params)
     const executionResult = result.executionResult as ExecutionResult
-    const stakerAddress = Decoder.toEcoAddress(executionResult.formattedOutput.beneficiar) as string
+    const stakerAddress = Decoder.toEcoAddress(
+      executionResult.formattedOutput.beneficiar,
+      isMainnet
+    ) as string
     const stakingAmount = executionResult.formattedOutput.EFGamount.toNumber() as number
     const rewardAmount = executionResult.formattedOutput.GPTamount.toNumber() as number
     const maturity = executionResult.formattedOutput.maturity.toNumber() as number
