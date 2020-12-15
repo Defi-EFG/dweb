@@ -59,39 +59,6 @@
             >
               <div class="docs_head">EFG Deposit</div>
               <div class="head_Introduction">ECOC Financial Growth</div>
-              <div class="head_list">{{ $t('views.step_1') }}</div>
-              <img src="@/assets/Artboard_2.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step1.step1_1') }}</li>
-                <li>{{ $t('views.step1.step1_2') }}</li>
-                <li>{{ $t('views.step1.step1_3') }}</li>
-                <li>{{ $t('views.step1.step1_4') }}</li>
-              </ol>
-              <div class="head_list">{{ $t('views.step_2') }}</div>
-              <img src="@/assets/Artboard_3.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step2.step2_1') }}</li>
-                <li>{{ $t('views.step2.step2_2') }}.</li>
-                <li>{{ $t('views.step2.step2_3') }}</li>
-                <li>{{ $t('views.step2.step2_4') }}</li>
-                <li>{{ $t('views.step2.step2_5') }}</li>
-              </ol>
-              <div class="head_list">
-                <li>{{ $t('views.How_to_Deposit') }}</li>
-              </div>
-              <img src="@/assets/Artboard_4.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step3.step3_1') }}</li>
-                <li>{{ $t('views.step3.step3_2') }}</li>
-                <li>{{ $t('views.step3.step3_3') }}</li>
-                <li>{{ $t('views.step3.step3_4') }}</li>
-              </ol>
-              <div class="head_list">{{ $t('views.How_to_Staking') }}</div>
-              <img src="@/assets/Artboard_5.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step4.step4_1') }}</li>
-                <li>{{ $t('views.step4.step4_2') }}</li>
-              </ol>
             </div>
             <div
               id="Wallet"
@@ -99,39 +66,6 @@
             >
               <div class="docs_head">EFG Wallet</div>
               <div class="head_Introduction">ECOC Financial Growth</div>
-              <div class="head_list">{{ $t('views.step_1') }}</div>
-              <img src="@/assets/Artboard_2.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step1.step1_1') }}</li>
-                <li>{{ $t('views.step1.step1_2') }}</li>
-                <li>{{ $t('views.step1.step1_3') }}</li>
-                <li>{{ $t('views.step1.step1_4') }}</li>
-              </ol>
-              <div class="head_list">{{ $t('views.step_2') }}</div>
-              <img src="@/assets/Artboard_3.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step2.step2_1') }}</li>
-                <li>{{ $t('views.step2.step2_2') }}.</li>
-                <li>{{ $t('views.step2.step2_3') }}</li>
-                <li>{{ $t('views.step2.step2_4') }}</li>
-                <li>{{ $t('views.step2.step2_5') }}</li>
-              </ol>
-              <div class="head_list">
-                <li>{{ $t('views.How_to_Deposit') }}</li>
-              </div>
-              <img src="@/assets/Artboard_4.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step3.step3_1') }}</li>
-                <li>{{ $t('views.step3.step3_2') }}</li>
-                <li>{{ $t('views.step3.step3_3') }}</li>
-                <li>{{ $t('views.step3.step3_4') }}</li>
-              </ol>
-              <div class="head_list">{{ $t('views.How_to_Staking') }}</div>
-              <img src="@/assets/Artboard_5.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step4.step4_1') }}</li>
-                <li>{{ $t('views.step4.step4_2') }}</li>
-              </ol>
             </div>
             <div
               id="Withdraw"
@@ -162,39 +96,6 @@
             >
               <div class="docs_head">EFG Staking</div>
               <div class="head_Introduction">ECOC Financial Growth</div>
-              <div class="head_list">{{ $t('views.step_1') }}</div>
-              <img src="@/assets/Artboard_2.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step1.step1_1') }}</li>
-                <li>{{ $t('views.step1.step1_2') }}</li>
-                <li>{{ $t('views.step1.step1_3') }}</li>
-                <li>{{ $t('views.step1.step1_4') }}</li>
-              </ol>
-              <div class="head_list">{{ $t('views.step_2') }}</div>
-              <img src="@/assets/Artboard_3.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step2.step2_1') }}</li>
-                <li>{{ $t('views.step2.step2_2') }}.</li>
-                <li>{{ $t('views.step2.step2_3') }}</li>
-                <li>{{ $t('views.step2.step2_4') }}</li>
-                <li>{{ $t('views.step2.step2_5') }}</li>
-              </ol>
-              <div class="head_list">
-                <li>{{ $t('views.How_to_Deposit') }}</li>
-              </div>
-              <img src="@/assets/Artboard_4.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step3.step3_1') }}</li>
-                <li>{{ $t('views.step3.step3_2') }}</li>
-                <li>{{ $t('views.step3.step3_3') }}</li>
-                <li>{{ $t('views.step3.step3_4') }}</li>
-              </ol>
-              <div class="head_list">{{ $t('views.How_to_Staking') }}</div>
-              <img src="@/assets/Artboard_5.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step4.step4_1') }}</li>
-                <li>{{ $t('views.step4.step4_2') }}</li>
-              </ol>
             </div>
             <div
               id="Lending"
@@ -202,39 +103,7 @@
             >
               <div class="docs_head">EFG Lending</div>
               <div class="head_Introduction">ECOC Financial Growth</div>
-              <div class="head_list">{{ $t('views.step_1') }}</div>
-              <img src="@/assets/Artboard_2.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step1.step1_1') }}</li>
-                <li>{{ $t('views.step1.step1_2') }}</li>
-                <li>{{ $t('views.step1.step1_3') }}</li>
-                <li>{{ $t('views.step1.step1_4') }}</li>
-              </ol>
-              <div class="head_list">{{ $t('views.step_2') }}</div>
-              <img src="@/assets/Artboard_3.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step2.step2_1') }}</li>
-                <li>{{ $t('views.step2.step2_2') }}.</li>
-                <li>{{ $t('views.step2.step2_3') }}</li>
-                <li>{{ $t('views.step2.step2_4') }}</li>
-                <li>{{ $t('views.step2.step2_5') }}</li>
-              </ol>
-              <div class="head_list">
-                <li>{{ $t('views.How_to_Deposit') }}</li>
-              </div>
-              <img src="@/assets/Artboard_4.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step3.step3_1') }}</li>
-                <li>{{ $t('views.step3.step3_2') }}</li>
-                <li>{{ $t('views.step3.step3_3') }}</li>
-                <li>{{ $t('views.step3.step3_4') }}</li>
-              </ol>
               <div class="head_list">{{ $t('views.How_to_Staking') }}</div>
-              <img src="@/assets/Artboard_5.png" alt="" />
-              <ol>
-                <li>{{ $t('views.step4.step4_1') }}</li>
-                <li>{{ $t('views.step4.step4_2') }}</li>
-              </ol>
             </div>
           </section>
         </v-col>
@@ -310,7 +179,7 @@ export default class Tutorial extends Vue {
 .sidebar_dc a {
   color: #000000;
   text-align: left;
-  font: 18px/24px;
+  font: 18px;
   letter-spacing: 0px;
   color: #000000;
   opacity: 1;
