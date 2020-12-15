@@ -111,7 +111,7 @@ export default class HeaderNavHome extends Vue {
 
   gotoDashboard() {
     this.$router.push('defi')
-    //this.dialog = true
+    // this.dialog = true
   }
   onClickActive(name: string) {
     alert(this.name)

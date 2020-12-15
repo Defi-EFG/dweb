@@ -4,7 +4,10 @@ import { staking } from './staking'
 import { lending } from './lending'
 import { ECOC_MAINNET } from './ecoc/constants'
 import { ecocw3 } from '@/services/ecoc/ecocw3'
+import { defaultNetwork } from '@/services/ecoc/config'
 import * as constants from '@/constants'
+
+const isMainnet = defaultNetwork === ECOC_MAINNET
 
 export const toDecimals = (value: number | string, decimals: number | string) => {
   const expo = new BigNumber(10).pow(new BigNumber(decimals))
@@ -80,7 +83,7 @@ export const getBlockNumber = async () => {
 
 export const toEcocAddress = (addressHex: string) => {
   try {
-    return Decoder.toEcoAddress(addressHex)
+    return Decoder.toEcoAddress(addressHex, isMainnet)
   } catch (error) {
     return addressHex
   }

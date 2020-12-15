@@ -60,7 +60,7 @@ export default class DoughnutChart extends Vue {
     const myChart = new Chart(element, {
       type: 'doughnut',
       data: {
-        labels: ['Available', 'Staked'],
+        labels: ['Available', 'Staked GPT'],
         datasets: [
           {
             borderWidth: 0,

@@ -13,6 +13,7 @@ const mainnetAddress = '9a0abbb55f6ff5f16ed78e45d706a91d67868820'
 const testnetAddress = 'bf879840a4e5b432f7fb94cb2e28b3250285a4b4'
 
 const defaultAddress = defaultNetwork === ECOC_MAINNET ? mainnetAddress : testnetAddress
+const isMainnet = defaultNetwork === ECOC_MAINNET
 
 const lendingContract = {
   address: defaultAddress,
@@ -80,7 +81,7 @@ export namespace lending {
     const result = await contract.call('getAllPools', params)
     const executionResult = result.executionResult as ExecutionResult
     const pools = executionResult.formattedOutput['0'] as string[]
-    const poolsAddress = pools.map(pool => Decoder.toEcoAddress(pool)) as string[]
+    const poolsAddress = pools.map(pool => Decoder.toEcoAddress(pool, isMainnet)) as string[]
 
     return poolsAddress
   }
@@ -96,7 +97,7 @@ export namespace lending {
 
     if (!poolAddress) return ''
 
-    poolAddress = Decoder.toEcoAddress(poolAddress)
+    poolAddress = Decoder.toEcoAddress(poolAddress, isMainnet)
     return poolAddress
   }
 
@@ -108,7 +109,7 @@ export namespace lending {
     const result = await contract.call('listPoolUsers', params)
     const executionResult = result.executionResult as ExecutionResult
     const addresses = executionResult.formattedOutput['0'] as string[]
-    const members = addresses.map(address => Decoder.toEcoAddress(address)) as string[]
+    const members = addresses.map(address => Decoder.toEcoAddress(address), isMainnet) as string[]
 
     return members
   }
@@ -222,7 +223,7 @@ export namespace lending {
       return { totalDebt: 0, poolAddress: '' }
     }
 
-    const poolAddress = Decoder.toEcoAddress(res['1'])
+    const poolAddress = Decoder.toEcoAddress(res['1'], isMainnet)
 
     return { totalDebt, poolAddress }
   }
@@ -251,7 +252,7 @@ export namespace lending {
     } as LoanInfo
 
     if (loanInfo.amount > 0) {
-      loanInfo.poolAddr = Decoder.toEcoAddress(res.poolAddr)
+      loanInfo.poolAddr = Decoder.toEcoAddress(res.poolAddr, isMainnet)
     }
 
     return loanInfo
