@@ -1,11 +1,11 @@
 <template>
   <div>
-    <v-dialog v-model="showModal" max-width="420" class="send-transaction" id="collat" persistent>
+    <v-dialog v-model="showModal" content-class="vdialognew" id="collat" persistent>
       <v-stepper v-model="step" class="blur-card">
         <v-stepper-items>
           <!-- Welcome to ECOC Finance Governance -->
           <v-stepper-content step="1">
-            <v-card color="#FFFFFF00">
+            <v-card color="#FFFFFF00" class="vdialognew1">
               <v-card-title class="modal-header">
                 <v-icon></v-icon>
                 <v-btn @click="onClose()" icon><v-icon color="white">close</v-icon></v-btn>
@@ -33,33 +33,44 @@
                       </v-row>
                     </div>
                     <div class="row2" id="style-1">
-                      <v-row
-                        v-for="(item, i) in Loanerlist"
-                        :key="i"
-                        :class="Loanername == item.address ? 'active row1 roww2' : 'row1 roww2'"
-                        @click="selectLoaner((Loanername = item.address))"
-                      >
-                        <v-col lg="4" md="4" cols="4">
-                          <div class="margintop Loener">
-                            {{ truncateAddress(item.address) }}
+                      <div v-for="(item, i) in Loanerlist" :key="i">
+                        <v-row
+                          v-if="item.address != null || item.address != ''"
+                          :class="Loanername == item.address ? 'active row1 roww2' : 'row1 roww2'"
+                          @click="selectLoaner((Loanername = item.address))"
+                        >
+                          <v-col lg="4" md="4" cols="4">
+                            <div class="Loener">
+                              {{ item.name }}
+                            </div>
+                            <div class="Loener">
+                              {{ truncateAddress(item.address) }}
+                            </div>
+                          </v-col>
+                          <v-col lg="4" md="4" cols="4" class="textafter">
+                            <div class="color_1">
+                              <span class="color_size1">
+                                ${{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }}</span
+                              >
+                            </div>
+                          </v-col>
+                          <v-col lg="4" md="4" cols="4" class="textafter">
+                            <div class="color_2">
+                              <span class="color_size2">
+                                ${{
+                                  item.totalBorrowed | numberWithCommas({ fixed: [0, 2] })
+                                }}</span
+                              >
+                            </div>
+                          </v-col>
+                          <img class="row1_img" src="@/assets/backg_01.svg" alt="" />
+                        </v-row>
+                        <v-row v-else>
+                          <div style="text-align: center; width: 100%;">
+                            <h1>No pool</h1>
                           </div>
-                        </v-col>
-                        <v-col lg="4" md="4" cols="4">
-                          <div class="margintop color_1 textafter">
-                            <span class="color_size1">
-                              ${{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }}</span
-                            >
-                          </div>
-                        </v-col>
-                        <v-col lg="4" md="4" cols="4">
-                          <div class="margintop color_2 textafter">
-                            <span class="color_size2">
-                              ${{ item.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }}</span
-                            >
-                          </div>
-                        </v-col>
-                        <img class="row1_img" src="@/assets/backg_01.svg" alt="" />
-                      </v-row>
+                        </v-row>
+                      </div>
                     </div>
                   </v-container>
                 </div>
@@ -76,7 +87,7 @@
           </v-stepper-content>
 
           <v-stepper-content step="2">
-            <v-card color="#FFFFFF00">
+            <v-card color="#FFFFFF00" class="vdialognew1">
               <v-card-title class="modal-header">
                 <v-btn @click="toStep(1)" icon><v-icon color="white">arrow_back</v-icon></v-btn>
                 <v-btn @click="onClose()" icon><v-icon color="white">close</v-icon></v-btn>
@@ -103,7 +114,7 @@
             </v-card>
           </v-stepper-content>
 
-          <v-stepper-content step="3">
+          <v-stepper-content step="3" class="vdialognew2">
             <v-card color="#FFFFFF00">
               <v-card-title class="modal-header">
                 <div></div>
@@ -217,7 +228,7 @@
 
           <v-stepper-content step="4">
             <div id="loadding" v-if="loading">
-              <v-card color="#FFFFFF00">
+              <v-card color="#FFFFFF00" class="vdialognew2">
                 <div class="generate-keydtore">
                   <v-progress-circular
                     rotate="360"
@@ -232,7 +243,7 @@
             </div>
 
             <div id="tx-result" v-else>
-              <v-card color="#FFFFFF00">
+              <v-card color="#FFFFFF00" class="vdialognew2">
                 <v-card-title class="modal-header">
                   <v-icon></v-icon>
                   <v-btn @click="onClose()" text><v-icon color="white">close</v-icon></v-btn>
@@ -607,6 +618,15 @@ export default class CollateralDeposit extends Vue {
 </script>
 
 <style lang="scss">
+.vdialognew {
+  width: auto !important;
+}
+.vdialognew1 {
+  min-width: 500px;
+}
+.vdialognew2 {
+  min-width: 420px;
+}
 .content-gas-setting {
   padding: 0px 25px 20px;
 }
@@ -647,6 +667,17 @@ export default class CollateralDeposit extends Vue {
   box-shadow: inset 0 0 2000px rgba(116, 116, 116, 0.356) !important;
   backdrop-filter: blur(20px);
   z-index: -1;
+}
+@media only screen and (max-width: 600px) {
+  .vdialognew {
+    width: 100% !important;
+  }
+  .vdialognew1 {
+    min-width: unset;
+  }
+  .vdialognew2 {
+    min-width: unset;
+  }
 }
 </style>
 <style lang="scss" scoped>
@@ -693,6 +724,10 @@ export default class CollateralDeposit extends Vue {
   max-height: 150px;
   overflow-y: scroll;
   padding: 0 15px;
+}
+.row .textafter {
+  display: flex;
+  align-items: center;
 }
 .roww2 {
   margin-bottom: 5px;
@@ -748,6 +783,7 @@ export default class CollateralDeposit extends Vue {
 .headtitle_collat_sub {
   color: #cccccc99;
   font-size: 13px;
+  margin-bottom: 10px;
 }
 .icon-send {
   display: flex;
