@@ -292,6 +292,11 @@ export default class Tutorial extends Vue {
   color: #000000;
 }
 @media only screen and (max-width: 960px) {
+  .sec_doc1 .headtext {
+    display: inline;
+    position: relative;
+    margin-right: 10px;
+  }
   .sec_doc1 {
     position: fixed;
     width: 100%;
