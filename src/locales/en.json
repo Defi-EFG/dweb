@@ -140,6 +140,7 @@
             "details": "Details",
             "liquidation": "Liquidation",
             "collateral_Factor": "Collateral Factor",
+            "collateral_amount": "Collateral Amount",
             "daily_Yield": "Daily Yield",
             "total": "Total",
             "staked": "Staked",

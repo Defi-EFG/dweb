@@ -137,6 +137,7 @@
             "details": "详情",
             "liquidation": "清算",
             "collateral_Factor": "抵押因素",
+            "collateral_amount": "抵押金额",
             "daily_Yield": "日产量",
             "total": "总",
             "staked": "奖励",
