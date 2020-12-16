@@ -129,7 +129,8 @@
             "number_of_staker": "Number of Staker",
             "total_EFG_Staking": "Total EFG Staking",
             "hour": "Hours",
-            "day": "Days"
+            "day": "Days",
+            "Market Price": "Market Price"
         },
         "tutorial": "Tutorial",
         "deposit": "Deposit",

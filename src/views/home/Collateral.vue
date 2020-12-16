@@ -41,7 +41,7 @@
       <v-container>
         <v-row>
           <v-col cols="12">
-            <div class="chart_title">Market Price</div>
+             <div class="chart_title">{{ $t('views.detail.Market Price') }}</div>
             <div class="button-small">
               <a @click="daysChanged('hour')" :class="active == 'hour' ? 'active' : undefined">{{
                 $t('views.detail.hour')

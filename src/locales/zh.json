@@ -126,7 +126,8 @@
             "number_of_staker": "质押者数额",
             "total_EFG_Staking": "总质押EFG",
             "hour": "小时",
-            "day": "每日"
+            "day": "每日",
+            "Market Price": "市場價"
         },
         "tutorial": "讲解",
         "deposit": "充值",
