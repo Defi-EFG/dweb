@@ -5,7 +5,8 @@ const MainPage = () => import(/* webpackChunkName: "group-home-main" */ '@/views
 const Gpt = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Gpt.vue')
 const Efg = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Efg.vue')
 const Collateral = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Collateral.vue')
-const Introduction = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Introduction.vue')
+const Introduction = () =>
+  import(/* webpackChunkName: "group-home" */ '@/views/home/Introduction.vue')
 const Tutorial = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Tutorial.vue')
 const WhitePaper = () => import(/* webpackChunkName: "group-home" */ '@/views/home/Whitepaper.vue')
 
