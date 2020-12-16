@@ -292,6 +292,9 @@ export default class Tutorial extends Vue {
   color: #000000;
 }
 @media only screen and (max-width: 960px) {
+  .tutorial ol {
+    margin-bottom: 40px;
+  }
   .sec_doc1 .headtext {
     display: inline;
     position: relative;
