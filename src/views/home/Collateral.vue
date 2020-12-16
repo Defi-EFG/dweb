@@ -22,10 +22,12 @@
                 <v-col cols="9" class="efg_border1">
                   <div class="m_titel">{{ $t('views.detail.liquidation') }}</div>
                   <div class="m_titel">{{ $t('views.detail.collateral_Factor') }}</div>
+                  <div class="m_titel">CollateralAmout</div>
                 </v-col>
                 <v-col cols="3" class="efg_border1">
-                  <div class="m_titel m_titel_2">0</div>
+                  <div class="m_titel m_titel_2">{{ liquidation }}</div>
                   <div class="m_titel m_titel_2">{{ collateralFactor }}%</div>
+                  <div class="m_titel m_titel_2">{{ amount }} {{ currencyName }}</div>
                 </v-col>
               </v-row>
             </div>
@@ -66,6 +68,8 @@ import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
 import { getModule } from 'vuex-module-decorators'
 import LendingModule from '@/store/lending'
 import { api } from '@/services/api'
+import EcocWallet from '@/services/ecoc/ecoc-wallet'
+import * as utils from '@/services/utils'
 
 @Component({
   components: {
@@ -82,6 +86,8 @@ export default class Callaterr extends Vue {
   name = 'hour'
   title = 'hour'
   chartlist = 'hour'
+  amount = 0
+  liquidation = 0
 
   get labelSet() {
     return this.date
@@ -106,6 +112,10 @@ export default class Callaterr extends Vue {
       this.date = data.date
       this.price = data.price
     })
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    this.getCollateralAmount().then(res => {
+      this.amount = res
+    })
   }
   async daysChanged(name: string) {
     this.active = name
@@ -116,6 +126,16 @@ export default class Callaterr extends Vue {
       this.date = data.date
       this.price = data.price
     })
+  }
+  async getCollateralAmount() {
+    if (this.currencyName === 'ECOC') {
+      const address = utils.toEcocAddress(this.lendingStore.address)
+      const addressInfo = await EcocWallet.getAddressInfo(address)
+      console.log(addressInfo)
+      return Number(addressInfo.balance)
+    }
+
+    return 0
   }
 }
 </script>

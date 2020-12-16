@@ -33,36 +33,44 @@
                       </v-row>
                     </div>
                     <div class="row2" id="style-1">
-                      <v-row
-                        v-for="(item, i) in Loanerlist"
-                        :key="i"
-                        :class="Loanername == item.address ? 'active row1 roww2' : 'row1 roww2'"
-                        @click="selectLoaner((Loanername = item.address))"
-                      >
-                        <v-col lg="4" md="4" cols="4">
-                          <div class="Loener">
-                            {{ item.name }}
+                      <div v-for="(item, i) in Loanerlist" :key="i">
+                        <v-row
+                          v-if="item.address != null || item.address != ''"
+                          :class="Loanername == item.address ? 'active row1 roww2' : 'row1 roww2'"
+                          @click="selectLoaner((Loanername = item.address))"
+                        >
+                          <v-col lg="4" md="4" cols="4">
+                            <div class="Loener">
+                              {{ item.name }}
+                            </div>
+                            <div class="Loener">
+                              {{ truncateAddress(item.address) }}
+                            </div>
+                          </v-col>
+                          <v-col lg="4" md="4" cols="4" class="textafter">
+                            <div class="color_1">
+                              <span class="color_size1">
+                                ${{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }}</span
+                              >
+                            </div>
+                          </v-col>
+                          <v-col lg="4" md="4" cols="4" class="textafter">
+                            <div class="color_2">
+                              <span class="color_size2">
+                                ${{
+                                  item.totalBorrowed | numberWithCommas({ fixed: [0, 2] })
+                                }}</span
+                              >
+                            </div>
+                          </v-col>
+                          <img class="row1_img" src="@/assets/backg_01.svg" alt="" />
+                        </v-row>
+                        <v-row v-else>
+                          <div style="text-align: center; width: 100%;">
+                            <h1>No pool</h1>
                           </div>
-                          <div class="Loener">
-                            {{ truncateAddress(item.address) }}
-                          </div>
-                        </v-col>
-                        <v-col lg="4" md="4" cols="4" class="textafter">
-                          <div class="color_1">
-                            <span class="color_size1">
-                              ${{ item.totalSupply | numberWithCommas({ fixed: [0, 2] }) }}</span
-                            >
-                          </div>
-                        </v-col>
-                        <v-col lg="4" md="4" cols="4" class="textafter">
-                          <div class="color_2">
-                            <span class="color_size2">
-                              ${{ item.totalBorrowed | numberWithCommas({ fixed: [0, 2] }) }}</span
-                            >
-                          </div>
-                        </v-col>
-                        <img class="row1_img" src="@/assets/backg_01.svg" alt="" />
-                      </v-row>
+                        </v-row>
+                      </div>
                     </div>
                   </v-container>
                 </div>
