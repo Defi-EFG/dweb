@@ -22,8 +22,8 @@
                 <v-col cols="3" class="efg_border1">
                   <div class="m_titel m_titel_2">{{ interestRate }}%</div>
                   <div class="m_titel m_titel_2">{{ totalBorrowers }}</div>
-                  <div class="m_titel m_titel_2">0</div>
-                  <div class="m_titel m_titel_2">0</div>
+                  <div class="m_titel m_titel_2">{{ interest }}</div>
+                  <div class="m_titel m_titel_2">{{ debt }}</div>
                 </v-col>
               </v-row>
             </div>
@@ -45,6 +45,7 @@
       <v-container>
         <v-row>
           <v-col cols="12">
+            <div class="chart_title">Market Price</div>
             <div class="button-small">
               <a @click="daysChanged('day')" :class="active == 'day' ? 'active' : undefined">{{
                 $t('views.detail.day')
@@ -91,7 +92,8 @@ export default class Efg extends Vue {
   name = 'day'
   title = 'day'
   chartlist = 'day'
-
+  interest = 0
+  debt = 0
   get pool() {
     return this.lendingStore.pools.find(asset => asset.address === this.query)
   }
@@ -151,9 +153,17 @@ export default class Efg extends Vue {
 }
 </style>
 <style scoped lang="scss">
+.chart_title {
+  color: #fff;
+  font-size: 18px;
+  display: inline-block;
+  position: relative;
+}
 .button-small {
   padding: 0;
   text-align: right;
+  display: inline;
+  float: right;
   a {
     padding: 0px 10px;
     color: #ffffff;

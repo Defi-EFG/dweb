@@ -109,39 +109,6 @@
             }
 
         ],
-        "tutorial": "Tutorial",
-        "financial ": "Financial Growth ",
-        "step_1": "1st Step",
-        "step_2": "2nd Step",
-        "How_to_Deposit": "How to Deposit EFG?",
-        "How_to_Staking": "How to Staking EFG?",
-        "step1": {
-            "step1_1": "Click the “Create New ECOC Wallet”",
-            "step1_2": "Setting the password.",
-            "step1_3": "Click 'Create Button'",
-            "step1_4": "Click 'Download Key store' File Button."
-        },
-        "step2": {
-            "step2_1": "Click the “Connect ECOC Wallet”",
-            "step2_2": "Press the Key store file text.",
-            "step2_3": "Click 'Next' button",
-            "step2_4": "Input the password..",
-            "step2_5": "Click “Connect” button"
-        },
-        "step3": {
-            "step3_1": "Users can do the deposit via the scan QR code or copy text ECOC wallet address.",
-            "step3_2": "Input the wallet address for the deposit to transfer the token to the wallet.",
-            "step3_3": "Specify the amount, of tokens users need to transfer.",
-            "step3_4": "Press the ' SEND ' button to confirm your transaction."
-        },
-        "step4": {
-            "step4_1": "Specify the amount as you need to staking.",
-            "step4_2": "Press the ' DEPOSIT ' button to confirm the transaction of staking."
-        },
-        "Withdraw_howto": "How to Withdraw GPT ?",
-        "Users_haveto": "Users have to press the ' STOP STAKING ' button to withdraw the GPT rewards.",
-        "Note_the": "Note: the EFG dApp will lock your assets for 21 days after stop staking",
-        "After_21": "After 21 days, users can click the “WITHDRAW REWARD” to receive the GPT rewards.",
         "detail": {
             "market_details": "Market Details",
             "details": "Details",
@@ -163,8 +130,11 @@
             "hour": "Hours",
             "day": "Days"
         },
+        "tutorial": "Tutorial",
+        "deposit": "Deposit",
         "wallet": "Wallet",
         "lending": "Lending",
+        "withdraw": "Withdraw",
         "staking": "Staking",
         "walletpage": {
             "unlock_wallet": "Unlock Wallet",
@@ -262,6 +232,59 @@
             "withdrawing": "Withdrawing",
             "stopping": "Stopping",
             "depositing": "Depositing"
+        },
+        "EFG Tutorial": "EFG Tutorial",
+        "ECOC Financial Growth": "ECOC Financial Growth",
+        "docsWallet": {
+            "How to create": "How to create the Wallet ?",
+            "On this page": "On this page, EFG will teach the user how to create your own wallet before doing the transaction on the system, mentioned step as detail below.",
+            "Create the Wallet": "Create the Wallet",
+            "Create_li1": "Click the “Create New ECOC Wallet”",
+            "Create_li2": "Setting the password.",
+            "Create_li3": "Click “Create Button”",
+            "Create_li4": "Click “Download Key store ” File Button.",
+            "Connect the Wallet": "Connect the Wallet",
+            "Connect_li1": "Click the “Connect ECOC Wallet”",
+            "Connect_li2": "Press the Key store file text.",
+            "Connect_li3": "Click  “Next” button",
+            "Connect_li4": "Input the password.",
+            "Connect_li5": "Click “Connect” button"
+        },
+        "docsDeposit": {
+            "How to Deposit EFG?": "How to Deposit EFG ?",
+            "This function": "This function will explain in more detail to the user how to deposit the asset to the EFG dApp. This page is provided to facilitate deposit assets from the cryptocurrency exchange market to the EFG dApp such as native currency such as ECOC, EFG, and GPT for the user.",
+            "Deposit_step1": "Users can do the deposit via the scan QR code or copy text ECOC wallet address.",
+            "Deposit_step2": "Input the wallet address for the deposit to transfer the token to the wallet.",
+            "How to loan EFG?": "How to loan EFG?",
+            "To start": "To start lending EFG, you must deposit ECOC first as a collateral to borrow EFG. The system will calculate the amount of EFG you can borrow according to your collateral!",
+            "DEPOSIT ECOC": "DEPOSIT ECOC",
+            "Depositecoc_step1": "Click in to the “ECOC” assets.",
+            "Depositecoc_step2": "Input the amount of ECOC you need to deposit.",
+            "Depositecoc_step3": "Click the “DEPOSIT” to confirm your transaction.",
+            "BORROW EFG": "BORROW EFG",
+            "borrow_step1": "Click the “EFG” assets.",
+            "borrow_step2": "Input the amount of EFG token as you need to borrow.",
+            "borrow_step3": "Click the “BORROW” button to confirmed.",
+            "borrow_step4": "Click “CONFIRM” to confirm your transaction.",
+            "How to Repay EFG?": "How to Repay EFG ?",
+            "Repay_step1": "Insert amount as you need to repay back on EFG dApp.",
+            "Repay_step2": "Click “REPAY” button.",
+            "Repay_step3": "Click “CONFIRM” button to confirm your transaction."
+        },
+        "docsWithdraw": {
+            "How to Withdraw EFG": "How to Withdraw EFG ?",
+            "Withdraw_step1": "Input the address text of user need to send the EFG.",
+            "Withdraw_step2": "Fill the amount of EFG as you need to withdraw.",
+            "Withdraw_step3": "Click “SEND” button to confirm your transaction."
+        },
+        "docsStaking": {
+            "How to Staking EFG?": "How to Staking EFG ?",
+            "Staking_step1": "Input the deposit amount of EFG as you need to staking.",
+            "Staking_step2": "Click “DEPOSIT” button to confirm amount of staking.",
+            "How to Stop Staking?": "How to Stop Staking ?",
+            "HowtoStaking_step1": "Click the “ STOP STAKING ” button.",
+            "HowtoStaking_step2": "Condition to lock your assets for 21 days after stop staking to receive the GPT rewards!",
+            "Click the": "“Click the “WITHDRAW REWARD” button the receive the GPT rewards”"
         },
         "modal": {
             "errorMsg2": "Wrong format of keystore file",

@@ -39,6 +39,7 @@
       <v-container>
         <v-row>
           <v-col cols="12">
+            <div class="chart_title">Market Price</div>
             <div class="button-small">
               <a @click="daysChanged('hour')" :class="active == 'hour' ? 'active' : undefined">{{
                 $t('views.detail.hour')
@@ -141,9 +142,17 @@ export default class Callaterr extends Vue {
 </script>
 
 <style scoped lang="scss">
+.chart_title {
+  color: #fff;
+  font-size: 18px;
+  display: inline-block;
+  position: relative;
+}
 .button-small {
   padding: 0;
   text-align: right;
+  display: inline;
+  float: right;
   a {
     padding: 0px 10px;
     color: #ffffff;

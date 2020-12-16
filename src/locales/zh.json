@@ -106,39 +106,6 @@
             }
 
         ],
-        "tutorial": "讲解",
-        "financial ": "Financial Growth ",
-        "step_1": "创建ECOC钱包",
-        "step_2": "链接ECOC钱包",
-        "How_to_Deposit": "如何存入 EFG?",
-        "How_to_Staking": "如何质押EFG? ",
-        "step1": {
-            "step1_1": "点击“新建 ECOC 钱包”",
-            "step1_2": "设置密码",
-            "step1_3": "点击“创建”按钮",
-            "step1_4": "点击“下载 Key store 文件”按钮."
-        },
-        "step2": {
-            "step2_1": "点击“链接 ECOC 钱包”",
-            "step2_2": "点击 Keystore 文件",
-            "step2_3": "点击“继续”按钮",
-            "step2_4": "输入密码",
-            "step2_5": "点击“链接钱包”按钮"
-        },
-        "step3": {
-            "step3_1": "用户可以通过扫描二维码或者复制粘贴 ECOC 钱包地址进行存款",
-            "step3_2": "输入钱包地址为了存款到钱包",
-            "step3_3": "输入您所需要转的金额",
-            "step3_4": "点击“发送”按钮，启动转款。"
-        },
-        "step4": {
-            "step4_1": "输入需要质押的金额",
-            "step4_2": "点击“存入”按钮开始质押"
-        },
-        "Withdraw_howto": "如何提取GPT ? ",
-        "Users_haveto": "用户点击“停止质押”按钮为了提取GPT 奖励",
-        "Note_the": "备注: 停止质押后EFG dApp 需要就绪锁定您的资产 21 日",
-        "After_21": "21 日后，用户可点击“提取奖励”按钮为了提取 GPT",
         "detail": {
             "market_details": "市场详情",
             "details": "详情",
@@ -160,6 +127,9 @@
             "hour": "小时",
             "day": "每日"
         },
+        "tutorial": "讲解",
+        "deposit": "充值",
+        "withdraw": "提现",
         "wallet": "钱包",
         "lending": "借贷",
         "staking": "质押",
@@ -260,6 +230,59 @@
             "withdrawing": "提款",
             "stopping": "正在停止",
             "depositing": "存款"
+        },
+        "EFG Tutorial": "EFG 讲解",
+        "ECOC Financial Growth": "ECOC Financial Growth",
+        "docsWallet": {
+            "How to create": "如何创建钱包 ？",
+            "On this page": "在这个页面上，EFG将教用户如何在系统上创建自己的钱包，下面详细介绍了步骤。",
+            "Create the Wallet": "创建ECOC钱包",
+            "Create_li1": "点击“新建 ECOC 钱包”",
+            "Create_li2": "设置密码",
+            "Create_li3": "点击“创建”按钮",
+            "Create_li4": "点击“下载 Key store 文件”按钮.",
+            "Connect the Wallet": "链接ECOC钱包",
+            "Connect_li1": "点击“链接 ECOC 钱包”",
+            "Connect_li2": "点击 Keystore 文件",
+            "Connect_li3": "点击“继续”按钮",
+            "Connect_li4": "输入密码",
+            "Connect_li5": "点击“链接钱包”按钮"
+        },
+        "docsDeposit": {
+            "How to Deposit EFG?": "如何充值EFG？",
+            "This function": "此功能将更详细地向用户解释如何将资产存入EFG dApp。提供此页面是为了方便用户从交易所或ECOC移动端钱包向EFG dApp（如ECOC、EFG和GPT等代币）存款资产。",
+            "Deposit_step1": "用户可以通过扫描二维码或复制粘贴 ECOC 钱包地址进行存款",
+            "Deposit_step2": "输入存款的电子钱包地址，将代币转移至电子钱包。",
+            "How to loan EFG?": "如何借贷EFG ？",
+            "To start": "要开始贷款EFG，您必须先存入ECOC作为抵押，以便借入EFG。系统会根据您的抵押资产计算出您可以借入的EFG金额！",
+            "DEPOSIT ECOC": "充值ECOC",
+            "Depositecoc_step1": "点击“ECOC”资产。",
+            "Depositecoc_step2": "输入您需要存入的ECOC金额",
+            "Depositecoc_step3": "点击“存款”确认您的交易。",
+            "BORROW EFG": "借贷EFG",
+            "borrow_step1": "点击“EFG”资产。",
+            "borrow_step2": "输入您需要借用的EFG代币金额。",
+            "borrow_step3": "点击“借贷”确认。",
+            "borrow_step4": "点击“确认”以您的交易。",
+            "How to Repay EFG?": "如何偿还EFG ？",
+            "Repay_step1": "在EFG dApp 上输入需要还款的金额。",
+            "Repay_step2": "点击“偿还”按钮。",
+            "Repay_step3": "点击“确认”按钮确认您的交易。"
+        },
+        "docsWithdraw": {
+            "How to Withdraw EFG": "如何提现EFG ？",
+            "Withdraw_step1": "输入钱包地址为了存款到钱包",
+            "Withdraw_step2": "输入您所需要转的金额",
+            "Withdraw_step3": "点击“发送”按钮，启动转款。"
+        },
+        "docsStaking": {
+            "How to Staking EFG?": "如何质押EFG ?",
+            "Staking_step1": "输入需要质押的金额",
+            "Staking_step2": "点击“存入”按钮开始质押",
+            "How to Stop Staking?": "如何停止质押 ？",
+            "HowtoStaking_step1": "单击“停止质押”按钮。",
+            "HowtoStaking_step2": "备注: 停止质押后EFG dApp 需要就绪锁定您的资产 21 日",
+            "Click the": "用户点击“停止质押”按钮为了提取GPT 奖励"
         },
         "modal": {
             "errorMsg2": "密钥库文本格式错误",
