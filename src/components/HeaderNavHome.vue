@@ -27,9 +27,9 @@
             }}</a>
           </div>
         </div>
-        <a href="#home" class="Dashboard">
-          <v-btn outlined small @click="gotoDashboard">{{ $t('views.titles.dashboard') }}</v-btn></a
-        >
+        <a class="Dashboard">
+          <v-btn outlined small @click="gotoDashboard">{{ $t('views.titles.dashboard') }}</v-btn>
+        </a>
       </div>
       <v-row id="menu_s">
         <v-col>
@@ -55,7 +55,6 @@
                         }}</router-link>
                       </li>
                       <li>
-                        {{ $t('views.titles.docs') }}
                         <a :href="whitepaper" target="_blank">{{
                           $t('views.titles.whitepaper')
                         }}</a>
