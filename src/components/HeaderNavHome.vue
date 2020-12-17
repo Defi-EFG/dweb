@@ -67,12 +67,12 @@
                           $t('views.titles.EFG_Audit')
                         }}</a>
                       </li>
-                      <li>
+                      <li class="li_noberder">
                         <a href="https://efg.finance/media/Report_for_GPT.pdf" target="_blank">{{
                           $t('views.titles.GPT_Audit')
                         }}</a>
                       </li>
-                      <li>
+                      <li class="li_noberder">
                         <v-btn outlined small @click="gotoDashboard">{{
                           $t('views.titles.dashboard')
                         }}</v-btn>

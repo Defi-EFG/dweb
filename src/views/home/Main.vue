@@ -1116,6 +1116,10 @@ body {
   .sec_2 .row1 .color_size {
     font-size: 12px;
   }
+  .textafter {
+    text-align: left;
+    float: right;
+  }
 }
 </style>
 
