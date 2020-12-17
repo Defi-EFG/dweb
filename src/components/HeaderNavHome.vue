@@ -58,15 +58,21 @@
                         <a :href="whitepaper" target="_blank">{{
                           $t('views.titles.whitepaper')
                         }}</a>
+                      </li>
+                      <li>
                         <a :href="yellowpdf" target="_blank">{{ $t('views.titles.yellow') }}</a>
+                      </li>
+                      <li>
                         <a href="https://efg.finance/media/Report_for_EFG.pdf" target="_blank">{{
                           $t('views.titles.EFG_Audit')
                         }}</a>
+                      </li>
+                      <li>
                         <a href="https://efg.finance/media/Report_for_GPT.pdf" target="_blank">{{
                           $t('views.titles.GPT_Audit')
                         }}</a>
                       </li>
-                      <li class="li_noberder">
+                      <li>
                         <v-btn outlined small @click="gotoDashboard">{{
                           $t('views.titles.dashboard')
                         }}</v-btn>
@@ -335,7 +341,6 @@ export default class HeaderNavHome extends Vue {
     a {
       font-weight: bold;
       color: #ffffff;
-      padding: 5px 0px 0px 0px;
       text-decoration: unset;
       &.router-link-exact-active {
         color: rgb(192, 116, 249);

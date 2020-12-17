@@ -337,8 +337,32 @@ export default class Tutorial extends Vue {
     width: 100%;
     top: 50px;
     padding: 40px 20px;
-    height: 102px;
     background: #ffffff;
+  }
+  .sec_doc1 .headtext {
+    display: none;
+    position: relative;
+    margin-right: 0px;
+    margin-bottom: 0px;
+  }
+}
+@media only screen and (max-width: 413px) {
+  .docs {
+    background: #ededed;
+  }
+  .sec_doc1 {
+    position: fixed;
+    width: 100%;
+    top: 50px;
+    padding: 40px 20px;
+    height: 97px;
+    background: #ffffff;
+  }
+  .sec_doc1 .headtext {
+    display: none;
+    position: relative;
+    margin-right: 0px;
+    margin-bottom: 0px;
   }
 }
 </style>
