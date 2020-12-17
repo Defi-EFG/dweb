@@ -19,16 +19,16 @@
                     </div>
                   </div>
                 </v-col>
-                <v-col cols="9" class="efg_border1">
+                <v-col cols="6" class="efg_border1">
                   <!-- <div class="m_titel">{{ $t('views.detail.liquidation') }}</div> -->
                   <div class="m_titel">{{ $t('views.detail.collateral_Factor') }}</div>
                   <div class="m_titel">{{ $t('views.detail.collateral_amount') }}</div>
                 </v-col>
-                <v-col cols="3" class="efg_border1">
+                <v-col cols="6" class="efg_border1">
                   <!-- <div class="m_titel m_titel_2">{{ liquidation }}</div> -->
                   <div class="m_titel m_titel_2">{{ collateralFactor }}%</div>
                   <div class="m_titel m_titel_2">
-                    {{ amount | numberWithCommas({ fixed: [0, 8] }) }} {{ currencyName }}
+                    {{ amount | numberWithCommas({ fixed: [0, 4] }) }} {{ currencyName }}
                   </div>
                 </v-col>
               </v-row>

@@ -32,7 +32,9 @@
                   <div class="m_titel m_titel_2">
                     {{ totalStaked | numberWithCommas({ Fixed: [0, 3] }) }} GPT
                   </div>
-                  <div class="m_titel m_titel_2">{{ totalStaking }} EFG</div>
+                  <div class="m_titel m_titel_2">
+                    {{ totalStaking | numberWithCommas({ Fixed: [0, 3] }) }} EFG
+                  </div>
                 </v-col>
               </v-row>
             </div>
@@ -55,11 +57,11 @@
           <v-col cols="12">
             <div class="chart_title">{{ $t('views.detail.Market Price') }}</div>
             <div class="button-small">
-              <a @click="daysChanged('day')" :class="active == 'day' ? 'active' : undefined">{{
-                $t('views.detail.day')
-              }}</a>
               <a @click="daysChanged('hour')" :class="active == 'hour' ? 'active' : undefined">{{
                 $t('views.detail.hour')
+              }}</a>
+              <a @click="daysChanged('day')" :class="active == 'day' ? 'active' : undefined">{{
+                $t('views.detail.day')
               }}</a>
             </div>
           </v-col>
@@ -98,10 +100,10 @@ export default class Gpt extends Vue {
   date = [] as string[]
   price = [] as number[]
   currencyName = 'GPT'
-  active = 'day'
-  name = 'day'
-  title = 'day'
-  chartlist = 'day'
+  active = 'hour'
+  name = 'hour'
+  title = 'hour'
+  chartlist = 'hour'
 
   get stakingAvailable() {
     return this.stakingStore.available

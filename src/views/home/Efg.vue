@@ -47,11 +47,11 @@
           <v-col cols="12">
             <div class="chart_title">{{ $t('views.detail.Market Price') }}</div>
             <div class="button-small">
-              <a @click="daysChanged('day')" :class="active == 'day' ? 'active' : undefined">{{
-                $t('views.detail.day')
-              }}</a>
               <a @click="daysChanged('hour')" :class="active == 'hour' ? 'active' : undefined">{{
                 $t('views.detail.hour')
+              }}</a>
+              <a @click="daysChanged('day')" :class="active == 'day' ? 'active' : undefined">{{
+                $t('views.detail.day')
               }}</a>
             </div>
           </v-col>
@@ -88,10 +88,10 @@ export default class Efg extends Vue {
   date = [] as string[]
   price = [] as number[]
 
-  active = 'day'
-  name = 'day'
-  title = 'day'
-  chartlist = 'day'
+  active = 'hour'
+  name = 'hour'
+  title = 'dahoury'
+  chartlist = 'hour'
   interest = 0
   debt = 0
   get pool() {
