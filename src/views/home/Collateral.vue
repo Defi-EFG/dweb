@@ -134,7 +134,6 @@ export default class Callaterr extends Vue {
     if (this.currencyName === 'ECOC') {
       const address = utils.toEcocAddress(this.lendingStore.address)
       const addressInfo = await EcocWallet.getAddressInfo(address)
-      console.log(addressInfo)
       return Number(addressInfo.balance)
     }
 
