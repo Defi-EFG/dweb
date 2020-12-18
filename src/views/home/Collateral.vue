@@ -20,15 +20,17 @@
                   </div>
                 </v-col>
                 <v-col cols="6" class="efg_border1">
-                  <!-- <div class="m_titel">{{ $t('views.detail.liquidation') }}</div> -->
                   <div class="m_titel">{{ $t('views.detail.collateral_Factor') }}</div>
+                  <div class="m_titel">{{ $t('views.detail.liquidation') }}</div>
                   <div class="m_titel">{{ $t('views.detail.collateral_amount') }}</div>
                 </v-col>
                 <v-col cols="6" class="efg_border1">
-                  <!-- <div class="m_titel m_titel_2">{{ liquidation }}</div> -->
                   <div class="m_titel m_titel_2">{{ collateralFactor }}%</div>
                   <div class="m_titel m_titel_2">
-                    {{ amount | numberWithCommas({ fixed: [0, 4] }) }} {{ currencyName }}
+                    {{ liquidated | numberWithCommas({ fixed: [0, 8] }) }} {{ currencyName }}
+                  </div>
+                  <div class="m_titel m_titel_2">
+                    {{ amount | numberWithCommas({ fixed: [0, 8] }) }} {{ currencyName }}
                   </div>
                 </v-col>
               </v-row>
@@ -89,8 +91,9 @@ export default class Callaterr extends Vue {
   name = 'hour'
   title = 'hour'
   chartlist = 'hour'
+
   amount = 0
-  liquidation = 0
+  liquidated = 0
 
   get labelSet() {
     return this.date
@@ -119,7 +122,12 @@ export default class Callaterr extends Vue {
     this.getCollateralAmount().then(res => {
       this.amount = res
     })
+
+    this.getLiquidated().then(res => {
+      this.liquidated = res
+    })
   }
+
   async daysChanged(name: string) {
     this.active = name
     this.name = name
@@ -130,11 +138,20 @@ export default class Callaterr extends Vue {
       this.price = data.price
     })
   }
+
   async getCollateralAmount() {
     if (this.currencyName === 'ECOC') {
       const address = utils.toEcocAddress(this.lendingStore.address)
       const addressInfo = await EcocWallet.getAddressInfo(address)
       return Number(addressInfo.balance)
+    }
+
+    return 0
+  }
+
+  async getLiquidated() {
+    if (this.currencyName === 'ECOC') {
+      return 1021781.29
     }
 
     return 0

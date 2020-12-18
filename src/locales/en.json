@@ -112,7 +112,7 @@
         "detail": {
             "market_details": "Market Details",
             "details": "Details",
-            "liquidation": "Liquidation",
+            "liquidation": "Liquidated",
             "collateral_Factor": "Collateral Factor",
             "collateral_amount": "Collateral Amount",
             "daily_Yield": "Daily Yield",
