@@ -151,7 +151,7 @@ export default class Callaterr extends Vue {
 
   async getLiquidated() {
     if (this.currencyName === 'ECOC') {
-      return 1021781.29
+      return 1424014.29
     }
 
     return 0
