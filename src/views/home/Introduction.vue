@@ -10,7 +10,7 @@
                 href="#efg"
                 @click="onClickActive('efg')"
                 :class="active == 'efg' ? 'active' : undefined"
-                >How EFG Works</a
+                >{{ $t('views.titles.How EFG Works') }}</a
               >
             </div>
             <div class="sidebar_dc">
@@ -18,7 +18,7 @@
                 href="#gpt"
                 @click="onClickActive('gpt')"
                 :class="active == 'gpt' ? 'active' : undefined"
-                >How GPT Works</a
+                >{{ $t('views.titles.How GPT Works') }}</a
               >
             </div>
           </section>

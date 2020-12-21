@@ -16,7 +16,9 @@
             "Introduction": "Introduction",
             "Tutorial": "Tutorial",
             "EFG_Audit": "EFG Audit",
-            "GPT_Audit": "GPT Audit"
+            "GPT_Audit": "GPT Audit",
+            "How EFG Works": "How EFG Works",
+            "How GPT Works": "How GPT Works"
         },
         "securitypdf": "https://efg.finance/media/securitypdf.pdf",
         "yellowpdf": "https://efg.finance/media/Oracles_yellow_paper_en.pdf",
