@@ -75,7 +75,7 @@
             }
         ],
         "Introduction": "Introduction",
-        "docs": [{
+        "docsEFG": [{
                 "head": "Collateral ",
                 "headsub": "In order to borrow the EFG Token from dApp, users need to firstly supply ECOC coins as collateral. Meanwhile, users cannot redeem or transfer collateral while it is locked."
             },
@@ -109,6 +109,27 @@
             }
 
         ],
+        "docsGPT": [{
+                "head": "GPT (Grace Period Token) ",
+                "headsub": "can be used for delaying liquidation of the collateral in the system, this is in case of the collateral price dropped. So, if we deposit GPT, the delay process will start and end 7 hours later and the amount to be used will depend on the collateral amount. In the meantime, users can buy more EFG to redeem their collateral back. If not, their collateral will be lost and they can just keep their EFG in case of the collateral price dropped or loan asset price increased."
+            },
+            {
+                "head": "Staking ",
+                "headsub": "In order to stake the EFG token on dApp, users need to supply the EFG token used for staking. By input the amount of EFG as you need to stake into the system."
+            },
+            {
+                "head": "dApp Staking Reward",
+                "headsub": "The staking reward depends on the period of time and the amount of EFG staking. In dApp system, the reward will be given every block (32 seconds) creation time and at 0.011% of the total staking."
+            },
+            {
+                "head": "Reward Withdrawal ",
+                "headsub": "You can withdraw your staking reward (GPT) anytime you want by going to “stop staking” to reclaim GPT rewards. After you decide to stop staking, there will be a cooling down period of 21 days before you could proceed to withdraw both the asset, once the 21 days are over, you can withdraw your reward for trading!"
+            },
+            {
+                "head": "Exchange Market ",
+                "headsub": "Exchange Market - The GPT token can be used as speculation in the cryptocurrency exchange."
+            }
+        ],
         "detail": {
             "market_details": "Market Details",
             "details": "Details",
@@ -118,7 +139,7 @@
             "daily_Yield": "Daily Yield",
             "total": "Total",
             "staked": "Staked",
-            "Staked_total": "Total GPT Staked",
+            "Staked_total": "Total GPT Withdrawn",
             "number_of": "Number of Borrowers",
             "borrow_apy": "Borrow APY",
             "total_supply": "Total Supply",

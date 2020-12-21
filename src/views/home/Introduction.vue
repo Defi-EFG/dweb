@@ -4,27 +4,48 @@
       <v-row>
         <v-col lg="3" md="3" cols="12" style="padding:0px;">
           <section class="sec_doc1" name="doc">
+            <div class="sidebar_dc1">{{ $t('views.Introduction') }}</div>
             <div class="sidebar_dc">
               <a
-                style="display:none"
-                href="#Introduction"
-                @click="onClickActive('Introduction')"
-                :class="active == 'Introduction' ? 'active' : undefined"
-                >{{ $t('views.Introduction') }}</a
+                href="#efg"
+                @click="onClickActive('efg')"
+                :class="active == 'efg' ? 'active' : undefined"
+                >How EFG Works</a
+              >
+            </div>
+            <div class="sidebar_dc">
+              <a
+                href="#gpt"
+                @click="onClickActive('gpt')"
+                :class="active == 'gpt' ? 'active' : undefined"
+                >How GPT Works</a
               >
             </div>
           </section>
         </v-col>
         <v-col lg="9" md="9" cols="12" style="padding:0px;">
-          <section id="Introduction" class="sec_doc2">
-            <div class="img">
-              <div class="docs_head">{{ $t('views.Introduction') }}</div>
-              <img src="@/assets/docs02.png" alt="" />
+          <section class="sec_doc2">
+            <div class="detail">
+              <div id="efg" class="detailEFG">
+                <div class="docs_head">{{ $t('views.Introduction') }}</div>
+                <img src="@/assets/docs02.png" alt="" />
+              </div>
+              <div v-for="(item, i) in docsEFG" :key="i">
+                <div class="head_Introduction">
+                  {{ item.head }} - <span>{{ item.headsub }}</span
+                  ><br />
+                </div>
+              </div>
             </div>
-            <div v-for="(item, i) in msg" :key="i">
-              <div class="head_Introduction">
-                {{ item.head }} - <span>{{ item.headsub }}</span
-                ><br />
+            <div class="detail">
+              <div id="gpt" class="detailGPT">
+                <img src="@/assets/intoGpt.png" alt="" />
+              </div>
+              <div v-for="(item, i) in docsGPT" :key="i">
+                <div class="head_Introduction">
+                  {{ item.head }} - <span>{{ item.headsub }}</span
+                  ><br />
+                </div>
               </div>
             </div>
           </section>
@@ -38,7 +59,7 @@
 import { Component, Vue } from 'vue-property-decorator'
 @Component({})
 export default class Introduction extends Vue {
-  active = 'Introduction'
+  active = 'efg'
   name = ''
 
   onClickActive(name: string) {
@@ -46,8 +67,11 @@ export default class Introduction extends Vue {
     this.name = name
   }
 
-  get msg() {
-    return this.$t('views.docs')
+  get docsEFG() {
+    return this.$t('views.docsEFG')
+  }
+  get docsGPT() {
+    return this.$t('views.docsGPT')
   }
 }
 </script>
@@ -61,16 +85,20 @@ export default class Introduction extends Vue {
   color: #c074f9 !important;
   transition: 0.5s;
 }
-.sidebar_dc {
+.sidebar_dc1 {
   margin-bottom: 10px;
+  font-weight: 800;
+}
+.sidebar_dc {
+  padding: 5px 0;
 }
 .sidebar_dc a {
   color: #000000;
   text-align: left;
-  font: normal normal bold 18px/24px Segoe UI;
   letter-spacing: 0px;
   color: #000000;
   opacity: 1;
+  font-weight: 400;
 }
 .sidebar_dc a:hover {
   color: #c074f9;
@@ -83,17 +111,24 @@ export default class Introduction extends Vue {
 }
 .sec_doc2 {
   background: #ededed;
-  padding: 150px 30px 400px 82px;
+  padding: 0px 30px 400px 82px;
   height: 100%;
+  position: block;
 }
-.sec_doc2 .img img {
+.sec_doc2 .detail .detailGPT {
+  padding-top: 150px;
+}
+.sec_doc2 .detail .detailEFG {
+  padding-top: 150px;
+}
+.sec_doc2 img {
   width: 100%;
   margin-bottom: 40px;
   box-shadow: 0px 0px 20px 1px #cccccc;
   border-radius: 5px;
 }
 
-.sec_doc2 .img .docs_head {
+.sec_doc2 .docs_head {
   width: 100%;
   margin-bottom: 20px;
   font-size: 20px;
@@ -122,6 +157,15 @@ export default class Introduction extends Vue {
   padding: 0;
 }
 @media only screen and (max-width: 960px) {
+  .sidebar_dc a {
+    font-weight: bold;
+  }
+  .active {
+    border-bottom: 2px solid #c074f9;
+  }
+  .sidebar_dc1 {
+    display: none;
+  }
   .sec_doc1 {
     position: fixed;
     width: 100%;
@@ -129,20 +173,25 @@ export default class Introduction extends Vue {
     padding: 40px 20px;
     height: 70px;
     background: #ffffff;
-    display: none;
   }
   .sidebar_dc {
     display: inline;
     margin-right: 10px;
   }
   .sec_doc2 {
-    padding: 140px 20px;
+    padding: 0px 20px;
   }
   .container {
     padding: 12px;
   }
   .sec_doc2 .img img {
     margin-bottom: 20px;
+  }
+  .sec_doc2 .detail .detailGPT {
+    padding-top: 150px;
+  }
+  .sec_doc2 .detail .detailEFG {
+    padding-top: 150px;
   }
 }
 </style>
