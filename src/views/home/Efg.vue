@@ -16,14 +16,14 @@
                 <v-col cols="9" class="efg_border1">
                   <div class="m_titel">{{ $t('views.detail.borrow_apy') }}</div>
                   <div class="m_titel">{{ $t('views.detail.number_of') }}</div>
-                  <div class="m_titel">{{ $t('views.detail.total_Interest') }}</div>
-                  <div class="m_titel">{{ $t('views.detail.total_debt') }}</div>
+                  <!-- <div class="m_titel">{{ $t('views.detail.total_Interest') }}</div>
+                  <div class="m_titel">{{ $t('views.detail.total_debt') }}</div> -->
                 </v-col>
                 <v-col cols="3" class="efg_border1">
                   <div class="m_titel m_titel_2">{{ interestRate }}%</div>
                   <div class="m_titel m_titel_2">{{ totalBorrowers }}</div>
-                  <div class="m_titel m_titel_2">{{ interest }}</div>
-                  <div class="m_titel m_titel_2">{{ debt }}</div>
+                  <!-- <div class="m_titel m_titel_2">{{ interest }}</div>
+                  <div class="m_titel m_titel_2">{{ debt }}</div> -->
                 </v-col>
                 <v-col cols="12" style="padding:0px 0px 5px 0px">
                   <div class="m_titel">
@@ -31,20 +31,24 @@
                   </div>
                 </v-col>
                 <v-col class="colorLiquidated">
-                  <v-row v-for="(liquidated, index) in liquidated" :key="index" cols="12">
+                  <v-row v-for="(asset, index) in supportedCollateralAssets" :key="index" cols="12">
                     <v-col cols="6" style="padding:5px 12px">
                       <div class="name">
                         <img
                           width="22"
                           height="22"
-                          :src="getCurrencyIcon(liquidated.currencyName)"
+                          :src="getCurrencyIcon(asset.currencyName)"
                           class="img_text_but"
                           alt=""
-                        />{{ liquidated.currencyName }}
+                        />{{ asset.currencyName }}
                       </div></v-col
                     >
                     <v-col cols="6" style="padding:5px 12px">
-                      <div class="collaterals_number">{{ liquidatedECOC }}</div></v-col
+                      <div class="collaterals_number">
+                        {{
+                          getLiquidated(asset.currencyName) | numberWithCommas({ fixed: [0, 8] })
+                        }}
+                      </div></v-col
                     >
                   </v-row>
                 </v-col>
@@ -108,6 +112,7 @@ import { getCurrency } from '@/store/common'
 })
 export default class Efg extends Vue {
   lendingStore = getModule(LendingModule)
+
   query = this.$route.query.pool
   date = [] as string[]
   price = [] as number[]
@@ -116,9 +121,11 @@ export default class Efg extends Vue {
   name = 'hour'
   title = 'dahoury'
   chartlist = 'hour'
+
   interest = 0
   debt = 0
-  liquidatedECOC = 0
+
+  liquidated = [] as { currencyName: string; amount: number }[]
 
   get pool() {
     return this.lendingStore.pools.find(asset => asset.address === this.query)
@@ -151,19 +158,68 @@ export default class Efg extends Vue {
   get dataSet() {
     return this.price
   }
-  get liquidated() {
+
+  get supportedCollateralAssets() {
     return this.lendingStore.supportedCollateralAssets
   }
+
   getCurrencyIcon(currencyNname: string) {
     return getCurrency(currencyNname).style?.icon
   }
 
+  getLiquidated(currencyName: string) {
+    const liquidated = this.liquidated.find(asset => asset.currencyName === currencyName)
+    if (liquidated) return liquidated.amount
+    return 0
+  }
+
   async mounted() {
     this.lendingStore.updateLoners()
+    this.getPoolLiquidated(this.query as string).then(liquidated => {
+      if (liquidated) {
+        this.liquidated = liquidated
+      }
+    })
     api.getprice(this.currencyName, this.chartlist).then(data => {
       this.date = data.date
       this.price = data.price
     })
+  }
+
+  async getPoolLiquidated(poolAddress: string) {
+    // must call from api
+    const dataset = [
+      {
+        poolAddress: 'ELt364o3jBDuEZmJPVdM28ku82NB52dZ5h', // Themis
+        assets: [
+          {
+            currencyName: 'ECOC',
+            amount: 501037.8
+          }
+        ]
+      },
+      {
+        poolAddress: 'EXoRPHdQAw4BMjtSvWRhFYxt8ZnkxGL7hm', // Galaxy-K
+        assets: [
+          {
+            currencyName: 'ECOC',
+            amount: 1612826.49
+          }
+        ]
+      },
+      {
+        poolAddress: 'EUzHQBjr2dGJHam74Vp6dVUSsbzwRquQ5V', // Jockey-N
+        assets: [
+          {
+            currencyName: 'ECOC',
+            amount: 1570.0
+          }
+        ]
+      }
+    ]
+
+    const poolData = dataset.find(pool => pool.poolAddress === poolAddress)
+    return poolData?.assets
   }
 
   async daysChanged(name: string) {

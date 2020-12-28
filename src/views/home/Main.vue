@@ -385,7 +385,7 @@ export default class Main extends Vue {
   }
 
   get pools() {
-    return this.lendingStore.pools
+    return this.lendingStore.pools.sort((a, b) => b.totalBorrowed - a.totalBorrowed)
   }
 
   get collateral() {
