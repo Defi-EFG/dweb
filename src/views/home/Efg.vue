@@ -25,6 +25,29 @@
                   <div class="m_titel m_titel_2">{{ interest }}</div>
                   <div class="m_titel m_titel_2">{{ debt }}</div>
                 </v-col>
+                <v-col cols="12" style="padding:0px 0px 5px 0px">
+                  <div class="m_titel">
+                    <div class="m_titel">{{ $t('views.detail.liquidation') }} :</div>
+                  </div>
+                </v-col>
+                <v-col class="colorLiquidated">
+                  <v-row v-for="(liquidated, index) in liquidated" :key="index" cols="12">
+                    <v-col cols="6" style="padding:5px 12px">
+                      <div class="name">
+                        <img
+                          width="22"
+                          height="22"
+                          :src="getCurrencyIcon(liquidated.currencyName)"
+                          class="img_text_but"
+                          alt=""
+                        />{{ liquidated.currencyName }}
+                      </div></v-col
+                    >
+                    <v-col cols="6" style="padding:5px 12px">
+                      <div class="collaterals_number">{{ liquidatedECOC }}</div></v-col
+                    >
+                  </v-row>
+                </v-col>
               </v-row>
             </div>
           </v-col>
@@ -75,6 +98,7 @@ import DoughnutChart from '@/components/Home/DoughnutChartefg.vue'
 import LendingModule from '@/store/lending'
 import { getModule } from 'vuex-module-decorators'
 import { api } from '@/services/api'
+import { getCurrency } from '@/store/common'
 
 @Component({
   components: {
@@ -94,6 +118,8 @@ export default class Efg extends Vue {
   chartlist = 'hour'
   interest = 0
   debt = 0
+  liquidatedECOC = 0
+
   get pool() {
     return this.lendingStore.pools.find(asset => asset.address === this.query)
   }
@@ -125,6 +151,12 @@ export default class Efg extends Vue {
   get dataSet() {
     return this.price
   }
+  get liquidated() {
+    return this.lendingStore.supportedCollateralAssets
+  }
+  getCurrencyIcon(currencyNname: string) {
+    return getCurrency(currencyNname).style?.icon
+  }
 
   async mounted() {
     this.lendingStore.updateLoners()
@@ -153,6 +185,20 @@ export default class Efg extends Vue {
 }
 </style>
 <style scoped lang="scss">
+.name {
+  display: flex;
+  color: #ffffff;
+  font-size: 14px;
+}
+.name img {
+  margin-right: 5px;
+}
+.collaterals_number {
+  color: #ffffff;
+  float: right;
+  display: inline;
+  position: relative;
+}
 .chart_title {
   color: #fff;
   font-size: 18px;
@@ -241,14 +287,25 @@ export default class Efg extends Vue {
 }
 .M_detail {
   position: relative;
+  margin-top: 13%;
 }
 .chart_view {
   background-color: #000000;
   color: #ffffff;
   padding: 20px;
 }
+.colorLiquidated {
+  border: 1px solid #37373d;
+  background-color: #32323b4a;
+  border-radius: 2px;
+  padding: 5px 12px;
+}
 
 @media only screen and (max-width: 960px) {
+  .M_detail {
+    position: relative;
+    margin-top: 0;
+  }
   .h_detail {
     max-width: 95%;
   }
