@@ -142,7 +142,7 @@
             "number_of": "借款人数量",
             "borrow_apy": "总借贷",
             "total_supply": "总供应量",
-            "total_borrowed": "总供应量",
+            "total_borrowed": "总已借贷",
             "available": "可用",
             "total_Interest": "总利率",
             "total_debt": "总借款",
