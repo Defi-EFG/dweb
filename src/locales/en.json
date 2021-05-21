@@ -26,19 +26,24 @@
         "underconstruction": "underconstruction.svg",
         "main": {
             "name": "ECOC Financial Growth",
+
             "sub_name_efg": "EFG",
             "sub_name_1": "(EFG) dApp is created based on smart contracts architecture. The basic logic is the system to be fully decentralized. The dApp goal is decentralized finance (DeFi) and it has fixed total supply (of 1, 000, 000 tokens). All the tokens, including the basic system tokens (EFG and GPT) and collateral assets, are ECRC-20 standard which is similar with ERC-20 (Ethereum) standard. They are freely transferable by users, and they can be even delegate handling(allowance). Additionally, the system can also accept ECOC (the native coin).",
             "sub_name_11": "The EFG dApp can be cross-platform. This can be done with 'wrapped tokens.' Any assets (native coins or tokens) on any blockchain can be swapped in a decentralized way (atomic swaps), with wrapped tokens moving back and forth between Ecochain and the other blockchains. Wrapped tokens follow ECRC-20 standard so that they can join the dApp without problems.",
             "sub_name_12": "EFG dApp also includes an Oracle system and open source client for user interface and interaction with the blockchains. Oracle system obtains real-time exchange rates from many different trusted sources and injects them into smart contracts. All these mean that the system stays decentralized.",
             "sub_name_13": "EFG token details EFG has a total and fixed supply of one million tokens. That means that tokens can't be created, minted, or burned. The token shares the same interface as the ERC-20 (Ethereum) standard, as already mentioned. The interface standard provides the owner's functionality to transfer, allow some other entity to act for him, or even act on behalf of the other owner (if he gets an allowance from him). In short, it is easy even for third parties to build tools or clients to interact with EFG token.",
+
             "sub_name_gpt": "GPT",
             "sub_name_2": "GPT (Grace Period Token) is a token used to delay the settlement of mortgage assets. It can also be mined by using EFG mortgages that comply with the ECRC-20 standard. GPT is designed through the ECRC-20 standard smart contract and provides a total of 10,000 tokens. GPT provides the need for contract clearing extension because it can be used to increase the grace period for margin call notifications. It has become the main factor in the protection of investors' risk extension benefits in EFG's lending behavior.",
             "sub_name_22": "",
+
             "sub_name_efgandgpt": "Why EFG and GPT",
             "sub_name_3": "EFG is a lending token in the ECOC ecosystem. Its design purpose is to promote the development of the ECOC ecosystem and improve the construction of the ECOC financial ecosystem. At the same time, EFG adopts hedging financial logic to achieve a high degree of balance and trust between the relationship between the borrower and the lender and the transaction market. Coin holders can use ECOC coins as collateral to withdraw. It solves the problem of holding cryptocurrency and those who need liquidity to invest in the cryptocurrency market without selling their assets. If he wants to maintain a long position in assets because investors believe that these assets will increase in value. In addition,",
             "sub_name_33": "EFG token is about to launch GPT (Grace Period Token), which provides a more solid credit channel for borrowers to hedge. Hedging refers to investors placing bets on positions opposite to current positions in order to reduce the cycle risk of portfolio value fluctuations. Hedging is a strategy followed by rational investors (low risk and low expected profit). Currently, hedging (also called hedging) can only be done with a pair of cryptocurrencies. But in the future, when more currencies are introduced into the system, the combination of mortgage assets can be applied to hedging strategies. Because GPT was created to support EFG loans, GPT is used to delay the settlement of mortgage assets. Therefore, no matter what the exchange rate is, these innovative tokens are designed to support investors’ asset investment strategies.",
+
             "sub_name_work": "How it works",
             "sub_name_4": "Investors can just use ECOC as collateral to get a loan from ECOChain system, the system only accepts ECOC as collateral. The investor must pay interest to the system for the EFG token he received.  They are free to pay back their loan whenever they want. The investor must return exactly the amount of EFG token they borrowed plus the interest for the period elapsed. The interest rate is calculated daily, and the total interest depends on the block timestamps.  The investor has the option to receives a GPT rewarded token by staking EFG. This action brings him passive income because GPT has its value.  There is a demand for it because it can be used to increase the grace period of a margin call.",
+
             "supply": "Supply",
             "detail": "Details",
             "loaner": "Pool",
@@ -55,8 +60,7 @@
             "total_liquidated": "Total Liquidated",
             "total_interest": "Total Interest"
         },
-        "mainslider": [
-            {
+        "mainslider": [{
                 "src": "sliderimg01.svg",
                 "title": "ECOC Financial Growth",
                 "subtitle": "ECOC Financial Growth (EFG) is an interesting lending opportunity on decentralize blockchain, that let developers create new financial applications that are global, safe, and open for ECOC coins user. ECOChain developers keep developing the core blockchain infrastructure, as well as the tools to empower the new financial system."
@@ -73,8 +77,7 @@
             }
         ],
         "Introduction": "Introduction",
-        "docsEFG": [
-            {
+        "docsEFG": [{
                 "head": "Collateral ",
                 "headsub": "In order to borrow the EFG Token from dApp, users need to firstly supply ECOC coins as collateral. Meanwhile, users cannot redeem or transfer collateral while it is locked."
             },
@@ -106,9 +109,9 @@
                 "head": "Oracles ",
                 "headsub": "Oracles are the only entities that are authorized to inject real-world data into the smart contract. Specifically, they inject the exchange rates for each second(timestamp) of each pair of EFG (asset / USDT)."
             }
+
         ],
-        "docsGPT": [
-            {
+        "docsGPT": [{
                 "head": "GPT (Grace Period Token) ",
                 "headsub": "can be used for delaying liquidation of the collateral in the system, this is in case of the collateral price dropped. So, if we deposit GPT, the delay process will start and end 7 hours later and the amount to be used will depend on the collateral amount. In the meantime, users can buy more EFG to redeem their collateral back. If not, their collateral will be lost and they can just keep their EFG in case of the collateral price dropped or loan asset price increased."
             },
@@ -412,6 +415,7 @@
             "GPT": "GPT",
             "downloadkeystore": "Note: Keep the keystore file in a safe and secure place. If you lose your keystore file or forgot password, it may cause losing your funds and will not be able to recover.",
             "warning-address": "Warning: Contact info are temporary saved on this device only! These information are going to be lost after clearing browser or device storage."
+
         }
     },
     "components": {},
@@ -443,6 +447,5 @@
     "No results": "No results",
     "No more data": "No more data",
     "Invalid address format": "Invalid address format",
-    "UTXO currently unavailable, Please try again": "UTXO currently unavailable, Please try again",
-    "disclaim": "Legal disclaimer : EFG stands for  “Ecochain Financial Growth”. It is not connected, by any means to  “EFG International” which  stands for  “European Financial” Group. EFG International, EFG Bank European Financial Group and any of their connected companies are not  related to  “Ecochain Financial Growth”. We also declare that Ecochain Financial Growth is not connected to any financial or other institutions or companies,except if explicitly declared on this website or officially announced by our legal representative. In case of need of clarification or doubt on legal matters kindly contact us at "
+    "UTXO currently unavailable, Please try again": "UTXO currently unavailable, Please try again"
 }

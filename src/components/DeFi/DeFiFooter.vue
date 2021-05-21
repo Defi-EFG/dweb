@@ -1,65 +1,58 @@
 <template>
-  <div class="footer">
-    <div id="footer">
-      <div class="latest-block">
-        <div class="dot-circle"></div>
-        <div>
-          {{ $t('views.titles.latest_block') }}:
-          {{ latestBlock | numberWithCommas({ decimal: 0 }) }}
-        </div>
-      </div>
-      <div class="contact">
-        <a href="https://t.me/EFGtoken" target="_blank" rel="noopener noreferrer"
-          ><span class="contact-name">Telegram</span>
-          <img
-            title="Telegram"
-            class="contact-icon"
-            width="33"
-            height="32"
-            src="@/assets/Subtraction.svg"
-            style="animation-delay: 0.5s"
-            alt=""
-        /></a>
-        <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer"
-          ><span class="contact-name">Github</span>
-          <img
-            title="Github"
-            class="contact-icon"
-            width="33"
-            height="32"
-            src="@/assets/github.svg"
-            style="animation-delay: 1s"
-            alt=""
-        /></a>
-        <a href="https://efg-defi.medium.com/" target="_blank" rel="noopener noreferrer"
-          ><span class="contact-name">Medium</span
-          ><img
-            title="Medium"
-            class="contact-icon"
-            width="33"
-            height="32"
-            src="@/assets/medium.svg"
-            style="animation-delay: 1.5s"
-            alt=""
-        /></a>
-        <a href="https://twitter.com/EFG_DeFi" target="_blank" rel="noopener noreferrer">
-          <span class="contact-name">Twitter</span
-          ><img
-            title="Twitter"
-            class="contact-icon"
-            width="33"
-            height="32"
-            src="@/assets/twitter.svg"
-            style="animation-delay: 2s"
-            alt=""
-        /></a>
-        <span id="sp">|</span>
-        <language-switcher class="mt-5"></language-switcher>
+  <div id="footer">
+    <div class="latest-block">
+      <div class="dot-circle"></div>
+      <div>
+        {{ $t('views.titles.latest_block') }}: {{ latestBlock | numberWithCommas({ decimal: 0 }) }}
       </div>
     </div>
-    <div class="disclaim">
-      {{ $t('disclaim') }}
-      <a href="mailto:asupport@efg.finance"> support@efg.finance </a>
+    <div class="contact">
+      <a href="https://t.me/EFGtoken" target="_blank" rel="noopener noreferrer"
+        ><span class="contact-name">Telegram</span>
+        <img
+          title="Telegram"
+          class="contact-icon"
+          width="33"
+          height="32"
+          src="@/assets/Subtraction.svg"
+          style="animation-delay: 0.5s;"
+          alt=""
+      /></a>
+      <a href="https://github.com/Defi-EFG" target="_blank" rel="noopener noreferrer"
+        ><span class="contact-name">Github</span>
+        <img
+          title="Github"
+          class="contact-icon"
+          width="33"
+          height="32"
+          src="@/assets/github.svg"
+          style="animation-delay: 1s;"
+          alt=""
+      /></a>
+      <a href="https://efg-defi.medium.com/" target="_blank" rel="noopener noreferrer"
+        ><span class="contact-name">Medium</span
+        ><img
+          title="Medium"
+          class="contact-icon"
+          width="33"
+          height="32"
+          src="@/assets/medium.svg"
+          style="animation-delay: 1.5s;"
+          alt=""
+      /></a>
+      <a href="https://twitter.com/EFG_DeFi" target="_blank" rel="noopener noreferrer">
+        <span class="contact-name">Twitter</span
+        ><img
+          title="Twitter"
+          class="contact-icon"
+          width="33"
+          height="32"
+          src="@/assets/twitter.svg"
+          style="animation-delay: 2s;"
+          alt=""
+      /></a>
+      <span id="sp">|</span>
+      <language-switcher class="mt-5"></language-switcher>
     </div>
   </div>
 </template>
@@ -99,22 +92,10 @@ export default class DeFiFooter extends Vue {
   display: flex;
   text-align: center;
   padding: 0px 20px 5px 20px;
-
+  background: #090c1b 0% 0% no-repeat padding-box;
   position: relative;
   z-index: 1000;
-}
-.footer {
-  background: #090c1b;
   color: #ffffff;
-}
-.disclaim {
-  font-size: 12px;
-  width: 80%;
-  margin: 0 auto;
-  padding-bottom: 20px;
-}
-.disclaim > a {
-  color: white !important;
 }
 #footer span {
   text-align: center;
@@ -165,10 +146,6 @@ export default class DeFiFooter extends Vue {
     border-top-right-radius: 6px;
     box-shadow: 0 6px 12px #080808;
     border-bottom-right-radius: 6px;
-  }
-  .disclaim {
-    width: auto;
-    padding: 20px;
   }
 }
 @media only screen and (max-width: 670px) {

@@ -14,10 +14,6 @@
         <span>Twitter</span></a
       >
     </div>
-    <div class="disclaim">
-      {{ $t('disclaim') }}
-      <a href="mailto:asupport@efg.finance"> support@efg.finance </a>
-    </div>
   </div>
 </template>
 
@@ -43,24 +39,10 @@ export default {}
 #footer span:hover {
   color: #693987;
 }
-.disclaim {
-  font-size: 12px;
-  width: 80%;
-  margin: 0 auto;
-  padding: 20px;
-  text-align: start;
-}
-.disclaim > a {
-  color: white !important;
-}
 @media only screen and (max-width: 670px) {
   #footer span {
     font-size: 14px;
     padding: 15px;
-  }
-  .disclaim {
-    width: auto;
-    padding: 20px;
   }
 }
 </style>
