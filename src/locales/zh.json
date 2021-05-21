@@ -449,5 +449,6 @@
     "No results": "沒結果",
     "No more data": "沒有更多數據",
     "Invalid address format": "地址格式无效",
-    "UTXO currently unavailable, Please try again": "目前无法使用UTXO，请重试"
+    "UTXO currently unavailable, Please try again": "目前无法使用UTXO，请重试",
+    "disclaim":"法律免责声明：EFG代表“ECOC Financial Growth”。它与代表“欧洲金融集团”的“EFG国际”没有任何联系。EFG International、EFG Bank European Financial Group及其任何关联公司均与“生态链金融增长”无关。我们还声明，“ECOC Financial Growth”与任何金融或其他机构或公司无关，除非本网站明确声明或我们的法定代表人正式宣布。如需澄清或对法律问题有疑问，请联系我们"
 }
